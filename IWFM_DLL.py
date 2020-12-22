@@ -1037,7 +1037,30 @@ class IWFM_Model:
         return np.array(element_subregions)
     
     def get_stream_node_ids(self):
-        pass
+        ''' returns an array of stream node ids from the IWFM model application
+        
+        Returns
+        -------
+        np.array
+            integer array of length returned by method 'get_n_stream_nodes' 
+        '''
+        if not hasattr(self.dll, "IW_Model_GetStrmNodeIDs"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetStrmNodeIDs'))
+
+        # reset instance variable status to -1
+        self.status = ctypes.c_int(-1)
+
+        # get number of stream nodes
+        n_stream_nodes = ctypes.c_int(self.get_n_stream_nodes())
+
+        # initialize output variables
+        stream_node_ids = (ctypes.c_int*n_stream_nodes.value)()
+
+        self.dll.IW_Model_GetStrmNodeIDs(ctypes.byref(n_stream_nodes),
+                                         stream_node_ids,
+                                         ctypes.byref(self.status))
+
+        return np.array(stream_node_ids)
 
     def get_n_stream_nodes_upstream_of_stream_node(self):
         pass
