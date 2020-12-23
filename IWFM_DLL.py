@@ -1102,8 +1102,47 @@ class IWFM_Model:
 
         return n_upstream_stream_nodes.value
 
-    def get_stream_nodes_upstream_of_stream_node(self):
-        pass
+    def get_stream_nodes_upstream_of_stream_node(self, stream_node_id):
+        ''' returns an array of the stream node ids upstream of the provided stream node id
+        
+        Parameters
+        ----------
+        stream_node_id : int
+            stream node id used to determine number of stream nodes upstream 
+            
+        Returns
+        -------
+        np.ndarray
+            integer array of stream node ids upstream of the provided stream node id
+        '''
+        if not hasattr(self.dll, "IW_Model_GetStrmUpstrmNodes"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetStrmUpstrmNodes'))
+
+        # check that stream_node_id is an integer
+        if not isinstance(stream_node_id, (int, np.int, np.int32, np.dtype('<i4'))):
+            raise TypeError('stream_node_id must be an integer')
+
+        # check that stream_node_id is a valid stream_node_id
+        stream_node_ids = self.get_stream_node_ids()
+        if not np.any(stream_node_ids == stream_node_id):
+            raise ValueError('stream_node_id is not a valid Stream Node ID')
+
+        # set input variables
+        stream_node_id = ctypes.c_int(stream_node_id)
+        n_upstream_stream_nodes = ctypes.c_int(self.get_n_stream_nodes_upstream_of_stream_node(stream_node_id))
+
+        # reset instance variable status to -1
+        self.status = ctypes.c_int(-1)
+
+        # initialize output variables
+        upstream_nodes = (ctypes.c_int*n_upstream_stream_nodes.value)()
+
+        self.dll.IW_Model_GetStrmUpstrmNodes(ctypes.byref(stream_node_id),
+                                             ctypes.byref(n_upstream_stream_nodes),
+                                             upstream_nodes,
+                                             ctypes.byref(self.status))
+
+        return np.array(upstream_nodes)
 
     def get_stream_bottom_elevations(self):
         pass
