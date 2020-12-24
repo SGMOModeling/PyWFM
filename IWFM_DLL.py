@@ -1145,7 +1145,31 @@ class IWFM_Model:
         return np.array(upstream_nodes)
 
     def get_stream_bottom_elevations(self):
-        pass
+        ''' returns the stream channel bottom elevation at each stream node
+        
+        Returns
+        -------
+        np.ndarray
+            array of float with the stream channel elevation for each stream node
+        '''
+        if not hasattr(self.dll, "IW_Model_GetStrmBottomElevs"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetStrmBottomElevs'))
+
+        # set input variables
+        n_stream_nodes = ctypes.c_int(self.get_n_stream_nodes())
+
+        # reset_instance variable status to -1
+        self.status = ctypes.c_int(-1)
+
+        # initialize output variables
+        stream_bottom_elevations = (ctypes.c_double*n_stream_nodes.value)()
+
+        self.dll.IW_Model_GetStrmBottomElevs(ctypes.byref(n_stream_nodes),
+                                             stream_bottom_elevations,
+                                             ctypes.byref(self.status))
+        
+        return np.array(stream_bottom_elevations)
+
 
     def get_n_rating_table_points(self):
         pass
