@@ -1212,8 +1212,49 @@ class IWFM_Model:
         return n_rating_table_points.value
 
 
-    def get_stream_rating_table(self):
-        pass
+    def get_stream_rating_table(self, stream_node_id):
+        ''' returns the stream rating table for a specified stream node 
+        
+        Parameters
+        ----------
+        stream_node_id : int
+            stream node id used to return the rating table
+        
+        Returns
+        -------
+        tuple
+            length 2 tuple of np.ndarrays representing stage and flow, respectively
+        '''
+        if not hasattr(self.dll, "IW_Model_GetStrmRatingTable"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetStrmRatingTable'))
+
+        # check that stream_node_id is an integer
+        if not isinstance(stream_node_id, (int, np.int, np.int32, np.dtype('<i4'))):
+            raise TypeError('stream_node_id must be an integer')
+
+        # check that stream_node_id is a valid stream_node_id
+        stream_node_ids = self.get_stream_node_ids()
+        if not np.any(stream_node_ids == stream_node_id):
+            raise ValueError('stream_node_id is not a valid Stream Node ID')
+
+        # set input variables
+        stream_node_id = ctypes.c_int(stream_node_id)
+        n_rating_table_points =ctypes.c_int(self.get_n_rating_table_points(stream_node_id.value))
+
+        # reset_instance variable status to -1
+        self.status = ctypes.c_int(-1)
+
+        # initialize output variables
+        stage = (ctypes.c_double*n_rating_table_points.value)()
+        flow = (ctypes.c_double*n_rating_table_points.value)()
+
+        self.dll.IW_Model_GetStrmRatingTable(ctypes.byref(stream_node_id), 
+                                             ctypes.byref(n_rating_table_points),
+                                             stage,
+                                             flow
+                                             ctypes.byref(self.status))
+
+        return np.array(stage), np.array(flow)
 
     def get_n_stream_inflows(self):
         pass
