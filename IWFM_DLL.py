@@ -1251,7 +1251,7 @@ class IWFM_Model:
         self.dll.IW_Model_GetStrmRatingTable(ctypes.byref(stream_node_id), 
                                              ctypes.byref(n_rating_table_points),
                                              stage,
-                                             flow
+                                             flow,
                                              ctypes.byref(self.status))
 
         return np.array(stage), np.array(flow)
