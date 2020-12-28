@@ -1171,8 +1171,46 @@ class IWFM_Model:
         return np.array(stream_bottom_elevations)
 
 
-    def get_n_rating_table_points(self):
-        pass
+    def get_n_rating_table_points(self, stream_node_id):
+        '''returns the number of data points in the stream flow rating table for a stream node
+
+        Parameters
+        ----------
+        stream_node_id : int
+            stream node id used to determine number of data points in the rating table
+
+        Returns
+        -------
+        int
+            number of data points in the stream flow rating table
+        '''
+        if not hasattr(self.dll, "IW_Model_GetNRatingTablePoints"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetNRatingTablePoints'))
+
+        # check that stream_node_id is an integer
+        if not isinstance(stream_node_id, (int, np.int, np.int32, np.dtype('<i4'))):
+            raise TypeError('stream_node_id must be an integer')
+
+        # check that stream_node_id is a valid stream_node_id
+        stream_node_ids = self.get_stream_node_ids()
+        if not np.any(stream_node_ids == stream_node_id):
+            raise ValueError('stream_node_id is not a valid Stream Node ID')
+
+        # set input variables
+        stream_node_id = ctypes.c_int(stream_node_id)
+
+        # reset_instance variable status to -1
+        self.status = ctypes.c_int(-1)
+
+        # initialize output variables
+        n_rating_table_points = ctypes.c_int(0)
+
+        self.dll.IW_Model_GetNRatingTablePoints(ctypes.byref(stream_node_id),
+                                                ctypes.byref(n_rating_table_points),
+                                                ctypes.byref(self.status))
+
+        return n_rating_table_points.value
+
 
     def get_stream_rating_table(self):
         pass
