@@ -1307,7 +1307,31 @@ class IWFM_Model:
         return np.array(stream_inflow_nodes)
 
     def get_stream_inflow_ids(self):
-        pass
+        ''' returns the identification numbers for the stream boundary 
+        inflows specified by the user as timeseries input data 
+        
+        Returns
+        -------
+        np.ndarray
+            integer array of stream inflow node indices
+        '''
+        if not hasattr(self.dll, "IW_Model_GetStrmInflowIDs"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format("IW_Model_GetStrmInflowIDs"))
+        
+        # get number of stream inflow nodes
+        n_stream_inflows = ctypes.c_int(self.get_n_stream_inflows())
+
+        # set instance variable status to -1
+        self.status = ctypes.c_int(-1)
+
+        # initialize output variables
+        stream_inflow_ids = (ctypes.c_int*n_stream_inflows.value)()
+
+        self.dll.IW_Model_GetStrmInflowIDs(ctypes.byref(n_stream_inflows),
+                                             stream_inflow_ids,
+                                             ctypes.byref(self.status))
+
+        return np.array(stream_inflow_ids)
 
     def get_stream_inflows_at_some_locations(self):
         pass
