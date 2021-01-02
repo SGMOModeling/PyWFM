@@ -1257,8 +1257,8 @@ class IWFM_Model:
         return np.array(stage), np.array(flow)
 
     def get_n_stream_inflows(self):
-        ''' returns the number of stream boundary inflows specified by the user
-        as timeseries input data
+        ''' returns the number of stream boundary inflows specified by the 
+        user as timeseries input data
 
         Returns
         -------
@@ -1269,7 +1269,7 @@ class IWFM_Model:
             raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format("IW_Model_GetStrmNInflows"))
         
         # set instance variable status to -1
-        self.status = ctype.c_int(-1)
+        self.status = ctypes.c_int(-1)
         
         # initialize output variables
         n_stream_inflows = ctypes.c_int(0)
@@ -1280,7 +1280,31 @@ class IWFM_Model:
         return n_stream_inflows.value
 
     def get_stream_inflow_nodes(self):
-        pass
+        ''' returns the indices of the stream nodes that receive boundary 
+        inflows specified by the user as timeseries input data 
+        
+        Returns
+        -------
+        np.ndarray
+            integer array of stream inflow node indices
+        '''
+        if not hasattr(self.dll, "IW_Model_GetStrmInflowNodes"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format("IW_Model_GetStrmInflowNodes"))
+        
+        # get number of stream inflow nodes
+        n_stream_inflows = ctypes.c_int(self.get_n_stream_inflows())
+
+        # set instance variable status to -1
+        self.status = ctypes.c_int(-1)
+
+        # initialize output variables
+        stream_inflow_nodes = (ctypes.c_int*n_stream_inflows.value)()
+
+        self.dll.IW_Model_GetStrmInflowNodes(ctypes.byref(n_stream_inflows),
+                                             stream_inflow_nodes,
+                                             ctypes.byref(self.status))
+
+        return np.array(stream_inflow_nodes)
 
     def get_stream_inflow_ids(self):
         pass
