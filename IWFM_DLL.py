@@ -1241,7 +1241,7 @@ class IWFM_Model:
         stream_node_id = ctypes.c_int(stream_node_id)
         n_rating_table_points =ctypes.c_int(self.get_n_rating_table_points(stream_node_id.value))
 
-        # reset_instance variable status to -1
+        # reset instance variable status to -1
         self.status = ctypes.c_int(-1)
 
         # initialize output variables
@@ -1257,7 +1257,27 @@ class IWFM_Model:
         return np.array(stage), np.array(flow)
 
     def get_n_stream_inflows(self):
-        pass
+        ''' returns the number of stream boundary inflows specified by the user
+        as timeseries input data
+
+        Returns
+        -------
+        int
+            number of stream boundary inflows
+        '''
+        if not hasattr(self.dll, "IW_Model_GetStrmNInflows"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format("IW_Model_GetStrmNInflows"))
+        
+        # set instance variable status to -1
+        self.status = ctype.c_int(-1)
+        
+        # initialize output variables
+        n_stream_inflows = ctypes.c_int(0)
+
+        self.dll.IW_Model_GetStrmNInflows(ctypes.byref(n_stream_inflows),
+                                          ctypes.byref(self.status))
+
+        return n_stream_inflows.value
 
     def get_stream_inflow_nodes(self):
         pass
