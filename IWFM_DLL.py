@@ -81,8 +81,14 @@ class IWFM_Model:
                               ctypes.byref(self.has_routed_streams), 
                               ctypes.byref(self.is_for_inquiry), 
                               ctypes.byref(self.status))
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self):
+        self.kill()
       
-    def __del__(self):
+    def delete_inquiry_data_file(self):
         
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_DeleteInquiryDataFile"):
@@ -94,8 +100,6 @@ class IWFM_Model:
         self.dll.IW_Model_DeleteInquiryDataFile(ctypes.byref(self.length_simulation_file_name),
                                                 self.simulation_file_name,
                                                 ctypes.byref(self.status))
-        
-        self.kill()
             
     def kill(self):
         ''' terminates model object, closes files associated with model,
@@ -1333,58 +1337,126 @@ class IWFM_Model:
 
         return np.array(stream_inflow_ids)
 
-    def get_stream_inflows_at_some_locations(self):
-        pass
+    def get_stream_inflows_at_some_locations(self, stream_inflow_locations):
+        ''' returns user-specified stream boundary inflows at a specified
+        set of inflows listed by their indices
+        
+        Parameters
+        ----------
+        stream_inflow_locations : int
+
+        Returns
+        -------
+
+        Notes
+        -----
+        This method is designed to return stream inflows at the current
+        timestep during a simulation.
+        '''
+        if self.is_for_inquiry != 0:
+            raise RuntimeError("This function can only be used when the model object is instantiated with the is_for_inquiry flag set to 0")
+
+        if not hasattr(self.dll, "IW_Model_GetStrmInflows_AtSomeInflows"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format("IW_Model_GetStrmInflows_AtSomeInflows"))
+
+        # initialize output variables
+        
+        
+        #self.dll.IW_Model_GetStrmInflows_AtSomeInflows()
 
     def get_stream_flow_at_location(self, stream_node_id, flow_conversion_factor):
+        # is_for_inquiry=0
         pass
 
     def get_stream_flows(self):
+        # is_for_inquiry=0
         pass
 
     def get_stream_stages(self):
+        # is_for_inquiry=0
         pass
 
     def get_stream_tributary_inflows(self, inflow_conversion_factor):
+        # is_for_inquiry=0
         pass
 
     def get_stream_rainfall_runoff(self, runoff_conversion_factor):
+        # is_for_inquiry=0
         pass
 
     def get_stream_return_flows(self, return_flow_conversion_factor):
+        # is_for_inquiry=0
         pass
 
     def get_stream_tile_drains(self, tile_drain_flow_conversion_factor):
+        # is_for_inquiry=0
         pass
 
     def get_stream_riparian_evapotranspiration(self, evapotranspiration_conversion_factor):
+        # is_for_inquiry=0
         pass
 
     def get_stream_gain_from_groundwater(self, stream_gain_conversion_factor):
+        # is_for_inquiry=0
         pass
 
     def get_stream_gain_from_lakes(self, lake_inflow_conversion_factor):
+        # is_for_inquiry=0
         pass
 
     def get_net_bypass_inflows(self, bypass_inflow_conversion_factor):
+        # is_for_inquiry=0
         pass
 
     def get_actual_stream_diversions_at_some_locations(self, diversion_id, diversion_conversion_factor):
+        # is_for_inquiry=0
         pass
 
     def get_stream_diversion_locations(self):
-        pass
+        ''' returns the stream node indices corresponding to diversion locations
+        
+        Parameters
+        ----------
+        
+        
+        Returns
+        -------
+        '''
 
     def get_stream_reach_ids(self):
-        pass
+        ''' returns the user-specified identification numbers for the
+        stream reaches in an IWFM model 
+        
+        Returns
+        -------
+        stream reach_ids : np.ndarray of ints
+            integer array containing stream reach ids
+        '''
+        if not hasattr(self.dll, "IW_Model_GetReachIDs"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format("IW_Model_GetReachIDs"))
+
+        # set input variables
+        n_stream_reaches = ctypes.c_int(self.get_n_stream_reaches())
+        
+        # reset instance variable to -1
+        self.status = ctypes.c_int(-1)
+
+        # initialize output variables
+        stream_reach_ids = (ctypes.c_int*n_stream_reaches.value)()
+
+        self.dll.IW_Model_GetReachIDs(ctypes.byref(n_stream_reaches),
+                                      stream_reach_ids,
+                                      ctypes.byref(self.status))
+
+        return np.array(stream_reach_ids)
 
     def get_n_nodes_in_stream_reach(self, reach_id):
         pass
 
-    def get_reach_groundwater_nodes(self, reach_id):
+    def get_stream_reach_groundwater_nodes(self, reach_id):
         pass
 
-    def get_reach_stream_nodes(self, reach_id):
+    def get_stream_reach_stream_nodes(self, reach_id):
         pass
 
     def get_stream_reaches_for_stream_nodes(self, stream_node_indices):
