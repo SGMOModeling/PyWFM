@@ -1412,16 +1412,60 @@ class IWFM_Model:
         # is_for_inquiry=0
         pass
 
-    def get_stream_diversion_locations(self):
-        ''' returns the stream node indices corresponding to diversion locations
-        
-        Parameters
-        ----------
-        
+    def get_diversion_ids(self):
+        ''' returns the surface water diversion identification numbers
+        specified in an IWFM model
         
         Returns
         -------
+        np.ndarray
+            integer array of diversion ids
         '''
+        if not hasattr(self.dll, "IW_Model_GetDiversionIDs"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format("IW_Model_GetDiversionIDs"))
+
+        # set input variables
+        n_diversions = ctypes.c_int(self.get_n_diversions)
+        
+        # reset instance variable status to -1
+        self.status = ctypes.c_int(-1)
+
+        # initialize output variables
+        diversion_ids = (ctypes.c_int*n_diversion.value)()
+
+        self.dll.IW_Model_GetDiversionIDs(ctypes.byref(n_diversions),
+                                          diversion_ids,
+                                          ctypes.byref(self.status))
+
+        return np.array(diversion_ids)
+    
+    def get_stream_diversion_locations(self):
+        ''' returns the stream node indices corresponding to diversion locations
+        
+        Returns
+        -------
+        np.ndarray
+            integer array of stream node indices
+        '''
+        if not hasattr(self.dll, "IW_Model_GetStrmDiversionsExportNodes"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format("IW_Model_GetStrmDiversionsExportNodes"))
+
+        # set input variables
+        n_diversions = ctypes.c_int(self.get_n_diversions())
+        diversion_list = (ctypes.c_int*n_diversions)(*np.arange(1,n_diversions.value + 1))
+
+        # reset instance variable status to -1
+        self.status = ctypes.c_int(-1)
+
+        # initialize output variables
+        diversion_stream_nodes = (ctypes.c_int*n_diversions.value)()
+
+        self.dll.IW_Model_GetStrmDiversionsExportNodes(ctypes.byref(n_diversions),
+                                                       diversion_list,
+                                                       diversion_stream_nodes,
+                                                       ctypes.byref(self.status))
+
+        return np.array(diversion_stream_nodes)
 
     def get_stream_reach_ids(self):
         ''' returns the user-specified identification numbers for the
@@ -1438,7 +1482,7 @@ class IWFM_Model:
         # set input variables
         n_stream_reaches = ctypes.c_int(self.get_n_stream_reaches())
         
-        # reset instance variable to -1
+        # reset instance variable status to -1
         self.status = ctypes.c_int(-1)
 
         # initialize output variables
