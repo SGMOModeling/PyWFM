@@ -113,6 +113,27 @@ class IWFM_Model:
         self.status = ctypes.c_int(-1)
         
         self.dll.IW_Model_Kill(ctypes.byref(self.status))
+
+    def get_n_time_steps(self):
+        ''' returns the number of timesteps in an IWFM simulation 
+        '''
+        # check to see if IWFM procedure is available in user version of IWFM DLL
+        if not hasattr(self.dll, "IW_Model_GetNTimeSteps"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetNTimeSteps'))
+        
+        # reset instance variable status to -1
+        self.status = ctypes.c_int(-1)
+
+        # initialize n_nodes variable
+        n_time_steps = ctypes.c_int(0)
+
+        self.dll.IW_Model_GetNTimeSteps(ctypes.byref(n_time_steps),
+                                    ctypes.byref(self.status))
+           
+        if not hasattr(self, "n_time_steps"):
+            self.n_time_steps = n_time_steps
+
+        return self.n_time_steps.value
   
     def get_n_nodes(self):
         ''' returns the number of nodes in an IWFM model
