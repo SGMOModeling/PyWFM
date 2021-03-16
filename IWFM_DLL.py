@@ -2377,7 +2377,11 @@ class IWFM_Model:
                                iwfm_version,
                                ctypes.byref(self.status))
 
-        return iwfm_version.value.decode('utf-8')
+        iwfm_version_string = iwfm_version.value.decode('utf-8')
+
+        iwfm_version_info = {val.split(':')[0]: val.split(':')[1].strip() for val in iwfm_version_string.split('\n')}
+
+        return iwfm_version_info
 
     ### methods that wrap two or more DLL calls
     def get_hydrograph_info(self, feature_type):
