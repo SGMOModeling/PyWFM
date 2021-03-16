@@ -1439,8 +1439,13 @@ class IWFM_Model:
 
         return np.array(diversion_ids)
     
-    def get_stream_diversion_locations(self):
+    def get_stream_diversion_locations(self, diversion_locations):
         ''' returns the stream node indices corresponding to diversion locations
+
+        Parameters
+        ----------
+        diversion_locations : list, tuple, np.ndarray
+            integer array of diversion indices
         
         Returns
         -------
@@ -1451,8 +1456,18 @@ class IWFM_Model:
             raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format("IW_Model_GetStrmDiversionsExportNodes"))
 
         # set input variables
-        n_diversions = ctypes.c_int(self.get_n_diversions())
-        diversion_list = (ctypes.c_int*n_diversions)(*np.arange(1,n_diversions.value + 1))
+        if isinstance(diversion_locations, (np.ndarray, tuple, list)):
+            n_diversions = ctypes.c_int(len(diversion_locations))
+            diversion_list = (ctypes.c_int*n_diversions.value)(*diversion_locations)
+        
+        elif isinstance(diversion_locations, str):
+            if diversion_locations.lower() == 'all':
+                n_diversions = self.get_n_diversions()
+                diversion_list = (ctypes.c_int*n_diversions.value)(*np.arange(1,n_diversions + 1))
+            else:
+                raise ValueError('diversion_locations must be a list, tuple, or np.ndarray or use "all"')
+        else:
+            raise TypeError('diversion_locations provided must be a list, tuple, or np.ndarray or use "all"')
 
         # reset instance variable status to -1
         self.status = ctypes.c_int(-1)
