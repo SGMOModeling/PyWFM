@@ -386,13 +386,22 @@ class IWFM_Model:
         if not hasattr(self.dll, "IW_Model_GetTimeSpecs"):
             raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetTimeSpecs'))
             
+        # get version of the DLL to determine functionality of GetTimeSpecs procedure
+        dll_version = self.get_version['IWFM Core']
+
         # reset instance variable status to -1
         self.status = ctypes.c_int(-1)
-
-        # set string length properties
-        length_dates = ctypes.c_int(32)
-        length_ts_interval = ctypes.c_int(8)
-        n_data = ctypes.c_int(2)
+        
+        if dll_version in ['2015.0.706', '2015.0.828', '2015.0.961', '2015.0.1045']:
+            # set string length properties
+            n_data = ctypes.c_int(2)
+            length_dates = ctypes.c_int(32)
+            length_ts_interval = ctypes.c_int(8)
+            
+        else:
+            n_data = ctypes.c_int(self.n_time_steps())
+            length_dates = ctypes.c_int(n_data.value*16)
+            length_ts_interval = ctypes.c_int(8)
 
         # initialize output variables
         simulation_time_step = ctypes.create_string_buffer(length_ts_interval.value)
@@ -410,13 +419,9 @@ class IWFM_Model:
         dates_list = IWFM_Model._string_to_list_by_array(raw_dates_string, 
                                                         delimiter_position_array, n_data)
 
-        dates_tuple = tuple(dates_list)
-
-        start_date, end_date = dates_tuple # pylint: disable=unbalanced-tuple-unpacking
-
         sim_time_step = simulation_time_step.value.decode('utf-8')
 
-        return start_date, end_date, sim_time_step
+        return dates_list, sim_time_step
 
     def is_date_greater(self, first_date, comparison_date):
         ''' returns True if first_date is greater than comparison_date
