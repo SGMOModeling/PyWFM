@@ -380,14 +380,19 @@ class IWFM_Model:
         return n_hydrographs.value
 
     def get_time_specs(self):
-        ''' returns the IWFM simulation start date, end date, and time step
+        ''' returns the IWFM simulation dates and time step
+        if the version of the DLL is prior or including IWFM 2015.0.1045,
+        the simulation dates will only include the start and end date.
+        
+        For newer versions, simulation dates will include all dates in 
+        the simulation. 
         '''
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetTimeSpecs"):
             raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetTimeSpecs'))
             
         # get version of the DLL to determine functionality of GetTimeSpecs procedure
-        dll_version = self.get_version['IWFM Core']
+        dll_version = self.get_version()['IWFM Core']
 
         # reset instance variable status to -1
         self.status = ctypes.c_int(-1)
@@ -399,7 +404,7 @@ class IWFM_Model:
             length_ts_interval = ctypes.c_int(8)
             
         else:
-            n_data = ctypes.c_int(self.n_time_steps())
+            n_data = ctypes.c_int(self.get_n_time_steps())
             length_dates = ctypes.c_int(n_data.value*16)
             length_ts_interval = ctypes.c_int(8)
 
