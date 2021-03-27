@@ -3648,9 +3648,44 @@ class IWFM_Budget:
 
         return dates, budget
 
-    def get_values_for_a_column(self):
-        # IW_Budget_GetValues_ForAColumn(iLoc,iCol,cOutputInterval,iLenInterval,cOutputBeginDateAndTime,cOutputEndDateAndTime,
-        #                                iLenDateAndTime,rFact_LT,rFact_AR,rFact_VL,iDim_In,iDim_Out,Dates,Values,iStat)
+    def get_values_for_a_column(self, location_id, column_name, begin_date=None, 
+                                end_date=None, length_conversion_factor=1.0, 
+                                area_conversion_factor=2.295684E-05, 
+                                volume_conversion_factor=2.295684E-08):
+        ''' returns the budget data for a single column and location for a specified
+        beginning and ending dates.
+
+        Parameters
+        ----------
+        location_id : int
+            location_id where the budget data is returned
+
+        column_name : str
+            name of the budget column to return
+
+        begin_date : str or None, default=None
+            first date for budget values
+
+        end_date : str or None, default=None
+            last date for budget values
+
+        length_conversion_factor : float, default=1.0
+            unit conversion factor for length units used in the model 
+            to some other length unit
+
+        area_conversion_factor : float, default=2.295684E-05
+            unit conversion factor for area units used in the model
+            to some other area unit
+
+        volume_conversion_factor : float, default=2.295684E-08
+            unit conversion factor for volume units used in the model
+            to some other volume unit
+
+        Returns
+        -------
+        length 2-tuple of np.arrays
+            representing dates and values
+        '''
         if not hasattr(self.dll, 'IW_Budget_GetValues_ForAColumn'):
             raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Budget_GetValues_ForAColumn'))
         
@@ -3661,7 +3696,91 @@ class IWFM_Budget:
         if location_id not in [i+1 for i in range(n_locations)]:
             raise ValueError('location_id is not valid. Must be a value between 1 and {}.'.format(n_locations))
 
+        # convert location_id to ctypes
+        location_id = ctypes.c_int(location_id)
 
+        # get column_headers
+        column_headers = self.get_column_headers(location_id.value)
+
+        # check that column name provided exists. if so, get column index.
+        if column_name not in column_headers:
+            error_message = 'column_name is not recognized. Must be ' +
+                            'one of the following:\n{}'
+            raise ValueError(error_message.format(', '.join(column_headers)))
+
+        else:
+            column_id = ctypes.c_int(column_headers.index(column_name) + 1)
+            
+        # handle start and end dates
+        # get time specs
+        dates_list, output_interval = self.get_time_specs()
+        
+        if begin_date is None:
+            begin_date = dates_list[0]
+        else:
+            IWFM_Budget._validate_iwfm_date(begin_date)
+
+            if begin_date not in dates_list:
+                raise ValueError('begin_date was not found in the Budget file. use get_time_specs() method to check.')
+        
+        if end_date is None:
+            end_date = dates_list[-1]
+        else:
+            IWFM_Budget._validate_iwfm_date(end_date)
+
+            if end_date not in dates_list:
+                raise ValueError('end_date was not found in the Budget file. use get_time_specs() method to check.')
+
+        if self.is_date_greater(begin_date, end_date):
+            raise ValueError('end_date must occur after begin_date')
+
+        # get number of timestep intervals
+        n_timestep_intervals = ctypes.c_int(self.get_n_intervals(begin_date, end_date, 
+                                                                 output_interval, includes_end_date=True))
+
+        # convert beginning and end dates to ctypes
+        begin_date = ctypes.create_string_buffer(begin_date.encode('utf-8'))
+        end_date = ctypes.create_string_buffer(end_date.encode('utf-8'))
+
+        length_date = ctypes.c_int(ctypes.sizeof(begin_date))
+
+        # convert output_interval to ctypes
+        output_interval = ctypes.create_string_buffer(output_interval.encode('utf-8'))
+        length_output_interval = ctypes.c_int(ctypes.sizeof(output_interval))
+
+        # convert unit conversion factors to ctypes
+        length_conversion_factor = ctypes.c_double(length_conversion_factor)
+        area_conversion_factor = ctypes.c_double(area_conversion_factor)
+        volume_conversion_factor = ctypes.c_double(volume_conversion_factor)
+
+        # initialize output variables
+        n_output_intervals = ctypes.c_int(0)
+        dates = (ctypes.c_double*n_timestep_intervals)()
+        values = (ctypes.c_double*n_timestep_intervals)()
+        status = ctypes.c_int(-1)
+
+        # IW_Budget_GetValues_ForAColumn(iLoc,iCol,cOutputInterval,iLenInterval,cOutputBeginDateAndTime,cOutputEndDateAndTime,
+        #                                iLenDateAndTime,rFact_LT,rFact_AR,rFact_VL,iDim_In,iDim_Out,Dates,Values,iStat)
+        self.dll.IW_Budget_GetValues_ForAColumn(ctypes.byref(location_id),
+                                                ctypes.byref(column_id),
+                                                output_interval,
+                                                ctypes.byref(length_output_interval),
+                                                begin_date,
+                                                end_date,
+                                                ctypes.byref(length_date),
+                                                ctypes.byref(length_conversion_factor),
+                                                ctypes.byref(area_conversion_factor),
+                                                ctypes.byref(volume_conversion_factor),
+                                                ctypes.byref(n_timestep_intervals),
+                                                ctypes.byref(n_output_intervals),
+                                                dates,
+                                                values,
+                                                ctypes.byref(status))
+
+        dates = np.array('1899-12-30', dtype='datetime64') + dates.astype('timedelta64')
+        values = np.array(values)
+
+        return dates, values
 
     ### helper methods
     def is_date_greater(self, first_date, comparison_date):
