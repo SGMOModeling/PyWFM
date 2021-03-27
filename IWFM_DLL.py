@@ -3703,13 +3703,11 @@ class IWFM_Budget:
         column_headers = self.get_column_headers(location_id.value)
 
         # check that column name provided exists. if so, get column index.
-        if column_name not in column_headers:
-            error_message = 'column_name is not recognized. Must be ' +
-                            'one of the following:\n{}'
-            raise ValueError(error_message.format(', '.join(column_headers)))
-
-        else:
+        try:
             column_id = ctypes.c_int(column_headers.index(column_name) + 1)
+        except ValueError:
+            print('Must be one of the following:\n{}'.format(', '.join(column_headers)))
+            raise            
             
         # handle start and end dates
         # get time specs
@@ -3755,8 +3753,8 @@ class IWFM_Budget:
 
         # initialize output variables
         n_output_intervals = ctypes.c_int(0)
-        dates = (ctypes.c_double*n_timestep_intervals)()
-        values = (ctypes.c_double*n_timestep_intervals)()
+        dates = (ctypes.c_double*n_timestep_intervals.value)()
+        values = (ctypes.c_double*n_timestep_intervals.value)()
         status = ctypes.c_int(-1)
 
         # IW_Budget_GetValues_ForAColumn(iLoc,iCol,cOutputInterval,iLenInterval,cOutputBeginDateAndTime,cOutputEndDateAndTime,
@@ -3777,7 +3775,7 @@ class IWFM_Budget:
                                                 values,
                                                 ctypes.byref(status))
 
-        dates = np.array('1899-12-30', dtype='datetime64') + dates.astype('timedelta64')
+        dates = np.array('1899-12-30', dtype='datetime64') + np.array(dates, dtype='timedelta64')
         values = np.array(values)
 
         return dates, values
