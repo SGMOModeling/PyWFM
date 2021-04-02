@@ -3706,8 +3706,8 @@ class IWFM_Budget:
         try:
             column_id = ctypes.c_int(column_headers.index(column_name) + 1)
         except ValueError:
-            print('Must be one of the following:\n{}'.format(', '.join(column_headers)))
-            raise            
+            add_message = 'Must be one of the following:\n{}'.format(', '.join(column_headers))
+            raise ValueError(add_message)
             
         # handle start and end dates
         # get time specs
