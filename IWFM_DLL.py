@@ -2310,7 +2310,7 @@ class IWFM_Model:
         if begin_date is None:
             begin_date = dates_list[0]
         else:
-            IWFM_Budget._validate_iwfm_date(begin_date)
+            IWFM_Model._validate_iwfm_date(begin_date)
 
             if begin_date not in dates_list:
                 raise ValueError('begin_date was not recognized as a model time step. use IWFM_Model.get_time_specs() method to check.')
@@ -2318,7 +2318,7 @@ class IWFM_Model:
         if end_date is None:
             end_date = dates_list[-1]
         else:
-            IWFM_Budget._validate_iwfm_date(end_date)
+            IWFM_Model._validate_iwfm_date(end_date)
 
             if end_date not in dates_list:
                 raise ValueError('end_date was not found in the Budget file. use IWFM_Model.get_time_specs() method to check.')
@@ -2596,25 +2596,28 @@ class IWFM_Model:
         if layer_number < 0 or layer_number > num_layers:
             raise ValueError('layer number must be between 1 and {} (the total number of model layers)'.format(num_layers))
         
-        # check that begin_date and end_date are valid
-        if start_date is None and end_date is None:
-            start_date, end_date, _ = self.get_time_specs()
-        else:
-            # check that begin_date is valid
-            if start_date is not None:
-                IWFM_Model._validate_iwfm_date(start_date)
-            else:
-                start_date, _, _ = self.get_time_specs()
-
-            # check that end_date is valid
-            if end_date is not None:
-                IWFM_Model._validate_iwfm_date(end_date)
-            else:
-                _, end_date, _ = self.get_time_specs()
+        # handle start and end dates
+        # get time specs
+        dates_list, output_interval = self.get_time_specs()
         
-        # check that begin_date is not greater than end_date
-        if self.is_date_greater(start_date, end_date):
-            raise ValueError("start_date must occur before end_date")
+        if begin_date is None:
+            begin_date = dates_list[0]
+        else:
+            IWFM_Model._validate_iwfm_date(begin_date)
+
+            if begin_date not in dates_list:
+                raise ValueError('begin_date was not recognized as a model time step. use IWFM_Model.get_time_specs() method to check.')
+        
+        if end_date is None:
+            end_date = dates_list[-1]
+        else:
+            IWFM_Model._validate_iwfm_date(end_date)
+
+            if end_date not in dates_list:
+                raise ValueError('end_date was not recognized as a model time step. use IWFM_Model.get_time_specs() method to check.')
+
+        if self.is_date_greater(begin_date, end_date):
+            raise ValueError('end_date must occur after begin_date')
         
         # get ground surface elevations
         gs_elevs = self.get_ground_surface_elevation()
