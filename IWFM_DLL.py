@@ -2242,7 +2242,7 @@ class IWFM_Model:
 
         return np.array('1899-12-30', dtype='datetime64') + np.array(output_dates, dtype='timedelta64[D]'), np.array(output_data)
 
-    def get_gwheadsall_foralayer(self, layer_number, begin_date, end_date, length_conversion_factor=1.0):
+    def get_gwheadsall_foralayer(self, layer_number, begin_date=None, end_date=None, length_conversion_factor=1.0):
         ''' returns the simulated groundwater heads for a single user-specified model layer for
         every model node over a user-specified time interval.
 
@@ -2303,27 +2303,29 @@ class IWFM_Model:
         if not isinstance(layer_number, int):
             raise ValueError('layer_number must be an integer, value {} provided is of type {}'.format(layer_number, type(layer_number)))
 
-        # check that begin_date is valid
-        IWFM_Model._validate_iwfm_date(begin_date)
+        # handle start and end dates
+        # get time specs
+        dates_list, output_interval = self.get_time_specs()
         
-        # check that end_date is valid
-        IWFM_Model._validate_iwfm_date(end_date)
+        if begin_date is None:
+            begin_date = dates_list[0]
+        else:
+            IWFM_Budget._validate_iwfm_date(begin_date)
+
+            if begin_date not in dates_list:
+                raise ValueError('begin_date was not recognized as a model time step. use IWFM_Model.get_time_specs() method to check.')
         
-        # check that begin_date is not greater than end_date
+        if end_date is None:
+            end_date = dates_list[-1]
+        else:
+            IWFM_Budget._validate_iwfm_date(end_date)
+
+            if end_date not in dates_list:
+                raise ValueError('end_date was not found in the Budget file. use IWFM_Model.get_time_specs() method to check.')
+
         if self.is_date_greater(begin_date, end_date):
-            raise ValueError("begin_date must occur before end_date")
-
-        # get model time specifications
-        simulation_begin_date, simulation_end_date, simulation_output_interval = self.get_time_specs()
-
-        # check that begin_date is greater than simulation_begin_date
-        if self.is_date_greater(simulation_begin_date, begin_date):
-            raise ValueError("begin_date must occur after simulation_begin_date")
-
-        # check that end_date is less than simulation_end_date
-        if self.is_date_greater(end_date, simulation_end_date):
-            raise ValueError("end_date must occur before simulation_end_date")
-        
+            raise ValueError('end_date must occur after begin_date')
+                
         # check that length conversion factor is a number
         if not isinstance(length_conversion_factor, (int, float)):
             raise ValueError('length_conversion_factor must be a number. value {} provides is of type {}'.format(length_conversion_factor, type(length_conversion_factor)))
