@@ -2336,11 +2336,8 @@ class IWFM_Model:
         # convert specified layer number to ctypes
         layer_number = ctypes.c_int(layer_number)
 
-        # convert simulation_output_interval to ctypes
-        #output_interval = ctypes.create_string_buffer(simulation_output_interval.encode('utf-8'))
-
         # get number of time intervals between dates
-        num_time_intervals = ctypes.c_int(self.get_n_intervals(begin_date, end_date, simulation_output_interval))
+        num_time_intervals = ctypes.c_int(self.get_n_intervals(begin_date, end_date, output_interval))
 
         # convert dates to ctypes
         begin_date = ctypes.create_string_buffer(begin_date.encode('utf-8'))
