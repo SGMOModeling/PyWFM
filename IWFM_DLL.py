@@ -374,27 +374,78 @@ class IWFM_Model:
             self.n_elements = n_elements
 
         return self.n_elements.value
-    
-    def get_n_layers(self):
-        ''' returns the number of layers in an IWFM model
+
+    def get_element_ids(self):
+        ''' returns an array of element ids in an IWFM model
         '''
         # check to see if IWFM procedure is available in user version of IWFM DLL
-        if not hasattr(self.dll, "IW_Model_GetNLayers"):
-            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetNLayers'))
+        if not hasattr(self.dll, "IW_Model_GetElementIDs"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetElementIDs'))
+            
+        # reset instance variable status to -1
+        self.status = ctypes.c_int(-1)
+
+        # get number of elements
+        num_elements = ctypes.c_int(self.get_n_elements())
+
+        # initialize output variables
+        element_ids = (ctypes.c_int*num_elements.value)()
+
+        self.dll.IW_Model_GetElementIDs(ctypes.byref(num_elements),
+                                        element_ids,
+                                        ctypes.byref(self.status))
+
+        return np.array(element_ids)
+
+    def get_element_config(self, element_id):
+        ''' returns an array of node ids for an IWFM element.
+        The node ids are provided in a counter-clockwise direction
+
+        Parameters
+        ----------
+        element_id : int
+            single element ID for IWFM model. must be one of the values returned by
+            get_element_ids method
+
+        Returns
+        -------
+        np.array
+            array of node IDs for element
+
+        Notes
+        -----
+        In IWFM, elements can be composed of either 3 or 4 nodes. If 
+        the element has 3 nodes, the fourth is returned as a 0.
+        '''
+        # check to see if IWFM procedure is available in user version of IWFM DLL
+        if not hasattr(self.dll, "IW_Model_GetElementConfigData"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetElementConfigData'))
+        
+        # check that element_id is an integer
+        if not isinstance(element_id, (int, np.int, np.int32, np.dtype('<i4'))):
+            raise TypeError('element_id must be an integer')
+
+        # check that element_id is a valid element_id
+        element_ids = self.get_element_ids()
+        if not np.any(element_ids == element_id):
+            raise ValueError('element_id is not a valid element ID')
 
         # reset instance variable status to -1
         self.status = ctypes.c_int(-1)
-            
-        # initialize n_layers variable
-        n_layers = ctypes.c_int(0)
-            
-        self.dll.IW_Model_GetNLayers(ctypes.byref(n_layers),
-                                     ctypes.byref(self.status))
-        
-        if not hasattr(self, "n_layers"):
-            self.n_layers = n_layers
-            
-        return self.n_layers.value
+
+        # set input variables
+        element_id = ctypes.c_int(element_id)
+        max_nodes_per_element = ctypes.c_int(4)
+
+        # initialize output variables
+        nodes_in_element = (ctypes.c_int*max_nodes_per_element.value)()
+
+        self.dll.IW_Model_GetElementConfigData(ctypes.byref(element_id),
+                                               ctypes.byref(max_nodes_per_element),
+                                               nodes_in_element,
+                                               ctypes.byref(self.status))
+
+        return np.array(nodes_in_element)
 
     def get_n_subregions(self):
         ''' returns the number of subregions in an IWFM model
@@ -416,6 +467,95 @@ class IWFM_Model:
             self.n_subregions = n_subregions
             
         return self.n_subregions.value
+
+    def get_subregion_ids(self):
+        ''' returns an array of IDs for subregions identifiedin the an IWFM model 
+        
+        Returns
+        -------
+        np.array
+            integer array of length returned by method 'get_n_subregions'
+        '''
+        
+        # check to see if IWFM procedure is available in user version of IWFM DLL
+        if not hasattr(self.dll, "IW_Model_GetSubregionIDs"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetSubregionIDs'))
+
+        # reset instance variable status to -1
+        self.status = ctypes.c_int(-1)
+
+        # get number of model subregions
+        n_subregions = ctypes.c_int(self.get_n_subregions())
+
+        # initialize output variables
+        subregion_ids = (ctypes.c_int*n_subregions.value)()
+                
+        self.dll.IW_Model_GetSubregionIDs(ctypes.byref(n_subregions),
+                                                       subregion_ids,
+                                                       self.status)
+
+        return np.array(subregion_ids)
+
+    def get_subregion_name(self, subregion_id):
+        ''' returns the name corresponding to the subregion_id in an IWFM model '''
+
+        # check to see if IWFM procedure is available in user version of IWFM DLL
+        if not hasattr(self.dll, "IW_Model_GetSubregionName"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetSubregionName'))
+
+        # check that subregion_id is an integer
+        if not isinstance(subregion_id, (int, np.int, np.int32, np.dtype('<i4'))):
+            raise TypeError('subregion_id must be an integer')
+
+        # check that subregion_id is valid
+        subregion_ids = self.get_subregion_ids()
+        if subregion_id not in subregion_ids:
+            raise ValueError('subregion_id provided is not a valid subregion id. value provided {}. Must be one of: {}'.format(subregion_id, ' '.join(subregion_ids)))
+
+        # reset instance variable status to -1
+        self.status = ctypes.c_int(-1)
+
+        # convert subregion_id to ctypes
+        subregion_id = ctypes.c_int(subregion_id)
+
+        # initialize name length as 50 characters
+        length_name = ctypes.c_int(50)
+
+        # initialize output variables
+        subregion_name = ctypes.create_string_buffer(length_name.value)
+        
+        self.dll.IW_Model_GetSubregionName(ctypes.byref(subregion_id),
+                                           ctypes.byref(length_name),
+                                           subregion_name,
+                                           ctypes.byref(self.status))
+
+        return subregion_name.value.decode('utf-8')
+
+    def get_subregions_by_element(self):
+        ''' returns an array identifying the IWFM Model elements contained within each subregion.
+
+        Returns
+        -------
+        np.array
+            integer array of length returned by method 'get_n_elements'
+        '''
+        if not hasattr(self.dll, "IW_Model_GetElemSubregions"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetElemSubregions'))
+
+        # reset instance variable status to -1
+        self.status = ctypes.c_int(-1)
+
+        # get number of elements in model
+        n_elements = ctypes.c_int(self.get_n_elements())
+
+        # initialize output variables
+        element_subregions = (ctypes.c_int*n_elements.value)()
+
+        self.dll.IW_Model_GetElemSubregions(ctypes.byref(n_elements),
+                                   element_subregions,
+                                   ctypes.byref(self.status))
+
+        return np.array(element_subregions)
 
     def get_n_stream_nodes(self):
         ''' returns the number of stream nodes in an IWFM model
@@ -521,6 +661,27 @@ class IWFM_Model:
             self.n_tile_drains = n_tile_drains
             
         return self.n_tile_drains.value
+
+    def get_n_layers(self):
+        ''' returns the number of layers in an IWFM model
+        '''
+        # check to see if IWFM procedure is available in user version of IWFM DLL
+        if not hasattr(self.dll, "IW_Model_GetNLayers"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetNLayers'))
+
+        # reset instance variable status to -1
+        self.status = ctypes.c_int(-1)
+            
+        # initialize n_layers variable
+        n_layers = ctypes.c_int(0)
+            
+        self.dll.IW_Model_GetNLayers(ctypes.byref(n_layers),
+                                     ctypes.byref(self.status))
+        
+        if not hasattr(self, "n_layers"):
+            self.n_layers = n_layers
+            
+        return self.n_layers.value
 
     def get_n_hydrographs(self, feature_type):
         ''' returns the number of hydrographs for a given IWFM feature type
@@ -946,167 +1107,6 @@ class IWFM_Model:
             self._get_zone_extent_ids()
         
         return self.zone_extent_ids[zone_type.lower()]
-
-    def get_element_ids(self):
-        ''' returns an array of element ids in an IWFM model
-        '''
-        # check to see if IWFM procedure is available in user version of IWFM DLL
-        if not hasattr(self.dll, "IW_Model_GetElementIDs"):
-            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetElementIDs'))
-            
-        # reset instance variable status to -1
-        self.status = ctypes.c_int(-1)
-
-        # get number of elements
-        num_elements = ctypes.c_int(self.get_n_elements())
-
-        # initialize output variables
-        element_ids = (ctypes.c_int*num_elements.value)()
-
-        self.dll.IW_Model_GetElementIDs(ctypes.byref(num_elements),
-                                        element_ids,
-                                        ctypes.byref(self.status))
-
-        return np.array(element_ids)
-
-    def get_element_config(self, element_id):
-        ''' returns an array of node ids for an IWFM element.
-        The node ids are provided in a counter-clockwise direction
-
-        Parameters
-        ----------
-        element_id : int
-            single element ID for IWFM model. must be one of the values returned by
-            get_element_ids method
-
-        Returns
-        -------
-        np.array
-            array of node IDs for element
-
-        Notes
-        -----
-        In IWFM, elements can be composed of either 3 or 4 nodes. If 
-        the element has 3 nodes, the fourth is returned as a 0.
-        '''
-        # check to see if IWFM procedure is available in user version of IWFM DLL
-        if not hasattr(self.dll, "IW_Model_GetElementConfigData"):
-            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetElementConfigData'))
-        
-        # check that element_id is an integer
-        if not isinstance(element_id, (int, np.int, np.int32, np.dtype('<i4'))):
-            raise TypeError('element_id must be an integer')
-
-        # check that element_id is a valid element_id
-        element_ids = self.get_element_ids()
-        if not np.any(element_ids == element_id):
-            raise ValueError('element_id is not a valid element ID')
-
-        # reset instance variable status to -1
-        self.status = ctypes.c_int(-1)
-
-        # set input variables
-        element_id = ctypes.c_int(element_id)
-        max_nodes_per_element = ctypes.c_int(4)
-
-        # initialize output variables
-        nodes_in_element = (ctypes.c_int*max_nodes_per_element.value)()
-
-        self.dll.IW_Model_GetElementConfigData(ctypes.byref(element_id),
-                                               ctypes.byref(max_nodes_per_element),
-                                               nodes_in_element,
-                                               ctypes.byref(self.status))
-
-        return np.array(nodes_in_element)
-
-    def get_subregion_ids(self):
-        ''' returns an array of IDs for subregions identifiedin the an IWFM model 
-        
-        Returns
-        -------
-        np.array
-            integer array of length returned by method 'get_n_subregions'
-        '''
-        
-        # check to see if IWFM procedure is available in user version of IWFM DLL
-        if not hasattr(self.dll, "IW_Model_GetSubregionIDs"):
-            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetSubregionIDs'))
-
-        # reset instance variable status to -1
-        self.status = ctypes.c_int(-1)
-
-        # get number of model subregions
-        n_subregions = ctypes.c_int(self.get_n_subregions())
-
-        # initialize output variables
-        subregion_ids = (ctypes.c_int*n_subregions.value)()
-                
-        self.dll.IW_Model_GetSubregionIDs(ctypes.byref(n_subregions),
-                                                       subregion_ids,
-                                                       self.status)
-
-        return np.array(subregion_ids)
-
-    def get_subregion_name(self, subregion_id):
-        ''' returns the name corresponding to the subregion_id in an IWFM model '''
-
-        # check to see if IWFM procedure is available in user version of IWFM DLL
-        if not hasattr(self.dll, "IW_Model_GetSubregionName"):
-            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetSubregionName'))
-
-        # check that subregion_id is an integer
-        if not isinstance(subregion_id, (int, np.int, np.int32, np.dtype('<i4'))):
-            raise TypeError('subregion_id must be an integer')
-
-        # check that subregion_id is valid
-        subregion_ids = self.get_subregion_ids()
-        if subregion_id not in subregion_ids:
-            raise ValueError('subregion_id provided is not a valid subregion id. value provided {}. Must be one of: {}'.format(subregion_id, ' '.join(subregion_ids)))
-
-        # reset instance variable status to -1
-        self.status = ctypes.c_int(-1)
-
-        # convert subregion_id to ctypes
-        subregion_id = ctypes.c_int(subregion_id)
-
-        # initialize name length as 50 characters
-        length_name = ctypes.c_int(50)
-
-        # initialize output variables
-        subregion_name = ctypes.create_string_buffer(length_name.value)
-        
-        self.dll.IW_Model_GetSubregionName(ctypes.byref(subregion_id),
-                                           ctypes.byref(length_name),
-                                           subregion_name,
-                                           ctypes.byref(self.status))
-
-        return subregion_name.value.decode('utf-8')
-
-    def get_subregions_by_element(self):
-        ''' returns an array identifying the IWFM Model elements contained within each subregion.
-
-        Returns
-        -------
-        np.array
-            integer array of length returned by method 'get_n_elements'
-        '''
-        if not hasattr(self.dll, "IW_Model_GetElemSubregions"):
-            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetElemSubregions'))
-
-        # reset instance variable status to -1
-        self.status = ctypes.c_int(-1)
-
-        # get number of elements in model
-        n_elements = ctypes.c_int(self.get_n_elements())
-
-        # initialize output variables
-        element_subregions = (ctypes.c_int*n_elements.value)()
-
-        self.dll.IW_Model_GetElemSubregions(ctypes.byref(n_elements),
-                                   element_subregions,
-                                   ctypes.byref(self.status))
-
-        return np.array(element_subregions)
     
     def get_stream_node_ids(self):
         ''' returns an array of stream node ids from the IWFM model application
