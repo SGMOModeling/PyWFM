@@ -1441,6 +1441,12 @@ class IWFM_Model:
 
         return IWFM_Model._string_to_list_by_array(raw_names_string, delimiter_position_array, num_names)
 
+    def get_n_hydrograph_types(self):
+        pass
+
+    def get_hydrograph_type_list(self):
+        pass
+
     def get_n_hydrographs(self, feature_type):
         ''' returns the number of hydrographs for a given IWFM feature type
         
