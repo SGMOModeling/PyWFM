@@ -1466,7 +1466,44 @@ class IWFM_Model:
         return n_hydrograph_types.value
 
     def get_hydrograph_type_list(self):
-        pass
+        ''' returns a list of different hydrograph types being printed
+        by the IWFM model 
+        
+        Returns
+        -------
+        list of strings
+            list of different hydrograph types printed by the IWFM model
+        '''
+        # check to see if IWFM procedure is available in user version of IWFM DLL
+        if not hasattr(self.dll, "IW_Model_GetHydrographTypeList"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetHydrographTypeList'))
+
+        # get number of hydrograph types
+        n_hydrograph_types = ctypes.c_int(self.get_n_hydrograph_types())
+
+        # set length of hydrograph type list string
+        length_hydrograph_type_list = ctypes.c_int(3000)
+
+        # initialize output variables
+        raw_hydrograph_type_string = ctypes.create_string_buffer(length_hydrograph_type_list.value)
+        delimiter_position_array = (ctypes.c_int*n_hydrograph_types.value)()
+        hydrograph_location_type_list = (ctypes.c_int*n_hydrograph_types.value)()
+
+        # set instance variable status to -1
+        self.status = ctypes.c_int(-1)
+
+        self.dll.IW_Model_GetHydrographTypeList(ctypes.byref(n_hydrograph_types),
+                                                delimiter_position_array,
+                                                ctypes.byref(length_hydrograph_type_list),
+                                                raw_hydrograph_type_string,
+                                                hydrograph_location_type_list,
+                                                ctypes.byref(self.status))
+
+        hydrograph_type_list = IWFM_Model._string_to_list_by_array(raw_hydrograph_type_string, delimiter_position_array, n_hydrograph_types)
+
+        return hydrograph_type_list, hydrograph_location_type_list
+
+
 
     def get_n_hydrographs(self, feature_type):
         ''' returns the number of hydrographs for a given IWFM feature type
