@@ -578,7 +578,7 @@ class IWFM_Model:
             
         return self.n_stream_nodes.value
 
-        def get_stream_node_ids(self):
+    def get_stream_node_ids(self):
         ''' returns an array of stream node ids from the IWFM model application
         
         Returns
@@ -1442,7 +1442,28 @@ class IWFM_Model:
         return IWFM_Model._string_to_list_by_array(raw_names_string, delimiter_position_array, num_names)
 
     def get_n_hydrograph_types(self):
-        pass
+        ''' returns the number of different hydrograph types being
+        printed by the IWFM model
+        
+        Returns
+        -------
+        int
+            number of hydrograph types produced by the model
+        '''
+        # check to see if IWFM procedure is available in user version of IWFM DLL
+        if not hasattr(self.dll, "IW_Model_GetNHydrographTypes"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetNHydrographTypes'))
+
+        # initialize output variables
+        n_hydrograph_types = ctypes.c_int(0)
+
+        # set instance variable status to -1
+        self.status = ctypes.c_int(-1)
+
+        self.dll.IW_Model_GetNHydrographTypes(ctypes.byref(n_hydrograph_types),
+                                              ctypes.byref(self.status))
+
+        return n_hydrograph_types.value
 
     def get_hydrograph_type_list(self):
         pass
