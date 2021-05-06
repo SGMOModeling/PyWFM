@@ -114,6 +114,43 @@ class IWFM_Model:
         
         self.dll.IW_Model_Kill(ctypes.byref(self.status))
 
+    def get_current_date_and_time(self):
+        ''' returns the current simulation date and time 
+        Returns
+        -------
+        str
+            current date and time in IWFM format MM/DD/YYYY_hh:mm
+
+        Notes
+        -----
+        1. the intent of this method is to retrieve information about the
+        current time step when using the IWFM DLL to run a simulation. 
+        i.e. IWFM_Model object is instantiated with is_for_inquiry=0
+        
+        2. if this method is called when the IWFM_Model object is 
+        instantiated with is_for_inquiry=1, it only returns the 
+        simulation begin date and time.
+        '''
+        # check to see if IWFM procedure is available in user version of IWFM DLL
+        if not hasattr(self.dll, "IW_Model_GetCurrentDateAndTime"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. ' 
+                                 'Check for an updated version'.format('IW_Model_GetCurrentDateAndTime'))
+        
+        # set length of IWFM Date and Time string
+        length_date_string = ctypes.c_int(16)
+
+        # initialize output variables
+        current_date_string = ctypes.create_string_buffer(length_date_string.value)
+
+        # set instance variable status to -1
+        self.status = ctypes.c_int(-1)
+
+        self.dll.IW_Model_GetCurrentDateAndTime(ctypes.byref(length_date_string),
+                                                current_date_string,
+                                                ctypes.byref(self.status))
+
+        return current_date_string.value.decode('utf-8')
+
     def get_n_time_steps(self):
         ''' returns the number of timesteps in an IWFM simulation 
         '''
