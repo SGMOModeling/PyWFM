@@ -1169,6 +1169,12 @@ class IWFM_Model:
             
         return self.n_tile_drains.value
 
+    def get_tile_drain_ids(self):
+        pass
+
+    def get_tile_drain_nodes(self):
+        pass
+
     def get_n_layers(self):
         ''' returns the number of layers in an IWFM model
         '''
