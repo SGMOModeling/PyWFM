@@ -1502,6 +1502,37 @@ class IWFM_Model:
 
         return n_hydrographs.value
 
+    def get_hydrograph_ids(self, feature_type):
+        ''' returns the ids of the hydrographs for a provided feature_type
+
+        Parameters
+        ----------
+        feature_type : str
+            valid feature type to obtain a location_type_id for feature
+        '''
+        # check to see if IWFM procedure is available in user version of IWFM DLL
+        if not hasattr(self.dll, "IW_Model_GetHydrographIDs"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetHydrographIDs'))
+
+        # reset instance variable status to -1
+        self.status = ctypes.c_int(-1)
+
+        # get location type id. validation of feature_type internal to this function
+        location_type_id = self.get_location_type_id(feature_type)
+
+        # get number of hydrographs
+        num_hydrographs = ctypes.c_int(self.get_n_hydrographs(feature_type))
+
+        # initialize output variables
+        hydrograph_ids = (ctypes.c_int*num_hydrographs.value)()
+
+        self.dll.IW_Model_GetHydrographIDs(ctypes.byref(location_type_id),
+                                           ctypes.byref(num_hydrographs),
+                                           hydrograph_ids,
+                                           ctypes.byref(self.status))
+        
+        return np.array(hydrograph_ids)
+
     def is_date_greater(self, first_date, comparison_date):
         ''' returns True if first_date is greater than comparison_date
 
@@ -1910,37 +1941,6 @@ class IWFM_Model:
                                                    ctypes.byref(self.status))
 
         return np.array(x), np.array(y)
-
-    def get_hydrograph_ids(self, feature_type):
-        ''' returns the ids of the hydrographs for a provided feature_type
-
-        Parameters
-        ----------
-        feature_type : str
-            valid feature type to obtain a location_type_id for feature
-        '''
-        # check to see if IWFM procedure is available in user version of IWFM DLL
-        if not hasattr(self.dll, "IW_Model_GetHydrographIDs"):
-            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetHydrographIDs'))
-
-        # reset instance variable status to -1
-        self.status = ctypes.c_int(-1)
-
-        # get location type id. validation of feature_type internal to this function
-        location_type_id = self.get_location_type_id(feature_type)
-
-        # get number of hydrographs
-        num_hydrographs = ctypes.c_int(self.get_n_hydrographs(feature_type))
-
-        # initialize output variables
-        hydrograph_ids = (ctypes.c_int*num_hydrographs.value)()
-
-        self.dll.IW_Model_GetHydrographIDs(ctypes.byref(location_type_id),
-                                           ctypes.byref(num_hydrographs),
-                                           hydrograph_ids,
-                                           ctypes.byref(self.status))
-        
-        return np.array(hydrograph_ids)
 
     def get_n_data_list(self, feature_type):
         ''' returns the number of data types available for a given feature_type
