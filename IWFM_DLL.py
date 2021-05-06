@@ -1215,6 +1215,118 @@ class IWFM_Model:
         
         return np.array(gselev)
 
+    def get_aquifer_top_elevation(self):
+        pass
+
+    def get_aquifer_bottom_elevation(self):
+        pass
+
+    def get_stratigraphy_atXYcoordinate(self, x, y, fact, output_options=1):
+        ''' returns the ground surface elevation, elevations of the tops of each layer,
+        and the elevations of the bottoms of each layer at a given X,Y coordinate and 
+        conversion factor.
+
+        Parameters
+        ----------
+        x : int, float
+            x-coordinate for spatial location
+
+        y : int, float
+            y-coordinate for spatial location
+
+        fact : int, float
+            conversion factor for x,y coordinates to model length units
+            
+            e.g. if model units in feet and x,y coordinates are provided in 
+            meters, then FACT=3.2808
+
+        output_options : int, string, default=1
+            selects how output is returned by the function
+            Options
+            -------
+            None
+            1 or 'combined'
+            2 or 'gse'
+            3 or 'tops'
+            4 or 'bottoms'
+
+        Returns
+        -------
+        if output_options == 1 or 'combined',
+        np.array
+            array contains the ground surface elevation and the bottoms of all layers
+        
+        if output_options == 2 or 'gse',
+        float
+            ground surface elevation at x,y coordinates
+        
+        if output_options == 3 or 'tops':
+        np.array
+            array containing the top elevations of each model layer
+
+        if output_options == 4 or 'bottoms':
+        np.array
+            array containing the bottom elevations of each model layer
+        
+        if output_options is None or some other integer or string not defined above, 
+        tuple : length 3
+            ground surface elevation at x,y coordinates
+            numpy array of top elevation of each layer
+            numpy array of bottom elevation of each layer       
+        '''
+        # check to see if IWFM procedure is available in user version of IWFM DLL
+        if not hasattr(self.dll, "IW_Model_GetStratigraphy_AtXYCoordinate"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetStratigraphy_AtXYCoordinate'))
+
+        if not isinstance(x, (int, float)):
+            raise TypeError('X-coordinate must be an int or float')
+
+        if not isinstance(y, (int, float)):
+            raise TypeError('Y-coordinate must be an int or float')
+
+        if not isinstance(fact, (int, float)):
+            raise TypeError('conversion factor must be an int or float')
+
+        if not isinstance(output_options, (int, str)):
+            raise TypeError('output_options must be an integer or string')
+        
+        # reset instance variable status to -1 
+        self.status = ctypes.c_int(-1)
+            
+        # convert input variables to ctype equivalent
+        x = ctypes.c_double(x * fact)
+        y = ctypes.c_double(y * fact)
+            
+        # initialize output variables
+        gselev = ctypes.c_double(0.0)
+        top_elevs = (ctypes.c_double*self.get_n_layers())()
+        bottom_elevs = (ctypes.c_double*self.get_n_layers())()
+        
+    
+        self.dll.IW_Model_GetStratigraphy_AtXYCoordinate(ctypes.byref(self.n_layers), 
+                                                         ctypes.byref(x), 
+                                                         ctypes.byref(y), 
+                                                         ctypes.byref(gselev), 
+                                                         top_elevs, 
+                                                         bottom_elevs, 
+                                                         ctypes.byref(self.status))
+            
+        # user output options
+        if output_options is None:
+            output = (gselev.value, np.array(top_elevs), np.array(bottom_elevs))
+        elif output_options == 1 or output_options == 'combined':
+            output = np.concatenate((gselev.value, np.array(bottom_elevs)), axis=None)
+        elif output_options == 2 or output_options == 'gse':
+            output = gselev.value
+        elif output_options == 3 or output_options == 'tops':
+            output = np.array(top_elevs)
+        elif output_options == 4 or output_options == 'bottoms':
+            output = np.array(bottom_elevs)
+        else:
+            output = (gselev.value, np.array(top_elevs), np.array(bottom_elevs))
+        
+        return output
+
     def get_n_hydrographs(self, feature_type):
         ''' returns the number of hydrographs for a given IWFM feature type
         
@@ -1639,112 +1751,6 @@ class IWFM_Model:
             self._get_zone_extent_ids()
         
         return self.zone_extent_ids[zone_type.lower()]
-
-    def get_stratigraphy_atXYcoordinate(self, x, y, fact, output_options=1):
-        ''' returns the ground surface elevation, elevations of the tops of each layer,
-        and the elevations of the bottoms of each layer at a given X,Y coordinate and 
-        conversion factor.
-
-        Parameters
-        ----------
-        x : int, float
-            x-coordinate for spatial location
-
-        y : int, float
-            y-coordinate for spatial location
-
-        fact : int, float
-            conversion factor for x,y coordinates to model length units
-            
-            e.g. if model units in feet and x,y coordinates are provided in 
-            meters, then FACT=3.2808
-
-        output_options : int, string, default=1
-            selects how output is returned by the function
-            Options
-            -------
-            None
-            1 or 'combined'
-            2 or 'gse'
-            3 or 'tops'
-            4 or 'bottoms'
-
-        Returns
-        -------
-        if output_options == 1 or 'combined',
-        np.array
-            array contains the ground surface elevation and the bottoms of all layers
-        
-        if output_options == 2 or 'gse',
-        float
-            ground surface elevation at x,y coordinates
-        
-        if output_options == 3 or 'tops':
-        np.array
-            array containing the top elevations of each model layer
-
-        if output_options == 4 or 'bottoms':
-        np.array
-            array containing the bottom elevations of each model layer
-        
-        if output_options is None or some other integer or string not defined above, 
-        tuple : length 3
-            ground surface elevation at x,y coordinates
-            numpy array of top elevation of each layer
-            numpy array of bottom elevation of each layer       
-        '''
-        # check to see if IWFM procedure is available in user version of IWFM DLL
-        if not hasattr(self.dll, "IW_Model_GetStratigraphy_AtXYCoordinate"):
-            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetStratigraphy_AtXYCoordinate'))
-
-        if not isinstance(x, (int, float)):
-            raise TypeError('X-coordinate must be an int or float')
-
-        if not isinstance(y, (int, float)):
-            raise TypeError('Y-coordinate must be an int or float')
-
-        if not isinstance(fact, (int, float)):
-            raise TypeError('conversion factor must be an int or float')
-
-        if not isinstance(output_options, (int, str)):
-            raise TypeError('output_options must be an integer or string')
-        
-        # reset instance variable status to -1 
-        self.status = ctypes.c_int(-1)
-            
-        # convert input variables to ctype equivalent
-        x = ctypes.c_double(x * fact)
-        y = ctypes.c_double(y * fact)
-            
-        # initialize output variables
-        gselev = ctypes.c_double(0.0)
-        top_elevs = (ctypes.c_double*self.get_n_layers())()
-        bottom_elevs = (ctypes.c_double*self.get_n_layers())()
-        
-    
-        self.dll.IW_Model_GetStratigraphy_AtXYCoordinate(ctypes.byref(self.n_layers), 
-                                                         ctypes.byref(x), 
-                                                         ctypes.byref(y), 
-                                                         ctypes.byref(gselev), 
-                                                         top_elevs, 
-                                                         bottom_elevs, 
-                                                         ctypes.byref(self.status))
-            
-        # user output options
-        if output_options is None:
-            output = (gselev.value, np.array(top_elevs), np.array(bottom_elevs))
-        elif output_options == 1 or output_options == 'combined':
-            output = np.concatenate((gselev.value, np.array(bottom_elevs)), axis=None)
-        elif output_options == 2 or output_options == 'gse':
-            output = gselev.value
-        elif output_options == 3 or output_options == 'tops':
-            output = np.array(top_elevs)
-        elif output_options == 4 or output_options == 'bottoms':
-            output = np.array(bottom_elevs)
-        else:
-            output = (gselev.value, np.array(top_elevs), np.array(bottom_elevs))
-        
-        return output
 
     def get_aquifer_parameters(self):
         '''  '''
