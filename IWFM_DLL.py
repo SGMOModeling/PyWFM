@@ -1139,6 +1139,15 @@ class IWFM_Model:
             
         return self.n_lakes.value
 
+    def get_lake_ids(self):
+        pass
+
+    def get_n_elements_in_lake(self, lake_id):
+        pass
+
+    def get_elements_in_lake(self, lake_id):
+        pass
+
     def get_n_tile_drains(self):
         ''' returns the number of tile drain nodes in an IWFM model
         '''
