@@ -1196,6 +1196,25 @@ class IWFM_Model:
             
         return self.n_layers.value
 
+    def get_ground_surface_elevation(self):
+        ''' returns the ground surface elevation for each node specified 
+        in the IWFM model
+        '''
+        # reset instance variable status to -1
+        self.status = ctypes.c_int(-1)
+
+        # get number of model nodes
+        num_nodes = ctypes.c_int(self.get_n_nodes())
+
+        # initialize output variables
+        gselev = (ctypes.c_double*num_nodes.value)()
+        
+        self.dll.IW_Model_GetGSElev(ctypes.byref(num_nodes),
+                                    gselev,
+                                    ctypes.byref(self.status))
+        
+        return np.array(gselev)
+
     def get_n_hydrographs(self, feature_type):
         ''' returns the number of hydrographs for a given IWFM feature type
         
@@ -1620,25 +1639,6 @@ class IWFM_Model:
             self._get_zone_extent_ids()
         
         return self.zone_extent_ids[zone_type.lower()]
-
-    def get_ground_surface_elevation(self):
-        ''' returns the ground surface elevation for each node specified 
-        in the IWFM model
-        '''
-        # reset instance variable status to -1
-        self.status = ctypes.c_int(-1)
-
-        # get number of model nodes
-        num_nodes = ctypes.c_int(self.get_n_nodes())
-
-        # initialize output variables
-        gselev = (ctypes.c_double*num_nodes.value)()
-        
-        self.dll.IW_Model_GetGSElev(ctypes.byref(num_nodes),
-                                    gselev,
-                                    ctypes.byref(self.status))
-        
-        return np.array(gselev)
 
     def get_stratigraphy_atXYcoordinate(self, x, y, fact, output_options=1):
         ''' returns the ground surface elevation, elevations of the tops of each layer,
