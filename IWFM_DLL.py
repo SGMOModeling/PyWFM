@@ -92,7 +92,7 @@ class IWFM_Model:
         
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_DeleteInquiryDataFile"):
-            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_DeleteInquireDataFile'))
+            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_DeleteInquiryDataFile'))
 
         # reset instance variable status to -1
         self.status = ctypes.c_int(-1)
