@@ -308,6 +308,30 @@ class IWFM_Model:
 
         return self.n_nodes.value
 
+    def get_node_coordinates(self):
+        ''' returns the x,y coordinates of the nodes in an IWFM model
+        '''
+        # check to see if IWFM procedure is available in user version of IWFM DLL
+        if not hasattr(self.dll, "IW_Model_GetNodeXY"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetNodeXY'))
+
+        # reset instance variable status to -1
+        self.status = ctypes.c_int(-1)
+
+        # get number of nodes
+        num_nodes = ctypes.c_int(self.get_n_nodes())
+
+        # initialize output variables
+        x_coordinates = (ctypes.c_double*num_nodes.value)()
+        y_coordinates = (ctypes.c_double*num_nodes.value)()
+
+        self.dll.IW_Model_GetNodeXY(ctypes.byref(num_nodes),
+                                    x_coordinates,
+                                    y_coordinates,
+                                    ctypes.byref(self.status))
+
+        return np.array(x_coordinates), np.array(y_coordinates)
+
     def get_n_elements(self):
         ''' returns the number of elements in an IWFM model
         '''
@@ -922,30 +946,6 @@ class IWFM_Model:
                                      ctypes.byref(self.status))
 
         return np.array(node_ids)
-
-    def get_node_coordinates(self):
-        ''' returns the x,y coordinates of the nodes in an IWFM model
-        '''
-        # check to see if IWFM procedure is available in user version of IWFM DLL
-        if not hasattr(self.dll, "IW_Model_GetNodeXY"):
-            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetNodeXY'))
-
-        # reset instance variable status to -1
-        self.status = ctypes.c_int(-1)
-
-        # get number of nodes
-        num_nodes = ctypes.c_int(self.get_n_nodes())
-
-        # initialize output variables
-        x_coordinates = (ctypes.c_double*num_nodes.value)()
-        y_coordinates = (ctypes.c_double*num_nodes.value)()
-
-        self.dll.IW_Model_GetNodeXY(ctypes.byref(num_nodes),
-                                    x_coordinates,
-                                    y_coordinates,
-                                    ctypes.byref(self.status))
-
-        return np.array(x_coordinates), np.array(y_coordinates)
 
     def get_element_ids(self):
         ''' returns an array of element ids in an IWFM model
