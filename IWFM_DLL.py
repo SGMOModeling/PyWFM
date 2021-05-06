@@ -949,9 +949,48 @@ class IWFM_Model:
         # is_for_inquiry=0
         pass
 
-    def get_stream_diversion_export_nodes(self, diversion_ids):
-        # is_for_inquiry=0
-        pass
+    def get_stream_diversion_locations(self, diversion_locations):
+        ''' returns the stream node indices corresponding to diversion locations
+
+        Parameters
+        ----------
+        diversion_locations : list, tuple, np.ndarray
+            integer array of diversion indices
+        
+        Returns
+        -------
+        np.ndarray
+            integer array of stream node indices
+        '''
+        if not hasattr(self.dll, "IW_Model_GetStrmDiversionsExportNodes"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format("IW_Model_GetStrmDiversionsExportNodes"))
+
+        # set input variables
+        if isinstance(diversion_locations, (np.ndarray, tuple, list)):
+            n_diversions = ctypes.c_int(len(diversion_locations))
+            diversion_list = (ctypes.c_int*n_diversions.value)(*diversion_locations)
+        
+        elif isinstance(diversion_locations, str):
+            if diversion_locations.lower() == 'all':
+                n_diversions = self.get_n_diversions()
+                diversion_list = (ctypes.c_int*n_diversions.value)(*np.arange(1,n_diversions + 1))
+            else:
+                raise ValueError('diversion_locations must be a list, tuple, or np.ndarray or use "all"')
+        else:
+            raise TypeError('diversion_locations provided must be a list, tuple, or np.ndarray or use "all"')
+
+        # reset instance variable status to -1
+        self.status = ctypes.c_int(-1)
+
+        # initialize output variables
+        diversion_stream_nodes = (ctypes.c_int*n_diversions.value)()
+
+        self.dll.IW_Model_GetStrmDiversionsExportNodes(ctypes.byref(n_diversions),
+                                                       diversion_list,
+                                                       diversion_stream_nodes,
+                                                       ctypes.byref(self.status))
+
+        return np.array(diversion_stream_nodes)
 
     def get_n_stream_reaches(self):
         ''' returns the number of stream reaches in an IWFM model
@@ -1031,27 +1070,6 @@ class IWFM_Model:
     def get_reach_outflow_destination_types(self):
         pass
 
-    def get_n_lakes(self):
-        ''' returns the number of lakes in an IWFM model
-        '''
-        # check to see if IWFM procedure is available in user version of IWFM DLL
-        if not hasattr(self.dll, "IW_Model_GetNLakes"):
-            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetNLakes'))
-
-        # reset instance variable status to -1
-        self.status = ctypes.c_int(-1)
-            
-        # initialize n_stream_reaches variable
-        n_lakes = ctypes.c_int(0)
-            
-        self.dll.IW_Model_GetNLakes(ctypes.byref(n_lakes),
-                                    ctypes.byref(self.status))
-        
-        if not hasattr(self, "n_lakes"):
-            self.n_lakes = n_lakes
-            
-        return self.n_lakes.value
-
     def get_n_diversions(self):
         ''' returns the number of surface water diversions in an IWFM model
         '''
@@ -1072,6 +1090,54 @@ class IWFM_Model:
             self.n_diversions = n_diversions
             
         return self.n_diversions.value
+
+    def get_diversion_ids(self):
+        ''' returns the surface water diversion identification numbers
+        specified in an IWFM model
+        
+        Returns
+        -------
+        np.ndarray
+            integer array of diversion ids
+        '''
+        if not hasattr(self.dll, "IW_Model_GetDiversionIDs"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format("IW_Model_GetDiversionIDs"))
+
+        # set input variables
+        n_diversions = ctypes.c_int(self.get_n_diversions)
+        
+        # reset instance variable status to -1
+        self.status = ctypes.c_int(-1)
+
+        # initialize output variables
+        diversion_ids = (ctypes.c_int*n_diversion.value)()
+
+        self.dll.IW_Model_GetDiversionIDs(ctypes.byref(n_diversions),
+                                          diversion_ids,
+                                          ctypes.byref(self.status))
+
+        return np.array(diversion_ids)
+
+    def get_n_lakes(self):
+        ''' returns the number of lakes in an IWFM model
+        '''
+        # check to see if IWFM procedure is available in user version of IWFM DLL
+        if not hasattr(self.dll, "IW_Model_GetNLakes"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetNLakes'))
+
+        # reset instance variable status to -1
+        self.status = ctypes.c_int(-1)
+            
+        # initialize n_stream_reaches variable
+        n_lakes = ctypes.c_int(0)
+            
+        self.dll.IW_Model_GetNLakes(ctypes.byref(n_lakes),
+                                    ctypes.byref(self.status))
+        
+        if not hasattr(self, "n_lakes"):
+            self.n_lakes = n_lakes
+            
+        return self.n_lakes.value
 
     def get_n_tile_drains(self):
         ''' returns the number of tile drain nodes in an IWFM model
@@ -1539,76 +1605,6 @@ class IWFM_Model:
             self._get_zone_extent_ids()
         
         return self.zone_extent_ids[zone_type.lower()]
-
-    def get_diversion_ids(self):
-        ''' returns the surface water diversion identification numbers
-        specified in an IWFM model
-        
-        Returns
-        -------
-        np.ndarray
-            integer array of diversion ids
-        '''
-        if not hasattr(self.dll, "IW_Model_GetDiversionIDs"):
-            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format("IW_Model_GetDiversionIDs"))
-
-        # set input variables
-        n_diversions = ctypes.c_int(self.get_n_diversions)
-        
-        # reset instance variable status to -1
-        self.status = ctypes.c_int(-1)
-
-        # initialize output variables
-        diversion_ids = (ctypes.c_int*n_diversion.value)()
-
-        self.dll.IW_Model_GetDiversionIDs(ctypes.byref(n_diversions),
-                                          diversion_ids,
-                                          ctypes.byref(self.status))
-
-        return np.array(diversion_ids)
-    
-    def get_stream_diversion_locations(self, diversion_locations):
-        ''' returns the stream node indices corresponding to diversion locations
-
-        Parameters
-        ----------
-        diversion_locations : list, tuple, np.ndarray
-            integer array of diversion indices
-        
-        Returns
-        -------
-        np.ndarray
-            integer array of stream node indices
-        '''
-        if not hasattr(self.dll, "IW_Model_GetStrmDiversionsExportNodes"):
-            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format("IW_Model_GetStrmDiversionsExportNodes"))
-
-        # set input variables
-        if isinstance(diversion_locations, (np.ndarray, tuple, list)):
-            n_diversions = ctypes.c_int(len(diversion_locations))
-            diversion_list = (ctypes.c_int*n_diversions.value)(*diversion_locations)
-        
-        elif isinstance(diversion_locations, str):
-            if diversion_locations.lower() == 'all':
-                n_diversions = self.get_n_diversions()
-                diversion_list = (ctypes.c_int*n_diversions.value)(*np.arange(1,n_diversions + 1))
-            else:
-                raise ValueError('diversion_locations must be a list, tuple, or np.ndarray or use "all"')
-        else:
-            raise TypeError('diversion_locations provided must be a list, tuple, or np.ndarray or use "all"')
-
-        # reset instance variable status to -1
-        self.status = ctypes.c_int(-1)
-
-        # initialize output variables
-        diversion_stream_nodes = (ctypes.c_int*n_diversions.value)()
-
-        self.dll.IW_Model_GetStrmDiversionsExportNodes(ctypes.byref(n_diversions),
-                                                       diversion_list,
-                                                       diversion_stream_nodes,
-                                                       ctypes.byref(self.status))
-
-        return np.array(diversion_stream_nodes)
 
     def get_ground_surface_elevation(self):
         ''' returns the ground surface elevation for each node specified 
