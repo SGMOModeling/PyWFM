@@ -1572,6 +1572,212 @@ class IWFM_Model:
 
         return np.array(x), np.array(y)
 
+    def get_hydrograph(self, hydrograph_type, hydrograph_id, layer_number, 
+                       begin_date, end_date, time_interval, length_conversion_factor, volume_conversion_factor):
+        pass
+
+    # this procedure needs to be rewritten for the latest DLL
+    def get_gwheadsall_foralayer(self, layer_number, begin_date=None, end_date=None, length_conversion_factor=1.0):
+        ''' returns the simulated groundwater heads for a single user-specified model layer for
+        every model node over a user-specified time interval.
+
+        Parameters
+        ----------
+        layer_number : int
+            layer number for a layer in the model
+        
+        begin_date : str
+            IWFM-style date for the beginning date of the simulated groundwater heads
+
+        end_date : str
+            IWFM-style date for the end date of the simulated groundwater heads
+
+        length_conversion_factor : float, int, default=1.0
+            simulated heads are multiplied by this value to convert simulation units to desired output units
+
+        Returns
+        -------
+        np.arrays
+            1-D array of dates
+            2-D array of heads for all nodes for each date
+
+        Notes
+        -----
+        the interval between the begin_date and the end_date is determined from the model time interval
+        using get_time_specs()
+
+        Examples
+        --------
+        >>> model = IWFM_Model(dll, preprocessor_file, simulation_file)
+
+        >>>dates, heads = model.get_gwheadsall_foralayer(1, '09/30/1980_24:00', '09/30/2000_24:00')
+        >>> dates
+            ['09/30/1980',
+             '10/31/1980',
+             '11/30/1980',
+             '12/31/1980',
+             .
+             .
+             .
+             '09/30/2000']
+
+        >>> heads
+            [[458.57, 460.32, 457.86, ..., 686.42],
+             [459.86, 462.38, 459.11, ..., 689.05],
+             .
+             .
+             .
+             [435.75, 439.23, 440.99, ..., 650.78]]
+
+        '''
+        # check to see if IWFM procedure is available in user version of IWFM DLL
+        if not hasattr(self.dll, "IW_Model_GetModelData_GWHeadsAll_ForALayer"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetModelData_GWHeadsAll_ForALayer'))
+        
+        # check that layer_number is an integer
+        if not isinstance(layer_number, int):
+            raise ValueError('layer_number must be an integer, value {} provided is of type {}'.format(layer_number, type(layer_number)))
+
+        # handle start and end dates
+        # get time specs
+        dates_list, output_interval = self.get_time_specs()
+        
+        if begin_date is None:
+            begin_date = dates_list[0]
+        else:
+            IWFM_Model._validate_iwfm_date(begin_date)
+
+            if begin_date not in dates_list:
+                raise ValueError('begin_date was not recognized as a model time step. use IWFM_Model.get_time_specs() method to check.')
+        
+        if end_date is None:
+            end_date = dates_list[-1]
+        else:
+            IWFM_Model._validate_iwfm_date(end_date)
+
+            if end_date not in dates_list:
+                raise ValueError('end_date was not found in the Budget file. use IWFM_Model.get_time_specs() method to check.')
+
+        if self.is_date_greater(begin_date, end_date):
+            raise ValueError('end_date must occur after begin_date')
+                
+        # check that length conversion factor is a number
+        if not isinstance(length_conversion_factor, (int, float)):
+            raise ValueError('length_conversion_factor must be a number. value {} provides is of type {}'.format(length_conversion_factor, type(length_conversion_factor)))
+        
+        # reset instance variable status to -1
+        self.status = ctypes.c_int(-1)
+
+        # convert specified layer number to ctypes
+        layer_number = ctypes.c_int(layer_number)
+
+        # get number of time intervals between dates
+        num_time_intervals = ctypes.c_int(self.get_n_intervals(begin_date, end_date, output_interval))
+
+        # convert dates to ctypes
+        begin_date = ctypes.create_string_buffer(begin_date.encode('utf-8'))
+        end_date = ctypes.create_string_buffer(end_date.encode('utf-8'))
+
+        # get length of begin_date and end_date strings
+        length_date_string = ctypes.c_int(ctypes.sizeof(begin_date))
+
+        # convert length_conversion_factor to ctypes
+        length_conversion_factor = ctypes.c_double(length_conversion_factor)
+
+        # get number of model nodes
+        num_nodes = ctypes.c_int(self.get_n_nodes())
+
+        # initialize output variables
+        output_dates = (ctypes.c_double*num_time_intervals.value)()
+        output_gwheads = ((ctypes.c_double*num_nodes.value)*num_time_intervals.value)()
+
+        # call DLL procedure
+        self.dll.IW_Model_GetModelData_GWHeadsAll_ForALayer(ctypes.byref(layer_number),
+                                                            begin_date, 
+                                                            end_date,
+                                                            ctypes.byref(length_date_string),
+                                                            ctypes.byref(length_conversion_factor),
+                                                            ctypes.byref(num_nodes), 
+                                                            ctypes.byref(num_time_intervals),
+                                                            output_dates,
+                                                            output_gwheads,
+                                                            ctypes.byref(self.status))
+
+        return np.array('1899-12-30', dtype='datetime64') + np.array(output_dates, dtype='timedelta64[D]'), np.array(output_gwheads)
+
+    def get_gwheads_all(self, end_of_timestep=True):
+        # is_for_inquiry=0
+        pass
+
+    def get_subsidence_all(self, length_conversion_factor):
+        # is_for_inquiry
+        pass
+
+    def get_subregion_ag_pumping_average_depth_to_water(self):
+        # is_for_inquiry
+        pass
+
+    def get_zone_ag_pumping_average_depth_to_water(self):
+        # is_for_inquiry
+        pass
+
+    def get_n_locations(self, location_type_id):
+        pass
+
+    def get_location_ids(self, location_type_id):
+        pass
+
+    def set_preprocessor_path(self, preprocessor_path):
+        pass
+
+    def set_simulation_path(self, simulation_path):
+        pass
+
+    def set_supply_adjustment_max_iterations(self, max_iterations):
+        pass
+
+    def set_supply_adjustment_tolerance(self, tolerance):
+        pass
+
+    def simulate_for_one_timestep(self):
+        pass
+
+    def simulate_for_an_interval(self):
+        pass
+
+    def simulate_all(self):
+        pass
+
+    def advance_time(self):
+        pass
+
+    def read_timeseries_data(self):
+        pass
+
+    def read_timeseries_data_overwrite(self):
+        pass
+
+    def print_results(self):
+        pass
+
+    def advance_state(self):
+        pass
+
+    def is_stream_upstream_node(self, stream_node_1, stream_node_2):
+        pass
+
+    def is_end_of_simulations(self):
+        pass
+
+    def is_model_instantiated(self):
+        pass
+
+    def turn_supply_adjustment_on_off(self, diversion_adjustment_flag, pumping_adjustment_flag):
+        pass
+
+    def restore_pumping_to_read_values(self):
+        pass
+
     def is_date_greater(self, first_date, comparison_date):
         ''' returns True if first_date is greater than comparison_date
 
@@ -2343,134 +2549,6 @@ class IWFM_Model:
                                                   ctypes.byref(self.status))
 
         return np.array('1899-12-30', dtype='datetime64') + np.array(output_dates, dtype='timedelta64[D]'), np.array(output_data)
-
-    def get_gwheadsall_foralayer(self, layer_number, begin_date=None, end_date=None, length_conversion_factor=1.0):
-        ''' returns the simulated groundwater heads for a single user-specified model layer for
-        every model node over a user-specified time interval.
-
-        Parameters
-        ----------
-        layer_number : int
-            layer number for a layer in the model
-        
-        begin_date : str
-            IWFM-style date for the beginning date of the simulated groundwater heads
-
-        end_date : str
-            IWFM-style date for the end date of the simulated groundwater heads
-
-        length_conversion_factor : float, int, default=1.0
-            simulated heads are multiplied by this value to convert simulation units to desired output units
-
-        Returns
-        -------
-        np.arrays
-            1-D array of dates
-            2-D array of heads for all nodes for each date
-
-        Notes
-        -----
-        the interval between the begin_date and the end_date is determined from the model time interval
-        using get_time_specs()
-
-        Examples
-        --------
-        >>> model = IWFM_Model(dll, preprocessor_file, simulation_file)
-
-        >>>dates, heads = model.get_gwheadsall_foralayer(1, '09/30/1980_24:00', '09/30/2000_24:00')
-        >>> dates
-            ['09/30/1980',
-             '10/31/1980',
-             '11/30/1980',
-             '12/31/1980',
-             .
-             .
-             .
-             '09/30/2000']
-
-        >>> heads
-            [[458.57, 460.32, 457.86, ..., 686.42],
-             [459.86, 462.38, 459.11, ..., 689.05],
-             .
-             .
-             .
-             [435.75, 439.23, 440.99, ..., 650.78]]
-
-        '''
-        # check to see if IWFM procedure is available in user version of IWFM DLL
-        if not hasattr(self.dll, "IW_Model_GetModelData_GWHeadsAll_ForALayer"):
-            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetModelData_GWHeadsAll_ForALayer'))
-        
-        # check that layer_number is an integer
-        if not isinstance(layer_number, int):
-            raise ValueError('layer_number must be an integer, value {} provided is of type {}'.format(layer_number, type(layer_number)))
-
-        # handle start and end dates
-        # get time specs
-        dates_list, output_interval = self.get_time_specs()
-        
-        if begin_date is None:
-            begin_date = dates_list[0]
-        else:
-            IWFM_Model._validate_iwfm_date(begin_date)
-
-            if begin_date not in dates_list:
-                raise ValueError('begin_date was not recognized as a model time step. use IWFM_Model.get_time_specs() method to check.')
-        
-        if end_date is None:
-            end_date = dates_list[-1]
-        else:
-            IWFM_Model._validate_iwfm_date(end_date)
-
-            if end_date not in dates_list:
-                raise ValueError('end_date was not found in the Budget file. use IWFM_Model.get_time_specs() method to check.')
-
-        if self.is_date_greater(begin_date, end_date):
-            raise ValueError('end_date must occur after begin_date')
-                
-        # check that length conversion factor is a number
-        if not isinstance(length_conversion_factor, (int, float)):
-            raise ValueError('length_conversion_factor must be a number. value {} provides is of type {}'.format(length_conversion_factor, type(length_conversion_factor)))
-        
-        # reset instance variable status to -1
-        self.status = ctypes.c_int(-1)
-
-        # convert specified layer number to ctypes
-        layer_number = ctypes.c_int(layer_number)
-
-        # get number of time intervals between dates
-        num_time_intervals = ctypes.c_int(self.get_n_intervals(begin_date, end_date, output_interval))
-
-        # convert dates to ctypes
-        begin_date = ctypes.create_string_buffer(begin_date.encode('utf-8'))
-        end_date = ctypes.create_string_buffer(end_date.encode('utf-8'))
-
-        # get length of begin_date and end_date strings
-        length_date_string = ctypes.c_int(ctypes.sizeof(begin_date))
-
-        # convert length_conversion_factor to ctypes
-        length_conversion_factor = ctypes.c_double(length_conversion_factor)
-
-        # get number of model nodes
-        num_nodes = ctypes.c_int(self.get_n_nodes())
-
-        # initialize output variables
-        output_dates = (ctypes.c_double*num_time_intervals.value)()
-        output_gwheads = ((ctypes.c_double*num_nodes.value)*num_time_intervals.value)()
-
-        # call DLL procedure
-        self.dll.IW_Model_GetModelData_GWHeadsAll_ForALayer(ctypes.byref(layer_number),
-                                                            begin_date, 
-                                                            end_date,
-                                                            ctypes.byref(length_date_string),
-                                                            ctypes.byref(length_conversion_factor),
-                                                            ctypes.byref(num_nodes), 
-                                                            ctypes.byref(num_time_intervals),
-                                                            output_dates,
-                                                            output_gwheads,
-                                                            ctypes.byref(self.status))
-
-        return np.array('1899-12-30', dtype='datetime64') + np.array(output_dates, dtype='timedelta64[D]'), np.array(output_gwheads)
     
     def get_version(self):
         ''' returns the version of the IWFM DLL
