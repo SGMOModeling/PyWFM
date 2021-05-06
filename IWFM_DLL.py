@@ -578,6 +578,378 @@ class IWFM_Model:
             
         return self.n_stream_nodes.value
 
+        def get_stream_node_ids(self):
+        ''' returns an array of stream node ids from the IWFM model application
+        
+        Returns
+        -------
+        np.array
+            integer array of length returned by method 'get_n_stream_nodes' 
+        '''
+        if not hasattr(self.dll, "IW_Model_GetStrmNodeIDs"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetStrmNodeIDs'))
+
+        # reset instance variable status to -1
+        self.status = ctypes.c_int(-1)
+
+        # get number of stream nodes
+        n_stream_nodes = ctypes.c_int(self.get_n_stream_nodes())
+
+        # initialize output variables
+        stream_node_ids = (ctypes.c_int*n_stream_nodes.value)()
+
+        self.dll.IW_Model_GetStrmNodeIDs(ctypes.byref(n_stream_nodes),
+                                         stream_node_ids,
+                                         ctypes.byref(self.status))
+
+        return np.array(stream_node_ids)
+
+    def get_n_stream_nodes_upstream_of_stream_node(self, stream_node_id):
+        ''' returns the number of stream nodes upstream of the provided stream node id
+        
+        Parameters
+        ----------
+        stream_node_id : int
+            stream node id used to determine number of stream nodes upstream
+            
+        Returns
+        -------
+        int
+            number of stream nodes upstream of given stream node
+        '''
+        if not hasattr(self.dll, "IW_Model_GetStrmNUpstrmNodes"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetStrmNUpstreamNodes'))
+
+        # check that stream_node_id is an integer
+        if not isinstance(stream_node_id, (int, np.int, np.int32, np.dtype('<i4'))):
+            raise TypeError('stream_node_id must be an integer')
+
+        # check that stream_node_id is a valid stream_node_id
+        stream_node_ids = self.get_stream_node_ids()
+        if not np.any(stream_node_ids == stream_node_id):
+            raise ValueError('stream_node_id is not a valid Stream Node ID')
+
+        # set input variables
+        stream_node_id = ctypes.c_int(stream_node_id)
+        
+        # reset instance variable status to -1
+        self.status = ctypes.c_int(-1)
+
+        # initialize output variables
+        n_upstream_stream_nodes = ctypes.c_int(0)
+
+        self.dll.IW_Model_GetStrmNUpstreamNodes(ctypes.byref(stream_node_id),
+                                                ctypes.byref(n_upstream_stream_nodes),
+                                                ctypes.byref(self.status))
+
+        return n_upstream_stream_nodes.value
+
+    def get_stream_nodes_upstream_of_stream_node(self, stream_node_id):
+        ''' returns an array of the stream node ids upstream of the provided stream node id
+        
+        Parameters
+        ----------
+        stream_node_id : int
+            stream node id used to determine number of stream nodes upstream 
+            
+        Returns
+        -------
+        np.ndarray
+            integer array of stream node ids upstream of the provided stream node id
+        '''
+        if not hasattr(self.dll, "IW_Model_GetStrmUpstrmNodes"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetStrmUpstrmNodes'))
+
+        # check that stream_node_id is an integer
+        if not isinstance(stream_node_id, (int, np.int, np.int32, np.dtype('<i4'))):
+            raise TypeError('stream_node_id must be an integer')
+
+        # check that stream_node_id is a valid stream_node_id
+        stream_node_ids = self.get_stream_node_ids()
+        if not np.any(stream_node_ids == stream_node_id):
+            raise ValueError('stream_node_id is not a valid Stream Node ID')
+
+        # set input variables
+        stream_node_id = ctypes.c_int(stream_node_id)
+        n_upstream_stream_nodes = ctypes.c_int(self.get_n_stream_nodes_upstream_of_stream_node(stream_node_id))
+
+        # reset instance variable status to -1
+        self.status = ctypes.c_int(-1)
+
+        # initialize output variables
+        upstream_nodes = (ctypes.c_int*n_upstream_stream_nodes.value)()
+
+        self.dll.IW_Model_GetStrmUpstrmNodes(ctypes.byref(stream_node_id),
+                                             ctypes.byref(n_upstream_stream_nodes),
+                                             upstream_nodes,
+                                             ctypes.byref(self.status))
+
+        return np.array(upstream_nodes)
+
+    def get_stream_bottom_elevations(self):
+        ''' returns the stream channel bottom elevation at each stream node
+        
+        Returns
+        -------
+        np.ndarray
+            array of float with the stream channel elevation for each stream node
+        '''
+        if not hasattr(self.dll, "IW_Model_GetStrmBottomElevs"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetStrmBottomElevs'))
+
+        # set input variables
+        n_stream_nodes = ctypes.c_int(self.get_n_stream_nodes())
+
+        # reset_instance variable status to -1
+        self.status = ctypes.c_int(-1)
+
+        # initialize output variables
+        stream_bottom_elevations = (ctypes.c_double*n_stream_nodes.value)()
+
+        self.dll.IW_Model_GetStrmBottomElevs(ctypes.byref(n_stream_nodes),
+                                             stream_bottom_elevations,
+                                             ctypes.byref(self.status))
+        
+        return np.array(stream_bottom_elevations)
+
+
+    def get_n_rating_table_points(self, stream_node_id):
+        '''returns the number of data points in the stream flow rating table for a stream node
+
+        Parameters
+        ----------
+        stream_node_id : int
+            stream node id used to determine number of data points in the rating table
+
+        Returns
+        -------
+        int
+            number of data points in the stream flow rating table
+        '''
+        if not hasattr(self.dll, "IW_Model_GetNRatingTablePoints"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetNRatingTablePoints'))
+
+        # check that stream_node_id is an integer
+        if not isinstance(stream_node_id, (int, np.int, np.int32, np.dtype('<i4'))):
+            raise TypeError('stream_node_id must be an integer')
+
+        # check that stream_node_id is a valid stream_node_id
+        stream_node_ids = self.get_stream_node_ids()
+        if not np.any(stream_node_ids == stream_node_id):
+            raise ValueError('stream_node_id is not a valid Stream Node ID')
+
+        # set input variables
+        stream_node_id = ctypes.c_int(stream_node_id)
+
+        # reset_instance variable status to -1
+        self.status = ctypes.c_int(-1)
+
+        # initialize output variables
+        n_rating_table_points = ctypes.c_int(0)
+
+        self.dll.IW_Model_GetNRatingTablePoints(ctypes.byref(stream_node_id),
+                                                ctypes.byref(n_rating_table_points),
+                                                ctypes.byref(self.status))
+
+        return n_rating_table_points.value
+
+
+    def get_stream_rating_table(self, stream_node_id):
+        ''' returns the stream rating table for a specified stream node 
+        
+        Parameters
+        ----------
+        stream_node_id : int
+            stream node id used to return the rating table
+        
+        Returns
+        -------
+        tuple
+            length 2 tuple of np.ndarrays representing stage and flow, respectively
+        '''
+        if not hasattr(self.dll, "IW_Model_GetStrmRatingTable"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetStrmRatingTable'))
+
+        # check that stream_node_id is an integer
+        if not isinstance(stream_node_id, (int, np.int, np.int32, np.dtype('<i4'))):
+            raise TypeError('stream_node_id must be an integer')
+
+        # check that stream_node_id is a valid stream_node_id
+        stream_node_ids = self.get_stream_node_ids()
+        if not np.any(stream_node_ids == stream_node_id):
+            raise ValueError('stream_node_id is not a valid Stream Node ID')
+
+        # set input variables
+        stream_node_id = ctypes.c_int(stream_node_id)
+        n_rating_table_points =ctypes.c_int(self.get_n_rating_table_points(stream_node_id.value))
+
+        # reset instance variable status to -1
+        self.status = ctypes.c_int(-1)
+
+        # initialize output variables
+        stage = (ctypes.c_double*n_rating_table_points.value)()
+        flow = (ctypes.c_double*n_rating_table_points.value)()
+
+        self.dll.IW_Model_GetStrmRatingTable(ctypes.byref(stream_node_id), 
+                                             ctypes.byref(n_rating_table_points),
+                                             stage,
+                                             flow,
+                                             ctypes.byref(self.status))
+
+        return np.array(stage), np.array(flow)
+
+    def get_n_stream_inflows(self):
+        ''' returns the number of stream boundary inflows specified by the 
+        user as timeseries input data
+
+        Returns
+        -------
+        int
+            number of stream boundary inflows
+        '''
+        if not hasattr(self.dll, "IW_Model_GetStrmNInflows"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format("IW_Model_GetStrmNInflows"))
+        
+        # set instance variable status to -1
+        self.status = ctypes.c_int(-1)
+        
+        # initialize output variables
+        n_stream_inflows = ctypes.c_int(0)
+
+        self.dll.IW_Model_GetStrmNInflows(ctypes.byref(n_stream_inflows),
+                                          ctypes.byref(self.status))
+
+        return n_stream_inflows.value
+
+    def get_stream_inflow_nodes(self):
+        ''' returns the indices of the stream nodes that receive boundary 
+        inflows specified by the user as timeseries input data 
+        
+        Returns
+        -------
+        np.ndarray
+            integer array of stream inflow node indices
+        '''
+        if not hasattr(self.dll, "IW_Model_GetStrmInflowNodes"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format("IW_Model_GetStrmInflowNodes"))
+        
+        # get number of stream inflow nodes
+        n_stream_inflows = ctypes.c_int(self.get_n_stream_inflows())
+
+        # set instance variable status to -1
+        self.status = ctypes.c_int(-1)
+
+        # initialize output variables
+        stream_inflow_nodes = (ctypes.c_int*n_stream_inflows.value)()
+
+        self.dll.IW_Model_GetStrmInflowNodes(ctypes.byref(n_stream_inflows),
+                                             stream_inflow_nodes,
+                                             ctypes.byref(self.status))
+
+        return np.array(stream_inflow_nodes)
+
+    def get_stream_inflow_ids(self):
+        ''' returns the identification numbers for the stream boundary 
+        inflows specified by the user as timeseries input data 
+        
+        Returns
+        -------
+        np.ndarray
+            integer array of stream inflow node indices
+        '''
+        if not hasattr(self.dll, "IW_Model_GetStrmInflowIDs"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format("IW_Model_GetStrmInflowIDs"))
+        
+        # get number of stream inflow nodes
+        n_stream_inflows = ctypes.c_int(self.get_n_stream_inflows())
+
+        # set instance variable status to -1
+        self.status = ctypes.c_int(-1)
+
+        # initialize output variables
+        stream_inflow_ids = (ctypes.c_int*n_stream_inflows.value)()
+
+        self.dll.IW_Model_GetStrmInflowIDs(ctypes.byref(n_stream_inflows),
+                                             stream_inflow_ids,
+                                             ctypes.byref(self.status))
+
+        return np.array(stream_inflow_ids)
+
+    def get_stream_inflows_at_some_locations(self, stream_inflow_locations):
+        ''' returns user-specified stream boundary inflows at a specified
+        set of inflows listed by their indices
+        
+        Parameters
+        ----------
+        stream_inflow_locations : int
+
+        Returns
+        -------
+
+        Notes
+        -----
+        This method is designed to return stream inflows at the current
+        timestep during a simulation.
+        '''
+        if self.is_for_inquiry != 0:
+            raise RuntimeError("This function can only be used when the model object is instantiated with the is_for_inquiry flag set to 0")
+
+        if not hasattr(self.dll, "IW_Model_GetStrmInflows_AtSomeInflows"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format("IW_Model_GetStrmInflows_AtSomeInflows"))
+
+        # initialize output variables
+        
+        
+        #self.dll.IW_Model_GetStrmInflows_AtSomeInflows()
+
+    def get_stream_flow_at_location(self, stream_node_id, flow_conversion_factor):
+        # is_for_inquiry=0
+        pass
+
+    def get_stream_flows(self):
+        # is_for_inquiry=0
+        pass
+
+    def get_stream_stages(self):
+        # is_for_inquiry=0
+        pass
+
+    def get_stream_tributary_inflows(self, inflow_conversion_factor):
+        # is_for_inquiry=0
+        pass
+
+    def get_stream_rainfall_runoff(self, runoff_conversion_factor):
+        # is_for_inquiry=0
+        pass
+
+    def get_stream_return_flows(self, return_flow_conversion_factor):
+        # is_for_inquiry=0
+        pass
+
+    def get_stream_tile_drains(self, tile_drain_flow_conversion_factor):
+        # is_for_inquiry=0
+        pass
+
+    def get_stream_riparian_evapotranspiration(self, evapotranspiration_conversion_factor):
+        # is_for_inquiry=0
+        pass
+
+    def get_stream_gain_from_groundwater(self, stream_gain_conversion_factor):
+        # is_for_inquiry=0
+        pass
+
+    def get_stream_gain_from_lakes(self, lake_inflow_conversion_factor):
+        # is_for_inquiry=0
+        pass
+
+    def get_net_bypass_inflows(self, bypass_inflow_conversion_factor):
+        # is_for_inquiry=0
+        pass
+
+    def get_actual_stream_diversions_at_some_locations(self, diversion_id, diversion_conversion_factor):
+        # is_for_inquiry=0
+        pass
+
     def get_n_stream_reaches(self):
         ''' returns the number of stream reaches in an IWFM model
         '''
@@ -1107,378 +1479,6 @@ class IWFM_Model:
             self._get_zone_extent_ids()
         
         return self.zone_extent_ids[zone_type.lower()]
-    
-    def get_stream_node_ids(self):
-        ''' returns an array of stream node ids from the IWFM model application
-        
-        Returns
-        -------
-        np.array
-            integer array of length returned by method 'get_n_stream_nodes' 
-        '''
-        if not hasattr(self.dll, "IW_Model_GetStrmNodeIDs"):
-            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetStrmNodeIDs'))
-
-        # reset instance variable status to -1
-        self.status = ctypes.c_int(-1)
-
-        # get number of stream nodes
-        n_stream_nodes = ctypes.c_int(self.get_n_stream_nodes())
-
-        # initialize output variables
-        stream_node_ids = (ctypes.c_int*n_stream_nodes.value)()
-
-        self.dll.IW_Model_GetStrmNodeIDs(ctypes.byref(n_stream_nodes),
-                                         stream_node_ids,
-                                         ctypes.byref(self.status))
-
-        return np.array(stream_node_ids)
-
-    def get_n_stream_nodes_upstream_of_stream_node(self, stream_node_id):
-        ''' returns the number of stream nodes upstream of the provided stream node id
-        
-        Parameters
-        ----------
-        stream_node_id : int
-            stream node id used to determine number of stream nodes upstream
-            
-        Returns
-        -------
-        int
-            number of stream nodes upstream of given stream node
-        '''
-        if not hasattr(self.dll, "IW_Model_GetStrmNUpstrmNodes"):
-            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetStrmNUpstreamNodes'))
-
-        # check that stream_node_id is an integer
-        if not isinstance(stream_node_id, (int, np.int, np.int32, np.dtype('<i4'))):
-            raise TypeError('stream_node_id must be an integer')
-
-        # check that stream_node_id is a valid stream_node_id
-        stream_node_ids = self.get_stream_node_ids()
-        if not np.any(stream_node_ids == stream_node_id):
-            raise ValueError('stream_node_id is not a valid Stream Node ID')
-
-        # set input variables
-        stream_node_id = ctypes.c_int(stream_node_id)
-        
-        # reset instance variable status to -1
-        self.status = ctypes.c_int(-1)
-
-        # initialize output variables
-        n_upstream_stream_nodes = ctypes.c_int(0)
-
-        self.dll.IW_Model_GetStrmNUpstreamNodes(ctypes.byref(stream_node_id),
-                                                ctypes.byref(n_upstream_stream_nodes),
-                                                ctypes.byref(self.status))
-
-        return n_upstream_stream_nodes.value
-
-    def get_stream_nodes_upstream_of_stream_node(self, stream_node_id):
-        ''' returns an array of the stream node ids upstream of the provided stream node id
-        
-        Parameters
-        ----------
-        stream_node_id : int
-            stream node id used to determine number of stream nodes upstream 
-            
-        Returns
-        -------
-        np.ndarray
-            integer array of stream node ids upstream of the provided stream node id
-        '''
-        if not hasattr(self.dll, "IW_Model_GetStrmUpstrmNodes"):
-            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetStrmUpstrmNodes'))
-
-        # check that stream_node_id is an integer
-        if not isinstance(stream_node_id, (int, np.int, np.int32, np.dtype('<i4'))):
-            raise TypeError('stream_node_id must be an integer')
-
-        # check that stream_node_id is a valid stream_node_id
-        stream_node_ids = self.get_stream_node_ids()
-        if not np.any(stream_node_ids == stream_node_id):
-            raise ValueError('stream_node_id is not a valid Stream Node ID')
-
-        # set input variables
-        stream_node_id = ctypes.c_int(stream_node_id)
-        n_upstream_stream_nodes = ctypes.c_int(self.get_n_stream_nodes_upstream_of_stream_node(stream_node_id))
-
-        # reset instance variable status to -1
-        self.status = ctypes.c_int(-1)
-
-        # initialize output variables
-        upstream_nodes = (ctypes.c_int*n_upstream_stream_nodes.value)()
-
-        self.dll.IW_Model_GetStrmUpstrmNodes(ctypes.byref(stream_node_id),
-                                             ctypes.byref(n_upstream_stream_nodes),
-                                             upstream_nodes,
-                                             ctypes.byref(self.status))
-
-        return np.array(upstream_nodes)
-
-    def get_stream_bottom_elevations(self):
-        ''' returns the stream channel bottom elevation at each stream node
-        
-        Returns
-        -------
-        np.ndarray
-            array of float with the stream channel elevation for each stream node
-        '''
-        if not hasattr(self.dll, "IW_Model_GetStrmBottomElevs"):
-            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetStrmBottomElevs'))
-
-        # set input variables
-        n_stream_nodes = ctypes.c_int(self.get_n_stream_nodes())
-
-        # reset_instance variable status to -1
-        self.status = ctypes.c_int(-1)
-
-        # initialize output variables
-        stream_bottom_elevations = (ctypes.c_double*n_stream_nodes.value)()
-
-        self.dll.IW_Model_GetStrmBottomElevs(ctypes.byref(n_stream_nodes),
-                                             stream_bottom_elevations,
-                                             ctypes.byref(self.status))
-        
-        return np.array(stream_bottom_elevations)
-
-
-    def get_n_rating_table_points(self, stream_node_id):
-        '''returns the number of data points in the stream flow rating table for a stream node
-
-        Parameters
-        ----------
-        stream_node_id : int
-            stream node id used to determine number of data points in the rating table
-
-        Returns
-        -------
-        int
-            number of data points in the stream flow rating table
-        '''
-        if not hasattr(self.dll, "IW_Model_GetNRatingTablePoints"):
-            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetNRatingTablePoints'))
-
-        # check that stream_node_id is an integer
-        if not isinstance(stream_node_id, (int, np.int, np.int32, np.dtype('<i4'))):
-            raise TypeError('stream_node_id must be an integer')
-
-        # check that stream_node_id is a valid stream_node_id
-        stream_node_ids = self.get_stream_node_ids()
-        if not np.any(stream_node_ids == stream_node_id):
-            raise ValueError('stream_node_id is not a valid Stream Node ID')
-
-        # set input variables
-        stream_node_id = ctypes.c_int(stream_node_id)
-
-        # reset_instance variable status to -1
-        self.status = ctypes.c_int(-1)
-
-        # initialize output variables
-        n_rating_table_points = ctypes.c_int(0)
-
-        self.dll.IW_Model_GetNRatingTablePoints(ctypes.byref(stream_node_id),
-                                                ctypes.byref(n_rating_table_points),
-                                                ctypes.byref(self.status))
-
-        return n_rating_table_points.value
-
-
-    def get_stream_rating_table(self, stream_node_id):
-        ''' returns the stream rating table for a specified stream node 
-        
-        Parameters
-        ----------
-        stream_node_id : int
-            stream node id used to return the rating table
-        
-        Returns
-        -------
-        tuple
-            length 2 tuple of np.ndarrays representing stage and flow, respectively
-        '''
-        if not hasattr(self.dll, "IW_Model_GetStrmRatingTable"):
-            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetStrmRatingTable'))
-
-        # check that stream_node_id is an integer
-        if not isinstance(stream_node_id, (int, np.int, np.int32, np.dtype('<i4'))):
-            raise TypeError('stream_node_id must be an integer')
-
-        # check that stream_node_id is a valid stream_node_id
-        stream_node_ids = self.get_stream_node_ids()
-        if not np.any(stream_node_ids == stream_node_id):
-            raise ValueError('stream_node_id is not a valid Stream Node ID')
-
-        # set input variables
-        stream_node_id = ctypes.c_int(stream_node_id)
-        n_rating_table_points =ctypes.c_int(self.get_n_rating_table_points(stream_node_id.value))
-
-        # reset instance variable status to -1
-        self.status = ctypes.c_int(-1)
-
-        # initialize output variables
-        stage = (ctypes.c_double*n_rating_table_points.value)()
-        flow = (ctypes.c_double*n_rating_table_points.value)()
-
-        self.dll.IW_Model_GetStrmRatingTable(ctypes.byref(stream_node_id), 
-                                             ctypes.byref(n_rating_table_points),
-                                             stage,
-                                             flow,
-                                             ctypes.byref(self.status))
-
-        return np.array(stage), np.array(flow)
-
-    def get_n_stream_inflows(self):
-        ''' returns the number of stream boundary inflows specified by the 
-        user as timeseries input data
-
-        Returns
-        -------
-        int
-            number of stream boundary inflows
-        '''
-        if not hasattr(self.dll, "IW_Model_GetStrmNInflows"):
-            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format("IW_Model_GetStrmNInflows"))
-        
-        # set instance variable status to -1
-        self.status = ctypes.c_int(-1)
-        
-        # initialize output variables
-        n_stream_inflows = ctypes.c_int(0)
-
-        self.dll.IW_Model_GetStrmNInflows(ctypes.byref(n_stream_inflows),
-                                          ctypes.byref(self.status))
-
-        return n_stream_inflows.value
-
-    def get_stream_inflow_nodes(self):
-        ''' returns the indices of the stream nodes that receive boundary 
-        inflows specified by the user as timeseries input data 
-        
-        Returns
-        -------
-        np.ndarray
-            integer array of stream inflow node indices
-        '''
-        if not hasattr(self.dll, "IW_Model_GetStrmInflowNodes"):
-            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format("IW_Model_GetStrmInflowNodes"))
-        
-        # get number of stream inflow nodes
-        n_stream_inflows = ctypes.c_int(self.get_n_stream_inflows())
-
-        # set instance variable status to -1
-        self.status = ctypes.c_int(-1)
-
-        # initialize output variables
-        stream_inflow_nodes = (ctypes.c_int*n_stream_inflows.value)()
-
-        self.dll.IW_Model_GetStrmInflowNodes(ctypes.byref(n_stream_inflows),
-                                             stream_inflow_nodes,
-                                             ctypes.byref(self.status))
-
-        return np.array(stream_inflow_nodes)
-
-    def get_stream_inflow_ids(self):
-        ''' returns the identification numbers for the stream boundary 
-        inflows specified by the user as timeseries input data 
-        
-        Returns
-        -------
-        np.ndarray
-            integer array of stream inflow node indices
-        '''
-        if not hasattr(self.dll, "IW_Model_GetStrmInflowIDs"):
-            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format("IW_Model_GetStrmInflowIDs"))
-        
-        # get number of stream inflow nodes
-        n_stream_inflows = ctypes.c_int(self.get_n_stream_inflows())
-
-        # set instance variable status to -1
-        self.status = ctypes.c_int(-1)
-
-        # initialize output variables
-        stream_inflow_ids = (ctypes.c_int*n_stream_inflows.value)()
-
-        self.dll.IW_Model_GetStrmInflowIDs(ctypes.byref(n_stream_inflows),
-                                             stream_inflow_ids,
-                                             ctypes.byref(self.status))
-
-        return np.array(stream_inflow_ids)
-
-    def get_stream_inflows_at_some_locations(self, stream_inflow_locations):
-        ''' returns user-specified stream boundary inflows at a specified
-        set of inflows listed by their indices
-        
-        Parameters
-        ----------
-        stream_inflow_locations : int
-
-        Returns
-        -------
-
-        Notes
-        -----
-        This method is designed to return stream inflows at the current
-        timestep during a simulation.
-        '''
-        if self.is_for_inquiry != 0:
-            raise RuntimeError("This function can only be used when the model object is instantiated with the is_for_inquiry flag set to 0")
-
-        if not hasattr(self.dll, "IW_Model_GetStrmInflows_AtSomeInflows"):
-            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format("IW_Model_GetStrmInflows_AtSomeInflows"))
-
-        # initialize output variables
-        
-        
-        #self.dll.IW_Model_GetStrmInflows_AtSomeInflows()
-
-    def get_stream_flow_at_location(self, stream_node_id, flow_conversion_factor):
-        # is_for_inquiry=0
-        pass
-
-    def get_stream_flows(self):
-        # is_for_inquiry=0
-        pass
-
-    def get_stream_stages(self):
-        # is_for_inquiry=0
-        pass
-
-    def get_stream_tributary_inflows(self, inflow_conversion_factor):
-        # is_for_inquiry=0
-        pass
-
-    def get_stream_rainfall_runoff(self, runoff_conversion_factor):
-        # is_for_inquiry=0
-        pass
-
-    def get_stream_return_flows(self, return_flow_conversion_factor):
-        # is_for_inquiry=0
-        pass
-
-    def get_stream_tile_drains(self, tile_drain_flow_conversion_factor):
-        # is_for_inquiry=0
-        pass
-
-    def get_stream_riparian_evapotranspiration(self, evapotranspiration_conversion_factor):
-        # is_for_inquiry=0
-        pass
-
-    def get_stream_gain_from_groundwater(self, stream_gain_conversion_factor):
-        # is_for_inquiry=0
-        pass
-
-    def get_stream_gain_from_lakes(self, lake_inflow_conversion_factor):
-        # is_for_inquiry=0
-        pass
-
-    def get_net_bypass_inflows(self, bypass_inflow_conversion_factor):
-        # is_for_inquiry=0
-        pass
-
-    def get_actual_stream_diversions_at_some_locations(self, diversion_id, diversion_conversion_factor):
-        # is_for_inquiry=0
-        pass
 
     def get_diversion_ids(self):
         ''' returns the surface water diversion identification numbers
