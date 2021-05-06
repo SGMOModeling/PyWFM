@@ -1346,6 +1346,101 @@ class IWFM_Model:
         '''  '''
         pass
 
+    def get_n_ag_crops(self):
+        pass
+
+    def get_supply_purpose(self, supply_type):
+        pass
+
+    def get_supply_requirement_ag(self, location_type, locations):
+        pass
+
+    def get_supply_requirement_urban(self, location_type, locations):
+        pass
+
+    def get_supply_shortage_at_origin_ag(self, supply_type, supply_list, supply_conversion_factor):
+        pass
+
+    def get_supply_shortage_at_origin_urban(self, supply_type, supply_list, supply_conversion_factor):
+        pass
+
+    def get_names(self, feature_type):
+        ''' returns the available names for a given feature_type
+
+         Parameters
+        ----------
+        feature_type : str
+            valid feature type to obtain a location_type_id for feature
+
+        Returns
+        -------
+        list of strings
+            list containing names for the provided feature_type. Returns
+            empty list if no names are available for given feature_type.
+        '''
+        # check to see if IWFM procedure is available in user version of IWFM DLL
+        if not hasattr(self.dll, "IW_Model_GetNames"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetNames'))
+
+        # reset instance variable status to -1
+        self.status = ctypes.c_int(-1)
+
+        # get location type id
+        location_type_id = self.get_location_type_id(feature_type)
+
+        # get number of location for specified feature_type
+        if feature_type.lower() == 'node':
+            self.get_n_nodes()
+
+        elif feature_type.lower() == 'element':
+            self.get_n_elements()
+
+        elif feature_type.lower() == 'subregion':
+            self.get_n_subregions()
+
+        elif feature_type.lower() == 'zone':
+            # need to determine if API call exists for this
+            raise NotImplementedError
+
+        elif feature_type.lower() == 'lake':
+            self.get_n_lakes()
+
+        elif feature_type.lower() == 'stream_node':
+            self.get_n_stream_nodes()
+
+        elif feature_type.lower() == 'stream_reach':
+            self.get_n_stream_reaches()
+
+        elif feature_type.lower() == 'tile_drain':
+            num_names = self.get_n_tile_drains()
+
+        elif feature_type.lower() == 'small_watershed':
+            #self.get_n_small_watersheds()
+            raise NotImplementedError
+
+        elif feature_type.lower() == 'gw_head_obs':
+            num_names = ctypes.c_int(self.get_n_hydrographs(feature_type))
+
+        elif feature_type.lower() == 'stream_hydrograph_obs':
+            num_names = ctypes.c_int(self.get_n_hydrographs(feature_type))
+
+        elif feature_type.lower() == 'subsidence_obs':
+            num_names = ctypes.c_int(self.get_n_hydrographs(feature_type))
+
+        # initialize output variables
+        delimiter_position_array = (ctypes.c_int*num_names.value)()
+        names_string_length = ctypes.c_int(30 * num_names.value)
+        raw_names_string = ctypes.create_string_buffer(names_string_length.value)
+
+        self.dll.IW_Model_GetNames(ctypes.byref(location_type_id),
+                                   ctypes.byref(num_names), 
+                                   delimiter_position_array,
+                                   ctypes.byref(names_string_length),
+                                   raw_names_string,
+                                   ctypes.byref(self.status))
+
+        return IWFM_Model._string_to_list_by_array(raw_names_string, delimiter_position_array, num_names)
+
     def get_n_hydrographs(self, feature_type):
         ''' returns the number of hydrographs for a given IWFM feature type
         
@@ -1840,83 +1935,6 @@ class IWFM_Model:
                                            ctypes.byref(self.status))
         
         return np.array(hydrograph_ids)
-
-    def get_names(self, feature_type):
-        ''' returns the available names for a given feature_type
-
-         Parameters
-        ----------
-        feature_type : str
-            valid feature type to obtain a location_type_id for feature
-
-        Returns
-        -------
-        list of strings
-            list containing names for the provided feature_type. Returns
-            empty list if no names are available for given feature_type.
-        '''
-        # check to see if IWFM procedure is available in user version of IWFM DLL
-        if not hasattr(self.dll, "IW_Model_GetNames"):
-            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetNames'))
-
-        # reset instance variable status to -1
-        self.status = ctypes.c_int(-1)
-
-        # get location type id
-        location_type_id = self.get_location_type_id(feature_type)
-
-        # get number of location for specified feature_type
-        if feature_type.lower() == 'node':
-            self.get_n_nodes()
-
-        elif feature_type.lower() == 'element':
-            self.get_n_elements()
-
-        elif feature_type.lower() == 'subregion':
-            self.get_n_subregions()
-
-        elif feature_type.lower() == 'zone':
-            # need to determine if API call exists for this
-            raise NotImplementedError
-
-        elif feature_type.lower() == 'lake':
-            self.get_n_lakes()
-
-        elif feature_type.lower() == 'stream_node':
-            self.get_n_stream_nodes()
-
-        elif feature_type.lower() == 'stream_reach':
-            self.get_n_stream_reaches()
-
-        elif feature_type.lower() == 'tile_drain':
-            num_names = self.get_n_tile_drains()
-
-        elif feature_type.lower() == 'small_watershed':
-            #self.get_n_small_watersheds()
-            raise NotImplementedError
-
-        elif feature_type.lower() == 'gw_head_obs':
-            num_names = ctypes.c_int(self.get_n_hydrographs(feature_type))
-
-        elif feature_type.lower() == 'stream_hydrograph_obs':
-            num_names = ctypes.c_int(self.get_n_hydrographs(feature_type))
-
-        elif feature_type.lower() == 'subsidence_obs':
-            num_names = ctypes.c_int(self.get_n_hydrographs(feature_type))
-
-        # initialize output variables
-        delimiter_position_array = (ctypes.c_int*num_names.value)()
-        names_string_length = ctypes.c_int(30 * num_names.value)
-        raw_names_string = ctypes.create_string_buffer(names_string_length.value)
-
-        self.dll.IW_Model_GetNames(ctypes.byref(location_type_id),
-                                   ctypes.byref(num_names), 
-                                   delimiter_position_array,
-                                   ctypes.byref(names_string_length),
-                                   raw_names_string,
-                                   ctypes.byref(self.status))
-
-        return IWFM_Model._string_to_list_by_array(raw_names_string, delimiter_position_array, num_names)
 
     def get_n_data_list(self, feature_type):
         ''' returns the number of data types available for a given feature_type
