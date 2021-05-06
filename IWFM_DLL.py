@@ -712,7 +712,6 @@ class IWFM_Model:
         
         return np.array(stream_bottom_elevations)
 
-
     def get_n_rating_table_points(self, stream_node_id):
         '''returns the number of data points in the stream flow rating table for a stream node
 
@@ -947,6 +946,10 @@ class IWFM_Model:
         pass
 
     def get_actual_stream_diversions_at_some_locations(self, diversion_id, diversion_conversion_factor):
+        # is_for_inquiry=0
+        pass
+
+    def get_stream_diversion_export_nodes(self, diversion_ids):
         # is_for_inquiry=0
         pass
 
