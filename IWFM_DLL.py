@@ -220,6 +220,72 @@ class IWFM_Model:
         sim_time_step = simulation_time_step.value.decode('utf-8')
 
         return dates_list, sim_time_step
+
+    def get_output_interval(self, feature_type, data_type_index):
+        ''' returns a list of the possible time intervals a selected
+        time-series data can be retrieved at.
+
+        Parameters
+        ----------
+        feature_type : str
+            valid feature type to obtain a location_type_id for feature
+
+        data_type_index : int
+            array index, i.e. 0-based (standard python) for data type 
+            returned for feature_type by running get_data_list method
+
+        Returns
+        -------
+        list of strings
+            list of available output intervals for given data type
+        '''
+        # check to see if IWFM procedure is available in user version of IWFM DLL
+        if not hasattr(self.dll, "IW_Model_GetOutputIntervals"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetOutputIntervals'))
+
+        # check that provided feature_type is valid
+        IWFM_Model._validate_feature_type(feature_type)
+
+        # get number of data for provided feature_type
+        self.get_n_data_list(feature_type)
+
+        # get data types for provided feature_type
+        data_list = self.get_data_list(feature_type)
+
+        # get sub data types for provided feature_type and data_type_index
+        sub_data_list = self.get_sub_data_list(feature_type, data_type_index)
+
+        if not sub_data_list:
+            output_data_list = data_list
+        else:
+            output_data_list = sub_data_list
+
+        # reset instance variable status to -1
+        self.status = ctypes.c_int(-1)
+
+        # convert data_type_index to fortran-type (1-based)
+        selected_data_index = ctypes.c_int(data_type_index + 1)
+
+        # set length of output intervals character array to 160 or larger
+        length_output_intervals = ctypes.c_int(160)
+
+        # set maximum number of time intervals to 20 or larger
+        max_num_time_intervals = ctypes.c_int(20)
+
+        # initialize output variables
+        output_intervals = ctypes.create_string_buffer(length_output_intervals.value)
+        actual_num_time_intervals = ctypes.c_int(0)
+        delimiter_position_array = (ctypes.c_int*max_num_time_intervals.value)()
+            
+        self.dll.IW_Model_GetOutputIntervals(ctypes.byref(selected_data_index), 
+                                             output_intervals, 
+                                             ctypes.byref(length_output_intervals),
+                                             delimiter_position_array,
+                                             ctypes.byref(max_num_time_intervals),
+                                             ctypes.byref(actual_num_time_intervals),
+                                             ctypes.byref(self.status))
+
+        return output_data_list, IWFM_Model._string_to_list_by_array(output_intervals, delimiter_position_array, actual_num_time_intervals)
   
     def get_n_nodes(self):
         ''' returns the number of nodes in an IWFM model
@@ -583,73 +649,7 @@ class IWFM_Model:
             return n_intervals.value + 1
 
         return n_intervals.value
-
-    def get_output_interval(self, feature_type, data_type_index):
-        ''' returns a list of the possible time intervals a selected
-        time-series data can be retrieved at.
-
-        Parameters
-        ----------
-        feature_type : str
-            valid feature type to obtain a location_type_id for feature
-
-        data_type_index : int
-            array index, i.e. 0-based (standard python) for data type 
-            returned for feature_type by running get_data_list method
-
-        Returns
-        -------
-        list of strings
-            list of available output intervals for given data type
-        '''
-        # check to see if IWFM procedure is available in user version of IWFM DLL
-        if not hasattr(self.dll, "IW_Model_GetOutputIntervals"):
-            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetOutputIntervals'))
-
-        # check that provided feature_type is valid
-        IWFM_Model._validate_feature_type(feature_type)
-
-        # get number of data for provided feature_type
-        self.get_n_data_list(feature_type)
-
-        # get data types for provided feature_type
-        data_list = self.get_data_list(feature_type)
-
-        # get sub data types for provided feature_type and data_type_index
-        sub_data_list = self.get_sub_data_list(feature_type, data_type_index)
-
-        if not sub_data_list:
-            output_data_list = data_list
-        else:
-            output_data_list = sub_data_list
-
-        # reset instance variable status to -1
-        self.status = ctypes.c_int(-1)
-
-        # convert data_type_index to fortran-type (1-based)
-        selected_data_index = ctypes.c_int(data_type_index + 1)
-
-        # set length of output intervals character array to 160 or larger
-        length_output_intervals = ctypes.c_int(160)
-
-        # set maximum number of time intervals to 20 or larger
-        max_num_time_intervals = ctypes.c_int(20)
-
-        # initialize output variables
-        output_intervals = ctypes.create_string_buffer(length_output_intervals.value)
-        actual_num_time_intervals = ctypes.c_int(0)
-        delimiter_position_array = (ctypes.c_int*max_num_time_intervals.value)()
-            
-        self.dll.IW_Model_GetOutputIntervals(ctypes.byref(selected_data_index), 
-                                             output_intervals, 
-                                             ctypes.byref(length_output_intervals),
-                                             delimiter_position_array,
-                                             ctypes.byref(max_num_time_intervals),
-                                             ctypes.byref(actual_num_time_intervals),
-                                             ctypes.byref(self.status))
-
-        return output_data_list, IWFM_Model._string_to_list_by_array(output_intervals, delimiter_position_array, actual_num_time_intervals)
-        
+       
     def _get_location_type_ids(self):
         ''' private method to generate dictionary of location type ids 
         for an IWFM model. Uses the IWFM DLL IW_GetLocationTypeIDs 
