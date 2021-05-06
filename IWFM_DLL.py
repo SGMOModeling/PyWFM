@@ -171,6 +171,55 @@ class IWFM_Model:
             self.n_time_steps = n_time_steps
 
         return self.n_time_steps.value
+
+    def get_time_specs(self):
+        ''' returns the IWFM simulation dates and time step
+        if the version of the DLL is prior or including IWFM 2015.0.1045,
+        the simulation dates will only include the start and end date.
+        
+        For newer versions, simulation dates will include all dates in 
+        the simulation. 
+        '''
+        # check to see if IWFM procedure is available in user version of IWFM DLL
+        if not hasattr(self.dll, "IW_Model_GetTimeSpecs"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetTimeSpecs'))
+            
+        # get version of the DLL to determine functionality of GetTimeSpecs procedure
+        dll_version = self.get_version()['IWFM Core']
+
+        # reset instance variable status to -1
+        self.status = ctypes.c_int(-1)
+        
+        if dll_version in ['2015.0.706', '2015.0.828', '2015.0.961', '2015.0.1045']:
+            # set string length properties
+            n_data = ctypes.c_int(2)
+            length_dates = ctypes.c_int(32)
+            length_ts_interval = ctypes.c_int(8)
+            
+        else:
+            n_data = ctypes.c_int(self.get_n_time_steps())
+            length_dates = ctypes.c_int(n_data.value*16)
+            length_ts_interval = ctypes.c_int(8)
+
+        # initialize output variables
+        simulation_time_step = ctypes.create_string_buffer(length_ts_interval.value)
+        raw_dates_string = ctypes.create_string_buffer(length_dates.value)
+        delimiter_position_array = (ctypes.c_int*n_data.value)()
+
+        self.dll.IW_Model_GetTimeSpecs(raw_dates_string,
+                                       ctypes.byref(length_dates),
+                                       simulation_time_step,
+                                       ctypes.byref(length_ts_interval),
+                                       ctypes.byref(n_data),
+                                       delimiter_position_array,
+                                       ctypes.byref(self.status))
+
+        dates_list = IWFM_Model._string_to_list_by_array(raw_dates_string, 
+                                                        delimiter_position_array, n_data)
+
+        sim_time_step = simulation_time_step.value.decode('utf-8')
+
+        return dates_list, sim_time_step
   
     def get_n_nodes(self):
         ''' returns the number of nodes in an IWFM model
@@ -415,55 +464,6 @@ class IWFM_Model:
                                           ctypes.byref(self.status))
 
         return n_hydrographs.value
-
-    def get_time_specs(self):
-        ''' returns the IWFM simulation dates and time step
-        if the version of the DLL is prior or including IWFM 2015.0.1045,
-        the simulation dates will only include the start and end date.
-        
-        For newer versions, simulation dates will include all dates in 
-        the simulation. 
-        '''
-        # check to see if IWFM procedure is available in user version of IWFM DLL
-        if not hasattr(self.dll, "IW_Model_GetTimeSpecs"):
-            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetTimeSpecs'))
-            
-        # get version of the DLL to determine functionality of GetTimeSpecs procedure
-        dll_version = self.get_version()['IWFM Core']
-
-        # reset instance variable status to -1
-        self.status = ctypes.c_int(-1)
-        
-        if dll_version in ['2015.0.706', '2015.0.828', '2015.0.961', '2015.0.1045']:
-            # set string length properties
-            n_data = ctypes.c_int(2)
-            length_dates = ctypes.c_int(32)
-            length_ts_interval = ctypes.c_int(8)
-            
-        else:
-            n_data = ctypes.c_int(self.get_n_time_steps())
-            length_dates = ctypes.c_int(n_data.value*16)
-            length_ts_interval = ctypes.c_int(8)
-
-        # initialize output variables
-        simulation_time_step = ctypes.create_string_buffer(length_ts_interval.value)
-        raw_dates_string = ctypes.create_string_buffer(length_dates.value)
-        delimiter_position_array = (ctypes.c_int*n_data.value)()
-
-        self.dll.IW_Model_GetTimeSpecs(raw_dates_string,
-                                       ctypes.byref(length_dates),
-                                       simulation_time_step,
-                                       ctypes.byref(length_ts_interval),
-                                       ctypes.byref(n_data),
-                                       delimiter_position_array,
-                                       ctypes.byref(self.status))
-
-        dates_list = IWFM_Model._string_to_list_by_array(raw_dates_string, 
-                                                        delimiter_position_array, n_data)
-
-        sim_time_step = simulation_time_step.value.decode('utf-8')
-
-        return dates_list, sim_time_step
 
     def is_date_greater(self, first_date, comparison_date):
         ''' returns True if first_date is greater than comparison_date
