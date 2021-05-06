@@ -974,6 +974,63 @@ class IWFM_Model:
             
         return self.n_stream_reaches.value
 
+    def get_stream_reach_ids(self):
+        ''' returns the user-specified identification numbers for the
+        stream reaches in an IWFM model 
+        
+        Returns
+        -------
+        stream reach_ids : np.ndarray of ints
+            integer array containing stream reach ids
+        '''
+        if not hasattr(self.dll, "IW_Model_GetReachIDs"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format("IW_Model_GetReachIDs"))
+
+        # set input variables
+        n_stream_reaches = ctypes.c_int(self.get_n_stream_reaches())
+        
+        # reset instance variable status to -1
+        self.status = ctypes.c_int(-1)
+
+        # initialize output variables
+        stream_reach_ids = (ctypes.c_int*n_stream_reaches.value)()
+
+        self.dll.IW_Model_GetReachIDs(ctypes.byref(n_stream_reaches),
+                                      stream_reach_ids,
+                                      ctypes.byref(self.status))
+
+        return np.array(stream_reach_ids)
+
+    def get_n_nodes_in_stream_reach(self, reach_id):
+        pass
+
+    def get_stream_reach_groundwater_nodes(self, reach_id):
+        pass
+
+    def get_stream_reach_stream_nodes(self, reach_id):
+        pass
+
+    def get_stream_reaches_for_stream_nodes(self, stream_node_indices):
+        pass
+
+    def get_upstream_node_in_stream_reach(self):
+        pass
+
+    def get_n_reaches_upstream_of_reach(self, reach_id):
+        pass
+
+    def get_reaches_upstream_of_reach(self, reach_id):
+        pass
+
+    def get_downstream_node_in_stream_reach(self, reach_id):
+        pass
+
+    def get_reach_outflow_destination(self):
+        pass
+
+    def get_reach_outflow_destination_types(self):
+        pass
+
     def get_n_lakes(self):
         ''' returns the number of lakes in an IWFM model
         '''
@@ -1552,57 +1609,6 @@ class IWFM_Model:
                                                        ctypes.byref(self.status))
 
         return np.array(diversion_stream_nodes)
-
-    def get_stream_reach_ids(self):
-        ''' returns the user-specified identification numbers for the
-        stream reaches in an IWFM model 
-        
-        Returns
-        -------
-        stream reach_ids : np.ndarray of ints
-            integer array containing stream reach ids
-        '''
-        if not hasattr(self.dll, "IW_Model_GetReachIDs"):
-            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format("IW_Model_GetReachIDs"))
-
-        # set input variables
-        n_stream_reaches = ctypes.c_int(self.get_n_stream_reaches())
-        
-        # reset instance variable status to -1
-        self.status = ctypes.c_int(-1)
-
-        # initialize output variables
-        stream_reach_ids = (ctypes.c_int*n_stream_reaches.value)()
-
-        self.dll.IW_Model_GetReachIDs(ctypes.byref(n_stream_reaches),
-                                      stream_reach_ids,
-                                      ctypes.byref(self.status))
-
-        return np.array(stream_reach_ids)
-
-    def get_n_nodes_in_stream_reach(self, reach_id):
-        pass
-
-    def get_stream_reach_groundwater_nodes(self, reach_id):
-        pass
-
-    def get_stream_reach_stream_nodes(self, reach_id):
-        pass
-
-    def get_stream_reaches_for_stream_nodes(self, stream_node_indices):
-        pass
-
-    def get_upstream_node_in_stream_reach(self):
-        pass
-
-    def get_n_reaches_upstream_of_reach(self, reach_id):
-        pass
-
-    def get_reaches_upstream_of_reach(self, reach_id):
-        pass
-
-    def get_downstream_node_in_stream_reach(self, reach_id):
-        pass
 
     def get_ground_surface_elevation(self):
         ''' returns the ground surface elevation for each node specified 
