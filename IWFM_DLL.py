@@ -332,6 +332,28 @@ class IWFM_Model:
 
         return np.array(x_coordinates), np.array(y_coordinates)
 
+    def get_node_ids(self):
+        ''' returns an array of node ids in an IWFM model
+        '''
+        # check to see if IWFM procedure is available in user version of IWFM DLL
+        if not hasattr(self.dll, "IW_Model_GetNodeIDs"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetNodeIDs'))
+
+        # reset instance variable status to -1
+        self.status = ctypes.c_int(-1)
+
+        # get number of nodes
+        num_nodes = ctypes.c_int(self.get_n_nodes())
+
+        # initialize output variables
+        node_ids = (ctypes.c_int*num_nodes.value)()
+
+        self.dll.IW_Model_GetNodeIDs(ctypes.byref(num_nodes),
+                                     node_ids,
+                                     ctypes.byref(self.status))
+
+        return np.array(node_ids)
+
     def get_n_elements(self):
         ''' returns the number of elements in an IWFM model
         '''
@@ -924,28 +946,6 @@ class IWFM_Model:
             self._get_zone_extent_ids()
         
         return self.zone_extent_ids[zone_type.lower()]
-
-    def get_node_ids(self):
-        ''' returns an array of node ids in an IWFM model
-        '''
-        # check to see if IWFM procedure is available in user version of IWFM DLL
-        if not hasattr(self.dll, "IW_Model_GetNodeIDs"):
-            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetNodeIDs'))
-
-        # reset instance variable status to -1
-        self.status = ctypes.c_int(-1)
-
-        # get number of nodes
-        num_nodes = ctypes.c_int(self.get_n_nodes())
-
-        # initialize output variables
-        node_ids = (ctypes.c_int*num_nodes.value)()
-
-        self.dll.IW_Model_GetNodeIDs(ctypes.byref(num_nodes),
-                                     node_ids,
-                                     ctypes.byref(self.status))
-
-        return np.array(node_ids)
 
     def get_element_ids(self):
         ''' returns an array of element ids in an IWFM model
