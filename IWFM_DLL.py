@@ -1327,6 +1327,25 @@ class IWFM_Model:
         
         return output
 
+    def get_aquifer_horizontal_k(self):
+        pass
+
+    def get_aquifer_vertical_k(self):
+        pass
+
+    def get_aquitard_vertical_k(self):
+        pass
+
+    def get_aquifer_specific_yield(self):
+        pass
+
+    def get_aquifer_specific_storage(self):
+        pass
+
+    def get_aquifer_parameters(self):
+        '''  '''
+        pass
+
     def get_n_hydrographs(self, feature_type):
         ''' returns the number of hydrographs for a given IWFM feature type
         
@@ -1751,10 +1770,6 @@ class IWFM_Model:
             self._get_zone_extent_ids()
         
         return self.zone_extent_ids[zone_type.lower()]
-
-    def get_aquifer_parameters(self):
-        '''  '''
-        pass
 
     def get_hydrograph_coordinates(self, feature_type):
         ''' returns the hydrograph coordinates for a provided feature type
