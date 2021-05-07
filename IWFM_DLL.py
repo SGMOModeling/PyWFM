@@ -1633,8 +1633,7 @@ class IWFM_Model:
                        begin_date, end_date, time_interval, length_conversion_factor, volume_conversion_factor):
         pass
 
-    # this procedure needs to be rewritten for the latest DLL
-    def get_gwheadsall_foralayer(self, layer_number, begin_date=None, end_date=None, length_conversion_factor=1.0):
+    def get_gwheads_foralayer(self, layer_number, begin_date=None, end_date=None, length_conversion_factor=1.0):
         ''' returns the simulated groundwater heads for a single user-specified model layer for
         every model node over a user-specified time interval.
 
@@ -1688,8 +1687,8 @@ class IWFM_Model:
 
         '''
         # check to see if IWFM procedure is available in user version of IWFM DLL
-        if not hasattr(self.dll, "IW_Model_GetModelData_GWHeadsAll_ForALayer"):
-            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetModelData_GWHeadsAll_ForALayer'))
+        if not hasattr(self.dll, "IW_Model_GetGWHeads_ForALayer"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetGWHeads_ForALayer'))
         
         # check that layer_number is an integer
         if not isinstance(layer_number, int):
@@ -1749,16 +1748,16 @@ class IWFM_Model:
         output_gwheads = ((ctypes.c_double*num_nodes.value)*num_time_intervals.value)()
 
         # call DLL procedure
-        self.dll.IW_Model_GetModelData_GWHeadsAll_ForALayer(ctypes.byref(layer_number),
-                                                            begin_date, 
-                                                            end_date,
-                                                            ctypes.byref(length_date_string),
-                                                            ctypes.byref(length_conversion_factor),
-                                                            ctypes.byref(num_nodes), 
-                                                            ctypes.byref(num_time_intervals),
-                                                            output_dates,
-                                                            output_gwheads,
-                                                            ctypes.byref(self.status))
+        self.dll.IW_Model_GetGWHeads_ForALayer(ctypes.byref(layer_number),
+                                               begin_date, 
+                                               end_date,
+                                               ctypes.byref(length_date_string),
+                                               ctypes.byref(length_conversion_factor),
+                                               ctypes.byref(num_nodes), 
+                                               ctypes.byref(num_time_intervals),
+                                               output_dates,
+                                               output_gwheads,
+                                               ctypes.byref(self.status))
 
         return np.array('1899-12-30', dtype='datetime64') + np.array(output_dates, dtype='timedelta64[D]'), np.array(output_gwheads)
 
@@ -1767,15 +1766,15 @@ class IWFM_Model:
         pass
 
     def get_subsidence_all(self, length_conversion_factor):
-        # is_for_inquiry
+        # is_for_inquiry=0
         pass
 
     def get_subregion_ag_pumping_average_depth_to_water(self):
-        # is_for_inquiry
+        # is_for_inquiry=0
         pass
 
     def get_zone_ag_pumping_average_depth_to_water(self):
-        # is_for_inquiry
+        # is_for_inquiry=0
         pass
 
     def get_n_locations(self, location_type_id):
