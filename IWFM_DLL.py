@@ -1471,8 +1471,9 @@ class IWFM_Model:
         
         Returns
         -------
-        list of strings
-            list of different hydrograph types printed by the IWFM model
+        dict
+            keys are different hydrograph types printed by the IWFM model
+            values are corresponding hydrograph type ids
         '''
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetHydrographTypeList"):
@@ -1501,9 +1502,7 @@ class IWFM_Model:
 
         hydrograph_type_list = IWFM_Model._string_to_list_by_array(raw_hydrograph_type_string, delimiter_position_array, n_hydrograph_types)
 
-        return hydrograph_type_list, hydrograph_location_type_list
-
-
+        return dict(zip(hydrograph_type_list, np.array(hydrograph_location_type_list)))
 
     def get_n_hydrographs(self, feature_type):
         ''' returns the number of hydrographs for a given IWFM feature type
