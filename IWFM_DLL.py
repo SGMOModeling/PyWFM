@@ -1075,7 +1075,8 @@ class IWFM_Model:
         '''
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetNDiversions"):
-            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetNDiversions'))
+            raise AttributeError('IWFM DLL does not have "{}" procedure. '
+                                 'Check for an updated version'.format('IW_Model_GetNDiversions'))
 
         # reset instance variable status to -1
         self.status = ctypes.c_int(-1)
@@ -1110,7 +1111,7 @@ class IWFM_Model:
         self.status = ctypes.c_int(-1)
 
         # initialize output variables
-        diversion_ids = (ctypes.c_int*n_diversion.value)()
+        diversion_ids = (ctypes.c_int*n_diversions.value)()
 
         self.dll.IW_Model_GetDiversionIDs(ctypes.byref(n_diversions),
                                           diversion_ids,
@@ -1629,9 +1630,154 @@ class IWFM_Model:
 
         return np.array(x), np.array(y)
 
-    def get_hydrograph(self, hydrograph_type, hydrograph_id, layer_number, 
-                       begin_date, end_date, time_interval, length_conversion_factor, volume_conversion_factor):
-        pass
+    def _get_hydrograph(self, hydrograph_type, hydrograph_id, layer_number=1, 
+                        begin_date=None, end_date=None, length_conversion_factor=1.0, 
+                        volume_conversion_factor=2.29568E-8):
+        ''' returns a simulated hydrograph for a selected hydrograph type and hydrograph index 
+        
+        Parameters
+        ----------
+        hydrograph_type : int
+            one of the available hydrograph types for the model retrieved using
+            get_hydrograph_type_list method
+            
+        hydrograph_id : int
+            id for hydrograph being retrieved
+            
+        layer_number : int, default=1
+            layer number for returning hydrograph. only used for groundwater hydrograph
+            at node and layer
+            
+        begin_date : str, default=None
+            IWFM-style date for the beginning date of the simulated groundwater heads
+
+        end_date : str, default=None
+            IWFM-style date for the end date of the simulated groundwater heads
+
+        length_conversion_factor : float, int, default=1.0
+            hydrographs with units of length are multiplied by this
+            value to convert simulation units to desired output units
+            
+        volume_conversion_factor : float, int, default=2.29568E-8
+            hydrographs with units of volume are multiplied by this
+            value to convert simulation units to desired output units
+
+        Returns
+        -------
+        np.arrays
+            1-D array of dates
+            1-D array of hydrograph values
+        '''
+        # check to see if IWFM procedure is available in user version of IWFM DLL
+        if not hasattr(self.dll, "IW_Model_GetHydrograph"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. ' 
+                                 'Check for an updated version'.format('IW_Model_GetHydrograph'))
+
+        # check that layer_number is an integer
+        if not isinstance(layer_number, int):
+            raise TypeError('layer_number must be an integer, '
+                             'value {} provided is of type {}'.format(layer_number, type(layer_number)))
+
+        # check layer number is valid
+        n_layers = self.get_n_layers()
+        if layer_number not in range(1,n_layers+1):
+            raise ValueError("Layer Number provided {} is not valid. "
+                             "Model only has {} layers".format(layer_number, n_layers))
+
+        # handle start and end dates
+        # get time specs
+        dates_list, output_interval = self.get_time_specs()
+        
+        if begin_date is None:
+            begin_date = dates_list[0]
+        else:
+            IWFM_Model._validate_iwfm_date(begin_date)
+
+            if begin_date not in dates_list:
+                raise ValueError('begin_date was not recognized as a model time step. use IWFM_Model.get_time_specs() method to check.')
+        
+        if end_date is None:
+            end_date = dates_list[-1]
+        else:
+            IWFM_Model._validate_iwfm_date(end_date)
+
+            if end_date not in dates_list:
+                raise ValueError('end_date was not found in the Budget file. use IWFM_Model.get_time_specs() method to check.')
+
+        if self.is_date_greater(begin_date, end_date):
+            raise ValueError('end_date must occur after begin_date')
+                
+        # check that length conversion factor is a number
+        if not isinstance(length_conversion_factor, (int, float)):
+            raise TypeError('length_conversion_factor must be a number. '
+                             'value {} provides is of type {}'.format(length_conversion_factor, 
+                                                                      type(length_conversion_factor)))
+
+        # check that volume conversion factor is a number
+        if not isinstance(volume_conversion_factor, (int, float)):
+            raise TypeError('volume_conversion_factor must be a number. '
+                             'value {} provides is of type {}'.format(volume_conversion_factor, 
+                                                                      type(volume_conversion_factor)))
+        
+        # convert hydrograph type to ctypes
+        hydrograph_type = ctypes.c_int(hydrograph_type)
+
+        # convert hydrograph_id to ctypes
+        hydrograph_id = ctypes.c_int(hydrograph_id)
+
+        # convert layer number to ctypes
+        layer_number = ctypes.c_int(layer_number)
+
+        # get number of time intervals
+        num_time_intervals = ctypes.c_int(self.get_n_intervals(begin_date, end_date, output_interval))
+
+        # convert output interval to ctypes
+        output_interval = ctypes.create_string_buffer(output_interval.encode('utf-8'))
+
+        # get length of time interval
+        length_time_interval = ctypes.c_int(ctypes.sizeof(output_interval))
+
+        # convert dates to ctypes
+        begin_date = ctypes.create_string_buffer(begin_date.encode('utf-8'))
+        end_date = ctypes.create_string_buffer(end_date.encode('utf-8'))
+
+        # get length of begin_date and end_date strings
+        length_date_string = ctypes.c_int(ctypes.sizeof(begin_date))
+
+        # convert length_conversion_factor to ctypes
+        length_conversion_factor = ctypes.c_double(length_conversion_factor)
+
+        # convert volume_conversion_factor to ctypes
+        volume_conversion_factor = ctypes.c_double(volume_conversion_factor)
+
+        # initialize output variables
+        output_dates = (ctypes.c_double*num_time_intervals.value)()
+        output_hydrograph = (ctypes.c_double*num_time_intervals.value)()
+        data_unit_type_id = ctypes.c_int(0)
+        num_time_steps = ctypes.c_int(0)
+
+        # reset instance variable status to -1
+        self.status = ctypes.c_int(-1)
+
+        self.dll.IW_Model_GetHydrograph(ctypes.byref(hydrograph_type),
+                                        ctypes.byref(hydrograph_id),
+                                        ctypes.byref(layer_number),
+                                        ctypes.byref(length_date_string),
+                                        begin_date,
+                                        end_date,
+                                        ctypes.byref(length_time_interval),
+                                        output_interval,
+                                        ctypes.byref(length_conversion_factor),
+                                        ctypes.byref(volume_conversion_factor),
+                                        ctypes.byref(num_time_intervals),
+                                        output_dates,
+                                        output_hydrograph,
+                                        ctypes.byref(data_unit_type_id),
+                                        ctypes.byref(num_time_steps),
+                                        ctypes.byref(self.status))
+
+        return np.array('1899-12-30', dtype='datetime64') + np.array(output_dates, dtype='timedelta64[D]'), np.array(output_hydrograph)
+
 
     def get_gwheads_foralayer(self, layer_number, begin_date=None, end_date=None, length_conversion_factor=1.0):
         ''' returns the simulated groundwater heads for a single user-specified model layer for
@@ -1642,10 +1788,10 @@ class IWFM_Model:
         layer_number : int
             layer number for a layer in the model
         
-        begin_date : str
+        begin_date : str, default=None
             IWFM-style date for the beginning date of the simulated groundwater heads
 
-        end_date : str
+        end_date : str, default=None
             IWFM-style date for the end date of the simulated groundwater heads
 
         length_conversion_factor : float, int, default=1.0
@@ -1688,11 +1834,13 @@ class IWFM_Model:
         '''
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetGWHeads_ForALayer"):
-            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetGWHeads_ForALayer'))
+            raise AttributeError('IWFM DLL does not have "{}" procedure. ' 
+                                 'Check for an updated version'.format('IW_Model_GetGWHeads_ForALayer'))
         
         # check that layer_number is an integer
         if not isinstance(layer_number, int):
-            raise ValueError('layer_number must be an integer, value {} provided is of type {}'.format(layer_number, type(layer_number)))
+            raise TypeError('layer_number must be an integer, '
+                             'value {} provided is of type {}'.format(layer_number, type(layer_number)))
 
         # handle start and end dates
         # get time specs
@@ -1719,7 +1867,7 @@ class IWFM_Model:
                 
         # check that length conversion factor is a number
         if not isinstance(length_conversion_factor, (int, float)):
-            raise ValueError('length_conversion_factor must be a number. value {} provides is of type {}'.format(length_conversion_factor, type(length_conversion_factor)))
+            raise TypeError('length_conversion_factor must be a number. value {} provides is of type {}'.format(length_conversion_factor, type(length_conversion_factor)))
         
         # reset instance variable status to -1
         self.status = ctypes.c_int(-1)
@@ -2804,7 +2952,7 @@ class IWFM_Model:
 
         return element_geometry_info
 
-    def get_depth_to_water(self, layer_number, start_date=None, end_date=None):
+    def get_depth_to_water(self, layer_number, begin_date=None, end_date=None):
         ''' calculates a depth to water for an IWFM model layer for all dates between
         the provided start date and end date.
 
@@ -2859,7 +3007,7 @@ class IWFM_Model:
         gs_elevs = self.get_ground_surface_elevation()
 
         # get groundwater heads
-        dts, heads = self.get_gwheadsall_foralayer(layer_number, start_date, end_date)
+        dts, heads = self.get_gwheadsall_foralayer(layer_number, begin_date, end_date)
 
         # calculate depth to water
         depth_to_water = gs_elevs - heads
