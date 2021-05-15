@@ -156,7 +156,8 @@ class IWFM_Model:
         '''
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetNTimeSteps"):
-            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetNTimeSteps'))
+            raise AttributeError('IWFM DLL does not have "{}" procedure. '
+                                 'Check for an updated version'.format('IW_Model_GetNTimeSteps'))
         
         # reset instance variable status to -1
         self.status = ctypes.c_int(-1)
@@ -174,32 +175,25 @@ class IWFM_Model:
 
     def get_time_specs(self):
         ''' returns the IWFM simulation dates and time step
-        if the version of the DLL is prior or including IWFM 2015.0.1045,
-        the simulation dates will only include the start and end date.
-        
-        For newer versions, simulation dates will include all dates in 
-        the simulation. 
+
+        Returns
+        -------
+        tuple (length=2)
+            list: simulation dates
+            str: simulation time step 
         '''
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetTimeSpecs"):
-            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetTimeSpecs'))
+            raise AttributeError('IWFM DLL does not have "{}" procedure. '
+                                 'Check for an updated version'.format('IW_Model_GetTimeSpecs'))
             
-        # get version of the DLL to determine functionality of GetTimeSpecs procedure
-        dll_version = self.get_version()['IWFM Core']
-
         # reset instance variable status to -1
         self.status = ctypes.c_int(-1)
         
-        if dll_version in ['2015.0.706', '2015.0.828', '2015.0.961', '2015.0.1045']:
-            # set string length properties
-            n_data = ctypes.c_int(2)
-            length_dates = ctypes.c_int(32)
-            length_ts_interval = ctypes.c_int(8)
-            
-        else:
-            n_data = ctypes.c_int(self.get_n_time_steps())
-            length_dates = ctypes.c_int(n_data.value*16)
-            length_ts_interval = ctypes.c_int(8)
+        # set input variables
+        n_data = ctypes.c_int(self.get_n_time_steps())
+        length_dates = ctypes.c_int(n_data.value*16)
+        length_ts_interval = ctypes.c_int(8)
 
         # initialize output variables
         simulation_time_step = ctypes.create_string_buffer(length_ts_interval.value)
@@ -221,18 +215,9 @@ class IWFM_Model:
 
         return dates_list, sim_time_step
 
-    def get_output_interval(self, feature_type, data_type_index):
+    def get_output_interval(self):
         ''' returns a list of the possible time intervals a selected
         time-series data can be retrieved at.
-
-        Parameters
-        ----------
-        feature_type : str
-            valid feature type to obtain a location_type_id for feature
-
-        data_type_index : int
-            array index, i.e. 0-based (standard python) for data type 
-            returned for feature_type by running get_data_list method
 
         Returns
         -------
@@ -241,30 +226,11 @@ class IWFM_Model:
         '''
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetOutputIntervals"):
-            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetOutputIntervals'))
-
-        # check that provided feature_type is valid
-        IWFM_Model._validate_feature_type(feature_type)
-
-        # get number of data for provided feature_type
-        self.get_n_data_list(feature_type)
-
-        # get data types for provided feature_type
-        data_list = self.get_data_list(feature_type)
-
-        # get sub data types for provided feature_type and data_type_index
-        sub_data_list = self.get_sub_data_list(feature_type, data_type_index)
-
-        if not sub_data_list:
-            output_data_list = data_list
-        else:
-            output_data_list = sub_data_list
+            raise AttributeError('IWFM DLL does not have "{}" procedure. '
+                                 'Check for an updated version'.format('IW_Model_GetOutputIntervals'))
 
         # reset instance variable status to -1
         self.status = ctypes.c_int(-1)
-
-        # convert data_type_index to fortran-type (1-based)
-        selected_data_index = ctypes.c_int(data_type_index + 1)
 
         # set length of output intervals character array to 160 or larger
         length_output_intervals = ctypes.c_int(160)
@@ -277,18 +243,24 @@ class IWFM_Model:
         actual_num_time_intervals = ctypes.c_int(0)
         delimiter_position_array = (ctypes.c_int*max_num_time_intervals.value)()
             
-        self.dll.IW_Model_GetOutputIntervals(ctypes.byref(selected_data_index), 
-                                             output_intervals, 
+        self.dll.IW_Model_GetOutputIntervals(output_intervals, 
                                              ctypes.byref(length_output_intervals),
                                              delimiter_position_array,
                                              ctypes.byref(max_num_time_intervals),
                                              ctypes.byref(actual_num_time_intervals),
                                              ctypes.byref(self.status))
 
-        return output_data_list, IWFM_Model._string_to_list_by_array(output_intervals, delimiter_position_array, actual_num_time_intervals)
+        return IWFM_Model._string_to_list_by_array(output_intervals, 
+                                                   delimiter_position_array, 
+                                                   actual_num_time_intervals)
   
     def get_n_nodes(self):
         ''' returns the number of nodes in an IWFM model
+
+        Returns
+        -------
+        int
+            number of nodes specified in the IWFM model
         '''
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetNNodes"):
@@ -491,8 +463,8 @@ class IWFM_Model:
         subregion_ids = (ctypes.c_int*n_subregions.value)()
                 
         self.dll.IW_Model_GetSubregionIDs(ctypes.byref(n_subregions),
-                                                       subregion_ids,
-                                                       self.status)
+                                          subregion_ids,
+                                          ctypes.byref(self.status))
 
         return np.array(subregion_ids)
 
@@ -618,7 +590,7 @@ class IWFM_Model:
             number of stream nodes upstream of given stream node
         '''
         if not hasattr(self.dll, "IW_Model_GetStrmNUpstrmNodes"):
-            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetStrmNUpstreamNodes'))
+            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetStrmNUpstrmNodes'))
 
         # check that stream_node_id is an integer
         if not isinstance(stream_node_id, (int, np.int, np.int32, np.dtype('<i4'))):
@@ -638,7 +610,7 @@ class IWFM_Model:
         # initialize output variables
         n_upstream_stream_nodes = ctypes.c_int(0)
 
-        self.dll.IW_Model_GetStrmNUpstreamNodes(ctypes.byref(stream_node_id),
+        self.dll.IW_Model_GetStrmNUpstrmNodes(ctypes.byref(stream_node_id),
                                                 ctypes.byref(n_upstream_stream_nodes),
                                                 ctypes.byref(self.status))
 
@@ -1505,45 +1477,30 @@ class IWFM_Model:
 
         return dict(zip(hydrograph_type_list, np.array(hydrograph_location_type_list)))
 
-    def get_n_hydrographs(self, feature_type):
-        ''' returns the number of hydrographs for a given IWFM feature type
+    def _get_n_hydrographs(self, location_type_id):
+        '''private method returning the number of hydrographs for a given IWFM feature type
         
         Parameters
         ----------
-        feature_type : str (case-insensitive)
-            Valid feature types include:
-                'tile_drain'
-                'gw_head_obs'
-                'stream_hydrograph_obs'
-                'subsidence_obs'
-
-            Other feature types will raise a ValueError
+        location_type_id : int
+            integer id used internally to IWFM for location types
 
         Returns
         -------
         int
             number of hydrographs for the provided feature type
 
-        Examples
-        --------
-        >>> num_hydrographs = IWFM_Model.get_n_hydrographs('gw_head_obs')
-        >>> print(num_hydrographs)    
-        43
+        Notes
+        -----
+        this method only works with location_type_ids
+        - 9 (groundwater hydrographs)
+        - 10 (subsidence hydrographs)
+        - 12 (stream hydrographs)
+        - 13 (tile drains)
         '''
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetNHydrographs"):
             raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetNHydrographs'))
-
-        if not isinstance(feature_type, str):
-            raise TypeError('feature_type must be a string.')
-
-        _valid_feature_types = ['tile_drain', 
-                                'gw_head_obs', 
-                                'stream_hydrograph_obs', 
-                                'subsidence_obs']
-
-        if feature_type.lower() not in _valid_feature_types:
-            raise ValueError("invalid feature_type: {}. Must be:\n\t-{}".format(feature_type, '\n\t-'.join(_valid_feature_types)))
 
         # reset instance variable status to -1
         self.status = ctypes.c_int(-1)
@@ -1551,8 +1508,8 @@ class IWFM_Model:
         # initialize output variables
         n_hydrographs = ctypes.c_int(0)
 
-        # get location type id for valid location types
-        location_type_id = self.get_location_type_id(feature_type)
+        # convert location_type_id to ctypes
+        location_type_id = ctypes.c_int(location_type_id)
 
         self.dll.IW_Model_GetNHydrographs(ctypes.byref(location_type_id), 
                                           ctypes.byref(n_hydrographs), 
@@ -1560,13 +1517,26 @@ class IWFM_Model:
 
         return n_hydrographs.value
 
-    def get_hydrograph_ids(self, feature_type):
-        ''' returns the ids of the hydrographs for a provided feature_type
+    def _get_hydrograph_ids(self, location_type_id):
+        '''private method returning the ids of the hydrographs for a provided feature_type
 
         Parameters
         ----------
-        feature_type : str
-            valid feature type to obtain a location_type_id for feature
+        location_type_id : int
+            integer id used internally to IWFM for location types
+
+        Returns
+        -------
+        np.array
+            integer array containing ids for hydrographs of the given location type
+
+        Notes
+        -----
+        this method only works with location_type_ids
+        - 9 (groundwater hydrographs)
+        - 10 (subsidence hydrographs)
+        - 12 (stream hydrographs)
+        - 13 (tile drains)
         '''
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetHydrographIDs"):
@@ -1575,11 +1545,11 @@ class IWFM_Model:
         # reset instance variable status to -1
         self.status = ctypes.c_int(-1)
 
-        # get location type id. validation of feature_type internal to this function
-        location_type_id = self.get_location_type_id(feature_type)
+        # convert location_type_id to ctypes
+        location_type_id = ctypes.c_int(location_type_id)
 
         # get number of hydrographs
-        num_hydrographs = ctypes.c_int(self.get_n_hydrographs(feature_type))
+        num_hydrographs = ctypes.c_int(self._get_n_hydrographs(location_type_id.value))
 
         # initialize output variables
         hydrograph_ids = (ctypes.c_int*num_hydrographs.value)()
@@ -1591,19 +1561,27 @@ class IWFM_Model:
         
         return np.array(hydrograph_ids)
 
-    def get_hydrograph_coordinates(self, feature_type):
-        ''' returns the hydrograph coordinates for a provided feature type
+    def _get_hydrograph_coordinates(self, location_type_id):
+        ''' private method returning the hydrograph coordinates for a provided feature type
 
         Parameters
         ----------
-        feature_type : str
-            valid feature type to obtain a location_type_id for feature
+        location_type_id : int
+            integer id used internally to IWFM for location types
 
         Returns
         -------
         tuple : length 2
             index 0: np.array of x-coordinates of hydrographs
-            index 1: np.array of y-coordinates of hydrographs 
+            index 1: np.array of y-coordinates of hydrographs
+
+        Notes
+        -----
+        this method only works with location_type_ids
+        - 9 (groundwater hydrographs)
+        - 10 (subsidence hydrographs)
+        - 12 (stream hydrographs)
+        - 13 (tile drains)
         '''
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetHydrographCoordinates"):
@@ -1612,11 +1590,11 @@ class IWFM_Model:
         # reset instance variable status to -1
         self.status = ctypes.c_int(-1)
 
-        # get location type id. validation of feature_type performed in this function
-        location_type_id = self.get_location_type_id(feature_type)
+        # convert location_type_id to ctypes
+        location_type_id = ctypes.c_int(location_type_id)
 
         # get number of hydrographs
-        num_hydrographs = ctypes.c_int(self.get_n_hydrographs(feature_type))
+        num_hydrographs = ctypes.c_int(self._get_n_hydrographs(location_type_id.value))
 
         # initialize output variables
         x = (ctypes.c_double*num_hydrographs.value)()
@@ -1633,7 +1611,7 @@ class IWFM_Model:
     def _get_hydrograph(self, hydrograph_type, hydrograph_id, layer_number=1, 
                         begin_date=None, end_date=None, length_conversion_factor=1.0, 
                         volume_conversion_factor=2.29568E-8):
-        ''' returns a simulated hydrograph for a selected hydrograph type and hydrograph index 
+        ''' private method returning a simulated hydrograph for a selected hydrograph type and hydrograph index 
         
         Parameters
         ----------
@@ -2151,6 +2129,7 @@ class IWFM_Model:
         location_type_id_gw_head_obs = ctypes.c_int(0)
         location_type_id_stream_hyd_obs = ctypes.c_int(0)
         location_type_id_subsidence_obs = ctypes.c_int(0)
+        location_type_id_stream_node_bud = ctypes.c_int(0)
            
         self.dll.IW_GetLocationTypeIDs(ctypes.byref(location_type_id_node),
                                        ctypes.byref(location_type_id_element),
@@ -2164,6 +2143,7 @@ class IWFM_Model:
                                        ctypes.byref(location_type_id_gw_head_obs),
                                        ctypes.byref(location_type_id_stream_hyd_obs),
                                        ctypes.byref(location_type_id_subsidence_obs),
+                                       ctypes.byref(location_type_id_stream_node_bud),
                                        ctypes.byref(self.status))
             
         self.location_type_ids = dict(
@@ -2178,7 +2158,8 @@ class IWFM_Model:
             small_watershed=location_type_id_small_watershed,
             gw_head_obs=location_type_id_gw_head_obs,
             stream_hydrograph_obs=location_type_id_stream_hyd_obs,
-            subsidence_obs=location_type_id_subsidence_obs
+            subsidence_obs=location_type_id_subsidence_obs,
+            stream_node_bud=location_type_id_stream_node_bud
             )
             
     def get_location_type_id(self, feature_type):
