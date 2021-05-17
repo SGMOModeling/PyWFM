@@ -702,11 +702,12 @@ class IWFM_Model:
         int
             number of data points in the stream flow rating table
         '''
-        if not hasattr(self.dll, "IW_Model_GetNRatingTablePoints"):
-            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetNRatingTablePoints'))
+        if not hasattr(self.dll, "IW_Model_GetNStrmRatingTablePoints"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. '
+                                 'Check for an updated version'.format('IW_Model_GetNStrmRatingTablePoints'))
 
         # check that stream_node_id is an integer
-        if not isinstance(stream_node_id, (int, np.int, np.int32, np.dtype('<i4'))):
+        if not isinstance(stream_node_id, (int, np.int, np.int32, ctypes.c_long)):
             raise TypeError('stream_node_id must be an integer')
 
         # check that stream_node_id is a valid stream_node_id
@@ -714,8 +715,9 @@ class IWFM_Model:
         if not np.any(stream_node_ids == stream_node_id):
             raise ValueError('stream_node_id is not a valid Stream Node ID')
 
-        # set input variables
-        stream_node_id = ctypes.c_int(stream_node_id)
+        # set input variables convert to ctypes, if not already
+        if not isinstance(stream_node_id, ctypes.c_long):
+            stream_node_id = ctypes.c_int(stream_node_id)
 
         # reset_instance variable status to -1
         self.status = ctypes.c_int(-1)
@@ -723,9 +725,9 @@ class IWFM_Model:
         # initialize output variables
         n_rating_table_points = ctypes.c_int(0)
 
-        self.dll.IW_Model_GetNRatingTablePoints(ctypes.byref(stream_node_id),
-                                                ctypes.byref(n_rating_table_points),
-                                                ctypes.byref(self.status))
+        self.dll.IW_Model_GetNStrmRatingTablePoints(ctypes.byref(stream_node_id),
+                                                    ctypes.byref(n_rating_table_points),
+                                                    ctypes.byref(self.status))
 
         return n_rating_table_points.value
 
