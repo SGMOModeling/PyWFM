@@ -634,7 +634,8 @@ class IWFM_Model:
             integer array of stream node ids upstream of the provided stream node id
         '''
         if not hasattr(self.dll, "IW_Model_GetStrmUpstrmNodes"):
-            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetStrmUpstrmNodes'))
+            raise AttributeError('IWFM DLL does not have "{}" procedure. '
+                                 'Check for an updated version'.format('IW_Model_GetStrmUpstrmNodes'))
 
         # check that stream_node_id is an integer
         if not isinstance(stream_node_id, (int, np.int, np.int32, ctypes.c_long)):
@@ -672,7 +673,8 @@ class IWFM_Model:
             array of float with the stream channel elevation for each stream node
         '''
         if not hasattr(self.dll, "IW_Model_GetStrmBottomElevs"):
-            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetStrmBottomElevs'))
+            raise AttributeError('IWFM DLL does not have "{}" procedure. '
+                                 'Check for an updated version'.format('IW_Model_GetStrmBottomElevs'))
 
         # set input variables
         n_stream_nodes = ctypes.c_int(self.get_n_stream_nodes())
