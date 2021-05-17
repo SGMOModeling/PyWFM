@@ -577,7 +577,8 @@ class IWFM_Model:
         return np.array(stream_node_ids)
 
     def get_n_stream_nodes_upstream_of_stream_node(self, stream_node_id):
-        ''' returns the number of stream nodes upstream of the provided stream node id
+        ''' returns the number of stream nodes immediately upstream of
+        the provided stream node id
         
         Parameters
         ----------
@@ -587,13 +588,14 @@ class IWFM_Model:
         Returns
         -------
         int
-            number of stream nodes upstream of given stream node
+            number of stream nodes immediately upstream of given stream node
         '''
         if not hasattr(self.dll, "IW_Model_GetStrmNUpstrmNodes"):
-            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetStrmNUpstrmNodes'))
+            raise AttributeError('IWFM DLL does not have "{}" procedure. '
+                                 'Check for an updated version'.format('IW_Model_GetStrmNUpstrmNodes'))
 
         # check that stream_node_id is an integer
-        if not isinstance(stream_node_id, (int, np.int, np.int32, np.dtype('<i4'))):
+        if not isinstance(stream_node_id, (int, np.int, np.int32, ctypes.c_long)):
             raise TypeError('stream_node_id must be an integer')
 
         # check that stream_node_id is a valid stream_node_id
@@ -602,7 +604,8 @@ class IWFM_Model:
             raise ValueError('stream_node_id is not a valid Stream Node ID')
 
         # set input variables
-        stream_node_id = ctypes.c_int(stream_node_id)
+        if not isinstance(stream_node_id, ctypes.c_long):
+            stream_node_id = ctypes.c_int(stream_node_id)
         
         # reset instance variable status to -1
         self.status = ctypes.c_int(-1)
@@ -611,13 +614,14 @@ class IWFM_Model:
         n_upstream_stream_nodes = ctypes.c_int(0)
 
         self.dll.IW_Model_GetStrmNUpstrmNodes(ctypes.byref(stream_node_id),
-                                                ctypes.byref(n_upstream_stream_nodes),
-                                                ctypes.byref(self.status))
+                                              ctypes.byref(n_upstream_stream_nodes),
+                                              ctypes.byref(self.status))
 
         return n_upstream_stream_nodes.value
 
     def get_stream_nodes_upstream_of_stream_node(self, stream_node_id):
-        ''' returns an array of the stream node ids upstream of the provided stream node id
+        ''' returns an array of the stream node ids immediately upstream
+        of the provided stream node id
         
         Parameters
         ----------
@@ -633,7 +637,7 @@ class IWFM_Model:
             raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetStrmUpstrmNodes'))
 
         # check that stream_node_id is an integer
-        if not isinstance(stream_node_id, (int, np.int, np.int32, np.dtype('<i4'))):
+        if not isinstance(stream_node_id, (int, np.int, np.int32, ctypes.c_long)):
             raise TypeError('stream_node_id must be an integer')
 
         # check that stream_node_id is a valid stream_node_id
@@ -642,7 +646,8 @@ class IWFM_Model:
             raise ValueError('stream_node_id is not a valid Stream Node ID')
 
         # set input variables
-        stream_node_id = ctypes.c_int(stream_node_id)
+        if not isinstance(stream_node_id, ctypes.c_long):
+            stream_node_id = ctypes.c_int(stream_node_id)
         n_upstream_stream_nodes = ctypes.c_int(self.get_n_stream_nodes_upstream_of_stream_node(stream_node_id))
 
         # reset instance variable status to -1
