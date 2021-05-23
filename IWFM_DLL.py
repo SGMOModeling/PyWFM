@@ -954,7 +954,7 @@ class IWFM_Model:
         return stream_flow.value
 
     def get_stream_flows(self, flow_conversion_factor=1.0):
-        ''' returns stream flows at every stream node for the current timesteps 
+        ''' returns stream flows at every stream node for the current timestep 
         
         Parameters
         ----------
@@ -995,9 +995,47 @@ class IWFM_Model:
 
         return np.array(stream_flows)
 
-    def get_stream_stages(self):
-        # is_for_inquiry=0
-        pass
+    def get_stream_stages(self, stage_conversion_factor=1.0):
+        ''' returns stream stages at every stream node for the current timestep
+        
+        Parameters
+        ----------
+        stage_conversion_factor : float
+            conversion factor for stream stages from the 
+            simulation units of length to a desired unit of length
+
+        Returns
+        -------
+        np.ndarray
+            stages for all stream nodes for the current simulation timestep
+
+        Notes
+        -----
+        This method is designed for use when is_for_inquiry=0 to return
+        stream stages at the current timestep during a simulation.
+        '''
+        if not hasattr(self.dll, "IW_Model_GetStrmStages"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. '
+                                 'Check for an updated version'.format("IW_Model_GetStrmStages"))
+
+        # get number of stream nodes in the model
+        n_stream_nodes = ctypes.c_int(self.get_n_stream_nodes())
+
+        # convert unit conversion factor to ctypes
+        stage_conversion_factor = ctypes.c_double(stage_conversion_factor)
+
+        # initialize output variables
+        stream_stages = (ctypes.c_double*n_stream_nodes.value)()
+
+        # reset instance method status to -1
+        self.status = ctypes.c_int(-1)
+
+        self.dll.IW_GetStrmFlows(ctypes.byref(n_stream_nodes),
+                                 ctypes.byref(stage_conversion_factor),
+                                 stream_stages,
+                                 ctypes.byref(self.status))
+
+        return np.array(stream_stages)
 
     def get_stream_tributary_inflows(self, inflow_conversion_factor):
         # is_for_inquiry=0
