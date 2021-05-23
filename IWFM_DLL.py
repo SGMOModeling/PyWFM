@@ -748,7 +748,8 @@ class IWFM_Model:
             length 2 tuple of np.ndarrays representing stage and flow, respectively
         '''
         if not hasattr(self.dll, "IW_Model_GetStrmRatingTable"):
-            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetStrmRatingTable'))
+            raise AttributeError('IWFM DLL does not have "{}" procedure. '
+                                 'Check for an updated version'.format('IW_Model_GetStrmRatingTable'))
 
         # check that stream_node_id is an integer
         if not isinstance(stream_node_id, (int, np.int, np.int32, np.dtype('<i4'))):
@@ -788,7 +789,8 @@ class IWFM_Model:
             number of stream boundary inflows
         '''
         if not hasattr(self.dll, "IW_Model_GetStrmNInflows"):
-            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format("IW_Model_GetStrmNInflows"))
+            raise AttributeError('IWFM DLL does not have "{}" procedure. '
+                                 'Check for an updated version'.format("IW_Model_GetStrmNInflows"))
         
         # set instance variable status to -1
         self.status = ctypes.c_int(-1)
@@ -811,7 +813,8 @@ class IWFM_Model:
             integer array of stream inflow node indices
         '''
         if not hasattr(self.dll, "IW_Model_GetStrmInflowNodes"):
-            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format("IW_Model_GetStrmInflowNodes"))
+            raise AttributeError('IWFM DLL does not have "{}" procedure. '
+                                 'Check for an updated version'.format("IW_Model_GetStrmInflowNodes"))
         
         # get number of stream inflow nodes
         n_stream_inflows = ctypes.c_int(self.get_n_stream_inflows())
@@ -838,7 +841,8 @@ class IWFM_Model:
             integer array of stream inflow node indices
         '''
         if not hasattr(self.dll, "IW_Model_GetStrmInflowIDs"):
-            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format("IW_Model_GetStrmInflowIDs"))
+            raise AttributeError('IWFM DLL does not have "{}" procedure. '
+                                 'Check for an updated version'.format("IW_Model_GetStrmInflowIDs"))
         
         # get number of stream inflow nodes
         n_stream_inflows = ctypes.c_int(self.get_n_stream_inflows())
@@ -855,40 +859,141 @@ class IWFM_Model:
 
         return np.array(stream_inflow_ids)
 
-    def get_stream_inflows_at_some_locations(self, stream_inflow_locations):
-        ''' returns user-specified stream boundary inflows at a specified
-        set of inflows listed by their indices
+    def get_stream_inflows_at_some_locations(self, stream_inflow_locations, inflow_conversion_factor=1.0):
+        ''' returns stream boundary inflows at a specified set of inflow
+        locations listed by their indices for the current simulation timestep
         
         Parameters
         ----------
-        stream_inflow_locations : int
+        stream_inflow_locations : list of int
+            one or more stream inflow ids used to return flows
+
+        inflow_conversion_factor : float, default=1.0
+            conversion factor for stream boundary inflows from the 
+            simulation units of volume to a desired unit of volume
 
         Returns
         -------
+        np.ndarray
+            array of inflows for the inflow locations at the current 
+            simulation time step
 
         Notes
         -----
-        This method is designed to return stream inflows at the current
-        timestep during a simulation.
+        This method is designed for use when is_for_inquiry=0 to return
+        stream inflows at the current timestep during a simulation.
         '''
-        if self.is_for_inquiry != 0:
-            raise RuntimeError("This function can only be used when the model object is instantiated with the is_for_inquiry flag set to 0")
+        #if self.is_for_inquiry != 0:
+        #    raise RuntimeError("This function can only be used when the model object is instantiated with the is_for_inquiry flag set to 0")
 
         if not hasattr(self.dll, "IW_Model_GetStrmInflows_AtSomeInflows"):
-            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format("IW_Model_GetStrmInflows_AtSomeInflows"))
+            raise AttributeError('IWFM DLL does not have "{}" procedure. '
+                                 'Check for an updated version'.format("IW_Model_GetStrmInflows_AtSomeInflows"))
+
+        # initialize input variables
+        n_stream_inflow_locations = ctypes.c_int(len(stream_inflow_locations))
+        stream_inflow_locations = (ctypes.c_int*n_stream_inflow_locations.value)(*stream_inflow_locations)
+        inflow_conversion_factor = ctypes.c_double(inflow_conversion_factor)
+
+        # set instance variable status to -1
+        self.status = ctypes.c_int(-1)
 
         # initialize output variables
-        
-        
-        #self.dll.IW_Model_GetStrmInflows_AtSomeInflows()
+        inflows = (ctypes.c_double*n_stream_inflow_locations.value)()
+                
+        self.dll.IW_Model_GetStrmInflows_AtSomeInflows(ctypes.byref(n_stream_inflow_locations),
+                                                       stream_inflow_locations,
+                                                       ctypes.byref(inflow_conversion_factor),
+                                                       inflows,
+                                                       ctypes.byref(self.status))
+
+        return np.array(inflows)
 
     def get_stream_flow_at_location(self, stream_node_id, flow_conversion_factor):
-        # is_for_inquiry=0
-        pass
+        ''' returns stream flow at a stream node for the current time
+        step in a simulation 
 
-    def get_stream_flows(self):
-        # is_for_inquiry=0
-        pass
+        Parameters
+        ----------
+        stream_node_id : int
+            stream node index where flow is retrieved
+
+        flow_conversion_factor : float
+            conversion factor for stream flows from the 
+            simulation units of volume to a desired unit of volume
+
+        Returns
+        -------
+        float
+            stream flow at specified stream node
+        
+        Notes
+        -----
+        This method is designed for use when is_for_inquiry=0 to return
+        a stream flow at the current timestep during a simulation.
+        '''
+        if not hasattr(self.dll, "IW_Model_GetStrmFlow"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. '
+                                 'Check for an updated version'.format("IW_Model_GetStrmFlow"))
+        
+        # convert input variables to ctypes
+        stream_node_id = ctypes.c_int(stream_node_id)
+        flow_conversion_factor = ctypes.c_double(flow_conversion_factor)
+
+        # initialize output variables
+        stream_flow = ctypes.c_double(0)
+
+        # set instance variable status to -1
+        self.status = ctypes.c_int(-1)
+
+        self.dll.IW_Model_GetStrmFlow(ctypes.byref(stream_node_id),
+                                      ctypes.byref(flow_conversion_factor),
+                                      ctypes.byref(stream_flow),
+                                      ctypes.byref(self.status))
+
+        return stream_flow.value
+
+    def get_stream_flows(self, flow_conversion_factor=1.0):
+        ''' returns stream flows at every stream node for the current timesteps 
+        
+        Parameters
+        ----------
+        flow_conversion_factor : float
+            conversion factor for stream flows from the 
+            simulation units of volume to a desired unit of volume
+
+        Returns
+        -------
+        np.ndarray
+            flows for all stream nodes for the current simulation timestep
+
+        Notes
+        -----
+        This method is designed for use when is_for_inquiry=0 to return
+        stream flows at the current timestep during a simulation.
+        '''
+        if not hasattr(self.dll, "IW_Model_GetStrmFlows"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. '
+                                 'Check for an updated version'.format("IW_Model_GetStrmFlows"))
+
+        # get number of stream nodes in the model
+        n_stream_nodes = ctypes.c_int(self.get_n_stream_nodes())
+
+        # convert unit conversion factor to ctypes
+        flow_conversion_factor = ctypes.c_double(flow_conversion_factor)
+
+        # initialize output variables
+        stream_flows = (ctypes.c_double*n_stream_nodes.value)()
+
+        # reset instance method status to -1
+        self.status = ctypes.c_int(-1)
+
+        self.dll.IW_GetStrmFlows(ctypes.byref(n_stream_nodes),
+                                 ctypes.byref(flow_conversion_factor),
+                                 stream_flows,
+                                 ctypes.byref(self.status))
+
+        return np.array(stream_flows)
 
     def get_stream_stages(self):
         # is_for_inquiry=0
