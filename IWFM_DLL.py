@@ -1082,31 +1082,72 @@ class IWFM_Model:
 
         return np.array(small_watershed_inflows)
 
-    def get_stream_rainfall_runoff(self, runoff_conversion_factor):
+    def get_stream_rainfall_runoff(self, runoff_conversion_factor=1.0):
+        ''' returns small watershed inflows at every stream node for the current timestep
+        
+        Parameters
+        ----------
+        runoff_conversion_factor : float
+            conversion factor for inflows due to rainfall-runoff from 
+            the simulation units of volume to a desired unit of volume
+
+        Returns
+        -------
+        np.ndarray
+            inflows from rainfall-runoff for all stream nodes for the
+            current simulation timestep
+
+        Notes
+        -----
+        This method is designed for use when is_for_inquiry=0 to return
+        inflows from rainfall-runoff at the current timestep during a simulation.
+
+        stream nodes without rainfall-runoff draining to it will be 0
+        '''
+        if not hasattr(self.dll, "IW_Model_GetStrmRainfallRunoff"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. '
+                                 'Check for an updated version'.format("IW_Model_GetStrmRainfallRunoff"))
+
+        # get number of stream nodes in the model
+        n_stream_nodes = ctypes.c_int(self.get_n_stream_nodes())
+
+        # convert unit conversion factor to ctypes
+        runoff_conversion_factor = ctypes.c_double(runoff_conversion_factor)
+
+        # initialize output variables
+        rainfall_runoff_inflows = (ctypes.c_double*n_stream_nodes.value)()
+
+        # reset instance method status to -1
+        self.status = ctypes.c_int(-1)
+
+        self.dll.IW_Model_GetStrmRainfallRunoff(ctypes.byref(n_stream_nodes),
+                                                ctypes.byref(runoff_conversion_factor),
+                                                rainfall_runoff_inflows,
+                                                ctypes.byref(self.status))
+
+        return np.array(rainfall_runoff_inflows)
+
+    def get_stream_return_flows(self, return_flow_conversion_factor=1.0):
         # is_for_inquiry=0
         pass
 
-    def get_stream_return_flows(self, return_flow_conversion_factor):
+    def get_stream_tile_drains(self, tile_drain_flow_conversion_factor=1.0):
         # is_for_inquiry=0
         pass
 
-    def get_stream_tile_drains(self, tile_drain_flow_conversion_factor):
+    def get_stream_riparian_evapotranspiration(self, evapotranspiration_conversion_factor=1.0):
         # is_for_inquiry=0
         pass
 
-    def get_stream_riparian_evapotranspiration(self, evapotranspiration_conversion_factor):
+    def get_stream_gain_from_groundwater(self, stream_gain_conversion_factor=1.0):
         # is_for_inquiry=0
         pass
 
-    def get_stream_gain_from_groundwater(self, stream_gain_conversion_factor):
+    def get_stream_gain_from_lakes(self, lake_inflow_conversion_factor=1.0):
         # is_for_inquiry=0
         pass
 
-    def get_stream_gain_from_lakes(self, lake_inflow_conversion_factor):
-        # is_for_inquiry=0
-        pass
-
-    def get_net_bypass_inflows(self, bypass_inflow_conversion_factor):
+    def get_net_bypass_inflows(self, bypass_inflow_conversion_factor=1.0):
         # is_for_inquiry=0
         pass
 
