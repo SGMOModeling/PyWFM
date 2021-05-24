@@ -1128,7 +1128,8 @@ class IWFM_Model:
         return np.array(rainfall_runoff_inflows)
 
     def get_stream_return_flows(self, return_flow_conversion_factor=1.0):
-        ''' returns small watershed inflows at every stream node for the current timestep
+        ''' returns agricultural and urban return flows at every stream
+        node for the current timestep
         
         Parameters
         ----------
@@ -1172,9 +1173,51 @@ class IWFM_Model:
 
         return np.array(return_flows)
 
-    def get_stream_tile_drains(self, tile_drain_flow_conversion_factor=1.0):
-        # is_for_inquiry=0
-        pass
+    def get_stream_tile_drains(self, tile_drain_conversion_factor=1.0):
+        ''' returns tile drain flows into every stream
+        node for the current timestep
+        
+        Parameters
+        ----------
+        tile_drain_conversion_factor : float
+            conversion factor for tile drain flows from 
+            the simulation units of volume to a desired unit of volume
+
+        Returns
+        -------
+        np.ndarray
+            tile drain flows for all stream nodes for the current 
+            simulation timestep
+
+        Notes
+        -----
+        This method is designed for use when is_for_inquiry=0 to tile
+        drain flows at the current timestep during a simulation.
+
+        stream nodes without tile drain flows will be 0
+        '''
+        if not hasattr(self.dll, "IW_Model_GetStrmTileDrains"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. '
+                                 'Check for an updated version'.format("IW_Model_GetStrmTileDrains"))
+
+        # get number of stream nodes in the model
+        n_stream_nodes = ctypes.c_int(self.get_n_stream_nodes())
+
+        # convert unit conversion factor to ctypes
+        tile_drain_conversion_factor = ctypes.c_double(tile_drain_conversion_factor)
+
+        # initialize output variables
+        tile_drain_flows = (ctypes.c_double*n_stream_nodes.value)()
+
+        # reset instance method status to -1
+        self.status = ctypes.c_int(-1)
+
+        self.dll.IW_Model_GetStrmTileDrains(ctypes.byref(n_stream_nodes),
+                                             ctypes.byref(tile_drain_conversion_factor),
+                                             tile_drain_flows,
+                                             ctypes.byref(self.status))
+
+        return np.array(tile_drain_flows)
 
     def get_stream_riparian_evapotranspiration(self, evapotranspiration_conversion_factor=1.0):
         # is_for_inquiry=0
