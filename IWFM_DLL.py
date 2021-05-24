@@ -1037,9 +1037,50 @@ class IWFM_Model:
 
         return np.array(stream_stages)
 
-    def get_stream_tributary_inflows(self, inflow_conversion_factor):
-        # is_for_inquiry=0
-        pass
+    def get_stream_tributary_inflows(self, inflow_conversion_factor=1.0):
+        ''' returns small watershed inflows at every stream node for the current timestep
+        
+        Parameters
+        ----------
+        inflow_conversion_factor : float
+            conversion factor for small watershed flows from the 
+            simulation units of volume to a desired unit of volume
+
+        Returns
+        -------
+        np.ndarray
+            inflows from small watersheds for all stream nodes for the
+            current simulation timestep
+
+        Notes
+        -----
+        This method is designed for use when is_for_inquiry=0 to return
+        small watershed inflows at the current timestep during a simulation.
+
+        stream nodes without a small watershed draining to it will be 0
+        '''
+        if not hasattr(self.dll, "IW_Model_GetStrmTributaryInflows"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. '
+                                 'Check for an updated version'.format("IW_Model_GetStrmTributaryInflows"))
+
+        # get number of stream nodes in the model
+        n_stream_nodes = ctypes.c_int(self.get_n_stream_nodes())
+
+        # convert unit conversion factor to ctypes
+        inflow_conversion_factor = ctypes.c_double(inflow_conversion_factor)
+
+        # initialize output variables
+        small_watershed_inflows = (ctypes.c_double*n_stream_nodes.value)()
+
+        # reset instance method status to -1
+        self.status = ctypes.c_int(-1)
+
+        self.dll.IW_Model_GetStrmTributaryInflows(ctypes.byref(n_stream_nodes),
+                                                  ctypes.byref(inflow_conversion_factor),
+                                                  small_watershed_inflows,
+                                                  ctypes.byref(self.status))
+
+        return np.array(small_watershed_inflows)
 
     def get_stream_rainfall_runoff(self, runoff_conversion_factor):
         # is_for_inquiry=0
