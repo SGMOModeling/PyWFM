@@ -1840,22 +1840,64 @@ class IWFM_Model:
         return np.array(downstream_stream_nodes)
 
     def get_reach_outflow_destination(self):
-        '''
+        ''' This procedure returns the destination index that each stream
+        reach flows into. To find out the type of destination (i.e. lake, 
+        another stream node or outside the model domain) that the reaches 
+        flow into, it is necessary to call IW_Model_GetReachOutflowDestType 
+        procedure.
+
+        Returns
+        -------
+        np.ndarray
+            array of destination indices corresponding to the destination 
+            of flows exiting each stream reach
         '''
         if not hasattr(self.dll, "IW_Model_GetReachOutflowDest"):
             raise AttributeError('IWFM DLL does not have "{}" procedure. '
                                  'Check for an updated version'.format("IW_Model_GetReachOutflowDest"))
         
-        self.dll.IW_Model_GetReachOutflowDest()
+        # get number of reaches
+        n_reaches = ctypes.c_int(self.get_n_stream_reaches())
+
+        # initialize output variables
+        reach_outflow_destinations = (ctypes.c_int*n_reaches.value)()
+
+        # set instance variable status to -1
+        self.status = ctypes.c_int(-1)
+
+        self.dll.IW_Model_GetReachOutflowDest(ctypes.byref(n_reaches),
+                                              reach_outflow_destinations,
+                                              ctypes.byref(self.status))
+
+        return np.array(reach_outflow_destinations)
 
     def get_reach_outflow_destination_types(self):
-        '''
+        ''' returns the outflow destination types that each stream reach
+        flows into.
+
+        Returns
+        -------
+        np.ndarray
+            array of destination types for each reach in the IWFM model
         '''
         if not hasattr(self.dll, "IW_Model_GetReachOutflowDestType"):
             raise AttributeError('IWFM DLL does not have "{}" procedure. '
                                  'Check for an updated version'.format("IW_Model_GetReachOutflowDestType"))
         
-        self.dll.IW_Model_GetReachOutflowDestType()
+        # get number of reaches
+        n_reaches = ctypes.c_int(self.get_n_stream_reaches())
+
+        # initialize output variables
+        reach_outflow_destination_types = (ctypes.c_int*n_reaches.value)()
+
+        # set instance variable status to -1
+        self.status = ctypes.c_int(-1)
+
+        self.dll.IW_Model_GetReachOutflowDestType(ctypes.byref(n_reaches),
+                                                  reach_outflow_destination_types,
+                                                  ctypes.byref(self.status))
+
+        return np.array(reach_outflow_destination_types)
 
     def get_n_diversions(self):
         ''' returns the number of surface water diversions in an IWFM model
