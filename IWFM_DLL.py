@@ -1362,8 +1362,51 @@ class IWFM_Model:
         return np.array(gain_from_lakes)
 
     def get_net_bypass_inflows(self, bypass_inflow_conversion_factor=1.0):
-        # is_for_inquiry=0
-        pass
+        ''' returns net bypass inflows for every stream
+        node for the current timestep
+        
+        Parameters
+        ----------
+        bypass_inflow_conversion_factor : float
+            conversion factor for net bypass inflow from 
+            the simulation units of volume to a desired unit of volume
+
+        Returns
+        -------
+        np.ndarray
+            net bypass inflow for all stream nodes for the current 
+            simulation timestep
+
+        Notes
+        -----
+        This method is designed for use when is_for_inquiry=0 to return
+        net bypass inflow to streams at the current timestep during a 
+        simulation.
+
+        stream nodes without net bypass inflow will be 0
+        '''
+        if not hasattr(self.dll, "IW_Model_GetStrmGainFromLakes"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. '
+                                 'Check for an updated version'.format("IW_Model_GetStrmGainFromLakes"))
+
+        # get number of stream nodes in the model
+        n_stream_nodes = ctypes.c_int(self.get_n_stream_nodes())
+
+        # convert unit conversion factor to ctypes
+        bypass_inflow_conversion_factor = ctypes.c_double(bypass_inflow_conversion_factor)
+
+        # initialize output variables
+        net_bypass_inflow = (ctypes.c_double*n_stream_nodes.value)()
+
+        # reset instance method status to -1
+        self.status = ctypes.c_int(-1)
+
+        self.dll.IW_Model_GetStrmGainFromLakes(ctypes.byref(n_stream_nodes),
+                                               ctypes.byref(bypass_inflow_conversion_factor),
+                                               net_bypass_inflow,
+                                               ctypes.byref(self.status))
+
+        return np.array(net_bypass_inflow)
 
     def get_actual_stream_diversions_at_some_locations(self, diversion_id, diversion_conversion_factor):
         # is_for_inquiry=0
