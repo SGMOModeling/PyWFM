@@ -1315,8 +1315,51 @@ class IWFM_Model:
         return np.array(gain_from_groundwater)
 
     def get_stream_gain_from_lakes(self, lake_inflow_conversion_factor=1.0):
-        # is_for_inquiry=0
-        pass
+        ''' returns gain from lakes for every stream
+        node for the current timestep
+        
+        Parameters
+        ----------
+        lake_inflow_conversion_factor : float
+            conversion factor for gain from lakes from 
+            the simulation units of volume to a desired unit of volume
+
+        Returns
+        -------
+        np.ndarray
+            gain from lakes for all stream nodes for the current 
+            simulation timestep
+
+        Notes
+        -----
+        This method is designed for use when is_for_inquiry=0 to return
+        gain from groundwater at the current timestep during a 
+        simulation.
+
+        stream nodes without gain from lakes will be 0
+        '''
+        if not hasattr(self.dll, "IW_Model_GetStrmGainFromLakes"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. '
+                                 'Check for an updated version'.format("IW_Model_GetStrmGainFromLakes"))
+
+        # get number of stream nodes in the model
+        n_stream_nodes = ctypes.c_int(self.get_n_stream_nodes())
+
+        # convert unit conversion factor to ctypes
+        lake_inflow_conversion_factor = ctypes.c_double(lake_inflow_conversion_factor)
+
+        # initialize output variables
+        gain_from_lakes = (ctypes.c_double*n_stream_nodes.value)()
+
+        # reset instance method status to -1
+        self.status = ctypes.c_int(-1)
+
+        self.dll.IW_Model_GetStrmGainFromLakes(ctypes.byref(n_stream_nodes),
+                                               ctypes.byref(lake_inflow_conversion_factor),
+                                               gain_from_lakes,
+                                               ctypes.byref(self.status))
+
+        return np.array(gain_from_lakes)
 
     def get_net_bypass_inflows(self, bypass_inflow_conversion_factor=1.0):
         # is_for_inquiry=0
