@@ -1730,14 +1730,47 @@ class IWFM_Model:
 
         return np.array(upstream_stream_nodes)
 
-    def get_n_reaches_upstream_of_reach(self, reach_id):
-        '''
+    def get_n_reaches_upstream_of_reach(self, reach_index):
+        ''' returns the number of stream reaches immediately upstream 
+        of the specified reach
+
+        Parameters
+        ----------
+        reach_index : int
+            stream reach index to obtain the corresponding stream nodes. This 
+            is not necessarily the same as the reach id
+
+        Returns
+        -------
+        int
+            number of stream reaches immediately upstream of specified
+            stream reach.
+
+        Notes
+        -----
+        if no stream reaches upstream, returns 0
+        if reach downstream of confluence of tributaries, returns number 
+        of tributaries
+        otherwise, returns 1
         '''
         if not hasattr(self.dll, "IW_Model_GetReachNUpstrmReaches"):
             raise AttributeError('IWFM DLL does not have "{}" procedure. '
                                  'Check for an updated version'.format("IW_Model_GetReachNUpstrmReaches"))
+
+        # convert reach_index to ctypes
+        reach_index = ctypes.c_int(reach_index)
+
+        # initialize output variables
+        n_upstream_reaches = ctypes.c_int(0)
+
+        # set instance variable status to -1
+        self.status = ctypes.c_int(-1)
         
-        self.dll.IW_Model_GetReachNUpstrmReaches()
+        self.dll.IW_Model_GetReachNUpstrmReaches(ctypes.byref(reach_index),
+                                                 ctypes.byref(n_upstream_reaches),
+                                                 ctypes.byref(self.status))
+
+        return n_upstream_reaches.value
 
     def get_reaches_upstream_of_reach(self, reach_id):
         '''
