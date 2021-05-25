@@ -1408,9 +1408,58 @@ class IWFM_Model:
 
         return np.array(net_bypass_inflow)
 
-    def get_actual_stream_diversions_at_some_locations(self, diversion_id, diversion_conversion_factor):
-        # is_for_inquiry=0
-        pass
+    def get_actual_stream_diversions_at_some_locations(self, diversion_indices, diversion_conversion_factor):
+        ''' returns actual diversion amounts for a list of diversions
+        during a model simulation
+        
+        Parameters
+        ----------
+        diversion_indices : list of int, np.ndarray
+            one or more diversion indices where actual diversions are
+            returned. This is based on order not on the id used in the
+            input file
+
+        diversion_conversion_factor: float
+            conversion factor for actual diversions from the simulation 
+            unit of volume to a desired unit of volume
+        
+        Returns
+        -------
+        np.ndarray
+            actual diversions for the diversion indices provided
+        
+        Notes
+        -----
+        This method is designed for use when is_for_inquiry=0 to return
+        actual diversions amounts for selected diversion locations at 
+        the current timestep during a simulation.
+
+        Actual diversion amounts can be less than the required diversion 
+        amount if stream goes dry at the stream node where the diversion 
+        occurs
+        '''
+        if not hasattr(self.dll, "IW_Model_GetStrmActualDiversions_AtSomeDiversions"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. '
+                                 'Check for an updated version'.format("IW_Model_GetStrmActualDiversions_AtSomeDiversions"))
+
+        # initialize input variables
+        n_diversions = ctypes.c_int(len(diversion_indices))
+        diversion_indices = (ctypes.c_int*n_diversions.value)(*diversion_indices)
+        diversion_conversion_factor = ctypes.c_double(diversion_conversion_factor)
+
+        # set instance variable status to -1
+        self.status = ctypes.c_int(-1)
+
+        # initialize output variables
+        actual_diversion_amounts = (ctypes.c_double*n_diversions.value)()
+
+        self.dll.IW_Model_GetStrmActualDiversions_AtSomeDiversions(ctypes.byref(n_diversions),
+                                                                   diversion_indices,
+                                                                   ctypes.byref(diversion_conversion_factor),
+                                                                   actual_diversion_amounts,
+                                                                   ctypes.byref(self.status))
+        
+        return np.array(actual_diversion_amounts)
 
     def get_stream_diversion_locations(self, diversion_locations):
         ''' returns the stream node indices corresponding to diversion locations
