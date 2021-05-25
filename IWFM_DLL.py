@@ -1665,25 +1665,95 @@ class IWFM_Model:
         return np.array(reach_stream_nodes)
 
     def get_stream_reaches_for_stream_nodes(self, stream_node_indices):
-        pass
+        ''' returns the stream reach indices that correspond to a list of stream nodes
+
+        Parameters
+        ---------
+        stream_node_indices : list, np.ndarray
+            list or array of stream node indices where the stream reach
+            indices will be returned
+
+        Returns
+        -------
+        np.ndarray
+            array of stream reaches corresponding to stream node indices
+        '''
+        if not hasattr(self.dll, "IW_Model_GetReaches_ForStrmNodes"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. '
+                                 'Check for an updated version'.format("IW_Model_GetReaches_ForStrmNodes"))
+
+        # get number of stream nodes indices provided
+        n_stream_nodes = ctypes.c_int(len(stream_node_indices))
+
+        # convert stream node indices to ctypes
+        stream_node_indices = (ctypes.c_int*n_stream_nodes.value)(*stream_node_indices)
+
+        # initialize output variables
+        stream_reaches = (ctypes.c_int*n_stream_nodes.value)()
+
+        # set instance variable status to -1
+        self.status = ctypes.c_int(-1)
+        
+        self.dll.IW_Model_GetReaches_ForStrmNodes(ctypes.byref(n_stream_nodes),
+                                                  stream_node_indices,
+                                                  stream_reaches,
+                                                  ctypes.byref(self.status))
+
+        return np.array(stream_reaches)
 
     def get_upstream_node_in_stream_reach(self):
-        pass
+        '''
+        '''
+        if not hasattr(self.dll, "IW_Model_GetReachUpstrmNodes"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. '
+                                 'Check for an updated version'.format("IW_Model_GetReachUpstrmNodes"))
+        
+        self.dll.IW_Model_GetReachUpstrmNodes()
 
     def get_n_reaches_upstream_of_reach(self, reach_id):
-        pass
+        '''
+        '''
+        if not hasattr(self.dll, "IW_Model_GetReachNUpstrmReaches"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. '
+                                 'Check for an updated version'.format("IW_Model_GetReachNUpstrmReaches"))
+        
+        self.dll.IW_Model_GetReachNUpstrmReaches()
 
     def get_reaches_upstream_of_reach(self, reach_id):
-        pass
+        '''
+        '''
+        if not hasattr(self.dll, "IW_Model_GetReachUpstrmReaches"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. '
+                                 'Check for an updated version'.format("IW_Model_GetReachUpstrmReaches"))
+        
+        self.dll.IW_Model_GetReachUpstrmReaches()
 
     def get_downstream_node_in_stream_reach(self, reach_id):
-        pass
+        '''
+        '''
+        if not hasattr(self.dll, "IW_Model_GetReachDownstrmNodes"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. '
+                                 'Check for an updated version'.format("IW_Model_GetReachDownstrmNodes"))
+        
+        self.dll.IW_Model_GetReachDownstrmNodes()
 
     def get_reach_outflow_destination(self):
-        pass
+        '''
+        '''
+        if not hasattr(self.dll, "IW_Model_GetReachOutflowDest"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. '
+                                 'Check for an updated version'.format("IW_Model_GetReachOutflowDest"))
+        
+        self.dll.IW_Model_GetReachOutflowDest()
 
     def get_reach_outflow_destination_types(self):
-        pass
+        '''
+        '''
+        if not hasattr(self.dll, "IW_Model_GetReachOutflowDestType"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. '
+                                 'Check for an updated version'.format("IW_Model_GetReachOutflowDestType"))
+        
+        self.dll.IW_Model_GetReachOutflowDestType()
 
     def get_n_diversions(self):
         ''' returns the number of surface water diversions in an IWFM model
