@@ -1173,7 +1173,7 @@ class IWFM_Model:
 
         return np.array(return_flows)
 
-    def get_stream_tile_drains(self, tile_drain_conversion_factor=1.0):
+    def get_stream_tile_drain_flows(self, tile_drain_conversion_factor=1.0):
         ''' returns tile drain flows into every stream
         node for the current timestep
         
@@ -1191,8 +1191,8 @@ class IWFM_Model:
 
         Notes
         -----
-        This method is designed for use when is_for_inquiry=0 to tile
-        drain flows at the current timestep during a simulation.
+        This method is designed for use when is_for_inquiry=0 to return
+        tile drain flows at the current timestep during a simulation.
 
         stream nodes without tile drain flows will be 0
         '''
@@ -1220,12 +1220,99 @@ class IWFM_Model:
         return np.array(tile_drain_flows)
 
     def get_stream_riparian_evapotranspiration(self, evapotranspiration_conversion_factor=1.0):
-        # is_for_inquiry=0
-        pass
+        ''' returns riparian evapotranspiration from every stream
+        node for the current timestep
+        
+        Parameters
+        ----------
+        evapotranspiration_conversion_factor : float
+            conversion factor for riparian evapotranspiration from 
+            the simulation units of volume to a desired unit of volume
+
+        Returns
+        -------
+        np.ndarray
+            riparian evapotranspiration for all stream nodes for the current 
+            simulation timestep
+
+        Notes
+        -----
+        This method is designed for use when is_for_inquiry=0 to return
+        riparian evapotranspiration at the current timestep during a 
+        simulation.
+
+        stream nodes without riparian evapotranspiration will be 0
+        '''
+        if not hasattr(self.dll, "IW_Model_GetStrmRiparianETs"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. '
+                                 'Check for an updated version'.format("IW_Model_GetStrmRiparianETs"))
+
+        # get number of stream nodes in the model
+        n_stream_nodes = ctypes.c_int(self.get_n_stream_nodes())
+
+        # convert unit conversion factor to ctypes
+        evapotranspiration_conversion_factor = ctypes.c_double(evapotranspiration_conversion_factor)
+
+        # initialize output variables
+        riparian_evapotranspiration = (ctypes.c_double*n_stream_nodes.value)()
+
+        # reset instance method status to -1
+        self.status = ctypes.c_int(-1)
+
+        self.dll.IW_Model_GetStrmRiparianETs(ctypes.byref(n_stream_nodes),
+                                             ctypes.byref(evapotranspiration_conversion_factor),
+                                             riparian_evapotranspiration,
+                                             ctypes.byref(self.status))
+
+        return np.array(riparian_evapotranspiration)
 
     def get_stream_gain_from_groundwater(self, stream_gain_conversion_factor=1.0):
-        # is_for_inquiry=0
-        pass
+        ''' returns gain from groundwater for every stream
+        node for the current timestep
+        
+        Parameters
+        ----------
+        stream_gain_conversion_factor : float
+            conversion factor for gain from groundwater from 
+            the simulation units of volume to a desired unit of volume
+
+        Returns
+        -------
+        np.ndarray
+            gain from groundwater for all stream nodes for the current 
+            simulation timestep
+
+        Notes
+        -----
+        This method is designed for use when is_for_inquiry=0 to return
+        gain from groundwater at the current timestep during a 
+        simulation.
+
+        stream nodes with gain from groundwater will be +
+        stream nodes with loss to groundwater will be -
+        '''
+        if not hasattr(self.dll, "IW_Model_GetStrmGainFromGW"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. '
+                                 'Check for an updated version'.format("IW_Model_GetStrmGainFromGW"))
+
+        # get number of stream nodes in the model
+        n_stream_nodes = ctypes.c_int(self.get_n_stream_nodes())
+
+        # convert unit conversion factor to ctypes
+        stream_gain_conversion_factor = ctypes.c_double(stream_gain_conversion_factor)
+
+        # initialize output variables
+        gain_from_groundwater = (ctypes.c_double*n_stream_nodes.value)()
+
+        # reset instance method status to -1
+        self.status = ctypes.c_int(-1)
+
+        self.dll.IW_Model_GetStrmGainFromGW(ctypes.byref(n_stream_nodes),
+                                            ctypes.byref(stream_gain_conversion_factor),
+                                            gain_from_groundwater,
+                                            ctypes.byref(self.status))
+
+        return np.array(gain_from_groundwater)
 
     def get_stream_gain_from_lakes(self, lake_inflow_conversion_factor=1.0):
         # is_for_inquiry=0
