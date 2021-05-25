@@ -1586,11 +1586,83 @@ class IWFM_Model:
 
         return n_nodes_in_reach.value
 
-    def get_stream_reach_groundwater_nodes(self, reach_id):
-        pass
+    def get_stream_reach_groundwater_nodes(self, reach_index):
+        ''' returns the groundwater node indices corresponding to stream
+        nodes in a specified reach 
 
-    def get_stream_reach_stream_nodes(self, reach_id):
-        pass
+        Parameters
+        ----------
+        reach_index : int
+            stream reach index to obtain the corresponding groundwater nodes. This 
+            is not necessarily the same as the reach id
+
+        Returns
+        -------
+        np.ndarray
+            integer array of groundwater node indices corresponding to
+            stream reach
+        '''
+        if not hasattr(self.dll, "IW_Model_GetReachGWNodes"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. '
+                                 'Check for an updated version'.format("IW_Model_GetReachGWNodes"))
+
+        # convert reach index to ctypes
+        reach_index = ctypes.c_int(reach_index)
+
+        # get number of nodes in stream reach
+        n_nodes_in_reach = ctypes.c_int(self.get_n_nodes_in_stream_reach())
+
+        # initialize output variables
+        reach_groundwater_nodes = (ctypes.c_int*n_nodes_in_reach.value)()
+
+        # set instance variable status to -1
+        self.status = ctypes.c_int(-1)
+
+        self.dll.IW_Model_GetReachGWNodes(ctypes.byref(reach_index),
+                                          ctypes.byref(n_nodes_in_reach),
+                                          reach_groundwater_nodes,
+                                          ctypes.byref(self.status))
+
+        return np.array(reach_groundwater_nodes)
+
+    def get_stream_reach_stream_nodes(self, reach_index):
+        ''' returns the stream node indices corresponding to stream
+        nodes in a specified reach 
+
+        Parameters
+        ----------
+        reach_index : int
+            stream reach index to obtain the corresponding stream nodes. This 
+            is not necessarily the same as the reach id
+
+        Returns
+        -------
+        np.ndarray
+            integer array of stream node indices corresponding to
+            stream reach
+        '''
+        if not hasattr(self.dll, "IW_Model_GetReachStrmNodes"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. '
+                                 'Check for an updated version'.format("IW_Model_GetReachStrmNodes"))
+
+        # convert reach index to ctypes
+        reach_index = ctypes.c_int(reach_index)
+
+        # get number of nodes in stream reach
+        n_nodes_in_reach = ctypes.c_int(self.get_n_nodes_in_stream_reach())
+
+        # initialize output variables
+        reach_stream_nodes = (ctypes.c_int*n_nodes_in_reach.value)()
+
+        # set instance variable status to -1
+        self.status = ctypes.c_int(-1)
+
+        self.dll.IW_Model_GetReachStrmNodes(ctypes.byref(reach_index),
+                                            ctypes.byref(n_nodes_in_reach),
+                                            reach_stream_nodes,
+                                            ctypes.byref(self.status))
+
+        return np.array(reach_stream_nodes)
 
     def get_stream_reaches_for_stream_nodes(self, stream_node_indices):
         pass
