@@ -1810,14 +1810,34 @@ class IWFM_Model:
 
         return np.array(upstream_reaches)
 
-    def get_downstream_node_in_stream_reach(self, reach_index):
-        '''
+    def get_downstream_node_in_stream_reaches(self):
+        ''' returns the indices for the downstream stream node in each 
+        stream reach
+
+        Returns
+        -------
+        np.ndarray
+            array of stream node indices for the downstream stream node
+            in each stream reach
         '''
         if not hasattr(self.dll, "IW_Model_GetReachDownstrmNodes"):
             raise AttributeError('IWFM DLL does not have "{}" procedure. '
                                  'Check for an updated version'.format("IW_Model_GetReachDownstrmNodes"))
+
+        # get number of reaches specified in the model
+        n_reaches = ctypes.c_int(self.get_n_stream_reaches())
+
+        # initialize output variables
+        downstream_stream_nodes = (ctypes.c_int*n_reaches.value)()
+
+        # set instance variable status to -1
+        self.status = ctypes.c_int(-1)        
         
-        self.dll.IW_Model_GetReachDownstrmNodes()
+        self.dll.IW_Model_GetReachDownstrmNodes(ctypes.byref(n_reaches),
+                                                downstream_stream_nodes,
+                                                ctypes.byref(self.status))
+        
+        return np.array(downstream_stream_nodes)
 
     def get_reach_outflow_destination(self):
         '''
