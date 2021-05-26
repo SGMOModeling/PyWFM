@@ -909,7 +909,7 @@ class IWFM_Model:
 
         return np.array(inflows)
 
-    def get_stream_flow_at_location(self, stream_node_id, flow_conversion_factor):
+    def get_stream_flow_at_location(self, stream_node_id, flow_conversion_factor=1.0):
         ''' returns stream flow at a stream node for the current time
         step in a simulation 
 
@@ -988,7 +988,7 @@ class IWFM_Model:
         # reset instance method status to -1
         self.status = ctypes.c_int(-1)
 
-        self.dll.IW_GetStrmFlows(ctypes.byref(n_stream_nodes),
+        self.dll.IW_Model_GetStrmFlows(ctypes.byref(n_stream_nodes),
                                  ctypes.byref(flow_conversion_factor),
                                  stream_flows,
                                  ctypes.byref(self.status))
@@ -1030,10 +1030,10 @@ class IWFM_Model:
         # reset instance method status to -1
         self.status = ctypes.c_int(-1)
 
-        self.dll.IW_GetStrmFlows(ctypes.byref(n_stream_nodes),
-                                 ctypes.byref(stage_conversion_factor),
-                                 stream_stages,
-                                 ctypes.byref(self.status))
+        self.dll.IW_Model_GetStrmStages(ctypes.byref(n_stream_nodes),
+                                        ctypes.byref(stage_conversion_factor),
+                                        stream_stages,
+                                        ctypes.byref(self.status))
 
         return np.array(stream_stages)
 
@@ -1484,8 +1484,8 @@ class IWFM_Model:
         
         elif isinstance(diversion_locations, str):
             if diversion_locations.lower() == 'all':
-                n_diversions = self.get_n_diversions()
-                diversion_list = (ctypes.c_int*n_diversions.value)(*np.arange(1,n_diversions + 1))
+                n_diversions = ctypes.c_int(self.get_n_diversions())
+                diversion_list = (ctypes.c_int*n_diversions.value)(*np.arange(1,n_diversions.value + 1))
             else:
                 raise ValueError('diversion_locations must be a list, tuple, or np.ndarray or use "all"')
         else:
@@ -1610,7 +1610,7 @@ class IWFM_Model:
         reach_index = ctypes.c_int(reach_index)
 
         # get number of nodes in stream reach
-        n_nodes_in_reach = ctypes.c_int(self.get_n_nodes_in_stream_reach())
+        n_nodes_in_reach = ctypes.c_int(self.get_n_nodes_in_stream_reach(reach_index.value))
 
         # initialize output variables
         reach_groundwater_nodes = (ctypes.c_int*n_nodes_in_reach.value)()
