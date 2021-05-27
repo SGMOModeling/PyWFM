@@ -2104,10 +2104,17 @@ class IWFM_Model:
 
     def get_n_tile_drains(self):
         ''' returns the number of tile drain nodes in an IWFM model
+
+        Returns
+        -------
+        int
+            number of tile drains simulated in the IWFM model 
+            application
         '''
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetNTileDrainNodes"):
-            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetNTileDrainNodes'))
+            raise AttributeError('IWFM DLL does not have "{}" procedure. '
+                                 'Check for an updated version'.format('IW_Model_GetNTileDrainNodes'))
 
         # reset instance variable status to -1
         self.status = ctypes.c_int(-1)
@@ -2119,22 +2126,88 @@ class IWFM_Model:
                                              ctypes.byref(self.status))
         
         if not hasattr(self, "n_tile_drains"):
-            self.n_tile_drains = n_tile_drains
+            self.n_tile_drains = n_tile_drains.value
             
-        return self.n_tile_drains.value
+        return n_tile_drains.value
 
     def get_tile_drain_ids(self):
-        pass
+        ''' returns the user-specified identification numbers for tile
+        drains simulated in an IWFM model
+
+        Returns
+        -------
+        np.ndarray
+            array of all tile drain identification number specified in
+            an IWFM model
+        '''
+         # check to see if IWFM procedure is available in user version of IWFM DLL
+        if not hasattr(self.dll, "IW_Model_GetTileDrainIDs"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. '
+                                 'Check for an updated version'.format('IW_Model_GetTileDrainIDs'))
+
+        # initialize n_stream_reaches variable
+        n_tile_drains = ctypes.c_int(self.get_n_tile_drains())
+
+        # stop here if no lakes are specified
+        if n_tile_drains.value == 0:
+            return
+
+        # initialize output variables
+        tile_drain_ids = (ctypes.c_int*n_tile_drains.value)()
+
+        # reset instance variable status to -1
+        self.status = ctypes.c_int(-1)
+
+        self.dll.IW_Model_GetTileDrainIDs(ctypes.byref(n_tile_drains),
+                                          tile_drain_ids,
+                                          ctypes.byref(self.status))
+
+        return np.array(tile_drain_ids)
 
     def get_tile_drain_nodes(self):
-        pass
+        ''' returns the node ids where tile drains are specified
+        
+        Returns
+        -------
+        np.ndarray
+            array of node ids where tiles drains are specified
+        '''
+        # check to see if IWFM procedure is available in user version of IWFM DLL
+        if not hasattr(self.dll, "IW_Model_GetTileDrainNodes"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. '
+                                 'Check for an updated version'.format('IW_Model_GetTileDrainNodes'))
+
+        # get number of tile_drains
+        n_tile_drains = ctypes.c_int(self.get_n_tile_drains())
+
+        # if no tile drains exist in the model return None
+        if n_tile_drains.value == 0:
+            return
+        
+        # initialize output variables
+        tile_drain_nodes = (ctypes.c_int*n_tile_drains.value)()
+
+        # reset instance variable status to -1
+        self.status = ctypes.c_int(-1)
+
+        self.dll.IW_Model_GetTileDrainNodes(ctypes.byref(n_tile_drains),
+                                            tile_drain_nodes,
+                                            ctypes.byref(self.status))
+
+        return np.array(tile_drain_nodes)
 
     def get_n_layers(self):
         ''' returns the number of layers in an IWFM model
+
+        Returns
+        -------
+        int
+            number of layers specified in an IWFM model
         '''
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetNLayers"):
-            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetNLayers'))
+            raise AttributeError('IWFM DLL does not have "{}" procedure. '
+                                 'Check for an updated version'.format('IW_Model_GetNLayers'))
 
         # reset instance variable status to -1
         self.status = ctypes.c_int(-1)
