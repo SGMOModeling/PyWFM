@@ -2219,24 +2219,35 @@ class IWFM_Model:
                                      ctypes.byref(self.status))
         
         if not hasattr(self, "n_layers"):
-            self.n_layers = n_layers
+            self.n_layers = n_layers.value
             
-        return self.n_layers.value
+        return n_layers.value
 
     def get_ground_surface_elevation(self):
         ''' returns the ground surface elevation for each node specified 
         in the IWFM model
+
+        Returns
+        -------
+        np.ndarray
+            array of ground surface elevation at every finite element 
+            node in an IWFM model
         '''
+        # check to see if IWFM procedure is available in user version of IWFM DLL
+        if not hasattr(self.dll, "IW_Model_GetGSElev"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. '
+                                 'Check for an updated version'.format('IW_Model_GetGSElev'))
+        
         # reset instance variable status to -1
         self.status = ctypes.c_int(-1)
 
         # get number of model nodes
-        num_nodes = ctypes.c_int(self.get_n_nodes())
+        n_nodes = ctypes.c_int(self.get_n_nodes())
 
         # initialize output variables
-        gselev = (ctypes.c_double*num_nodes.value)()
+        gselev = (ctypes.c_double*n_nodes.value)()
         
-        self.dll.IW_Model_GetGSElev(ctypes.byref(num_nodes),
+        self.dll.IW_Model_GetGSElev(ctypes.byref(n_nodes),
                                     gselev,
                                     ctypes.byref(self.status))
         
