@@ -1649,7 +1649,7 @@ class IWFM_Model:
         reach_index = ctypes.c_int(reach_index)
 
         # get number of nodes in stream reach
-        n_nodes_in_reach = ctypes.c_int(self.get_n_nodes_in_stream_reach())
+        n_nodes_in_reach = ctypes.c_int(self.get_n_nodes_in_stream_reach(reach_index.value))
 
         # initialize output variables
         reach_stream_nodes = (ctypes.c_int*n_nodes_in_reach.value)()
@@ -1880,9 +1880,9 @@ class IWFM_Model:
         np.ndarray
             array of destination types for each reach in the IWFM model
         '''
-        if not hasattr(self.dll, "IW_Model_GetReachOutflowDestType"):
+        if not hasattr(self.dll, "IW_Model_GetReachOutflowDestTypes"):
             raise AttributeError('IWFM DLL does not have "{}" procedure. '
-                                 'Check for an updated version'.format("IW_Model_GetReachOutflowDestType"))
+                                 'Check for an updated version'.format("IW_Model_GetReachOutflowDestTypes"))
         
         # get number of reaches
         n_reaches = ctypes.c_int(self.get_n_stream_reaches())
@@ -1893,9 +1893,9 @@ class IWFM_Model:
         # set instance variable status to -1
         self.status = ctypes.c_int(-1)
 
-        self.dll.IW_Model_GetReachOutflowDestType(ctypes.byref(n_reaches),
-                                                  reach_outflow_destination_types,
-                                                  ctypes.byref(self.status))
+        self.dll.IW_Model_GetReachOutflowDestTypes(ctypes.byref(n_reaches),
+                                                   reach_outflow_destination_types,
+                                                   ctypes.byref(self.status))
 
         return np.array(reach_outflow_destination_types)
 
@@ -1931,10 +1931,11 @@ class IWFM_Model:
             integer array of diversion ids
         '''
         if not hasattr(self.dll, "IW_Model_GetDiversionIDs"):
-            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format("IW_Model_GetDiversionIDs"))
+            raise AttributeError('IWFM DLL does not have "{}" procedure. '
+                                 'Check for an updated version'.format("IW_Model_GetDiversionIDs"))
 
         # set input variables
-        n_diversions = ctypes.c_int(self.get_n_diversions)
+        n_diversions = ctypes.c_int(self.get_n_diversions())
         
         # reset instance variable status to -1
         self.status = ctypes.c_int(-1)
@@ -1950,33 +1951,156 @@ class IWFM_Model:
 
     def get_n_lakes(self):
         ''' returns the number of lakes in an IWFM model
+
+        Returns
+        -------
+        int
+            number of lakes in the IWFM model
         '''
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetNLakes"):
-            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetNLakes'))
+            raise AttributeError('IWFM DLL does not have "{}" procedure. '
+                                 'Check for an updated version'.format('IW_Model_GetNLakes'))
 
-        # reset instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        # check if instance variable n_lakes already exists
+        if hasattr(self, "n_lakes"):
+            return self.n_lakes
             
         # initialize n_stream_reaches variable
         n_lakes = ctypes.c_int(0)
             
+        # reset instance variable status to -1
+        self.status = ctypes.c_int(-1)
+        
         self.dll.IW_Model_GetNLakes(ctypes.byref(n_lakes),
                                     ctypes.byref(self.status))
         
         if not hasattr(self, "n_lakes"):
-            self.n_lakes = n_lakes
+            self.n_lakes = n_lakes.value
             
-        return self.n_lakes.value
+        return n_lakes.value
 
     def get_lake_ids(self):
-        pass
+        ''' returns the lake identification numbers assigned by the user
+
+        Returns
+        -------
+        np.ndarray
+            array of lake identification numbers for each lake in the 
+            model 
+        '''
+        # check to see if IWFM procedure is available in user version of IWFM DLL
+        if not hasattr(self.dll, "IW_Model_GetLakeIDs"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. '
+                                 'Check for an updated version'.format('IW_Model_GetLakeIDs'))
+
+        # initialize n_stream_reaches variable
+        n_lakes = ctypes.c_int(self.get_n_lakes())
+
+        # stop here if no lakes are specified
+        if n_lakes.value == 0:
+            return
+
+        # initialize output variables
+        lake_ids = (ctypes.c_int*n_lakes.value)()
+
+        # reset instance variable status to -1
+        self.status = ctypes.c_int(-1)
+
+        self.dll.IW_Model_GetLakeIDs(ctypes.byref(n_lakes),
+                                     lake_ids,
+                                     ctypes.byref(self.status))
+
+        return np.array(lake_ids)
 
     def get_n_elements_in_lake(self, lake_id):
-        pass
+        ''' returns the number of finite element grid cells that make
+        up a lake
+
+        Parameters
+        ----------
+        lake_id : int
+            lake identification number used to obtain number of elements
+            contained in the lake
+
+        Returns
+        -------
+        int
+            number of elements representing the lake with the provided
+            id number
+        '''
+        # check to see if IWFM procedure is available in user version of IWFM DLL
+        if not hasattr(self.dll, "IW_Model_GetLakeIDs"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. '
+                                 'Check for an updated version'.format('IW_Model_GetLakeIDs'))
+        
+        # check if any lakes exist
+        n_lakes = self.get_n_lakes()
+
+        # if no lakes exist, return 0
+        if n_lakes == 0:
+            return 0
+        
+        # convert lake id to ctypes
+        lake_id = ctypes.c_int(lake_id)
+        
+        # initialize output variables
+        n_elements_in_lake = ctypes.c_int(0)
+
+        # reset instance variable status to -1
+        self.status = ctypes.c_int(-1)
+
+        self.dll.IW_Model_GetNElementsInLake(ctypes.byref(lake_id),
+                                             ctypes.byref(n_elements_in_lake),
+                                             ctypes.byref(self.status))
+
+        return n_elements_in_lake.value
 
     def get_elements_in_lake(self, lake_id):
-        pass
+        ''' returns the element ids in the lakes
+        
+        Parameters
+        ----------
+        lake_id : int
+            lake identification number used to obtain number of elements
+            contained in the lake
+
+        Returns
+        -------
+        int
+            number of elements representing the lake with the provided
+            id number
+        '''
+        # check to see if IWFM procedure is available in user version of IWFM DLL
+        if not hasattr(self.dll, "IW_Model_GetLakeIDs"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. '
+                                 'Check for an updated version'.format('IW_Model_GetLakeIDs'))
+
+        # get number of lakes
+        n_lakes = self.get_n_lakes()
+
+        # if no lakes exist in the model return
+        if n_lakes == 0:
+            return
+        
+        # convert lake id to ctypes
+        lake_id = ctypes.c_int(lake_id)
+        
+        # get number of elements in lake
+        n_elements_in_lake = ctypes.c_int(self.get_n_elements_in_lake(lake_id.value))
+
+        # initialize output variables
+        elements_in_lake = (ctypes.c_int*n_elements_in_lake.value)()
+
+        # reset instance variable status to -1
+        self.status = ctypes.c_int(-1)
+
+        self.dll.IW_Model_GetElementsInLake(ctypes.byref(lake_id),
+                                            ctypes.byref(n_elements_in_lake),
+                                            elements_in_lake,
+                                            ctypes.byref(self.status))
+
+        return np.array(elements_in_lake)
 
     def get_n_tile_drains(self):
         ''' returns the number of tile drain nodes in an IWFM model
