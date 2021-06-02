@@ -3439,7 +3439,7 @@ class IWFM_Model(IWFM_Miscellaneous):
         if begin_date is None:
             begin_date = dates_list[0]
         else:
-            IWFM_Model._validate_iwfm_date(begin_date)
+            self._validate_iwfm_date(begin_date)
 
             if begin_date not in dates_list:
                 raise ValueError('begin_date was not recognized as a model time step. use IWFM_Model.get_time_specs() method to check.')
@@ -3447,7 +3447,7 @@ class IWFM_Model(IWFM_Miscellaneous):
         if end_date is None:
             end_date = dates_list[-1]
         else:
-            IWFM_Model._validate_iwfm_date(end_date)
+            self._validate_iwfm_date(end_date)
 
             if end_date not in dates_list:
                 raise ValueError('end_date was not found in the Budget file. use IWFM_Model.get_time_specs() method to check.')
@@ -3958,62 +3958,3 @@ class IWFM_Model(IWFM_Miscellaneous):
                 previous_end_node = current_end_node
     
         return pd.concat(df_list)
-
-
-    def _has_data_list(self, feature_type):
-        ''' checks to see if feature type has a data list associated with it
-
-        Parameters
-        ----------
-        feature_type : str
-            valid IWFM feature type
-
-        Returns
-        -------
-        boolean
-            True if there is a data list returned using feature_type
-            False if empty list is returned
-        '''
-        # check that feature_type is valid
-        IWFM_Model._validate_feature_type(feature_type)
-
-        # retrieve data list
-        data_list = self.get_data_list(feature_type)
-
-        # check that list has values
-        if not data_list:
-            return False
-        
-        return True
-
-    def _has_sub_data_list(self, feature_type, data_type_index):
-        ''' checks to see if particular data type for an IWFM feature
-        has a sub data list
-
-        Parameters
-        ----------
-        feature_type : str
-            valid IWFM feature type
-
-        data_type_index : int
-            index of a value in data list
-
-        Returns
-        -------
-        boolean
-            returns True if there is a sub data list returned
-            returns False if there is an empty sub data list
-        '''
-        # check that feature_type is valid
-        IWFM_Model._validate_feature_type(feature_type)
-
-        # check that list has values
-        if not self._has_data_list(feature_type):
-            return False
-
-        sub_data_list = self.get_sub_data_list(feature_type, data_type_index)
-
-        if not sub_data_list:
-            return False
-
-        return True
