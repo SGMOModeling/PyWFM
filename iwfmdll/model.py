@@ -2964,12 +2964,13 @@ class IWFM_Model(IWFM_Miscellaneous):
         '''
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetNames"):
-            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetNames'))
+            raise AttributeError('IWFM DLL does not have "{}" procedure. '
+                                 'Check for an updated version'.format('IW_Model_GetNames'))
 
         # get location type id
         location_type_id = ctypes.c_int(location_type_id)
 
-        # get number of location for specified feature_type
+        # get number of location for specified location type
         if location_type_id.value == 8:
             num_names = ctypes.c_int(self.get_n_nodes())
 
@@ -3123,8 +3124,61 @@ class IWFM_Model(IWFM_Miscellaneous):
 
         return n_hydrographs.value
 
+    def get_n_groundwater_hydrographs(self):
+        ''' returns the number of groundwater hydrographs specified in
+        an IWFM model
+
+        Returns
+        -------
+        int
+            number of groundwater hydrographs
+        '''
+        location_type_id = self.get_location_type_id_gwheadobs()
+
+        return self._get_n_hydrographs(location_type_id)
+
+    def get_n_subsidence_hydrographs(self):
+        ''' returns the number of subsidence hydrographs specified in 
+        an IWFM model
+
+        Returns
+        -------
+        int
+            number of subsidence hydrographs
+        '''
+        location_type_id = self.get_location_type_id_subsidenceobs()
+
+        return self._get_n_hydrographs(location_type_id)
+
+    def get_n_stream_hydrographs(self):
+        ''' returns the number of stream flow hydrographs specified in
+        an IWFM model
+
+        Returns
+        -------
+        int
+            number of stream hydrographs
+        '''
+        location_type_id = self.get_location_type_id_streamhydobs()
+
+        return self._get_n_hydrographs(location_type_id)
+
+    def get_n_tile_drain_hydrographs(self):
+        ''' returns the number of tile drain hydrographs specified in 
+        an IWFM model
+
+        Returns
+        -------
+        int
+            number of tile drain hydrographs
+        '''
+        location_type_id = self.get_location_type_id_tiledrainobs()
+
+        return self._get_n_hydrographs(location_type_id)
+
     def _get_hydrograph_ids(self, location_type_id):
-        '''private method returning the ids of the hydrographs for a provided feature_type
+        '''private method returning the ids of the hydrographs for a 
+        provided location type
 
         Parameters
         ----------
@@ -3166,6 +3220,42 @@ class IWFM_Model(IWFM_Miscellaneous):
                                            ctypes.byref(self.status))
         
         return np.array(hydrograph_ids)
+
+    def get_groundwater_hydrograph_ids(self):
+        ''' returns the ids for the groundwater hydrographs specified
+        in an IWFM model
+        '''
+        # get the location type id for groundwater head observations
+        location_type_id = self.get_location_type_id_gwheadobs()
+
+        return self._get_hydrograph_ids(location_type_id)
+
+    def get_subsidence_hydrograph_ids(self):
+        ''' returns the ids for the subsidence hydrographs specified
+        in an IWFM model
+        '''
+        # get the location type id for groundwater head observations
+        location_type_id = self.get_location_type_id_subsidenceobs()
+
+        return self._get_hydrograph_ids(location_type_id)
+
+    def get_stream_hydrograph_ids(self):
+        ''' returns the ids for the stream hydrographs specified
+        in an IWFM model
+        '''
+        # get the location type id for stream flow observations
+        location_type_id = self.get_location_type_id_streamhydobs()
+
+        return self._get_hydrograph_ids(location_type_id)
+
+    def get_tile_drain_hydrograph_ids(self):
+        ''' returns the ids for the tile drain hydrographs specified
+        in an IWFM model
+        '''
+        # get the location type id for tile drain observations
+        location_type_id = self.get_location_type_id_tiledrainobs()
+
+        return self._get_hydrograph_ids(location_type_id)
 
     def _get_hydrograph_coordinates(self, location_type_id):
         ''' private method returning the hydrograph coordinates for a provided feature type
@@ -3213,6 +3303,62 @@ class IWFM_Model(IWFM_Miscellaneous):
                                                    ctypes.byref(self.status))
 
         return np.array(x), np.array(y)
+
+    def get_groundwater_hydrograph_coordinates(self):
+        ''' returns the x,y-coordinates for the groundwater hydrographs
+        specified in an IWFM model
+
+        Returns
+        -------
+        tuple
+            np.ndarray of x-coordinates
+            np.ndarray of y-coordinates
+        '''
+        location_type_id = self.get_location_type_id_gwheadobs()
+
+        return self._get_hydrograph_coordinates(location_type_id)
+
+    def get_subsidence_observation_coordinates(self):
+        ''' returns the x,y-coordinates for the subsidence observation
+        locations specified in an IWFM model
+
+        Returns
+        -------
+        tuple
+            np.ndarray of x-coordinates
+            np.ndarray of y-coordinates
+        '''
+        location_type_id = self.get_location_type_id_subsidenceobs()
+
+        return self._get_hydrograph_coordinates(location_type_id)
+
+    def get_stream_observation_coordinates(self):
+        ''' returns the x,y-coordinates for the stream flow observation
+        locations specified in an IWFM model
+
+        Returns
+        -------
+        tuple
+            np.ndarray of x-coordinates
+            np.ndarray of y-coordinates
+        '''
+        location_type_id = self.get_location_type_id_streamhydobs()
+
+        return self._get_hydrograph_coordinates(location_type_id)
+
+    def get_tile_drain_observation_coordinates(self):
+        ''' returns the x,y-coordinates for the tile drain observations
+        specified in an IWFM model
+
+        Returns
+        -------
+        tuple
+            np.ndarray of x-coordinates
+            np.ndarray of y-coordinates
+        '''
+        location_type_id = self.get_location_type_id_tiledrainobs()
+
+        return self._get_hydrograph_coordinates(location_type_id)
 
     def _get_hydrograph(self, hydrograph_type, hydrograph_id, layer_number=1, 
                         begin_date=None, end_date=None, length_conversion_factor=1.0, 
