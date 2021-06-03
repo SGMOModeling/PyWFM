@@ -2731,7 +2731,7 @@ class IWFM_Model(IWFM_Miscellaneous):
 
         return np.array(supply_purpose_flags)
 
-    def _get_supply_requirement_ag(self, location_type_id, locations_list, conversion_factor):
+    def _get_supply_requirement_ag(self, location_type_id, locations_list, conversion_factor=1.0):
         ''' returns the agricultural water supply requirement at a 
         specified set of locations
 
@@ -2744,7 +2744,7 @@ class IWFM_Model(IWFM_Miscellaneous):
         locations_list : list or np.ndarray
             indices of locations where ag supply requirements are returned
 
-        conversion_factor : float
+        conversion_factor : float, default=1.0
             factor to convert ag supply requirement from model units to
             desired output units
 
@@ -2785,7 +2785,7 @@ class IWFM_Model(IWFM_Miscellaneous):
 
         return np.array(ag_supply_requirement)
 
-    def _get_supply_requirement_urban(self, location_type_id, locations_list, conversion_factor):
+    def _get_supply_requirement_urban(self, location_type_id, locations_list, conversion_factor=1.0):
         ''' returns the urban water supply requirement at a 
         specified set of locations
 
@@ -2798,7 +2798,7 @@ class IWFM_Model(IWFM_Miscellaneous):
         locations_list : list or np.ndarray
             indices of locations where ag supply requirements are returned
 
-        conversion_factor : float
+        conversion_factor : float, default=1.0
             factor to convert ag supply requirement from model units to
             desired output units
 
@@ -2839,7 +2839,7 @@ class IWFM_Model(IWFM_Miscellaneous):
 
         return np.array(urban_supply_requirement)
 
-    def _get_supply_shortage_at_origin_ag(self, supply_type_id, supply_location_list, supply_conversion_factor):
+    def _get_supply_shortage_at_origin_ag(self, supply_type_id, supply_location_list, supply_conversion_factor=1.0):
         ''' returns the supply shortage for agriculture at the destination of those 
         supplies plus any conveyance losses
         
@@ -2852,7 +2852,7 @@ class IWFM_Model(IWFM_Miscellaneous):
         supply_location_list : list or np.ndarray
             indices of supplies where ag supply shortages are returned
 
-        supply_conversion_factor : float
+        supply_conversion_factor : float, default=1.0
             factor to convert agricultural supply shortage from model 
             units to the desired output units
 
@@ -2893,7 +2893,7 @@ class IWFM_Model(IWFM_Miscellaneous):
 
         return np.array(ag_supply_shortage)
 
-    def _get_supply_shortage_at_origin_urban(self, supply_type_id, supply_location_list, supply_conversion_factor):
+    def _get_supply_shortage_at_origin_urban(self, supply_type_id, supply_location_list, supply_conversion_factor=1.0):
         ''' returns the supply shortage for agriculture at the destination of those 
         supplies plus any conveyance losses
         
@@ -2947,73 +2947,68 @@ class IWFM_Model(IWFM_Miscellaneous):
 
         return np.array(urban_supply_shortage)
 
-    def get_names(self, feature_type):
+    def _get_names(self, location_type_id):
         ''' returns the available names for a given feature_type
 
          Parameters
         ----------
-        feature_type : str
-            valid feature type to obtain a location_type_id for feature
+        location_type_id : int
+            location type identifier used by IWFM to represent model 
+            features
 
         Returns
         -------
         list of strings
-            list containing names for the provided feature_type. Returns
+            list containing names for the provided location_type_id. Returns
             empty list if no names are available for given feature_type.
         '''
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetNames"):
             raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetNames'))
 
-        # reset instance variable status to -1
-        self.status = ctypes.c_int(-1)
-
         # get location type id
-        location_type_id = self.get_location_type_id(feature_type)
+        location_type_id = ctypes.c_int(location_type_id)
 
         # get number of location for specified feature_type
-        if feature_type.lower() == 'node':
+        if location_type_id.value == 8:
             num_names = ctypes.c_int(self.get_n_nodes())
 
-        elif feature_type.lower() == 'element':
+        elif location_type_id.value == 2:
             num_names = ctypes.c_int(self.get_n_elements())
 
-        elif feature_type.lower() == 'subregion':
+        elif location_type_id.value == 4:
             num_names = ctypes.c_int(self.get_n_subregions())
 
-        elif feature_type.lower() == 'zone':
+        elif location_type_id.value == 7:
             # need to determine if API call exists for this
             raise NotImplementedError
 
-        elif feature_type.lower() == 'lake':
+        elif location_type_id.value == 3:
             num_names = ctypes.c_int(self.get_n_lakes())
 
-        elif feature_type.lower() == 'stream_node':
+        elif location_type_id.value == 1:
             num_names = ctypes.c_int(self.get_n_stream_nodes())
 
-        elif feature_type.lower() == 'stream_reach':
+        elif location_type_id.value == 11:
             num_names = ctypes.c_int(self.get_n_stream_reaches())
 
-        elif feature_type.lower() == 'tile_drain':
+        elif location_type_id.value == 13:
             num_names = ctypes.c_int(self.get_n_tile_drains())
 
-        elif feature_type.lower() == 'small_watershed':
+        elif location_type_id.value == 14:
             #self.get_n_small_watersheds()
             raise NotImplementedError
 
-        elif feature_type.lower() == 'gw_head_obs':
-            num_names = ctypes.c_int(self.get_n_hydrographs(feature_type))
-
-        elif feature_type.lower() == 'stream_hydrograph_obs':
-            num_names = ctypes.c_int(self.get_n_hydrographs(feature_type))
-
-        elif feature_type.lower() == 'subsidence_obs':
-            num_names = ctypes.c_int(self.get_n_hydrographs(feature_type))
+        elif location_type_id.value in [9, 10, 12]:
+            num_names = ctypes.c_int(self._get_n_hydrographs(location_type_id.value))
 
         # initialize output variables
         delimiter_position_array = (ctypes.c_int*num_names.value)()
         names_string_length = ctypes.c_int(30 * num_names.value)
         raw_names_string = ctypes.create_string_buffer(names_string_length.value)
+
+        # reset instance variable status to -1
+        self.status = ctypes.c_int(-1)
 
         self.dll.IW_Model_GetNames(ctypes.byref(location_type_id),
                                    ctypes.byref(num_names), 
