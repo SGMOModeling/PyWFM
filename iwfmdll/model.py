@@ -2,6 +2,7 @@ import os
 import ctypes
 import math
 import numpy as np
+from numpy.lib.shape_base import expand_dims
 import pandas as pd
 
 import matplotlib.pyplot as plt
@@ -3020,6 +3021,70 @@ class IWFM_Model(IWFM_Miscellaneous):
 
         return self._string_to_list_by_array(raw_names_string, delimiter_position_array, num_names)
 
+    def get_subregion_names(self):
+        ''' returns the subregions names specified
+        in an IWFM model
+        
+        Returns
+        -------
+        list
+            list of names for each subregion in the model 
+        '''
+        location_type_id = self.get_location_type_id_subregion()
+
+        return self._get_names(location_type_id)
+
+    def get_stream_reach_names(self):
+        ''' returns the stream reach names specified in an IWFM model
+        
+        Returns
+        -------
+        list
+            list of names for each stream reach in the model
+        '''
+        location_type_id = self.get_location_type_id_streamreach()
+
+        return self._get_names(location_type_id)
+
+    def get_groundwater_observation_names(self):
+        ''' returns the groundwater head observation location names
+        specified in an IWFM model
+
+        Returns
+        -------
+        list
+            list of names for each groundwater head observation location
+        '''
+        location_type_id = self.get_location_type_id_gwheadobs()
+
+        return self._get_names(location_type_id)
+
+    def get_stream_observation_names(self):
+        ''' returns the stream flow observation location names specified
+        in an IWFM model
+        
+        Returns
+        -------
+        list
+            list of names for each stream observation location
+        '''
+        location_type_id = self.get_location_type_id_streamhydobs()
+
+        return self._get_names(location_type_id)
+
+    def get_subsidence_observation_names(self):
+        ''' returns the subsidence observation location names specified
+        in an IWFM model
+
+        Returns
+        -------
+        list
+            list of names for each subsidence observation locations
+        '''
+        location_type_id = self.get_location_type_id_subsidenceobs()
+
+        return self._get_names(location_type_id)
+
     def get_n_hydrograph_types(self):
         ''' returns the number of different hydrograph types being
         printed by the IWFM model
@@ -3360,9 +3425,9 @@ class IWFM_Model(IWFM_Miscellaneous):
 
         return self._get_hydrograph_coordinates(location_type_id)
 
-    def _get_hydrograph(self, hydrograph_type, hydrograph_id, layer_number=1, 
-                        begin_date=None, end_date=None, length_conversion_factor=1.0, 
-                        volume_conversion_factor=2.29568E-8):
+    def _get_hydrograph(self, hydrograph_type, hydrograph_id, layer_number, 
+                        begin_date, end_date, length_conversion_factor, 
+                        volume_conversion_factor):
         ''' private method returning a simulated hydrograph for a selected hydrograph type and hydrograph index 
         
         Parameters
@@ -3374,21 +3439,21 @@ class IWFM_Model(IWFM_Miscellaneous):
         hydrograph_id : int
             id for hydrograph being retrieved
             
-        layer_number : int, default=1
+        layer_number : int
             layer number for returning hydrograph. only used for groundwater hydrograph
             at node and layer
             
-        begin_date : str, default=None
+        begin_date : str
             IWFM-style date for the beginning date of the simulated groundwater heads
 
-        end_date : str, default=None
+        end_date : str
             IWFM-style date for the end date of the simulated groundwater heads
 
-        length_conversion_factor : float, int, default=1.0
+        length_conversion_factor : float, int
             hydrographs with units of length are multiplied by this
             value to convert simulation units to desired output units
             
-        volume_conversion_factor : float, int, default=2.29568E-8
+        volume_conversion_factor : float, int
             hydrographs with units of volume are multiplied by this
             value to convert simulation units to desired output units
 
@@ -3508,6 +3573,163 @@ class IWFM_Model(IWFM_Miscellaneous):
 
         return np.array('1899-12-30', dtype='datetime64') + np.array(output_dates, dtype='timedelta64[D]'), np.array(output_hydrograph)
 
+    def get_groundwater_hydrograph(self, groundwater_hydrograph_id, begin_date=None,
+                                   end_date=None, length_conversion_factor=1.0, 
+                                   volume_conversion_factor=1.0):
+        ''' returns the simulated groundwater hydrograph for the 
+        provided groundwater hydrograph id
+
+        Parameters
+        ----------
+        groundwater_hydrograph_id : int
+            id for hydrograph being retrieved
+            
+        begin_date : str or None, default=None
+            IWFM-style date for the beginning date of the simulated groundwater heads
+
+        end_date : str or None, default=None
+            IWFM-style date for the end date of the simulated groundwater heads
+
+        length_conversion_factor : float, int, default=1.0
+            hydrographs with units of length are multiplied by this
+            value to convert simulation units to desired output units
+            
+        volume_conversion_factor : float, int, default=1.0
+            hydrographs with units of volume are multiplied by this
+            value to convert simulation units to desired output units
+            e.g. use 2.29568E-8 for ft^3 --> TAF
+
+        Returns
+        -------
+        np.arrays
+            1-D array of dates
+            1-D array of hydrograph values
+        '''
+        hydrograph_type = self.get_location_type_id_gwheadobs()
+        layer_number = 1
+
+        return self._get_hydrograph(hydrograph_type, groundwater_hydrograph_id, 
+                                    layer_number, begin_date, end_date, 
+                                    length_conversion_factor, volume_conversion_factor)
+
+    def get_groundwater_hydrograph_at_node_and_layer(self, node_id, layer_number, 
+                        begin_date=None, end_date=None, length_conversion_factor=1.0, 
+                        volume_conversion_factor=1.0):
+        ''' Returns a simulated groundwater hydrograph for a node and layer
+
+        Parameters
+        ----------
+        node_id : int
+            id for node where hydrograph being retrieved
+            
+        layer_number : int
+            layer number for returning hydrograph. only used for groundwater hydrograph
+            at node and layer
+            
+        begin_date : str or None, default=None
+            IWFM-style date for the beginning date of the simulated groundwater heads
+
+        end_date : str or None, default=None
+            IWFM-style date for the end date of the simulated groundwater heads
+
+        length_conversion_factor : float or int, default=1.0
+            hydrographs with units of length are multiplied by this
+            value to convert simulation units to desired output units
+            
+        volume_conversion_factor : float or int, default=1.0
+            hydrographs with units of volume are multiplied by this
+            value to convert simulation units to desired output units
+            e.g. use 2.29568E-8 for ft^3 --> TAF
+
+        Returns
+        -------
+        np.arrays
+            1-D array of dates
+            1-D array of hydrograph values
+        '''
+        hydrograph_type = self.get_location_type_id_node()
+
+        return self._get_hydrograph(hydrograph_type, node_id, layer_number,
+                                    begin_date, end_date, length_conversion_factor,
+                                    volume_conversion_factor)
+
+    def get_subsidence_hydrograph(self, subsidence_location_id, begin_date=None,
+                                   end_date=None, length_conversion_factor=1.0, 
+                                   volume_conversion_factor=1.0):
+        ''' returns the simulated groundwater hydrograph for the 
+        provided groundwater hydrograph id
+
+        Parameters
+        ----------
+        subsidence_location_id : int
+            id for subsidence hydrograph location being retrieved
+            
+        begin_date : str or None, default=None
+            IWFM-style date for the beginning date of the simulated groundwater heads
+
+        end_date : str or None, default=None
+            IWFM-style date for the end date of the simulated groundwater heads
+
+        length_conversion_factor : float, int, default=1.0
+            hydrographs with units of length are multiplied by this
+            value to convert simulation units to desired output units
+            
+        volume_conversion_factor : float, int, default=1.0
+            hydrographs with units of volume are multiplied by this
+            value to convert simulation units to desired output units
+            e.g. use 2.29568E-8 for ft^3 --> TAF
+
+        Returns
+        -------
+        np.arrays
+            1-D array of dates
+            1-D array of hydrograph values
+        '''
+        hydrograph_type = self.get_location_type_id_subsidenceobs()
+        layer_number = 1
+
+        return self._get_hydrograph(hydrograph_type, subsidence_location_id, 
+                                    layer_number, begin_date, end_date, 
+                                    length_conversion_factor, volume_conversion_factor)
+
+    def get_stream_hydrograph(self, stream_location_id, begin_date=None,
+                              end_date=None, length_conversion_factor=1.0, 
+                              volume_conversion_factor=1.0):
+        ''' returns the simulated groundwater hydrograph for the 
+        provided groundwater hydrograph id
+
+        Parameters
+        ----------
+        stream_location_id : int
+            id for subsidence hydrograph location being retrieved
+            
+        begin_date : str or None, default=None
+            IWFM-style date for the beginning date of the simulated groundwater heads
+
+        end_date : str or None, default=None
+            IWFM-style date for the end date of the simulated groundwater heads
+
+        length_conversion_factor : float, int, default=1.0
+            hydrographs with units of length are multiplied by this
+            value to convert simulation units to desired output units
+            
+        volume_conversion_factor : float, int, default=1.0
+            hydrographs with units of volume are multiplied by this
+            value to convert simulation units to desired output units
+            e.g. use 2.29568E-8 for ft^3 --> TAF
+
+        Returns
+        -------
+        np.arrays
+            1-D array of dates
+            1-D array of hydrograph values
+        '''
+        hydrograph_type = self.get_location_type_id_streamhydobs()
+        layer_number = 1
+
+        return self._get_hydrograph(hydrograph_type, stream_location_id, 
+                                    layer_number, begin_date, end_date, 
+                                    length_conversion_factor, volume_conversion_factor)
 
     def get_gwheads_foralayer(self, layer_number, begin_date=None, end_date=None, length_conversion_factor=1.0):
         ''' returns the simulated groundwater heads for a single user-specified model layer for
