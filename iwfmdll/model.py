@@ -4185,9 +4185,64 @@ class IWFM_Model(IWFM_Miscellaneous):
 
         return np.array('1899-12-30', dtype='datetime64') + np.array(output_dates, dtype='timedelta64[D]'), np.array(output_gwheads)
 
-    def get_gwheads_all(self, end_of_timestep=True):
-        # is_for_inquiry=0
-        pass
+    def get_gwheads_all(self, end_of_timestep=True, head_conversion_factor=1.0):
+        ''' returns the groundwater heads at all nodes in every aquifer 
+        layer for the current simulation time step
+        
+        Parameters
+        ----------
+        end_of_timestep : boolean, default=True
+            flag to specify if the groundwater heads are returned for 
+            the beginning of the timestep or end of the time step
+
+        head_conversion_factor : float, default=1.0
+            factor to convert groundwater heads from simulation unit
+            of length to a desired unit of length
+
+        Returns
+        -------
+        np.ndarray
+            2-D array of heads (n_nodes x n_layers)
+
+        Notes
+        -----
+        This method is designed for use when is_for_inquiry=0 to return 
+        the simulated groundwater heads after one time step is simulated
+        i.e. after calling simulate_for_one_time_step method
+        '''
+        # check to see if IWFM procedure is available in user version of IWFM DLL
+        if not hasattr(self.dll, "IW_Model_GetGWHeads_All"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. ' 
+                                 'Check for an updated version'.format('IW_Model_GetGWHeads_All'))
+        
+        if end_of_timestep:
+            previous = ctypes.c_int(0)
+        else:
+            previous = ctypes.c_int(1)
+
+        # convert head_conversion_factor to ctypes equivalent
+        head_conversion_factor = ctypes.c_double(head_conversion_factor)
+
+        # get number of model nodes
+        n_nodes = ctypes.c_int(self.get_n_nodes())
+
+        # get number of model layers
+        n_layers = ctypes.c_int(self.get_n_layers())
+
+        # initialize output variables
+        heads = ((ctypes.c_double*n_nodes.value)*n_layers.value)()
+
+        # set instance variable status to -1
+        self.status = ctypes.c_int(-1)
+
+        self.dll.IW_Model_GetGWHeads_All(ctypes.byref(n_nodes),
+                                         ctypes.byref(n_layers),
+                                         ctypes.byref(previous),
+                                         ctypes.byref(head_conversion_factor),
+                                         heads,
+                                         ctypes.byref(self.status))
+
+        return np.array(heads)
 
     def get_subsidence_all(self, length_conversion_factor):
         # is_for_inquiry=0
