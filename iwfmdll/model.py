@@ -2712,6 +2712,10 @@ class IWFM_Model(IWFM_Miscellaneous):
         # convert supply_type_id to ctypes
         supply_type_id = ctypes.c_int(supply_type_id)
         
+        # check that supply_indices are provided as a list or np.ndarray
+        if not isinstance(supply_indices, (list, np.ndarray)):
+            raise TypeError('supply_indices must be a list or np.ndarray')
+
         # get number of supply indices
         n_supply_indices = ctypes.c_int(len(supply_indices))
 
@@ -2732,7 +2736,66 @@ class IWFM_Model(IWFM_Miscellaneous):
 
         return np.array(supply_purpose_flags)
 
-    def _get_supply_requirement_ag(self, location_type_id, locations_list, conversion_factor=1.0):
+    def get_diversion_purpose(self, diversion_indices):
+        ''' returns the flags for the initial purpose of the water 
+        supplies as ag, urban, or both
+
+        Parameters
+        ----------
+        diversion_indices : list of int or np.ndarray
+            One or more diversion identification numbers used to return
+            the supply purpose.
+
+        Returns
+        -------
+        np.ndarray
+            array of flags for each supply index provided
+
+        Notes
+        -----
+        flag equal to 10 for agricultural water demand
+        flag equal to 01 for urban water demands
+        flag equal to 11 for both ag and urban
+
+        automatic supply adjustment in IWFM allows the supply purpose 
+        to change dynamically, so this only returns the user-specified
+        initial value. 
+        '''
+        supply_type_id = self.get_supply_type_id_diversion()
+
+        return self._get_supply_purpose(supply_type_id, diversion_indices)
+
+    def get_well_pumping_purpose(self, well_indices):
+        ''' returns the flags for the initial purpose of the water 
+        supplies as ag, urban, or both
+
+        Parameters
+        ----------
+        well_indices : list of int or np.ndarray
+            One or more well identification numbers used to return
+            the supply purpose.
+
+        Returns
+        -------
+        np.ndarray
+            array of flags for each supply index provided
+
+        Notes
+        -----
+        flag equal to 10 for agricultural water demand
+        flag equal to 01 for urban water demands
+        flag equal to 11 for both ag and urban
+
+        automatic supply adjustment in IWFM allows the supply purpose 
+        to change dynamically, so this only returns the user-specified
+        initial value.
+        '''
+        supply_type_id = self.get_supply_type_id_well()
+
+        return self._get_supply_purpose(supply_type_id, well_indices)
+
+    def _get_supply_requirement_ag(self, location_type_id, locations_list, 
+                                   conversion_factor):
         ''' returns the agricultural water supply requirement at a 
         specified set of locations
 
@@ -2745,7 +2808,7 @@ class IWFM_Model(IWFM_Miscellaneous):
         locations_list : list or np.ndarray
             indices of locations where ag supply requirements are returned
 
-        conversion_factor : float, default=1.0
+        conversion_factor : float
             factor to convert ag supply requirement from model units to
             desired output units
 
@@ -2786,7 +2849,51 @@ class IWFM_Model(IWFM_Miscellaneous):
 
         return np.array(ag_supply_requirement)
 
-    def _get_supply_requirement_urban(self, location_type_id, locations_list, conversion_factor=1.0):
+    def get_supply_requirement_ag_elements(self, elements_list, conversion_factor=1.0):
+        ''' returns the agricultural supply requirement for one or more model elements
+
+        Parameters
+        ----------
+        elements_list : list or np.ndarray
+            one or more element identification numbers used to return 
+            the ag supply requirement
+
+        conversion_factor : float, default=1.0
+            factor to convert ag supply requirement from model units to
+            desired output units
+
+        Returns
+        -------
+        np.ndarray
+            array of ag supply requirement for elements specified
+        '''
+        location_type_id = self.get_location_type_id_element()
+
+        return self._get_supply_requirement_ag(location_type_id, elements_list, conversion_factor)
+
+    def get_supply_requirement_ag_subregions(self, subregions_list, conversion_factor=1.0):
+        ''' returns the agricultural supply requirement for one or more model subregions
+
+        Parameters
+        ----------
+        subregions_list : list or np.ndarray
+            one or more subregion identification numbers used to return 
+            the ag supply requirement
+
+        conversion_factor : float, default=1.0
+            factor to convert ag supply requirement from model units to
+            desired output units
+
+        Returns
+        -------
+        np.ndarray
+            array of ag supply requirement for subregions specified
+        '''
+        location_type_id = self.get_location_type_id_subregion()
+
+        return self._get_supply_requirement_ag(location_type_id, subregions_list, conversion_factor)
+
+    def _get_supply_requirement_urban(self, location_type_id, locations_list, conversion_factor):
         ''' returns the urban water supply requirement at a 
         specified set of locations
 
@@ -2799,7 +2906,7 @@ class IWFM_Model(IWFM_Miscellaneous):
         locations_list : list or np.ndarray
             indices of locations where ag supply requirements are returned
 
-        conversion_factor : float, default=1.0
+        conversion_factor : float
             factor to convert ag supply requirement from model units to
             desired output units
 
@@ -2840,8 +2947,56 @@ class IWFM_Model(IWFM_Miscellaneous):
 
         return np.array(urban_supply_requirement)
 
-    def _get_supply_shortage_at_origin_ag(self, supply_type_id, supply_location_list, supply_conversion_factor=1.0):
-        ''' returns the supply shortage for agriculture at the destination of those 
+    def get_supply_requirement_urban_elements(self, elements_list, conversion_factor=1.0):
+        ''' returns the urban supply requirement for one or more model elements
+
+        Parameters
+        ----------
+        elements_list : list or np.ndarray
+            one or more element identification numbers used to return 
+            the urban supply requirement
+
+        conversion_factor : float, default=1.0
+            factor to convert ag supply requirement from model units to
+            desired output units
+
+        Returns
+        -------
+        np.ndarray
+            array of ag supply requirement for elements specified
+        '''
+        location_type_id = self.get_location_type_id_element()
+
+        return self._get_supply_requirement_urban(location_type_id, 
+                                                  elements_list, 
+                                                  conversion_factor)
+
+    def get_supply_requirement_urban_subregions(self, subregions_list, conversion_factor=1.0):
+        ''' returns the urban supply requirement for one or more model subregions
+
+        Parameters
+        ----------
+        subregions_list : list or np.ndarray
+            one or more subregion identification numbers used to return 
+            the urban supply requirement
+
+        conversion_factor : float, default=1.0
+            factor to convert ag supply requirement from model units to
+            desired output units
+
+        Returns
+        -------
+        np.ndarray
+            array of ag supply requirement for subregions specified
+        '''
+        location_type_id = self.get_location_type_id_subregion()
+
+        return self._get_supply_requirement_urban(location_type_id, 
+                                                  subregions_list, 
+                                                  conversion_factor)
+
+    def _get_supply_shortage_at_origin_ag(self, supply_type_id, supply_location_list, supply_conversion_factor):
+        ''' private method returning the supply shortage for agriculture at the destination of those 
         supplies plus any conveyance losses
         
         Parameters
@@ -2853,7 +3008,7 @@ class IWFM_Model(IWFM_Miscellaneous):
         supply_location_list : list or np.ndarray
             indices of supplies where ag supply shortages are returned
 
-        supply_conversion_factor : float, default=1.0
+        supply_conversion_factor : float
             factor to convert agricultural supply shortage from model 
             units to the desired output units
 
@@ -2894,7 +3049,79 @@ class IWFM_Model(IWFM_Miscellaneous):
 
         return np.array(ag_supply_shortage)
 
-    def _get_supply_shortage_at_origin_urban(self, supply_type_id, supply_location_list, supply_conversion_factor=1.0):
+    def get_ag_diversion_supply_shortage_at_origin(self, diversions_list, conversion_factor=1.0):
+        ''' returns the supply shortage for agricultural diversions at the destination of those 
+        supplies plus any conveyance losses
+        
+        Parameters
+        ----------
+        diversions_list : list or np.ndarray
+            indices of diversions where ag supply shortages are returned
+
+        conversion_factor : float, default=1.0
+            factor to convert agricultural supply shortage from model 
+            units to the desired output units
+
+        Returns
+        -------
+        np.ndarray
+            array of agricultural supply shortages for each diversion location
+        '''
+        supply_type_id = self.get_supply_type_id_diversion()
+
+        return self._get_supply_shortage_at_origin_ag(supply_type_id, 
+                                                      diversions_list, 
+                                                      conversion_factor)
+
+    def get_ag_well_supply_shortage_at_origin(self, wells_list, conversion_factor=1.0):
+        ''' returns the supply shortage for agricultural wells at the destination of those 
+        supplies plus any conveyance losses
+        
+        Parameters
+        ----------
+        wells_list : list or np.ndarray
+            indices of wells where ag supply shortages are returned
+
+        conversion_factor : float, default=1.0
+            factor to convert agricultural supply shortage from model 
+            units to the desired output units
+
+        Returns
+        -------
+        np.ndarray
+            array of agricultural supply shortages for each well location
+        '''
+        supply_type_id = self.get_supply_type_id_well()
+
+        return self._get_supply_shortage_at_origin_ag(supply_type_id, 
+                                                      wells_list, 
+                                                      conversion_factor)
+
+    def get_ag_elempump_supply_shortage_at_origin(self, elements_list, conversion_factor=1.0):
+        ''' returns the supply shortage for agricultural element pumping 
+        at the destination of those supplies plus any conveyance losses
+        
+        Parameters
+        ----------
+        elements_list : list or np.ndarray
+            indices of element pumping locations where ag supply shortages are returned
+
+        conversion_factor : float, default=1.0
+            factor to convert agricultural supply shortage from model 
+            units to the desired output units
+
+        Returns
+        -------
+        np.ndarray
+            array of agricultural supply shortages for each element pumping location
+        '''
+        supply_type_id = self.get_supply_type_id_elempump()
+
+        return self._get_supply_shortage_at_origin_ag(supply_type_id, 
+                                                      elements_list, 
+                                                      conversion_factor)
+
+    def _get_supply_shortage_at_origin_urban(self, supply_type_id, supply_location_list, supply_conversion_factor):
         ''' returns the supply shortage for agriculture at the destination of those 
         supplies plus any conveyance losses
         
@@ -2947,6 +3174,78 @@ class IWFM_Model(IWFM_Miscellaneous):
                                                     ctypes.byref(self.status))
 
         return np.array(urban_supply_shortage)
+
+    def get_urban_diversion_supply_shortage_at_origin(self, diversions_list, conversion_factor=1.0):
+        ''' returns the supply shortage for urban diversions at the destination of those 
+        supplies plus any conveyance losses
+        
+        Parameters
+        ----------
+        diversions_list : list or np.ndarray
+            indices of diversions where urban supply shortages are returned
+
+        conversion_factor : float, default=1.0
+            factor to convert urban supply shortage from model 
+            units to the desired output units
+
+        Returns
+        -------
+        np.ndarray
+            array of urban supply shortages for each diversion location
+        '''
+        supply_type_id = self.get_supply_type_id_diversion()
+
+        return self._get_supply_shortage_at_origin_urban(supply_type_id, 
+                                                         diversions_list, 
+                                                         conversion_factor)
+
+    def get_urban_well_supply_shortage_at_origin(self, wells_list, conversion_factor=1.0):
+        ''' returns the supply shortage for urban wells at the destination of those 
+        supplies plus any conveyance losses
+        
+        Parameters
+        ----------
+        wells_list : list or np.ndarray
+            indices of wells where urban supply shortages are returned
+
+        conversion_factor : float, default=1.0
+            factor to convert urban supply shortage from model 
+            units to the desired output units
+
+        Returns
+        -------
+        np.ndarray
+            array of urban supply shortages for each well location
+        '''
+        supply_type_id = self.get_supply_type_id_well()
+
+        return self._get_supply_shortage_at_origin_urban(supply_type_id, 
+                                                         wells_list, 
+                                                         conversion_factor)
+
+    def get_urban_elempump_supply_shortage_at_origin(self, elements_list, conversion_factor=1.0):
+        ''' returns the supply shortage for urban element pumping 
+        at the destination of those supplies plus any conveyance losses
+        
+        Parameters
+        ----------
+        elements_list : list or np.ndarray
+            indices of element pumping locations where urban supply shortages are returned
+
+        conversion_factor : float, default=1.0
+            factor to convert urban supply shortage from model 
+            units to the desired output units
+
+        Returns
+        -------
+        np.ndarray
+            array of urban supply shortages for each element pumping location
+        '''
+        supply_type_id = self.get_supply_type_id_elempump()
+
+        return self._get_supply_shortage_at_origin_urban(supply_type_id, 
+                                                         elements_list, 
+                                                         conversion_factor)
 
     def _get_names(self, location_type_id):
         ''' returns the available names for a given feature_type
@@ -3276,19 +3575,27 @@ class IWFM_Model(IWFM_Miscellaneous):
         # get number of hydrographs
         num_hydrographs = ctypes.c_int(self._get_n_hydrographs(location_type_id.value))
 
-        # initialize output variables
-        hydrograph_ids = (ctypes.c_int*num_hydrographs.value)()
-
-        self.dll.IW_Model_GetHydrographIDs(ctypes.byref(location_type_id),
-                                           ctypes.byref(num_hydrographs),
-                                           hydrograph_ids,
-                                           ctypes.byref(self.status))
         
-        return np.array(hydrograph_ids)
+        if num_hydrographs.value != 0:
+            
+            # initialize output variables
+            hydrograph_ids = (ctypes.c_int*num_hydrographs.value)()
+
+            self.dll.IW_Model_GetHydrographIDs(ctypes.byref(location_type_id),
+                                               ctypes.byref(num_hydrographs),
+                                               hydrograph_ids,
+                                               ctypes.byref(self.status))
+        
+            return np.array(hydrograph_ids)
 
     def get_groundwater_hydrograph_ids(self):
         ''' returns the ids for the groundwater hydrographs specified
         in an IWFM model
+
+        Returns
+        -------
+        np.ndarray
+            integer array of ids for groundwater hydrographs
         '''
         # get the location type id for groundwater head observations
         location_type_id = self.get_location_type_id_gwheadobs()
@@ -3298,6 +3605,11 @@ class IWFM_Model(IWFM_Miscellaneous):
     def get_subsidence_hydrograph_ids(self):
         ''' returns the ids for the subsidence hydrographs specified
         in an IWFM model
+        
+        Returns
+        -------
+        np.ndarray
+            integer array of ids for subsidence hydrographs
         '''
         # get the location type id for groundwater head observations
         location_type_id = self.get_location_type_id_subsidenceobs()
@@ -3307,6 +3619,11 @@ class IWFM_Model(IWFM_Miscellaneous):
     def get_stream_hydrograph_ids(self):
         ''' returns the ids for the stream hydrographs specified
         in an IWFM model
+        
+        Returns
+        -------
+        np.ndarray
+            integer array of ids for stream hydrographs
         '''
         # get the location type id for stream flow observations
         location_type_id = self.get_location_type_id_streamhydobs()
@@ -3316,6 +3633,11 @@ class IWFM_Model(IWFM_Miscellaneous):
     def get_tile_drain_hydrograph_ids(self):
         ''' returns the ids for the tile drain hydrographs specified
         in an IWFM model
+        
+        Returns
+        -------
+        np.ndarray
+            integer array of ids for tile drain hydrographs
         '''
         # get the location type id for tile drain observations
         location_type_id = self.get_location_type_id_tiledrainobs()
@@ -3357,17 +3679,19 @@ class IWFM_Model(IWFM_Miscellaneous):
         # get number of hydrographs
         num_hydrographs = ctypes.c_int(self._get_n_hydrographs(location_type_id.value))
 
-        # initialize output variables
-        x = (ctypes.c_double*num_hydrographs.value)()
-        y = (ctypes.c_double*num_hydrographs.value)() 
+        if num_hydrographs.value != 0:
+            
+            # initialize output variables
+            x = (ctypes.c_double*num_hydrographs.value)()
+            y = (ctypes.c_double*num_hydrographs.value)() 
 
-        self.dll.IW_Model_GetHydrographCoordinates(ctypes.byref(location_type_id), 
-                                                   ctypes.byref(num_hydrographs), 
-                                                   x, 
-                                                   y, 
-                                                   ctypes.byref(self.status))
+            self.dll.IW_Model_GetHydrographCoordinates(ctypes.byref(location_type_id), 
+                                                       ctypes.byref(num_hydrographs), 
+                                                       x, 
+                                                       y, 
+                                                       ctypes.byref(self.status))
 
-        return np.array(x), np.array(y)
+            return np.array(x), np.array(y)
 
     def get_groundwater_hydrograph_coordinates(self):
         ''' returns the x,y-coordinates for the groundwater hydrographs
