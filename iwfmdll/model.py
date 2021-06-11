@@ -4512,7 +4512,27 @@ class IWFM_Model(IWFM_Miscellaneous):
                                             ctypes.byref(self.status))
 
     def set_supply_adjustment_max_iterations(self, max_iterations):
-        pass
+        ''' sets the maximum number of iterations that will be used in 
+        automatic supply adjustment 
+        
+        Parameters
+        ----------
+        max_iterations : int
+            maximum number of iterations for automatic supply adjustment
+        '''
+        # check to see if IWFM procedure is available in user version of IWFM DLL
+        if not hasattr(self.dll, "IW_Model_SetSupplyAdjustmentMaxIters"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. ' 
+                                 'Check for an updated version'.format('IW_Model_SetSupplyAdjustmentMaxIters'))
+        
+        # convert max_iterations to ctypes
+        max_iterations = ctypes.c_int(max_iterations)
+        
+        # set instance variable status to -1
+        self.status = ctypes.c_int(-1)
+
+        self.dll.IW_Model_SetSupplyAdjustmentMaxIters(ctypes.byref(max_iterations),
+                                                      ctypes.byref(self.status))
 
     def set_supply_adjustment_tolerance(self, tolerance):
         pass
