@@ -4438,6 +4438,7 @@ class IWFM_Model(IWFM_Miscellaneous):
             raise AttributeError('IWFM DLL does not have "{}" procedure. ' 
                                  'Check for an updated version'.format('IW_Model_GetLocationIDs'))
 
+        # get number of locations of the given location type
         n_locations = ctypes.c_int(self.get_n_locations(location_type_id))
 
         # convert location_type_id to ctypes
@@ -4457,10 +4458,58 @@ class IWFM_Model(IWFM_Miscellaneous):
         return np.array(location_ids)
 
     def set_preprocessor_path(self, preprocessor_path):
-        pass
+        ''' sets the path to the directory where the preprocessor main
+        input file is located
+
+        Parameters
+        ----------
+        preprocessor_path : str
+            file path to where preprocessor main input file is stored
+        '''
+        # check to see if IWFM procedure is available in user version of IWFM DLL
+        if not hasattr(self.dll, "IW_Model_SetPreProcessorPath"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. ' 
+                                 'Check for an updated version'.format('IW_Model_SetPreProcessorPath'))
+        
+        # get length of preprocessor_path string
+        len_pp_path = len(preprocessor_path)
+
+        # convert preprocessor path to ctypes character array
+        preprocessor_path = ctypes.create_string_buffer(preprocessor_path.encode('utf-8'))
+
+        # set instance variable status to -1
+        self.status = ctypes.c_int(-1)
+
+        self.dll.IW_Model_SetPreProcessorPath(ctypes.byref(len_pp_path),
+                                              preprocessor_path,
+                                              ctypes.byref(self.status))
 
     def set_simulation_path(self, simulation_path):
-        pass
+        ''' sets the path to the directory where the simulation main
+        input file is located
+
+        Parameters
+        ----------
+        simulation_path : str
+            file path to where simulation main input file is stored
+        '''
+        # check to see if IWFM procedure is available in user version of IWFM DLL
+        if not hasattr(self.dll, "IW_Model_SetSimulationPath"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. ' 
+                                 'Check for an updated version'.format('IW_Model_SetSimulationPath'))
+        
+        # get length of preprocessor_path string
+        len_sim_path = len(simulation_path)
+
+        # convert preprocessor path to ctypes character array
+        simulation_path = ctypes.create_string_buffer(simulation_path.encode('utf-8'))
+
+        # set instance variable status to -1
+        self.status = ctypes.c_int(-1)
+
+        self.dll.IW_Model_SetSimulationPath(ctypes.byref(len_sim_path),
+                                            simulation_path,
+                                            ctypes.byref(self.status))
 
     def set_supply_adjustment_max_iterations(self, max_iterations):
         pass
