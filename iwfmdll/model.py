@@ -4244,9 +4244,54 @@ class IWFM_Model(IWFM_Miscellaneous):
 
         return np.array(heads)
 
-    def get_subsidence_all(self, length_conversion_factor):
-        # is_for_inquiry=0
-        pass
+    def get_subsidence_all(self, subsidence_conversion_factor=1.0):
+        ''' returns the groundwater heads at all nodes in every aquifer 
+        layer for the current simulation time step
+        
+        Parameters
+        ----------
+        subsidence_conversion_factor : float, default=1.0
+            factor to convert subsidence from simulation unit
+            of length to a desired unit of length
+
+        Returns
+        -------
+        np.ndarray
+            2-D array of subsidence at each node and layer (n_nodes x n_layers)
+
+        Notes
+        -----
+        This method is designed for use when is_for_inquiry=0 to return 
+        the simulated subsidence after one time step is simulated
+        i.e. after calling simulate_for_one_time_step method
+        '''
+        # check to see if IWFM procedure is available in user version of IWFM DLL
+        if not hasattr(self.dll, "IW_Model_GetSubsidence_All"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. ' 
+                                 'Check for an updated version'.format('IW_Model_GetSubsidence_All'))
+        
+        # convert head_conversion_factor to ctypes equivalent
+        subsidence_conversion_factor = ctypes.c_double(subsidence_conversion_factor)
+
+        # get number of model nodes
+        n_nodes = ctypes.c_int(self.get_n_nodes())
+
+        # get number of model layers
+        n_layers = ctypes.c_int(self.get_n_layers())
+
+        # initialize output variables
+        subsidence = ((ctypes.c_double*n_nodes.value)*n_layers.value)()
+
+        # set instance variable status to -1
+        self.status = ctypes.c_int(-1)
+
+        self.dll.IW_Model_GetSubsidence_All(ctypes.byref(n_nodes),
+                                            ctypes.byref(n_layers),
+                                            ctypes.byref(subsidence_conversion_factor),
+                                            subsidence,
+                                            ctypes.byref(self.status))
+
+        return np.array(subsidence)
 
     def get_subregion_ag_pumping_average_depth_to_water(self):
         # is_for_inquiry=0
