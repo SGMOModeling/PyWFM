@@ -4384,10 +4384,77 @@ class IWFM_Model(IWFM_Miscellaneous):
         return np.array(average_depth_to_groundwater)
 
     def get_n_locations(self, location_type_id):
-        pass
+        ''' returns the number of locations for a specified location
+        type
+
+        Parameters
+        ----------
+        location_type_id : int
+            identification number used by IWFM for a particular location type
+            e.g elements, nodes, subregions, etc.
+
+        Returns
+        -------
+        int
+            number of locations for the location type specified
+        '''
+        # check to see if IWFM procedure is available in user version of IWFM DLL
+        if not hasattr(self.dll, "IW_Model_GetNLocations"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. ' 
+                                 'Check for an updated version'.format('IW_Model_GetNLocations'))
+        
+        # convert location type id to ctypes
+        location_type_id = ctypes.c_int(location_type_id)
+
+        # initialize output variables
+        n_locations = ctypes.c_int(0)
+
+        # set instance variable status to -1
+        self.status = ctypes.c_int(-1)
+
+        self.dll.IW_Model_GetNLocations(ctypes.byref(location_type_id),
+                                        ctypes.byref(n_locations),
+                                        ctypes.byref(self.status))
+
+        return n_locations.value
 
     def get_location_ids(self, location_type_id):
-        pass
+        ''' returns the location identification numbers used by the 
+        model for a specified location type
+
+        Parameters
+        ----------
+        location_type_id : int
+            identification number used by IWFM for a particular location type
+            e.g elements, nodes, subregions, etc.
+        
+        Returns
+        -------
+        np.ndarray
+            array of identification numbers 
+        '''
+        # check to see if IWFM procedure is available in user version of IWFM DLL
+        if not hasattr(self.dll, "IW_Model_GetLocationIDs"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. ' 
+                                 'Check for an updated version'.format('IW_Model_GetLocationIDs'))
+
+        n_locations = ctypes.c_int(self.get_n_locations(location_type_id))
+
+        # convert location_type_id to ctypes
+        location_type_id = ctypes.c_int(location_type_id)
+
+        # initialize output variables
+        location_ids = (ctypes.c_int*n_locations.value)()
+
+        # set instance variable status to -1
+        self.status = ctypes.c_int(-1)
+
+        self.dll.IW_Model_GetLocationIDs(ctypes.byref(location_type_id),
+                                         ctypes.byref(n_locations),
+                                         location_ids,
+                                         ctypes.byref(self.status))
+
+        return np.array(location_ids)
 
     def set_preprocessor_path(self, preprocessor_path):
         pass
