@@ -4535,7 +4535,40 @@ class IWFM_Model(IWFM_Miscellaneous):
                                                       ctypes.byref(self.status))
 
     def set_supply_adjustment_tolerance(self, tolerance):
-        pass
+        ''' sets the tolerance, given as a fraction of the water demand
+        that will be used in automatic supply adjustment
+
+        Parameters
+        ----------
+        tolerance : float
+            fraction of water demand used as the convergence criteria
+            for iterative supply adjustment
+
+        Notes
+        -----
+        When the automatic supply adjustment feature of IWFM is turned 
+        on, IWFM iteratively tries to adjust water supplies (diversions, 
+        pumping or both based on user defined specifications) to meet 
+        the water demand. When the difference between water supply and 
+        demand is less than the tolerance, IWFM assumes equivalency 
+        between demand and supply, and terminates supply adjustment 
+        iterations.
+        
+        0.01 represents 1% of the demand
+        '''
+        # check to see if IWFM procedure is available in user version of IWFM DLL
+        if not hasattr(self.dll, "IW_Model_SetSupplyAdjustmentTolerance"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. ' 
+                                 'Check for an updated version'.format('IW_Model_SetSupplyAdjustmentTolerance'))
+        
+        # convert tolerance to ctypes
+        tolerance = ctypes.c_double(tolerance)
+
+        # set instance variable status to -1
+        self.status = ctypes.c_int(-1)
+
+        self.dll.IW_Model_SetSupplyAdjustmentTolerance(ctypes.byref(tolerance),
+                                                       ctypes.byref(self.status))
 
     def simulate_for_one_timestep(self):
         pass
