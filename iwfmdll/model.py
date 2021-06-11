@@ -4324,9 +4324,64 @@ class IWFM_Model(IWFM_Miscellaneous):
 
         return np.array(average_depth_to_groundwater)
 
-    def get_zone_ag_pumping_average_depth_to_water(self):
-        # is_for_inquiry=0
-        pass
+    def get_zone_ag_pumping_average_depth_to_water(self, elements_list, zones_list):
+        ''' returns average depth to groundwater for user-defined zones
+
+        Parameters
+        ----------
+        elements_list : list or np.ndarray
+            list of all elements corresponding to all zones where average depth to water is calculated
+
+        zones_list : list or np.ndarray
+            list of zone ids corresponding to each element in the elements list
+
+        Returns
+        -------
+        np.ndarray
+            average depth to water for each zone specified
+        '''
+        # check to see if IWFM procedure is available in user version of IWFM DLL
+        if not hasattr(self.dll, "IW_Model_GetZoneAgPumpingAverageDepthToGW"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. ' 
+                                 'Check for an updated version'.format('IW_Model_GetZoneAgPumpingAverageDepthToGW'))
+
+        # if list convert to np.ndarray
+        if isinstance(elements_list, list):
+            elements_list = np.array(elements_list)
+
+        if isinstance(zones_list, list):
+            zones_list = np.array(zones_list)
+
+        if (elements_list.shape != zones_list.shape) | (len(elements_list.shape) != 1):
+            raise ValueError('elements_list and zone_list should be 1D'
+                             ' arrays of the same length')
+
+        # get length of elements list
+        len_elements_list = ctypes.c_int(len(elements_list))
+
+        # get length of zones list
+        n_zones = ctypes.c_int(len(np.unique(zones_list)))
+
+        # convert elements_list to ctypes
+        elements_list = (ctypes.c_int*len_elements_list.value)(*elements_list)
+
+        # convert zones_list to ctypes
+        zones_list = (ctypes.c_int*len_elements_list.value)()
+
+        # initialize output variables
+        average_depth_to_groundwater = (ctypes.c_double*n_zones.value)()
+
+        # reset instance variable status to -1
+        self.status = ctypes.c_int(-1)
+
+        self.dll.IW_Model_GetZoneAgPumpingAverageDepthToGW(ctypes.byref(len_elements_list),
+                                                           elements_list,
+                                                           zones_list,
+                                                           ctypes.byref(n_zones),
+                                                           average_depth_to_groundwater,
+                                                           ctypes.byref(self.status))
+
+        return np.array(average_depth_to_groundwater)
 
     def get_n_locations(self, location_type_id):
         pass
