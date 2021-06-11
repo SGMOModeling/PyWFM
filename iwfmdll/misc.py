@@ -1019,6 +1019,63 @@ class IWFM_Miscellaneous:
 
         self.dll.IW_LogLastMessage(ctypes.byref(status))
 
+    def _is_time_interval_greater_or_equal(self, time_interval, 
+                                           simulation_time_interval):
+        ''' determines if a provided time_interval is greater than or 
+        equal to the simulation_time_interval
+        
+        Parameters
+        ----------
+        time_interval : str
+            valid IWFM time interval to compare with the simulation time 
+            interval
+
+        simulation_time_interval : str
+            valid IWFM time interval representing the simulation time 
+            interval
+
+        Returns
+        -------
+        boolean
+            True if time interval is greater than or equal to 
+            simulation time interval, otherwise False
+        '''
+        # validate time interval
+        self._validate_time_interval(time_interval)
+
+        # validate simulation_time_interval
+        self._validate_time_interval(simulation_time_interval)
+
+        # list of valid time intervals
+        _valid_time_intervals = ['1MIN',
+                                '2MIN',
+                                '3MIN',
+                                '4MIN',
+                                '5MIN',
+                                '10MIN',
+                                '15MIN',
+                                '20MIN',
+                                '30MIN',
+                                '1HOUR',
+                                '2HOUR',
+                                '3HOUR',
+                                '4HOUR',
+                                '6HOUR',
+                                '8HOUR',
+                                '12HOUR',
+                                '1DAY',
+                                '1WEEK',
+                                '1MON',
+                                '1YEAR']
+
+        index_time_interval = _valid_time_intervals.index(time_interval)
+        index_simulation_interval = _valid_time_intervals.index(simulation_time_interval)
+
+        if index_time_interval >= index_simulation_interval:
+            return True
+        else:
+            return False
+
     def _validate_iwfm_date(self, dt):
         ''' performs validation that a provided value is an IWFM-format date string based on
         string length and format MM/DD/YYYY_HH:MM
