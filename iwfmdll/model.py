@@ -2,6 +2,7 @@ import os
 import ctypes
 import math
 import numpy as np
+from numpy.lib.function_base import average
 from numpy.lib.shape_base import expand_dims
 import pandas as pd
 
@@ -4294,8 +4295,34 @@ class IWFM_Model(IWFM_Miscellaneous):
         return np.array(subsidence)
 
     def get_subregion_ag_pumping_average_depth_to_water(self):
-        # is_for_inquiry=0
-        pass
+        ''' returns subregional depth to groundwater values that are 
+        weighted-average with respect to agricultural pumping rates
+        during a model run
+
+        Returns
+        -------
+        np.ndarray
+            array of weighted-average depth to groundwater
+        '''
+        # check to see if IWFM procedure is available in user version of IWFM DLL
+        if not hasattr(self.dll, "IW_Model_GetSubregionAgPumpingAverageDepthToGW"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. ' 
+                                 'Check for an updated version'.format('IW_Model_GetSubregionAgPumpingAverageDepthToGW'))
+
+        # get number of subregions in model
+        n_subregions = ctypes.c_int(self.get_n_subregions())
+
+        # initialize output variables
+        average_depth_to_groundwater = (ctypes.c_double*n_subregions.value)()
+        
+        # reset instance variable status to -1
+        self.status = ctypes.c_int(-1)
+
+        self.dll.IW_Model_GetSubregionAgPumpingAverageDepthToGW(ctypes.byref(n_subregions),
+                                                                average_depth_to_groundwater,
+                                                                ctypes.byref(self.status))
+
+        return np.array(average_depth_to_groundwater)
 
     def get_zone_ag_pumping_average_depth_to_water(self):
         # is_for_inquiry=0
