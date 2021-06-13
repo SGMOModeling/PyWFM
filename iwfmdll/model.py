@@ -71,7 +71,8 @@ class IWFM_Model(IWFM_Miscellaneous):
 
         super().__init__(dll_path)
                     
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
             
         self.dll = ctypes.windll.LoadLibrary(self.dll_path)
 
@@ -101,8 +102,8 @@ class IWFM_Model(IWFM_Miscellaneous):
         if not hasattr(self.dll, "IW_Model_Kill"):
             raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_Kill'))
         
-        # reset instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        # reset instance variable status to 0
+        self.status = ctypes.c_int(0)
         
         self.dll.IW_Model_Kill(ctypes.byref(self.status))
 
@@ -134,8 +135,8 @@ class IWFM_Model(IWFM_Miscellaneous):
         # initialize output variables
         current_date_string = ctypes.create_string_buffer(length_date_string.value)
 
-        # set instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetCurrentDateAndTime(ctypes.byref(length_date_string),
                                                 current_date_string,
@@ -151,8 +152,8 @@ class IWFM_Model(IWFM_Miscellaneous):
             raise AttributeError('IWFM DLL does not have "{}" procedure. '
                                  'Check for an updated version'.format('IW_Model_GetNTimeSteps'))
         
-        # reset instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        # reset instance variable status to 0
+        self.status = ctypes.c_int(0)
 
         # initialize n_nodes variable
         n_time_steps = ctypes.c_int(0)
@@ -179,8 +180,8 @@ class IWFM_Model(IWFM_Miscellaneous):
             raise AttributeError('IWFM DLL does not have "{}" procedure. '
                                  'Check for an updated version'.format('IW_Model_GetTimeSpecs'))
             
-        # reset instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
         
         # set input variables
         n_data = ctypes.c_int(self.get_n_time_steps())
@@ -221,8 +222,8 @@ class IWFM_Model(IWFM_Miscellaneous):
             raise AttributeError('IWFM DLL does not have "{}" procedure. '
                                  'Check for an updated version'.format('IW_Model_GetOutputIntervals'))
 
-        # reset instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
 
         # set length of output intervals character array to 160 or larger
         length_output_intervals = ctypes.c_int(160)
@@ -258,8 +259,8 @@ class IWFM_Model(IWFM_Miscellaneous):
         if not hasattr(self.dll, "IW_Model_GetNNodes"):
             raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetNNodes'))
         
-        # reset instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
 
         # initialize n_nodes variable
         n_nodes = ctypes.c_int(0)
@@ -279,8 +280,8 @@ class IWFM_Model(IWFM_Miscellaneous):
         if not hasattr(self.dll, "IW_Model_GetNodeXY"):
             raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetNodeXY'))
 
-        # reset instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
 
         # get number of nodes
         num_nodes = ctypes.c_int(self.get_n_nodes())
@@ -303,8 +304,8 @@ class IWFM_Model(IWFM_Miscellaneous):
         if not hasattr(self.dll, "IW_Model_GetNodeIDs"):
             raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetNodeIDs'))
 
-        # reset instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
 
         # get number of nodes
         num_nodes = ctypes.c_int(self.get_n_nodes())
@@ -325,8 +326,8 @@ class IWFM_Model(IWFM_Miscellaneous):
         if not hasattr(self.dll, "IW_Model_GetNElements"):
             raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetNElements'))
 
-        # reset instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
 
         # initialize n_nodes variable
         n_elements = ctypes.c_int(0)
@@ -346,8 +347,8 @@ class IWFM_Model(IWFM_Miscellaneous):
         if not hasattr(self.dll, "IW_Model_GetElementIDs"):
             raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetElementIDs'))
             
-        # reset instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
 
         # get number of elements
         num_elements = ctypes.c_int(self.get_n_elements())
@@ -394,8 +395,8 @@ class IWFM_Model(IWFM_Miscellaneous):
         if not np.any(element_ids == element_id):
             raise ValueError('element_id is not a valid element ID')
 
-        # reset instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
 
         # set input variables
         element_id = ctypes.c_int(element_id)
@@ -418,8 +419,8 @@ class IWFM_Model(IWFM_Miscellaneous):
         if not hasattr(self.dll, "IW_Model_GetNSubregions"):
             raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetNSubregions'))
 
-        # reset instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
             
         # initialize n_subregions variable
         n_subregions = ctypes.c_int(0)
@@ -445,8 +446,8 @@ class IWFM_Model(IWFM_Miscellaneous):
         if not hasattr(self.dll, "IW_Model_GetSubregionIDs"):
             raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetSubregionIDs'))
 
-        # reset instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
 
         # get number of model subregions
         n_subregions = ctypes.c_int(self.get_n_subregions())
@@ -476,8 +477,8 @@ class IWFM_Model(IWFM_Miscellaneous):
         if subregion_id not in subregion_ids:
             raise ValueError('subregion_id provided is not a valid subregion id. value provided {}. Must be one of: {}'.format(subregion_id, ' '.join(subregion_ids)))
 
-        # reset instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
 
         # convert subregion_id to ctypes
         subregion_id = ctypes.c_int(subregion_id)
@@ -506,8 +507,8 @@ class IWFM_Model(IWFM_Miscellaneous):
         if not hasattr(self.dll, "IW_Model_GetElemSubregions"):
             raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetElemSubregions'))
 
-        # reset instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
 
         # get number of elements in model
         n_elements = ctypes.c_int(self.get_n_elements())
@@ -528,8 +529,8 @@ class IWFM_Model(IWFM_Miscellaneous):
         if not hasattr(self.dll, "IW_Model_GetNStrmNodes"):
             raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetNStrmNodes'))
 
-        # reset instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
             
         # initialize n_stream_nodes variable
         n_stream_nodes = ctypes.c_int(0)
@@ -553,8 +554,8 @@ class IWFM_Model(IWFM_Miscellaneous):
         if not hasattr(self.dll, "IW_Model_GetStrmNodeIDs"):
             raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetStrmNodeIDs'))
 
-        # reset instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
 
         # get number of stream nodes
         n_stream_nodes = ctypes.c_int(self.get_n_stream_nodes())
@@ -599,8 +600,8 @@ class IWFM_Model(IWFM_Miscellaneous):
         if not isinstance(stream_node_id, ctypes.c_long):
             stream_node_id = ctypes.c_int(stream_node_id)
         
-        # reset instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
 
         # initialize output variables
         n_upstream_stream_nodes = ctypes.c_int(0)
@@ -643,8 +644,8 @@ class IWFM_Model(IWFM_Miscellaneous):
             stream_node_id = ctypes.c_int(stream_node_id)
         n_upstream_stream_nodes = ctypes.c_int(self.get_n_stream_nodes_upstream_of_stream_node(stream_node_id))
 
-        # reset instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
 
         # initialize output variables
         upstream_nodes = (ctypes.c_int*n_upstream_stream_nodes.value)()
@@ -672,7 +673,7 @@ class IWFM_Model(IWFM_Miscellaneous):
         n_stream_nodes = ctypes.c_int(self.get_n_stream_nodes())
 
         # reset_instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        self.status = ctypes.c_int(0)
 
         # initialize output variables
         stream_bottom_elevations = (ctypes.c_double*n_stream_nodes.value)()
@@ -714,7 +715,7 @@ class IWFM_Model(IWFM_Miscellaneous):
             stream_node_id = ctypes.c_int(stream_node_id)
 
         # reset_instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        self.status = ctypes.c_int(0)
 
         # initialize output variables
         n_rating_table_points = ctypes.c_int(0)
@@ -756,8 +757,8 @@ class IWFM_Model(IWFM_Miscellaneous):
         stream_node_id = ctypes.c_int(stream_node_id)
         n_rating_table_points =ctypes.c_int(self.get_n_rating_table_points(stream_node_id.value))
 
-        # reset instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
 
         # initialize output variables
         stage = (ctypes.c_double*n_rating_table_points.value)()
@@ -784,8 +785,8 @@ class IWFM_Model(IWFM_Miscellaneous):
             raise AttributeError('IWFM DLL does not have "{}" procedure. '
                                  'Check for an updated version'.format("IW_Model_GetStrmNInflows"))
         
-        # set instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
         
         # initialize output variables
         n_stream_inflows = ctypes.c_int(0)
@@ -811,8 +812,8 @@ class IWFM_Model(IWFM_Miscellaneous):
         # get number of stream inflow nodes
         n_stream_inflows = ctypes.c_int(self.get_n_stream_inflows())
 
-        # set instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
 
         # initialize output variables
         stream_inflow_nodes = (ctypes.c_int*n_stream_inflows.value)()
@@ -830,7 +831,7 @@ class IWFM_Model(IWFM_Miscellaneous):
         Returns
         -------
         np.ndarray
-            integer array of stream inflow node indices
+            integer array of stream inflow indices
         '''
         if not hasattr(self.dll, "IW_Model_GetStrmInflowIDs"):
             raise AttributeError('IWFM DLL does not have "{}" procedure. '
@@ -839,8 +840,8 @@ class IWFM_Model(IWFM_Miscellaneous):
         # get number of stream inflow nodes
         n_stream_inflows = ctypes.c_int(self.get_n_stream_inflows())
 
-        # set instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
 
         # initialize output variables
         stream_inflow_ids = (ctypes.c_int*n_stream_inflows.value)()
@@ -887,8 +888,8 @@ class IWFM_Model(IWFM_Miscellaneous):
         stream_inflow_locations = (ctypes.c_int*n_stream_inflow_locations.value)(*stream_inflow_locations)
         inflow_conversion_factor = ctypes.c_double(inflow_conversion_factor)
 
-        # set instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
 
         # initialize output variables
         inflows = (ctypes.c_double*n_stream_inflow_locations.value)()
@@ -935,8 +936,8 @@ class IWFM_Model(IWFM_Miscellaneous):
         # initialize output variables
         stream_flow = ctypes.c_double(0)
 
-        # set instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetStrmFlow(ctypes.byref(stream_node_id),
                                       ctypes.byref(flow_conversion_factor),
@@ -977,8 +978,8 @@ class IWFM_Model(IWFM_Miscellaneous):
         # initialize output variables
         stream_flows = (ctypes.c_double*n_stream_nodes.value)()
 
-        # reset instance method status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetStrmFlows(ctypes.byref(n_stream_nodes),
                                  ctypes.byref(flow_conversion_factor),
@@ -1019,8 +1020,8 @@ class IWFM_Model(IWFM_Miscellaneous):
         # initialize output variables
         stream_stages = (ctypes.c_double*n_stream_nodes.value)()
 
-        # reset instance method status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetStrmStages(ctypes.byref(n_stream_nodes),
                                         ctypes.byref(stage_conversion_factor),
@@ -1064,8 +1065,8 @@ class IWFM_Model(IWFM_Miscellaneous):
         # initialize output variables
         small_watershed_inflows = (ctypes.c_double*n_stream_nodes.value)()
 
-        # reset instance method status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetStrmTributaryInflows(ctypes.byref(n_stream_nodes),
                                                   ctypes.byref(inflow_conversion_factor),
@@ -1109,8 +1110,8 @@ class IWFM_Model(IWFM_Miscellaneous):
         # initialize output variables
         rainfall_runoff_inflows = (ctypes.c_double*n_stream_nodes.value)()
 
-        # reset instance method status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetStrmRainfallRunoff(ctypes.byref(n_stream_nodes),
                                                 ctypes.byref(runoff_conversion_factor),
@@ -1155,8 +1156,8 @@ class IWFM_Model(IWFM_Miscellaneous):
         # initialize output variables
         return_flows = (ctypes.c_double*n_stream_nodes.value)()
 
-        # reset instance method status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetStrmReturnFlows(ctypes.byref(n_stream_nodes),
                                              ctypes.byref(return_flow_conversion_factor),
@@ -1201,8 +1202,8 @@ class IWFM_Model(IWFM_Miscellaneous):
         # initialize output variables
         tile_drain_flows = (ctypes.c_double*n_stream_nodes.value)()
 
-        # reset instance method status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetStrmTileDrains(ctypes.byref(n_stream_nodes),
                                              ctypes.byref(tile_drain_conversion_factor),
@@ -1248,8 +1249,8 @@ class IWFM_Model(IWFM_Miscellaneous):
         # initialize output variables
         riparian_evapotranspiration = (ctypes.c_double*n_stream_nodes.value)()
 
-        # reset instance method status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetStrmRiparianETs(ctypes.byref(n_stream_nodes),
                                              ctypes.byref(evapotranspiration_conversion_factor),
@@ -1296,8 +1297,8 @@ class IWFM_Model(IWFM_Miscellaneous):
         # initialize output variables
         gain_from_groundwater = (ctypes.c_double*n_stream_nodes.value)()
 
-        # reset instance method status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetStrmGainFromGW(ctypes.byref(n_stream_nodes),
                                             ctypes.byref(stream_gain_conversion_factor),
@@ -1343,8 +1344,8 @@ class IWFM_Model(IWFM_Miscellaneous):
         # initialize output variables
         gain_from_lakes = (ctypes.c_double*n_stream_nodes.value)()
 
-        # reset instance method status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetStrmGainFromLakes(ctypes.byref(n_stream_nodes),
                                                ctypes.byref(lake_inflow_conversion_factor),
@@ -1390,8 +1391,8 @@ class IWFM_Model(IWFM_Miscellaneous):
         # initialize output variables
         net_bypass_inflow = (ctypes.c_double*n_stream_nodes.value)()
 
-        # reset instance method status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetStrmGainFromLakes(ctypes.byref(n_stream_nodes),
                                                ctypes.byref(bypass_inflow_conversion_factor),
@@ -1439,8 +1440,8 @@ class IWFM_Model(IWFM_Miscellaneous):
         diversion_indices = (ctypes.c_int*n_diversions.value)(*diversion_indices)
         diversion_conversion_factor = ctypes.c_double(diversion_conversion_factor)
 
-        # set instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
 
         # initialize output variables
         actual_diversion_amounts = (ctypes.c_double*n_diversions.value)()
@@ -1483,8 +1484,8 @@ class IWFM_Model(IWFM_Miscellaneous):
         else:
             raise TypeError('diversion_locations provided must be a list, tuple, or np.ndarray or use "all"')
 
-        # reset instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
 
         # initialize output variables
         diversion_stream_nodes = (ctypes.c_int*n_diversions.value)()
@@ -1503,8 +1504,8 @@ class IWFM_Model(IWFM_Miscellaneous):
         if not hasattr(self.dll, "IW_Model_GetNReaches"):
             raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_ModelGetNReaches'))
 
-        # reset instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
             
         # initialize n_stream_reaches variable
         n_stream_reaches = ctypes.c_int(0)
@@ -1533,8 +1534,8 @@ class IWFM_Model(IWFM_Miscellaneous):
         # set input variables
         n_stream_reaches = ctypes.c_int(self.get_n_stream_reaches())
         
-        # reset instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
 
         # initialize output variables
         stream_reach_ids = (ctypes.c_int*n_stream_reaches.value)()
@@ -1569,8 +1570,8 @@ class IWFM_Model(IWFM_Miscellaneous):
         # initialize output variables
         n_nodes_in_reach = ctypes.c_int(0)
 
-        # set instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetReachNNodes(ctypes.byref(reach_index),
                                          ctypes.byref(n_nodes_in_reach),
@@ -1607,8 +1608,8 @@ class IWFM_Model(IWFM_Miscellaneous):
         # initialize output variables
         reach_groundwater_nodes = (ctypes.c_int*n_nodes_in_reach.value)()
 
-        # set instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetReachGWNodes(ctypes.byref(reach_index),
                                           ctypes.byref(n_nodes_in_reach),
@@ -1646,8 +1647,8 @@ class IWFM_Model(IWFM_Miscellaneous):
         # initialize output variables
         reach_stream_nodes = (ctypes.c_int*n_nodes_in_reach.value)()
 
-        # set instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetReachStrmNodes(ctypes.byref(reach_index),
                                             ctypes.byref(n_nodes_in_reach),
@@ -1683,8 +1684,8 @@ class IWFM_Model(IWFM_Miscellaneous):
         # initialize output variables
         stream_reaches = (ctypes.c_int*n_stream_nodes.value)()
 
-        # set instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
         
         self.dll.IW_Model_GetReaches_ForStrmNodes(ctypes.byref(n_stream_nodes),
                                                   stream_node_indices,
@@ -1713,8 +1714,8 @@ class IWFM_Model(IWFM_Miscellaneous):
         # initialize output variables
         upstream_stream_nodes = (ctypes.c_int*n_reaches.value)()
 
-        # set instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
         
         self.dll.IW_Model_GetReachUpstrmNodes(ctypes.byref(n_reaches),
                                               upstream_stream_nodes,
@@ -1755,8 +1756,8 @@ class IWFM_Model(IWFM_Miscellaneous):
         # initialize output variables
         n_upstream_reaches = ctypes.c_int(0)
 
-        # set instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
         
         self.dll.IW_Model_GetReachNUpstrmReaches(ctypes.byref(reach_index),
                                                  ctypes.byref(n_upstream_reaches),
@@ -1792,8 +1793,8 @@ class IWFM_Model(IWFM_Miscellaneous):
         # initialize output variables
         upstream_reaches = (ctypes.c_int*n_upstream_reaches.value)()
 
-        # set instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
         
         self.dll.IW_Model_GetReachUpstrmReaches(ctypes.byref(reach_index),
                                                 ctypes.byref(n_upstream_reaches),
@@ -1822,8 +1823,8 @@ class IWFM_Model(IWFM_Miscellaneous):
         # initialize output variables
         downstream_stream_nodes = (ctypes.c_int*n_reaches.value)()
 
-        # set instance variable status to -1
-        self.status = ctypes.c_int(-1)        
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)        
         
         self.dll.IW_Model_GetReachDownstrmNodes(ctypes.byref(n_reaches),
                                                 downstream_stream_nodes,
@@ -1854,8 +1855,8 @@ class IWFM_Model(IWFM_Miscellaneous):
         # initialize output variables
         reach_outflow_destinations = (ctypes.c_int*n_reaches.value)()
 
-        # set instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetReachOutflowDest(ctypes.byref(n_reaches),
                                               reach_outflow_destinations,
@@ -1882,8 +1883,8 @@ class IWFM_Model(IWFM_Miscellaneous):
         # initialize output variables
         reach_outflow_destination_types = (ctypes.c_int*n_reaches.value)()
 
-        # set instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetReachOutflowDestTypes(ctypes.byref(n_reaches),
                                                    reach_outflow_destination_types,
@@ -1899,8 +1900,8 @@ class IWFM_Model(IWFM_Miscellaneous):
             raise AttributeError('IWFM DLL does not have "{}" procedure. '
                                  'Check for an updated version'.format('IW_Model_GetNDiversions'))
 
-        # reset instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
             
         # initialize n_stream_reaches variable
         n_diversions = ctypes.c_int(0)
@@ -1929,8 +1930,8 @@ class IWFM_Model(IWFM_Miscellaneous):
         # set input variables
         n_diversions = ctypes.c_int(self.get_n_diversions())
         
-        # reset instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
 
         # initialize output variables
         diversion_ids = (ctypes.c_int*n_diversions.value)()
@@ -1961,8 +1962,8 @@ class IWFM_Model(IWFM_Miscellaneous):
         # initialize n_stream_reaches variable
         n_lakes = ctypes.c_int(0)
             
-        # reset instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
         
         self.dll.IW_Model_GetNLakes(ctypes.byref(n_lakes),
                                     ctypes.byref(self.status))
@@ -1996,8 +1997,8 @@ class IWFM_Model(IWFM_Miscellaneous):
         # initialize output variables
         lake_ids = (ctypes.c_int*n_lakes.value)()
 
-        # reset instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetLakeIDs(ctypes.byref(n_lakes),
                                      lake_ids,
@@ -2039,8 +2040,8 @@ class IWFM_Model(IWFM_Miscellaneous):
         # initialize output variables
         n_elements_in_lake = ctypes.c_int(0)
 
-        # reset instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetNElementsInLake(ctypes.byref(lake_id),
                                              ctypes.byref(n_elements_in_lake),
@@ -2084,8 +2085,8 @@ class IWFM_Model(IWFM_Miscellaneous):
         # initialize output variables
         elements_in_lake = (ctypes.c_int*n_elements_in_lake.value)()
 
-        # reset instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetElementsInLake(ctypes.byref(lake_id),
                                             ctypes.byref(n_elements_in_lake),
@@ -2108,8 +2109,8 @@ class IWFM_Model(IWFM_Miscellaneous):
             raise AttributeError('IWFM DLL does not have "{}" procedure. '
                                  'Check for an updated version'.format('IW_Model_GetNTileDrainNodes'))
 
-        # reset instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
             
         # initialize n_stream_reaches variable
         n_tile_drains = ctypes.c_int(0)
@@ -2147,8 +2148,8 @@ class IWFM_Model(IWFM_Miscellaneous):
         # initialize output variables
         tile_drain_ids = (ctypes.c_int*n_tile_drains.value)()
 
-        # reset instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetTileDrainIDs(ctypes.byref(n_tile_drains),
                                           tile_drain_ids,
@@ -2179,8 +2180,8 @@ class IWFM_Model(IWFM_Miscellaneous):
         # initialize output variables
         tile_drain_nodes = (ctypes.c_int*n_tile_drains.value)()
 
-        # reset instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetTileDrainNodes(ctypes.byref(n_tile_drains),
                                             tile_drain_nodes,
@@ -2201,8 +2202,8 @@ class IWFM_Model(IWFM_Miscellaneous):
             raise AttributeError('IWFM DLL does not have "{}" procedure. '
                                  'Check for an updated version'.format('IW_Model_GetNLayers'))
 
-        # reset instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
             
         # initialize n_layers variable
         n_layers = ctypes.c_int(0)
@@ -2230,8 +2231,8 @@ class IWFM_Model(IWFM_Miscellaneous):
             raise AttributeError('IWFM DLL does not have "{}" procedure. '
                                  'Check for an updated version'.format('IW_Model_GetGSElev'))
         
-        # reset instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
 
         # get number of model nodes
         n_nodes = ctypes.c_int(self.get_n_nodes())
@@ -2268,8 +2269,8 @@ class IWFM_Model(IWFM_Miscellaneous):
         # initialize output variables
         aquifer_top_elevations = ((ctypes.c_double*n_nodes.value)*n_layers.value)()
 
-        # set instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetAquiferTopElev(ctypes.byref(n_nodes),
                                             ctypes.byref(n_layers),
@@ -2301,8 +2302,8 @@ class IWFM_Model(IWFM_Miscellaneous):
         # initialize output variables
         aquifer_bottom_elevations = ((ctypes.c_double*n_nodes.value)*n_layers.value)()
 
-        # set instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetAquiferBottomElev(ctypes.byref(n_nodes),
                                             ctypes.byref(n_layers),
@@ -2397,8 +2398,8 @@ class IWFM_Model(IWFM_Miscellaneous):
         top_elevs = (ctypes.c_double*n_layers.value)()
         bottom_elevs = (ctypes.c_double*n_layers.value)()
 
-        # reset instance variable status to -1 
-        self.status = ctypes.c_int(-1)        
+        # set instance variable status to 0 
+        self.status = ctypes.c_int(0)        
     
         self.dll.IW_Model_GetStratigraphy_AtXYCoordinate(ctypes.byref(n_layers), 
                                                          ctypes.byref(x), 
@@ -2447,8 +2448,8 @@ class IWFM_Model(IWFM_Miscellaneous):
         # initialize output variables
         aquifer_horizontal_k = ((ctypes.c_double*n_nodes.value)*n_layers.value)()
 
-        # set instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetAquiferHorizontalK(ctypes.byref(n_nodes),
                                             ctypes.byref(n_layers),
@@ -2480,8 +2481,8 @@ class IWFM_Model(IWFM_Miscellaneous):
         # initialize output variables
         aquifer_vertical_k = ((ctypes.c_double*n_nodes.value)*n_layers.value)()
 
-        # set instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetAquiferVerticalK(ctypes.byref(n_nodes),
                                             ctypes.byref(n_layers),
@@ -2513,8 +2514,8 @@ class IWFM_Model(IWFM_Miscellaneous):
         # initialize output variables
         aquitard_vertical_k = ((ctypes.c_double*n_nodes.value)*n_layers.value)()
 
-        # set instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetAquitardVerticalK(ctypes.byref(n_nodes),
                                                ctypes.byref(n_layers),
@@ -2546,8 +2547,8 @@ class IWFM_Model(IWFM_Miscellaneous):
         # initialize output variables
         aquifer_specific_yield = ((ctypes.c_double*n_nodes.value)*n_layers.value)()
 
-        # set instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetAquiferSy(ctypes.byref(n_nodes),
                                        ctypes.byref(n_layers),
@@ -2579,8 +2580,8 @@ class IWFM_Model(IWFM_Miscellaneous):
         # initialize output variables
         aquifer_specific_storage = ((ctypes.c_double*n_nodes.value)*n_layers.value)()
 
-        # set instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetAquiferSs(ctypes.byref(n_nodes),
                                        ctypes.byref(n_layers),
@@ -2619,8 +2620,8 @@ class IWFM_Model(IWFM_Miscellaneous):
         aquifer_specific_yield = ((ctypes.c_double*n_nodes.value)*n_layers.value)()
         aquifer_specific_storage = ((ctypes.c_double*n_nodes.value)*n_layers.value)()
 
-        # set instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
         
         self.dll.IW_Model_GetAquiferParameters(ctypes.byref(n_nodes),
                                                ctypes.byref(n_layers),
@@ -2652,8 +2653,8 @@ class IWFM_Model(IWFM_Miscellaneous):
         # initialize output variables
         n_ag_crops = ctypes.c_int(0)
 
-        # set instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetNAgCrops(ctypes.byref(n_ag_crops),
                                       ctypes.byref(self.status))
@@ -2713,8 +2714,8 @@ class IWFM_Model(IWFM_Miscellaneous):
         # initialize output variables
         supply_purpose_flags = (ctypes.c_int*n_supply_indices.value)()
 
-        # set instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetSupplyPurpose(ctypes.byref(supply_type_id),
                                            ctypes.byref(n_supply_indices),
@@ -2825,8 +2826,8 @@ class IWFM_Model(IWFM_Miscellaneous):
         # initialize output variables
         ag_supply_requirement = (ctypes.c_double*n_locations.value)()
 
-        # reset instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetSupplyRequirement_Ag(ctypes.byref(location_type_id),
                                                   ctypes.byref(n_locations),
@@ -2923,8 +2924,8 @@ class IWFM_Model(IWFM_Miscellaneous):
         # initialize output variables
         urban_supply_requirement = (ctypes.c_double*n_locations.value)()
 
-        # reset instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetSupplyRequirement_Urb(ctypes.byref(location_type_id),
                                                    ctypes.byref(n_locations),
@@ -3025,8 +3026,8 @@ class IWFM_Model(IWFM_Miscellaneous):
         # initialize output variables
         ag_supply_shortage = (ctypes.c_double*n_locations.value)()
 
-        # reset instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetSupplyShortAtOrigin_Ag(ctypes.byref(supply_type_id),
                                                     ctypes.byref(n_locations),
@@ -3151,8 +3152,8 @@ class IWFM_Model(IWFM_Miscellaneous):
         # initialize output variables
         urban_supply_shortage = (ctypes.c_double*n_locations.value)()
 
-        # reset instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetSupplyShortAtOrigin_Urb(ctypes.byref(supply_type_id),
                                                     ctypes.byref(n_locations),
@@ -3296,8 +3297,8 @@ class IWFM_Model(IWFM_Miscellaneous):
         names_string_length = ctypes.c_int(30 * num_names.value)
         raw_names_string = ctypes.create_string_buffer(names_string_length.value)
 
-        # reset instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetNames(ctypes.byref(location_type_id),
                                    ctypes.byref(num_names), 
@@ -3389,8 +3390,8 @@ class IWFM_Model(IWFM_Miscellaneous):
         # initialize output variables
         n_hydrograph_types = ctypes.c_int(0)
 
-        # set instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetNHydrographTypes(ctypes.byref(n_hydrograph_types),
                                               ctypes.byref(self.status))
@@ -3422,8 +3423,8 @@ class IWFM_Model(IWFM_Miscellaneous):
         delimiter_position_array = (ctypes.c_int*n_hydrograph_types.value)()
         hydrograph_location_type_list = (ctypes.c_int*n_hydrograph_types.value)()
 
-        # set instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetHydrographTypeList(ctypes.byref(n_hydrograph_types),
                                                 delimiter_position_array,
@@ -3461,8 +3462,8 @@ class IWFM_Model(IWFM_Miscellaneous):
         if not hasattr(self.dll, "IW_Model_GetNHydrographs"):
             raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetNHydrographs'))
 
-        # reset instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
 
         # initialize output variables
         n_hydrographs = ctypes.c_int(0)
@@ -3554,8 +3555,8 @@ class IWFM_Model(IWFM_Miscellaneous):
         if not hasattr(self.dll, "IW_Model_GetHydrographIDs"):
             raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetHydrographIDs'))
 
-        # reset instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
 
         # convert location_type_id to ctypes
         location_type_id = ctypes.c_int(location_type_id)
@@ -3658,8 +3659,8 @@ class IWFM_Model(IWFM_Miscellaneous):
         if not hasattr(self.dll, "IW_Model_GetHydrographCoordinates"):
             raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetHydrographCoordinates'))
 
-        # reset instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
 
         # convert location_type_id to ctypes
         location_type_id = ctypes.c_int(location_type_id)
@@ -3863,8 +3864,8 @@ class IWFM_Model(IWFM_Miscellaneous):
         data_unit_type_id = ctypes.c_int(0)
         num_time_steps = ctypes.c_int(0)
 
-        # reset instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetHydrograph(ctypes.byref(hydrograph_type),
                                         ctypes.byref(hydrograph_id),
@@ -4133,8 +4134,8 @@ class IWFM_Model(IWFM_Miscellaneous):
         if not isinstance(length_conversion_factor, (int, float)):
             raise TypeError('length_conversion_factor must be a number. value {} provides is of type {}'.format(length_conversion_factor, type(length_conversion_factor)))
         
-        # reset instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
 
         # convert specified layer number to ctypes
         layer_number = ctypes.c_int(layer_number)
@@ -4220,8 +4221,8 @@ class IWFM_Model(IWFM_Miscellaneous):
         # initialize output variables
         heads = ((ctypes.c_double*n_nodes.value)*n_layers.value)()
 
-        # set instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetGWHeads_All(ctypes.byref(n_nodes),
                                          ctypes.byref(n_layers),
@@ -4270,8 +4271,8 @@ class IWFM_Model(IWFM_Miscellaneous):
         # initialize output variables
         subsidence = ((ctypes.c_double*n_nodes.value)*n_layers.value)()
 
-        # set instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetSubsidence_All(ctypes.byref(n_nodes),
                                             ctypes.byref(n_layers),
@@ -4302,8 +4303,8 @@ class IWFM_Model(IWFM_Miscellaneous):
         # initialize output variables
         average_depth_to_groundwater = (ctypes.c_double*n_subregions.value)()
         
-        # reset instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetSubregionAgPumpingAverageDepthToGW(ctypes.byref(n_subregions),
                                                                 average_depth_to_groundwater,
@@ -4358,8 +4359,8 @@ class IWFM_Model(IWFM_Miscellaneous):
         # initialize output variables
         average_depth_to_groundwater = (ctypes.c_double*n_zones.value)()
 
-        # reset instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetZoneAgPumpingAverageDepthToGW(ctypes.byref(len_elements_list),
                                                            elements_list,
@@ -4396,8 +4397,8 @@ class IWFM_Model(IWFM_Miscellaneous):
         # initialize output variables
         n_locations = ctypes.c_int(0)
 
-        # set instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetNLocations(ctypes.byref(location_type_id),
                                         ctypes.byref(n_locations),
@@ -4434,8 +4435,8 @@ class IWFM_Model(IWFM_Miscellaneous):
         # initialize output variables
         location_ids = (ctypes.c_int*n_locations.value)()
 
-        # set instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetLocationIDs(ctypes.byref(location_type_id),
                                          ctypes.byref(n_locations),
@@ -4464,8 +4465,8 @@ class IWFM_Model(IWFM_Miscellaneous):
         # convert preprocessor path to ctypes character array
         preprocessor_path = ctypes.create_string_buffer(preprocessor_path.encode('utf-8'))
 
-        # set instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
 
         self.dll.IW_Model_SetPreProcessorPath(ctypes.byref(len_pp_path),
                                               preprocessor_path,
@@ -4491,8 +4492,8 @@ class IWFM_Model(IWFM_Miscellaneous):
         # convert preprocessor path to ctypes character array
         simulation_path = ctypes.create_string_buffer(simulation_path.encode('utf-8'))
 
-        # set instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
 
         self.dll.IW_Model_SetSimulationPath(ctypes.byref(len_sim_path),
                                             simulation_path,
@@ -4515,8 +4516,8 @@ class IWFM_Model(IWFM_Miscellaneous):
         # convert max_iterations to ctypes
         max_iterations = ctypes.c_int(max_iterations)
         
-        # set instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
 
         self.dll.IW_Model_SetSupplyAdjustmentMaxIters(ctypes.byref(max_iterations),
                                                       ctypes.byref(self.status))
@@ -4551,8 +4552,8 @@ class IWFM_Model(IWFM_Miscellaneous):
         # convert tolerance to ctypes
         tolerance = ctypes.c_double(tolerance)
 
-        # set instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
 
         self.dll.IW_Model_SetSupplyAdjustmentTolerance(ctypes.byref(tolerance),
                                                        ctypes.byref(self.status))
@@ -4571,51 +4572,468 @@ class IWFM_Model(IWFM_Miscellaneous):
             raise AttributeError('IWFM DLL does not have "{}" procedure. '
                                  'Check for an updated version'.format('IW_Model_DeleteInquiryDataFile'))
 
-        # reset instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
         
         self.dll.IW_Model_DeleteInquiryDataFile(ctypes.byref(self.length_simulation_file_name),
                                                 self.simulation_file_name,
                                                 ctypes.byref(self.status))
 
     def simulate_for_one_timestep(self):
-        pass
+        ''' simulates a single timestep of the model application
 
-    def simulate_for_an_interval(self):
-        pass
+        Notes
+        -----
+        This method is intended to be used when is_for_inquiry=0
+        '''
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
+
+        self.dll.IW_Model_SimulateForOneTimeStep(ctypes.byref(self.status))
+
+    def simulate_for_an_interval(self, time_interval):
+        ''' simulates the model application for a specified time interval
+
+        Parameters
+        ----------
+        time_interval : str
+            valid IWFM time interval greater than or equal to simulation 
+            time step
+
+        Notes
+        -----
+        This method is intended to be used when is_for_inquiry=0 during
+        a model simulation
+        specified time interval must be greater than simulation time step
+        '''
+        # check to see if IWFM procedure is available in user version of IWFM DLL
+        if not hasattr(self.dll, "IW_Model_SimulateForAnInterval"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. '
+                                 'Check for an updated version'.format('IW_Model_SimulateForAnInterval'))
+        
+        # get simulation time_interval
+        simulation_time_interval = self.get_time_specs()[-1]
+
+        # determine if time_interval is greater than or equal to 
+        # simulation_time_interval
+        if not self._is_time_interval_greater_or_equal(time_interval, simulation_time_interval):
+            raise ValueError('time interval must be greater than or '
+                             'equal to simulation time interval')
+
+        # convert time_interval to ctypes
+        time_interval = ctypes.create_string_buffer(time_interval.encoding('utf-8'))
+
+        # get length of time interval
+        len_time_interval = ctypes.c_int(ctypes.sizeof(time_interval))
+
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
+        
+        self.dll.IW_Model_SimulateForAnInterval(ctypes.byref(len_time_interval),
+                                                time_interval,
+                                                ctypes.byref(self.status))
 
     def simulate_all(self):
-        pass
+        ''' performs all of the computations for the entire simulation 
+        period
+
+        Notes
+        -----
+        This method is intended to be used when is_for_inquiry=0 during
+        a model simulation
+        '''
+        # check to see if IWFM procedure is available in user version of IWFM DLL
+        if not hasattr(self.dll, "IW_Model_SimulateAll"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. '
+                                 'Check for an updated version'.format('IW_Model_SimulateAll'))
+        
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
+
+        self.dll.IW_Model_SimulateAll(ctypes.byref(self.status))
 
     def advance_time(self):
-        pass
+        ''' advances the simulation time step by one simulation time step
+        
+        Notes
+        -----
+        This method is intended to be used when is_for_inquiry=0 during
+        a model simulation
+        '''
+        # check to see if IWFM procedure is available in user version of IWFM DLL
+        if not hasattr(self.dll, "IW_Model_AdvanceTime"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. '
+                                 'Check for an updated version'.format('IW_Model_AdvanceTime'))
+        
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
+
+        self.dll.IW_Model_AdvanceTime(ctypes.byref(self.status))
 
     def read_timeseries_data(self):
-        pass
+        ''' reads in all of the time series data for the current 
+        simulation time step
 
-    def read_timeseries_data_overwrite(self):
-        pass
+        Notes
+        -----
+        This method is intended to be used when is_for_inquiry=0 during
+        a model simulation
+        '''
+        # check to see if IWFM procedure is available in user version of IWFM DLL
+        if not hasattr(self.dll, "IW_Model_ReadTSData"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. '
+                                 'Check for an updated version'.format('IW_Model_ReadTSData'))
+        
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
+
+        self.dll.IW_Model_ReadTSData(ctypes.byref(self.status))
+
+    def read_timeseries_data_overwrite(self, land_use_areas, 
+                                        diversion_ids, diversions,
+                                        stream_inflow_ids, stream_inflows):
+        ''' overwrites time series data for the current time step
+        
+        Parameters
+        ----------
+        land_use_areas : list or np.ndarray
+            subregional land use areas to be overwritten for the current 
+            time step order is non-ponded first, then ponded, then urban,
+            then native, and riparian
+
+        diversion_ids : list or np.ndarray
+            diversion identification numbers to be overwritten
+
+        diversions : list or np.ndarray
+            diversion amounts to overwrite for each diversion 
+            identification number provided. must be same length
+            as diversion_ids
+
+        stream_inflow_ids : list or np.ndarray
+            stream inflow indices where boundary inflows will be 
+            overwritten
+
+        stream_inflows : list or np.ndarray
+            stream inflow amounts to be overwritten for each stream
+            flow index provided. Must be the same length as 
+            stream_inflow_ids
+
+        Notes
+        -----
+        This method is intended to be used when is_for_inquiry=0 during
+        a model simulation 
+        '''
+        # check to see if IWFM procedure is available in user version of IWFM DLL
+        if not hasattr(self.dll, "IW_Model_ReadTSData_Overwrite"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. '
+                                 'Check for an updated version'.format('IW_Model_ReadTSData_Overwrite'))
+
+        if land_use_areas is None:
+            n_landuses = ctypes.c_int(0)
+            n_subregions = ctypes.c_int(0)
+        else:
+            # get number of land uses
+            n_landuses = ctypes.c_int(self.get_n_ag_crops() + 3)
+
+            # get number of subregions
+            n_subregions = ctypes.c_int(self.get_n_subregions())
+        
+            # check that land_use_areas is n_subregions by n_landuses
+            if isinstance(land_use_areas, list):
+                land_use_areas = np.array(land_use_areas)
+
+            if land_use_areas.shape != (n_subregions, n_landuses):
+                raise ValueError('land_use areas must be provided for '
+                                 'each land use and subregion in the model')
+
+        # convert land_use_areas to ctypes
+        land_use_array = ((ctypes.c_double*n_subregions.value)*n_landuses.value)()
+        for i, row in enumerate(land_use_areas):
+            land_use_array[i][:] = row
+
+        # check that diversion_ids are valid
+        # if either diversion_ids or diversions are None treat both as None.
+        if diversion_ids is None or diversions is None:
+            n_diversions = ctypes.c_int(0)
+        else:
+            # check that diversion_ids are provided as correct data type
+            if not isinstance(diversion_ids, (np.ndarray, list)):
+                raise TypeError('diversion_ids must be provided as a list or np.ndarray')
+
+            # check that diversions are provided as the correct data type
+            if not isinstance(diversions, (np.ndarray, list)):
+                raise TypeError('diversions must be provided as a list or np.ndarray')
+            
+            # get diversion_ids specified in the model input files
+            model_diversion_ids = self.get_diversion_ids()
+
+            # if provided as a list, convert to a np.ndarray
+            if isinstance(diversion_ids, list):
+                diversion_ids = np.array(diversion_ids)
+
+            if isinstance(diversions, list):
+                diversions = np.array(diversions)
+
+            # check that all diversion_ids provided are valid model diversion ids
+            if not np.all(np.isin(diversion_ids, model_diversion_ids)):
+                raise ValueError('diversion_ids contains diversion '
+                                 'identification number not found in the model')
+            
+            # check diversion and diversion_ids are the same length
+            if (diversion_ids.shape != diversions.shape) and (len(diversion_ids.shape) == 1):
+                raise ValueError('diversion_ids and diversions must be 1D arrays of the same length')
+            
+            # get the number of diversions
+            n_diversions = ctypes.c_int(len(diversion_ids))     
+
+        # convert diversion_ids and diversion to ctypes
+        diversion_ids = (ctypes.c_int*n_diversions.value)(*diversion_ids)
+        diversions = (ctypes.c_double*n_diversions.value)(*diversions)
+        
+        # check that stream_inflow_ids are valid
+        # if either stream_inflow_ids or stream_inflows are None treat both as None.
+        if stream_inflow_ids is None or stream_inflows is None:
+            n_stream_inflows = ctypes.c_int(0)
+        else:
+            # check that stream_inflow_ids are provided as the correct data type
+            if not isinstance(stream_inflow_ids, (np.ndarray, list)):
+                raise TypeError('stream_inflow_ids must be provided as a list or np.ndarray')
+
+            # check that stream_inflows are provided as the correct data type
+            if not isinstance(stream_inflows, (np.ndarray, list)):
+                raise TypeError('stream_inflows must be provided as a list or np.ndarray')
+
+            model_stream_inflow_ids = self.get_stream_inflow_ids()
+
+            # if provided as a list, convert to a np.ndarray
+            if isinstance(stream_inflow_ids, list):
+                stream_inflow_ids = np.array(stream_inflow_ids)
+
+            if isinstance(stream_inflows, list):
+                stream_inflows = np.array(stream_inflows)
+
+            # check that all stream_inflow_ids provided are valid model stream inflow ids
+            if not np.all(np.isin(stream_inflow_ids, model_stream_inflow_ids)):
+                raise ValueError('stream_inflow_ids contains stream inflow '
+                                 'identification numbers not found in the model')
+            
+            # check stream_inflows and stream_inflow_ids are the same length
+            if (stream_inflow_ids.shape != stream_inflows.shape) and (len(stream_inflow_ids.shape) == 1):
+                raise ValueError('stream_inflow_ids and stream_inflows '
+                                 'must be 1D arrays of the same length')
+            
+            # get the number of diversions
+            n_stream_inflows = ctypes.c_int(len(stream_inflow_ids))     
+
+        # convert diversion_ids and diversion to ctypes
+        stream_inflow_ids = (ctypes.c_int*n_diversions.value)(*stream_inflow_ids)
+        stream_inflows = (ctypes.c_double*n_diversions.value)(*stream_inflows)
+        
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
+
+        self.dll.IW_Model_ReadTSData_Overwrite(ctypes.byref(n_landuses),
+                                               ctypes.byref(n_subregions),
+                                               land_use_array,
+                                               ctypes.byref(n_diversions),
+                                               diversion_ids,
+                                               diversions,
+                                               ctypes.byref(n_stream_inflows),
+                                               stream_inflow_ids,
+                                               stream_inflows,
+                                               ctypes.byref(self.status))
 
     def print_results(self):
-        pass
+        ''' prints out all the simulation results at the end of a 
+        simulation
+        '''
+        # check to see if IWFM procedure is available in user version of IWFM DLL
+        if not hasattr(self.dll, "IW_Model_PrintResults"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. '
+                                 'Check for an updated version'.format('IW_Model_PrintResults'))
+        
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
+
+        self.dll.IW_Model_PrintResults(ctypes.byref(self.status))
 
     def advance_state(self):
-        pass
+        ''' advances the state of the hydrologic system in time (e.g. 
+        groundwater heads at current timestep are switched to 
+        groundwater heads at previous timestep) during a model run
+        '''
+        # check to see if IWFM procedure is available in user version of IWFM DLL
+        if not hasattr(self.dll, "IW_Model_AdvanceState"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. '
+                                 'Check for an updated version'.format('IW_Model_AdvanceState'))
+        
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
+
+        self.dll.IW_Model_AdvanceState(ctypes.byref(self.status))
 
     def is_stream_upstream_node(self, stream_node_1, stream_node_2):
-        pass
+        ''' checks if a specified stream node .is located upstream from
+        another specified stream node within the stream network of the 
+        IWFM model
 
-    def is_end_of_simulations(self):
-        pass
+        Parameters
+        ----------
+        stream_node_1 : int
+            stream node being checked if it is upstream of stream_node_2
+
+        stream_node_2 : int
+            stream node used to determine if stream_node_1 is upstream
+
+        Returns
+        -------
+        boolean
+            True if stream_node_1 is upstream of stream_node_2
+        '''
+        # check to see if IWFM procedure is available in user version of IWFM DLL
+        if not hasattr(self.dll, "IW_Model_IsStrmUpstreamNode"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. '
+                                 'Check for an updated version'.format('IW_Model_IsStrmUpstreamNode'))
+        
+        # convert stream_node_1 and stream_node_2 to ctypes
+        stream_node_1 = ctypes.c_int(stream_node_1)
+        stream_node_2 = ctypes.c_int(stream_node_2)
+
+        # initialize output variables
+        is_upstream = ctypes.c_int(0)
+        
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
+
+        self.dll.IW_Model_IsStrmUpstreamNode(ctypes.byref(stream_node_1),
+                                             ctypes.byref(stream_node_2),
+                                             ctypes.byref(is_upstream),
+                                             ctypes.byref(self.status))
+
+        if is_upstream == 1:
+            return True
+        else:
+            return False
+
+    def is_end_of_simulation(self):
+        ''' check if the end of simulation period has been reached during a model run
+
+        Returns
+        -------
+        boolean
+            True if end of simulation period otherwise False
+        '''
+        # check to see if IWFM procedure is available in user version of IWFM DLL
+        if not hasattr(self.dll, "IW_Model_IsEndOfSimulation"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. '
+                                 'Check for an updated version'.format('IW_Model_IsEndOfSimulation'))
+        
+        # initialize output variables
+        is_end_of_simulation = ctypes.c_int(0)
+        
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
+
+        self.dll.IW_Model_IsEndOfSimulation(ctypes.byref(is_end_of_simulation),
+                                            ctypes.byref(self.status))
+        
+        if is_end_of_simulation == 1:
+            return True
+        else:
+            return False
 
     def is_model_instantiated(self):
-        pass
+        ''' check if a Model object is instantiated 
+        
+        Returns
+        -------
+        boolean
+            True if model object is instantiated otherwise False
+        '''
+        # check to see if IWFM procedure is available in user version of IWFM DLL
+        if not hasattr(self.dll, "IW_Model_IsModelInstantiated"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. '
+                                 'Check for an updated version'.format('IW_Model_IsModelInstantiated'))
+        
+        # initialize output variables
+        is_instantiated = ctypes.c_int(0)
+        
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
+
+        self.dll.IW_Model_IsModelInstantiated(ctypes.byref(is_instantiated),
+                                              ctypes.byref(self.status))
+
+        if is_instantiated == 1:
+            return True
+        else:
+            return False
 
     def turn_supply_adjustment_on_off(self, diversion_adjustment_flag, pumping_adjustment_flag):
-        pass
+        ''' turns the automatic supply adjustment of diversions and 
+        pumping to meet agricultural and/or urban water demands on or 
+        off during a model run
+
+        Parameters
+        ----------
+        diversion_adjustment_flag : int, 0 or 1 only
+            1 - turn diversion supply adjustment on
+            0 - turn diversion supply adjustment off
+
+        pumping_adjustment_flag : int, 0 or 1 only
+            1 - turn pumping supply adjustment on
+            0 - turn pumping supply adjustment off
+
+        Returns
+        -------
+        None
+            updates global supply adjustment flags for diversions and 
+            pumping
+        '''
+        # check to see if IWFM procedure is available in user version of IWFM DLL
+        if not hasattr(self.dll, "IW_Model_TurnSupplyAdjustOnOff"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. '
+                                 'Check for an updated version'.format('IW_Model_TurnSupplyAdjustOnOff'))
+
+        if diversion_adjustment_flag not in [0, 1]:
+            raise ValueError('diversion_adjustment_flag must be 0 or 1 '
+                             'to turn diversion adjustment on use 1 '
+                             'to turn diversion adjustment off use 0.')
+
+        if pumping_adjustment_flag not in [0, 1]:
+            raise ValueError('diversion_adjustment_flag must be 0 or 1 '
+                             'to turn diversion adjustment on use 1 '
+                             'to turn diversion adjustment off use 0.')
+
+        # convert adjustment flags to ctypes
+        diversion_adjustment_flag = ctypes.c_int(diversion_adjustment_flag)
+        pumping_adjustment_flag = ctypes.c_int(pumping_adjustment_flag)
+        
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
+
+        self.dll.IW_Model_TurnSupplyAdjustOnOff(ctypes.byref(diversion_adjustment_flag),
+                                                ctypes.byref(pumping_adjustment_flag),
+                                                ctypes.byref(self.status))
 
     def restore_pumping_to_read_values(self):
-        pass
+        ''' restores the pumping rates to the values read from the 
+        Pumping Rate input file during a model run. This procedure is 
+        useful when it is necessary to re-simulate the hydrologic 
+        system (e.g. when IWFM is linked to a reservoir operations 
+        model in an iterative fashion) at a given timestep with pumping 
+        adjustment is on and the pumping values need to be restored to 
+        their original values
+        '''
+        # check to see if IWFM procedure is available in user version of IWFM DLL
+        if not hasattr(self.dll, "IW_Model_RestorePumpingToReadValues"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. '
+                                 'Check for an updated version'.format('IW_Model_RestorePumpingToReadValues'))
+        
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
+
+        self.dll.IW_Model_RestorePumpingToReadValues(ctypes.byref(self.status))
 
     ### methods that wrap two or more DLL calls
     def get_hydrograph_info(self, feature_type):
