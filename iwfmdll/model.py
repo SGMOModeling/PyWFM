@@ -4406,6 +4406,19 @@ class IWFM_Model(IWFM_Miscellaneous):
 
         return n_locations.value
 
+    def get_n_small_watersheds(self):
+        ''' returns the number of small watersheds specified in an IWFM
+        model
+        
+        Returns
+        -------
+        int
+            number of small watersheds
+        '''
+        location_type_id = self.get_location_type_id_smallwatershed()
+
+        return self.get_n_locations(ctypes.byref(location_type_id))
+
     def get_location_ids(self, location_type_id):
         ''' returns the location identification numbers used by the 
         model for a specified location type
@@ -4444,6 +4457,19 @@ class IWFM_Model(IWFM_Miscellaneous):
                                          ctypes.byref(self.status))
 
         return np.array(location_ids)
+    
+    def get_small_watershed_ids(self):
+        ''' returns the small watershed identification numbers specified
+        in the IWFM model
+        
+        Returns
+        -------
+        np.ndarray
+            integer array of small watershed identification numbers
+        '''
+        location_type_id = self.get_location_type_id_smallwatershed()
+
+        return self.get_location_ids(location_type_id)
 
     def set_preprocessor_path(self, preprocessor_path):
         ''' sets the path to the directory where the preprocessor main
