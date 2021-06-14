@@ -91,7 +91,7 @@ class IWFM_Model(IWFM_Miscellaneous):
     def __enter__(self):
         return self
 
-    def __exit__(self):
+    def __exit__(self, exc_type, exc_value, tb):
         self.kill()
       
     def kill(self):
