@@ -2,8 +2,6 @@ import os
 import ctypes
 import math
 import numpy as np
-from numpy.lib.function_base import average
-from numpy.lib.shape_base import expand_dims
 import pandas as pd
 
 import matplotlib.pyplot as plt
@@ -91,7 +89,7 @@ class IWFM_Model(IWFM_Miscellaneous):
     def __enter__(self):
         return self
 
-    def __exit__(self, exc_type, exc_value, tb):
+    def __exit__(self, exc_type, exc_value, traceback):
         self.kill()
       
     def kill(self):
@@ -4612,6 +4610,11 @@ class IWFM_Model(IWFM_Miscellaneous):
         -----
         This method is intended to be used when is_for_inquiry=0
         '''
+        # check to see if IWFM procedure is available in user version of IWFM DLL
+        if not hasattr(self.dll, "IW_Model_SimulateForOneTimeStep"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. '
+                                 'Check for an updated version'.format('IW_Model_SimulateForOneTimeStep'))
+
         # set instance variable status to 0
         self.status = ctypes.c_int(0)
 
