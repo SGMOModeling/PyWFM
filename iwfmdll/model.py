@@ -66,9 +66,7 @@ class IWFM_Model(IWFM_Miscellaneous):
         
         if isinstance(is_for_inquiry, int):
             self.is_for_inquiry = ctypes.c_int(is_for_inquiry)
-
-        super().__init__(dll_path)
-                    
+          
         # set instance variable status to 0
         self.status = ctypes.c_int(0)
             
@@ -98,7 +96,8 @@ class IWFM_Model(IWFM_Miscellaneous):
         '''
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_Kill"):
-            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_Kill'))
+            raise AttributeError('IWFM DLL does not have "{}" procedure. '
+                                 'Check for an updated version'.format('IW_Model_Kill'))
         
         # reset instance variable status to 0
         self.status = ctypes.c_int(0)
@@ -4939,7 +4938,7 @@ class IWFM_Model(IWFM_Miscellaneous):
                                              ctypes.byref(is_upstream),
                                              ctypes.byref(self.status))
 
-        if is_upstream == 1:
+        if is_upstream.value == 1:
             return True
         else:
             return False
@@ -4966,7 +4965,7 @@ class IWFM_Model(IWFM_Miscellaneous):
         self.dll.IW_Model_IsEndOfSimulation(ctypes.byref(is_end_of_simulation),
                                             ctypes.byref(self.status))
         
-        if is_end_of_simulation == 1:
+        if is_end_of_simulation.value == 1:
             return True
         else:
             return False
@@ -4993,7 +4992,7 @@ class IWFM_Model(IWFM_Miscellaneous):
         self.dll.IW_Model_IsModelInstantiated(ctypes.byref(is_instantiated),
                                               ctypes.byref(self.status))
 
-        if is_instantiated == 1:
+        if is_instantiated.value == 1:
             return True
         else:
             return False
