@@ -31,7 +31,8 @@ class IWFM_Budget(IWFM_Miscellaneous):
 
         # check to see if the open file procedure exists in the dll provided
         if not hasattr(self.dll, 'IW_Budget_OpenFile'):
-            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Budget_OpenFile'))
+            raise AttributeError('IWFM DLL does not have "{}" procedure. '
+                                 'Check for an updated version'.format('IW_Budget_OpenFile'))
 
         # set input variables name and name length
         budget_file = ctypes.create_string_buffer(self.budget_file_name.encode('utf-8'))
@@ -54,7 +55,8 @@ class IWFM_Budget(IWFM_Miscellaneous):
         ''' closes an open budget file for an IWFM model application '''
         # check to see if the procedure exists in the dll provided
         if not hasattr(self.dll, 'IW_Budget_CloseFile'):
-            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Budget_CloseFile'))
+            raise AttributeError('IWFM DLL does not have "{}" procedure. '
+                                 'Check for an updated version'.format('IW_Budget_CloseFile'))
         
         # initialize output variable status
         status = ctypes.c_int(-1)
@@ -73,7 +75,8 @@ class IWFM_Budget(IWFM_Miscellaneous):
         '''
         # check to see if the procedure exists in the dll provided
         if not hasattr(self.dll, 'IW_Budget_GetNLocations'):
-            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Budget_GetNLocations'))
+            raise AttributeError('IWFM DLL does not have "{}" procedure. '
+                                 'Check for an updated version'.format('IW_Budget_GetNLocations'))
         
         # initialize output variables
         n_locations = ctypes.c_int(0)
@@ -96,7 +99,8 @@ class IWFM_Budget(IWFM_Miscellaneous):
         '''
         # check to see if the procedure exists in the dll provided
         if not hasattr(self.dll, 'IW_Budget_GetLocationNames'):
-            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Budget_GetLocationNames'))
+            raise AttributeError('IWFM DLL does not have "{}" procedure. '
+                                 'Check for an updated version'.format('IW_Budget_GetLocationNames'))
         
         # get number of locations
         n_locations = ctypes.c_int(self.get_n_locations())
@@ -128,7 +132,8 @@ class IWFM_Budget(IWFM_Miscellaneous):
         '''
         # check to see if the procedure exists in the dll provided
         if not hasattr(self.dll, 'IW_Budget_GetNTimeSteps'):
-            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Budget_GetNTimeSteps'))
+            raise AttributeError('IWFM DLL does not have "{}" procedure. '
+                                 'Check for an updated version'.format('IW_Budget_GetNTimeSteps'))
 
         n_time_steps = ctypes.c_int(0)
         status = ctypes.c_int(-1)
@@ -149,7 +154,8 @@ class IWFM_Budget(IWFM_Miscellaneous):
         '''
         # check to see if the procedure exists in the dll provided
         if not hasattr(self.dll, 'IW_Budget_GetTimeSpecs'):
-            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Budget_GetTimeSpecs'))
+            raise AttributeError('IWFM DLL does not have "{}" procedure. '
+                                 'Check for an updated version'.format('IW_Budget_GetTimeSpecs'))
 
         # get number of time steps
         n_time_steps = ctypes.c_int(self.get_n_time_steps())
@@ -191,7 +197,8 @@ class IWFM_Budget(IWFM_Miscellaneous):
         '''
         # check to see if the procedure exists in the dll provided
         if not hasattr(self.dll, 'IW_Budget_GetNTitleLines'):
-            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Budget_GetNTitleLines'))
+            raise AttributeError('IWFM DLL does not have "{}" procedure. '
+                                 'Check for an updated version'.format('IW_Budget_GetNTitleLines'))
 
         # initialize output variables
         n_title_lines = ctypes.c_int(0)
@@ -213,7 +220,8 @@ class IWFM_Budget(IWFM_Miscellaneous):
         '''
         # check to see if the procedure exists in the dll provided
         if not hasattr(self.dll, 'IW_Budget_GetTitleLength'):
-            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Budget_GetTitleLength'))
+            raise AttributeError('IWFM DLL does not have "{}" procedure. '
+                                 'Check for an updated version'.format('IW_Budget_GetTitleLength'))
         
         # initialize output variables
         title_length = ctypes.c_int(0)
@@ -257,7 +265,8 @@ class IWFM_Budget(IWFM_Miscellaneous):
         '''
         # check to see if the procedure exists in the dll provided
         if not hasattr(self.dll, 'IW_Budget_GetTitleLines'):
-            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Budget_GetTitleLines'))
+            raise AttributeError('IWFM DLL does not have "{}" procedure. '
+                                 'Check for an updated version'.format('IW_Budget_GetTitleLines'))
         
         # get the number of title lines
         n_title_lines = ctypes.c_int(self.get_n_title_lines())
@@ -337,7 +346,8 @@ class IWFM_Budget(IWFM_Miscellaneous):
         '''
         # check to see if the procedure exists in the dll provided
         if not hasattr(self.dll, 'IW_Budget_GetNColumns'):
-            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Budget_GetNColumns'))
+            raise AttributeError('IWFM DLL does not have "{}" procedure. '
+                                 'Check for an updated version'.format('IW_Budget_GetNColumns'))
         
         # get number of locations
         n_locations = self.get_n_locations()
@@ -365,7 +375,8 @@ class IWFM_Budget(IWFM_Miscellaneous):
         # IW_Budget_GetColumnHeaders(iLoc,cColumnHeaders,iLenColumnHeaders,NColumns,LengthUnit,AreaUnit,VolumeUnit,
         #                            iLenUnit,iLocArray,iStat)
         if not hasattr(self.dll, 'IW_Budget_GetColumnHeaders'):
-            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Budget_GetColumnHeaders'))
+            raise AttributeError('IWFM DLL does not have "{}" procedure. '
+                                 'Check for an updated version'.format('IW_Budget_GetColumnHeaders'))
         
         # get number of locations
         n_locations = self.get_n_locations()
@@ -454,7 +465,8 @@ class IWFM_Budget(IWFM_Miscellaneous):
         more aggregated.
         '''
         if not hasattr(self.dll, 'IW_Budget_GetValues'):
-            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Budget_GetValues'))
+            raise AttributeError('IWFM DLL does not have "{}" procedure. '
+                                 'Check for an updated version'.format('IW_Budget_GetValues'))
         
         # get number of locations
         n_locations = self.get_n_locations()
@@ -502,7 +514,8 @@ class IWFM_Budget(IWFM_Miscellaneous):
             self._validate_iwfm_date(begin_date)
 
             if begin_date not in dates_list:
-                raise ValueError('begin_date was not found in the Budget file. use get_time_specs() method to check.')
+                raise ValueError('begin_date was not found in the Budget '
+                                 'file. use get_time_specs() method to check.')
         
         if end_date is None:
             end_date = dates_list[-1]
@@ -510,7 +523,8 @@ class IWFM_Budget(IWFM_Miscellaneous):
             self._validate_iwfm_date(end_date)
 
             if end_date not in dates_list:
-                raise ValueError('end_date was not found in the Budget file. use get_time_specs() method to check.')
+                raise ValueError('end_date was not found in the Budget '
+                                 'file. use get_time_specs() method to check.')
 
         if self.is_date_greater(begin_date, end_date):
             raise ValueError('end_date must occur after begin_date')
@@ -603,7 +617,8 @@ class IWFM_Budget(IWFM_Miscellaneous):
             representing dates and values
         '''
         if not hasattr(self.dll, 'IW_Budget_GetValues_ForAColumn'):
-            raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Budget_GetValues_ForAColumn'))
+            raise AttributeError('IWFM DLL does not have "{}" procedure. '
+                                 'Check for an updated version'.format('IW_Budget_GetValues_ForAColumn'))
         
         # get number of locations
         n_locations = self.get_n_locations()
