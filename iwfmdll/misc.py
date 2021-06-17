@@ -5,25 +5,18 @@ import numpy as np
 class IWFM_Miscellaneous:
     ''' IWFM Miscellaneous Class for interacting with the IWFM DLL
 
-    Parameters
-    ----------
-    dll_path : str
-        file path and name of the IWFM DLL to access IWFM procedures
-
     Returns
     -------
     IWFM_Miscellaneous Object
         instance of the IWFM_Miscellaneous class and access to the IWFM
         Miscellaneous fortran procedures.
+
+    Notes
+    -----
+    This class is a base class and is not meant to be called directly.
+    It is not provided with an __init__ method, so the self.dll used in
+    each of the methods must be provided through the subclass.
     '''
-    def __init__(self, dll_path):
-        if not isinstance(dll_path, str):
-            raise TypeError('dll path provided: {} is not a string'.format(dll_path))
-        
-        self.dll_path = dll_path
-
-        self.dll = ctypes.windll.LoadLibrary(self.dll_path)
-
     def get_data_unit_type_id_length(self):
         if not hasattr(self.dll, "IW_GetDataUnitTypeID_Length"):
             raise AttributeError('IWFM DLL does not have "{}" procedure. '
