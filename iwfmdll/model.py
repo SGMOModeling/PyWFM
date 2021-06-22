@@ -5064,24 +5064,19 @@ class IWFM_Model(IWFM_Miscellaneous):
         self.dll.IW_Model_RestorePumpingToReadValues(ctypes.byref(self.status))
 
     ### methods that wrap two or more DLL calls
-    def get_hydrograph_info(self, feature_type):
-        ''' returns model information for the hydrograph locations for the
-        provided feature type, including hydrograph id, x- and y- coordinates, 
-        name, and stratigraphy.
-
-        Parameters
-        ----------
-        feature_type : str
-            valid feature type to obtain a location_type_id for feature
+    def get_groundwater_hydrograph_info(self):
+        ''' returns model information for the groundwater hydrographs,
+        including hydrograph id, x- and y- coordinates, name, and 
+        stratigraphy.
 
         Returns
         -------
         pd.DataFrame
             columns: id, name, x, y, gse, bottom_layer1, bottom_layer2, ..., bottom_layern
         '''
-        hydrograph_ids = self.get_hydrograph_ids(feature_type)
-        hydrograph_x_coord, hydrograph_y_coord = self.get_hydrograph_coordinates(feature_type)
-        hydrograph_names = self.get_names(feature_type)
+        hydrograph_ids = self.get_groundwater_hydrograph_ids()
+        hydrograph_x_coord, hydrograph_y_coord = self.get_groundwater_hydrograph_coordinates()
+        hydrograph_names = self.get_groundwater_observation_names()
         df = pd.DataFrame({'id': hydrograph_ids, 'Name': hydrograph_names, 
                            'X': hydrograph_x_coord, 'Y': hydrograph_y_coord})
         
