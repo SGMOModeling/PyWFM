@@ -30,19 +30,33 @@ the IWFM_Budget class performs budget processing from the HDF output files
 the IWFM_ZBudget class performs ZBudgets based on user provided zone definitions and the HDF output files
 
 ## IWFM_Model methods
-To obtain data from an already completed model, the following code can be used
+To obtain data from an already completed model, the following code can be used:
 
 ```python
+# import libraries
 from iwfmdll import IWFM_Model
 
-dll_path = r'../path/to/IWFM DLL/IWFM2015_C_x64.dll'
-preprocessor_in_file = r'SampleModel/Preprocessor/PreProcessor_MAIN.IN'
-simulation_in_file = r'SampleModel/Simulation/Simulation_MAIN.IN'
+# set paths to files needed to create model object
+iwfm_dll = 'IWFM-2015.0.1177/DLL/Bin/IWFM2015_C_x64.dll'
+preprocessor_in_file = 'SampleModel/Preprocessor/PreProcessor_MAIN.IN'
+simulation_in_file = 'SampleModel/Simulation/Simulation_MAIN.IN'
 
+# create instance of the IWFM_Model class
 m = IWFM_Model(dll_path, preprocessor_in_file, simulation_in_file)
 ```
 
-
 ## IWFM_Budget methods
+To use IWFM_Budget, the following code can be used:
+
+```python
+# import libraries
+from iwfmdll import IWFM_Budget
+
+# set paths to files needed to create budget object
+iwfm_dll = 'IWFM-2015.0.1177/DLL/Bin/IWFM2015_C_x64.dll'
+gw_budget_file = 'SampleModel/Results/GW.hdf'
+
+gw_budget = IWFM_Budget(iwfm_dll, gw_budget_file)
+```
 
 ## IWFM_ZBudget methods
