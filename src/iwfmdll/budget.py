@@ -1,9 +1,9 @@
 import ctypes
 import numpy as np
 
-from iwfmdll.misc import IWFM_Miscellaneous
+from iwfmdll.misc import IWFMMiscellaneous
 
-class IWFM_Budget(IWFM_Miscellaneous):
+class IWFMBudget(IWFMMiscellaneous):
     ''' IWFM Budget Class for interacting with the IWFM DLL
 
     Parameters
