@@ -8,9 +8,9 @@ import matplotlib.pyplot as plt
 from matplotlib.path import Path
 import matplotlib.patches as patches
 
-from iwfmdll.misc import IWFM_Miscellaneous
+from iwfmdll.misc import IWFMMiscellaneous
 
-class IWFM_Model(IWFM_Miscellaneous):
+class IWFMModel(IWFMMiscellaneous):
     ''' IWFM Model Class for interacting with the IWFM DLL
 
     Parameters
