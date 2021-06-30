@@ -33,17 +33,17 @@ class IWFMModel(IWFMMiscellaneous):
         option=0 for model simulations
 
         notes:
-        is_for_inquiry=1: when an instance of the IWFM_Model class is 
+        is_for_inquiry=1: when an instance of the IWFMModel class is 
         created for the first time, the entire model object will be 
         available for returning data. A binary file will be generated 
         for quicker loading, if this binary file exists when subsequent 
-        instances of the IWFM_Model object are created, not all functions
+        instances of the IWFMModel object are created, not all functions
         will be available.
 
     Returns
     -------
-    IWFM_Model Object
-        instance of the IWFM_Model class and access to the IWFM Model Object 
+    IWFMModel Object
+        instance of the IWFMModel class and access to the IWFM Model Object 
         fortran procedures.
     '''
     def __init__(self, dll_path, preprocessor_file_name, simulation_file_name, has_routed_streams=1, is_for_inquiry=1):
@@ -115,9 +115,9 @@ class IWFMModel(IWFMMiscellaneous):
         -----
         1. the intent of this method is to retrieve information about the
         current time step when using the IWFM DLL to run a simulation. 
-        i.e. IWFM_Model object is instantiated with is_for_inquiry=0
+        i.e. IWFMModel object is instantiated with is_for_inquiry=0
         
-        2. if this method is called when the IWFM_Model object is 
+        2. if this method is called when the IWFMModel object is 
         instantiated with is_for_inquiry=1, it only returns the 
         simulation begin date and time.
         '''
@@ -3799,7 +3799,7 @@ class IWFMModel(IWFMMiscellaneous):
             self._validate_iwfm_date(begin_date)
 
             if begin_date not in dates_list:
-                raise ValueError('begin_date was not recognized as a model time step. use IWFM_Model.get_time_specs() method to check.')
+                raise ValueError('begin_date was not recognized as a model time step. use IWFMModel.get_time_specs() method to check.')
         
         if end_date is None:
             end_date = dates_list[-1]
@@ -3807,7 +3807,7 @@ class IWFMModel(IWFMMiscellaneous):
             self._validate_iwfm_date(end_date)
 
             if end_date not in dates_list:
-                raise ValueError('end_date was not found in the Budget file. use IWFM_Model.get_time_specs() method to check.')
+                raise ValueError('end_date was not found in the Budget file. use IWFMModel.get_time_specs() method to check.')
 
         if self.is_date_greater(begin_date, end_date):
             raise ValueError('end_date must occur after begin_date')
@@ -4072,7 +4072,7 @@ class IWFMModel(IWFMMiscellaneous):
 
         Examples
         --------
-        >>> model = IWFM_Model(dll, preprocessor_file, simulation_file)
+        >>> model = IWFMModel(dll, preprocessor_file, simulation_file)
 
         >>>dates, heads = model.get_gwheadsall_foralayer(1, '09/30/1980_24:00', '09/30/2000_24:00')
         >>> dates
@@ -4114,7 +4114,7 @@ class IWFMModel(IWFMMiscellaneous):
             self._validate_iwfm_date(begin_date)
 
             if begin_date not in dates_list:
-                raise ValueError('begin_date was not recognized as a model time step. use IWFM_Model.get_time_specs() method to check.')
+                raise ValueError('begin_date was not recognized as a model time step. use IWFMModel.get_time_specs() method to check.')
         
         if end_date is None:
             end_date = dates_list[-1]
@@ -4122,7 +4122,7 @@ class IWFMModel(IWFMMiscellaneous):
             self._validate_iwfm_date(end_date)
 
             if end_date not in dates_list:
-                raise ValueError('end_date was not found in the Budget file. use IWFM_Model.get_time_specs() method to check.')
+                raise ValueError('end_date was not found in the Budget file. use IWFMModel.get_time_specs() method to check.')
 
         if self.is_date_greater(begin_date, end_date):
             raise ValueError('end_date must occur after begin_date')
@@ -4588,7 +4588,7 @@ class IWFMModel(IWFMMiscellaneous):
         Notes
         -----
         When this binary file exists, the entire Model Object is not created
-        when the IWFM_Model object is created so not all functionality is available 
+        when the IWFMModel object is created so not all functionality is available 
         '''
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_DeleteInquiryDataFile"):
@@ -5268,7 +5268,7 @@ class IWFMModel(IWFMMiscellaneous):
             self._validate_iwfm_date(begin_date)
 
             if begin_date not in dates_list:
-                raise ValueError('begin_date was not recognized as a model time step. use IWFM_Model.get_time_specs() method to check.')
+                raise ValueError('begin_date was not recognized as a model time step. use IWFMModel.get_time_specs() method to check.')
         
         if end_date is None:
             end_date = dates_list[-1]
@@ -5276,7 +5276,7 @@ class IWFMModel(IWFMMiscellaneous):
             self._validate_iwfm_date(end_date)
 
             if end_date not in dates_list:
-                raise ValueError('end_date was not recognized as a model time step. use IWFM_Model.get_time_specs() method to check.')
+                raise ValueError('end_date was not recognized as a model time step. use IWFMModel.get_time_specs() method to check.')
 
         if self.is_date_greater(begin_date, end_date):
             raise ValueError('end_date must occur after begin_date')
