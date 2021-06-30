@@ -10,7 +10,7 @@ The IWFM DLL can be downloaded from the [CNRA Open Data Platform](https://data.c
 
 ## Overview
 ---
-The iwfmdll library includes 3 main classes (IWFM_Model, IWFM_Budget, and IWFM_ZBudget). Each of these inherits from the IWFM_Miscellaneous base class. Many of the methods in the IWFM_Miscellaneous base class cannot be used on their own because the IWFM_Miscellaneous class was designed without direct access to the IWFM DLL. Users can access all of this functionality from within the IWFM_Model, IWFM_Budget, and IWFM_Zbudget classes.
+The iwfmdll library includes 3 main classes (IWFMModel, IWFMBudget, and IWFMZBudget). Each of these inherits from the IWFM_Miscellaneous base class. Many of the methods in the IWFM_Miscellaneous base class cannot be used on their own because the IWFM_Miscellaneous class was designed without direct access to the IWFM DLL. Users can access all of this functionality from within the IWFMModel, IWFMBudget, and IWFMZBudget classes.
 
 ## Design
 ---
@@ -18,42 +18,42 @@ The iwfmdll library wraps each of the IWFM DLL functions so that the user does n
 
 Many parts of the IWFM DLL procedures are handled internally allowing the user to provide only a few pieces of required information to obtain results.
 
-### IWFM_Model
-the IWFM_Model class can be run in two modes.
+### IWFMModel
+the IWFMModel class can be run in two modes.
 1. is_for_inquiry=0, which allows running model simulations from python and interacting with the model simulations at runtime
 2. is_for_inquiry=1, which allows obtaining data from a model that has already been completed
 
-### IWFM_Budget
-the IWFM_Budget class performs budget processing from the HDF output files
+### IWFMBudget
+the IWFMBudget class performs budget processing from the HDF output files
 
-### IWFM_ZBudget
-the IWFM_ZBudget class performs ZBudgets based on user provided zone definitions and the HDF output files
+### IWFMZBudget
+the IWFMZBudget class performs ZBudgets based on user provided zone definitions and the HDF output files
 
-## IWFM_Model methods
+## IWFMModel methods
 To obtain data from an already completed model, use the following code:
 
 ```python
 # import libraries
-from iwfmdll import IWFM_Model
+from iwfmdll import IWFMModel
 
 # set paths to files needed to create model object
 iwfm_dll = 'IWFM-2015.0.1177/DLL/Bin/IWFM2015_C_x64.dll'
 preprocessor_in_file = 'SampleModel/Preprocessor/PreProcessor_MAIN.IN'
 simulation_in_file = 'SampleModel/Simulation/Simulation_MAIN.IN'
 
-# create instance of the IWFM_Model class
-m = IWFM_Model(dll_path, preprocessor_in_file, simulation_in_file)
+# create instance of the IWFMModel class
+m = IWFMModel(dll_path, preprocessor_in_file, simulation_in_file)
 ```
-To see all methods available within the IWFM_Model class, type the following:
+To see all methods available within the IWFMModel class, type the following:
 ```python
-from iwfmdll import IWFM_Model
+from iwfmdll import IWFMModel
 
-dir(IWFM_Model)
+dir(IWFMModel)
 ```
 
 ```python
-class IWFM_Model(iwfmdll.misc.IWFM_Miscellaneous)
- |  IWFM_Model(dll_path, preprocessor_file_name, simulation_file_name, has_routed_streams=1, is_for_inquiry=1)
+class IWFMModel(iwfmdll.misc.IWFMMiscellaneous)
+ |  IWFMModel(dll_path, preprocessor_file_name, simulation_file_name, has_routed_streams=1, is_for_inquiry=1)
  |  
  |  IWFM Model Class for interacting with the IWFM DLL
  |  
@@ -77,22 +77,22 @@ class IWFM_Model(iwfmdll.misc.IWFM_Miscellaneous)
  |      option=0 for model simulations
  |  
  |      notes:
- |      is_for_inquiry=1: when an instance of the IWFM_Model class is 
+ |      is_for_inquiry=1: when an instance of the IWFMModel class is 
  |      created for the first time, the entire model object will be 
  |      available for returning data. A binary file will be generated 
  |      for quicker loading, if this binary file exists when subsequent 
- |      instances of the IWFM_Model object are created, not all functions
+ |      instances of the IWFMModel object are created, not all functions
  |      will be available.
  |  
  |  Returns
  |  -------
- |  IWFM_Model Object
- |      instance of the IWFM_Model class and access to the IWFM Model Object 
+ |  IWFMModel Object
+ |      instance of the IWFMModel class and access to the IWFM Model Object 
  |      fortran procedures.
  |  
  |  Method resolution order:
- |      IWFM_Model
- |      iwfmdll.misc.IWFM_Miscellaneous
+ |      IWFMModel
+ |      iwfmdll.misc.IWFMMiscellaneous
  |      builtins.object
  |  
  |  Methods defined here:
@@ -124,7 +124,7 @@ class IWFM_Model(iwfmdll.misc.IWFM_Miscellaneous)
  |      Notes
  |      -----
  |      When this binary file exists, the entire Model Object is not created
- |      when the IWFM_Model object is created so not all functionality is available
+ |      when the IWFMModel object is created so not all functionality is available
  |  
  |  get_actual_stream_diversions_at_some_locations(self, diversion_indices, diversion_conversion_factor)
  |      returns actual diversion amounts for a list of diversions
@@ -314,9 +314,9 @@ class IWFM_Model(iwfmdll.misc.IWFM_Miscellaneous)
  |      -----
  |      1. the intent of this method is to retrieve information about the
  |      current time step when using the IWFM DLL to run a simulation. 
- |      i.e. IWFM_Model object is instantiated with is_for_inquiry=0
+ |      i.e. IWFMModel object is instantiated with is_for_inquiry=0
  |      
- |      2. if this method is called when the IWFM_Model object is 
+ |      2. if this method is called when the IWFMModel object is 
  |      instantiated with is_for_inquiry=1, it only returns the 
  |      simulation begin date and time.
  |  
@@ -598,7 +598,7 @@ class IWFM_Model(iwfmdll.misc.IWFM_Miscellaneous)
  |      
  |      Examples
  |      --------
- |      >>> model = IWFM_Model(dll, preprocessor_file, simulation_file)
+ |      >>> model = IWFMModel(dll, preprocessor_file, simulation_file)
  |      
  |      >>>dates, heads = model.get_gwheadsall_foralayer(1, '09/30/1980_24:00', '09/30/2000_24:00')
  |      >>> dates
@@ -2225,32 +2225,32 @@ class IWFM_Model(iwfmdll.misc.IWFM_Miscellaneous)
  |          opens the log file
  ```
 
-## IWFM_Budget methods
-To use IWFM_Budget, use the following code:
+## IWFMBudget methods
+To use IWFMBudget, use the following code:
 
 ```python
 # import libraries
-from iwfmdll import IWFM_Budget
+from iwfmdll import IWFMBudget
 
 # set paths to files needed to create budget object
 iwfm_dll = 'IWFM-2015.0.1177/DLL/Bin/IWFM2015_C_x64.dll'
 gw_budget_file = 'SampleModel/Results/GW.hdf'
 
-# create instance of the IWFM_Budget class
-gw_budget = IWFM_Budget(iwfm_dll, gw_budget_file)
+# create instance of the IWFMBudget class
+gw_budget = IWFMBudget(iwfm_dll, gw_budget_file)
 ```
 
-## IWFM_ZBudget methods
-To use IWFM_ZBudget, use the following code:
+## IWFMZBudget methods
+To use IWFMZBudget, use the following code:
 
 ```python
 # import libraries
-from iwfmdll import IWFM_ZBudget
+from iwfmdll import IWFMZBudget
 
 # set paths to files needed to create zbudget object
 iwfm_dll = 'IWFM-2015.0.1177/DLL/Bin/IWFM2015_C_x64.dll'
 gw_budget_file = 'SampleModel/Results/GW_ZBud.hdf'
 
-# create instance of the IWFM_ZBudget class
-z = IWFM_ZBudget(dll_file, zbudget_file)
+# create instance of the IWFMZBudget class
+z = IWFMZBudget(dll_file, zbudget_file)
 ```
