@@ -2,7 +2,7 @@ import ctypes
 import datetime
 import numpy as np
 
-class IWFM_Miscellaneous:
+class IWFMMiscellaneous:
     ''' IWFM Miscellaneous Class for interacting with the IWFM DLL
 
     Returns
