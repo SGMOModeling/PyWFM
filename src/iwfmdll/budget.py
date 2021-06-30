@@ -16,8 +16,8 @@ class IWFMBudget(IWFMMiscellaneous):
 
     Returns
     -------
-    IWFM_Budget Object
-        instance of the IWFM_Budget class and access to the IWFM Budget 
+    IWFMBudget Object
+        instance of the IWFMBudget class and access to the IWFM Budget 
         fortran procedures.
     '''
     def __init__(self, dll_path, budget_file_name):
