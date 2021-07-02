@@ -1,4 +1,4 @@
-from iwfmdll.model import IWFM_Model
-from iwfmdll.budget import IWFM_Budget
-from iwfmdll.zbudget import IWFM_ZBudget
+from iwfmdll.model import IWFMModel
+from iwfmdll.budget import IWFMBudget
+from iwfmdll.zbudget import IWFMZBudget
 from iwfmdll.decorators import program_timer
