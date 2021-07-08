@@ -744,15 +744,15 @@ class IWFMModel(IWFMMiscellaneous):
         
         Returns
         -------
-        tuple
-            length 2 tuple of np.ndarrays representing stage and flow, respectively
+        tuple (length=2)
+            np.ndarrays representing stage and flow, respectively
         '''
         if not hasattr(self.dll, "IW_Model_GetStrmRatingTable"):
             raise AttributeError('IWFM DLL does not have "{}" procedure. '
                                  'Check for an updated version'.format('IW_Model_GetStrmRatingTable'))
 
         # check that stream_node_id is an integer
-        if not isinstance(stream_node_id, (int, np.int, np.int32, np.dtype('<i4'))):
+        if not isinstance(stream_node_id, int):
             raise TypeError('stream_node_id must be an integer')
 
         # check that stream_node_id is a valid stream_node_id
