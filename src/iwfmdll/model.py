@@ -638,7 +638,7 @@ class IWFMModel(IWFMMiscellaneous):
                                  'Check for an updated version'.format('IW_Model_GetStrmUpstrmNodes'))
 
         # check that stream_node_id is an integer
-        if not isinstance(stream_node_id, (int, np.int, np.int32, ctypes.c_long)):
+        if not isinstance(stream_node_id, int):
             raise TypeError('stream_node_id must be an integer')
 
         # check that stream_node_id is a valid stream_node_id
@@ -647,8 +647,7 @@ class IWFMModel(IWFMMiscellaneous):
             raise ValueError('stream_node_id is not a valid Stream Node ID')
 
         # set input variables
-        if not isinstance(stream_node_id, ctypes.c_long):
-            stream_node_id = ctypes.c_int(stream_node_id)
+        stream_node_id = ctypes.c_int(stream_node_id)
         n_upstream_stream_nodes = ctypes.c_int(self.get_n_stream_nodes_upstream_of_stream_node(stream_node_id))
 
         # set instance variable status to 0
