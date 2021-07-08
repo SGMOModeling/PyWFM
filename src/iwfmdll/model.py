@@ -106,6 +106,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_current_date_and_time(self):
         ''' returns the current simulation date and time 
+        
         Returns
         -------
         str
@@ -459,14 +460,24 @@ class IWFMModel(IWFMMiscellaneous):
         return np.array(subregion_ids)
 
     def get_subregion_name(self, subregion_id):
-        ''' returns the name corresponding to the subregion_id in an IWFM model '''
-
+        ''' returns the name corresponding to the subregion_id in an IWFM model 
+        
+        Parameters
+        ----------
+        subregion_id : int
+            subregion identification number used to return name
+            
+        Returns
+        -------
+        str
+            name of the subregion
+        '''
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetSubregionName"):
             raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetSubregionName'))
 
         # check that subregion_id is an integer
-        if not isinstance(subregion_id, (int, np.int, np.int32, np.dtype('<i4'))):
+        if not isinstance(subregion_id, int):
             raise TypeError('subregion_id must be an integer')
 
         # check that subregion_id is valid
