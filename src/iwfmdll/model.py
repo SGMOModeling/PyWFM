@@ -721,7 +721,7 @@ class IWFMModel(IWFMMiscellaneous):
         # set input variables convert to ctypes, if not already
         stream_node_id = ctypes.c_int(stream_node_id)
 
-        # reset_instance variable status to -1
+        # reset instance variable status to 0
         self.status = ctypes.c_int(0)
 
         # initialize output variables
