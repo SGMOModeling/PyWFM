@@ -484,7 +484,10 @@ class IWFMModel(IWFMMiscellaneous):
         # check that subregion_id is valid
         subregion_ids = self.get_subregion_ids()
         if subregion_id not in subregion_ids:
-            raise ValueError('subregion_id provided is not a valid subregion id. value provided {}. Must be one of: {}'.format(subregion_id, ' '.join(subregion_ids)))
+            subregions = ' '.join([str(val) for val in subregion_ids])
+            raise ValueError('subregion_id provided is not a valid '
+                             'subregion id. value provided {}. Must be '
+                             'one of: {}'.format(subregion_id, subregions))
 
         # set instance variable status to 0
         self.status = ctypes.c_int(0)
