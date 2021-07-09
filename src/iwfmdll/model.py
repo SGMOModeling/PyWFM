@@ -1,6 +1,7 @@
 import os
 import ctypes
 import math
+from typing import Type
 import numpy as np
 import pandas as pd
 
@@ -859,13 +860,15 @@ class IWFMModel(IWFMMiscellaneous):
 
         return np.array(stream_inflow_ids)
 
-    def get_stream_inflows_at_some_locations(self, stream_inflow_locations, inflow_conversion_factor=1.0):
+    def get_stream_inflows_at_some_locations(self, 
+                                             stream_inflow_locations, 
+                                             inflow_conversion_factor=1.0):
         ''' returns stream boundary inflows at a specified set of inflow
         locations listed by their indices for the current simulation timestep
         
         Parameters
         ----------
-        stream_inflow_locations : list of int
+        stream_inflow_locations : int, list of int, or np.ndarray
             one or more stream inflow ids used to return flows
 
         inflow_conversion_factor : float, default=1.0
@@ -883,13 +886,30 @@ class IWFMModel(IWFMMiscellaneous):
         This method is designed for use when is_for_inquiry=0 to return
         stream inflows at the current timestep during a simulation.
         '''
-        #if self.is_for_inquiry != 0:
-        #    raise RuntimeError("This function can only be used when the model object is instantiated with the is_for_inquiry flag set to 0")
-
         if not hasattr(self.dll, "IW_Model_GetStrmInflows_AtSomeInflows"):
             raise AttributeError('IWFM DLL does not have "{}" procedure. '
                                  'Check for an updated version'.format("IW_Model_GetStrmInflows_AtSomeInflows"))
 
+        # get possible stream inflow locations
+        stream_inflow_ids = self.get_stream_inflow_ids()
+
+        # if int convert to np.ndarray
+        if isinstance(stream_inflow_locations, int):
+            stream_inflow_locations = np.array([stream_inflow_locations])
+        
+        # if list convert to np.ndarray
+        if isinstance(stream_inflow_locations, list):
+            stream_inflow_locations = np.array(stream_inflow_locations)
+
+        # if stream_inflow_locations were provided as an int, list, or 
+        # np.ndarray they should now all be np.ndarray, so check if np.ndarray
+        if not isinstance(stream_inflow_locations, np.ndarray):
+            raise TypeError('stream_inflow_locations must be an int, list, or np.ndarray')
+
+        # check if all of the provided stream_inflow_locations are valid
+        if not np.all(np.isin(stream_inflow_locations, stream_inflow_ids)):
+            raise ValueError('One or more stream inflow locations are invalid')
+        
         # initialize input variables
         n_stream_inflow_locations = ctypes.c_int(len(stream_inflow_locations))
         stream_inflow_locations = (ctypes.c_int*n_stream_inflow_locations.value)(*stream_inflow_locations)
