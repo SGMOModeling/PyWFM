@@ -386,7 +386,7 @@ class IWFMModel(IWFMMiscellaneous):
             raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetElementConfigData'))
         
         # check that element_id is an integer
-        if not isinstance(element_id, (int, np.int, np.int32, np.dtype('<i4'))):
+        if not isinstance(element_id, (int, np.int32)):
             raise TypeError('element_id must be an integer')
 
         # check that element_id is a valid element_id
@@ -652,6 +652,11 @@ class IWFMModel(IWFMMiscellaneous):
 
         # set input variables
         n_upstream_stream_nodes = ctypes.c_int(self.get_n_stream_nodes_upstream_of_stream_node(stream_node_id))
+        
+        # return None if no upstream stream nodes
+        if n_upstream_stream_nodes == 0:
+            return
+
         stream_node_id = ctypes.c_int(stream_node_id)
 
         # set instance variable status to 0
