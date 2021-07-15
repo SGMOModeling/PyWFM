@@ -491,11 +491,11 @@ class IWFMBudget(IWFMMiscellaneous):
             
             # check that all column names provided exist if so create list of column numbers
             column_numbers = []
-            for i, val in enumerate(columns):
+            for val in columns:
                 if val not in column_headers:
                     raise ValueError('columns provided must be one of the following:\n {}'.format(', '.join(column_headers)))
                 else:
-                    column_numbers.append(i+1) # i+1 is used for fortran array indexing
+                    column_numbers.append(column_headers.index(val)) # i+1 is used for fortran array indexing
             
             # convert column numbers list to ctypes
             n_columns = ctypes.c_int(len(column_numbers))
@@ -635,7 +635,7 @@ class IWFMBudget(IWFMMiscellaneous):
 
         # check that column name provided exists. if so, get column index.
         try:
-            column_id = ctypes.c_int(column_headers.index(column_name) + 1)
+            column_id = ctypes.c_int(column_headers.index(column_name))
         except ValueError:
             add_message = 'Must be one of the following:\n{}'.format(', '.join(column_headers))
             raise ValueError(add_message)
