@@ -113,8 +113,8 @@ class IWFMModel(IWFMMiscellaneous):
         str
             current date and time in IWFM format MM/DD/YYYY_hh:mm
 
-        Notes
-        -----
+        Note
+        ----
         1. the intent of this method is to retrieve information about the
         current time step when using the IWFM DLL to run a simulation. 
         i.e. IWFMModel object is instantiated with is_for_inquiry=0
@@ -144,7 +144,16 @@ class IWFMModel(IWFMMiscellaneous):
         return current_date_string.value.decode('utf-8')
 
     def get_n_time_steps(self):
-        ''' returns the number of timesteps in an IWFM simulation 
+        ''' returns the number of timesteps in an IWFM simulation
+
+        Returns
+        -------
+        int
+            the number of timesteps in the simulation
+
+        See Also
+        --------
+        IWFMModel.get_time_specs 
         '''
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetNTimeSteps"):
@@ -159,10 +168,7 @@ class IWFMModel(IWFMMiscellaneous):
 
         self.dll.IW_Model_GetNTimeSteps(ctypes.byref(n_time_steps),
                                     ctypes.byref(self.status))
-           
-        if not hasattr(self, "n_time_steps"):
-            self.n_time_steps = n_time_steps
-
+        
         return self.n_time_steps.value
 
     def get_time_specs(self):
@@ -274,6 +280,12 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_node_coordinates(self):
         ''' returns the x,y coordinates of the nodes in an IWFM model
+
+        Returns
+        -------
+        tuple
+            np.ndarray of groundwater node x-coordinates
+            np.ndarray of groundwater node y-coordinates
         '''
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetNodeXY"):
@@ -298,6 +310,11 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_node_ids(self):
         ''' returns an array of node ids in an IWFM model
+
+        Returns
+        -------
+        np.ndarray
+            array of groundwater node ids
         '''
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetNodeIDs"):
@@ -4112,7 +4129,8 @@ class IWFMModel(IWFMMiscellaneous):
         --------
         >>> model = IWFMModel(dll, preprocessor_file, simulation_file)
 
-        >>>dates, heads = model.get_gwheadsall_foralayer(1, '09/30/1980_24:00', '09/30/2000_24:00')
+        >>> dates, heads = model.get_gwheadsall_foralayer(1, '09/30/1980_24:00', '09/30/2000_24:00')
+        
         >>> dates
             ['09/30/1980',
              '10/31/1980',
