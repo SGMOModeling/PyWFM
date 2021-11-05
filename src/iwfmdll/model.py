@@ -242,6 +242,32 @@ class IWFMModel(IWFMMiscellaneous):
         -------
         list of strings
             list of available output intervals for given data type
+
+        See Also
+        --------
+        IWFMModel.get_current_date_and_time
+        IWFMModel.get_n_time_steps
+        IWFMModel.get_time_specs
+        IWFMModel.get_n_intervals
+        IWFMModel.is_date_greater
+        IWFMModel.increment_time
+
+        Example
+        -------
+        >>> from iwfmdll import IWFMModel
+        
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+
+        >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
+
+        >>> sim_file = 'Simulation_MAIN.IN'
+ 
+        >>> model = IWFMModel(dll, preprocessor_infile, simulation_infile)
+        
+        >>> model.get_output_interval()
+            ['1DAY', '1WEEK', '1MON', '1YEAR']
+
+        >>> model.kill()
         '''
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetOutputIntervals"):
