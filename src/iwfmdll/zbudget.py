@@ -72,8 +72,7 @@ class IWFMZBudget(IWFMMiscellaneous):
         Parameters
         ----------
         zone_definition_file : str
-            file name for the zone definition file used to generate the
-            list of zones
+            file name for the zone definition file used to generate the list of zones
             
         Returns
         -------
@@ -671,8 +670,9 @@ class IWFMZBudget(IWFMMiscellaneous):
         -------
         tuple (length=2)
             index 0 - 1-D array of dates for each zone
+            
             index 1 - array of zbudget values for each zone and column
-                      identification number
+            identification number
         '''
         # check to see if the procedure exists in the dll provided
         if not hasattr(self.dll, 'IW_ZBudget_GetValues_ForSomeZones_ForAnInterval'):
