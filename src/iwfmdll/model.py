@@ -190,8 +190,17 @@ class IWFMModel(IWFMMiscellaneous):
         Returns
         -------
         tuple (length=2)
-            list: simulation dates
-            str: simulation time step 
+        list: simulation dates
+        str: simulation time step
+
+        See Also
+        --------
+        IWFMModel.get_current_date_and_time
+        IWFMModel.get_n_time_steps
+        IWFMModel.get_n_intervals
+        IWFMModel.get_output_interval
+        IWFMModel.is_date_greater
+        IWFMModel.increment_time
         '''
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetTimeSpecs"):
