@@ -10,7 +10,7 @@ The IWFM DLL can be downloaded from the [CNRA Open Data Platform](https://data.c
 
 ## Overview
 ---
-The iwfmdll library includes 3 main classes (IWFMModel, IWFMBudget, and IWFMZBudget). Each of these inherits from the IWFM_Miscellaneous base class. Many of the methods in the IWFM_Miscellaneous base class cannot be used on their own because the IWFM_Miscellaneous class was designed without direct access to the IWFM DLL. Users can access all of this functionality from within the IWFMModel, IWFMBudget, and IWFMZBudget classes.
+The iwfmdll library includes 3 main classes (IWFMModel, IWFMBudget, and IWFMZBudget). Each of these inherits from the IWFMMiscellaneous base class. Many of the methods in the IWFMMiscellaneous base class cannot be used on their own because the IWFMMiscellaneous class was designed without direct access to the IWFM DLL. Users can access all of this functionality from within the IWFMModel, IWFMBudget, and IWFMZBudget classes.
 
 ## Design
 ---
