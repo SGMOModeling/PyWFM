@@ -1,7 +1,6 @@
 import os
 import ctypes
 import math
-from typing import Type
 import numpy as np
 import pandas as pd
 
@@ -169,7 +168,7 @@ class IWFMModel(IWFMMiscellaneous):
         self.dll.IW_Model_GetNTimeSteps(ctypes.byref(n_time_steps),
                                     ctypes.byref(self.status))
         
-        return self.n_time_steps.value
+        return n_time_steps.value
 
     def get_time_specs(self):
         ''' returns the IWFM simulation dates and time step
@@ -3289,9 +3288,9 @@ class IWFMModel(IWFMMiscellaneous):
                                                          conversion_factor)
 
     def _get_names(self, location_type_id):
-        ''' returns the available names for a given feature_type
+        ''' returns the available names for a given location_type
 
-         Parameters
+        Parameters
         ----------
         location_type_id : int
             location type identifier used by IWFM to represent model 
