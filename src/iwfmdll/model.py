@@ -190,8 +190,7 @@ class IWFMModel(IWFMMiscellaneous):
         Returns
         -------
         tuple (length=2)
-        list: simulation dates
-        str: simulation time step
+            index 0 - (list) simulation dates; index 1 - (str) simulation time step
 
         See Also
         --------
