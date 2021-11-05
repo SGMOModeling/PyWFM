@@ -1,0 +1,2077 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IWFMModel &#8212; IWFMDLL 0.0.1 documentation</title>
+    
+  <link href="../_static/css/theme.css" rel="stylesheet" />
+  <link href="../_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.1c5a1a01449ed65a7b51.js">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="iwfmdll.IWFMModel.get_current_date_and_time" href="generated/iwfmdll.IWFMModel.get_current_date_and_time.html" />
+    <link rel="prev" title="iwfmdll.IWFMZBudget" href="generated/iwfmdll.IWFMZBudget.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="container-xl">
+
+  <div id="navbar-start">
+    
+    
+
+<a class="navbar-brand" href="../index.html">
+  <img src="../_static/sgmo_logo.png" class="logo" alt="logo">
+</a>
+
+
+    
+  </div>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapsible" aria-controls="navbar-collapsible" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  
+  <div id="navbar-collapsible" class="col-lg-9 collapse navbar-collapse">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <ul id="navbar-main-elements" class="navbar-nav">
+    <li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../installation/index.html">
+  Installation
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../tutorial/index.html">
+  Tutorial
+ </a>
+</li>
+
+<li class="toctree-l1 current active nav-item">
+ <a class="reference internal nav-link" href="index.html">
+  API Reference
+ </a>
+</li>
+
+    
+</ul>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+            
+            <!-- Only show if we have sidebars configured, else just a small margin  -->
+            <div class="col-12 col-md-3 bd-sidebar"><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+    <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="generated/iwfmdll.IWFMModel.html">
+   iwfmdll.IWFMModel
+  </a>
+ </li>
+</ul>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="generated/iwfmdll.IWFMBudget.html">
+   iwfmdll.IWFMBudget
+  </a>
+ </li>
+</ul>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="generated/iwfmdll.IWFMZBudget.html">
+   iwfmdll.IWFMZBudget
+  </a>
+ </li>
+</ul>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active has-children">
+  <a class="current reference internal" href="#">
+   IWFMModel
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_current_date_and_time.html">
+     iwfmdll.IWFMModel.get_current_date_and_time
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_n_time_steps.html">
+     iwfmdll.IWFMModel.get_n_time_steps
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_time_specs.html">
+     iwfmdll.IWFMModel.get_time_specs
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_n_intervals.html">
+     iwfmdll.IWFMModel.get_n_intervals
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_output_interval.html">
+     iwfmdll.IWFMModel.get_output_interval
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.is_date_greater.html">
+     iwfmdll.IWFMModel.is_date_greater
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.increment_time.html">
+     iwfmdll.IWFMModel.increment_time
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_n_nodes.html">
+     iwfmdll.IWFMModel.get_n_nodes
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_node_coordinates.html">
+     iwfmdll.IWFMModel.get_node_coordinates
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_node_ids.html">
+     iwfmdll.IWFMModel.get_node_ids
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_node_info.html">
+     iwfmdll.IWFMModel.get_node_info
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_n_elements.html">
+     iwfmdll.IWFMModel.get_n_elements
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_element_config.html">
+     iwfmdll.IWFMModel.get_element_config
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_element_ids.html">
+     iwfmdll.IWFMModel.get_element_ids
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_element_info.html">
+     iwfmdll.IWFMModel.get_element_info
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_element_spatial_info.html">
+     iwfmdll.IWFMModel.get_element_spatial_info
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_n_subregions.html">
+     iwfmdll.IWFMModel.get_n_subregions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_subregion_ids.html">
+     iwfmdll.IWFMModel.get_subregion_ids
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_subregion_name.html">
+     iwfmdll.IWFMModel.get_subregion_name
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_subregion_names.html">
+     iwfmdll.IWFMModel.get_subregion_names
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_subregions_by_element.html">
+     iwfmdll.IWFMModel.get_subregions_by_element
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_n_layers.html">
+     iwfmdll.IWFMModel.get_n_layers
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_ground_surface_elevation.html">
+     iwfmdll.IWFMModel.get_ground_surface_elevation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_aquifer_top_elevation.html">
+     iwfmdll.IWFMModel.get_aquifer_top_elevation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_aquifer_bottom_elevation.html">
+     iwfmdll.IWFMModel.get_aquifer_bottom_elevation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_stratigraphy_atXYcoordinate.html">
+     iwfmdll.IWFMModel.get_stratigraphy_atXYcoordinate
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_n_lakes.html">
+     iwfmdll.IWFMModel.get_n_lakes
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_lake_ids.html">
+     iwfmdll.IWFMModel.get_lake_ids
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_n_elements_in_lake.html">
+     iwfmdll.IWFMModel.get_n_elements_in_lake
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_elements_in_lake.html">
+     iwfmdll.IWFMModel.get_elements_in_lake
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_n_stream_reaches.html">
+     iwfmdll.IWFMModel.get_n_stream_reaches
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_stream_reach_ids.html">
+     iwfmdll.IWFMModel.get_stream_reach_ids
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_stream_reach_names.html">
+     iwfmdll.IWFMModel.get_stream_reach_names
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_n_nodes_in_stream_reach.html">
+     iwfmdll.IWFMModel.get_n_nodes_in_stream_reach
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_stream_reach_stream_nodes.html">
+     iwfmdll.IWFMModel.get_stream_reach_stream_nodes
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_stream_reach_groundwater_nodes.html">
+     iwfmdll.IWFMModel.get_stream_reach_groundwater_nodes
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_n_stream_nodes.html">
+     iwfmdll.IWFMModel.get_n_stream_nodes
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_stream_node_ids.html">
+     iwfmdll.IWFMModel.get_stream_node_ids
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_stream_bottom_elevations.html">
+     iwfmdll.IWFMModel.get_stream_bottom_elevations
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_n_rating_table_points.html">
+     iwfmdll.IWFMModel.get_n_rating_table_points
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_stream_rating_table.html">
+     iwfmdll.IWFMModel.get_stream_rating_table
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_n_stream_nodes_upstream_of_stream_node.html">
+     iwfmdll.IWFMModel.get_n_stream_nodes_upstream_of_stream_node
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_stream_nodes_upstream_of_stream_node.html">
+     iwfmdll.IWFMModel.get_stream_nodes_upstream_of_stream_node
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_upstream_nodes_in_stream_reaches.html">
+     iwfmdll.IWFMModel.get_upstream_nodes_in_stream_reaches
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_downstream_node_in_stream_reaches.html">
+     iwfmdll.IWFMModel.get_downstream_node_in_stream_reaches
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_reach_outflow_destination.html">
+     iwfmdll.IWFMModel.get_reach_outflow_destination
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_reach_outflow_destination_types.html">
+     iwfmdll.IWFMModel.get_reach_outflow_destination_types
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_n_reaches_upstream_of_reach.html">
+     iwfmdll.IWFMModel.get_n_reaches_upstream_of_reach
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_reaches_upstream_of_reach.html">
+     iwfmdll.IWFMModel.get_reaches_upstream_of_reach
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.is_stream_upstream_node.html">
+     iwfmdll.IWFMModel.is_stream_upstream_node
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_n_tile_drains.html">
+     iwfmdll.IWFMModel.get_n_tile_drains
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_tile_drain_ids.html">
+     iwfmdll.IWFMModel.get_tile_drain_ids
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_tile_drain_nodes.html">
+     iwfmdll.IWFMModel.get_tile_drain_nodes
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_n_locations.html">
+     iwfmdll.IWFMModel.get_n_locations
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_boundary_nodes.html">
+     iwfmdll.IWFMModel.get_boundary_nodes
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.order_boundary_nodes.html">
+     iwfmdll.IWFMModel.order_boundary_nodes
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.plot_elements.html">
+     iwfmdll.IWFMModel.plot_elements
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_n_stream_inflows.html">
+     iwfmdll.IWFMModel.get_n_stream_inflows
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_stream_inflow_ids.html">
+     iwfmdll.IWFMModel.get_stream_inflow_ids
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_stream_inflow_nodes.html">
+     iwfmdll.IWFMModel.get_stream_inflow_nodes
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_n_small_watersheds.html">
+     iwfmdll.IWFMModel.get_n_small_watersheds
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_small_watershed_ids.html">
+     iwfmdll.IWFMModel.get_small_watershed_ids
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_n_diversions.html">
+     iwfmdll.IWFMModel.get_n_diversions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_diversion_ids.html">
+     iwfmdll.IWFMModel.get_diversion_ids
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_diversion_purpose.html">
+     iwfmdll.IWFMModel.get_diversion_purpose
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_stream_flow_at_location.html">
+     iwfmdll.IWFMModel.get_stream_flow_at_location
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_stream_flows.html">
+     iwfmdll.IWFMModel.get_stream_flows
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_stream_gain_from_groundwater.html">
+     iwfmdll.IWFMModel.get_stream_gain_from_groundwater
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_stream_gain_from_lakes.html">
+     iwfmdll.IWFMModel.get_stream_gain_from_lakes
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_stream_inflows_at_some_locations.html">
+     iwfmdll.IWFMModel.get_stream_inflows_at_some_locations
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_stream_rainfall_runoff.html">
+     iwfmdll.IWFMModel.get_stream_rainfall_runoff
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_stream_reaches_for_stream_nodes.html">
+     iwfmdll.IWFMModel.get_stream_reaches_for_stream_nodes
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_stream_return_flows.html">
+     iwfmdll.IWFMModel.get_stream_return_flows
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_stream_riparian_evapotranspiration.html">
+     iwfmdll.IWFMModel.get_stream_riparian_evapotranspiration
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_stream_stages.html">
+     iwfmdll.IWFMModel.get_stream_stages
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_stream_tile_drain_flows.html">
+     iwfmdll.IWFMModel.get_stream_tile_drain_flows
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_stream_tributary_inflows.html">
+     iwfmdll.IWFMModel.get_stream_tributary_inflows
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_stream_diversion_locations.html">
+     iwfmdll.IWFMModel.get_stream_diversion_locations
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_net_bypass_inflows.html">
+     iwfmdll.IWFMModel.get_net_bypass_inflows
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_actual_stream_diversions_at_some_locations.html">
+     iwfmdll.IWFMModel.get_actual_stream_diversions_at_some_locations
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_n_ag_crops.html">
+     iwfmdll.IWFMModel.get_n_ag_crops
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_well_pumping_purpose.html">
+     iwfmdll.IWFMModel.get_well_pumping_purpose
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_urban_diversion_supply_shortage_at_origin.html">
+     iwfmdll.IWFMModel.get_urban_diversion_supply_shortage_at_origin
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_urban_elempump_supply_shortage_at_origin.html">
+     iwfmdll.IWFMModel.get_urban_elempump_supply_shortage_at_origin
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_urban_well_supply_shortage_at_origin.html">
+     iwfmdll.IWFMModel.get_urban_well_supply_shortage_at_origin
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_ag_diversion_supply_shortage_at_origin.html">
+     iwfmdll.IWFMModel.get_ag_diversion_supply_shortage_at_origin
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_ag_elempump_supply_shortage_at_origin.html">
+     iwfmdll.IWFMModel.get_ag_elempump_supply_shortage_at_origin
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_ag_well_supply_shortage_at_origin.html">
+     iwfmdll.IWFMModel.get_ag_well_supply_shortage_at_origin
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_supply_requirement_ag_elements.html">
+     iwfmdll.IWFMModel.get_supply_requirement_ag_elements
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_supply_requirement_ag_subregions.html">
+     iwfmdll.IWFMModel.get_supply_requirement_ag_subregions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_supply_requirement_urban_elements.html">
+     iwfmdll.IWFMModel.get_supply_requirement_urban_elements
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_supply_requirement_urban_subregions.html">
+     iwfmdll.IWFMModel.get_supply_requirement_urban_subregions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_aquifer_horizontal_k.html">
+     iwfmdll.IWFMModel.get_aquifer_horizontal_k
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_aquifer_vertical_k.html">
+     iwfmdll.IWFMModel.get_aquifer_vertical_k
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_aquitard_vertical_k.html">
+     iwfmdll.IWFMModel.get_aquitard_vertical_k
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_aquifer_specific_storage.html">
+     iwfmdll.IWFMModel.get_aquifer_specific_storage
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_aquifer_specific_yield.html">
+     iwfmdll.IWFMModel.get_aquifer_specific_yield
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_aquifer_parameters.html">
+     iwfmdll.IWFMModel.get_aquifer_parameters
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_gwheads_all.html">
+     iwfmdll.IWFMModel.get_gwheads_all
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_gwheads_foralayer.html">
+     iwfmdll.IWFMModel.get_gwheads_foralayer
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_depth_to_water.html">
+     iwfmdll.IWFMModel.get_depth_to_water
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_subsidence_all.html">
+     iwfmdll.IWFMModel.get_subsidence_all
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_subregion_ag_pumping_average_depth_to_water.html">
+     iwfmdll.IWFMModel.get_subregion_ag_pumping_average_depth_to_water
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_zone_ag_pumping_average_depth_to_water.html">
+     iwfmdll.IWFMModel.get_zone_ag_pumping_average_depth_to_water
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_n_subsidence_hydrographs.html">
+     iwfmdll.IWFMModel.get_n_subsidence_hydrographs
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_subsidence_hydrograph_ids.html">
+     iwfmdll.IWFMModel.get_subsidence_hydrograph_ids
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_subsidence_observation_coordinates.html">
+     iwfmdll.IWFMModel.get_subsidence_observation_coordinates
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_subsidence_observation_names.html">
+     iwfmdll.IWFMModel.get_subsidence_observation_names
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_subsidence_hydrograph.html">
+     iwfmdll.IWFMModel.get_subsidence_hydrograph
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_n_tile_drain_hydrographs.html">
+     iwfmdll.IWFMModel.get_n_tile_drain_hydrographs
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_tile_drain_hydrograph_ids.html">
+     iwfmdll.IWFMModel.get_tile_drain_hydrograph_ids
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_tile_drain_observation_coordinates.html">
+     iwfmdll.IWFMModel.get_tile_drain_observation_coordinates
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_n_groundwater_hydrographs.html">
+     iwfmdll.IWFMModel.get_n_groundwater_hydrographs
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_groundwater_hydrograph_ids.html">
+     iwfmdll.IWFMModel.get_groundwater_hydrograph_ids
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_groundwater_hydrograph_coordinates.html">
+     iwfmdll.IWFMModel.get_groundwater_hydrograph_coordinates
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_groundwater_observation_names.html">
+     iwfmdll.IWFMModel.get_groundwater_observation_names
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_groundwater_hydrograph_info.html">
+     iwfmdll.IWFMModel.get_groundwater_hydrograph_info
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_groundwater_hydrograph.html">
+     iwfmdll.IWFMModel.get_groundwater_hydrograph
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_groundwater_hydrograph_at_node_and_layer.html">
+     iwfmdll.IWFMModel.get_groundwater_hydrograph_at_node_and_layer
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_n_stream_hydrographs.html">
+     iwfmdll.IWFMModel.get_n_stream_hydrographs
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_stream_hydrograph_ids.html">
+     iwfmdll.IWFMModel.get_stream_hydrograph_ids
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_stream_observation_coordinates.html">
+     iwfmdll.IWFMModel.get_stream_observation_coordinates
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_stream_observation_names.html">
+     iwfmdll.IWFMModel.get_stream_observation_names
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_stream_hydrograph.html">
+     iwfmdll.IWFMModel.get_stream_hydrograph
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_n_hydrograph_types.html">
+     iwfmdll.IWFMModel.get_n_hydrograph_types
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_hydrograph_type_list.html">
+     iwfmdll.IWFMModel.get_hydrograph_type_list
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.advance_state.html">
+     iwfmdll.IWFMModel.advance_state
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.advance_time.html">
+     iwfmdll.IWFMModel.advance_time
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.read_timeseries_data.html">
+     iwfmdll.IWFMModel.read_timeseries_data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.read_timeseries_data_overwrite.html">
+     iwfmdll.IWFMModel.read_timeseries_data_overwrite
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.restore_pumping_to_read_values.html">
+     iwfmdll.IWFMModel.restore_pumping_to_read_values
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.set_log_file.html">
+     iwfmdll.IWFMModel.set_log_file
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.close_log_file.html">
+     iwfmdll.IWFMModel.close_log_file
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_last_message.html">
+     iwfmdll.IWFMModel.get_last_message
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.log_last_message.html">
+     iwfmdll.IWFMModel.log_last_message
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.set_preprocessor_path.html">
+     iwfmdll.IWFMModel.set_preprocessor_path
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.set_simulation_path.html">
+     iwfmdll.IWFMModel.set_simulation_path
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.turn_supply_adjustment_on_off.html">
+     iwfmdll.IWFMModel.turn_supply_adjustment_on_off
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.set_supply_adjustment_max_iterations.html">
+     iwfmdll.IWFMModel.set_supply_adjustment_max_iterations
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.set_supply_adjustment_tolerance.html">
+     iwfmdll.IWFMModel.set_supply_adjustment_tolerance
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.simulate_all.html">
+     iwfmdll.IWFMModel.simulate_all
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.simulate_for_an_interval.html">
+     iwfmdll.IWFMModel.simulate_for_an_interval
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.simulate_for_one_timestep.html">
+     iwfmdll.IWFMModel.simulate_for_one_timestep
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.print_results.html">
+     iwfmdll.IWFMModel.print_results
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.is_end_of_simulation.html">
+     iwfmdll.IWFMModel.is_end_of_simulation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.kill.html">
+     iwfmdll.IWFMModel.kill
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.is_model_instantiated.html">
+     iwfmdll.IWFMModel.is_model_instantiated
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.delete_inquiry_data_file.html">
+     iwfmdll.IWFMModel.delete_inquiry_data_file
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_version.html">
+     iwfmdll.IWFMModel.get_version
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel._is_time_interval_greater_or_equal.html">
+     iwfmdll.IWFMModel._is_time_interval_greater_or_equal
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel._get_names.html">
+     iwfmdll.IWFMModel._get_names
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel._get_n_hydrographs.html">
+     iwfmdll.IWFMModel._get_n_hydrographs
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel._get_hydrograph_ids.html">
+     iwfmdll.IWFMModel._get_hydrograph_ids
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel._get_hydrograph_coordinates.html">
+     iwfmdll.IWFMModel._get_hydrograph_coordinates
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel._get_hydrograph.html">
+     iwfmdll.IWFMModel._get_hydrograph
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel._string_to_list_by_array.html">
+     iwfmdll.IWFMModel._string_to_list_by_array
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel._validate_iwfm_date.html">
+     iwfmdll.IWFMModel._validate_iwfm_date
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel._validate_time_interval.html">
+     iwfmdll.IWFMModel._validate_time_interval
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel._get_supply_purpose.html">
+     iwfmdll.IWFMModel._get_supply_purpose
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel._get_supply_requirement_ag.html">
+     iwfmdll.IWFMModel._get_supply_requirement_ag
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel._get_supply_requirement_urban.html">
+     iwfmdll.IWFMModel._get_supply_requirement_urban
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel._get_supply_shortage_at_origin_ag.html">
+     iwfmdll.IWFMModel._get_supply_shortage_at_origin_ag
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel._get_supply_shortage_at_origin_urban.html">
+     iwfmdll.IWFMModel._get_supply_shortage_at_origin_urban
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_data_unit_type_id_area.html">
+     iwfmdll.IWFMModel.get_data_unit_type_id_area
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_data_unit_type_id_length.html">
+     iwfmdll.IWFMModel.get_data_unit_type_id_length
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_data_unit_type_ids.html">
+     iwfmdll.IWFMModel.get_data_unit_type_ids
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_data_unit_type_volume.html">
+     iwfmdll.IWFMModel.get_data_unit_type_volume
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_flow_destination_type_id.html">
+     iwfmdll.IWFMModel.get_flow_destination_type_id
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_flow_destination_type_id_element.html">
+     iwfmdll.IWFMModel.get_flow_destination_type_id_element
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_flow_destination_type_id_elementset.html">
+     iwfmdll.IWFMModel.get_flow_destination_type_id_elementset
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_flow_destination_type_id_gwelement.html">
+     iwfmdll.IWFMModel.get_flow_destination_type_id_gwelement
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_flow_destination_type_id_lake.html">
+     iwfmdll.IWFMModel.get_flow_destination_type_id_lake
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_flow_destination_type_id_outside.html">
+     iwfmdll.IWFMModel.get_flow_destination_type_id_outside
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_flow_destination_type_id_streamnode.html">
+     iwfmdll.IWFMModel.get_flow_destination_type_id_streamnode
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_flow_destination_type_id_subregion.html">
+     iwfmdll.IWFMModel.get_flow_destination_type_id_subregion
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_land_use_ids.html">
+     iwfmdll.IWFMModel.get_land_use_ids
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_land_use_type_id_gen_ag.html">
+     iwfmdll.IWFMModel.get_land_use_type_id_gen_ag
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_land_use_type_id_native_riparian.html">
+     iwfmdll.IWFMModel.get_land_use_type_id_native_riparian
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_land_use_type_id_nonponded_ag.html">
+     iwfmdll.IWFMModel.get_land_use_type_id_nonponded_ag
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_land_use_type_id_refuge.html">
+     iwfmdll.IWFMModel.get_land_use_type_id_refuge
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_land_use_type_id_rice.html">
+     iwfmdll.IWFMModel.get_land_use_type_id_rice
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_land_use_type_id_urban.html">
+     iwfmdll.IWFMModel.get_land_use_type_id_urban
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_location_ids.html">
+     iwfmdll.IWFMModel.get_location_ids
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_location_type_id_element.html">
+     iwfmdll.IWFMModel.get_location_type_id_element
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_location_type_id_gwheadobs.html">
+     iwfmdll.IWFMModel.get_location_type_id_gwheadobs
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_location_type_id_lake.html">
+     iwfmdll.IWFMModel.get_location_type_id_lake
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_location_type_id_node.html">
+     iwfmdll.IWFMModel.get_location_type_id_node
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_location_type_id_smallwatershed.html">
+     iwfmdll.IWFMModel.get_location_type_id_smallwatershed
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_location_type_id_streamhydobs.html">
+     iwfmdll.IWFMModel.get_location_type_id_streamhydobs
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_location_type_id_streamnode.html">
+     iwfmdll.IWFMModel.get_location_type_id_streamnode
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_location_type_id_streamnodebud.html">
+     iwfmdll.IWFMModel.get_location_type_id_streamnodebud
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_location_type_id_streamreach.html">
+     iwfmdll.IWFMModel.get_location_type_id_streamreach
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_location_type_id_subregion.html">
+     iwfmdll.IWFMModel.get_location_type_id_subregion
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_location_type_id_subsidenceobs.html">
+     iwfmdll.IWFMModel.get_location_type_id_subsidenceobs
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_location_type_id_tiledrainobs.html">
+     iwfmdll.IWFMModel.get_location_type_id_tiledrainobs
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_location_type_id_zone.html">
+     iwfmdll.IWFMModel.get_location_type_id_zone
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_location_type_ids.html">
+     iwfmdll.IWFMModel.get_location_type_ids
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_supply_type_id_diversion.html">
+     iwfmdll.IWFMModel.get_supply_type_id_diversion
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_supply_type_id_elempump.html">
+     iwfmdll.IWFMModel.get_supply_type_id_elempump
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_supply_type_id_well.html">
+     iwfmdll.IWFMModel.get_supply_type_id_well
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_zone_extent_id_horizontal.html">
+     iwfmdll.IWFMModel.get_zone_extent_id_horizontal
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_zone_extent_id_vertical.html">
+     iwfmdll.IWFMModel.get_zone_extent_id_vertical
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_zone_extent_ids.html">
+     iwfmdll.IWFMModel.get_zone_extent_ids
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_budget_type_ids.html">
+     iwfmdll.IWFMModel.get_budget_type_ids
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/iwfmdll.IWFMModel.get_zbudget_type_ids.html">
+     iwfmdll.IWFMModel.get_zbudget_type_ids
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="budget.html">
+   IWFMBudget
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="zbudget.html">
+   IWFMZBudget
+  </a>
+ </li>
+</ul>
+
+  </div>
+</nav>
+            </div>
+            
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+            
+              
+              <div class="toc-item">
+                
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#time-related">
+   Time-Related
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#model-geometry">
+   Model Geometry
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#inflows-and-diversions">
+   Inflows and Diversions
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#streams-and-bypasses">
+   Streams and Bypasses
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#supply-and-demand">
+   Supply and Demand
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#aquifer-properties">
+   Aquifer Properties
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#simulation-results">
+   Simulation Results
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#simulation-hydrographs">
+   Simulation Hydrographs
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#model-simulation">
+   Model Simulation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#general">
+   General
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#private-methods">
+   Private Methods
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#iwfm-internal">
+   IWFM-Internal
+  </a>
+ </li>
+</ul>
+
+</nav>
+              </div>
+              
+              <div class="toc-item">
+                
+              </div>
+              
+            
+          </div>
+          
+
+          
+          
+            
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <div class="section" id="iwfmmodel">
+<span id="model"></span><h1>IWFMModel<a class="headerlink" href="#iwfmmodel" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="time-related">
+<h2>Time-Related<a class="headerlink" href="#time-related" title="Permalink to this headline">¶</a></h2>
+<table class="longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_current_date_and_time.html#iwfmdll.IWFMModel.get_current_date_and_time" title="iwfmdll.IWFMModel.get_current_date_and_time"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_current_date_and_time</span></code></a>()</p></td>
+<td><p>returns the current simulation date and time</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_n_time_steps.html#iwfmdll.IWFMModel.get_n_time_steps" title="iwfmdll.IWFMModel.get_n_time_steps"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_n_time_steps</span></code></a>()</p></td>
+<td><p>returns the number of timesteps in an IWFM simulation</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_time_specs.html#iwfmdll.IWFMModel.get_time_specs" title="iwfmdll.IWFMModel.get_time_specs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_time_specs</span></code></a>()</p></td>
+<td><p>returns the IWFM simulation dates and time step</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_n_intervals.html#iwfmdll.IWFMModel.get_n_intervals" title="iwfmdll.IWFMModel.get_n_intervals"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_n_intervals</span></code></a>(begin_date, end_date, …[, …])</p></td>
+<td><p>returns the number of time intervals between a provided start date and end date</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_output_interval.html#iwfmdll.IWFMModel.get_output_interval" title="iwfmdll.IWFMModel.get_output_interval"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_output_interval</span></code></a>()</p></td>
+<td><p>returns a list of the possible time intervals a selected time-series data can be retrieved at.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.is_date_greater.html#iwfmdll.IWFMModel.is_date_greater" title="iwfmdll.IWFMModel.is_date_greater"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_date_greater</span></code></a>(first_date, comparison_date)</p></td>
+<td><p>returns True if first_date is greater than comparison_date</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.increment_time.html#iwfmdll.IWFMModel.increment_time" title="iwfmdll.IWFMModel.increment_time"><code class="xref py py-obj docutils literal notranslate"><span class="pre">increment_time</span></code></a>(date_string, time_interval, …)</p></td>
+<td><p>increments the date provided by the specified time interval</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="model-geometry">
+<h2>Model Geometry<a class="headerlink" href="#model-geometry" title="Permalink to this headline">¶</a></h2>
+<table class="longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_n_nodes.html#iwfmdll.IWFMModel.get_n_nodes" title="iwfmdll.IWFMModel.get_n_nodes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_n_nodes</span></code></a>()</p></td>
+<td><p>returns the number of nodes in an IWFM model</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_node_coordinates.html#iwfmdll.IWFMModel.get_node_coordinates" title="iwfmdll.IWFMModel.get_node_coordinates"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_node_coordinates</span></code></a>()</p></td>
+<td><p>returns the x,y coordinates of the nodes in an IWFM model</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_node_ids.html#iwfmdll.IWFMModel.get_node_ids" title="iwfmdll.IWFMModel.get_node_ids"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_node_ids</span></code></a>()</p></td>
+<td><p>returns an array of node ids in an IWFM model</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_node_info.html#iwfmdll.IWFMModel.get_node_info" title="iwfmdll.IWFMModel.get_node_info"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_node_info</span></code></a>()</p></td>
+<td><p>returns node id, x-, and y-coordinates for each node in an IWFM model</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_n_elements.html#iwfmdll.IWFMModel.get_n_elements" title="iwfmdll.IWFMModel.get_n_elements"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_n_elements</span></code></a>()</p></td>
+<td><p>returns the number of elements in an IWFM model</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_element_config.html#iwfmdll.IWFMModel.get_element_config" title="iwfmdll.IWFMModel.get_element_config"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_element_config</span></code></a>(element_id)</p></td>
+<td><p>returns an array of node ids for an IWFM element.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_element_ids.html#iwfmdll.IWFMModel.get_element_ids" title="iwfmdll.IWFMModel.get_element_ids"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_element_ids</span></code></a>()</p></td>
+<td><p>returns an array of element ids in an IWFM model</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_element_info.html#iwfmdll.IWFMModel.get_element_info" title="iwfmdll.IWFMModel.get_element_info"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_element_info</span></code></a>()</p></td>
+<td><p>returns element configuration information for all elements in an IWFM model</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_element_spatial_info.html#iwfmdll.IWFMModel.get_element_spatial_info" title="iwfmdll.IWFMModel.get_element_spatial_info"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_element_spatial_info</span></code></a>()</p></td>
+<td><p>returns element configuration information including x-y coordinates for nodes</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_n_subregions.html#iwfmdll.IWFMModel.get_n_subregions" title="iwfmdll.IWFMModel.get_n_subregions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_n_subregions</span></code></a>()</p></td>
+<td><p>returns the number of subregions in an IWFM model</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_subregion_ids.html#iwfmdll.IWFMModel.get_subregion_ids" title="iwfmdll.IWFMModel.get_subregion_ids"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_subregion_ids</span></code></a>()</p></td>
+<td><p>returns an array of IDs for subregions identifiedin the an IWFM model</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_subregion_name.html#iwfmdll.IWFMModel.get_subregion_name" title="iwfmdll.IWFMModel.get_subregion_name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_subregion_name</span></code></a>(subregion_id)</p></td>
+<td><p>returns the name corresponding to the subregion_id in an IWFM model</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_subregion_names.html#iwfmdll.IWFMModel.get_subregion_names" title="iwfmdll.IWFMModel.get_subregion_names"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_subregion_names</span></code></a>()</p></td>
+<td><p>returns the subregions names specified in an IWFM model</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_subregions_by_element.html#iwfmdll.IWFMModel.get_subregions_by_element" title="iwfmdll.IWFMModel.get_subregions_by_element"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_subregions_by_element</span></code></a>()</p></td>
+<td><p>returns an array identifying the IWFM Model elements contained within each subregion.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_n_layers.html#iwfmdll.IWFMModel.get_n_layers" title="iwfmdll.IWFMModel.get_n_layers"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_n_layers</span></code></a>()</p></td>
+<td><p>returns the number of layers in an IWFM model</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_ground_surface_elevation.html#iwfmdll.IWFMModel.get_ground_surface_elevation" title="iwfmdll.IWFMModel.get_ground_surface_elevation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_ground_surface_elevation</span></code></a>()</p></td>
+<td><p>returns the ground surface elevation for each node specified in the IWFM model</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_aquifer_top_elevation.html#iwfmdll.IWFMModel.get_aquifer_top_elevation" title="iwfmdll.IWFMModel.get_aquifer_top_elevation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_aquifer_top_elevation</span></code></a>()</p></td>
+<td><p>returns the aquifer top elevations for each finite element node and each layer</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_aquifer_bottom_elevation.html#iwfmdll.IWFMModel.get_aquifer_bottom_elevation" title="iwfmdll.IWFMModel.get_aquifer_bottom_elevation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_aquifer_bottom_elevation</span></code></a>()</p></td>
+<td><p>returns the aquifer top elevations for each finite element node and each layer</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_stratigraphy_atXYcoordinate.html#iwfmdll.IWFMModel.get_stratigraphy_atXYcoordinate" title="iwfmdll.IWFMModel.get_stratigraphy_atXYcoordinate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_stratigraphy_atXYcoordinate</span></code></a>(x, y, fact)</p></td>
+<td><p>returns the stratigraphy at a given X,Y coordinate and conversion factor.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_n_lakes.html#iwfmdll.IWFMModel.get_n_lakes" title="iwfmdll.IWFMModel.get_n_lakes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_n_lakes</span></code></a>()</p></td>
+<td><p>returns the number of lakes in an IWFM model</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_lake_ids.html#iwfmdll.IWFMModel.get_lake_ids" title="iwfmdll.IWFMModel.get_lake_ids"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_lake_ids</span></code></a>()</p></td>
+<td><p>returns the lake identification numbers assigned by the user</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_n_elements_in_lake.html#iwfmdll.IWFMModel.get_n_elements_in_lake" title="iwfmdll.IWFMModel.get_n_elements_in_lake"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_n_elements_in_lake</span></code></a>(lake_id)</p></td>
+<td><p>returns the number of finite element grid cells that make up a lake</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_elements_in_lake.html#iwfmdll.IWFMModel.get_elements_in_lake" title="iwfmdll.IWFMModel.get_elements_in_lake"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_elements_in_lake</span></code></a>(lake_id)</p></td>
+<td><p>returns the element ids in the lakes</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_n_stream_reaches.html#iwfmdll.IWFMModel.get_n_stream_reaches" title="iwfmdll.IWFMModel.get_n_stream_reaches"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_n_stream_reaches</span></code></a>()</p></td>
+<td><p>returns the number of stream reaches in an IWFM model</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_stream_reach_ids.html#iwfmdll.IWFMModel.get_stream_reach_ids" title="iwfmdll.IWFMModel.get_stream_reach_ids"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_stream_reach_ids</span></code></a>()</p></td>
+<td><p>returns the user-specified identification numbers for the stream reaches in an IWFM model</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_stream_reach_names.html#iwfmdll.IWFMModel.get_stream_reach_names" title="iwfmdll.IWFMModel.get_stream_reach_names"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_stream_reach_names</span></code></a>()</p></td>
+<td><p>returns the stream reach names specified in an IWFM model</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_n_nodes_in_stream_reach.html#iwfmdll.IWFMModel.get_n_nodes_in_stream_reach" title="iwfmdll.IWFMModel.get_n_nodes_in_stream_reach"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_n_nodes_in_stream_reach</span></code></a>(reach_index)</p></td>
+<td><p>returns the number of stream nodes in a stream reach</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_stream_reach_stream_nodes.html#iwfmdll.IWFMModel.get_stream_reach_stream_nodes" title="iwfmdll.IWFMModel.get_stream_reach_stream_nodes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_stream_reach_stream_nodes</span></code></a>(reach_index)</p></td>
+<td><p>returns the stream node indices corresponding to stream nodes in a specified reach</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_stream_reach_groundwater_nodes.html#iwfmdll.IWFMModel.get_stream_reach_groundwater_nodes" title="iwfmdll.IWFMModel.get_stream_reach_groundwater_nodes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_stream_reach_groundwater_nodes</span></code></a>(reach_index)</p></td>
+<td><p>returns the groundwater node indices corresponding to stream nodes in a specified reach</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_n_stream_nodes.html#iwfmdll.IWFMModel.get_n_stream_nodes" title="iwfmdll.IWFMModel.get_n_stream_nodes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_n_stream_nodes</span></code></a>()</p></td>
+<td><p>returns the number of stream nodes in an IWFM model</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_stream_node_ids.html#iwfmdll.IWFMModel.get_stream_node_ids" title="iwfmdll.IWFMModel.get_stream_node_ids"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_stream_node_ids</span></code></a>()</p></td>
+<td><p>returns an array of stream node ids from the IWFM model application</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_stream_bottom_elevations.html#iwfmdll.IWFMModel.get_stream_bottom_elevations" title="iwfmdll.IWFMModel.get_stream_bottom_elevations"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_stream_bottom_elevations</span></code></a>()</p></td>
+<td><p>returns the stream channel bottom elevation at each stream node</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_n_rating_table_points.html#iwfmdll.IWFMModel.get_n_rating_table_points" title="iwfmdll.IWFMModel.get_n_rating_table_points"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_n_rating_table_points</span></code></a>(stream_node_id)</p></td>
+<td><p>returns the number of data points in the stream flow rating table for a stream node</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_stream_rating_table.html#iwfmdll.IWFMModel.get_stream_rating_table" title="iwfmdll.IWFMModel.get_stream_rating_table"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_stream_rating_table</span></code></a>(stream_node_id)</p></td>
+<td><p>returns the stream rating table for a specified stream node</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_n_stream_nodes_upstream_of_stream_node.html#iwfmdll.IWFMModel.get_n_stream_nodes_upstream_of_stream_node" title="iwfmdll.IWFMModel.get_n_stream_nodes_upstream_of_stream_node"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_n_stream_nodes_upstream_of_stream_node</span></code></a>(…)</p></td>
+<td><p>returns the number of stream nodes immediately upstream of the provided stream node id</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_stream_nodes_upstream_of_stream_node.html#iwfmdll.IWFMModel.get_stream_nodes_upstream_of_stream_node" title="iwfmdll.IWFMModel.get_stream_nodes_upstream_of_stream_node"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_stream_nodes_upstream_of_stream_node</span></code></a>(…)</p></td>
+<td><p>returns an array of the stream node ids immediately upstream of the provided stream node id</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_upstream_nodes_in_stream_reaches.html#iwfmdll.IWFMModel.get_upstream_nodes_in_stream_reaches" title="iwfmdll.IWFMModel.get_upstream_nodes_in_stream_reaches"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_upstream_nodes_in_stream_reaches</span></code></a>()</p></td>
+<td><p>returns the indices for the upstream stream node in each stream reach</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_downstream_node_in_stream_reaches.html#iwfmdll.IWFMModel.get_downstream_node_in_stream_reaches" title="iwfmdll.IWFMModel.get_downstream_node_in_stream_reaches"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_downstream_node_in_stream_reaches</span></code></a>()</p></td>
+<td><p>returns the indices for the downstream stream node in each stream reach</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_reach_outflow_destination.html#iwfmdll.IWFMModel.get_reach_outflow_destination" title="iwfmdll.IWFMModel.get_reach_outflow_destination"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_reach_outflow_destination</span></code></a>()</p></td>
+<td><p>This procedure returns the destination index that each stream reach flows into.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_reach_outflow_destination_types.html#iwfmdll.IWFMModel.get_reach_outflow_destination_types" title="iwfmdll.IWFMModel.get_reach_outflow_destination_types"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_reach_outflow_destination_types</span></code></a>()</p></td>
+<td><p>returns the outflow destination types that each stream reach flows into.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_n_reaches_upstream_of_reach.html#iwfmdll.IWFMModel.get_n_reaches_upstream_of_reach" title="iwfmdll.IWFMModel.get_n_reaches_upstream_of_reach"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_n_reaches_upstream_of_reach</span></code></a>(reach_index)</p></td>
+<td><p>returns the number of stream reaches immediately upstream of the specified reach</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_reaches_upstream_of_reach.html#iwfmdll.IWFMModel.get_reaches_upstream_of_reach" title="iwfmdll.IWFMModel.get_reaches_upstream_of_reach"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_reaches_upstream_of_reach</span></code></a>(reach_index)</p></td>
+<td><p>returns the indices of the reaches that are immediately upstream of the specified reach</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.is_stream_upstream_node.html#iwfmdll.IWFMModel.is_stream_upstream_node" title="iwfmdll.IWFMModel.is_stream_upstream_node"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_stream_upstream_node</span></code></a>(stream_node_1, …)</p></td>
+<td><p>checks if a specified stream node .is located upstream from another specified stream node within the stream network of the IWFM model</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_n_tile_drains.html#iwfmdll.IWFMModel.get_n_tile_drains" title="iwfmdll.IWFMModel.get_n_tile_drains"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_n_tile_drains</span></code></a>()</p></td>
+<td><p>returns the number of tile drain nodes in an IWFM model</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_tile_drain_ids.html#iwfmdll.IWFMModel.get_tile_drain_ids" title="iwfmdll.IWFMModel.get_tile_drain_ids"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_tile_drain_ids</span></code></a>()</p></td>
+<td><p>returns the user-specified identification numbers for tile drains simulated in an IWFM model</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_tile_drain_nodes.html#iwfmdll.IWFMModel.get_tile_drain_nodes" title="iwfmdll.IWFMModel.get_tile_drain_nodes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_tile_drain_nodes</span></code></a>()</p></td>
+<td><p>returns the node ids where tile drains are specified</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_n_locations.html#iwfmdll.IWFMModel.get_n_locations" title="iwfmdll.IWFMModel.get_n_locations"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_n_locations</span></code></a>(location_type_id)</p></td>
+<td><p>returns the number of locations for a specified location type</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_boundary_nodes.html#iwfmdll.IWFMModel.get_boundary_nodes" title="iwfmdll.IWFMModel.get_boundary_nodes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_boundary_nodes</span></code></a>([subregions, …])</p></td>
+<td><p>returns nodes that make up the boundary of an IWFM model</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.order_boundary_nodes.html#iwfmdll.IWFMModel.order_boundary_nodes" title="iwfmdll.IWFMModel.order_boundary_nodes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">order_boundary_nodes</span></code></a>(in_boundary_nodes, …)</p></td>
+<td><p>takes an unordered dataframe with two columns of node ids and orders them such that the start id of the next is equal to the end id of the previous.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.plot_elements.html#iwfmdll.IWFMModel.plot_elements" title="iwfmdll.IWFMModel.plot_elements"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_elements</span></code></a>(axes[, scale_factor, …])</p></td>
+<td><p>plots model elements on predefined axes</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="inflows-and-diversions">
+<h2>Inflows and Diversions<a class="headerlink" href="#inflows-and-diversions" title="Permalink to this headline">¶</a></h2>
+<table class="longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_n_stream_inflows.html#iwfmdll.IWFMModel.get_n_stream_inflows" title="iwfmdll.IWFMModel.get_n_stream_inflows"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_n_stream_inflows</span></code></a>()</p></td>
+<td><p>returns the number of stream boundary inflows specified by the user as timeseries input data</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_stream_inflow_ids.html#iwfmdll.IWFMModel.get_stream_inflow_ids" title="iwfmdll.IWFMModel.get_stream_inflow_ids"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_stream_inflow_ids</span></code></a>()</p></td>
+<td><p>returns the identification numbers for the stream boundary inflows specified by the user as timeseries input data</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_stream_inflow_nodes.html#iwfmdll.IWFMModel.get_stream_inflow_nodes" title="iwfmdll.IWFMModel.get_stream_inflow_nodes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_stream_inflow_nodes</span></code></a>()</p></td>
+<td><p>returns the indices of the stream nodes that receive boundary inflows specified by the user as timeseries input data</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_n_small_watersheds.html#iwfmdll.IWFMModel.get_n_small_watersheds" title="iwfmdll.IWFMModel.get_n_small_watersheds"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_n_small_watersheds</span></code></a>()</p></td>
+<td><p>returns the number of small watersheds specified in an IWFM model</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_small_watershed_ids.html#iwfmdll.IWFMModel.get_small_watershed_ids" title="iwfmdll.IWFMModel.get_small_watershed_ids"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_small_watershed_ids</span></code></a>()</p></td>
+<td><p>returns the small watershed identification numbers specified in the IWFM model</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_n_diversions.html#iwfmdll.IWFMModel.get_n_diversions" title="iwfmdll.IWFMModel.get_n_diversions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_n_diversions</span></code></a>()</p></td>
+<td><p>returns the number of surface water diversions in an IWFM model</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_diversion_ids.html#iwfmdll.IWFMModel.get_diversion_ids" title="iwfmdll.IWFMModel.get_diversion_ids"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_diversion_ids</span></code></a>()</p></td>
+<td><p>returns the surface water diversion identification numbers specified in an IWFM model</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_diversion_purpose.html#iwfmdll.IWFMModel.get_diversion_purpose" title="iwfmdll.IWFMModel.get_diversion_purpose"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_diversion_purpose</span></code></a>(diversion_indices)</p></td>
+<td><p>returns the flags for the initial purpose of the water supplies as ag, urban, or both</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="streams-and-bypasses">
+<h2>Streams and Bypasses<a class="headerlink" href="#streams-and-bypasses" title="Permalink to this headline">¶</a></h2>
+<table class="longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_stream_flow_at_location.html#iwfmdll.IWFMModel.get_stream_flow_at_location" title="iwfmdll.IWFMModel.get_stream_flow_at_location"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_stream_flow_at_location</span></code></a>(stream_node_id)</p></td>
+<td><p>returns stream flow at a stream node for the current time step in a simulation</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_stream_flows.html#iwfmdll.IWFMModel.get_stream_flows" title="iwfmdll.IWFMModel.get_stream_flows"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_stream_flows</span></code></a>([flow_conversion_factor])</p></td>
+<td><p>returns stream flows at every stream node for the current timestep</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_stream_gain_from_groundwater.html#iwfmdll.IWFMModel.get_stream_gain_from_groundwater" title="iwfmdll.IWFMModel.get_stream_gain_from_groundwater"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_stream_gain_from_groundwater</span></code></a>([…])</p></td>
+<td><p>returns gain from groundwater for every stream node for the current timestep</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_stream_gain_from_lakes.html#iwfmdll.IWFMModel.get_stream_gain_from_lakes" title="iwfmdll.IWFMModel.get_stream_gain_from_lakes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_stream_gain_from_lakes</span></code></a>([…])</p></td>
+<td><p>returns gain from lakes for every stream node for the current timestep</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_stream_inflows_at_some_locations.html#iwfmdll.IWFMModel.get_stream_inflows_at_some_locations" title="iwfmdll.IWFMModel.get_stream_inflows_at_some_locations"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_stream_inflows_at_some_locations</span></code></a>(…[, …])</p></td>
+<td><p>returns stream boundary inflows at a specified set of inflow locations listed by their indices for the current simulation timestep</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_stream_rainfall_runoff.html#iwfmdll.IWFMModel.get_stream_rainfall_runoff" title="iwfmdll.IWFMModel.get_stream_rainfall_runoff"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_stream_rainfall_runoff</span></code></a>([…])</p></td>
+<td><p>returns small watershed inflows at every stream node for the current timestep</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_stream_reaches_for_stream_nodes.html#iwfmdll.IWFMModel.get_stream_reaches_for_stream_nodes" title="iwfmdll.IWFMModel.get_stream_reaches_for_stream_nodes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_stream_reaches_for_stream_nodes</span></code></a>(…)</p></td>
+<td><p>returns the stream reach indices that correspond to a list of stream nodes</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_stream_return_flows.html#iwfmdll.IWFMModel.get_stream_return_flows" title="iwfmdll.IWFMModel.get_stream_return_flows"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_stream_return_flows</span></code></a>([…])</p></td>
+<td><p>returns agricultural and urban return flows at every stream node for the current timestep</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_stream_riparian_evapotranspiration.html#iwfmdll.IWFMModel.get_stream_riparian_evapotranspiration" title="iwfmdll.IWFMModel.get_stream_riparian_evapotranspiration"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_stream_riparian_evapotranspiration</span></code></a>([…])</p></td>
+<td><p>returns riparian evapotranspiration from every stream node for the current timestep</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_stream_stages.html#iwfmdll.IWFMModel.get_stream_stages" title="iwfmdll.IWFMModel.get_stream_stages"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_stream_stages</span></code></a>([stage_conversion_factor])</p></td>
+<td><p>returns stream stages at every stream node for the current timestep</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_stream_tile_drain_flows.html#iwfmdll.IWFMModel.get_stream_tile_drain_flows" title="iwfmdll.IWFMModel.get_stream_tile_drain_flows"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_stream_tile_drain_flows</span></code></a>([…])</p></td>
+<td><p>returns tile drain flows into every stream node for the current timestep</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_stream_tributary_inflows.html#iwfmdll.IWFMModel.get_stream_tributary_inflows" title="iwfmdll.IWFMModel.get_stream_tributary_inflows"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_stream_tributary_inflows</span></code></a>([…])</p></td>
+<td><p>returns small watershed inflows at every stream node for the current timestep</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_stream_diversion_locations.html#iwfmdll.IWFMModel.get_stream_diversion_locations" title="iwfmdll.IWFMModel.get_stream_diversion_locations"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_stream_diversion_locations</span></code></a>(…)</p></td>
+<td><p>returns the stream node indices corresponding to diversion locations</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_net_bypass_inflows.html#iwfmdll.IWFMModel.get_net_bypass_inflows" title="iwfmdll.IWFMModel.get_net_bypass_inflows"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_net_bypass_inflows</span></code></a>([…])</p></td>
+<td><p>returns net bypass inflows for every stream node for the current timestep</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_actual_stream_diversions_at_some_locations.html#iwfmdll.IWFMModel.get_actual_stream_diversions_at_some_locations" title="iwfmdll.IWFMModel.get_actual_stream_diversions_at_some_locations"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_actual_stream_diversions_at_some_locations</span></code></a>(…)</p></td>
+<td><p>returns actual diversion amounts for a list of diversions during a model simulation</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="supply-and-demand">
+<h2>Supply and Demand<a class="headerlink" href="#supply-and-demand" title="Permalink to this headline">¶</a></h2>
+<table class="longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_n_ag_crops.html#iwfmdll.IWFMModel.get_n_ag_crops" title="iwfmdll.IWFMModel.get_n_ag_crops"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_n_ag_crops</span></code></a>()</p></td>
+<td><p>returns the number of agricultural crops simulated in an IWFM model</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_well_pumping_purpose.html#iwfmdll.IWFMModel.get_well_pumping_purpose" title="iwfmdll.IWFMModel.get_well_pumping_purpose"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_well_pumping_purpose</span></code></a>(well_indices)</p></td>
+<td><p>returns the flags for the initial purpose of the water supplies as ag, urban, or both</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_urban_diversion_supply_shortage_at_origin.html#iwfmdll.IWFMModel.get_urban_diversion_supply_shortage_at_origin" title="iwfmdll.IWFMModel.get_urban_diversion_supply_shortage_at_origin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_urban_diversion_supply_shortage_at_origin</span></code></a>(…)</p></td>
+<td><p>returns the supply shortage for urban diversions at the destination of those supplies plus any conveyance losses</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_urban_elempump_supply_shortage_at_origin.html#iwfmdll.IWFMModel.get_urban_elempump_supply_shortage_at_origin" title="iwfmdll.IWFMModel.get_urban_elempump_supply_shortage_at_origin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_urban_elempump_supply_shortage_at_origin</span></code></a>(…)</p></td>
+<td><p>returns the supply shortage for urban element pumping at the destination of those supplies plus any conveyance losses</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_urban_well_supply_shortage_at_origin.html#iwfmdll.IWFMModel.get_urban_well_supply_shortage_at_origin" title="iwfmdll.IWFMModel.get_urban_well_supply_shortage_at_origin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_urban_well_supply_shortage_at_origin</span></code></a>(…)</p></td>
+<td><p>returns the supply shortage for urban wells at the destination of those supplies plus any conveyance losses</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_ag_diversion_supply_shortage_at_origin.html#iwfmdll.IWFMModel.get_ag_diversion_supply_shortage_at_origin" title="iwfmdll.IWFMModel.get_ag_diversion_supply_shortage_at_origin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_ag_diversion_supply_shortage_at_origin</span></code></a>(…)</p></td>
+<td><p>returns the supply shortage for agricultural diversions at the destination of those supplies plus any conveyance losses</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_ag_elempump_supply_shortage_at_origin.html#iwfmdll.IWFMModel.get_ag_elempump_supply_shortage_at_origin" title="iwfmdll.IWFMModel.get_ag_elempump_supply_shortage_at_origin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_ag_elempump_supply_shortage_at_origin</span></code></a>(…)</p></td>
+<td><p>returns the supply shortage for agricultural element pumping at the destination of those supplies plus any conveyance losses</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_ag_well_supply_shortage_at_origin.html#iwfmdll.IWFMModel.get_ag_well_supply_shortage_at_origin" title="iwfmdll.IWFMModel.get_ag_well_supply_shortage_at_origin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_ag_well_supply_shortage_at_origin</span></code></a>(wells_list)</p></td>
+<td><p>returns the supply shortage for agricultural wells at the destination of those supplies plus any conveyance losses</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_supply_requirement_ag_elements.html#iwfmdll.IWFMModel.get_supply_requirement_ag_elements" title="iwfmdll.IWFMModel.get_supply_requirement_ag_elements"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_supply_requirement_ag_elements</span></code></a>(elements_list)</p></td>
+<td><p>returns the agricultural supply requirement for one or more model elements</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_supply_requirement_ag_subregions.html#iwfmdll.IWFMModel.get_supply_requirement_ag_subregions" title="iwfmdll.IWFMModel.get_supply_requirement_ag_subregions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_supply_requirement_ag_subregions</span></code></a>(…[, …])</p></td>
+<td><p>returns the agricultural supply requirement for one or more model subregions</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_supply_requirement_urban_elements.html#iwfmdll.IWFMModel.get_supply_requirement_urban_elements" title="iwfmdll.IWFMModel.get_supply_requirement_urban_elements"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_supply_requirement_urban_elements</span></code></a>(…[, …])</p></td>
+<td><p>returns the urban supply requirement for one or more model elements</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_supply_requirement_urban_subregions.html#iwfmdll.IWFMModel.get_supply_requirement_urban_subregions" title="iwfmdll.IWFMModel.get_supply_requirement_urban_subregions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_supply_requirement_urban_subregions</span></code></a>(…)</p></td>
+<td><p>returns the urban supply requirement for one or more model subregions</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aquifer-properties">
+<h2>Aquifer Properties<a class="headerlink" href="#aquifer-properties" title="Permalink to this headline">¶</a></h2>
+<table class="longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_aquifer_horizontal_k.html#iwfmdll.IWFMModel.get_aquifer_horizontal_k" title="iwfmdll.IWFMModel.get_aquifer_horizontal_k"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_aquifer_horizontal_k</span></code></a>()</p></td>
+<td><p>returns the aquifer horizontal hydraulic conductivity for each finite element node and each layer</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_aquifer_vertical_k.html#iwfmdll.IWFMModel.get_aquifer_vertical_k" title="iwfmdll.IWFMModel.get_aquifer_vertical_k"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_aquifer_vertical_k</span></code></a>()</p></td>
+<td><p>returns the aquifer vertical hydraulic conductivity for each finite element node and each layer</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_aquitard_vertical_k.html#iwfmdll.IWFMModel.get_aquitard_vertical_k" title="iwfmdll.IWFMModel.get_aquitard_vertical_k"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_aquitard_vertical_k</span></code></a>()</p></td>
+<td><p>returns the aquitard vertical hydraulic conductivity for each finite element node and each layer</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_aquifer_specific_storage.html#iwfmdll.IWFMModel.get_aquifer_specific_storage" title="iwfmdll.IWFMModel.get_aquifer_specific_storage"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_aquifer_specific_storage</span></code></a>()</p></td>
+<td><p>returns the aquifer specific storage for each finite element node and each layer</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_aquifer_specific_yield.html#iwfmdll.IWFMModel.get_aquifer_specific_yield" title="iwfmdll.IWFMModel.get_aquifer_specific_yield"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_aquifer_specific_yield</span></code></a>()</p></td>
+<td><p>returns the aquifer specific yield for each finite element node and each layer</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_aquifer_parameters.html#iwfmdll.IWFMModel.get_aquifer_parameters" title="iwfmdll.IWFMModel.get_aquifer_parameters"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_aquifer_parameters</span></code></a>()</p></td>
+<td><p>returns all aquifer parameters at each model node and layer</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="simulation-results">
+<h2>Simulation Results<a class="headerlink" href="#simulation-results" title="Permalink to this headline">¶</a></h2>
+<table class="longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_gwheads_all.html#iwfmdll.IWFMModel.get_gwheads_all" title="iwfmdll.IWFMModel.get_gwheads_all"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_gwheads_all</span></code></a>([end_of_timestep, …])</p></td>
+<td><p>returns the groundwater heads at all nodes in every aquifer layer for the current simulation time step</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_gwheads_foralayer.html#iwfmdll.IWFMModel.get_gwheads_foralayer" title="iwfmdll.IWFMModel.get_gwheads_foralayer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_gwheads_foralayer</span></code></a>(layer_number[, …])</p></td>
+<td><p>returns the simulated groundwater heads for a single user-specified model layer for every model node over a user-specified time interval.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_depth_to_water.html#iwfmdll.IWFMModel.get_depth_to_water" title="iwfmdll.IWFMModel.get_depth_to_water"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_depth_to_water</span></code></a>(layer_number[, …])</p></td>
+<td><p>calculates a depth to water for an IWFM model layer for all dates between the provided start date and end date.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_subsidence_all.html#iwfmdll.IWFMModel.get_subsidence_all" title="iwfmdll.IWFMModel.get_subsidence_all"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_subsidence_all</span></code></a>([…])</p></td>
+<td><p>returns the groundwater heads at all nodes in every aquifer layer for the current simulation time step</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_subregion_ag_pumping_average_depth_to_water.html#iwfmdll.IWFMModel.get_subregion_ag_pumping_average_depth_to_water" title="iwfmdll.IWFMModel.get_subregion_ag_pumping_average_depth_to_water"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_subregion_ag_pumping_average_depth_to_water</span></code></a>()</p></td>
+<td><p>returns subregional depth to groundwater values that are weighted-average with respect to agricultural pumping rates during a model run</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_zone_ag_pumping_average_depth_to_water.html#iwfmdll.IWFMModel.get_zone_ag_pumping_average_depth_to_water" title="iwfmdll.IWFMModel.get_zone_ag_pumping_average_depth_to_water"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_zone_ag_pumping_average_depth_to_water</span></code></a>(…)</p></td>
+<td><p>returns average depth to groundwater for user-defined zones</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="simulation-hydrographs">
+<h2>Simulation Hydrographs<a class="headerlink" href="#simulation-hydrographs" title="Permalink to this headline">¶</a></h2>
+<table class="longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_n_subsidence_hydrographs.html#iwfmdll.IWFMModel.get_n_subsidence_hydrographs" title="iwfmdll.IWFMModel.get_n_subsidence_hydrographs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_n_subsidence_hydrographs</span></code></a>()</p></td>
+<td><p>returns the number of subsidence hydrographs specified in an IWFM model</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_subsidence_hydrograph_ids.html#iwfmdll.IWFMModel.get_subsidence_hydrograph_ids" title="iwfmdll.IWFMModel.get_subsidence_hydrograph_ids"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_subsidence_hydrograph_ids</span></code></a>()</p></td>
+<td><p>returns the ids for the subsidence hydrographs specified in an IWFM model</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_subsidence_observation_coordinates.html#iwfmdll.IWFMModel.get_subsidence_observation_coordinates" title="iwfmdll.IWFMModel.get_subsidence_observation_coordinates"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_subsidence_observation_coordinates</span></code></a>()</p></td>
+<td><p>returns the x,y-coordinates for the subsidence observation locations specified in an IWFM model</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_subsidence_observation_names.html#iwfmdll.IWFMModel.get_subsidence_observation_names" title="iwfmdll.IWFMModel.get_subsidence_observation_names"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_subsidence_observation_names</span></code></a>()</p></td>
+<td><p>returns the subsidence observation location names specified in an IWFM model</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_subsidence_hydrograph.html#iwfmdll.IWFMModel.get_subsidence_hydrograph" title="iwfmdll.IWFMModel.get_subsidence_hydrograph"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_subsidence_hydrograph</span></code></a>(subsidence_location_id)</p></td>
+<td><p>returns the simulated groundwater hydrograph for the provided groundwater hydrograph id</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_n_tile_drain_hydrographs.html#iwfmdll.IWFMModel.get_n_tile_drain_hydrographs" title="iwfmdll.IWFMModel.get_n_tile_drain_hydrographs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_n_tile_drain_hydrographs</span></code></a>()</p></td>
+<td><p>returns the number of tile drain hydrographs specified in an IWFM model</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_tile_drain_hydrograph_ids.html#iwfmdll.IWFMModel.get_tile_drain_hydrograph_ids" title="iwfmdll.IWFMModel.get_tile_drain_hydrograph_ids"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_tile_drain_hydrograph_ids</span></code></a>()</p></td>
+<td><p>returns the ids for the tile drain hydrographs specified in an IWFM model</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_tile_drain_observation_coordinates.html#iwfmdll.IWFMModel.get_tile_drain_observation_coordinates" title="iwfmdll.IWFMModel.get_tile_drain_observation_coordinates"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_tile_drain_observation_coordinates</span></code></a>()</p></td>
+<td><p>returns the x,y-coordinates for the tile drain observations specified in an IWFM model</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_n_groundwater_hydrographs.html#iwfmdll.IWFMModel.get_n_groundwater_hydrographs" title="iwfmdll.IWFMModel.get_n_groundwater_hydrographs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_n_groundwater_hydrographs</span></code></a>()</p></td>
+<td><p>returns the number of groundwater hydrographs specified in an IWFM model</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_groundwater_hydrograph_ids.html#iwfmdll.IWFMModel.get_groundwater_hydrograph_ids" title="iwfmdll.IWFMModel.get_groundwater_hydrograph_ids"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_groundwater_hydrograph_ids</span></code></a>()</p></td>
+<td><p>returns the ids for the groundwater hydrographs specified in an IWFM model</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_groundwater_hydrograph_coordinates.html#iwfmdll.IWFMModel.get_groundwater_hydrograph_coordinates" title="iwfmdll.IWFMModel.get_groundwater_hydrograph_coordinates"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_groundwater_hydrograph_coordinates</span></code></a>()</p></td>
+<td><p>returns the x,y-coordinates for the groundwater hydrographs specified in an IWFM model</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_groundwater_observation_names.html#iwfmdll.IWFMModel.get_groundwater_observation_names" title="iwfmdll.IWFMModel.get_groundwater_observation_names"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_groundwater_observation_names</span></code></a>()</p></td>
+<td><p>returns the groundwater head observation location names specified in an IWFM model</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_groundwater_hydrograph_info.html#iwfmdll.IWFMModel.get_groundwater_hydrograph_info" title="iwfmdll.IWFMModel.get_groundwater_hydrograph_info"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_groundwater_hydrograph_info</span></code></a>()</p></td>
+<td><p>returns model information for the groundwater hydrographs, including hydrograph id, x- and y- coordinates, name, and stratigraphy.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_groundwater_hydrograph.html#iwfmdll.IWFMModel.get_groundwater_hydrograph" title="iwfmdll.IWFMModel.get_groundwater_hydrograph"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_groundwater_hydrograph</span></code></a>(…[, …])</p></td>
+<td><p>returns the simulated groundwater hydrograph for the provided groundwater hydrograph id</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_groundwater_hydrograph_at_node_and_layer.html#iwfmdll.IWFMModel.get_groundwater_hydrograph_at_node_and_layer" title="iwfmdll.IWFMModel.get_groundwater_hydrograph_at_node_and_layer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_groundwater_hydrograph_at_node_and_layer</span></code></a>(…)</p></td>
+<td><p>Returns a simulated groundwater hydrograph for a node and layer</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_n_stream_hydrographs.html#iwfmdll.IWFMModel.get_n_stream_hydrographs" title="iwfmdll.IWFMModel.get_n_stream_hydrographs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_n_stream_hydrographs</span></code></a>()</p></td>
+<td><p>returns the number of stream flow hydrographs specified in an IWFM model</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_stream_hydrograph_ids.html#iwfmdll.IWFMModel.get_stream_hydrograph_ids" title="iwfmdll.IWFMModel.get_stream_hydrograph_ids"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_stream_hydrograph_ids</span></code></a>()</p></td>
+<td><p>returns the ids for the stream hydrographs specified in an IWFM model</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_stream_observation_coordinates.html#iwfmdll.IWFMModel.get_stream_observation_coordinates" title="iwfmdll.IWFMModel.get_stream_observation_coordinates"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_stream_observation_coordinates</span></code></a>()</p></td>
+<td><p>returns the x,y-coordinates for the stream flow observation locations specified in an IWFM model</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_stream_observation_names.html#iwfmdll.IWFMModel.get_stream_observation_names" title="iwfmdll.IWFMModel.get_stream_observation_names"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_stream_observation_names</span></code></a>()</p></td>
+<td><p>returns the stream flow observation location names specified in an IWFM model</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_stream_hydrograph.html#iwfmdll.IWFMModel.get_stream_hydrograph" title="iwfmdll.IWFMModel.get_stream_hydrograph"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_stream_hydrograph</span></code></a>(stream_location_id[, …])</p></td>
+<td><p>returns the simulated groundwater hydrograph for the provided groundwater hydrograph id</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_n_hydrograph_types.html#iwfmdll.IWFMModel.get_n_hydrograph_types" title="iwfmdll.IWFMModel.get_n_hydrograph_types"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_n_hydrograph_types</span></code></a>()</p></td>
+<td><p>returns the number of different hydrograph types being printed by the IWFM model</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_hydrograph_type_list.html#iwfmdll.IWFMModel.get_hydrograph_type_list" title="iwfmdll.IWFMModel.get_hydrograph_type_list"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_hydrograph_type_list</span></code></a>()</p></td>
+<td><p>returns a list of different hydrograph types being printed by the IWFM model</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="model-simulation">
+<h2>Model Simulation<a class="headerlink" href="#model-simulation" title="Permalink to this headline">¶</a></h2>
+<table class="longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.advance_state.html#iwfmdll.IWFMModel.advance_state" title="iwfmdll.IWFMModel.advance_state"><code class="xref py py-obj docutils literal notranslate"><span class="pre">advance_state</span></code></a>()</p></td>
+<td><p>advances the state of the hydrologic system in time (e.g.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.advance_time.html#iwfmdll.IWFMModel.advance_time" title="iwfmdll.IWFMModel.advance_time"><code class="xref py py-obj docutils literal notranslate"><span class="pre">advance_time</span></code></a>()</p></td>
+<td><p>advances the simulation time step by one simulation time step</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.read_timeseries_data.html#iwfmdll.IWFMModel.read_timeseries_data" title="iwfmdll.IWFMModel.read_timeseries_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">read_timeseries_data</span></code></a>()</p></td>
+<td><p>reads in all of the time series data for the current simulation time step</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.read_timeseries_data_overwrite.html#iwfmdll.IWFMModel.read_timeseries_data_overwrite" title="iwfmdll.IWFMModel.read_timeseries_data_overwrite"><code class="xref py py-obj docutils literal notranslate"><span class="pre">read_timeseries_data_overwrite</span></code></a>(…)</p></td>
+<td><p>overwrites time series data for the current time step</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.restore_pumping_to_read_values.html#iwfmdll.IWFMModel.restore_pumping_to_read_values" title="iwfmdll.IWFMModel.restore_pumping_to_read_values"><code class="xref py py-obj docutils literal notranslate"><span class="pre">restore_pumping_to_read_values</span></code></a>()</p></td>
+<td><p>restores the pumping rates to the values read from the Pumping Rate input file during a model run.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.set_log_file.html#iwfmdll.IWFMModel.set_log_file" title="iwfmdll.IWFMModel.set_log_file"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_log_file</span></code></a>([file_name])</p></td>
+<td><p>opens a text log file to print out error and warning messages</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.close_log_file.html#iwfmdll.IWFMModel.close_log_file" title="iwfmdll.IWFMModel.close_log_file"><code class="xref py py-obj docutils literal notranslate"><span class="pre">close_log_file</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_last_message.html#iwfmdll.IWFMModel.get_last_message" title="iwfmdll.IWFMModel.get_last_message"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_last_message</span></code></a>()</p></td>
+<td><p>the error message in case a procedure call from IWFM API returns an error code (status) other than 0</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.log_last_message.html#iwfmdll.IWFMModel.log_last_message" title="iwfmdll.IWFMModel.log_last_message"><code class="xref py py-obj docutils literal notranslate"><span class="pre">log_last_message</span></code></a>()</p></td>
+<td><p>prints the last error message (generated when a procedure call from IWFM API returns an error code (status) other than 0) to the message log file</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.set_preprocessor_path.html#iwfmdll.IWFMModel.set_preprocessor_path" title="iwfmdll.IWFMModel.set_preprocessor_path"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_preprocessor_path</span></code></a>(preprocessor_path)</p></td>
+<td><p>sets the path to the directory where the preprocessor main input file is located</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.set_simulation_path.html#iwfmdll.IWFMModel.set_simulation_path" title="iwfmdll.IWFMModel.set_simulation_path"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_simulation_path</span></code></a>(simulation_path)</p></td>
+<td><p>sets the path to the directory where the simulation main input file is located</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.turn_supply_adjustment_on_off.html#iwfmdll.IWFMModel.turn_supply_adjustment_on_off" title="iwfmdll.IWFMModel.turn_supply_adjustment_on_off"><code class="xref py py-obj docutils literal notranslate"><span class="pre">turn_supply_adjustment_on_off</span></code></a>(…)</p></td>
+<td><p>turns the automatic supply adjustment of diversions and pumping to meet agricultural and/or urban water demands on or off during a model run</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.set_supply_adjustment_max_iterations.html#iwfmdll.IWFMModel.set_supply_adjustment_max_iterations" title="iwfmdll.IWFMModel.set_supply_adjustment_max_iterations"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_supply_adjustment_max_iterations</span></code></a>(…)</p></td>
+<td><p>sets the maximum number of iterations that will be used in automatic supply adjustment</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.set_supply_adjustment_tolerance.html#iwfmdll.IWFMModel.set_supply_adjustment_tolerance" title="iwfmdll.IWFMModel.set_supply_adjustment_tolerance"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_supply_adjustment_tolerance</span></code></a>(tolerance)</p></td>
+<td><p>sets the tolerance, given as a fraction of the water demand that will be used in automatic supply adjustment</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.simulate_all.html#iwfmdll.IWFMModel.simulate_all" title="iwfmdll.IWFMModel.simulate_all"><code class="xref py py-obj docutils literal notranslate"><span class="pre">simulate_all</span></code></a>()</p></td>
+<td><p>performs all of the computations for the entire simulation period</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.simulate_for_an_interval.html#iwfmdll.IWFMModel.simulate_for_an_interval" title="iwfmdll.IWFMModel.simulate_for_an_interval"><code class="xref py py-obj docutils literal notranslate"><span class="pre">simulate_for_an_interval</span></code></a>(time_interval)</p></td>
+<td><p>simulates the model application for a specified time interval</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.simulate_for_one_timestep.html#iwfmdll.IWFMModel.simulate_for_one_timestep" title="iwfmdll.IWFMModel.simulate_for_one_timestep"><code class="xref py py-obj docutils literal notranslate"><span class="pre">simulate_for_one_timestep</span></code></a>()</p></td>
+<td><p>simulates a single timestep of the model application</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.print_results.html#iwfmdll.IWFMModel.print_results" title="iwfmdll.IWFMModel.print_results"><code class="xref py py-obj docutils literal notranslate"><span class="pre">print_results</span></code></a>()</p></td>
+<td><p>prints out all the simulation results at the end of a simulation</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.is_end_of_simulation.html#iwfmdll.IWFMModel.is_end_of_simulation" title="iwfmdll.IWFMModel.is_end_of_simulation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_end_of_simulation</span></code></a>()</p></td>
+<td><p>check if the end of simulation period has been reached during a model run</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="general">
+<h2>General<a class="headerlink" href="#general" title="Permalink to this headline">¶</a></h2>
+<table class="longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.kill.html#iwfmdll.IWFMModel.kill" title="iwfmdll.IWFMModel.kill"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kill</span></code></a>()</p></td>
+<td><p>terminates model object, closes files associated with model, and clears memory</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.is_model_instantiated.html#iwfmdll.IWFMModel.is_model_instantiated" title="iwfmdll.IWFMModel.is_model_instantiated"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_model_instantiated</span></code></a>()</p></td>
+<td><p>check if a Model object is instantiated</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.delete_inquiry_data_file.html#iwfmdll.IWFMModel.delete_inquiry_data_file" title="iwfmdll.IWFMModel.delete_inquiry_data_file"><code class="xref py py-obj docutils literal notranslate"><span class="pre">delete_inquiry_data_file</span></code></a>()</p></td>
+<td><p>deletes the binary file, IW_ModelData_ForInquiry.bin, generated by the IWFM DLL when the Model Object is instantiated</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_version.html#iwfmdll.IWFMModel.get_version" title="iwfmdll.IWFMModel.get_version"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_version</span></code></a>()</p></td>
+<td><p>returns the version of the IWFM DLL</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="private-methods">
+<h2>Private Methods<a class="headerlink" href="#private-methods" title="Permalink to this headline">¶</a></h2>
+<table class="longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel._is_time_interval_greater_or_equal.html#iwfmdll.IWFMModel._is_time_interval_greater_or_equal" title="iwfmdll.IWFMModel._is_time_interval_greater_or_equal"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_is_time_interval_greater_or_equal</span></code></a>(…)</p></td>
+<td><p>determines if a provided time_interval is greater than or equal to the simulation_time_interval</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel._get_names.html#iwfmdll.IWFMModel._get_names" title="iwfmdll.IWFMModel._get_names"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_get_names</span></code></a>(location_type_id)</p></td>
+<td><p>returns the available names for a given feature_type</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel._get_n_hydrographs.html#iwfmdll.IWFMModel._get_n_hydrographs" title="iwfmdll.IWFMModel._get_n_hydrographs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_get_n_hydrographs</span></code></a>(location_type_id)</p></td>
+<td><p>private method returning the number of hydrographs for a given IWFM feature type</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel._get_hydrograph_ids.html#iwfmdll.IWFMModel._get_hydrograph_ids" title="iwfmdll.IWFMModel._get_hydrograph_ids"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_get_hydrograph_ids</span></code></a>(location_type_id)</p></td>
+<td><p>private method returning the ids of the hydrographs for a provided location type</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel._get_hydrograph_coordinates.html#iwfmdll.IWFMModel._get_hydrograph_coordinates" title="iwfmdll.IWFMModel._get_hydrograph_coordinates"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_get_hydrograph_coordinates</span></code></a>(location_type_id)</p></td>
+<td><p>private method returning the hydrograph coordinates for a provided feature type</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel._get_hydrograph.html#iwfmdll.IWFMModel._get_hydrograph" title="iwfmdll.IWFMModel._get_hydrograph"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_get_hydrograph</span></code></a>(hydrograph_type, …)</p></td>
+<td><p>private method returning a simulated hydrograph for a selected hydrograph type and hydrograph index</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel._string_to_list_by_array.html#iwfmdll.IWFMModel._string_to_list_by_array" title="iwfmdll.IWFMModel._string_to_list_by_array"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_string_to_list_by_array</span></code></a>(in_string, …)</p></td>
+<td><p>converts a string to a list of strings based on an array of the starting character position (index).</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel._validate_iwfm_date.html#iwfmdll.IWFMModel._validate_iwfm_date" title="iwfmdll.IWFMModel._validate_iwfm_date"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_validate_iwfm_date</span></code></a>(dt)</p></td>
+<td><p>performs validation that a provided value is an IWFM-format date string based on string length and format MM/DD/YYYY_HH:MM</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel._validate_time_interval.html#iwfmdll.IWFMModel._validate_time_interval" title="iwfmdll.IWFMModel._validate_time_interval"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_validate_time_interval</span></code></a>(time_interval)</p></td>
+<td><p>performs validation that a provided value is an IWFM-format time-interval string</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel._get_supply_purpose.html#iwfmdll.IWFMModel._get_supply_purpose" title="iwfmdll.IWFMModel._get_supply_purpose"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_get_supply_purpose</span></code></a>(supply_type_id, …)</p></td>
+<td><p>private method returning the flags for the initial assignment of water supplies (diversions, well pumping, element pumping) designating if they serve agricultural, urban, or both</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel._get_supply_requirement_ag.html#iwfmdll.IWFMModel._get_supply_requirement_ag" title="iwfmdll.IWFMModel._get_supply_requirement_ag"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_get_supply_requirement_ag</span></code></a>(location_type_id, …)</p></td>
+<td><p>returns the agricultural water supply requirement at a specified set of locations</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel._get_supply_requirement_urban.html#iwfmdll.IWFMModel._get_supply_requirement_urban" title="iwfmdll.IWFMModel._get_supply_requirement_urban"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_get_supply_requirement_urban</span></code></a>(…)</p></td>
+<td><p>returns the urban water supply requirement at a specified set of locations</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel._get_supply_shortage_at_origin_ag.html#iwfmdll.IWFMModel._get_supply_shortage_at_origin_ag" title="iwfmdll.IWFMModel._get_supply_shortage_at_origin_ag"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_get_supply_shortage_at_origin_ag</span></code></a>(…)</p></td>
+<td><p>private method returning the supply shortage for agriculture at the destination of those supplies plus any conveyance losses</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel._get_supply_shortage_at_origin_urban.html#iwfmdll.IWFMModel._get_supply_shortage_at_origin_urban" title="iwfmdll.IWFMModel._get_supply_shortage_at_origin_urban"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_get_supply_shortage_at_origin_urban</span></code></a>(…)</p></td>
+<td><p>returns the supply shortage for agriculture at the destination of those supplies plus any conveyance losses</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="iwfm-internal">
+<h2>IWFM-Internal<a class="headerlink" href="#iwfm-internal" title="Permalink to this headline">¶</a></h2>
+<table class="longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_data_unit_type_id_area.html#iwfmdll.IWFMModel.get_data_unit_type_id_area" title="iwfmdll.IWFMModel.get_data_unit_type_id_area"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_data_unit_type_id_area</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_data_unit_type_id_length.html#iwfmdll.IWFMModel.get_data_unit_type_id_length" title="iwfmdll.IWFMModel.get_data_unit_type_id_length"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_data_unit_type_id_length</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_data_unit_type_ids.html#iwfmdll.IWFMModel.get_data_unit_type_ids" title="iwfmdll.IWFMModel.get_data_unit_type_ids"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_data_unit_type_ids</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_data_unit_type_volume.html#iwfmdll.IWFMModel.get_data_unit_type_volume" title="iwfmdll.IWFMModel.get_data_unit_type_volume"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_data_unit_type_volume</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_flow_destination_type_id.html#iwfmdll.IWFMModel.get_flow_destination_type_id" title="iwfmdll.IWFMModel.get_flow_destination_type_id"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_flow_destination_type_id</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_flow_destination_type_id_element.html#iwfmdll.IWFMModel.get_flow_destination_type_id_element" title="iwfmdll.IWFMModel.get_flow_destination_type_id_element"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_flow_destination_type_id_element</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_flow_destination_type_id_elementset.html#iwfmdll.IWFMModel.get_flow_destination_type_id_elementset" title="iwfmdll.IWFMModel.get_flow_destination_type_id_elementset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_flow_destination_type_id_elementset</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_flow_destination_type_id_gwelement.html#iwfmdll.IWFMModel.get_flow_destination_type_id_gwelement" title="iwfmdll.IWFMModel.get_flow_destination_type_id_gwelement"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_flow_destination_type_id_gwelement</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_flow_destination_type_id_lake.html#iwfmdll.IWFMModel.get_flow_destination_type_id_lake" title="iwfmdll.IWFMModel.get_flow_destination_type_id_lake"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_flow_destination_type_id_lake</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_flow_destination_type_id_outside.html#iwfmdll.IWFMModel.get_flow_destination_type_id_outside" title="iwfmdll.IWFMModel.get_flow_destination_type_id_outside"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_flow_destination_type_id_outside</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_flow_destination_type_id_streamnode.html#iwfmdll.IWFMModel.get_flow_destination_type_id_streamnode" title="iwfmdll.IWFMModel.get_flow_destination_type_id_streamnode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_flow_destination_type_id_streamnode</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_flow_destination_type_id_subregion.html#iwfmdll.IWFMModel.get_flow_destination_type_id_subregion" title="iwfmdll.IWFMModel.get_flow_destination_type_id_subregion"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_flow_destination_type_id_subregion</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_land_use_ids.html#iwfmdll.IWFMModel.get_land_use_ids" title="iwfmdll.IWFMModel.get_land_use_ids"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_land_use_ids</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_land_use_type_id_gen_ag.html#iwfmdll.IWFMModel.get_land_use_type_id_gen_ag" title="iwfmdll.IWFMModel.get_land_use_type_id_gen_ag"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_land_use_type_id_gen_ag</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_land_use_type_id_native_riparian.html#iwfmdll.IWFMModel.get_land_use_type_id_native_riparian" title="iwfmdll.IWFMModel.get_land_use_type_id_native_riparian"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_land_use_type_id_native_riparian</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_land_use_type_id_nonponded_ag.html#iwfmdll.IWFMModel.get_land_use_type_id_nonponded_ag" title="iwfmdll.IWFMModel.get_land_use_type_id_nonponded_ag"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_land_use_type_id_nonponded_ag</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_land_use_type_id_refuge.html#iwfmdll.IWFMModel.get_land_use_type_id_refuge" title="iwfmdll.IWFMModel.get_land_use_type_id_refuge"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_land_use_type_id_refuge</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_land_use_type_id_rice.html#iwfmdll.IWFMModel.get_land_use_type_id_rice" title="iwfmdll.IWFMModel.get_land_use_type_id_rice"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_land_use_type_id_rice</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_land_use_type_id_urban.html#iwfmdll.IWFMModel.get_land_use_type_id_urban" title="iwfmdll.IWFMModel.get_land_use_type_id_urban"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_land_use_type_id_urban</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_location_ids.html#iwfmdll.IWFMModel.get_location_ids" title="iwfmdll.IWFMModel.get_location_ids"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_location_ids</span></code></a>(location_type_id)</p></td>
+<td><p>returns the location identification numbers used by the model for a specified location type</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_location_type_id_element.html#iwfmdll.IWFMModel.get_location_type_id_element" title="iwfmdll.IWFMModel.get_location_type_id_element"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_location_type_id_element</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_location_type_id_gwheadobs.html#iwfmdll.IWFMModel.get_location_type_id_gwheadobs" title="iwfmdll.IWFMModel.get_location_type_id_gwheadobs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_location_type_id_gwheadobs</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_location_type_id_lake.html#iwfmdll.IWFMModel.get_location_type_id_lake" title="iwfmdll.IWFMModel.get_location_type_id_lake"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_location_type_id_lake</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_location_type_id_node.html#iwfmdll.IWFMModel.get_location_type_id_node" title="iwfmdll.IWFMModel.get_location_type_id_node"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_location_type_id_node</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_location_type_id_smallwatershed.html#iwfmdll.IWFMModel.get_location_type_id_smallwatershed" title="iwfmdll.IWFMModel.get_location_type_id_smallwatershed"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_location_type_id_smallwatershed</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_location_type_id_streamhydobs.html#iwfmdll.IWFMModel.get_location_type_id_streamhydobs" title="iwfmdll.IWFMModel.get_location_type_id_streamhydobs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_location_type_id_streamhydobs</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_location_type_id_streamnode.html#iwfmdll.IWFMModel.get_location_type_id_streamnode" title="iwfmdll.IWFMModel.get_location_type_id_streamnode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_location_type_id_streamnode</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_location_type_id_streamnodebud.html#iwfmdll.IWFMModel.get_location_type_id_streamnodebud" title="iwfmdll.IWFMModel.get_location_type_id_streamnodebud"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_location_type_id_streamnodebud</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_location_type_id_streamreach.html#iwfmdll.IWFMModel.get_location_type_id_streamreach" title="iwfmdll.IWFMModel.get_location_type_id_streamreach"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_location_type_id_streamreach</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_location_type_id_subregion.html#iwfmdll.IWFMModel.get_location_type_id_subregion" title="iwfmdll.IWFMModel.get_location_type_id_subregion"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_location_type_id_subregion</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_location_type_id_subsidenceobs.html#iwfmdll.IWFMModel.get_location_type_id_subsidenceobs" title="iwfmdll.IWFMModel.get_location_type_id_subsidenceobs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_location_type_id_subsidenceobs</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_location_type_id_tiledrainobs.html#iwfmdll.IWFMModel.get_location_type_id_tiledrainobs" title="iwfmdll.IWFMModel.get_location_type_id_tiledrainobs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_location_type_id_tiledrainobs</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_location_type_id_zone.html#iwfmdll.IWFMModel.get_location_type_id_zone" title="iwfmdll.IWFMModel.get_location_type_id_zone"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_location_type_id_zone</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_location_type_ids.html#iwfmdll.IWFMModel.get_location_type_ids" title="iwfmdll.IWFMModel.get_location_type_ids"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_location_type_ids</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_supply_type_id_diversion.html#iwfmdll.IWFMModel.get_supply_type_id_diversion" title="iwfmdll.IWFMModel.get_supply_type_id_diversion"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_supply_type_id_diversion</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_supply_type_id_elempump.html#iwfmdll.IWFMModel.get_supply_type_id_elempump" title="iwfmdll.IWFMModel.get_supply_type_id_elempump"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_supply_type_id_elempump</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_supply_type_id_well.html#iwfmdll.IWFMModel.get_supply_type_id_well" title="iwfmdll.IWFMModel.get_supply_type_id_well"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_supply_type_id_well</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_zone_extent_id_horizontal.html#iwfmdll.IWFMModel.get_zone_extent_id_horizontal" title="iwfmdll.IWFMModel.get_zone_extent_id_horizontal"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_zone_extent_id_horizontal</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_zone_extent_id_vertical.html#iwfmdll.IWFMModel.get_zone_extent_id_vertical" title="iwfmdll.IWFMModel.get_zone_extent_id_vertical"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_zone_extent_id_vertical</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_zone_extent_ids.html#iwfmdll.IWFMModel.get_zone_extent_ids" title="iwfmdll.IWFMModel.get_zone_extent_ids"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_zone_extent_ids</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_budget_type_ids.html#iwfmdll.IWFMModel.get_budget_type_ids" title="iwfmdll.IWFMModel.get_budget_type_ids"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_budget_type_ids</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/iwfmdll.IWFMModel.get_zbudget_type_ids.html#iwfmdll.IWFMModel.get_zbudget_type_ids" title="iwfmdll.IWFMModel.get_zbudget_type_ids"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_zbudget_type_ids</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+              </div>
+              
+              
+              <div class='prev-next-bottom'>
+                
+    <a class='left-prev' id="prev-link" href="generated/iwfmdll.IWFMZBudget.html" title="previous page">iwfmdll.IWFMZBudget</a>
+    <a class='right-next' id="next-link" href="generated/iwfmdll.IWFMModel.get_current_date_and_time.html" title="next page">iwfmdll.IWFMModel.get_current_date_and_time</a>
+
+              </div>
+              
+          </main>
+          
+
+      </div>
+    </div>
+  
+  <script src="../_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+
+  <footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    
+    <div class="footer-item">
+      <p class="copyright">
+    &copy; Copyright 2021, California Department of Water Resources.<br/>
+</p>
+    </div>
+    
+    <div class="footer-item">
+      <p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.1.2.<br/>
+</p>
+    </div>
+    
+  </div>
+</footer>
+  </body>
+</html>
