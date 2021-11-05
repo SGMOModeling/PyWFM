@@ -1,6 +1,6 @@
 *.pyc
-.ipynb_checkpoints
+.ipynb_checkpoints/
 */.ipynb_checkpoints/*
 *.docx
-.vscode
+.vscode/
 */.vscode/*
