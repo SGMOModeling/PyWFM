@@ -65,13 +65,19 @@ class IWFMBudget(IWFMMiscellaneous):
 
     def get_n_locations(self):
         ''' returns the number of locations where budget data is available
-        e.g. if it is a stream reach budget, this is the number of stream reaches
-             if it is a groundwater budget, this is the number of subregions 
              
         Returns
         -------
         int
             number of locations
+
+        Notes
+        -----
+        - if the budget file used is the stream reach budget, the number of
+          locations is the number of stream reaches.
+        
+        - if the budget file used is the groundwater budget, the number of
+          locations is the number of subregions.
         '''
         # check to see if the procedure exists in the dll provided
         if not hasattr(self.dll, 'IW_Budget_GetNLocations'):
