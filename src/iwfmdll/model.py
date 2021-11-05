@@ -112,6 +112,15 @@ class IWFMModel(IWFMMiscellaneous):
         str
             current date and time in IWFM format MM/DD/YYYY_hh:mm
 
+        See Also
+        --------
+        IWFMModel.get_n_time_steps
+        IWFMModel.get_time_specs
+        IWFMModel.get_n_intervals
+        IWFMModel.get_output_interval
+        IWFMModel.is_date_greater
+        IWFMModel.increment_time
+
         Note
         ----
         1. the intent of this method is to retrieve information about the
@@ -152,7 +161,12 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_time_specs 
+        IWFMModel.get_current_date_and_time
+        IWFMModel.get_time_specs
+        IWFMModel.get_n_intervals
+        IWFMModel.get_output_interval
+        IWFMModel.is_date_greater
+        IWFMModel.increment_time
         '''
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetNTimeSteps"):
@@ -4119,8 +4133,8 @@ class IWFMModel(IWFMMiscellaneous):
             1-D array of dates
             2-D array of heads for all nodes for each date
 
-        Notes
-        -----
+        Note
+        ----
         the interval between the begin_date and the end_date is determined from the model time interval
         using get_time_specs()
 
