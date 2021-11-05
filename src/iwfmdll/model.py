@@ -255,18 +255,12 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from iwfmdll import IWFMModel
-        
         >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
-
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
-
         >>> sim_file = 'Simulation_MAIN.IN'
- 
         >>> model = IWFMModel(dll, preprocessor_infile, simulation_infile)
-        
         >>> model.get_output_interval()
-            ['1DAY', '1WEEK', '1MON', '1YEAR']
-
+        ['1DAY', '1WEEK', '1MON', '1YEAR']
         >>> model.kill()
         '''
         # check to see if IWFM procedure is available in user version of IWFM DLL
