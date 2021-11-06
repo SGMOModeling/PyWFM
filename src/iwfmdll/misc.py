@@ -835,6 +835,15 @@ class IWFMMiscellaneous:
         str
             iwfm format datetime n time intervals after the provided
             date
+
+        See Also
+        --------
+        IWFMModel.get_current_date_and_time : returns the current simulation date and time
+        IWFMModel.get_n_time_steps : returns the number of timesteps in an IWFM simulation
+        IWFMModel.get_time_specs : returns the IWFM simulation dates and time step
+        IWFMModel.get_n_intervals : returns the number of time intervals between a provided start date and end date
+        IWFMModel.get_output_interval : returns a list of the possible time intervals a selected time-series data can be retrieved at.
+        IWFMModel.is_date_greater : returns True if first_date is greater than comparison_date
         '''
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_IncrementTime"):
