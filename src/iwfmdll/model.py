@@ -110,16 +110,16 @@ class IWFMModel(IWFMMiscellaneous):
         Returns
         -------
         str
-            current date and time in IWFM format MM/DD/YYYY_hh:mm
+            current date and time in IWFM date format i.e. MM/DD/YYYY_hh:mm
 
         See Also
         --------
-        IWFMModel.get_n_time_steps
-        IWFMModel.get_time_specs
-        IWFMModel.get_n_intervals
-        IWFMModel.get_output_interval
-        IWFMModel.is_date_greater
-        IWFMModel.increment_time
+        IWFMModel.get_n_time_steps : returns the number of timesteps in an IWFM simulation
+        IWFMModel.get_time_specs : returns the IWFM simulation dates and time step
+        IWFMModel.get_n_intervals : returns the number of time intervals between a provided start date and end date
+        IWFMModel.get_output_interval : returns a list of the possible time intervals a selected time-series data can be retrieved at.
+        IWFMModel.is_date_greater : returns True if first_date is greater than comparison_date
+        IWFMModel.increment_time : increments the date provided by the specified time interval
 
         Note
         ----
@@ -161,12 +161,12 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_current_date_and_time
-        IWFMModel.get_time_specs
-        IWFMModel.get_n_intervals
-        IWFMModel.get_output_interval
-        IWFMModel.is_date_greater
-        IWFMModel.increment_time
+        IWFMModel.get_current_date_and_time : returns the current simulation date and time
+        IWFMModel.get_time_specs : returns the IWFM simulation dates and time step
+        IWFMModel.get_n_intervals : returns the number of time intervals between a provided start date and end date
+        IWFMModel.get_output_interval : returns a list of the possible time intervals a selected time-series data can be retrieved at.
+        IWFMModel.is_date_greater : returns True if first_date is greater than comparison_date
+        IWFMModel.increment_time : increments the date provided by the specified time interval
         '''
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetNTimeSteps"):
@@ -194,12 +194,12 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_current_date_and_time
-        IWFMModel.get_n_time_steps
-        IWFMModel.get_n_intervals
-        IWFMModel.get_output_interval
-        IWFMModel.is_date_greater
-        IWFMModel.increment_time
+        IWFMModel.get_current_date_and_time : returns the current simulation date and time
+        IWFMModel.get_n_time_steps : returns the number of timesteps in an IWFM simulation
+        IWFMModel.get_n_intervals : returns the number of time intervals between a provided start date and end date
+        IWFMModel.get_output_interval : returns a list of the possible time intervals a selected time-series data can be retrieved at.
+        IWFMModel.is_date_greater : returns True if first_date is greater than comparison_date
+        IWFMModel.increment_time : increments the date provided by the specified time interval
         '''
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetTimeSpecs"):
@@ -245,12 +245,12 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_current_date_and_time
-        IWFMModel.get_n_time_steps
-        IWFMModel.get_time_specs
-        IWFMModel.get_n_intervals
-        IWFMModel.is_date_greater
-        IWFMModel.increment_time
+        IWFMModel.get_current_date_and_time : returns the current simulation date and time
+        IWFMModel.get_n_time_steps : returns the number of timesteps in an IWFM simulation
+        IWFMModel.get_time_specs : returns the IWFM simulation dates and time step 
+        IWFMModel.get_n_intervals : returns the number of time intervals between a provided start date and end date
+        IWFMModel.is_date_greater : returns True if first_date is greater than comparison_date
+        IWFMModel.increment_time : increments the date provided by the specified time interval
 
         Example
         -------
