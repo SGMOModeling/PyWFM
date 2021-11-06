@@ -831,7 +831,7 @@ class IWFMMiscellaneous:
         Parameters
         ----------
         date_string : str
-            iwfm format datetime MM/DD/YYYY_HH:MM
+            IWFM date format i.e. MM/DD/YYYY_HH:MM
 
         time_interval : str
             valid time interval
@@ -842,7 +842,7 @@ class IWFMMiscellaneous:
         Returns
         -------
         str
-            iwfm format datetime n time intervals after the provided
+            IWFM-style date the number of time intervals after the provided
             date
 
         See Also
@@ -898,10 +898,10 @@ class IWFMMiscellaneous:
         Parameters
         ----------
         first_date : str
-            IWFM format date MM/DD/YYYY_HH:MM
+            IWFM date format MM/DD/YYYY_HH:MM
 
         comparison_date : str
-            IWFM format date MM/DD/YYYY_HH:MM
+            IWFM date format MM/DD/YYYY_HH:MM
 
         Returns
         -------
