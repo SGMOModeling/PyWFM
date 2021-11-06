@@ -908,6 +908,15 @@ class IWFMMiscellaneous:
         boolean
             True if first_date is greater (in the future) when compared to the comparison_date
             False if first_date is less (in the past) when compared to the comparison_date 
+
+        See Also
+        --------
+        IWFMModel.get_current_date_and_time : returns the current simulation date and time
+        IWFMModel.get_n_time_steps : returns the number of timesteps in an IWFM simulation
+        IWFMModel.get_time_specs : returns the IWFM simulation dates and time step
+        IWFMModel.get_n_intervals : returns the number of time intervals between a provided start date and end date
+        IWFMModel.get_output_interval : returns a list of the possible time intervals a selected time-series data can be retrieved at.
+        IWFMModel.increment_time : increments the date provided by the specified time interval
         '''
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_IsTimeGreaterThan"):
