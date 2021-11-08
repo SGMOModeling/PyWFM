@@ -966,6 +966,26 @@ class IWFMMiscellaneous:
         IWFMModel.get_n_intervals : returns the number of time intervals between a provided start date and end date
         IWFMModel.get_output_interval : returns a list of the possible time intervals a selected time-series data can be retrieved at.
         IWFMModel.increment_time : increments the date provided by the specified time interval
+
+        Examples
+        --------
+        >>> from iwfmdll import IWFMModel
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
+        >>> sim_file = 'Simulation_MAIN.IN'
+        >>> model = IWFMModel(dll, preprocessor_infile, simulation_infile)
+        >>> model.is_date_greater('09/30/2011_24:00', '10/01/2011_24:00')
+        False
+        >>> model.kill()
+
+        >>> from iwfmdll import IWFMModel
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
+        >>> sim_file = 'Simulation_MAIN.IN'
+        >>> model = IWFMModel(dll, preprocessor_infile, simulation_infile)
+        >>> model.is_date_greater('03/28/2001_24:00', '06/30/1989_24:00')
+        True
+        >>> model.kill()
         '''
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_IsTimeGreaterThan"):
