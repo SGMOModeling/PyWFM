@@ -121,6 +121,27 @@ class IWFMModel(IWFMMiscellaneous):
         IWFMModel.is_date_greater : returns True if first_date is greater than comparison_date
         IWFMModel.increment_time : increments the date provided by the specified time interval
 
+        Examples
+        --------
+        >>> from iwfmdll import IWFMModel
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
+        >>> sim_file = 'Simulation_MAIN.IN'
+        >>> model = IWFMModel(dll, preprocessor_infile, simulation_infile)
+        >>> model.get_current_date_and_time()
+        '09/30/1990_24:00'
+        >>> model.kill()
+
+        >>> from iwfmdll import IWFMModel
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
+        >>> sim_file = 'Simulation_MAIN.IN'
+        >>> model = IWFMModel(dll, preprocessor_infile, simulation_infile, is_for_inquiry=0)
+        >>> model.advance_time()
+        >>> model.get_current_date_and_time()
+        '10/01/1990_24:00'
+        >>> model.kill()
+
         Note
         ----
         1. the intent of this method is to retrieve information about the
@@ -167,6 +188,17 @@ class IWFMModel(IWFMMiscellaneous):
         IWFMModel.get_output_interval : returns a list of the possible time intervals a selected time-series data can be retrieved at.
         IWFMModel.is_date_greater : returns True if first_date is greater than comparison_date
         IWFMModel.increment_time : increments the date provided by the specified time interval
+
+        Example
+        -------
+        >>> from iwfmdll import IWFMModel
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
+        >>> sim_file = 'Simulation_MAIN.IN'
+        >>> model = IWFMModel(dll, preprocessor_infile, simulation_infile)
+        >>> model.get_n_time_steps()
+        3653
+        >>> model.kill()
         '''
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetNTimeSteps"):
