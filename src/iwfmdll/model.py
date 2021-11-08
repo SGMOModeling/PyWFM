@@ -3935,7 +3935,7 @@ class IWFMModel(IWFMMiscellaneous):
             self._validate_iwfm_date(end_date)
 
             if end_date not in dates_list:
-                raise ValueError('end_date was not found in the Budget file. use IWFMModel.get_time_specs() method to check.')
+                raise ValueError('end_date was not found in the Simulation file. use IWFMModel.get_time_specs() method to check.')
 
         if self.is_date_greater(begin_date, end_date):
             raise ValueError('end_date must occur after begin_date')
@@ -4014,7 +4014,7 @@ class IWFMModel(IWFMMiscellaneous):
     def get_groundwater_hydrograph(self, groundwater_hydrograph_id, begin_date=None,
                                    end_date=None, length_conversion_factor=1.0, 
                                    volume_conversion_factor=1.0):
-        ''' returns the simulated groundwater hydrograph for the 
+        ''' Returns the simulated groundwater hydrograph for the 
         provided groundwater hydrograph id
 
         Parameters
