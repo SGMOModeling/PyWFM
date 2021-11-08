@@ -355,6 +355,26 @@ class IWFMModel(IWFMMiscellaneous):
         -------
         int
             number of nodes specified in the IWFM model
+
+        See Also
+        --------
+        IWFMModel.get_node_coordinates : returns the x,y coordinates of the nodes in an IWFM model
+        IWFMModel.get_node_ids : Returns an array of node ids in an IWFM model
+        IWFMModel.get_n_elements : Returns the number of elements in an IWFM model
+        IWFMModel.get_n_subregions : Returns the number of subregions in an IWFM model
+        IWFMModel.get_n_stream_nodes : Returns the number of stream nodes in an IWFM model
+        IWFMModel.get_n_stream_inflows : Returns the number of stream boundary inflows specified by the user as timeseries input data
+
+        Example
+        -------
+        >>> from iwfmdll import IWFMModel
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
+        >>> sim_file = 'Simulation_MAIN.IN'
+        >>> model = IWFMModel(dll, preprocessor_infile, simulation_infile)
+        >>> model.get_n_nodes()
+        441
+        >>> model.kill()
         '''
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetNNodes"):
@@ -375,7 +395,7 @@ class IWFMModel(IWFMMiscellaneous):
         return self.n_nodes.value
 
     def get_node_coordinates(self):
-        ''' returns the x,y coordinates of the nodes in an IWFM model
+        ''' Returns the x,y coordinates of the nodes in an IWFM model
 
         Returns
         -------
@@ -405,7 +425,7 @@ class IWFMModel(IWFMMiscellaneous):
         return np.array(x_coordinates), np.array(y_coordinates)
 
     def get_node_ids(self):
-        ''' returns an array of node ids in an IWFM model
+        ''' Returns an array of node ids in an IWFM model
 
         Returns
         -------
@@ -432,7 +452,7 @@ class IWFMModel(IWFMMiscellaneous):
         return np.array(node_ids)
 
     def get_n_elements(self):
-        ''' returns the number of elements in an IWFM model
+        ''' Returns the number of elements in an IWFM model
         '''
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetNElements"):
@@ -453,7 +473,7 @@ class IWFMModel(IWFMMiscellaneous):
         return self.n_elements.value
 
     def get_element_ids(self):
-        ''' returns an array of element ids in an IWFM model
+        ''' Returns an array of element ids in an IWFM model
         '''
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetElementIDs"):
@@ -475,7 +495,7 @@ class IWFMModel(IWFMMiscellaneous):
         return np.array(element_ids)
 
     def get_element_config(self, element_id):
-        ''' returns an array of node ids for an IWFM element.
+        ''' Returns an array of node ids for an IWFM element.
         The node ids are provided in a counter-clockwise direction
 
         Parameters
@@ -525,7 +545,7 @@ class IWFMModel(IWFMMiscellaneous):
         return np.array(nodes_in_element)
 
     def get_n_subregions(self):
-        ''' returns the number of subregions in an IWFM model
+        ''' Returns the number of subregions in an IWFM model
         '''
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetNSubregions"):
@@ -546,7 +566,7 @@ class IWFMModel(IWFMMiscellaneous):
         return self.n_subregions.value
 
     def get_subregion_ids(self):
-        ''' returns an array of IDs for subregions identifiedin the an IWFM model 
+        ''' Returns an array of IDs for subregions identifiedin the an IWFM model 
         
         Returns
         -------
@@ -574,7 +594,7 @@ class IWFMModel(IWFMMiscellaneous):
         return np.array(subregion_ids)
 
     def get_subregion_name(self, subregion_id):
-        ''' returns the name corresponding to the subregion_id in an IWFM model 
+        ''' Returns the name corresponding to the subregion_id in an IWFM model 
         
         Parameters
         ----------
@@ -622,7 +642,7 @@ class IWFMModel(IWFMMiscellaneous):
         return subregion_name.value.decode('utf-8')
 
     def get_subregions_by_element(self):
-        ''' returns an array identifying the IWFM Model elements contained within each subregion.
+        ''' Returns an array identifying the IWFM Model elements contained within each subregion.
 
         Returns
         -------
@@ -648,7 +668,7 @@ class IWFMModel(IWFMMiscellaneous):
         return np.array(element_subregions)
 
     def get_n_stream_nodes(self):
-        ''' returns the number of stream nodes in an IWFM model
+        ''' Returns the number of stream nodes in an IWFM model
         '''
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetNStrmNodes"):
@@ -669,7 +689,7 @@ class IWFMModel(IWFMMiscellaneous):
         return self.n_stream_nodes.value
 
     def get_stream_node_ids(self):
-        ''' returns an array of stream node ids from the IWFM model application
+        ''' Returns an array of stream node ids from the IWFM model application
         
         Returns
         -------
@@ -695,7 +715,7 @@ class IWFMModel(IWFMMiscellaneous):
         return np.array(stream_node_ids)
 
     def get_n_stream_nodes_upstream_of_stream_node(self, stream_node_id):
-        ''' returns the number of stream nodes immediately upstream of
+        ''' Returns the number of stream nodes immediately upstream of
         the provided stream node id
         
         Parameters
@@ -737,7 +757,7 @@ class IWFMModel(IWFMMiscellaneous):
         return n_upstream_stream_nodes.value
 
     def get_stream_nodes_upstream_of_stream_node(self, stream_node_id):
-        ''' returns an array of the stream node ids immediately upstream
+        ''' Returns an array of the stream node ids immediately upstream
         of the provided stream node id
         
         Parameters
@@ -786,7 +806,7 @@ class IWFMModel(IWFMMiscellaneous):
         return np.array(upstream_nodes)
 
     def get_stream_bottom_elevations(self):
-        ''' returns the stream channel bottom elevation at each stream node
+        ''' Returns the stream channel bottom elevation at each stream node
         
         Returns
         -------
@@ -813,7 +833,7 @@ class IWFMModel(IWFMMiscellaneous):
         return np.array(stream_bottom_elevations)
 
     def get_n_rating_table_points(self, stream_node_id):
-        '''returns the number of data points in the stream flow rating 
+        '''Returns the number of data points in the stream flow rating 
         table for a stream node
 
         Parameters
@@ -857,7 +877,7 @@ class IWFMModel(IWFMMiscellaneous):
 
 
     def get_stream_rating_table(self, stream_node_id):
-        ''' returns the stream rating table for a specified stream node 
+        ''' Returns the stream rating table for a specified stream node 
         
         Parameters
         ----------
@@ -902,7 +922,7 @@ class IWFMModel(IWFMMiscellaneous):
         return np.array(stage), np.array(flow)
 
     def get_n_stream_inflows(self):
-        ''' returns the number of stream boundary inflows specified by the 
+        ''' Returns the number of stream boundary inflows specified by the 
         user as timeseries input data
 
         Returns
