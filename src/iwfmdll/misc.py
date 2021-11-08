@@ -853,6 +853,35 @@ class IWFMMiscellaneous:
         IWFMModel.get_n_intervals : returns the number of time intervals between a provided start date and end date
         IWFMModel.get_output_interval : returns a list of the possible time intervals a selected time-series data can be retrieved at.
         IWFMModel.is_date_greater : returns True if first_date is greater than comparison_date
+
+        Examples
+        --------
+        >>> from iwfmdll import IWFMModel
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
+        >>> sim_file = 'Simulation_MAIN.IN'
+        >>> model = IWFMModel(dll, preprocessor_infile, simulation_infile)
+        >>> model.increment_time('10/01/1990_24:00', '1DAY', n_intervals=1)
+        '10/02/1990_24:00'
+        >>> model.kill()
+
+        >>> from iwfmdll import IWFMModel
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
+        >>> sim_file = 'Simulation_MAIN.IN'
+        >>> model = IWFMModel(dll, preprocessor_infile, simulation_infile)
+        >>> model.increment_time('12/31/2000_24:00', '1MON', n_intervals=3)
+        '03/31/2001_24:00'
+        >>> model.kill()
+
+        >>> from iwfmdll import IWFMModel
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
+        >>> sim_file = 'Simulation_MAIN.IN'
+        >>> model = IWFMModel(dll, preprocessor_infile, simulation_infile)
+        >>> model.increment_time('02/28/1991_24:00', '1YEAR', n_intervals=1)
+        '02/29/1992_24:00'
+        >>> model.kill()
         '''
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_IncrementTime"):
