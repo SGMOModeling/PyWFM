@@ -405,8 +405,8 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_n_nodes
-        IWFMModel.get_node_ids
+        IWFMModel.get_n_nodes : Returns the number of nodes in an IWFM model
+        IWFMModel.get_node_ids : Returns an array of node ids in an IWFM model
 
         Example
         -------
