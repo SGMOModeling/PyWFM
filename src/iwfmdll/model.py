@@ -450,6 +450,22 @@ class IWFMModel(IWFMMiscellaneous):
         -------
         np.ndarray
             array of groundwater node ids
+
+        See Also
+        --------
+        IWFMModel.get_n_nodes : Returns the number of nodes in an IWFM model
+        IWFMModel.get_node_coordinates : returns the x,y coordinates of the nodes in an IWFM model
+
+        Example
+        -------
+        >>> from iwfmdll import IWFMModel
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
+        >>> sim_file = 'Simulation_MAIN.IN'
+        >>> model = IWFMModel(dll, preprocessor_infile, simulation_infile)
+        >>> model.get_node_ids()
+        array([  1,   2,   3,   4,   5, ..., 437, 438, 439, 440, 441])
+        >>> model.kill()
         '''
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetNodeIDs"):
