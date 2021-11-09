@@ -349,7 +349,7 @@ class IWFMModel(IWFMMiscellaneous):
                                                    actual_num_time_intervals)
   
     def get_n_nodes(self):
-        ''' returns the number of nodes in an IWFM model
+        ''' Returns the number of nodes in an IWFM model
 
         Returns
         -------
@@ -402,6 +402,25 @@ class IWFMModel(IWFMMiscellaneous):
         tuple
             np.ndarray of groundwater node x-coordinates
             np.ndarray of groundwater node y-coordinates
+
+        See Also
+        --------
+        IWFMModel.get_n_nodes
+        IWFMModel.get_node_ids
+
+        Example
+        -------
+        >>> from iwfmdll import IWFMModel
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
+        >>> sim_file = 'Simulation_MAIN.IN'
+        >>> model = IWFMModel(dll, preprocessor_infile, simulation_infile)
+        >>> x, y = model.get_node_coordinates()
+        >>> x
+        array([1804440. , 1811001.6, 1817563.2, 1824124.8, 1830686.4, 1837248. , ..., 1902864. , 1909425.6, 1915987.2, 1922548.8, 1929110.4, 1935672. ])
+        >>> y
+        array([14435520. , 14435520. , 14435520. , 14435520. , 14435520. , ..., 14566752. , 14566752. , 14566752. , 14566752. , 14566752. ])
+        >>> model.kill()
         '''
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetNodeXY"):
