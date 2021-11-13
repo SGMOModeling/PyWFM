@@ -544,8 +544,8 @@ class IWFMModel(IWFMMiscellaneous):
         np.array
             array of node IDs for element
 
-        Notes
-        -----
+        Note
+        ----
         In IWFM, elements can be composed of either 3 or 4 nodes. If 
         the element has 3 nodes, the fourth is returned as a 0.
         '''
@@ -1057,8 +1057,8 @@ class IWFMModel(IWFMMiscellaneous):
             array of inflows for the inflow locations at the current 
             simulation time step
 
-        Notes
-        -----
+        Note
+        ----
         This method is designed for use when is_for_inquiry=0 to return
         stream inflows at the current timestep during a simulation.
         '''
@@ -1123,8 +1123,8 @@ class IWFMModel(IWFMMiscellaneous):
         float
             stream flow at specified stream node
         
-        Notes
-        -----
+        Note
+        ----
         This method is designed for use when is_for_inquiry=0 to return
         a stream flow at the current timestep during a simulation.
         '''
@@ -1163,8 +1163,8 @@ class IWFMModel(IWFMMiscellaneous):
         np.ndarray
             flows for all stream nodes for the current simulation timestep
 
-        Notes
-        -----
+        Note
+        ----
         This method is designed for use when is_for_inquiry=0 to return
         stream flows at the current timestep during a simulation.
         '''
@@ -1205,8 +1205,8 @@ class IWFMModel(IWFMMiscellaneous):
         np.ndarray
             stages for all stream nodes for the current simulation timestep
 
-        Notes
-        -----
+        Note
+        ----
         This method is designed for use when is_for_inquiry=0 to return
         stream stages at the current timestep during a simulation.
         '''
@@ -1248,8 +1248,8 @@ class IWFMModel(IWFMMiscellaneous):
             inflows from small watersheds for all stream nodes for the
             current simulation timestep
 
-        Notes
-        -----
+        Note
+        ----
         This method is designed for use when is_for_inquiry=0 to return
         small watershed inflows at the current timestep during a simulation.
 
