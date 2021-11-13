@@ -5492,7 +5492,7 @@ class IWFMModel(IWFMMiscellaneous):
         gs_elevs = self.get_ground_surface_elevation()
 
         # get groundwater heads
-        dts, heads = self.get_gwheadsall_foralayer(layer_number, begin_date, end_date)
+        dts, heads = self.get_gwheads_foralayer(layer_number, begin_date, end_date)
 
         # calculate depth to water
         depth_to_water = gs_elevs - heads
