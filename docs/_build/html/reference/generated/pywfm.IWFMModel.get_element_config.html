@@ -1364,20 +1364,41 @@
 The node ids are provided in a counter-clockwise direction</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>element_id</strong> (<em>int</em>) – single element ID for IWFM model. must be one of the values returned by
+<dd class="field-odd"><p><strong>element_id</strong> (<em>int</em>) – single element ID for IWFM model. Must be one of the values returned by
 get_element_ids method</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>array of node IDs for element</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>np.array</p>
+<dd class="field-odd"><p>np.ndarray</p>
 </dd>
 </dl>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>In IWFM, elements can be composed of either 3 or 4 nodes. If
-the element has 3 nodes, the fourth is returned as a 0.</p>
+the element has 3 nodes, the fourth is returned as a 0. Nodes IDs
+must also be in counter-clockwise order.</p>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><a class="reference internal" href="pywfm.IWFMModel.get_n_elements.html#pywfm.IWFMModel.get_n_elements" title="pywfm.IWFMModel.get_n_elements"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IWFMModel.get_n_elements</span></code></a></dt><dd><p>Returns the number of elements in an IWFM model</p>
+</dd>
+<dt><a class="reference internal" href="pywfm.IWFMModel.get_element_ids.html#pywfm.IWFMModel.get_element_ids" title="pywfm.IWFMModel.get_element_ids"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IWFMModel.get_element_ids</span></code></a></dt><dd><p>Returns an array of element IDs in an IWFM model</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pywfm</span> <span class="kn">import</span> <span class="n">IWFMModel</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dll</span> <span class="o">=</span> <span class="s1">&#39;../../DLL/Bin/IWFM2015_C_x64.dll&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pp_file</span> <span class="o">=</span> <span class="s1">&#39;../Preprocessor/PreProcessor_MAIN.IN&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sim_file</span> <span class="o">=</span> <span class="s1">&#39;Simulation_MAIN.IN&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">IWFMModel</span><span class="p">(</span><span class="n">dll</span><span class="p">,</span> <span class="n">preprocessor_infile</span><span class="p">,</span> <span class="n">simulation_infile</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">get_element_config</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">array([ 1, 2, 23, 22])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">kill</span><span class="p">()</span>
+</pre></div>
 </div>
 </dd></dl>
 
