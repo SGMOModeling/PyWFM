@@ -496,8 +496,8 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_element_ids : Returns an array of element ids in an IWFM model
-        IWFMModel.get_element_config : Returns an array of node ids for an IWFM element.
+        IWFMModel.get_element_ids : Returns an array of element IDs in an IWFM model
+        IWFMModel.get_element_config : Returns an array of node IDs for an IWFM element.
 
         Example
         -------
@@ -539,7 +539,7 @@ class IWFMModel(IWFMMiscellaneous):
         See Also
         --------
         IWFMModel.get_n_elements : Returns the number of elements in the IWFM model
-        IWFMModel.get_element_config : Returns an array of node ids for an IWFM element
+        IWFMModel.get_element_config : Returns an array of node IDs for an IWFM element
 
         Example
         -------
@@ -548,7 +548,7 @@ class IWFMModel(IWFMMiscellaneous):
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
         >>> model = IWFMModel(dll, preprocessor_infile, simulation_infile)
-        >>> model.get_elemen_ids()
+        >>> model.get_element_ids()
         array([ 1, 2, 3, ..., 398, 399, 400])
         >>> model.kill()
         '''
@@ -578,18 +578,35 @@ class IWFMModel(IWFMMiscellaneous):
         Parameters
         ----------
         element_id : int
-            single element ID for IWFM model. must be one of the values returned by
+            single element ID for IWFM model. Must be one of the values returned by
             get_element_ids method
 
         Returns
         -------
-        np.array
+        np.ndarray
             array of node IDs for element
 
         Note
         ----
         In IWFM, elements can be composed of either 3 or 4 nodes. If 
-        the element has 3 nodes, the fourth is returned as a 0.
+        the element has 3 nodes, the fourth is returned as a 0. Nodes IDs
+        must also be in counter-clockwise order.
+
+        See Also
+        --------
+        IWFMModel.get_n_elements : Returns the number of elements in an IWFM model
+        IWFMModel.get_element_ids : Returns an array of element IDs in an IWFM model
+
+        Example
+        -------
+        >>> from pywfm import IWFMModel
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
+        >>> sim_file = 'Simulation_MAIN.IN'
+        >>> model = IWFMModel(dll, preprocessor_infile, simulation_infile)
+        >>> model.get_element_config(1)
+        array([ 1, 2, 23, 22])
+        >>> model.kill()
         '''
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetElementConfigData"):
