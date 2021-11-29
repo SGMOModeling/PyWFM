@@ -12,12 +12,12 @@
 #
 import os
 import sys
-sys.path.insert(0, os.path.abspath('../src/iwfmdll'))
+sys.path.insert(0, os.path.abspath('../src/pywfm'))
 
-import iwfmdll
+import pywfm
 # -- Project information -----------------------------------------------------
 
-project = 'IWFMDLL'
+project = 'PyWFM'
 copyright = '2021, California Department of Water Resources'
 author = 'Tyler Hatch'
 
