@@ -1,8 +1,8 @@
-# IWFMDLL
+# PyWFM
 ---
 python library to expose the functionality of the IWFM DLL
 
-To use the iwfmdll module, users need to download this repository
+To use the pywfm module, users need to download this repository
 
 **Note** Users must also download the IWFM DLL.
 
@@ -10,11 +10,11 @@ The IWFM DLL can be downloaded from the [CNRA Open Data Platform](https://data.c
 
 ## Overview
 ---
-The iwfmdll library includes 3 main classes (IWFMModel, IWFMBudget, and IWFMZBudget). Each of these inherits from the IWFMMiscellaneous base class. Many of the methods in the IWFMMiscellaneous base class cannot be used on their own because the IWFMMiscellaneous class was designed without direct access to the IWFM DLL. Users can access all of this functionality from within the IWFMModel, IWFMBudget, and IWFMZBudget classes.
+The pywfm library includes 3 main classes (IWFMModel, IWFMBudget, and IWFMZBudget). Each of these inherits from the IWFMMiscellaneous base class. Many of the methods in the IWFMMiscellaneous base class cannot be used on their own because the IWFMMiscellaneous class was designed without direct access to the IWFM DLL. Users can access all of this functionality from within the IWFMModel, IWFMBudget, and IWFMZBudget classes.
 
 ## Design
 ---
-The iwfmdll library wraps each of the IWFM DLL functions so that the user does not have to deal with the IWFM DLL syntax directly. Instead, users familiar with python can work with standard python objects such as strings, ints, floats, lists, and numpy arrays.
+The pywfm library wraps each of the IWFM DLL functions so that the user does not have to deal with the IWFM DLL syntax directly. Instead, users familiar with python can work with standard python objects such as strings, ints, floats, lists, and numpy arrays.
 
 Many parts of the IWFM DLL procedures are handled internally allowing the user to provide only a few pieces of required information to obtain results.
 
@@ -34,7 +34,7 @@ To obtain data from an already completed model, use the following code:
 
 ```python
 # import libraries
-from iwfmdll import IWFMModel
+from pywfm import IWFMModel
 
 # set paths to files needed to create model object
 iwfm_dll = 'IWFM-2015.0.1177/DLL/Bin/IWFM2015_C_x64.dll'
@@ -46,13 +46,13 @@ m = IWFMModel(dll_path, preprocessor_in_file, simulation_in_file)
 ```
 To see all methods available within the IWFMModel class, type the following:
 ```python
-from iwfmdll import IWFMModel
+from pywfm import IWFMModel
 
 dir(IWFMModel)
 ```
 
 ```python
-class IWFMModel(iwfmdll.misc.IWFMMiscellaneous)
+class IWFMModel(pywfm.misc.IWFMMiscellaneous)
  |  IWFMModel(dll_path, preprocessor_file_name, simulation_file_name, has_routed_streams=1, is_for_inquiry=1)
  |  
  |  IWFM Model Class for interacting with the IWFM DLL
@@ -92,7 +92,7 @@ class IWFMModel(iwfmdll.misc.IWFMMiscellaneous)
  |  
  |  Method resolution order:
  |      IWFMModel
- |      iwfmdll.misc.IWFMMiscellaneous
+ |      pywfm.misc.IWFMMiscellaneous
  |      builtins.object
  |  
  |  Methods defined here:
@@ -2046,7 +2046,7 @@ class IWFMModel(iwfmdll.misc.IWFMMiscellaneous)
  |          pandas DataFrame ordered into a continuous sequence or set of sequences
  |  
  |  ----------------------------------------------------------------------
- |  Methods inherited from iwfmdll.misc.IWFM_Miscellaneous:
+ |  Methods inherited from pywfm.misc.IWFM_Miscellaneous:
  |  
  |  close_log_file(self)
  |  
@@ -2230,7 +2230,7 @@ To use IWFMBudget, use the following code:
 
 ```python
 # import libraries
-from iwfmdll import IWFMBudget
+from pywfm import IWFMBudget
 
 # set paths to files needed to create budget object
 iwfm_dll = 'IWFM-2015.0.1177/DLL/Bin/IWFM2015_C_x64.dll'
@@ -2245,7 +2245,7 @@ To use IWFMZBudget, use the following code:
 
 ```python
 # import libraries
-from iwfmdll import IWFMZBudget
+from pywfm import IWFMZBudget
 
 # set paths to files needed to create zbudget object
 iwfm_dll = 'IWFM-2015.0.1177/DLL/Bin/IWFM2015_C_x64.dll'
