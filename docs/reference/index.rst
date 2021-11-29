@@ -4,16 +4,16 @@
 API Reference
 #############
 
-.. currentmodule:: iwfmdll
+.. currentmodule:: pywfm
 
 This section provides detailed documentation of the available 
-functionality built into the iwfmdll python library
+functionality built into the pywfm python library
 
 ********************
-Main IWFMDLL Classes
+Main PyWFM Classes
 ********************
 
-The iwfmdll module is separated into three main classes.
+The pywfm module is separated into three main classes.
 
 The IWFMModel class is designed around the IWFM Model Object 
 which allows for interacting with the model data
