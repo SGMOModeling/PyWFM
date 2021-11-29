@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 from matplotlib.path import Path
 import matplotlib.patches as patches
 
-from iwfmdll.misc import IWFMMiscellaneous
+from pywfm.misc import IWFMMiscellaneous
 
 class IWFMModel(IWFMMiscellaneous):
     ''' IWFM Model Class for interacting with the IWFM DLL
@@ -123,7 +123,7 @@ class IWFMModel(IWFMMiscellaneous):
 
         Examples
         --------
-        >>> from iwfmdll import IWFMModel
+        >>> from pywfm import IWFMModel
         >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
@@ -132,7 +132,7 @@ class IWFMModel(IWFMMiscellaneous):
         '09/30/1990_24:00'
         >>> model.kill()
 
-        >>> from iwfmdll import IWFMModel
+        >>> from pywfm import IWFMModel
         >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
@@ -191,7 +191,7 @@ class IWFMModel(IWFMMiscellaneous):
 
         Example
         -------
-        >>> from iwfmdll import IWFMModel
+        >>> from pywfm import IWFMModel
         >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
@@ -235,7 +235,7 @@ class IWFMModel(IWFMMiscellaneous):
 
         Example
         -------
-        >>> from iwfmdll import IWFMModel
+        >>> from pywfm import IWFMModel
         >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
@@ -309,7 +309,7 @@ class IWFMModel(IWFMMiscellaneous):
 
         Example
         -------
-        >>> from iwfmdll import IWFMModel
+        >>> from pywfm import IWFMModel
         >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
@@ -367,7 +367,7 @@ class IWFMModel(IWFMMiscellaneous):
 
         Example
         -------
-        >>> from iwfmdll import IWFMModel
+        >>> from pywfm import IWFMModel
         >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
@@ -410,7 +410,7 @@ class IWFMModel(IWFMMiscellaneous):
 
         Example
         -------
-        >>> from iwfmdll import IWFMModel
+        >>> from pywfm import IWFMModel
         >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
@@ -458,7 +458,7 @@ class IWFMModel(IWFMMiscellaneous):
 
         Example
         -------
-        >>> from iwfmdll import IWFMModel
+        >>> from pywfm import IWFMModel
         >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
