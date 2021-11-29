@@ -9,7 +9,7 @@
 # 2. save the file as 'run_sample_model.py' in the Simulation folder of the Sample Model
 # 3. open command prompt and navigate to the Simulation folder of the Sample Model
 # 4. run the command 'python run_sample_model.py'
-from iwfmdll import IWFMModel
+from pywfm import IWFMModel
 
 def run_model(model):
     ''' uses an IWFM model object to run a model simulation '''
