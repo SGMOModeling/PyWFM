@@ -4,7 +4,7 @@
 IWFMBudget
 ##########
 
-.. currentmodule:: iwfmdll.IWFMBudget
+.. currentmodule:: pywfm.IWFMBudget
 
 Time-Related
 ============
