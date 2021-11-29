@@ -1,4 +1,4 @@
-from iwfmdll import IWFMModel
+from pywfm import IWFMModel
 
 DLL = r'C:\Users\hatch\Desktop\IWFM\IWFM-2015.0.1273\DLL\Bin\IWFM2015_C_x64.dll'
 pp_file = r'C:\Users\hatch\Desktop\IWFM\IWFM-2015.0.1273\SampleModel\Preprocessor\PreProcessor_MAIN.IN'
