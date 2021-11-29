@@ -2,7 +2,7 @@ import ctypes
 from typing import Type
 import numpy as np
 
-from iwfmdll.misc import IWFMMiscellaneous
+from pywfm.misc import IWFMMiscellaneous
 
 class IWFMZBudget(IWFMMiscellaneous):
     ''' IWFM ZBudget Class for interacting with the IWFM DLL
