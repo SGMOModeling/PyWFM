@@ -4,7 +4,7 @@
 IWFMZBudget
 ###########
 
-.. currentmodule:: iwfmdll.IWFMZBudget
+.. currentmodule:: pywfm.IWFMZBudget
 
 Time-Related
 ============
