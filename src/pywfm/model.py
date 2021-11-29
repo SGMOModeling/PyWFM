@@ -105,7 +105,7 @@ class IWFMModel(IWFMMiscellaneous):
         self.dll.IW_Model_Kill(ctypes.byref(self.status))
 
     def get_current_date_and_time(self):
-        ''' returns the current simulation date and time 
+        ''' Returns the current simulation date and time 
         
         Returns
         -------
@@ -114,11 +114,11 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_n_time_steps : returns the number of timesteps in an IWFM simulation
-        IWFMModel.get_time_specs : returns the IWFM simulation dates and time step
-        IWFMModel.get_n_intervals : returns the number of time intervals between a provided start date and end date
-        IWFMModel.get_output_interval : returns a list of the possible time intervals a selected time-series data can be retrieved at.
-        IWFMModel.is_date_greater : returns True if first_date is greater than comparison_date
+        IWFMModel.get_n_time_steps : Returns the number of timesteps in an IWFM simulation
+        IWFMModel.get_time_specs : Returns the IWFM simulation dates and time step
+        IWFMModel.get_n_intervals : Returns the number of time intervals between a provided start date and end date
+        IWFMModel.get_output_interval : Returns a list of the possible time intervals a selected time-series data can be retrieved at.
+        IWFMModel.is_date_greater : Returns True if first_date is greater than comparison_date
         IWFMModel.increment_time : increments the date provided by the specified time interval
 
         Examples
@@ -149,7 +149,7 @@ class IWFMModel(IWFMMiscellaneous):
         i.e. IWFMModel object is instantiated with is_for_inquiry=0
         
         2. if this method is called when the IWFMModel object is 
-        instantiated with is_for_inquiry=1, it only returns the 
+        instantiated with is_for_inquiry=1, it only Returns the 
         simulation begin date and time.
         '''
         # check to see if IWFM procedure is available in user version of IWFM DLL
@@ -173,7 +173,7 @@ class IWFMModel(IWFMMiscellaneous):
         return current_date_string.value.decode('utf-8')
 
     def get_n_time_steps(self):
-        ''' returns the number of timesteps in an IWFM simulation
+        ''' Returns the number of timesteps in an IWFM simulation
 
         Returns
         -------
@@ -182,11 +182,11 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_current_date_and_time : returns the current simulation date and time
-        IWFMModel.get_time_specs : returns the IWFM simulation dates and time step
-        IWFMModel.get_n_intervals : returns the number of time intervals between a provided start date and end date
-        IWFMModel.get_output_interval : returns a list of the possible time intervals a selected time-series data can be retrieved at.
-        IWFMModel.is_date_greater : returns True if first_date is greater than comparison_date
+        IWFMModel.get_current_date_and_time : Returns the current simulation date and time
+        IWFMModel.get_time_specs : Returns the IWFM simulation dates and time step
+        IWFMModel.get_n_intervals : Returns the number of time intervals between a provided start date and end date
+        IWFMModel.get_output_interval : Returns a list of the possible time intervals a selected time-series data can be retrieved at.
+        IWFMModel.is_date_greater : Returns True if first_date is greater than comparison_date
         IWFMModel.increment_time : increments the date provided by the specified time interval
 
         Example
@@ -217,7 +217,7 @@ class IWFMModel(IWFMMiscellaneous):
         return n_time_steps.value
 
     def get_time_specs(self):
-        ''' returns the IWFM simulation dates and time step
+        ''' Returns the IWFM simulation dates and time step
 
         Returns
         -------
@@ -226,11 +226,11 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_current_date_and_time : returns the current simulation date and time
-        IWFMModel.get_n_time_steps : returns the number of timesteps in an IWFM simulation
-        IWFMModel.get_n_intervals : returns the number of time intervals between a provided start date and end date
-        IWFMModel.get_output_interval : returns a list of the possible time intervals a selected time-series data can be retrieved at.
-        IWFMModel.is_date_greater : returns True if first_date is greater than comparison_date
+        IWFMModel.get_current_date_and_time : Returns the current simulation date and time
+        IWFMModel.get_n_time_steps : Returns the number of timesteps in an IWFM simulation
+        IWFMModel.get_n_intervals : Returns the number of time intervals between a provided start date and end date
+        IWFMModel.get_output_interval : Returns a list of the possible time intervals a selected time-series data can be retrieved at.
+        IWFMModel.is_date_greater : Returns True if first_date is greater than comparison_date
         IWFMModel.increment_time : increments the date provided by the specified time interval
 
         Example
@@ -290,7 +290,7 @@ class IWFMModel(IWFMMiscellaneous):
         return dates_list, sim_time_step
 
     def get_output_interval(self):
-        ''' returns a list of the possible time intervals a selected
+        ''' Returns a list of the possible time intervals a selected
         time-series data can be retrieved at.
 
         Returns
@@ -300,11 +300,11 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_current_date_and_time : returns the current simulation date and time
-        IWFMModel.get_n_time_steps : returns the number of timesteps in an IWFM simulation
-        IWFMModel.get_time_specs : returns the IWFM simulation dates and time step 
-        IWFMModel.get_n_intervals : returns the number of time intervals between a provided start date and end date
-        IWFMModel.is_date_greater : returns True if first_date is greater than comparison_date
+        IWFMModel.get_current_date_and_time : Returns the current simulation date and time
+        IWFMModel.get_n_time_steps : Returns the number of timesteps in an IWFM simulation
+        IWFMModel.get_time_specs : Returns the IWFM simulation dates and time step 
+        IWFMModel.get_n_intervals : Returns the number of time intervals between a provided start date and end date
+        IWFMModel.is_date_greater : Returns True if first_date is greater than comparison_date
         IWFMModel.increment_time : increments the date provided by the specified time interval
 
         Example
@@ -358,7 +358,7 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_node_coordinates : returns the x,y coordinates of the nodes in an IWFM model
+        IWFMModel.get_node_coordinates : Returns the x,y coordinates of the nodes in an IWFM model
         IWFMModel.get_node_ids : Returns an array of node ids in an IWFM model
         IWFMModel.get_n_elements : Returns the number of elements in an IWFM model
         IWFMModel.get_n_subregions : Returns the number of subregions in an IWFM model
@@ -454,7 +454,7 @@ class IWFMModel(IWFMMiscellaneous):
         See Also
         --------
         IWFMModel.get_n_nodes : Returns the number of nodes in an IWFM model
-        IWFMModel.get_node_coordinates : returns the x,y coordinates of the nodes in an IWFM model
+        IWFMModel.get_node_coordinates : Returns the x,y coordinates of the nodes in an IWFM model
 
         Example
         -------
@@ -981,7 +981,7 @@ class IWFMModel(IWFMMiscellaneous):
         return n_stream_inflows.value
 
     def get_stream_inflow_nodes(self):
-        ''' returns the indices of the stream nodes that receive boundary 
+        ''' Returns the indices of the stream nodes that receive boundary 
         inflows specified by the user as timeseries input data 
         
         Returns
@@ -1009,7 +1009,7 @@ class IWFMModel(IWFMMiscellaneous):
         return np.array(stream_inflow_nodes)
 
     def get_stream_inflow_ids(self):
-        ''' returns the identification numbers for the stream boundary 
+        ''' Returns the identification numbers for the stream boundary 
         inflows specified by the user as timeseries input data 
         
         Returns
@@ -1039,7 +1039,7 @@ class IWFMModel(IWFMMiscellaneous):
     def get_stream_inflows_at_some_locations(self, 
                                              stream_inflow_locations, 
                                              inflow_conversion_factor=1.0):
-        ''' returns stream boundary inflows at a specified set of inflow
+        ''' Returns stream boundary inflows at a specified set of inflow
         locations listed by their indices for the current simulation timestep
         
         Parameters
@@ -1106,7 +1106,7 @@ class IWFMModel(IWFMMiscellaneous):
         return np.array(inflows)
 
     def get_stream_flow_at_location(self, stream_node_id, flow_conversion_factor=1.0):
-        ''' returns stream flow at a stream node for the current time
+        ''' Returns stream flow at a stream node for the current time
         step in a simulation 
 
         Parameters
@@ -1150,7 +1150,7 @@ class IWFMModel(IWFMMiscellaneous):
         return stream_flow.value
 
     def get_stream_flows(self, flow_conversion_factor=1.0):
-        ''' returns stream flows at every stream node for the current timestep 
+        ''' Returns stream flows at every stream node for the current timestep 
         
         Parameters
         ----------
@@ -1192,7 +1192,7 @@ class IWFMModel(IWFMMiscellaneous):
         return np.array(stream_flows)
 
     def get_stream_stages(self, stage_conversion_factor=1.0):
-        ''' returns stream stages at every stream node for the current timestep
+        ''' Returns stream stages at every stream node for the current timestep
         
         Parameters
         ----------
@@ -1234,7 +1234,7 @@ class IWFMModel(IWFMMiscellaneous):
         return np.array(stream_stages)
 
     def get_stream_tributary_inflows(self, inflow_conversion_factor=1.0):
-        ''' returns small watershed inflows at every stream node for the current timestep
+        ''' Returns small watershed inflows at every stream node for the current timestep
         
         Parameters
         ----------
@@ -1279,7 +1279,7 @@ class IWFMModel(IWFMMiscellaneous):
         return np.array(small_watershed_inflows)
 
     def get_stream_rainfall_runoff(self, runoff_conversion_factor=1.0):
-        ''' returns small watershed inflows at every stream node for the current timestep
+        ''' Returns small watershed inflows at every stream node for the current timestep
         
         Parameters
         ----------
@@ -1324,7 +1324,7 @@ class IWFMModel(IWFMMiscellaneous):
         return np.array(rainfall_runoff_inflows)
 
     def get_stream_return_flows(self, return_flow_conversion_factor=1.0):
-        ''' returns agricultural and urban return flows at every stream
+        ''' Returns agricultural and urban return flows at every stream
         node for the current timestep
         
         Parameters
@@ -1370,7 +1370,7 @@ class IWFMModel(IWFMMiscellaneous):
         return np.array(return_flows)
 
     def get_stream_tile_drain_flows(self, tile_drain_conversion_factor=1.0):
-        ''' returns tile drain flows into every stream
+        ''' Returns tile drain flows into every stream
         node for the current timestep
         
         Parameters
@@ -1416,7 +1416,7 @@ class IWFMModel(IWFMMiscellaneous):
         return np.array(tile_drain_flows)
 
     def get_stream_riparian_evapotranspiration(self, evapotranspiration_conversion_factor=1.0):
-        ''' returns riparian evapotranspiration from every stream
+        ''' Returns riparian evapotranspiration from every stream
         node for the current timestep
         
         Parameters
@@ -1463,7 +1463,7 @@ class IWFMModel(IWFMMiscellaneous):
         return np.array(riparian_evapotranspiration)
 
     def get_stream_gain_from_groundwater(self, stream_gain_conversion_factor=1.0):
-        ''' returns gain from groundwater for every stream
+        ''' Returns gain from groundwater for every stream
         node for the current timestep
         
         Parameters
@@ -1511,7 +1511,7 @@ class IWFMModel(IWFMMiscellaneous):
         return np.array(gain_from_groundwater)
 
     def get_stream_gain_from_lakes(self, lake_inflow_conversion_factor=1.0):
-        ''' returns gain from lakes for every stream
+        ''' Returns gain from lakes for every stream
         node for the current timestep
         
         Parameters
@@ -1558,7 +1558,7 @@ class IWFMModel(IWFMMiscellaneous):
         return np.array(gain_from_lakes)
 
     def get_net_bypass_inflows(self, bypass_inflow_conversion_factor=1.0):
-        ''' returns net bypass inflows for every stream
+        ''' Returns net bypass inflows for every stream
         node for the current timestep
         
         Parameters
@@ -1605,7 +1605,7 @@ class IWFMModel(IWFMMiscellaneous):
         return np.array(net_bypass_inflow)
 
     def get_actual_stream_diversions_at_some_locations(self, diversion_indices, diversion_conversion_factor):
-        ''' returns actual diversion amounts for a list of diversions
+        ''' Returns actual diversion amounts for a list of diversions
         during a model simulation
         
         Parameters
@@ -1658,7 +1658,7 @@ class IWFMModel(IWFMMiscellaneous):
         return np.array(actual_diversion_amounts)
 
     def get_stream_diversion_locations(self, diversion_locations):
-        ''' returns the stream node indices corresponding to diversion locations
+        ''' Returns the stream node indices corresponding to diversion locations
 
         Parameters
         ----------
@@ -1701,7 +1701,7 @@ class IWFMModel(IWFMMiscellaneous):
         return np.array(diversion_stream_nodes)
 
     def get_n_stream_reaches(self):
-        ''' returns the number of stream reaches in an IWFM model
+        ''' Returns the number of stream reaches in an IWFM model
         '''
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetNReaches"):
@@ -1722,7 +1722,7 @@ class IWFMModel(IWFMMiscellaneous):
         return self.n_stream_reaches.value
 
     def get_stream_reach_ids(self):
-        ''' returns the user-specified identification numbers for the
+        ''' Returns the user-specified identification numbers for the
         stream reaches in an IWFM model 
         
         Returns
@@ -1750,7 +1750,7 @@ class IWFMModel(IWFMMiscellaneous):
         return np.array(stream_reach_ids)
 
     def get_n_nodes_in_stream_reach(self, reach_index):
-        ''' returns the number of stream nodes in a stream reach
+        ''' Returns the number of stream nodes in a stream reach
         
         Parameters
         ----------
@@ -1783,7 +1783,7 @@ class IWFMModel(IWFMMiscellaneous):
         return n_nodes_in_reach.value
 
     def get_stream_reach_groundwater_nodes(self, reach_index):
-        ''' returns the groundwater node indices corresponding to stream
+        ''' Returns the groundwater node indices corresponding to stream
         nodes in a specified reach 
 
         Parameters
@@ -1822,7 +1822,7 @@ class IWFMModel(IWFMMiscellaneous):
         return np.array(reach_groundwater_nodes)
 
     def get_stream_reach_stream_nodes(self, reach_index):
-        ''' returns the stream node indices corresponding to stream
+        ''' Returns the stream node indices corresponding to stream
         nodes in a specified reach 
 
         Parameters
@@ -1861,7 +1861,7 @@ class IWFMModel(IWFMMiscellaneous):
         return np.array(reach_stream_nodes)
 
     def get_stream_reaches_for_stream_nodes(self, stream_node_indices):
-        ''' returns the stream reach indices that correspond to a list of stream nodes
+        ''' Returns the stream reach indices that correspond to a list of stream nodes
 
         Parameters
         ---------
@@ -1898,7 +1898,7 @@ class IWFMModel(IWFMMiscellaneous):
         return np.array(stream_reaches)
 
     def get_upstream_nodes_in_stream_reaches(self):
-        ''' returns the indices for the upstream stream node in each
+        ''' Returns the indices for the upstream stream node in each
         stream reach
 
         Returns
@@ -1927,7 +1927,7 @@ class IWFMModel(IWFMMiscellaneous):
         return np.array(upstream_stream_nodes)
 
     def get_n_reaches_upstream_of_reach(self, reach_index):
-        ''' returns the number of stream reaches immediately upstream 
+        ''' Returns the number of stream reaches immediately upstream 
         of the specified reach
 
         Parameters
@@ -1944,10 +1944,10 @@ class IWFMModel(IWFMMiscellaneous):
 
         Notes
         -----
-        if no stream reaches upstream, returns 0
-        if reach downstream of confluence of tributaries, returns number 
+        if no stream reaches upstream, Returns 0
+        if reach downstream of confluence of tributaries, Returns number 
         of tributaries
-        otherwise, returns 1
+        otherwise, Returns 1
         '''
         if not hasattr(self.dll, "IW_Model_GetReachNUpstrmReaches"):
             raise AttributeError('IWFM DLL does not have "{}" procedure. '
@@ -1969,7 +1969,7 @@ class IWFMModel(IWFMMiscellaneous):
         return n_upstream_reaches.value
 
     def get_reaches_upstream_of_reach(self, reach_index):
-        ''' returns the indices of the reaches that are immediately 
+        ''' Returns the indices of the reaches that are immediately 
         upstream of the specified reach
 
         Parameters
@@ -2007,7 +2007,7 @@ class IWFMModel(IWFMMiscellaneous):
         return np.array(upstream_reaches)
 
     def get_downstream_node_in_stream_reaches(self):
-        ''' returns the indices for the downstream stream node in each 
+        ''' Returns the indices for the downstream stream node in each 
         stream reach
 
         Returns
@@ -2036,7 +2036,7 @@ class IWFMModel(IWFMMiscellaneous):
         return np.array(downstream_stream_nodes)
 
     def get_reach_outflow_destination(self):
-        ''' This procedure returns the destination index that each stream
+        ''' This procedure Returns the destination index that each stream
         reach flows into. To find out the type of destination (i.e. lake, 
         another stream node or outside the model domain) that the reaches 
         flow into, it is necessary to call IW_Model_GetReachOutflowDestType 
@@ -2068,7 +2068,7 @@ class IWFMModel(IWFMMiscellaneous):
         return np.array(reach_outflow_destinations)
 
     def get_reach_outflow_destination_types(self):
-        ''' returns the outflow destination types that each stream reach
+        ''' Returns the outflow destination types that each stream reach
         flows into.
 
         Returns
@@ -2096,7 +2096,7 @@ class IWFMModel(IWFMMiscellaneous):
         return np.array(reach_outflow_destination_types)
 
     def get_n_diversions(self):
-        ''' returns the number of surface water diversions in an IWFM model
+        ''' Returns the number of surface water diversions in an IWFM model
         '''
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetNDiversions"):
@@ -2118,7 +2118,7 @@ class IWFMModel(IWFMMiscellaneous):
         return self.n_diversions.value
 
     def get_diversion_ids(self):
-        ''' returns the surface water diversion identification numbers
+        ''' Returns the surface water diversion identification numbers
         specified in an IWFM model
         
         Returns
@@ -2146,7 +2146,7 @@ class IWFMModel(IWFMMiscellaneous):
         return np.array(diversion_ids)
 
     def get_n_lakes(self):
-        ''' returns the number of lakes in an IWFM model
+        ''' Returns the number of lakes in an IWFM model
 
         Returns
         -------
@@ -2177,7 +2177,7 @@ class IWFMModel(IWFMMiscellaneous):
         return n_lakes.value
 
     def get_lake_ids(self):
-        ''' returns the lake identification numbers assigned by the user
+        ''' Returns the lake identification numbers assigned by the user
 
         Returns
         -------
@@ -2210,7 +2210,7 @@ class IWFMModel(IWFMMiscellaneous):
         return np.array(lake_ids)
 
     def get_n_elements_in_lake(self, lake_id):
-        ''' returns the number of finite element grid cells that make
+        ''' Returns the number of finite element grid cells that make
         up a lake
 
         Parameters
@@ -2253,7 +2253,7 @@ class IWFMModel(IWFMMiscellaneous):
         return n_elements_in_lake.value
 
     def get_elements_in_lake(self, lake_id):
-        ''' returns the element ids in the lakes
+        ''' Returns the element ids in the lakes
         
         Parameters
         ----------
@@ -2299,7 +2299,7 @@ class IWFMModel(IWFMMiscellaneous):
         return np.array(elements_in_lake)
 
     def get_n_tile_drains(self):
-        ''' returns the number of tile drain nodes in an IWFM model
+        ''' Returns the number of tile drain nodes in an IWFM model
 
         Returns
         -------
@@ -2327,7 +2327,7 @@ class IWFMModel(IWFMMiscellaneous):
         return n_tile_drains.value
 
     def get_tile_drain_ids(self):
-        ''' returns the user-specified identification numbers for tile
+        ''' Returns the user-specified identification numbers for tile
         drains simulated in an IWFM model
 
         Returns
@@ -2361,7 +2361,7 @@ class IWFMModel(IWFMMiscellaneous):
         return np.array(tile_drain_ids)
 
     def get_tile_drain_nodes(self):
-        ''' returns the node ids where tile drains are specified
+        ''' Returns the node ids where tile drains are specified
         
         Returns
         -------
@@ -2393,7 +2393,7 @@ class IWFMModel(IWFMMiscellaneous):
         return np.array(tile_drain_nodes)
 
     def get_n_layers(self):
-        ''' returns the number of layers in an IWFM model
+        ''' Returns the number of layers in an IWFM model
 
         Returns
         -------
@@ -2420,7 +2420,7 @@ class IWFMModel(IWFMMiscellaneous):
         return n_layers.value
 
     def get_ground_surface_elevation(self):
-        ''' returns the ground surface elevation for each node specified 
+        ''' Returns the ground surface elevation for each node specified 
         in the IWFM model
 
         Returns
@@ -2450,7 +2450,7 @@ class IWFMModel(IWFMMiscellaneous):
         return np.array(gselev)
 
     def get_aquifer_top_elevation(self):
-        ''' returns the aquifer top elevations for each finite element 
+        ''' Returns the aquifer top elevations for each finite element 
         node and each layer
 
         Returns
@@ -2483,7 +2483,7 @@ class IWFMModel(IWFMMiscellaneous):
         return np.array(aquifer_top_elevations)
 
     def get_aquifer_bottom_elevation(self):
-        ''' returns the aquifer top elevations for each finite element 
+        ''' Returns the aquifer top elevations for each finite element 
         node and each layer
 
         Returns
@@ -2516,7 +2516,7 @@ class IWFMModel(IWFMMiscellaneous):
         return np.array(aquifer_bottom_elevations)
 
     def get_stratigraphy_atXYcoordinate(self, x, y, fact, output_options=1):
-        ''' returns the stratigraphy at a given X,Y coordinate and 
+        ''' Returns the stratigraphy at a given X,Y coordinate and 
         conversion factor.
 
         Parameters
@@ -2629,7 +2629,7 @@ class IWFMModel(IWFMMiscellaneous):
         return output
 
     def get_aquifer_horizontal_k(self):
-        ''' returns the aquifer horizontal hydraulic conductivity for 
+        ''' Returns the aquifer horizontal hydraulic conductivity for 
         each finite element node and each layer
 
         Returns
@@ -2662,7 +2662,7 @@ class IWFMModel(IWFMMiscellaneous):
         return np.array(aquifer_horizontal_k)
 
     def get_aquifer_vertical_k(self):
-        ''' returns the aquifer vertical hydraulic conductivity for each finite element 
+        ''' Returns the aquifer vertical hydraulic conductivity for each finite element 
         node and each layer
 
         Returns
@@ -2695,7 +2695,7 @@ class IWFMModel(IWFMMiscellaneous):
         return np.array(aquifer_vertical_k)
 
     def get_aquitard_vertical_k(self):
-        ''' returns the aquitard vertical hydraulic conductivity for 
+        ''' Returns the aquitard vertical hydraulic conductivity for 
         each finite element node and each layer
 
         Returns
@@ -2728,7 +2728,7 @@ class IWFMModel(IWFMMiscellaneous):
         return np.array(aquitard_vertical_k)
 
     def get_aquifer_specific_yield(self):
-        ''' returns the aquifer specific yield for each finite element 
+        ''' Returns the aquifer specific yield for each finite element 
         node and each layer
 
         Returns
@@ -2761,7 +2761,7 @@ class IWFMModel(IWFMMiscellaneous):
         return np.array(aquifer_specific_yield)
 
     def get_aquifer_specific_storage(self):
-        ''' returns the aquifer specific storage for each finite element 
+        ''' Returns the aquifer specific storage for each finite element 
         node and each layer
 
         Returns
@@ -2794,7 +2794,7 @@ class IWFMModel(IWFMMiscellaneous):
         return np.array(aquifer_specific_storage)
 
     def get_aquifer_parameters(self):
-        ''' returns all aquifer parameters at each model node and layer 
+        ''' Returns all aquifer parameters at each model node and layer 
         
         Returns
         -------
@@ -2840,7 +2840,7 @@ class IWFMModel(IWFMMiscellaneous):
                np.array(aquifer_specific_storage))
 
     def get_n_ag_crops(self):
-        ''' returns the number of agricultural crops simulated in an 
+        ''' Returns the number of agricultural crops simulated in an 
         IWFM model
 
         Returns
@@ -2893,7 +2893,7 @@ class IWFMModel(IWFMMiscellaneous):
         flag equal to 11 for both ag and urban
 
         automatic supply adjustment in IWFM allows the supply purpose 
-        to change dynamically, so this only returns the user-specified
+        to change dynamically, so this only Returns the user-specified
         initial value.
         '''
         # check to see if IWFM procedure is available in user version of IWFM DLL
@@ -2929,7 +2929,7 @@ class IWFMModel(IWFMMiscellaneous):
         return np.array(supply_purpose_flags)
 
     def get_diversion_purpose(self, diversion_indices):
-        ''' returns the flags for the initial purpose of the water 
+        ''' Returns the flags for the initial purpose of the water 
         supplies as ag, urban, or both
 
         Parameters
@@ -2950,7 +2950,7 @@ class IWFMModel(IWFMMiscellaneous):
         flag equal to 11 for both ag and urban
 
         automatic supply adjustment in IWFM allows the supply purpose 
-        to change dynamically, so this only returns the user-specified
+        to change dynamically, so this only Returns the user-specified
         initial value. 
         '''
         supply_type_id = self.get_supply_type_id_diversion()
@@ -2958,7 +2958,7 @@ class IWFMModel(IWFMMiscellaneous):
         return self._get_supply_purpose(supply_type_id, diversion_indices)
 
     def get_well_pumping_purpose(self, well_indices):
-        ''' returns the flags for the initial purpose of the water 
+        ''' Returns the flags for the initial purpose of the water 
         supplies as ag, urban, or both
 
         Parameters
@@ -2979,7 +2979,7 @@ class IWFMModel(IWFMMiscellaneous):
         flag equal to 11 for both ag and urban
 
         automatic supply adjustment in IWFM allows the supply purpose 
-        to change dynamically, so this only returns the user-specified
+        to change dynamically, so this only Returns the user-specified
         initial value.
         '''
         supply_type_id = self.get_supply_type_id_well()
@@ -2988,7 +2988,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def _get_supply_requirement_ag(self, location_type_id, locations_list, 
                                    conversion_factor):
-        ''' returns the agricultural water supply requirement at a 
+        ''' Returns the agricultural water supply requirement at a 
         specified set of locations
 
         Parameters
@@ -3042,7 +3042,7 @@ class IWFMModel(IWFMMiscellaneous):
         return np.array(ag_supply_requirement)
 
     def get_supply_requirement_ag_elements(self, elements_list, conversion_factor=1.0):
-        ''' returns the agricultural supply requirement for one or more model elements
+        ''' Returns the agricultural supply requirement for one or more model elements
 
         Parameters
         ----------
@@ -3064,7 +3064,7 @@ class IWFMModel(IWFMMiscellaneous):
         return self._get_supply_requirement_ag(location_type_id, elements_list, conversion_factor)
 
     def get_supply_requirement_ag_subregions(self, subregions_list, conversion_factor=1.0):
-        ''' returns the agricultural supply requirement for one or more model subregions
+        ''' Returns the agricultural supply requirement for one or more model subregions
 
         Parameters
         ----------
@@ -3086,7 +3086,7 @@ class IWFMModel(IWFMMiscellaneous):
         return self._get_supply_requirement_ag(location_type_id, subregions_list, conversion_factor)
 
     def _get_supply_requirement_urban(self, location_type_id, locations_list, conversion_factor):
-        ''' returns the urban water supply requirement at a 
+        ''' Returns the urban water supply requirement at a 
         specified set of locations
 
         Parameters
@@ -3140,7 +3140,7 @@ class IWFMModel(IWFMMiscellaneous):
         return np.array(urban_supply_requirement)
 
     def get_supply_requirement_urban_elements(self, elements_list, conversion_factor=1.0):
-        ''' returns the urban supply requirement for one or more model elements
+        ''' Returns the urban supply requirement for one or more model elements
 
         Parameters
         ----------
@@ -3164,7 +3164,7 @@ class IWFMModel(IWFMMiscellaneous):
                                                   conversion_factor)
 
     def get_supply_requirement_urban_subregions(self, subregions_list, conversion_factor=1.0):
-        ''' returns the urban supply requirement for one or more model subregions
+        ''' Returns the urban supply requirement for one or more model subregions
 
         Parameters
         ----------
@@ -3242,7 +3242,7 @@ class IWFMModel(IWFMMiscellaneous):
         return np.array(ag_supply_shortage)
 
     def get_ag_diversion_supply_shortage_at_origin(self, diversions_list, conversion_factor=1.0):
-        ''' returns the supply shortage for agricultural diversions at the destination of those 
+        ''' Returns the supply shortage for agricultural diversions at the destination of those 
         supplies plus any conveyance losses
         
         Parameters
@@ -3266,7 +3266,7 @@ class IWFMModel(IWFMMiscellaneous):
                                                       conversion_factor)
 
     def get_ag_well_supply_shortage_at_origin(self, wells_list, conversion_factor=1.0):
-        ''' returns the supply shortage for agricultural wells at the destination of those 
+        ''' Returns the supply shortage for agricultural wells at the destination of those 
         supplies plus any conveyance losses
         
         Parameters
@@ -3290,7 +3290,7 @@ class IWFMModel(IWFMMiscellaneous):
                                                       conversion_factor)
 
     def get_ag_elempump_supply_shortage_at_origin(self, elements_list, conversion_factor=1.0):
-        ''' returns the supply shortage for agricultural element pumping 
+        ''' Returns the supply shortage for agricultural element pumping 
         at the destination of those supplies plus any conveyance losses
         
         Parameters
@@ -3314,7 +3314,7 @@ class IWFMModel(IWFMMiscellaneous):
                                                       conversion_factor)
 
     def _get_supply_shortage_at_origin_urban(self, supply_type_id, supply_location_list, supply_conversion_factor):
-        ''' returns the supply shortage for agriculture at the destination of those 
+        ''' Returns the supply shortage for agriculture at the destination of those 
         supplies plus any conveyance losses
         
         Parameters
@@ -3368,7 +3368,7 @@ class IWFMModel(IWFMMiscellaneous):
         return np.array(urban_supply_shortage)
 
     def get_urban_diversion_supply_shortage_at_origin(self, diversions_list, conversion_factor=1.0):
-        ''' returns the supply shortage for urban diversions at the destination of those 
+        ''' Returns the supply shortage for urban diversions at the destination of those 
         supplies plus any conveyance losses
         
         Parameters
@@ -3392,7 +3392,7 @@ class IWFMModel(IWFMMiscellaneous):
                                                          conversion_factor)
 
     def get_urban_well_supply_shortage_at_origin(self, wells_list, conversion_factor=1.0):
-        ''' returns the supply shortage for urban wells at the destination of those 
+        ''' Returns the supply shortage for urban wells at the destination of those 
         supplies plus any conveyance losses
         
         Parameters
@@ -3416,7 +3416,7 @@ class IWFMModel(IWFMMiscellaneous):
                                                          conversion_factor)
 
     def get_urban_elempump_supply_shortage_at_origin(self, elements_list, conversion_factor=1.0):
-        ''' returns the supply shortage for urban element pumping 
+        ''' Returns the supply shortage for urban element pumping 
         at the destination of those supplies plus any conveyance losses
         
         Parameters
@@ -3440,7 +3440,7 @@ class IWFMModel(IWFMMiscellaneous):
                                                          conversion_factor)
 
     def _get_names(self, location_type_id):
-        ''' returns the available names for a given location_type
+        ''' Returns the available names for a given location_type
 
         Parameters
         ----------
@@ -3513,7 +3513,7 @@ class IWFMModel(IWFMMiscellaneous):
         return self._string_to_list_by_array(raw_names_string, delimiter_position_array, num_names)
 
     def get_subregion_names(self):
-        ''' returns the subregions names specified
+        ''' Returns the subregions names specified
         in an IWFM model
         
         Returns
@@ -3526,7 +3526,7 @@ class IWFMModel(IWFMMiscellaneous):
         return self._get_names(location_type_id)
 
     def get_stream_reach_names(self):
-        ''' returns the stream reach names specified in an IWFM model
+        ''' Returns the stream reach names specified in an IWFM model
         
         Returns
         -------
@@ -3538,7 +3538,7 @@ class IWFMModel(IWFMMiscellaneous):
         return self._get_names(location_type_id)
 
     def get_groundwater_observation_names(self):
-        ''' returns the groundwater head observation location names
+        ''' Returns the groundwater head observation location names
         specified in an IWFM model
 
         Returns
@@ -3551,7 +3551,7 @@ class IWFMModel(IWFMMiscellaneous):
         return self._get_names(location_type_id)
 
     def get_stream_observation_names(self):
-        ''' returns the stream flow observation location names specified
+        ''' Returns the stream flow observation location names specified
         in an IWFM model
         
         Returns
@@ -3564,7 +3564,7 @@ class IWFMModel(IWFMMiscellaneous):
         return self._get_names(location_type_id)
 
     def get_subsidence_observation_names(self):
-        ''' returns the subsidence observation location names specified
+        ''' Returns the subsidence observation location names specified
         in an IWFM model
 
         Returns
@@ -3577,7 +3577,7 @@ class IWFMModel(IWFMMiscellaneous):
         return self._get_names(location_type_id)
 
     def get_n_hydrograph_types(self):
-        ''' returns the number of different hydrograph types being
+        ''' Returns the number of different hydrograph types being
         printed by the IWFM model
         
         Returns
@@ -3602,7 +3602,7 @@ class IWFMModel(IWFMMiscellaneous):
         return n_hydrograph_types.value
 
     def get_hydrograph_type_list(self):
-        ''' returns a list of different hydrograph types being printed
+        ''' Returns a list of different hydrograph types being printed
         by the IWFM model 
         
         Returns
@@ -3681,7 +3681,7 @@ class IWFMModel(IWFMMiscellaneous):
         return n_hydrographs.value
 
     def get_n_groundwater_hydrographs(self):
-        ''' returns the number of groundwater hydrographs specified in
+        ''' Returns the number of groundwater hydrographs specified in
         an IWFM model
 
         Returns
@@ -3694,7 +3694,7 @@ class IWFMModel(IWFMMiscellaneous):
         return self._get_n_hydrographs(location_type_id)
 
     def get_n_subsidence_hydrographs(self):
-        ''' returns the number of subsidence hydrographs specified in 
+        ''' Returns the number of subsidence hydrographs specified in 
         an IWFM model
 
         Returns
@@ -3707,7 +3707,7 @@ class IWFMModel(IWFMMiscellaneous):
         return self._get_n_hydrographs(location_type_id)
 
     def get_n_stream_hydrographs(self):
-        ''' returns the number of stream flow hydrographs specified in
+        ''' Returns the number of stream flow hydrographs specified in
         an IWFM model
 
         Returns
@@ -3720,7 +3720,7 @@ class IWFMModel(IWFMMiscellaneous):
         return self._get_n_hydrographs(location_type_id)
 
     def get_n_tile_drain_hydrographs(self):
-        ''' returns the number of tile drain hydrographs specified in 
+        ''' Returns the number of tile drain hydrographs specified in 
         an IWFM model
 
         Returns
@@ -3781,7 +3781,7 @@ class IWFMModel(IWFMMiscellaneous):
             return np.array(hydrograph_ids)
 
     def get_groundwater_hydrograph_ids(self):
-        ''' returns the ids for the groundwater hydrographs specified
+        ''' Returns the ids for the groundwater hydrographs specified
         in an IWFM model
 
         Returns
@@ -3795,7 +3795,7 @@ class IWFMModel(IWFMMiscellaneous):
         return self._get_hydrograph_ids(location_type_id)
 
     def get_subsidence_hydrograph_ids(self):
-        ''' returns the ids for the subsidence hydrographs specified
+        ''' Returns the ids for the subsidence hydrographs specified
         in an IWFM model
         
         Returns
@@ -3809,7 +3809,7 @@ class IWFMModel(IWFMMiscellaneous):
         return self._get_hydrograph_ids(location_type_id)
 
     def get_stream_hydrograph_ids(self):
-        ''' returns the ids for the stream hydrographs specified
+        ''' Returns the ids for the stream hydrographs specified
         in an IWFM model
         
         Returns
@@ -3823,7 +3823,7 @@ class IWFMModel(IWFMMiscellaneous):
         return self._get_hydrograph_ids(location_type_id)
 
     def get_tile_drain_hydrograph_ids(self):
-        ''' returns the ids for the tile drain hydrographs specified
+        ''' Returns the ids for the tile drain hydrographs specified
         in an IWFM model
         
         Returns
@@ -3886,7 +3886,7 @@ class IWFMModel(IWFMMiscellaneous):
             return np.array(x), np.array(y)
 
     def get_groundwater_hydrograph_coordinates(self):
-        ''' returns the x,y-coordinates for the groundwater hydrographs
+        ''' Returns the x,y-coordinates for the groundwater hydrographs
         specified in an IWFM model
 
         Returns
@@ -3900,7 +3900,7 @@ class IWFMModel(IWFMMiscellaneous):
         return self._get_hydrograph_coordinates(location_type_id)
 
     def get_subsidence_observation_coordinates(self):
-        ''' returns the x,y-coordinates for the subsidence observation
+        ''' Returns the x,y-coordinates for the subsidence observation
         locations specified in an IWFM model
 
         Returns
@@ -3914,7 +3914,7 @@ class IWFMModel(IWFMMiscellaneous):
         return self._get_hydrograph_coordinates(location_type_id)
 
     def get_stream_observation_coordinates(self):
-        ''' returns the x,y-coordinates for the stream flow observation
+        ''' Returns the x,y-coordinates for the stream flow observation
         locations specified in an IWFM model
 
         Returns
@@ -3928,7 +3928,7 @@ class IWFMModel(IWFMMiscellaneous):
         return self._get_hydrograph_coordinates(location_type_id)
 
     def get_tile_drain_observation_coordinates(self):
-        ''' returns the x,y-coordinates for the tile drain observations
+        ''' Returns the x,y-coordinates for the tile drain observations
         specified in an IWFM model
 
         Returns
@@ -4172,7 +4172,7 @@ class IWFMModel(IWFMMiscellaneous):
     def get_subsidence_hydrograph(self, subsidence_location_id, begin_date=None,
                                    end_date=None, length_conversion_factor=1.0, 
                                    volume_conversion_factor=1.0):
-        ''' returns the simulated groundwater hydrograph for the 
+        ''' Returns the simulated groundwater hydrograph for the 
         provided groundwater hydrograph id
 
         Parameters
@@ -4211,7 +4211,7 @@ class IWFMModel(IWFMMiscellaneous):
     def get_stream_hydrograph(self, stream_location_id, begin_date=None,
                               end_date=None, length_conversion_factor=1.0, 
                               volume_conversion_factor=1.0):
-        ''' returns the simulated groundwater hydrograph for the 
+        ''' Returns the simulated groundwater hydrograph for the 
         provided groundwater hydrograph id
 
         Parameters
@@ -4248,7 +4248,7 @@ class IWFMModel(IWFMMiscellaneous):
                                     length_conversion_factor, volume_conversion_factor)
 
     def get_gwheads_foralayer(self, layer_number, begin_date=None, end_date=None, length_conversion_factor=1.0):
-        ''' returns the simulated groundwater heads for a single user-specified model layer for
+        ''' Returns the simulated groundwater heads for a single user-specified model layer for
         every model node over a user-specified time interval.
 
         Parameters
@@ -4379,7 +4379,7 @@ class IWFMModel(IWFMMiscellaneous):
         return np.array('1899-12-30', dtype='datetime64') + np.array(output_dates, dtype='timedelta64[D]'), np.array(output_gwheads)
 
     def get_gwheads_all(self, end_of_timestep=True, head_conversion_factor=1.0):
-        ''' returns the groundwater heads at all nodes in every aquifer 
+        ''' Returns the groundwater heads at all nodes in every aquifer 
         layer for the current simulation time step
         
         Parameters
@@ -4438,7 +4438,7 @@ class IWFMModel(IWFMMiscellaneous):
         return np.array(heads)
 
     def get_subsidence_all(self, subsidence_conversion_factor=1.0):
-        ''' returns the groundwater heads at all nodes in every aquifer 
+        ''' Returns the groundwater heads at all nodes in every aquifer 
         layer for the current simulation time step
         
         Parameters
@@ -4487,7 +4487,7 @@ class IWFMModel(IWFMMiscellaneous):
         return np.array(subsidence)
 
     def get_subregion_ag_pumping_average_depth_to_water(self):
-        ''' returns subregional depth to groundwater values that are 
+        ''' Returns subregional depth to groundwater values that are 
         weighted-average with respect to agricultural pumping rates
         during a model run
 
@@ -4517,7 +4517,7 @@ class IWFMModel(IWFMMiscellaneous):
         return np.array(average_depth_to_groundwater)
 
     def get_zone_ag_pumping_average_depth_to_water(self, elements_list, zones_list):
-        ''' returns average depth to groundwater for user-defined zones
+        ''' Returns average depth to groundwater for user-defined zones
 
         Parameters
         ----------
@@ -4576,7 +4576,7 @@ class IWFMModel(IWFMMiscellaneous):
         return np.array(average_depth_to_groundwater)
 
     def get_n_locations(self, location_type_id):
-        ''' returns the number of locations for a specified location
+        ''' Returns the number of locations for a specified location
         type
 
         Parameters
@@ -4611,7 +4611,7 @@ class IWFMModel(IWFMMiscellaneous):
         return n_locations.value
 
     def get_n_small_watersheds(self):
-        ''' returns the number of small watersheds specified in an IWFM
+        ''' Returns the number of small watersheds specified in an IWFM
         model
         
         Returns
@@ -4624,7 +4624,7 @@ class IWFMModel(IWFMMiscellaneous):
         return self.get_n_locations(ctypes.byref(location_type_id))
 
     def get_location_ids(self, location_type_id):
-        ''' returns the location identification numbers used by the 
+        ''' Returns the location identification numbers used by the 
         model for a specified location type
 
         Parameters
@@ -4663,7 +4663,7 @@ class IWFMModel(IWFMMiscellaneous):
         return np.array(location_ids)
     
     def get_small_watershed_ids(self):
-        ''' returns the small watershed identification numbers specified
+        ''' Returns the small watershed identification numbers specified
         in the IWFM model
         
         Returns
@@ -5272,7 +5272,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     ### methods that wrap two or more DLL calls
     def get_groundwater_hydrograph_info(self):
-        ''' returns model information for the groundwater hydrographs,
+        ''' Returns model information for the groundwater hydrographs,
         including hydrograph id, x- and y- coordinates, name, and 
         stratigraphy.
 
@@ -5295,7 +5295,7 @@ class IWFMModel(IWFMMiscellaneous):
         return df
 
     def get_node_info(self):
-        ''' returns node id, x-, and y-coordinates for each node in an IWFM model
+        ''' Returns node id, x-, and y-coordinates for each node in an IWFM model
         '''
         # get array of node ids
         node_ids = self.get_node_ids()
@@ -5309,7 +5309,7 @@ class IWFMModel(IWFMMiscellaneous):
         return node_info
 
     def get_element_info(self):
-        ''' returns element configuration information for all 
+        ''' Returns element configuration information for all 
         elements in an IWFM model
         '''
         df = pd.DataFrame({'IE': self.get_element_ids()})
@@ -5328,7 +5328,7 @@ class IWFMModel(IWFMMiscellaneous):
         return stacked_df[stacked_df['NodeID'] != 0]
 
     def get_boundary_nodes(self, subregions=False, remove_duplicates=False):
-        ''' returns nodes that make up the boundary of an IWFM model
+        ''' Returns nodes that make up the boundary of an IWFM model
 
         Parameters
         ----------
@@ -5400,7 +5400,7 @@ class IWFMModel(IWFMMiscellaneous):
             return pd.merge(element_segments, boundary_nodes, on=['SR', 'start_node', 'end_node'])[['SR', 'orig_start_node', 'orig_end_node']]
 
     def get_element_spatial_info(self):
-        ''' returns element configuration information including x-y 
+        ''' Returns element configuration information including x-y 
         coordinates for nodes
         '''
         node_info = self.get_node_info()
