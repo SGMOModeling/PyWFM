@@ -1,16 +1,16 @@
-.. IWFMDLL documentation master file
+.. PyWFM documentation master file
 
 #####################
-IWFMDLL Documentation
+PyWFM Documentation
 #####################
 
-iwfmdll is a python package that exposes the functionality of the IWFM DLL
+pywfm is a python package that exposes the functionality of the IWFM DLL
 
 --------
 Overview
 --------
 
-The iwfmdll library includes 3 main classes:
+The pywfm library includes 3 main classes:
 
    * IWFMModel 
    * IWFMBudget 
@@ -22,7 +22,7 @@ Each of these inherits from the IWFMMiscellaneous base class. Many of the method
 Design
 ------
 
-The iwfmdll library wraps each of the IWFM DLL functions so that the user does not have to deal with the IWFM DLL syntax directly. Instead, users familiar with python can work with standard python objects such as strings, ints, floats, lists, and numpy arrays.
+The pywfm library wraps each of the IWFM DLL functions so that the user does not have to deal with the IWFM DLL syntax directly. Instead, users familiar with python can work with standard python objects such as strings, ints, floats, lists, and numpy arrays.
 
 Many parts of the IWFM DLL procedures are handled internally allowing the user to provide only a few pieces of required information to obtain results.
 
