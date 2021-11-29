@@ -7,8 +7,8 @@ class IWFMMiscellaneous:
 
     Returns
     -------
-    IWFM_Miscellaneous Object
-        instance of the IWFM_Miscellaneous class and access to the IWFM
+    IWFMMiscellaneous Object
+        instance of the IWFMMiscellaneous class and access to the IWFM
         Miscellaneous fortran procedures.
 
     Notes
@@ -779,7 +779,7 @@ class IWFMMiscellaneous:
 
         Examples
         --------
-        >>> from iwfmdll import IWFMModel
+        >>> from pywfm import IWFMModel
         >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
@@ -788,7 +788,7 @@ class IWFMMiscellaneous:
         6
         >>> model.kill()
 
-        >>> from iwfmdll import IWFMModel
+        >>> from pywfm import IWFMModel
         >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
@@ -876,7 +876,7 @@ class IWFMMiscellaneous:
 
         Examples
         --------
-        >>> from iwfmdll import IWFMModel
+        >>> from pywfm import IWFMModel
         >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
@@ -885,7 +885,7 @@ class IWFMMiscellaneous:
         '10/02/1990_24:00'
         >>> model.kill()
 
-        >>> from iwfmdll import IWFMModel
+        >>> from pywfm import IWFMModel
         >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
@@ -894,7 +894,7 @@ class IWFMMiscellaneous:
         '03/31/2001_24:00'
         >>> model.kill()
 
-        >>> from iwfmdll import IWFMModel
+        >>> from pywfm import IWFMModel
         >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
@@ -969,7 +969,7 @@ class IWFMMiscellaneous:
 
         Examples
         --------
-        >>> from iwfmdll import IWFMModel
+        >>> from pywfm import IWFMModel
         >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
@@ -978,7 +978,7 @@ class IWFMMiscellaneous:
         False
         >>> model.kill()
 
-        >>> from iwfmdll import IWFMModel
+        >>> from pywfm import IWFMModel
         >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
