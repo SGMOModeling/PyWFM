@@ -8,7 +8,7 @@ This guide is an overview and explains the installation process.
 Overview
 ********
 
-To use the iwfmdll package there are several steps required.
+To use the pywfm package there are several steps required.
 
 
 1. Make sure python 3 [#pythonversion]_ is installed on your computer and pip runs from the command line
@@ -29,21 +29,21 @@ To use the iwfmdll package there are several steps required.
 
 
 
-2. Download the iwfmdll python code
+2. Download the pywfm python code
 ===================================
 
-   pip install git+https://github.com/SGMOModeling/IWFMDLL.git
+   pip install git+https://github.com/SGMOModeling/PyWFM.git
 
    or
 
-   go to https://github.com/SGMOModeling/IWFMDLL and download the code as a ZIP archive.
+   go to https://github.com/SGMOModeling/PyWFM and download the code as a ZIP archive.
 
    .. image:: ../_static/CodeDownload.png
-      :alt: github link to download iwfmdll module
+      :alt: github link to download pywfm module
 
    .. note::
-      By downloading the ZIP archive of the iwfmdll package, the module can be upzipped and placed 
-      in a location of the users choice. a .pth file containing the path to the iwfmdll package can 
+      By downloading the ZIP archive of the pywfm package, the module can be upzipped and placed 
+      in a location of the users choice. a .pth file containing the path to the pywfm package can 
       be saved in the site-packages folder of the python installation.
 
       For example, with an ArcGIS Pro python environment the site packages folder for a cloned
@@ -65,11 +65,11 @@ To use the iwfmdll package there are several steps required.
       :alt: Download IWFM from the CNRA Open Data Platform
 
    .. important::
-      Downloading IWFM includes the IWFM dll that the iwfmdll python module is dependent on to work
+      Downloading IWFM includes the IWFM dll that the pywfm python module is dependent on to work
 
 
 4.
 
 .. rubric Footnotes
 
-.. [#pythonversion] The iwfmdll module has been tested using python 3.7.9
+.. [#pythonversion] The pywfm module has been tested using python 3.7.9
