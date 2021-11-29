@@ -4,7 +4,7 @@
 IWFMModel
 ##########
 
-.. currentmodule:: iwfmdll.IWFMModel
+.. currentmodule:: pywfm.IWFMModel
 
 Time-Related
 ============
