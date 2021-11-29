@@ -530,6 +530,27 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_element_ids(self):
         ''' Returns an array of element ids in an IWFM model
+
+        Returns
+        -------
+        np.ndarray
+            array of element ids in an IWFM model application
+
+        See Also
+        --------
+        IWFMModel.get_n_elements : Returns the number of elements in the IWFM model
+        IWFMModel.get_element_config : Returns an array of node ids for an IWFM element
+
+        Example
+        -------
+        >>> from pywfm import IWFMModel
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
+        >>> sim_file = 'Simulation_MAIN.IN'
+        >>> model = IWFMModel(dll, preprocessor_infile, simulation_infile)
+        >>> model.get_elemen_ids()
+        array([ 1, 2, 3, ..., 398, 399, 400])
+        >>> model.kill()
         '''
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetElementIDs"):
