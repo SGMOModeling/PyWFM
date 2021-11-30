@@ -5530,6 +5530,39 @@ class IWFMModel(IWFMMiscellaneous):
     def get_element_spatial_info(self):
         ''' Returns element configuration information including x-y 
         coordinates for nodes
+
+        Returns
+        -------
+        pd.DataFrame
+            DataFrame containing element IDs, Subregions, NodeID for each element with x-y coordinates, and Code for matplotlib patch plotting
+        
+        See Also
+        --------
+        IWFMModel.get_element_info : Returns element configuration information for all elements in an IWFM model
+        IWFMModel.get_node_info : Returns node id, x-, and y-coordinates for each node in an IWFM model
+
+        Example
+        -------
+        >>> from pywfm import IWFMModel
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
+        >>> sim_file = 'Simulation_MAIN.IN'
+        >>> model = IWFMModel(dll, preprocessor_infile, simulation_infile)
+        >>> model.get_element_spatial_info()
+               IE   SR  NodeNum NodeID         X          Y Count code
+           0    1    1    Node1      1 1804440.0 14435520.0     4    1
+           1    1    1    Node2      2 1811001.6 14435520.0     4    2
+           2    1    1    Node3     23 1811001.6 14442081.6     4    2
+           3    1    1    Node4     22 1804440.0 14442081.6     4   79
+           4    2    1    Node1      2 1811001.6 14435520.0     4    1
+         ...  ...  ...    ...      ...       ...        ...   ...  ...
+        1595  399    2    Node4    439 1922548.8 14566752.0     4   79
+        1596  400    2    Node1    419 1929110.4 14560190.4     4    1
+        1597  400    2    Node2    420 1935672.0 14560190.4     4    2
+        1598  400    2    Node3    441 1935672.0 14566752.0     4    2
+        1599  400    2    Node4    440 1929110.4 14566752.0     4   79
+        1600 rows × 8 columns
+        >>> model.kill()
         '''
         node_info = self.get_node_info()
         element_info = self.get_element_info()
