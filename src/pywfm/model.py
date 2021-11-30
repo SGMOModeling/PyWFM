@@ -742,6 +742,23 @@ class IWFMModel(IWFMMiscellaneous):
         -------
         str
             name of the subregion
+
+        See Also
+        --------
+        IWFMModel.get_n_subregions : Returns the number of subregions in an IWFM model
+        IWFMModel.get_subregion_ids : Returns an array of IDs for subregions identified in an IWFM model
+        IWFMModel.get_subregions_by_element : Returns an array identifying the IWFM Model elements contained within each subregion.
+
+        Example
+        -------
+        >>> from pywfm import IWFMModel
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
+        >>> sim_file = 'Simulation_MAIN.IN'
+        >>> model = IWFMModel(dll, preprocessor_infile, simulation_infile)
+        >>> model.get_subregion_name(1)
+        'Region1 (SR1)'
+        >>> model.kill()
         '''
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetSubregionName"):
