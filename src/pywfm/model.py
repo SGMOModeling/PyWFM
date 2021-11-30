@@ -5355,6 +5355,40 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_node_info(self):
         ''' Returns node id, x-, and y-coordinates for each node in an IWFM model
+
+        Returns
+        -------
+        pd.DataFrame
+            DataFrame containing IDs, x-coordinates, and y-coordinates for all nodes in an IWFM model
+
+        See Also
+        --------
+        IWFMModel.get_n_nodes : Returns the number of nodes in an IWFM model
+        IWFMModel.get_node_ids : Returns an array of node IDs in an IWFM model
+        IWFMModel.get_node_coordinates : Returns the x,y coordinates of the nodes in an IWFM model 
+
+        Example
+        -------
+        >>> from pywfm import IWFMModel
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
+        >>> sim_file = 'Simulation_MAIN.IN'
+        >>> model = IWFMModel(dll, preprocessor_infile, simulation_infile)
+        >>> model.get_node_info()
+             NodeID          X            Y
+          0       1  1804440.0   14435520.0
+          1       2  1811001.6   14435520.0
+          2       3  1817563.2   14435520.0
+          3       4  1824124.8   14435520.0
+          4       5  1830686.4   14435520.0
+        ...     ...        ...          ...           
+        436     437  1909425.6   14566752.0
+        437     438  1915987.2   14566752.0
+        438     439  1922548.8   14566752.0
+        439     440  1929110.4   14566752.0
+        440     441  1935672.0   14566752.0
+        441 rows × 3 columns
+        >>> model.kill()
         '''
         # get array of node ids
         node_ids = self.get_node_ids()
