@@ -1360,15 +1360,40 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="pywfm.IWFMModel.get_subregion_ids">
 <span class="sig-prename descclassname"><span class="pre">IWFMModel.</span></span><span class="sig-name descname"><span class="pre">get_subregion_ids</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pywfm.IWFMModel.get_subregion_ids" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns an array of IDs for subregions identifiedin the an IWFM model</p>
+<dd><p>Returns an array of IDs for subregions identified in an IWFM model</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>integer array of length returned by method ‘get_n_subregions’</p>
+<dd class="field-odd"><p>array containing integer IDs for the subregions specified in the IWFM model</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>np.array</p>
+<dd class="field-even"><p>np.ndarray</p>
 </dd>
 </dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The resulting integer array will have a length equal to the value returned by the get_n_subregions method</p>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><a class="reference internal" href="pywfm.IWFMModel.get_n_subregions.html#pywfm.IWFMModel.get_n_subregions" title="pywfm.IWFMModel.get_n_subregions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IWFMModel.get_n_subregions</span></code></a></dt><dd><p>Returns the number of subregions in an IWFM model</p>
+</dd>
+<dt><a class="reference internal" href="pywfm.IWFMModel.get_subregion_name.html#pywfm.IWFMModel.get_subregion_name" title="pywfm.IWFMModel.get_subregion_name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IWFMModel.get_subregion_name</span></code></a></dt><dd><p>Returns the name corresponding to the subregion_id in an IWFM model</p>
+</dd>
+</dl>
+<p><a class="reference internal" href="pywfm.IWFMModel.get_subregions_by_element.html#pywfm.IWFMModel.get_subregions_by_element" title="pywfm.IWFMModel.get_subregions_by_element"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IWFMModel.get_subregions_by_element</span></code></a></p>
+</div>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pywfm</span> <span class="kn">import</span> <span class="n">IWFMModel</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dll</span> <span class="o">=</span> <span class="s1">&#39;../../DLL/Bin/IWFM2015_C_x64.dll&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pp_file</span> <span class="o">=</span> <span class="s1">&#39;../Preprocessor/PreProcessor_MAIN.IN&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sim_file</span> <span class="o">=</span> <span class="s1">&#39;Simulation_MAIN.IN&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">IWFMModel</span><span class="p">(</span><span class="n">dll</span><span class="p">,</span> <span class="n">preprocessor_infile</span><span class="p">,</span> <span class="n">simulation_infile</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">get_subregion_ids</span><span class="p">()</span>
+<span class="go">array([1, 2])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">kill</span><span class="p">()</span>
+</pre></div>
+</div>
 </dd></dl>
 
 </div>
