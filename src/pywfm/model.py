@@ -5370,6 +5370,42 @@ class IWFMModel(IWFMMiscellaneous):
     def get_element_info(self):
         ''' Returns element configuration information for all 
         elements in an IWFM model
+
+        Returns
+        -------
+        pd.DataFrame
+            DataFrame containing subregion IDs, node order, and node IDs for each element ID
+
+        See Also
+        --------
+        IWFMModel.get_n_elements : Returns the number of elements in an IWFM model
+        IWFMModel.get_element_ids : Returns an array of element IDs in an IWFM model
+        IWFMModel.get_element_config : Returns an array of node IDs for an IWFM element
+        IWFMModel.get_subregions_by_element : Returns an array of IWFM elements contained in each subregion
+
+        Example
+        -------
+        >>> from pywfm import IWFMModel
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
+        >>> sim_file = 'Simulation_MAIN.IN'
+        >>> model = IWFMModel(dll, preprocessor_infile, simulation_infile)
+        >>> model.get_element_info()
+              IE  SR  NodeNum  NodeID
+        _____________________________
+           0   1   1    Node1       1
+           1   1   1    Node2       2
+           2   1   1    Node3      23
+           3   1   1    Node4      22
+           4   2   1    Node1       2
+         ... ... ...      ...     ...
+        1595 399   2    Node4     439
+        1596 400   2    Node1     419
+        1597 400   2    Node2     420
+        1598 400   2    Node3     441
+        1599 400   2    Node4     440
+        1600 rows x 4 columns
+        >>> model.kill()
         '''
         df = pd.DataFrame({'IE': self.get_element_ids()})
         
