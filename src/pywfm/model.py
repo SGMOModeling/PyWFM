@@ -5391,19 +5391,18 @@ class IWFMModel(IWFMMiscellaneous):
         >>> sim_file = 'Simulation_MAIN.IN'
         >>> model = IWFMModel(dll, preprocessor_infile, simulation_infile)
         >>> model.get_element_info()
-              IE  SR  NodeNum  NodeID
-        _____________________________
-           0   1   1    Node1       1
-           1   1   1    Node2       2
-           2   1   1    Node3      23
-           3   1   1    Node4      22
-           4   2   1    Node1       2
-         ... ... ...      ...     ...
-        1595 399   2    Node4     439
-        1596 400   2    Node1     419
-        1597 400   2    Node2     420
-        1598 400   2    Node3     441
-        1599 400   2    Node4     440
+               IE   SR  NodeNum  NodeID
+           0    1    1    Node1       1
+           1    1    1    Node2       2
+           2    1    1    Node3      23
+           3    1    1    Node4      22
+           4    2    1    Node1       2
+         ...  ...  ...      ...     ...
+        1595  399    2    Node4     439
+        1596  400    2    Node1     419
+        1597  400    2    Node2     420
+        1598  400    2    Node3     441
+        1599  400    2    Node4     440
         1600 rows x 4 columns
         >>> model.kill()
         '''
