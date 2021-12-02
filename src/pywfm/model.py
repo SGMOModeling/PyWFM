@@ -977,8 +977,8 @@ class IWFMModel(IWFMMiscellaneous):
 
         Note
         ----
-        Most stream nodes will only have 1 stream node immediately upstream
-        The upstream-most stream node has no upstream stream nodes and will return 0
+        Most stream nodes will only have 1 stream node immediately upstream.
+        The upstream-most stream node has no upstream stream nodes and will return 0.
         Stream nodes at a confluence of two stream reaches will return a value 2
 
         See Also
