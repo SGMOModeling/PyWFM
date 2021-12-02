@@ -3617,38 +3617,43 @@ class IWFMModel(IWFMMiscellaneous):
             raise AttributeError('IWFM DLL does not have "{}" procedure. '
                                  'Check for an updated version'.format('IW_Model_GetNames'))
 
-        # get location type id
+        # convert location type id to ctypes
         location_type_id = ctypes.c_int(location_type_id)
 
-        # get number of location for specified location type
+        # get number of locations for specified location type
         if location_type_id.value == 8:
-            num_names = ctypes.c_int(self.get_n_nodes())
+            #num_names = ctypes.c_int(self.get_n_nodes())
+            raise NotImplementedError('IWFM does not allow names for groundwater nodes')
 
         elif location_type_id.value == 2:
-            num_names = ctypes.c_int(self.get_n_elements())
+            #num_names = ctypes.c_int(self.get_n_elements())
+            raise NotImplementedError('IWFM does not allow names for elements')
 
         elif location_type_id.value == 4:
             num_names = ctypes.c_int(self.get_n_subregions())
 
         elif location_type_id.value == 7:
             # need to determine if API call exists for this
-            raise NotImplementedError
+            raise NotImplementedError('The IWFM Model Object does not include zone definitions')
 
         elif location_type_id.value == 3:
-            num_names = ctypes.c_int(self.get_n_lakes())
+            #num_names = ctypes.c_int(self.get_n_lakes())
+            raise NotImplementedError('IWFM does not allow names for lakes')
 
         elif location_type_id.value == 1:
-            num_names = ctypes.c_int(self.get_n_stream_nodes())
+            #num_names = ctypes.c_int(self.get_n_stream_nodes())
+            raise NotImplementedError('IWFM does not allow names for stream nodes')
 
         elif location_type_id.value == 11:
             num_names = ctypes.c_int(self.get_n_stream_reaches())
 
         elif location_type_id.value == 13:
-            num_names = ctypes.c_int(self.get_n_tile_drains())
+            #num_names = ctypes.c_int(self.get_n_tile_drains())
+            raise NotImplementedError('IWFM does not allow names for tile drains')
 
         elif location_type_id.value == 14:
             #self.get_n_small_watersheds()
-            raise NotImplementedError
+            raise NotImplementedError('IWFM does not allow names for small watersheds')
 
         elif location_type_id.value in [9, 10, 12]:
             num_names = ctypes.c_int(self._get_n_hydrographs(location_type_id.value))
@@ -3677,7 +3682,24 @@ class IWFMModel(IWFMMiscellaneous):
         Returns
         -------
         list
-            list of names for each subregion in the model 
+            list of names for each subregion in the model
+
+        See Also
+        --------
+        IWFMModel.get_subregion_name : Returns the name corresponding to the subregion_id in an IWFM model
+        IWFMModel.get_n_subregions : Returns the number of subregions in an IWFM model
+        IWFMModel.get_subregion_ids : Returns an array of IDs for subregions identified in an IWFM model
+
+        Example
+        -------
+        >>> from pywfm import IWFMModel
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
+        >>> sim_file = 'Simulation_MAIN.IN'
+        >>> model = IWFMModel(dll, preprocessor_infile, simulation_infile)
+        >>> model.get_subregion_names()
+        ['Region1', 'Region2']
+        >>> model.kill()        
         '''
         location_type_id = self.get_location_type_id_subregion()
 
