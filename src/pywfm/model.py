@@ -891,7 +891,7 @@ class IWFMModel(IWFMMiscellaneous):
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
         >>> model = IWFMModel(dll, preprocessor_infile, simulation_infile)
-        >>> model.get_subregions_by_element()
+        >>> model.get_n_stream_nodes()
         23
         >>> model.kill()
         '''
@@ -914,12 +914,34 @@ class IWFMModel(IWFMMiscellaneous):
         return self.n_stream_nodes.value
 
     def get_stream_node_ids(self):
-        ''' Returns an array of stream node ids from the IWFM model application
+        ''' Returns an array of stream node IDs from the IWFM model application
         
         Returns
         -------
-        np.array
-            integer array of length returned by method 'get_n_stream_nodes' 
+        np.ndarray
+            array of stream node IDs from the IWFM model
+            
+        Note
+        ----
+        The resulting integer array will have a length equal to the value returned by the get_n_stream_nodes method
+
+        See Also
+        --------
+        IWFMModel.get_n_stream_nodes : Reutrns the number of stream nodes in an IWFM model
+        IWFMModel.get_n_stream_nodes_upstream_of_stream_node : Returns the number of stream nodes immediately upstream of the provided stream node id
+        IWFMModel.get_stream_nodes_upstream_of_stream_node : Returns an array of the stream node ids immediately upstream of the provided stream node id
+
+        Example
+        -------
+        >>> from pywfm import IWFMModel
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
+        >>> sim_file = 'Simulation_MAIN.IN'
+        >>> model = IWFMModel(dll, preprocessor_infile, simulation_infile)
+        >>> model.get_stream_node_ids()
+        array([ 1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16, 17,
+               18, 19, 20, 21, 22, 23])
+        >>> model.kill()
         '''
         if not hasattr(self.dll, "IW_Model_GetStrmNodeIDs"):
             raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format('IW_Model_GetStrmNodeIDs'))
