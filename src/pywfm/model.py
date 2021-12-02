@@ -364,6 +364,7 @@ class IWFMModel(IWFMMiscellaneous):
         IWFMModel.get_n_subregions : Returns the number of subregions in an IWFM model
         IWFMModel.get_n_stream_nodes : Returns the number of stream nodes in an IWFM model
         IWFMModel.get_n_stream_inflows : Returns the number of stream boundary inflows specified by the user as timeseries input data
+        IWFMModel.get_n_layers : Returns the number of layers in an IWFM model
 
         Example
         -------
@@ -497,7 +498,13 @@ class IWFMModel(IWFMMiscellaneous):
         See Also
         --------
         IWFMModel.get_element_ids : Returns an array of element IDs in an IWFM model
-        IWFMModel.get_element_config : Returns an array of node IDs for an IWFM element.
+        IWFMModel.get_element_config : Returns an array of node IDs for an IWFM element
+        IWFMModel.get_n_nodes : Returns the number of nodes in an IWFM model
+        IWFMModel.get_n_subregions : Returns the number of subregions in an IWFM model
+        IWFMModel.get_n_stream_nodes : Returns the number of stream nodes in an IWFM model
+        IWFMModel.get_n_stream_inflows : Returns the number of stream boundary inflows specified by the user as timeseries input data
+        IWFMModel.get_n_layers : Returns the number of layers in an IWFM model
+        
 
         Example
         -------
