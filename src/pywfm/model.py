@@ -869,6 +869,31 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_n_stream_nodes(self):
         ''' Returns the number of stream nodes in an IWFM model
+
+        Returns
+        -------
+        int
+            number of stream nodes in the IWFM model
+
+        See Also
+        --------
+        IWFMModel.get_stream_node_ids : Returns an array of stream node IDs from an IWFM model application
+        IWFMModel.get_n_stream_nodes_upstream_of_stream_node : Returns the number of stream nodes immediately upstream of the provided stream node id
+        IWFMModel.get_stream_nodes_upstream_of_stream_node : Returns an array of the stream node ids immediately upstream of the provided stream node id
+        IWFMModel.get_n_nodes : Returns the number of nodes in an IWFM model
+        IWFMModel.get_n_subregions : Returns the number of subregions in an IWFM model
+        IWFMModel.get_n_stream_inflows : Returns the number of stream boundary inflows specified by the user as timeseries input data
+
+        Example
+        -------
+        >>> from pywfm import IWFMModel
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
+        >>> sim_file = 'Simulation_MAIN.IN'
+        >>> model = IWFMModel(dll, preprocessor_infile, simulation_infile)
+        >>> model.get_subregions_by_element()
+        23
+        >>> model.kill()
         '''
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetNStrmNodes"):
