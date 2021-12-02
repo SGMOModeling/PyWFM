@@ -974,6 +974,29 @@ class IWFMModel(IWFMMiscellaneous):
         -------
         int
             number of stream nodes immediately upstream of given stream node
+
+        Note
+        ----
+        Most stream nodes will only have 1 stream node immediately upstream
+        The upstream-most stream node has no upstream stream nodes and will return 0
+        Stream nodes at a confluence of two stream reaches will return a value 2
+
+        See Also
+        --------
+        IWFMModel.get_n_stream_nodes : Returns the number of stream nodes in an IWFM model
+        IWFMModel.get_stream_node_ids : Returns an array of stream node IDs from an IWFM model application
+        IWFMModel.get_stream_nodes_upstream_of_stream_node : Returns an array of the stream node ids immediately upstream of the provided stream node id
+
+        Example
+        -------
+        >>> from pywfm import IWFMModel
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
+        >>> sim_file = 'Simulation_MAIN.IN'
+        >>> model = IWFMModel(dll, preprocessor_infile, simulation_infile)
+        >>> model.get_n_stream_nodes_upstream_of_stream_node(11)
+        0
+        >>> model.kill()
         '''
         if not hasattr(self.dll, "IW_Model_GetStrmNUpstrmNodes"):
             raise AttributeError('IWFM DLL does not have "{}" procedure. '
@@ -986,7 +1009,7 @@ class IWFMModel(IWFMMiscellaneous):
         # check that stream_node_id is a valid stream_node_id
         stream_node_ids = self.get_stream_node_ids()
         if not np.any(stream_node_ids == stream_node_id):
-            raise ValueError('stream_node_id is not a valid Stream Node ID')
+            raise ValueError("stream_node_id '{}' is not a valid Stream Node ID".format(stream_node_id))
 
         # set input variables
         stream_node_id = ctypes.c_int(stream_node_id)
