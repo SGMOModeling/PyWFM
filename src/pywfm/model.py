@@ -3698,7 +3698,7 @@ class IWFMModel(IWFMMiscellaneous):
         >>> sim_file = 'Simulation_MAIN.IN'
         >>> model = IWFMModel(dll, preprocessor_infile, simulation_infile)
         >>> model.get_subregion_names()
-        ['Region1', 'Region2']
+        ['Region1 (SR1)', 'Region2 (SR2)']
         >>> model.kill()        
         '''
         location_type_id = self.get_location_type_id_subregion()
