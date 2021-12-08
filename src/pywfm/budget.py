@@ -577,12 +577,7 @@ class IWFMBudget(IWFMMiscellaneous):
                                      ctypes.byref(n_output_intervals),
                                      ctypes.byref(status))
 
-        values = np.array(budget_values)
-
-        dates = np.array('1899-12-30', dtype='datetime64') + values[:,0].astype('timedelta64')
-        budget = values[:,1:]
-
-        return dates, budget
+        return np.array(budget_values)
 
     def get_values_for_a_column(self, location_id, column_name, begin_date=None, 
                                 end_date=None, length_conversion_factor=1.0, 
