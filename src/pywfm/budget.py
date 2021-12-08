@@ -585,8 +585,8 @@ class IWFMBudget(IWFMMiscellaneous):
 
     def get_values_for_a_column(self, location_id, column_name, begin_date=None, 
                                 end_date=None, length_conversion_factor=1.0, 
-                                area_conversion_factor=2.295684E-05, 
-                                volume_conversion_factor=2.295684E-08):
+                                area_conversion_factor=1.0, 
+                                volume_conversion_factor=1.0):
         ''' returns the budget data for a single column and location for a specified
         beginning and ending dates.
 
@@ -608,18 +608,22 @@ class IWFMBudget(IWFMMiscellaneous):
             unit conversion factor for length units used in the model 
             to some other length unit
 
-        area_conversion_factor : float, default=2.295684E-05
+        area_conversion_factor : float, default=1.0
             unit conversion factor for area units used in the model
             to some other area unit
 
-        volume_conversion_factor : float, default=2.295684E-08
+        volume_conversion_factor : float, default=1.0
             unit conversion factor for volume units used in the model
             to some other volume unit
 
         Returns
         -------
-        length 2-tuple of np.arrays
-            representing dates and values
+        tuple 
+            np.ndarrays representing dates and values
+
+        See Also
+        --------
+        IWFMBudget.get_values : returns budget data for selected budget columns for a location and specified time interval
         '''
         if not hasattr(self.dll, 'IW_Budget_GetValues_ForAColumn'):
             raise AttributeError('IWFM DLL does not have "{}" procedure. '
