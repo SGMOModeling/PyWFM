@@ -16,7 +16,9 @@ To use the pywfm package there are several steps required.
 
    To check your python version, open command prompt and type:
 
-   python --version
+   .. code-block:: bash
+   
+      python --version
 
    .. image:: ../_static/checkpythonversion.png
       :alt: command prompt window showing command to check python version
@@ -32,7 +34,9 @@ To use the pywfm package there are several steps required.
 2. Download the pywfm python code
 ===================================
 
-   pip install git+https://github.com/SGMOModeling/PyWFM.git
+   .. code-block:: bash
+      
+	  pip install git+https://github.com/SGMOModeling/PyWFM.git
 
    or
 

@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tutorial &#8212; PyWFM 0.0.1 documentation</title>
+    <title>Tutorials &#8212; PyWFM 0.0.1 documentation</title>
     
   <link href="../_static/css/theme.css" rel="stylesheet" />
   <link href="../_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
@@ -31,10 +31,11 @@
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="API Reference" href="../reference/index.html" />
+    <link rel="next" title="PyWFM Tutorial 1" href="tutorial01_pywfm_runsamplemodel.html" />
     <link rel="prev" title="Installation" href="../installation/index.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -116,7 +117,28 @@
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
   <div class="bd-toc-item active">
-    
+    <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="tutorial01_pywfm_runsamplemodel.html">
+   PyWFM Tutorial 1
+  </a>
+ </li>
+</ul>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="tutorial02_pywfm_plothorizontalK.html">
+   PyWFM Tutorial 2
+  </a>
+ </li>
+</ul>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="tutorial03_pywfm_plotheadcontours.html">
+   PyWFM Tutorial 3
+  </a>
+ </li>
+</ul>
+
   </div>
 </nav>
             </div>
@@ -129,9 +151,31 @@
               
               <div class="toc-item">
                 
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
 
 <nav id="bd-toc-nav">
-    
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#running-an-iwfm-simulation">
+   Running an IWFM Simulation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#retrieving-data-from-an-iwfm-simulation">
+   Retrieving Data from an IWFM Simulation
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#plotting-model-results">
+     Plotting Model Results
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
 </nav>
               </div>
               
@@ -151,10 +195,38 @@
               
               <div>
                 
-  <div class="section" id="tutorial">
-<h1>Tutorial<a class="headerlink" href="#tutorial" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="tutorials">
+<h1>Tutorials<a class="headerlink" href="#tutorials" title="Permalink to this headline">¶</a></h1>
 <p>This is an overview and explains some of the primary features of the module.</p>
+<div class="section" id="running-an-iwfm-simulation">
+<h2>Running an IWFM Simulation<a class="headerlink" href="#running-an-iwfm-simulation" title="Permalink to this headline">¶</a></h2>
+<p>Contents:
+This tutorial walks a user of pywfm through how to run the IWFM Sample Model from python</p>
 <div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tutorial01_pywfm_runsamplemodel.html">PyWFM Tutorial 1</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="retrieving-data-from-an-iwfm-simulation">
+<h2>Retrieving Data from an IWFM Simulation<a class="headerlink" href="#retrieving-data-from-an-iwfm-simulation" title="Permalink to this headline">¶</a></h2>
+<p>Contents:
+This tutorial walks a user of pywfm through how to obtain the aquifer horizontal K values and plot them.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tutorial02_pywfm_plothorizontalK.html">PyWFM Tutorial 2</a></li>
+</ul>
+</div>
+<div class="section" id="plotting-model-results">
+<h3>Plotting Model Results<a class="headerlink" href="#plotting-model-results" title="Permalink to this headline">¶</a></h3>
+<p>Contents:
+This tutorial walks a user of pywfm through how to retrieve simulated groundwater heads for a model layer and plot them.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tutorial03_pywfm_plotheadcontours.html">PyWFM Tutorial 3</a></li>
+</ul>
+</div>
+</div>
 </div>
 </div>
 
@@ -165,7 +237,7 @@
               <div class='prev-next-bottom'>
                 
     <a class='left-prev' id="prev-link" href="../installation/index.html" title="previous page">Installation</a>
-    <a class='right-next' id="next-link" href="../reference/index.html" title="next page">API Reference</a>
+    <a class='right-next' id="next-link" href="tutorial01_pywfm_runsamplemodel.html" title="next page">PyWFM Tutorial 1</a>
 
               </div>
               
