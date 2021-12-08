@@ -469,6 +469,10 @@ class IWFMBudget(IWFMMiscellaneous):
         At this time, output is always returned using the default output 
         interval. In the future, it could be the output interval or
         more aggregated.
+
+        See Also
+        --------
+        IWFMBudget.get_values_for_a_column : returns the budget data for a single column and location for specified beginning and ending dates.
         '''
         if not hasattr(self.dll, 'IW_Budget_GetValues'):
             raise AttributeError('IWFM DLL does not have "{}" procedure. '
