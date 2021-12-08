@@ -5189,6 +5189,10 @@ class IWFMModel(IWFMMiscellaneous):
         -----
         This method is intended to be used when is_for_inquiry=0 during
         a model simulation
+
+        See Also
+        --------
+        IWFMModel.read_timeseries_data_overwrite : reads time series data for the current simulation time step and allows overwriting certain time series data
         '''
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_ReadTSData"):
@@ -5203,7 +5207,7 @@ class IWFMModel(IWFMMiscellaneous):
     def read_timeseries_data_overwrite(self, land_use_areas, 
                                         diversion_ids, diversions,
                                         stream_inflow_ids, stream_inflows):
-        ''' overwrites time series data for the current time step
+        ''' reads time series data for the current simulation time step and allows overwriting certain time series data
         
         Parameters
         ----------
@@ -5229,10 +5233,18 @@ class IWFMModel(IWFMMiscellaneous):
             flow index provided. Must be the same length as 
             stream_inflow_ids
 
+        Returns
+        -------
+        None
+
         Notes
         -----
         This method is intended to be used when is_for_inquiry=0 during
-        a model simulation 
+        a model simulation
+
+        See Also
+        --------
+        IWFMModel.read_timeseries_data : reads in all of the time series data for the current simulation time step
         '''
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_ReadTSData_Overwrite"):
