@@ -1360,7 +1360,7 @@
 <h1>pywfm.IWFMBudget.get_values_for_a_column<a class="headerlink" href="#pywfm-iwfmbudget-get-values-for-a-column" title="Permalink to this headline">¶</a></h1>
 <dl class="py method">
 <dt class="sig sig-object py" id="pywfm.IWFMBudget.get_values_for_a_column">
-<span class="sig-prename descclassname"><span class="pre">IWFMBudget.</span></span><span class="sig-name descname"><span class="pre">get_values_for_a_column</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">location_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">column_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">begin_date</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_date</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length_conversion_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">area_conversion_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2.295684e-05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">volume_conversion_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2.295684e-08</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pywfm.IWFMBudget.get_values_for_a_column" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">IWFMBudget.</span></span><span class="sig-name descname"><span class="pre">get_values_for_a_column</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">location_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">column_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">begin_date</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_date</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length_conversion_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">area_conversion_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">volume_conversion_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pywfm.IWFMBudget.get_values_for_a_column" title="Permalink to this definition">¶</a></dt>
 <dd><p>returns the budget data for a single column and location for a specified
 beginning and ending dates.</p>
 <dl class="field-list simple">
@@ -1372,19 +1372,26 @@ beginning and ending dates.</p>
 <li><p><strong>end_date</strong> (<em>str</em><em> or </em><em>None</em><em>, </em><em>default=None</em>) – last date for budget values</p></li>
 <li><p><strong>length_conversion_factor</strong> (<em>float</em><em>, </em><em>default=1.0</em>) – unit conversion factor for length units used in the model
 to some other length unit</p></li>
-<li><p><strong>area_conversion_factor</strong> (<em>float</em><em>, </em><em>default=2.295684E-05</em>) – unit conversion factor for area units used in the model
+<li><p><strong>area_conversion_factor</strong> (<em>float</em><em>, </em><em>default=1.0</em>) – unit conversion factor for area units used in the model
 to some other area unit</p></li>
-<li><p><strong>volume_conversion_factor</strong> (<em>float</em><em>, </em><em>default=2.295684E-08</em>) – unit conversion factor for volume units used in the model
+<li><p><strong>volume_conversion_factor</strong> (<em>float</em><em>, </em><em>default=1.0</em>) – unit conversion factor for volume units used in the model
 to some other volume unit</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>representing dates and values</p>
+<dd class="field-even"><p>np.ndarrays representing dates and values</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>length 2-tuple of np.arrays</p>
+<dd class="field-odd"><p>tuple</p>
 </dd>
 </dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><a class="reference internal" href="pywfm.IWFMBudget.get_values.html#pywfm.IWFMBudget.get_values" title="pywfm.IWFMBudget.get_values"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IWFMBudget.get_values</span></code></a></dt><dd><p>returns budget data for selected budget columns for a location and specified time interval</p>
+</dd>
+</dl>
+</div>
 </dd></dl>
 
 </div>
