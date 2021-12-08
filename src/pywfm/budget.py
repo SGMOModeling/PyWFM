@@ -430,8 +430,8 @@ class IWFMBudget(IWFMMiscellaneous):
 
     def get_values(self, location_id, columns='all', begin_date=None, 
                    end_date=None, length_conversion_factor=1.0, 
-                   area_conversion_factor=2.295684E-05, 
-                   volume_conversion_factor=2.295684E-08):
+                   area_conversion_factor=1.0, 
+                   volume_conversion_factor=1.0):
         ''' returns budget data for selected budget columns for a location and specified time interval  
         
         Parameters
@@ -453,19 +453,19 @@ class IWFMBudget(IWFMMiscellaneous):
             conversion factor to convert simulation units for length
             to another length
         
-        area_conversion_factor : float, default=2.295684E-05 (ft^2 -> Acres)
+        area_conversion_factor : float, default=1.0
             conversion factor to convert simulation units for area
 
-        volume_conversion_factor : float, default=2.295684E-08 (ft^3 -> TAF)
+        volume_conversion_factor : float, default=1.0
             conversion factor to convert simulation units for volume
 
         Returns
         -------
-        np.array
+        np.ndarray
             2-D array of floats containing budget data
 
-        Notes
-        -----
+        Note
+        ----
         At this time, output is always returned using the default output 
         interval. In the future, it could be the output interval or
         more aggregated.
