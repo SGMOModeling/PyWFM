@@ -385,7 +385,7 @@ class IWFMZBudget(IWFMMiscellaneous):
 
     def get_column_headers_for_a_zone(self, zone_id, area_unit='SQ FT', 
                                       volume_unit='CU FT', column_list='all',
-                                      include_time=False):
+                                      include_time=True):
         ''' This procedure retrieves the Z-Budget column headers (i.e. 
         titles) for a specified zone for selected data columns. For flow 
         processes that simulate flow exchange between neighboring zones 
@@ -410,7 +410,7 @@ class IWFMZBudget(IWFMMiscellaneous):
         volume_unit : str, default='CU FT'
             unit of volume appearing in the ZBudget column headers
 
-        include_time : boolean, default=False
+        include_time : boolean, default=True
             flag to determine if columns headers include the time column
 
         Returns
