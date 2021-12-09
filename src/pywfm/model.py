@@ -1528,8 +1528,8 @@ class IWFMModel(IWFMMiscellaneous):
             inflows from rainfall-runoff for all stream nodes for the
             current simulation timestep
 
-        Notes
-        -----
+        Note
+        ----
         This method is designed for use when is_for_inquiry=0 to return
         inflows from rainfall-runoff at the current timestep during a simulation.
 
@@ -1574,8 +1574,8 @@ class IWFMModel(IWFMMiscellaneous):
             return flows for all stream nodes for the
             current simulation timestep
 
-        Notes
-        -----
+        Note
+        ----
         This method is designed for use when is_for_inquiry=0 to return
         return flows at the current timestep during a simulation.
 
@@ -1620,8 +1620,8 @@ class IWFMModel(IWFMMiscellaneous):
             tile drain flows for all stream nodes for the current 
             simulation timestep
 
-        Notes
-        -----
+        Note
+        ----
         This method is designed for use when is_for_inquiry=0 to return
         tile drain flows at the current timestep during a simulation.
 
@@ -1666,8 +1666,8 @@ class IWFMModel(IWFMMiscellaneous):
             riparian evapotranspiration for all stream nodes for the current 
             simulation timestep
 
-        Notes
-        -----
+        Note
+        ----
         This method is designed for use when is_for_inquiry=0 to return
         riparian evapotranspiration at the current timestep during a 
         simulation.
@@ -1713,8 +1713,8 @@ class IWFMModel(IWFMMiscellaneous):
             gain from groundwater for all stream nodes for the current 
             simulation timestep
 
-        Notes
-        -----
+        Note
+        ----
         This method is designed for use when is_for_inquiry=0 to return
         gain from groundwater at the current timestep during a 
         simulation.
@@ -3140,14 +3140,14 @@ class IWFMModel(IWFMMiscellaneous):
         np.ndarray
             array of flags for each supply index provided
 
-        Notes
-        -----
+        Note
+        ----
         flag equal to 10 for agricultural water demand
         flag equal to 01 for urban water demands
         flag equal to 11 for both ag and urban
 
         automatic supply adjustment in IWFM allows the supply purpose 
-        to change dynamically, so this only Returns the user-specified
+        to change dynamically, so this only returns the user-specified
         initial value.
         '''
         # check to see if IWFM procedure is available in user version of IWFM DLL
@@ -3197,14 +3197,14 @@ class IWFMModel(IWFMMiscellaneous):
         np.ndarray
             array of flags for each supply index provided
 
-        Notes
-        -----
+        Note
+        ----
         flag equal to 10 for agricultural water demand
         flag equal to 01 for urban water demands
         flag equal to 11 for both ag and urban
 
         automatic supply adjustment in IWFM allows the supply purpose 
-        to change dynamically, so this only Returns the user-specified
+        to change dynamically, so this only returns the user-specified
         initial value. 
         '''
         supply_type_id = self.get_supply_type_id_diversion()
@@ -3226,14 +3226,14 @@ class IWFMModel(IWFMMiscellaneous):
         np.ndarray
             array of flags for each supply index provided
 
-        Notes
-        -----
+        Note
+        ----
         flag equal to 10 for agricultural water demand
         flag equal to 01 for urban water demands
         flag equal to 11 for both ag and urban
 
         automatic supply adjustment in IWFM allows the supply purpose 
-        to change dynamically, so this only Returns the user-specified
+        to change dynamically, so this only returns the user-specified
         initial value.
         '''
         supply_type_id = self.get_supply_type_id_well()
