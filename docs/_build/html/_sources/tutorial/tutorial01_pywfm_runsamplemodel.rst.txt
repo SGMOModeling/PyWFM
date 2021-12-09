@@ -41,7 +41,9 @@ Create a Function to Perform the Simulation
 .. note::
    
    This function provides template code for the user to interact with the model application on a timestep
-   by timestep basis. If the user only wants to run the entire simulation from python using IWFMModel.simulate_all()
+   by timestep basis. If the user only wants to run the entire simulation from python using IWFMModel.simulate_all().
+   
+   Otherwise, certain time series data can be updated during a simulation using IWFMModel.read_timeseries_data_overwrite()
 		   
 
 Set Paths to the IWFM DLL, Preprocessor Input File, and Simulation Input File

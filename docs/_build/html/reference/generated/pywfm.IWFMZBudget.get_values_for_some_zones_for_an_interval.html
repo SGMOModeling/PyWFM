@@ -1380,15 +1380,16 @@ to the desired output units</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><p>index 0 - 1-D array of dates for each zone</p>
-<p>index 1 - array of zbudget values for each zone and column
-identification number</p>
-</p>
+<dd class="field-even"><p>array of ZBudget output for user-specified columns and specified zones</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>tuple (length=2)</p>
+<dd class="field-odd"><p>np.ndarray</p>
 </dd>
 </dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Return value includes Time as the first column whether the user provided it or not</p>
+</div>
 </dd></dl>
 
 </div>
