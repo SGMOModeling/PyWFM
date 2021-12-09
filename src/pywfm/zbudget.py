@@ -668,11 +668,12 @@ class IWFMZBudget(IWFMMiscellaneous):
 
         Returns
         -------
-        tuple (length=2)
-            index 0 - 1-D array of dates for each zone
-            
-            index 1 - array of zbudget values for each zone and column
-            identification number
+        np.ndarray
+            array of ZBudget output for user-specified columns and specified zones
+
+        Note
+        ----
+        Return value includes Time as the first column whether the user provided it or not
         '''
         # check to see if the procedure exists in the dll provided
         if not hasattr(self.dll, 'IW_ZBudget_GetValues_ForSomeZones_ForAnInterval'):
@@ -722,7 +723,9 @@ class IWFMZBudget(IWFMMiscellaneous):
             column_ids= zone_header_array
 
         elif isinstance(column_ids, (int, list)):
+            
             if isinstance(column_ids, int):
+                # add the 'Time' column if user did not include it
                 if column_ids != 1:
                     column_ids = np.array([1, column_ids])
                 else:
@@ -735,6 +738,7 @@ class IWFMZBudget(IWFMMiscellaneous):
                     if len(column_ids) > 1:
                         column_ids = sorted(column_ids)
 
+                    # add the 'Time' column if user did not include it
                     if 1 not in column_ids:
                         column_ids = [1] + column_ids
 
@@ -765,7 +769,8 @@ class IWFMZBudget(IWFMMiscellaneous):
                 
                 column_ids = np.array(column_ids)
 
-            # number of rows in column_ids must match number of zones
+            # valid user inputs have been converted to a np.ndarray so validation is performed using numpy
+            # check: number of rows in column_ids must match number of zones
             if (column_ids.ndim == 2) and (column_ids.shape[0] != n_zones.value):
                 raise ValueError('Each number of rows in column_ids '
                                  'must match number of zones\nThe number '
@@ -858,10 +863,11 @@ class IWFMZBudget(IWFMMiscellaneous):
 
         values = np.array(zbudget_values)
 
-        dates = np.array('1899-12-30', dtype='datetime64') + values[:,0].astype('timedelta64')
-        zbudget = values[:,1:]
+        #dates = np.array('1899-12-30', dtype='datetime64') + values[:,0].astype('timedelta64')
+        #zbudget = values[:,1:]
         
-        return dates, zbudget
+        #return dates, zbudget
+        return values
 
     def get_values_for_a_zone(self, zone_id, column_ids='all', begin_date=None, 
                               end_date=None, output_interval=None, 
@@ -893,6 +899,15 @@ class IWFMZBudget(IWFMMiscellaneous):
         volume_conversion_factor : float or int, default=1.0
             factor to convert volume units from the default model units
             to the desired output units
+
+        Returns
+        -------
+        np.ndarray
+            array of ZBudget output for user-specified columns for a zone
+
+        Note
+        ----
+        Return value includes Time as the first column whether the user provided it or not
         '''
         # check to see if the procedure exists in the dll provided
         if not hasattr(self.dll, 'IW_ZBudget_GetValues_ForAZone'):
@@ -1010,7 +1025,8 @@ class IWFMZBudget(IWFMMiscellaneous):
 
         values = np.array(zbudget_values)
 
-        dates = np.array('1899-12-30', dtype='datetime64') + values[:,0].astype('timedelta64')
-        zbudget = values[:,1:]
+        #dates = np.array('1899-12-30', dtype='datetime64') + values[:,0].astype('timedelta64')
+        #zbudget = values[:,1:]
         
-        return dates, zbudget
+        #return dates, zbudget
+        return values
