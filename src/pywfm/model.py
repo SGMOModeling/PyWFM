@@ -959,7 +959,7 @@ class IWFMModel(IWFMMiscellaneous):
                                          stream_node_ids,
                                          ctypes.byref(self.status))
 
-        return np.array(stream_node_ids)
+        return np.array(stream_node_ids, dtype=np.int32)
 
     def get_n_stream_nodes_upstream_of_stream_node(self, stream_node_id):
         ''' Returns the number of stream nodes immediately upstream of
@@ -1011,8 +1011,11 @@ class IWFMModel(IWFMMiscellaneous):
         if not np.any(stream_node_ids == stream_node_id):
             raise ValueError("stream_node_id '{}' is not a valid Stream Node ID".format(stream_node_id))
 
+        # get stream node index from user provided stream_node_id
+        stream_node_index = np.where(stream_node_ids == stream_node_id)[0][0]
+
         # set input variables
-        stream_node_id = ctypes.c_int(stream_node_id)
+        stream_node_index = ctypes.c_int(stream_node_index)
         
         # set instance variable status to 0
         self.status = ctypes.c_int(0)
@@ -1020,7 +1023,7 @@ class IWFMModel(IWFMMiscellaneous):
         # initialize output variables
         n_upstream_stream_nodes = ctypes.c_int(0)
 
-        self.dll.IW_Model_GetStrmNUpstrmNodes(ctypes.byref(stream_node_id),
+        self.dll.IW_Model_GetStrmNUpstrmNodes(ctypes.byref(stream_node_index),
                                               ctypes.byref(n_upstream_stream_nodes),
                                               ctypes.byref(self.status))
 
@@ -1039,6 +1042,8 @@ class IWFMModel(IWFMMiscellaneous):
         -------
         np.ndarray
             integer array of stream node ids upstream of the provided stream node id
+
+        
         '''
         if not hasattr(self.dll, "IW_Model_GetStrmUpstrmNodes"):
             raise AttributeError('IWFM DLL does not have "{}" procedure. '
@@ -1090,7 +1095,7 @@ class IWFMModel(IWFMMiscellaneous):
         # set input variables
         n_stream_nodes = ctypes.c_int(self.get_n_stream_nodes())
 
-        # reset_instance variable status to -1
+        # reset_instance variable status to 0
         self.status = ctypes.c_int(0)
 
         # initialize output variables
