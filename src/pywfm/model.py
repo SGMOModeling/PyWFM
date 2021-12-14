@@ -1012,7 +1012,8 @@ class IWFMModel(IWFMMiscellaneous):
             raise ValueError("stream_node_id '{}' is not a valid Stream Node ID".format(stream_node_id))
 
         # get stream node index from user provided stream_node_id
-        stream_node_index = np.where(stream_node_ids == stream_node_id)[0][0]
+        # add 1 to convert index from python index to fortran index
+        stream_node_index = np.where(stream_node_ids == stream_node_id)[0][0] + 1
 
         # set input variables
         stream_node_index = ctypes.c_int(stream_node_index)
@@ -1036,14 +1037,16 @@ class IWFMModel(IWFMMiscellaneous):
         Parameters
         ----------
         stream_node_id : int
-            stream node id used to determine number of stream nodes upstream 
+            stream node id used to determine upstream stream nodes 
             
         Returns
         -------
         np.ndarray
             integer array of stream node ids upstream of the provided stream node id
 
-        
+        Note
+        ----
+
         '''
         if not hasattr(self.dll, "IW_Model_GetStrmUpstrmNodes"):
             raise AttributeError('IWFM DLL does not have "{}" procedure. '
