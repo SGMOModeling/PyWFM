@@ -628,22 +628,29 @@ class IWFMModel(IWFMMiscellaneous):
         if not np.any(element_ids == element_id):
             raise ValueError('element_id is not a valid element ID')
 
+        # convert element_id to element index
+        element_index = np.where(element_ids == element_id)[0][0] + 1
+
         # set instance variable status to 0
         self.status = ctypes.c_int(0)
 
         # set input variables
-        element_id = ctypes.c_int(element_id)
+        element_index = ctypes.c_int(element_index)
         max_nodes_per_element = ctypes.c_int(4)
 
         # initialize output variables
         nodes_in_element = (ctypes.c_int*max_nodes_per_element.value)()
 
-        self.dll.IW_Model_GetElementConfigData(ctypes.byref(element_id),
+        self.dll.IW_Model_GetElementConfigData(ctypes.byref(element_index),
                                                ctypes.byref(max_nodes_per_element),
                                                nodes_in_element,
                                                ctypes.byref(self.status))
 
-        return np.array(nodes_in_element)
+        # convert node indices to node IDs
+        node_indices = np.array(nodes_in_element)
+        node_ids = self.get_node_ids()
+
+        return node_ids[node_indices - 1]
 
     def get_n_subregions(self):
         ''' Returns the number of subregions in an IWFM model
