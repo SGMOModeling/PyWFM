@@ -875,7 +875,11 @@ class IWFMModel(IWFMMiscellaneous):
                                    element_subregions,
                                    ctypes.byref(self.status))
 
-        return np.array(element_subregions)
+        # convert subregion indices to subregion IDs
+        subregion_index_by_element = np.array(element_subregions)
+        subregion_ids = self.get_subregion_ids()
+
+        return subregion_ids[subregion_index_by_element - 1]
 
     def get_n_stream_nodes(self):
         ''' Returns the number of stream nodes in an IWFM model
