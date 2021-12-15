@@ -790,11 +790,14 @@ class IWFMModel(IWFMMiscellaneous):
                              'subregion id. value provided {}. Must be '
                              'one of: {}'.format(subregion_id, subregions))
 
+        # convert subregion_id to subregion index adding 1 to handle fortran indexing
+        subregion_index = np.where(subregion_ids == subregion_id)[0][0] + 1
+
         # set instance variable status to 0
         self.status = ctypes.c_int(0)
 
-        # convert subregion_id to ctypes
-        subregion_id = ctypes.c_int(subregion_id)
+        # convert subregion_index to ctypes
+        subregion_index = ctypes.c_int(subregion_index)
 
         # initialize name length as 50 characters
         length_name = ctypes.c_int(50)
@@ -802,7 +805,7 @@ class IWFMModel(IWFMMiscellaneous):
         # initialize output variables
         subregion_name = ctypes.create_string_buffer(length_name.value)
         
-        self.dll.IW_Model_GetSubregionName(ctypes.byref(subregion_id),
+        self.dll.IW_Model_GetSubregionName(ctypes.byref(subregion_index),
                                            ctypes.byref(length_name),
                                            subregion_name,
                                            ctypes.byref(self.status))
