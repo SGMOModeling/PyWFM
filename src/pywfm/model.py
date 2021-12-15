@@ -1025,7 +1025,7 @@ class IWFMModel(IWFMMiscellaneous):
         if not np.any(stream_node_ids == stream_node_id):
             raise ValueError("stream_node_id '{}' is not a valid Stream Node ID".format(stream_node_id))
 
-        # get stream node index from user provided stream_node_id
+        # convert stream_node_id to stream node index
         # add 1 to convert index from python index to fortran index
         stream_node_index = np.where(stream_node_ids == stream_node_id)[0][0] + 1
 
