@@ -1368,12 +1368,38 @@
 <dd><p>Returns the stream channel bottom elevation at each stream node</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>array of float with the stream channel elevation for each stream node</p>
+<dd class="field-odd"><p>array of floats with the stream channel elevation for each stream node</p>
 </dd>
 <dt class="field-even">Return type</dt>
 <dd class="field-even"><p>np.ndarray</p>
 </dd>
 </dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><a class="reference internal" href="pywfm.IWFMModel.get_n_stream_nodes.html#pywfm.IWFMModel.get_n_stream_nodes" title="pywfm.IWFMModel.get_n_stream_nodes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IWFMModel.get_n_stream_nodes</span></code></a></dt><dd><p>Returns the number of stream nodes in an IWFM model</p>
+</dd>
+<dt><a class="reference internal" href="pywfm.IWFMModel.get_stream_node_ids.html#pywfm.IWFMModel.get_stream_node_ids" title="pywfm.IWFMModel.get_stream_node_ids"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IWFMModel.get_stream_node_ids</span></code></a></dt><dd><p>Returns an array of stream node IDs from the IWFM model application</p>
+</dd>
+<dt><a class="reference internal" href="pywfm.IWFMModel.get_n_rating_table_points.html#pywfm.IWFMModel.get_n_rating_table_points" title="pywfm.IWFMModel.get_n_rating_table_points"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IWFMModel.get_n_rating_table_points</span></code></a></dt><dd><p>Returns the number of data points in the stream flow rating table for a stream node</p>
+</dd>
+<dt><a class="reference internal" href="pywfm.IWFMModel.get_stream_rating_table.html#pywfm.IWFMModel.get_stream_rating_table" title="pywfm.IWFMModel.get_stream_rating_table"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IWFMModel.get_stream_rating_table</span></code></a></dt><dd><p>Returns the stream rating table for a specified stream node</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pywfm</span> <span class="kn">import</span> <span class="n">IWFMModel</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dll</span> <span class="o">=</span> <span class="s1">&#39;../../DLL/Bin/IWFM2015_C_x64.dll&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pp_file</span> <span class="o">=</span> <span class="s1">&#39;../Preprocessor/PreProcessor_MAIN.IN&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sim_file</span> <span class="o">=</span> <span class="s1">&#39;Simulation_MAIN.IN&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">IWFMModel</span><span class="p">(</span><span class="n">dll</span><span class="p">,</span> <span class="n">preprocessor_infile</span><span class="p">,</span> <span class="n">simulation_infile</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">get_stream_bottom_elevations</span><span class="p">()</span>
+<span class="go">array([300., 298., 296., 294., 292., 290., 288., 286., 284., 282., 282.,</span>
+<span class="go">       280., 278., 276., 274., 272., 272., 270., 268., 266., 264., 262.,</span>
+<span class="go">       260.])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">kill</span><span class="p">()</span>
+</pre></div>
+</div>
 </dd></dl>
 
 </section>
