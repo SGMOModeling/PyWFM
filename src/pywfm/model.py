@@ -1137,7 +1137,27 @@ class IWFMModel(IWFMMiscellaneous):
         Returns
         -------
         np.ndarray
-            array of float with the stream channel elevation for each stream node
+            array of floats with the stream channel elevation for each stream node
+
+        See Also
+        --------
+        IWFMModel.get_n_stream_nodes : Returns the number of stream nodes in an IWFM model
+        IWFMModel.get_stream_node_ids : Returns an array of stream node IDs from the IWFM model application
+        IWFMModel.get_n_rating_table_points : Returns the number of data points in the stream flow rating table for a stream node
+        IWFMModel.get_stream_rating_table : Returns the stream rating table for a specified stream node
+
+        Example
+        -------
+        >>> from pywfm import IWFMModel
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
+        >>> sim_file = 'Simulation_MAIN.IN'
+        >>> model = IWFMModel(dll, preprocessor_infile, simulation_infile)
+        >>> model.get_stream_bottom_elevations()
+        array([300., 298., 296., 294., 292., 290., 288., 286., 284., 282., 282.,
+               280., 278., 276., 274., 272., 272., 270., 268., 266., 264., 262.,
+               260.])
+        >>> model.kill()
         '''
         if not hasattr(self.dll, "IW_Model_GetStrmBottomElevs"):
             raise AttributeError('IWFM DLL does not have "{}" procedure. '
@@ -1159,7 +1179,7 @@ class IWFMModel(IWFMMiscellaneous):
         return np.array(stream_bottom_elevations)
 
     def get_n_rating_table_points(self, stream_node_id):
-        '''Returns the number of data points in the stream flow rating 
+        ''' Returns the number of data points in the stream flow rating 
         table for a stream node
 
         Parameters
