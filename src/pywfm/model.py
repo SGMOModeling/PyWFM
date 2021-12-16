@@ -1069,15 +1069,24 @@ class IWFMModel(IWFMMiscellaneous):
         IWFMModel.get_n_stream_nodes : Returns the number of stream nodes in an IWFM model
         IWFMModel.get_stream_node_ids : Returns an array of stream node IDs from the IWFM model application
 
-        Example
-        -------
+        Examples
+        --------
         >>> from pywfm import IWFMModel
         >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
         >>> model = IWFMModel(dll, preprocessor_infile, simulation_infile)
-        >>> model.get_stream_nodes_upstream_of_stream_node(11)
-        0
+        >>> print(model.get_stream_nodes_upstream_of_stream_node(11))
+        None
+        >>> model.kill()
+
+        >>> from pywfm import IWFMModel
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
+        >>> sim_file = 'Simulation_MAIN.IN'
+        >>> model = IWFMModel(dll, preprocessor_infile, simulation_infile)
+        >>> model.get_stream_nodes_upstream_of_stream_node(2)
+        array([1])
         >>> model.kill()
         '''
         if not hasattr(self.dll, "IW_Model_GetStrmUpstrmNodes"):
