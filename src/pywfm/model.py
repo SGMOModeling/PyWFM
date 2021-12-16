@@ -1060,7 +1060,25 @@ class IWFMModel(IWFMMiscellaneous):
 
         Note
         ----
+        stream node ids returned are for the stream node immediately upstream of the specified
+        stream node id only. if stream node specified is the most upstream node, None is returned
 
+        See Also
+        --------
+        IWFMModel.get_n_stream_nodes_upstream_of_stream_node : Returns the number of stream nodes immediately upstream of the provided stream node id
+        IWFMModel.get_n_stream_nodes : Returns the number of stream nodes in an IWFM model
+        IWFMModel.get_stream_node_ids : Returns an array of stream node IDs from the IWFM model application
+
+        Example
+        -------
+        >>> from pywfm import IWFMModel
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
+        >>> sim_file = 'Simulation_MAIN.IN'
+        >>> model = IWFMModel(dll, preprocessor_infile, simulation_infile)
+        >>> model.get_stream_nodes_upstream_of_stream_node(11)
+        0
+        >>> model.kill()
         '''
         if not hasattr(self.dll, "IW_Model_GetStrmUpstrmNodes"):
             raise AttributeError('IWFM DLL does not have "{}" procedure. '
@@ -1075,14 +1093,18 @@ class IWFMModel(IWFMMiscellaneous):
         if not np.any(stream_node_ids == stream_node_id):
             raise ValueError('stream_node_id is not a valid Stream Node ID')
 
+        # convert stream_node_id to stream node index
+        # add 1 to convert between python indexing and fortran indexing
+        stream_node_index = np.where(stream_node_ids == stream_node_id)[0][0] + 1
+
         # set input variables
         n_upstream_stream_nodes = ctypes.c_int(self.get_n_stream_nodes_upstream_of_stream_node(stream_node_id))
         
         # return None if no upstream stream nodes
-        if n_upstream_stream_nodes == 0:
+        if n_upstream_stream_nodes.value == 0:
             return
 
-        stream_node_id = ctypes.c_int(stream_node_id)
+        stream_node_index = ctypes.c_int(stream_node_index)
 
         # set instance variable status to 0
         self.status = ctypes.c_int(0)
@@ -1090,12 +1112,15 @@ class IWFMModel(IWFMMiscellaneous):
         # initialize output variables
         upstream_nodes = (ctypes.c_int*n_upstream_stream_nodes.value)()
 
-        self.dll.IW_Model_GetStrmUpstrmNodes(ctypes.byref(stream_node_id),
+        self.dll.IW_Model_GetStrmUpstrmNodes(ctypes.byref(stream_node_index),
                                              ctypes.byref(n_upstream_stream_nodes),
                                              upstream_nodes,
                                              ctypes.byref(self.status))
 
-        return np.array(upstream_nodes)
+        # convert stream node indices to stream node ids
+        upstream_node_indices = np.array(upstream_nodes)
+
+        return stream_node_ids[upstream_node_indices - 1] 
 
     def get_stream_bottom_elevations(self):
         ''' Returns the stream channel bottom elevation at each stream node
