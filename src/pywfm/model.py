@@ -1192,6 +1192,24 @@ class IWFMModel(IWFMMiscellaneous):
         -------
         int
             number of data points in the stream flow rating table
+
+        See Also
+        --------
+        IWFMModel.get_stream_rating_table : Returns the stream rating table for a specified stream node
+        IWFMModel.get_n_stream_nodes : Returns the number of stream nodes in an IWFM model
+        IWFMModel.get_stream_node_ids : Returns an array of stream node IDs from the IWFM model application
+        IWFMModel.get_stream_bottom_elevations : Returns the stream channel bottom elevation at each stream node
+
+        Example
+        -------
+        >>> from pywfm import IWFMModel
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
+        >>> sim_file = 'Simulation_MAIN.IN'
+        >>> model = IWFMModel(dll, preprocessor_infile, simulation_infile)
+        >>> model.get_n_rating_table_points(1)
+        
+        >>> model.kill()
         '''
         if not hasattr(self.dll, "IW_Model_GetNStrmRatingTablePoints"):
             raise AttributeError('IWFM DLL does not have "{}" procedure. '
@@ -1206,8 +1224,12 @@ class IWFMModel(IWFMMiscellaneous):
         if not np.any(stream_node_ids == stream_node_id):
             raise ValueError('stream_node_id is not a valid Stream Node ID')
 
+        # convert stream_node_id to stream node index
+        # add 1 to convert python index to fortran index
+        stream_node_index = np.where(stream_node_ids == stream_node_id)[0][0] + 1
+
         # set input variables convert to ctypes, if not already
-        stream_node_id = ctypes.c_int(stream_node_id)
+        stream_node_index = ctypes.c_int(stream_node_index)
 
         # reset instance variable status to 0
         self.status = ctypes.c_int(0)
@@ -1215,7 +1237,7 @@ class IWFMModel(IWFMMiscellaneous):
         # initialize output variables
         n_rating_table_points = ctypes.c_int(0)
 
-        self.dll.IW_Model_GetNStrmRatingTablePoints(ctypes.byref(stream_node_id),
+        self.dll.IW_Model_GetNStrmRatingTablePoints(ctypes.byref(stream_node_index),
                                                     ctypes.byref(n_rating_table_points),
                                                     ctypes.byref(self.status))
 
