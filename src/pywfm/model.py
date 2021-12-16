@@ -1208,7 +1208,7 @@ class IWFMModel(IWFMMiscellaneous):
         >>> sim_file = 'Simulation_MAIN.IN'
         >>> model = IWFMModel(dll, preprocessor_infile, simulation_infile)
         >>> model.get_n_rating_table_points(1)
-        
+        5
         >>> model.kill()
         '''
         if not hasattr(self.dll, "IW_Model_GetNStrmRatingTablePoints"):
@@ -1256,6 +1256,28 @@ class IWFMModel(IWFMMiscellaneous):
         -------
         tuple (length=2)
             np.ndarrays representing stage and flow, respectively
+
+        See Also
+        --------
+        IWFMModel.get_n_rating_table_points : Returns the number of data points in the stream flow rating table for a stream node
+        IWFMModel.get_n_stream_nodes : Returns the number of stream nodes in an IWFM model
+        IWFMModel.get_stream_node_ids : Returns an array of stream node IDs from the IWFM model application
+        IWFMModel.get_stream_bottom_elevations : Returns the stream channel bottom elevation at each stream node
+
+        Example
+        -------
+        >>> from pywfm import IWFMModel
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
+        >>> sim_file = 'Simulation_MAIN.IN'
+        >>> model = IWFMModel(dll, preprocessor_infile, simulation_infile)
+        >>> stage, flow = model.get_stream_rating_table(1)
+        >>> stage
+        array([ 0.,  2.,  5., 15., 25.])
+        >>> flow
+        array([0.00000000e+00, 6.34988160e+07, 2.85058656e+08, 1.64450304e+09,
+        3.59151408e+09])        
+        >>> model.kill()
         '''
         if not hasattr(self.dll, "IW_Model_GetStrmRatingTable"):
             raise AttributeError('IWFM DLL does not have "{}" procedure. '
@@ -1270,9 +1292,13 @@ class IWFMModel(IWFMMiscellaneous):
         if not np.any(stream_node_ids == stream_node_id):
             raise ValueError('stream_node_id is not a valid Stream Node ID')
 
+        # convert stream_node_id to stream node index
+        # add 1 to convert between python index and fortan index
+        stream_node_index = np.where(stream_node_ids == stream_node_id)[0][0] + 1
+
         # set input variables
-        stream_node_id = ctypes.c_int(stream_node_id)
-        n_rating_table_points =ctypes.c_int(self.get_n_rating_table_points(stream_node_id.value))
+        stream_node_index = ctypes.c_int(stream_node_index)
+        n_rating_table_points =ctypes.c_int(self.get_n_rating_table_points(stream_node_id))
 
         # set instance variable status to 0
         self.status = ctypes.c_int(0)
@@ -1281,7 +1307,7 @@ class IWFMModel(IWFMMiscellaneous):
         stage = (ctypes.c_double*n_rating_table_points.value)()
         flow = (ctypes.c_double*n_rating_table_points.value)()
 
-        self.dll.IW_Model_GetStrmRatingTable(ctypes.byref(stream_node_id), 
+        self.dll.IW_Model_GetStrmRatingTable(ctypes.byref(stream_node_index), 
                                              ctypes.byref(n_rating_table_points),
                                              stage,
                                              flow,
