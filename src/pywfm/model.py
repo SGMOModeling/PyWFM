@@ -1362,7 +1362,23 @@ class IWFMModel(IWFMMiscellaneous):
         Returns
         -------
         np.ndarray
-            integer array of stream inflow node indices
+            integer array of stream node IDs where inflows occur
+
+        See Also
+        --------
+        IWFMModel.get_n_stream_inflows : Returns the number of stream boundary inflows specified by the user as timeseries input data
+        IWFMModel.get_stream_inflow_ids : Returns the identification numbers for the stream boundary inflows specified by the user as timeseries input data
+
+        Example
+        -------
+        >>> from pywfm import IWFMModel
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
+        >>> sim_file = 'Simulation_MAIN.IN'
+        >>> model = IWFMModel(dll, preprocessor_infile, simulation_infile)
+        >>> model.get_stream_inflow_nodes()
+        array([1])
+        >>> model.kill()
         '''
         if not hasattr(self.dll, "IW_Model_GetStrmInflowNodes"):
             raise AttributeError('IWFM DLL does not have "{}" procedure. '
@@ -1381,7 +1397,11 @@ class IWFMModel(IWFMMiscellaneous):
                                              stream_inflow_nodes,
                                              ctypes.byref(self.status))
 
-        return np.array(stream_inflow_nodes)
+        # convert stream node indices to stream node IDs
+        stream_node_ids = self.get_stream_node_ids()
+        stream_inflow_node_indices = np.array(stream_inflow_nodes)
+
+        return stream_node_ids[stream_inflow_node_indices - 1]
 
     def get_stream_inflow_ids(self):
         ''' Returns the identification numbers for the stream boundary 
