@@ -1371,7 +1371,7 @@ step in a simulation</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>stream_node_id</strong> (<em>int</em>) – stream node ID where flow is retrieved</p></li>
-<li><p><strong>flow_conversion_factor</strong> (<em>float</em>) – conversion factor for stream flows from the
+<li><p><strong>flow_conversion_factor</strong> (<em>float</em><em>, </em><em>default=1.0</em>) – conversion factor for stream flows from the
 simulation units of volume to a desired unit of volume</p></li>
 </ul>
 </dd>
@@ -1414,7 +1414,7 @@ a stream flow at the current timestep during a simulation.</p>
 <span class="gp">... </span>    <span class="c1"># Simulate the hydrologic process for the timestep</span>
 <span class="gp">... </span>    <span class="n">model</span><span class="o">.</span><span class="n">simulate_for_one_timestep</span><span class="p">()</span>
 <span class="gp">...</span>
-<span class="gp">... </span>    <span class="c1"># print stream inflows</span>
+<span class="gp">... </span>    <span class="c1"># print stream flow at stream node ID = 1</span>
 <span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">get_stream_flow_at_location</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
 <span class="gp">...</span>
 <span class="gp">... </span>    <span class="c1"># print the results to the user-specified output files</span>
