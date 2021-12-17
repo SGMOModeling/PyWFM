@@ -1472,6 +1472,56 @@ class IWFMModel(IWFMMiscellaneous):
         ----
         This method is designed for use when is_for_inquiry=0 to return
         stream inflows at the current timestep during a simulation.
+
+        See Also
+        --------
+        IWFMModel.get_stream_flow_at_location : Returns stream flow at a stream node for the current time step in a simulation
+        IWFMModel.get_stream_flows : Returns stream flows at every stream node for the current timestep
+        IWFMModel.get_stream_stages : Returns stream stages at every stream node for the current timestep
+
+        Example
+        -------
+        >>> from pywfm import IWFMModel
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
+        >>> sim_file = 'Simulation_MAIN.IN'
+        >>> model = IWFMModel(dll, preprocessor_infile, simulation_infile, is_for_inquiry=0)
+        >>> while not model.is_end_of_simulation():
+        ...     # advance the simulation time one time step forward
+        ...     model.advance_time()
+        ...
+        ...     # read all time series data from input files
+        ...     model.read_timeseries_data()
+        ...
+        ...     # Simulate the hydrologic process for the timestep
+        ...     model.simulate_for_one_timestep()
+        ...
+        ...     # print stream inflows
+        ...     print(model.get_stream_inflows_at_some_locations(1)[0])
+        ...
+        ...     # print the results to the user-specified output files
+        ...     model.print_results()
+        ...
+        ...     # advance the state of the hydrologic system in time
+        ...     model.advance_state()
+        .
+        .
+        .
+        86400000.
+        *   TIME STEP 2 AT 10/02/1990_24:00
+        86400000.
+        *   TIME STEP 3 AT 10/03/1990_24:00
+        86400000.
+        *   TIME STEP 4 AT 10/04/1990_24:00
+        86400000.
+        .
+        .
+        .
+        *   TIME STEP 3652 AT 09/29/2000_24:00
+        86400000.
+        *   TIME STEP 3653 AT 09/30/2000_24:00
+        86400000.
+        >>> model.kill()
         '''
         if not hasattr(self.dll, "IW_Model_GetStrmInflows_AtSomeInflows"):
             raise AttributeError('IWFM DLL does not have "{}" procedure. '
@@ -1496,10 +1546,14 @@ class IWFMModel(IWFMMiscellaneous):
         # check if all of the provided stream_inflow_locations are valid
         if not np.all(np.isin(stream_inflow_locations, stream_inflow_ids)):
             raise ValueError('One or more stream inflow locations are invalid')
+
+        # convert stream_inflow_locations to stream inflow indices
+        # add 1 to convert between python indices and fortran indices
+        stream_inflow_indices = np.array([np.where(stream_inflow_ids == item)[0][0] for item in stream_inflow_locations]) + 1
         
         # initialize input variables
         n_stream_inflow_locations = ctypes.c_int(len(stream_inflow_locations))
-        stream_inflow_locations = (ctypes.c_int*n_stream_inflow_locations.value)(*stream_inflow_locations)
+        stream_inflow_indices = (ctypes.c_int*n_stream_inflow_locations.value)(*stream_inflow_indices)
         inflow_conversion_factor = ctypes.c_double(inflow_conversion_factor)
 
         # set instance variable status to 0
@@ -1509,7 +1563,7 @@ class IWFMModel(IWFMMiscellaneous):
         inflows = (ctypes.c_double*n_stream_inflow_locations.value)()
                 
         self.dll.IW_Model_GetStrmInflows_AtSomeInflows(ctypes.byref(n_stream_inflow_locations),
-                                                       stream_inflow_locations,
+                                                       stream_inflow_indices,
                                                        ctypes.byref(inflow_conversion_factor),
                                                        inflows,
                                                        ctypes.byref(self.status))
