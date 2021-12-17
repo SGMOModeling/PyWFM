@@ -1793,6 +1793,66 @@ class IWFMModel(IWFMMiscellaneous):
         ----
         This method is designed for use when is_for_inquiry=0 to return
         stream stages at the current timestep during a simulation.
+
+        See Also
+        --------
+        IWFMModel.get_stream_inflows_at_some_locations : Returns stream boundary inflows at a specified set of inflow locations listed by their indices for the current simulation timestep
+        IWFMModel.get_stream_flow_at_location : Returns stream flow at a stream node for the current time step in a simulation
+        IWFMModel.get_stream_flows : Returns stream flows at every stream node for the current timestep
+
+        Example
+        -------
+        >>> from pywfm import IWFMModel
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
+        >>> sim_file = 'Simulation_MAIN.IN'
+        >>> model = IWFMModel(dll, preprocessor_infile, simulation_infile, is_for_inquiry=0)
+        >>> while not model.is_end_of_simulation():
+        ...     # advance the simulation time one time step forward
+        ...     model.advance_time()
+        ...
+        ...     # read all time series data from input files
+        ...     model.read_timeseries_data()
+        ...
+        ...     # Simulate the hydrologic process for the timestep
+        ...     model.simulate_for_one_timestep()
+        ...
+        ...     # get stream flows
+        ...     stream_flows = model.get_stream_stages()
+        ...     stream_node_ids = model.get_stream_node_ids()
+        ...
+        ...     # print the results to the user-specified output files
+        ...     model.print_results()
+        ...
+        ...     # advance the state of the hydrologic system in time
+        ...     model.advance_state()
+        >>> for i, flow in enumerate(stream_flows):
+        ...     print(stream_node_ids[i], flow)
+        *   TIME STEP 3653 AT 09/30/2000_24:00
+        1 2.2952133835661925
+        2 2.265988534377925
+        3 2.23736219849917
+        4 2.209695515995236
+        5 2.183909078616921
+        6 2.1655452773528054
+        7 2.148149883990982
+        8 2.133630610251487
+        9 2.1115282647882054
+        10 2.1015104342912423
+        11 1.6783304406148432
+        12 1.4126136989034421e-06
+        13 0.0
+        14 0.0
+        15 0.0
+        16 0.0
+        17 0.0
+        18 0.08041698765009642
+        19 0.061386890202925315
+        20 0.046860127429624754
+        21 0.07388403067233185
+        22 0.050371296013054234
+        23 0.07860238766727434
+        >>> model.kill()
         '''
         if not hasattr(self.dll, "IW_Model_GetStrmStages"):
             raise AttributeError('IWFM DLL does not have "{}" procedure. '
