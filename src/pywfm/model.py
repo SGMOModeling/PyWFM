@@ -1577,7 +1577,7 @@ class IWFMModel(IWFMMiscellaneous):
         Parameters
         ----------
         stream_node_id : int
-            stream node index where flow is retrieved
+            stream node ID where flow is retrieved
 
         flow_conversion_factor : float
             conversion factor for stream flows from the 
@@ -1592,13 +1592,72 @@ class IWFMModel(IWFMMiscellaneous):
         ----
         This method is designed for use when is_for_inquiry=0 to return
         a stream flow at the current timestep during a simulation.
+
+        See Also
+        --------
+        IWFMModel.get_stream_inflows_at_some_locations : Returns stream boundary inflows at a specified set of inflow locations listed by their indices for the current simulation timestep
+        IWFMModel.get_stream_flows : Returns stream flows at every stream node for the current timestep
+        IWFMModel.get_stream_stages : Returns stream stages at every stream node for the current timestep
+
+        Example
+        -------
+        >>> from pywfm import IWFMModel
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
+        >>> sim_file = 'Simulation_MAIN.IN'
+        >>> model = IWFMModel(dll, preprocessor_infile, simulation_infile, is_for_inquiry=0)
+        >>> while not model.is_end_of_simulation():
+        ...     # advance the simulation time one time step forward
+        ...     model.advance_time()
+        ...
+        ...     # read all time series data from input files
+        ...     model.read_timeseries_data()
+        ...
+        ...     # Simulate the hydrologic process for the timestep
+        ...     model.simulate_for_one_timestep()
+        ...
+        ...     # print stream inflows
+        ...     print(model.get_stream_flow_at_location(1))
+        ...
+        ...     # print the results to the user-specified output files
+        ...     model.print_results()
+        ...
+        ...     # advance the state of the hydrologic system in time
+        ...     model.advance_state()
+        .
+        .
+        .
+        75741791.53232515
+        *   TIME STEP 2 AT 10/02/1990_24:00
+        75741791.53232515
+        *   TIME STEP 3 AT 10/03/1990_24:00
+        75741791.53232515
+        *   TIME STEP 4 AT 10/04/1990_24:00
+        75741791.53232515
+        .
+        .
+        .
+        *   TIME STEP 3652 AT 09/29/2000_24:00
+        85301157.65510693
+        *   TIME STEP 3653 AT 09/30/2000_24:00
+        85301292.67626143
+        >>> model.kill()
         '''
         if not hasattr(self.dll, "IW_Model_GetStrmFlow"):
             raise AttributeError('IWFM DLL does not have "{}" procedure. '
                                  'Check for an updated version'.format("IW_Model_GetStrmFlow"))
         
+        # check that stream_node_id is a valid stream_node_id
+        stream_node_ids = self.get_stream_node_ids()
+        if not np.any(stream_node_ids == stream_node_id):
+            raise ValueError('stream_node_id is not a valid Stream Node ID')
+
+        # convert stream_node_id to stream node index
+        # add 1 to convert between python index and fortan index
+        stream_node_index = np.where(stream_node_ids == stream_node_id)[0][0] + 1
+
         # convert input variables to ctypes
-        stream_node_id = ctypes.c_int(stream_node_id)
+        stream_node_index = ctypes.c_int(stream_node_index)
         flow_conversion_factor = ctypes.c_double(flow_conversion_factor)
 
         # initialize output variables
@@ -1607,7 +1666,7 @@ class IWFMModel(IWFMMiscellaneous):
         # set instance variable status to 0
         self.status = ctypes.c_int(0)
 
-        self.dll.IW_Model_GetStrmFlow(ctypes.byref(stream_node_id),
+        self.dll.IW_Model_GetStrmFlow(ctypes.byref(stream_node_index),
                                       ctypes.byref(flow_conversion_factor),
                                       ctypes.byref(stream_flow),
                                       ctypes.byref(self.status))
