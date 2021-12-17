@@ -1579,7 +1579,7 @@ class IWFMModel(IWFMMiscellaneous):
         stream_node_id : int
             stream node ID where flow is retrieved
 
-        flow_conversion_factor : float
+        flow_conversion_factor : float, default=1.0
             conversion factor for stream flows from the 
             simulation units of volume to a desired unit of volume
 
@@ -1616,7 +1616,7 @@ class IWFMModel(IWFMMiscellaneous):
         ...     # Simulate the hydrologic process for the timestep
         ...     model.simulate_for_one_timestep()
         ...
-        ...     # print stream inflows
+        ...     # print stream flow at stream node ID = 1
         ...     print(model.get_stream_flow_at_location(1))
         ...
         ...     # print the results to the user-specified output files
@@ -1678,7 +1678,7 @@ class IWFMModel(IWFMMiscellaneous):
         
         Parameters
         ----------
-        flow_conversion_factor : float
+        flow_conversion_factor : float, default=1.0
             conversion factor for stream flows from the 
             simulation units of volume to a desired unit of volume
 
@@ -1691,6 +1691,66 @@ class IWFMModel(IWFMMiscellaneous):
         ----
         This method is designed for use when is_for_inquiry=0 to return
         stream flows at the current timestep during a simulation.
+
+        See Also
+        --------
+        IWFMModel.get_stream_inflows_at_some_locations : Returns stream boundary inflows at a specified set of inflow locations listed by their indices for the current simulation timestep
+        IWFMModel.get_stream_flow_at_location : Returns stream flow at a stream node for the current time step in a simulation
+        IWFMModel.get_stream_stages : Returns stream stages at every stream node for the current timestep
+
+        Example
+        -------
+        >>> from pywfm import IWFMModel
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
+        >>> sim_file = 'Simulation_MAIN.IN'
+        >>> model = IWFMModel(dll, preprocessor_infile, simulation_infile, is_for_inquiry=0)
+        >>> while not model.is_end_of_simulation():
+        ...     # advance the simulation time one time step forward
+        ...     model.advance_time()
+        ...
+        ...     # read all time series data from input files
+        ...     model.read_timeseries_data()
+        ...
+        ...     # Simulate the hydrologic process for the timestep
+        ...     model.simulate_for_one_timestep()
+        ...
+        ...     # get stream flows
+        ...     stream_flows = model.get_stream_flows()
+        ...     stream_node_ids = model.get_stream_node_ids()
+        ...
+        ...     # print the results to the user-specified output files
+        ...     model.print_results()
+        ...
+        ...     # advance the state of the hydrologic system in time
+        ...     model.advance_state()
+        >>> for i, flow in enumerate(stream_flows):
+        ...     print(stream_node_ids[i], flow)
+        *   TIME STEP 3653 AT 09/30/2000_24:00
+        1 85301292.67626143
+        2 83142941.70620254
+        3 81028792.9071748
+        4 78985517.65754062
+        5 77081104.67763746
+        6 75724877.72101441
+        7 74440170.86435351
+        8 73367874.87547392
+        9 71735544.16731748
+        10 70995694.52663273
+        11 53285997.91790043
+        12 44.84964866936207
+        13 0.0
+        14 0.0
+        15 0.0
+        16 0.0
+        17 0.0
+        18 2553191.7510338724
+        19 1948997.4229038805
+        20 1487781.3046951443
+        21 2345774.2345003784
+        22 1599258.8286072314
+        23 2495579.2758224607
+        >>> model.kill()
         '''
         if not hasattr(self.dll, "IW_Model_GetStrmFlows"):
             raise AttributeError('IWFM DLL does not have "{}" procedure. '
