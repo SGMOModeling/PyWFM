@@ -1370,7 +1370,7 @@ step in a simulation</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>stream_node_id</strong> (<em>int</em>) – stream node index where flow is retrieved</p></li>
+<li><p><strong>stream_node_id</strong> (<em>int</em>) – stream node ID where flow is retrieved</p></li>
 <li><p><strong>flow_conversion_factor</strong> (<em>float</em>) – conversion factor for stream flows from the
 simulation units of volume to a desired unit of volume</p></li>
 </ul>
@@ -1386,6 +1386,61 @@ simulation units of volume to a desired unit of volume</p></li>
 <p class="admonition-title">Note</p>
 <p>This method is designed for use when is_for_inquiry=0 to return
 a stream flow at the current timestep during a simulation.</p>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><a class="reference internal" href="pywfm.IWFMModel.get_stream_inflows_at_some_locations.html#pywfm.IWFMModel.get_stream_inflows_at_some_locations" title="pywfm.IWFMModel.get_stream_inflows_at_some_locations"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IWFMModel.get_stream_inflows_at_some_locations</span></code></a></dt><dd><p>Returns stream boundary inflows at a specified set of inflow locations listed by their indices for the current simulation timestep</p>
+</dd>
+<dt><a class="reference internal" href="pywfm.IWFMModel.get_stream_flows.html#pywfm.IWFMModel.get_stream_flows" title="pywfm.IWFMModel.get_stream_flows"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IWFMModel.get_stream_flows</span></code></a></dt><dd><p>Returns stream flows at every stream node for the current timestep</p>
+</dd>
+<dt><a class="reference internal" href="pywfm.IWFMModel.get_stream_stages.html#pywfm.IWFMModel.get_stream_stages" title="pywfm.IWFMModel.get_stream_stages"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IWFMModel.get_stream_stages</span></code></a></dt><dd><p>Returns stream stages at every stream node for the current timestep</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pywfm</span> <span class="kn">import</span> <span class="n">IWFMModel</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dll</span> <span class="o">=</span> <span class="s1">&#39;../../DLL/Bin/IWFM2015_C_x64.dll&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pp_file</span> <span class="o">=</span> <span class="s1">&#39;../Preprocessor/PreProcessor_MAIN.IN&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sim_file</span> <span class="o">=</span> <span class="s1">&#39;Simulation_MAIN.IN&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">IWFMModel</span><span class="p">(</span><span class="n">dll</span><span class="p">,</span> <span class="n">preprocessor_infile</span><span class="p">,</span> <span class="n">simulation_infile</span><span class="p">,</span> <span class="n">is_for_inquiry</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">while</span> <span class="ow">not</span> <span class="n">model</span><span class="o">.</span><span class="n">is_end_of_simulation</span><span class="p">():</span>
+<span class="gp">... </span>    <span class="c1"># advance the simulation time one time step forward</span>
+<span class="gp">... </span>    <span class="n">model</span><span class="o">.</span><span class="n">advance_time</span><span class="p">()</span>
+<span class="gp">...</span>
+<span class="gp">... </span>    <span class="c1"># read all time series data from input files</span>
+<span class="gp">... </span>    <span class="n">model</span><span class="o">.</span><span class="n">read_timeseries_data</span><span class="p">()</span>
+<span class="gp">...</span>
+<span class="gp">... </span>    <span class="c1"># Simulate the hydrologic process for the timestep</span>
+<span class="gp">... </span>    <span class="n">model</span><span class="o">.</span><span class="n">simulate_for_one_timestep</span><span class="p">()</span>
+<span class="gp">...</span>
+<span class="gp">... </span>    <span class="c1"># print stream inflows</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">get_stream_flow_at_location</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+<span class="gp">...</span>
+<span class="gp">... </span>    <span class="c1"># print the results to the user-specified output files</span>
+<span class="gp">... </span>    <span class="n">model</span><span class="o">.</span><span class="n">print_results</span><span class="p">()</span>
+<span class="gp">...</span>
+<span class="gp">... </span>    <span class="c1"># advance the state of the hydrologic system in time</span>
+<span class="gp">... </span>    <span class="n">model</span><span class="o">.</span><span class="n">advance_state</span><span class="p">()</span>
+<span class="go">.</span>
+<span class="go">.</span>
+<span class="go">.</span>
+<span class="go">75741791.53232515</span>
+<span class="go">*   TIME STEP 2 AT 10/02/1990_24:00</span>
+<span class="go">75741791.53232515</span>
+<span class="go">*   TIME STEP 3 AT 10/03/1990_24:00</span>
+<span class="go">75741791.53232515</span>
+<span class="go">*   TIME STEP 4 AT 10/04/1990_24:00</span>
+<span class="go">75741791.53232515</span>
+<span class="go">.</span>
+<span class="go">.</span>
+<span class="go">.</span>
+<span class="go">*   TIME STEP 3652 AT 09/29/2000_24:00</span>
+<span class="go">85301157.65510693</span>
+<span class="go">*   TIME STEP 3653 AT 09/30/2000_24:00</span>
+<span class="go">85301292.67626143</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">kill</span><span class="p">()</span>
+</pre></div>
 </div>
 </dd></dl>
 
