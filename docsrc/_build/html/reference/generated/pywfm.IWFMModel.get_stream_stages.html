@@ -1383,6 +1383,71 @@ simulation units of length to a desired unit of length</p>
 <p>This method is designed for use when is_for_inquiry=0 to return
 stream stages at the current timestep during a simulation.</p>
 </div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><a class="reference internal" href="pywfm.IWFMModel.get_stream_inflows_at_some_locations.html#pywfm.IWFMModel.get_stream_inflows_at_some_locations" title="pywfm.IWFMModel.get_stream_inflows_at_some_locations"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IWFMModel.get_stream_inflows_at_some_locations</span></code></a></dt><dd><p>Returns stream boundary inflows at a specified set of inflow locations listed by their indices for the current simulation timestep</p>
+</dd>
+<dt><a class="reference internal" href="pywfm.IWFMModel.get_stream_flow_at_location.html#pywfm.IWFMModel.get_stream_flow_at_location" title="pywfm.IWFMModel.get_stream_flow_at_location"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IWFMModel.get_stream_flow_at_location</span></code></a></dt><dd><p>Returns stream flow at a stream node for the current time step in a simulation</p>
+</dd>
+<dt><a class="reference internal" href="pywfm.IWFMModel.get_stream_flows.html#pywfm.IWFMModel.get_stream_flows" title="pywfm.IWFMModel.get_stream_flows"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IWFMModel.get_stream_flows</span></code></a></dt><dd><p>Returns stream flows at every stream node for the current timestep</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pywfm</span> <span class="kn">import</span> <span class="n">IWFMModel</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dll</span> <span class="o">=</span> <span class="s1">&#39;../../DLL/Bin/IWFM2015_C_x64.dll&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pp_file</span> <span class="o">=</span> <span class="s1">&#39;../Preprocessor/PreProcessor_MAIN.IN&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sim_file</span> <span class="o">=</span> <span class="s1">&#39;Simulation_MAIN.IN&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">IWFMModel</span><span class="p">(</span><span class="n">dll</span><span class="p">,</span> <span class="n">preprocessor_infile</span><span class="p">,</span> <span class="n">simulation_infile</span><span class="p">,</span> <span class="n">is_for_inquiry</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">while</span> <span class="ow">not</span> <span class="n">model</span><span class="o">.</span><span class="n">is_end_of_simulation</span><span class="p">():</span>
+<span class="gp">... </span>    <span class="c1"># advance the simulation time one time step forward</span>
+<span class="gp">... </span>    <span class="n">model</span><span class="o">.</span><span class="n">advance_time</span><span class="p">()</span>
+<span class="gp">...</span>
+<span class="gp">... </span>    <span class="c1"># read all time series data from input files</span>
+<span class="gp">... </span>    <span class="n">model</span><span class="o">.</span><span class="n">read_timeseries_data</span><span class="p">()</span>
+<span class="gp">...</span>
+<span class="gp">... </span>    <span class="c1"># Simulate the hydrologic process for the timestep</span>
+<span class="gp">... </span>    <span class="n">model</span><span class="o">.</span><span class="n">simulate_for_one_timestep</span><span class="p">()</span>
+<span class="gp">...</span>
+<span class="gp">... </span>    <span class="c1"># get stream flows</span>
+<span class="gp">... </span>    <span class="n">stream_flows</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_stream_stages</span><span class="p">()</span>
+<span class="gp">... </span>    <span class="n">stream_node_ids</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_stream_node_ids</span><span class="p">()</span>
+<span class="gp">...</span>
+<span class="gp">... </span>    <span class="c1"># print the results to the user-specified output files</span>
+<span class="gp">... </span>    <span class="n">model</span><span class="o">.</span><span class="n">print_results</span><span class="p">()</span>
+<span class="gp">...</span>
+<span class="gp">... </span>    <span class="c1"># advance the state of the hydrologic system in time</span>
+<span class="gp">... </span>    <span class="n">model</span><span class="o">.</span><span class="n">advance_state</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">flow</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">stream_flows</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">stream_node_ids</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">flow</span><span class="p">)</span>
+<span class="go">*   TIME STEP 3653 AT 09/30/2000_24:00</span>
+<span class="go">1 2.2952133835661925</span>
+<span class="go">2 2.265988534377925</span>
+<span class="go">3 2.23736219849917</span>
+<span class="go">4 2.209695515995236</span>
+<span class="go">5 2.183909078616921</span>
+<span class="go">6 2.1655452773528054</span>
+<span class="go">7 2.148149883990982</span>
+<span class="go">8 2.133630610251487</span>
+<span class="go">9 2.1115282647882054</span>
+<span class="go">10 2.1015104342912423</span>
+<span class="go">11 1.6783304406148432</span>
+<span class="go">12 1.4126136989034421e-06</span>
+<span class="go">13 0.0</span>
+<span class="go">14 0.0</span>
+<span class="go">15 0.0</span>
+<span class="go">16 0.0</span>
+<span class="go">17 0.0</span>
+<span class="go">18 0.08041698765009642</span>
+<span class="go">19 0.061386890202925315</span>
+<span class="go">20 0.046860127429624754</span>
+<span class="go">21 0.07388403067233185</span>
+<span class="go">22 0.050371296013054234</span>
+<span class="go">23 0.07860238766727434</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">kill</span><span class="p">()</span>
+</pre></div>
+</div>
 </dd></dl>
 
 </section>
