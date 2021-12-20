@@ -1365,8 +1365,7 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="pywfm.IWFMModel.get_stream_gain_from_lakes">
 <span class="sig-prename descclassname"><span class="pre">IWFMModel.</span></span><span class="sig-name descname"><span class="pre">get_stream_gain_from_lakes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lake_inflow_conversion_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pywfm.IWFMModel.get_stream_gain_from_lakes" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns gain from lakes for every stream
-node for the current timestep</p>
+<dd><p>Returns gain from lakes for every stream node for the current timestep</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>lake_inflow_conversion_factor</strong> (<em>float</em>) – conversion factor for gain from lakes from
@@ -1380,11 +1379,34 @@ simulation timestep</p>
 <dd class="field-odd"><p>np.ndarray</p>
 </dd>
 </dl>
-<p class="rubric">Notes</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
 <p>This method is designed for use when is_for_inquiry=0 to return
 gain from groundwater at the current timestep during a
 simulation.</p>
 <p>stream nodes without gain from lakes will be 0</p>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><a class="reference internal" href="pywfm.IWFMModel.get_stream_tributary_inflows.html#pywfm.IWFMModel.get_stream_tributary_inflows" title="pywfm.IWFMModel.get_stream_tributary_inflows"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IWFMModel.get_stream_tributary_inflows</span></code></a></dt><dd><p>Returns small watershed inflows at every stream node for the current timestep</p>
+</dd>
+<dt><a class="reference internal" href="pywfm.IWFMModel.get_stream_rainfall_runoff.html#pywfm.IWFMModel.get_stream_rainfall_runoff" title="pywfm.IWFMModel.get_stream_rainfall_runoff"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IWFMModel.get_stream_rainfall_runoff</span></code></a></dt><dd><p>Returns rainfall runoff at every stream node for the current timestep</p>
+</dd>
+<dt><a class="reference internal" href="pywfm.IWFMModel.get_stream_return_flows.html#pywfm.IWFMModel.get_stream_return_flows" title="pywfm.IWFMModel.get_stream_return_flows"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IWFMModel.get_stream_return_flows</span></code></a></dt><dd><p>Returns agricultural and urban return flows at every stream node for the current timestep</p>
+</dd>
+<dt><a class="reference internal" href="pywfm.IWFMModel.get_stream_tile_drain_flows.html#pywfm.IWFMModel.get_stream_tile_drain_flows" title="pywfm.IWFMModel.get_stream_tile_drain_flows"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IWFMModel.get_stream_tile_drain_flows</span></code></a></dt><dd><p>Returns tile drain flows into every stream node for the current timestep</p>
+</dd>
+<dt><a class="reference internal" href="pywfm.IWFMModel.get_stream_riparian_evapotranspiration.html#pywfm.IWFMModel.get_stream_riparian_evapotranspiration" title="pywfm.IWFMModel.get_stream_riparian_evapotranspiration"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IWFMModel.get_stream_riparian_evapotranspiration</span></code></a></dt><dd><p>Returns riparian evapotranspiration from every stream node for the current timestep</p>
+</dd>
+<dt><a class="reference internal" href="pywfm.IWFMModel.get_stream_gain_from_groundwater.html#pywfm.IWFMModel.get_stream_gain_from_groundwater" title="pywfm.IWFMModel.get_stream_gain_from_groundwater"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IWFMModel.get_stream_gain_from_groundwater</span></code></a></dt><dd><p>Returns gain from groundwater for every stream node for the current timestep</p>
+</dd>
+<dt><a class="reference internal" href="pywfm.IWFMModel.get_net_bypass_inflows.html#pywfm.IWFMModel.get_net_bypass_inflows" title="pywfm.IWFMModel.get_net_bypass_inflows"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IWFMModel.get_net_bypass_inflows</span></code></a></dt><dd><p>Returns net bypass inflows for every stream node for the current timestep</p>
+</dd>
+<dt><a class="reference internal" href="pywfm.IWFMModel.get_actual_stream_diversions_at_some_locations.html#pywfm.IWFMModel.get_actual_stream_diversions_at_some_locations" title="pywfm.IWFMModel.get_actual_stream_diversions_at_some_locations"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IWFMModel.get_actual_stream_diversions_at_some_locations</span></code></a></dt><dd><p>Returns actual diversion amounts for a list of diversions during a model simulation</p>
+</dd>
+</dl>
+</div>
 </dd></dl>
 
 </section>
