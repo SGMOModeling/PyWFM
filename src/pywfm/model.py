@@ -1898,6 +1898,17 @@ class IWFMModel(IWFMMiscellaneous):
         small watershed inflows at the current timestep during a simulation.
 
         stream nodes without a small watershed draining to it will be 0
+
+        See Also
+        --------
+        IWFMModel.get_stream_rainfall_runoff : Returns rainfall runoff at every stream node for the current timestep
+        IWFMModel.get_stream_return_flows : Returns agricultural and urban return flows at every stream node for the current timestep
+        IWFMModel.get_stream_tile_drain_flows : Returns tile drain flows into every stream node for the current timestep
+        IWFMModel.get_stream_riparian_evapotranspiration : Returns riparian evapotranspiration from every stream node for the current timestep
+        IWFMModel.get_stream_gain_from_groundwater : Returns gain from groundwater for every stream node for the current timestep
+        IWFMModel.get_stream_gain_from_lakes : Returns gain from lakes for every stream node for the current timestep
+        IWFMModel.get_net_bypass_inflows : Returns net bypass inflows for every stream node for the current timestep
+        IWFMModel.get_actual_stream_diversions_at_some_locations : Returns actual diversion amounts for a list of diversions during a model simulation
         '''
         if not hasattr(self.dll, "IW_Model_GetStrmTributaryInflows"):
             raise AttributeError('IWFM DLL does not have "{}" procedure. '
@@ -1923,7 +1934,7 @@ class IWFMModel(IWFMMiscellaneous):
         return np.array(small_watershed_inflows)
 
     def get_stream_rainfall_runoff(self, runoff_conversion_factor=1.0):
-        ''' Returns small watershed inflows at every stream node for the current timestep
+        ''' Returns rainfall runoff at every stream node for the current timestep
         
         Parameters
         ----------
@@ -1943,6 +1954,17 @@ class IWFMModel(IWFMMiscellaneous):
         inflows from rainfall-runoff at the current timestep during a simulation.
 
         stream nodes without rainfall-runoff draining to it will be 0
+        
+        See Also
+        --------
+        IWFMModel.get_stream_tributary_inflows : Returns small watershed inflows at every stream node for the current timestep
+        IWFMModel.get_stream_return_flows : Returns agricultural and urban return flows at every stream node for the current timestep
+        IWFMModel.get_stream_tile_drain_flows : Returns tile drain flows into every stream node for the current timestep
+        IWFMModel.get_stream_riparian_evapotranspiration : Returns riparian evapotranspiration from every stream node for the current timestep
+        IWFMModel.get_stream_gain_from_groundwater : Returns gain from groundwater for every stream node for the current timestep
+        IWFMModel.get_stream_gain_from_lakes : Returns gain from lakes for every stream node for the current timestep
+        IWFMModel.get_net_bypass_inflows : Returns net bypass inflows for every stream node for the current timestep
+        IWFMModel.get_actual_stream_diversions_at_some_locations : Returns actual diversion amounts for a list of diversions during a model simulation
         '''
         if not hasattr(self.dll, "IW_Model_GetStrmRainfallRunoff"):
             raise AttributeError('IWFM DLL does not have "{}" procedure. '
@@ -1989,6 +2011,17 @@ class IWFMModel(IWFMMiscellaneous):
         return flows at the current timestep during a simulation.
 
         stream nodes without return flows will be 0
+        
+        See Also
+        --------
+        IWFMModel.get_stream_tributary_inflows : Returns small watershed inflows at every stream node for the current timestep
+        IWFMModel.get_stream_rainfall_runoff : Returns rainfall runoff at every stream node for the current timestep
+        IWFMModel.get_stream_tile_drain_flows : Returns tile drain flows into every stream node for the current timestep
+        IWFMModel.get_stream_riparian_evapotranspiration : Returns riparian evapotranspiration from every stream node for the current timestep
+        IWFMModel.get_stream_gain_from_groundwater : Returns gain from groundwater for every stream node for the current timestep
+        IWFMModel.get_stream_gain_from_lakes : Returns gain from lakes for every stream node for the current timestep
+        IWFMModel.get_net_bypass_inflows : Returns net bypass inflows for every stream node for the current timestep
+        IWFMModel.get_actual_stream_diversions_at_some_locations : Returns actual diversion amounts for a list of diversions during a model simulation
         '''
         if not hasattr(self.dll, "IW_Model_GetStrmReturnFlows"):
             raise AttributeError('IWFM DLL does not have "{}" procedure. '
@@ -2014,8 +2047,7 @@ class IWFMModel(IWFMMiscellaneous):
         return np.array(return_flows)
 
     def get_stream_tile_drain_flows(self, tile_drain_conversion_factor=1.0):
-        ''' Returns tile drain flows into every stream
-        node for the current timestep
+        ''' Returns tile drain flows into every stream node for the current timestep
         
         Parameters
         ----------
@@ -2035,6 +2067,17 @@ class IWFMModel(IWFMMiscellaneous):
         tile drain flows at the current timestep during a simulation.
 
         stream nodes without tile drain flows will be 0
+        
+        See Also
+        --------
+        IWFMModel.get_stream_tributary_inflows : Returns small watershed inflows at every stream node for the current timestep
+        IWFMModel.get_stream_rainfall_runoff : Returns rainfall runoff at every stream node for the current timestep
+        IWFMModel.get_stream_return_flows : Returns agricultural and urban return flows at every stream node for the current timestep
+        IWFMModel.get_stream_riparian_evapotranspiration : Returns riparian evapotranspiration from every stream node for the current timestep
+        IWFMModel.get_stream_gain_from_groundwater : Returns gain from groundwater for every stream node for the current timestep
+        IWFMModel.get_stream_gain_from_lakes : Returns gain from lakes for every stream node for the current timestep
+        IWFMModel.get_net_bypass_inflows : Returns net bypass inflows for every stream node for the current timestep
+        IWFMModel.get_actual_stream_diversions_at_some_locations : Returns actual diversion amounts for a list of diversions during a model simulation
         '''
         if not hasattr(self.dll, "IW_Model_GetStrmTileDrains"):
             raise AttributeError('IWFM DLL does not have "{}" procedure. '
@@ -2060,8 +2103,7 @@ class IWFMModel(IWFMMiscellaneous):
         return np.array(tile_drain_flows)
 
     def get_stream_riparian_evapotranspiration(self, evapotranspiration_conversion_factor=1.0):
-        ''' Returns riparian evapotranspiration from every stream
-        node for the current timestep
+        ''' Returns riparian evapotranspiration from every stream node for the current timestep
         
         Parameters
         ----------
@@ -2082,6 +2124,17 @@ class IWFMModel(IWFMMiscellaneous):
         simulation.
 
         stream nodes without riparian evapotranspiration will be 0
+        
+        See Also
+        --------
+        IWFMModel.get_stream_tributary_inflows : Returns small watershed inflows at every stream node for the current timestep
+        IWFMModel.get_stream_rainfall_runoff : Returns rainfall runoff at every stream node for the current timestep
+        IWFMModel.get_stream_return_flows : Returns agricultural and urban return flows at every stream node for the current timestep
+        IWFMModel.get_stream_tile_drain_flows : Returns tile drain flows into every stream node for the current timestep
+        IWFMModel.get_stream_gain_from_groundwater : Returns gain from groundwater for every stream node for the current timestep
+        IWFMModel.get_stream_gain_from_lakes : Returns gain from lakes for every stream node for the current timestep
+        IWFMModel.get_net_bypass_inflows : Returns net bypass inflows for every stream node for the current timestep
+        IWFMModel.get_actual_stream_diversions_at_some_locations : Returns actual diversion amounts for a list of diversions during a model simulation
         '''
         if not hasattr(self.dll, "IW_Model_GetStrmRiparianETs"):
             raise AttributeError('IWFM DLL does not have "{}" procedure. '
@@ -2107,8 +2160,7 @@ class IWFMModel(IWFMMiscellaneous):
         return np.array(riparian_evapotranspiration)
 
     def get_stream_gain_from_groundwater(self, stream_gain_conversion_factor=1.0):
-        ''' Returns gain from groundwater for every stream
-        node for the current timestep
+        ''' Returns gain from groundwater for every stream node for the current timestep
         
         Parameters
         ----------
@@ -2130,6 +2182,17 @@ class IWFMModel(IWFMMiscellaneous):
 
         stream nodes with gain from groundwater will be +
         stream nodes with loss to groundwater will be -
+        
+        See Also
+        --------
+        IWFMModel.get_stream_tributary_inflows : Returns small watershed inflows at every stream node for the current timestep
+        IWFMModel.get_stream_rainfall_runoff : Returns rainfall runoff at every stream node for the current timestep
+        IWFMModel.get_stream_return_flows : Returns agricultural and urban return flows at every stream node for the current timestep
+        IWFMModel.get_stream_tile_drain_flows : Returns tile drain flows into every stream node for the current timestep
+        IWFMModel.get_stream_riparian_evapotranspiration : Returns riparian evapotranspiration from every stream node for the current timestep
+        IWFMModel.get_stream_gain_from_lakes : Returns gain from lakes for every stream node for the current timestep
+        IWFMModel.get_net_bypass_inflows : Returns net bypass inflows for every stream node for the current timestep
+        IWFMModel.get_actual_stream_diversions_at_some_locations : Returns actual diversion amounts for a list of diversions during a model simulation
         '''
         if not hasattr(self.dll, "IW_Model_GetStrmGainFromGW"):
             raise AttributeError('IWFM DLL does not have "{}" procedure. '
@@ -2155,8 +2218,7 @@ class IWFMModel(IWFMMiscellaneous):
         return np.array(gain_from_groundwater)
 
     def get_stream_gain_from_lakes(self, lake_inflow_conversion_factor=1.0):
-        ''' Returns gain from lakes for every stream
-        node for the current timestep
+        ''' Returns gain from lakes for every stream node for the current timestep
         
         Parameters
         ----------
@@ -2170,13 +2232,24 @@ class IWFMModel(IWFMMiscellaneous):
             gain from lakes for all stream nodes for the current 
             simulation timestep
 
-        Notes
-        -----
+        Note
+        ----
         This method is designed for use when is_for_inquiry=0 to return
         gain from groundwater at the current timestep during a 
         simulation.
 
         stream nodes without gain from lakes will be 0
+        
+        See Also
+        --------
+        IWFMModel.get_stream_tributary_inflows : Returns small watershed inflows at every stream node for the current timestep
+        IWFMModel.get_stream_rainfall_runoff : Returns rainfall runoff at every stream node for the current timestep
+        IWFMModel.get_stream_return_flows : Returns agricultural and urban return flows at every stream node for the current timestep
+        IWFMModel.get_stream_tile_drain_flows : Returns tile drain flows into every stream node for the current timestep
+        IWFMModel.get_stream_riparian_evapotranspiration : Returns riparian evapotranspiration from every stream node for the current timestep
+        IWFMModel.get_stream_gain_from_groundwater : Returns gain from groundwater for every stream node for the current timestep
+        IWFMModel.get_net_bypass_inflows : Returns net bypass inflows for every stream node for the current timestep
+        IWFMModel.get_actual_stream_diversions_at_some_locations : Returns actual diversion amounts for a list of diversions during a model simulation
         '''
         if not hasattr(self.dll, "IW_Model_GetStrmGainFromLakes"):
             raise AttributeError('IWFM DLL does not have "{}" procedure. '
@@ -2202,8 +2275,7 @@ class IWFMModel(IWFMMiscellaneous):
         return np.array(gain_from_lakes)
 
     def get_net_bypass_inflows(self, bypass_inflow_conversion_factor=1.0):
-        ''' Returns net bypass inflows for every stream
-        node for the current timestep
+        ''' Returns net bypass inflows for every stream node for the current timestep
         
         Parameters
         ----------
@@ -2217,13 +2289,24 @@ class IWFMModel(IWFMMiscellaneous):
             net bypass inflow for all stream nodes for the current 
             simulation timestep
 
-        Notes
-        -----
+        Note
+        ----
         This method is designed for use when is_for_inquiry=0 to return
         net bypass inflow to streams at the current timestep during a 
         simulation.
 
         stream nodes without net bypass inflow will be 0
+        
+        See Also
+        --------
+        IWFMModel.get_stream_tributary_inflows : Returns small watershed inflows at every stream node for the current timestep
+        IWFMModel.get_stream_rainfall_runoff : Returns rainfall runoff at every stream node for the current timestep
+        IWFMModel.get_stream_return_flows : Returns agricultural and urban return flows at every stream node for the current timestep
+        IWFMModel.get_stream_tile_drain_flows : Returns tile drain flows into every stream node for the current timestep
+        IWFMModel.get_stream_riparian_evapotranspiration : Returns riparian evapotranspiration from every stream node for the current timestep
+        IWFMModel.get_stream_gain_from_groundwater : Returns gain from groundwater for every stream node for the current timestep
+        IWFMModel.get_stream_gain_from_lakes : Returns gain from lakes for every stream node for the current timestep
+        IWFMModel.get_actual_stream_diversions_at_some_locations : Returns actual diversion amounts for a list of diversions during a model simulation
         '''
         if not hasattr(self.dll, "IW_Model_GetStrmGainFromLakes"):
             raise AttributeError('IWFM DLL does not have "{}" procedure. '
@@ -2249,8 +2332,7 @@ class IWFMModel(IWFMMiscellaneous):
         return np.array(net_bypass_inflow)
 
     def get_actual_stream_diversions_at_some_locations(self, diversion_indices, diversion_conversion_factor):
-        ''' Returns actual diversion amounts for a list of diversions
-        during a model simulation
+        ''' Returns actual diversion amounts for a list of diversions during a model simulation
         
         Parameters
         ----------
@@ -2268,8 +2350,8 @@ class IWFMModel(IWFMMiscellaneous):
         np.ndarray
             actual diversions for the diversion indices provided
         
-        Notes
-        -----
+        Note
+        ----
         This method is designed for use when is_for_inquiry=0 to return
         actual diversions amounts for selected diversion locations at 
         the current timestep during a simulation.
@@ -2277,6 +2359,17 @@ class IWFMModel(IWFMMiscellaneous):
         Actual diversion amounts can be less than the required diversion 
         amount if stream goes dry at the stream node where the diversion 
         occurs
+        
+        See Also
+        --------
+        IWFMModel.get_stream_tributary_inflows : Returns small watershed inflows at every stream node for the current timestep
+        IWFMModel.get_stream_rainfall_runoff : Returns rainfall runoff at every stream node for the current timestep
+        IWFMModel.get_stream_return_flows : Returns agricultural and urban return flows at every stream node for the current timestep
+        IWFMModel.get_stream_tile_drain_flows : Returns tile drain flows into every stream node for the current timestep
+        IWFMModel.get_stream_riparian_evapotranspiration : Returns riparian evapotranspiration from every stream node for the current timestep
+        IWFMModel.get_stream_gain_from_groundwater : Returns gain from groundwater for every stream node for the current timestep
+        IWFMModel.get_stream_gain_from_lakes : Returns gain from lakes for every stream node for the current timestep
+        IWFMModel.get_net_bypass_inflows : Returns net bypass inflows for every stream node for the current timestep
         '''
         if not hasattr(self.dll, "IW_Model_GetStrmActualDiversions_AtSomeDiversions"):
             raise AttributeError('IWFM DLL does not have "{}" procedure. '
@@ -2301,18 +2394,18 @@ class IWFMModel(IWFMMiscellaneous):
         
         return np.array(actual_diversion_amounts)
 
-    def get_stream_diversion_locations(self, diversion_locations):
-        ''' Returns the stream node indices corresponding to diversion locations
+    def get_stream_diversion_locations(self, diversion_locations='all'):
+        ''' Returns the stream node IDs corresponding to diversion locations
 
         Parameters
         ----------
-        diversion_locations : list, tuple, np.ndarray
+        diversion_locations : list, tuple, np.ndarray, str='all', default='all'
             integer array of diversion indices
         
         Returns
         -------
         np.ndarray
-            integer array of stream node indices
+            array of stream node IDs corresponding to where diversions are exported
         '''
         if not hasattr(self.dll, "IW_Model_GetStrmDiversionsExportNodes"):
             raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format("IW_Model_GetStrmDiversionsExportNodes"))
@@ -2342,7 +2435,11 @@ class IWFMModel(IWFMMiscellaneous):
                                                        diversion_stream_nodes,
                                                        ctypes.byref(self.status))
 
-        return np.array(diversion_stream_nodes)
+        # convert stream node indices to stream node ids
+        stream_node_ids = self.get_stream_node_ids()
+        stream_diversion_indices = np.array(diversion_stream_nodes)
+
+        return stream_node_ids[stream_diversion_indices - 1]
 
     def get_n_stream_reaches(self):
         ''' Returns the number of stream reaches in an IWFM model
