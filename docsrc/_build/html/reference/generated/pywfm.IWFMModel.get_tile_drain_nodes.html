@@ -1374,6 +1374,27 @@
 <dd class="field-even"><p>np.ndarray</p>
 </dd>
 </dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><a class="reference internal" href="pywfm.IWFMModel.get_n_tile_drains.html#pywfm.IWFMModel.get_n_tile_drains" title="pywfm.IWFMModel.get_n_tile_drains"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IWFMModel.get_n_tile_drains</span></code></a></dt><dd><p>Returns the number of tile drain nodes in an IWFM model</p>
+</dd>
+<dt><a class="reference internal" href="pywfm.IWFMModel.get_tile_drain_ids.html#pywfm.IWFMModel.get_tile_drain_ids" title="pywfm.IWFMModel.get_tile_drain_ids"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IWFMModel.get_tile_drain_ids</span></code></a></dt><dd><p>Returns the user-specified IDs for tile drains simulated in an IWFM model</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pywfm</span> <span class="kn">import</span> <span class="n">IWFMModel</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dll</span> <span class="o">=</span> <span class="s1">&#39;../../DLL/Bin/IWFM2015_C_x64.dll&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pp_file</span> <span class="o">=</span> <span class="s1">&#39;../Preprocessor/PreProcessor_MAIN.IN&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sim_file</span> <span class="o">=</span> <span class="s1">&#39;Simulation_MAIN.IN&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">IWFMModel</span><span class="p">(</span><span class="n">dll</span><span class="p">,</span> <span class="n">pp_file</span><span class="p">,</span> <span class="n">sim_file</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">get_tile_drain_nodes</span><span class="p">()</span>
+<span class="go">array([  6,  27,  48,  69,  90, 111, 132, 153, 174, 195, 216, 237, 258,</span>
+<span class="go">       279, 300, 321, 342, 363, 384, 405, 426])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">kill</span><span class="p">()</span>
+</pre></div>
+</div>
 </dd></dl>
 
 </section>
