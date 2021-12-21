@@ -3751,7 +3751,7 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_n_tile_drain : Returns the number of tile drain nodes in an IWFM model
+        IWFMModel.get_n_tile_drains : Returns the number of tile drain nodes in an IWFM model
         IWFMModel.get_tile_drain_nodes : Returns the node ids where tile drains are specified
 
         Example
