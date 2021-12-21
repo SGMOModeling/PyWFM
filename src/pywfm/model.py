@@ -3318,6 +3318,37 @@ class IWFMModel(IWFMMiscellaneous):
         -------
         np.ndarray
             array of destination types for each reach in the IWFM model
+
+        Note
+        ----
+        A return value of 0 corresponds to flow leaving the model domain
+        A return value of 1 corresponds to flow to a stream node in another reach
+        A return value of 3 corresponds to flow to a lake
+        
+        See Also
+        --------
+        IWFMModel.get_n_stream_reaches : Returns the number of stream reaches in an IWFM model
+        IWFMModel.get_stream_reach_ids : Returns the user-specified identification numbers for the stream reaches in an IWFM model
+        IWFMModel.get_n_nodes_in_stream_reach : Returns the number of stream nodes in a stream reach
+        IWFMModel.get_stream_reach_groundwater_nodes : Returns the groundwater node IDs corresponding to stream nodes in a specified reach 
+        IWFMModel.get_stream_reach_stream_nodes : Returns the stream node IDs corresponding to stream nodes in a specified reach
+        IWFMModel.get_stream_reaches_for_stream_nodes : Returns the stream reach IDs that correspond to a list of stream nodes
+        IWFMModel.get_upstream_nodes_in_stream_reaches : Returns the IDs for the upstream stream node in each stream reach
+        IWFMModel.get_n_reaches_upstream_of_reach : Returns the number of stream reaches immediately upstream of the specified reach
+        IWFMModel.get_reaches_upstream_of_reach : Returns the IDs of the reaches that are immediately upstream of the specified reach
+        IWFMModel.get_downstream_node_in_stream_reaches : Returns the IDs for the downstream stream node in each stream reach
+        IWFMModel.get_reach_outflow_destination : Returns the destination index that each stream reach flows into
+        
+        Example
+        -------
+        >>> from pywfm import IWFMModel
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
+        >>> sim_file = 'Simulation_MAIN.IN'
+        >>> model = IWFMModel(dll, preprocessor_infile, simulation_infile)
+        >>> model.get_reach_outflow_destination_types()
+        array([1, 3, 0])
+        >>> model.kill()
         '''
         if not hasattr(self.dll, "IW_Model_GetReachOutflowDestTypes"):
             raise AttributeError('IWFM DLL does not have "{}" procedure. '
