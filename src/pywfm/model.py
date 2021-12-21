@@ -2406,6 +2406,22 @@ class IWFMModel(IWFMMiscellaneous):
         -------
         np.ndarray
             array of stream node IDs corresponding to where diversions are exported
+
+        See Also
+        --------
+        IWFMModel.get_n_diversions : Returns the number of surface water diversions in an IWFM model
+        IWFMModel.get_diversion_ids : Returns the surface water diversion identification numbers specified in an IWFM model
+
+        Example
+        -------
+        >>> from pywfm import IWFMModel
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
+        >>> sim_file = 'Simulation_MAIN.IN'
+        >>> model = IWFMModel(dll, preprocessor_infile, simulation_infile)
+        >>> model.get_stream_diversion_locations()
+        array([ 9, 12, 12, 22, 23])
+        >>> model.kill()
         '''
         if not hasattr(self.dll, "IW_Model_GetStrmDiversionsExportNodes"):
             raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format("IW_Model_GetStrmDiversionsExportNodes"))
