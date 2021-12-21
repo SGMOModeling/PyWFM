@@ -2510,6 +2510,36 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_n_stream_reaches(self):
         ''' Returns the number of stream reaches in an IWFM model
+
+        Returns
+        -------
+        int
+            number of stream reaches in the IWFM model
+
+        See Also
+        --------
+        IWFMModel.get_stream_reach_ids : Returns the user-specified identification numbers for the stream reaches in an IWFM model
+        IWFMModel.get_n_nodes_in_stream_reach : Returns the number of stream nodes in a stream reach
+        IWFMModel.get_stream_reach_groundwater_nodes : Returns the groundwater node indices corresponding to stream nodes in a specified reach 
+        IWFMModel.get_stream_reach_stream_nodes : Returns the stream node indices corresponding to stream nodes in a specified reach
+        IWFMModel.get_stream_reaches_for_stream_nodes : Returns the stream reach indices that correspond to a list of stream nodes
+        IWFMModel.get_upstream_nodes_in_stream_reaches : Returns the indices for the upstream stream node in each stream reach
+        IWFMModel.get_n_reaches_upstream_of_reach : Returns the number of stream reaches immediately upstream of the specified reach
+        IWFMModel.get_reaches_upstream_of_reach : Returns the indices of the reaches that are immediately upstream of the specified reach
+        IWFMModel.get_downstream_node_in_stream_reaches : Returns the indices for the downstream stream node in each stream reach
+        IWFMModel.get_reach_outflow_destination : Returns the destination index that each stream reach flows into
+        IWFMModel.get_reach_outflow_destination_types : Returns the outflow destination types that each stream reach flows into.
+
+        Example
+        -------
+        >>> from pywfm import IWFMModel
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
+        >>> sim_file = 'Simulation_MAIN.IN'
+        >>> model = IWFMModel(dll, preprocessor_infile, simulation_infile)
+        >>> model.get_n_stream_reaches()
+        3
+        >>> model.kill()
         '''
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetNReaches"):
@@ -2524,10 +2554,7 @@ class IWFMModel(IWFMMiscellaneous):
         self.dll.IW_Model_GetNReaches(ctypes.byref(n_stream_reaches),
                                       ctypes.byref(self.status))
         
-        if not hasattr(self, "n_stream_reaches"):
-            self.n_stream_reaches = n_stream_reaches
-            
-        return self.n_stream_reaches.value
+        return n_stream_reaches.value
 
     def get_stream_reach_ids(self):
         ''' Returns the user-specified identification numbers for the
@@ -2844,9 +2871,9 @@ class IWFMModel(IWFMMiscellaneous):
         return np.array(downstream_stream_nodes)
 
     def get_reach_outflow_destination(self):
-        ''' This procedure Returns the destination index that each stream
-        reach flows into. To find out the type of destination (i.e. lake, 
-        another stream node or outside the model domain) that the reaches 
+        ''' Returns the destination index that each stream reach flows 
+        into. To find out the type of destination (i.e. lake, another 
+        stream node or outside the model domain) that the reaches 
         flow into, it is necessary to call IW_Model_GetReachOutflowDestType 
         procedure.
 
