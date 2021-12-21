@@ -1369,12 +1369,119 @@
 node and each layer</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>array of aquifer top elevations</p>
+<dd class="field-odd"><p>array of aquifer top elevations for each model layer</p>
 </dd>
 <dt class="field-even">Return type</dt>
 <dd class="field-even"><p>np.ndarray</p>
 </dd>
 </dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Resulting array has a shape of (n_layers, n_nodes)</p>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><a class="reference internal" href="pywfm.IWFMModel.get_ground_surface_elevation.html#pywfm.IWFMModel.get_ground_surface_elevation" title="pywfm.IWFMModel.get_ground_surface_elevation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IWFMModel.get_ground_surface_elevation</span></code></a></dt><dd><p>Returns the ground surface elevation for each node specified in the IWFM model</p>
+</dd>
+<dt><a class="reference internal" href="pywfm.IWFMModel.get_aquifer_bottom_elevation.html#pywfm.IWFMModel.get_aquifer_bottom_elevation" title="pywfm.IWFMModel.get_aquifer_bottom_elevation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IWFMModel.get_aquifer_bottom_elevation</span></code></a></dt><dd><p>Returns the aquifer top elevations for each finite element node and each layer</p>
+</dd>
+<dt><a class="reference internal" href="pywfm.IWFMModel.get_stratigraphy_atXYcoordinate.html#pywfm.IWFMModel.get_stratigraphy_atXYcoordinate" title="pywfm.IWFMModel.get_stratigraphy_atXYcoordinate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IWFMModel.get_stratigraphy_atXYcoordinate</span></code></a></dt><dd><p>Returns the stratigraphy at given X,Y coordinates</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pywfm</span> <span class="kn">import</span> <span class="n">IWFMModel</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dll</span> <span class="o">=</span> <span class="s1">&#39;../../DLL/Bin/IWFM2015_C_x64.dll&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pp_file</span> <span class="o">=</span> <span class="s1">&#39;../Preprocessor/PreProcessor_MAIN.IN&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sim_file</span> <span class="o">=</span> <span class="s1">&#39;Simulation_MAIN.IN&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">IWFMModel</span><span class="p">(</span><span class="n">dll</span><span class="p">,</span> <span class="n">pp_file</span><span class="p">,</span> <span class="n">sim_file</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">get_aquifer_top_elevation</span><span class="p">()</span>
+<span class="go">array([[500., 500., 500., 500., 500., 500., 500., 500., 500., 500., 500.,</span>
+<span class="go">        500., 500., 500., 500., 500., 500., 500., 500., 500., 500., 500.,</span>
+<span class="go">        500., 500., 500., 500., 500., 500., 500., 500., 500., 500., 500.,</span>
+<span class="go">        500., 500., 500., 500., 500., 500., 500., 500., 500., 500., 500.,</span>
+<span class="go">        500., 500., 500., 500., 500., 500., 500., 500., 500., 500., 500.,</span>
+<span class="go">        500., 500., 500., 500., 500., 500., 500., 500., 500., 500., 500.,</span>
+<span class="go">        500., 500., 500., 500., 500., 500., 500., 500., 500., 500., 500.,</span>
+<span class="go">        500., 500., 500., 500., 500., 500., 500., 500., 500., 500., 500.,</span>
+<span class="go">        500., 500., 500., 500., 500., 500., 500., 500., 500., 500., 500.,</span>
+<span class="go">        500., 500., 500., 500., 500., 500., 500., 500., 500., 500., 500.,</span>
+<span class="go">        500., 500., 500., 500., 500., 500., 500., 500., 500., 500., 500.,</span>
+<span class="go">        500., 500., 500., 500., 500., 500., 500., 500., 500., 500., 500.,</span>
+<span class="go">        500., 500., 500., 500., 500., 500., 500., 500., 500., 500., 500.,</span>
+<span class="go">        500., 500., 500., 500., 500., 500., 500., 500., 500., 500., 500.,</span>
+<span class="go">        500., 500., 500., 500., 500., 500., 500., 500., 500., 500., 500.,</span>
+<span class="go">        500., 500., 500., 500., 500., 500., 500., 500., 500., 500., 500.,</span>
+<span class="go">        270., 270., 270., 270., 500., 500., 500., 500., 500., 500., 500.,</span>
+<span class="go">        500., 500., 500., 500., 500., 500., 500., 500., 500., 270., 270.,</span>
+<span class="go">        250., 270., 270., 500., 500., 500., 500., 500., 500., 500., 500.,</span>
+<span class="go">        500., 500., 500., 500., 500., 500., 500., 270., 270., 250., 250.,</span>
+<span class="go">        270., 500., 500., 500., 500., 500., 500., 500., 500., 500., 500.,</span>
+<span class="go">        500., 500., 500., 500., 500., 500., 270., 270., 270., 270., 270.,</span>
+<span class="go">        500., 500., 500., 500., 500., 500., 500., 500., 500., 500., 500.,</span>
+<span class="go">        500., 500., 500., 500., 500., 500., 500., 500., 500., 500., 500.,</span>
+<span class="go">        500., 500., 500., 500., 500., 500., 500., 500., 500., 500., 500.,</span>
+<span class="go">        500., 500., 500., 500., 500., 500., 500., 500., 500., 500., 500.,</span>
+<span class="go">        500., 500., 500., 500., 500., 500., 500., 500., 500., 500., 500.,</span>
+<span class="go">        500., 500., 500., 500., 500., 500., 500., 500., 500., 500., 500.,</span>
+<span class="go">        500., 500., 500., 500., 500., 500., 500., 500., 500., 500., 500.,</span>
+<span class="go">        500., 500., 500., 500., 500., 500., 500., 500., 500., 500., 500.,</span>
+<span class="go">        500., 500., 500., 500., 500., 500., 500., 500., 500., 500., 500.,</span>
+<span class="go">        500., 500., 500., 500., 500., 500., 500., 500., 500., 500., 500.,</span>
+<span class="go">        500., 500., 500., 500., 500., 500., 500., 500., 500., 500., 500.,</span>
+<span class="go">        500., 500., 500., 500., 500., 500., 500., 500., 500., 500., 500.,</span>
+<span class="go">        500., 500., 500., 500., 500., 500., 500., 500., 500., 500., 500.,</span>
+<span class="go">        500., 500., 500., 500., 500., 500., 500., 500., 500., 500., 500.,</span>
+<span class="go">        500., 500., 500., 500., 500., 500., 500., 500., 500., 500., 500.,</span>
+<span class="go">        500., 500., 500., 500., 500., 500., 500., 500., 500., 500., 500.,</span>
+<span class="go">        500., 500., 500., 500., 500., 500., 500., 500., 500., 500., 500.,</span>
+<span class="go">        500., 500., 500., 500., 500., 500., 500., 500., 500., 500., 500.,</span>
+<span class="go">        500.],</span>
+<span class="go">       [-10., -10., -10., -10., -10., -10., -10., -10., -10., -10., -10.,</span>
+<span class="go">        -10., -10., -10., -10., -10., -10., -10., -10., -10., -10., -10.,</span>
+<span class="go">        -10., -10., -10., -10., -10., -10., -10., -10., -10., -10., -10.,</span>
+<span class="go">        -10., -10., -10., -10., -10., -10., -10., -10., -10., -10., -10.,</span>
+<span class="go">        -10., -10., -10., -10., -10., -10., -10., -10., -10., -10., -10.,</span>
+<span class="go">        -10., -10., -10., -10., -10., -10., -10., -10., -10., -10., -10.,</span>
+<span class="go">        -10., -10., -10., -10., -10., -10., -10., -10., -10., -10., -10.,</span>
+<span class="go">        -10., -10., -10., -10., -10., -10., -10., -10., -10., -10., -10.,</span>
+<span class="go">        -10., -10., -10., -10., -10., -10., -10., -10., -10., -10., -10.,</span>
+<span class="go">        -10., -10., -10., -10., -10., -10., -10., -10., -10., -10., -10.,</span>
+<span class="go">        -10., -10., -10., -10., -10., -10., -10., -10., -10., -10., -10.,</span>
+<span class="go">        -10., -10., -10., -10., -10., -10., -10., -10., -10., -10., -10.,</span>
+<span class="go">        -10., -10., -10., -10., -10., -10., -10., -10., -10., -10., -10.,</span>
+<span class="go">        -10., -10., -10., -10., -10., -10., -10., -10., -10., -10., -10.,</span>
+<span class="go">        -10., -10., -10., -10., -10., -10., -10., -10., -10., -10., -10.,</span>
+<span class="go">        -10., -10., -10., -10., -10., -10., -10., -10., -10., -10., -10.,</span>
+<span class="go">        -10., -10., -10., -10., -10., -10., -10., -10., -10., -10., -10.,</span>
+<span class="go">        -10., -10., -10., -10., -10., -10., -10., -10., -10., -10., -10.,</span>
+<span class="go">        -10., -10., -10., -10., -10., -10., -10., -10., -10., -10., -10.,</span>
+<span class="go">        -10., -10., -10., -10., -10., -10., -10., -10., -10., -10., -10.,</span>
+<span class="go">        -10., -10., -10., -10., -10., -10., -10., -10., -10., -10., -10.,</span>
+<span class="go">          0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,</span>
+<span class="go">          0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,</span>
+<span class="go">          0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,</span>
+<span class="go">          0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,</span>
+<span class="go">          0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,</span>
+<span class="go">          0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,</span>
+<span class="go">          0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,</span>
+<span class="go">          0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,</span>
+<span class="go">          0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,</span>
+<span class="go">          0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,</span>
+<span class="go">          0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,</span>
+<span class="go">          0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,</span>
+<span class="go">          0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,</span>
+<span class="go">          0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,</span>
+<span class="go">          0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,</span>
+<span class="go">          0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,</span>
+<span class="go">          0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,</span>
+<span class="go">          0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,</span>
+<span class="go">          0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,</span>
+<span class="go">          0.]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">kill</span><span class="p">()</span>
+</pre></div>
+</div>
 </dd></dl>
 
 </section>
