@@ -1364,12 +1364,11 @@
 <h1>pywfm.IWFMModel.get_n_nodes_in_stream_reach<a class="headerlink" href="#pywfm-iwfmmodel-get-n-nodes-in-stream-reach" title="Permalink to this headline">¶</a></h1>
 <dl class="py method">
 <dt class="sig sig-object py" id="pywfm.IWFMModel.get_n_nodes_in_stream_reach">
-<span class="sig-prename descclassname"><span class="pre">IWFMModel.</span></span><span class="sig-name descname"><span class="pre">get_n_nodes_in_stream_reach</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reach_index</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pywfm.IWFMModel.get_n_nodes_in_stream_reach" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">IWFMModel.</span></span><span class="sig-name descname"><span class="pre">get_n_nodes_in_stream_reach</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reach_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pywfm.IWFMModel.get_n_nodes_in_stream_reach" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the number of stream nodes in a stream reach</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>reach_index</strong> (<em>int</em>) – stream reach index to obtain number of stream nodes. This
-is not necessarily the same as the reach id</p>
+<dd class="field-odd"><p><strong>reach_id</strong> (<em>int</em>) – ID for stream reach used to retrieve the number of stream nodes contained in it</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>number of stream nodes specified in the stream reach</p>
@@ -1378,6 +1377,44 @@ is not necessarily the same as the reach id</p>
 <dd class="field-odd"><p>int</p>
 </dd>
 </dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><a class="reference internal" href="pywfm.IWFMModel.get_n_stream_reaches.html#pywfm.IWFMModel.get_n_stream_reaches" title="pywfm.IWFMModel.get_n_stream_reaches"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IWFMModel.get_n_stream_reaches</span></code></a></dt><dd><p>Returns the number of stream reaches in an IWFM model</p>
+</dd>
+<dt><a class="reference internal" href="pywfm.IWFMModel.get_stream_reach_ids.html#pywfm.IWFMModel.get_stream_reach_ids" title="pywfm.IWFMModel.get_stream_reach_ids"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IWFMModel.get_stream_reach_ids</span></code></a></dt><dd><p>Returns the user-specified identification numbers for the stream reaches in an IWFM model</p>
+</dd>
+<dt><a class="reference internal" href="pywfm.IWFMModel.get_stream_reach_groundwater_nodes.html#pywfm.IWFMModel.get_stream_reach_groundwater_nodes" title="pywfm.IWFMModel.get_stream_reach_groundwater_nodes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IWFMModel.get_stream_reach_groundwater_nodes</span></code></a></dt><dd><p>Returns the groundwater node indices corresponding to stream nodes in a specified reach</p>
+</dd>
+<dt><a class="reference internal" href="pywfm.IWFMModel.get_stream_reach_stream_nodes.html#pywfm.IWFMModel.get_stream_reach_stream_nodes" title="pywfm.IWFMModel.get_stream_reach_stream_nodes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IWFMModel.get_stream_reach_stream_nodes</span></code></a></dt><dd><p>Returns the stream node indices corresponding to stream nodes in a specified reach</p>
+</dd>
+<dt><a class="reference internal" href="pywfm.IWFMModel.get_stream_reaches_for_stream_nodes.html#pywfm.IWFMModel.get_stream_reaches_for_stream_nodes" title="pywfm.IWFMModel.get_stream_reaches_for_stream_nodes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IWFMModel.get_stream_reaches_for_stream_nodes</span></code></a></dt><dd><p>Returns the stream reach indices that correspond to a list of stream nodes</p>
+</dd>
+<dt><a class="reference internal" href="pywfm.IWFMModel.get_upstream_nodes_in_stream_reaches.html#pywfm.IWFMModel.get_upstream_nodes_in_stream_reaches" title="pywfm.IWFMModel.get_upstream_nodes_in_stream_reaches"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IWFMModel.get_upstream_nodes_in_stream_reaches</span></code></a></dt><dd><p>Returns the indices for the upstream stream node in each stream reach</p>
+</dd>
+<dt><a class="reference internal" href="pywfm.IWFMModel.get_n_reaches_upstream_of_reach.html#pywfm.IWFMModel.get_n_reaches_upstream_of_reach" title="pywfm.IWFMModel.get_n_reaches_upstream_of_reach"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IWFMModel.get_n_reaches_upstream_of_reach</span></code></a></dt><dd><p>Returns the number of stream reaches immediately upstream of the specified reach</p>
+</dd>
+<dt><a class="reference internal" href="pywfm.IWFMModel.get_reaches_upstream_of_reach.html#pywfm.IWFMModel.get_reaches_upstream_of_reach" title="pywfm.IWFMModel.get_reaches_upstream_of_reach"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IWFMModel.get_reaches_upstream_of_reach</span></code></a></dt><dd><p>Returns the indices of the reaches that are immediately upstream of the specified reach</p>
+</dd>
+<dt><a class="reference internal" href="pywfm.IWFMModel.get_downstream_node_in_stream_reaches.html#pywfm.IWFMModel.get_downstream_node_in_stream_reaches" title="pywfm.IWFMModel.get_downstream_node_in_stream_reaches"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IWFMModel.get_downstream_node_in_stream_reaches</span></code></a></dt><dd><p>Returns the indices for the downstream stream node in each stream reach</p>
+</dd>
+<dt><a class="reference internal" href="pywfm.IWFMModel.get_reach_outflow_destination.html#pywfm.IWFMModel.get_reach_outflow_destination" title="pywfm.IWFMModel.get_reach_outflow_destination"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IWFMModel.get_reach_outflow_destination</span></code></a></dt><dd><p>Returns the destination index that each stream reach flows into</p>
+</dd>
+<dt><a class="reference internal" href="pywfm.IWFMModel.get_reach_outflow_destination_types.html#pywfm.IWFMModel.get_reach_outflow_destination_types" title="pywfm.IWFMModel.get_reach_outflow_destination_types"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IWFMModel.get_reach_outflow_destination_types</span></code></a></dt><dd><p>Returns the outflow destination types that each stream reach flows into.</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pywfm</span> <span class="kn">import</span> <span class="n">IWFMModel</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dll</span> <span class="o">=</span> <span class="s1">&#39;../../DLL/Bin/IWFM2015_C_x64.dll&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pp_file</span> <span class="o">=</span> <span class="s1">&#39;../Preprocessor/PreProcessor_MAIN.IN&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sim_file</span> <span class="o">=</span> <span class="s1">&#39;Simulation_MAIN.IN&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">IWFMModel</span><span class="p">(</span><span class="n">dll</span><span class="p">,</span> <span class="n">preprocessor_infile</span><span class="p">,</span> <span class="n">simulation_infile</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">get_n_nodes_in_stream_reach</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">10</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">kill</span><span class="p">()</span>
+</pre></div>
+</div>
 </dd></dl>
 
 </section>
