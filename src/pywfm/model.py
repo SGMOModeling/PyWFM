@@ -3708,24 +3708,37 @@ class IWFMModel(IWFMMiscellaneous):
         int
             number of tile drains simulated in the IWFM model 
             application
+
+        See Also
+        --------
+        IWFMModel.get_tile_drain_ids : Returns the user-specified IDs for tile drains simulated in an IWFM model
+        IWFMModel.get_tile_drain_nodes : Returns the node ids where tile drains are specified
+
+        Example
+        -------
+        >>> from pywfm import IWFMModel
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
+        >>> sim_file = 'Simulation_MAIN.IN'
+        >>> model = IWFMModel(dll, preprocessor_infile, simulation_infile)
+        >>> model.get_n_tile_drains()
+        21
+        >>> model.kill()
         '''
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetNTileDrainNodes"):
             raise AttributeError('IWFM DLL does not have "{}" procedure. '
                                  'Check for an updated version'.format('IW_Model_GetNTileDrainNodes'))
 
+        # initialize output variables
+        n_tile_drains = ctypes.c_int(0)
+
         # set instance variable status to 0
         self.status = ctypes.c_int(0)
-            
-        # initialize n_stream_reaches variable
-        n_tile_drains = ctypes.c_int(0)
             
         self.dll.IW_Model_GetNTileDrainNodes(ctypes.byref(n_tile_drains),
                                              ctypes.byref(self.status))
         
-        if not hasattr(self, "n_tile_drains"):
-            self.n_tile_drains = n_tile_drains.value
-            
         return n_tile_drains.value
 
     def get_tile_drain_ids(self):
