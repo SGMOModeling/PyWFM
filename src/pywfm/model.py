@@ -3797,6 +3797,23 @@ class IWFMModel(IWFMMiscellaneous):
         -------
         np.ndarray
             array of node ids where tiles drains are specified
+
+        See Also
+        --------
+        IWFMModel.get_n_tile_drains : Returns the number of tile drain nodes in an IWFM model
+        IWFMModel.get_tile_drain_ids : Returns the user-specified IDs for tile drains simulated in an IWFM model
+
+        Example
+        -------
+        >>> from pywfm import IWFMModel
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
+        >>> sim_file = 'Simulation_MAIN.IN'
+        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model.get_tile_drain_nodes()
+        array([  6,  27,  48,  69,  90, 111, 132, 153, 174, 195, 216, 237, 258,
+               279, 300, 321, 342, 363, 384, 405, 426])
+        >>> model.kill()
         '''
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetTileDrainNodes"):
@@ -3820,7 +3837,11 @@ class IWFMModel(IWFMMiscellaneous):
                                             tile_drain_nodes,
                                             ctypes.byref(self.status))
 
-        return np.array(tile_drain_nodes)
+        # convert tile drain node indices to node IDs
+        node_ids = self.get_node_ids()
+        tile_drain_node_indices = np.array(tile_drain_nodes)
+
+        return node_ids[tile_drain_node_indices - 1]
 
     def get_n_layers(self):
         ''' Returns the number of layers in an IWFM model
