@@ -3630,7 +3630,7 @@ class IWFMModel(IWFMMiscellaneous):
         Returns
         -------
         np.ndarray
-            number of elements representing the lake with the provided
+            array of element IDs representing the lake with the provided
             ID number
 
         See Also
