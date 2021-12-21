@@ -1365,20 +1365,41 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="pywfm.IWFMModel.get_elements_in_lake">
 <span class="sig-prename descclassname"><span class="pre">IWFMModel.</span></span><span class="sig-name descname"><span class="pre">get_elements_in_lake</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lake_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pywfm.IWFMModel.get_elements_in_lake" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the element ids in the lakes</p>
+<dd><p>Returns the element ids with the specified lake ID</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>lake_id</strong> (<em>int</em>) – lake identification number used to obtain number of elements
-contained in the lake</p>
+<dd class="field-odd"><p><strong>lake_id</strong> (<em>int</em>) – lake ID used to obtain element IDs that correspond to the lake</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>number of elements representing the lake with the provided
-id number</p>
+ID number</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>int</p>
+<dd class="field-odd"><p>np.ndarray</p>
 </dd>
 </dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><a class="reference internal" href="pywfm.IWFMModel.get_n_lakes.html#pywfm.IWFMModel.get_n_lakes" title="pywfm.IWFMModel.get_n_lakes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IWFMModel.get_n_lakes</span></code></a></dt><dd><p>Returns the number of lakes in an IWFM model</p>
+</dd>
+<dt><a class="reference internal" href="pywfm.IWFMModel.get_lake_ids.html#pywfm.IWFMModel.get_lake_ids" title="pywfm.IWFMModel.get_lake_ids"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IWFMModel.get_lake_ids</span></code></a></dt><dd><p>Returns the lake IDs specified by the user</p>
+</dd>
+<dt><a class="reference internal" href="pywfm.IWFMModel.get_n_elements_in_lake.html#pywfm.IWFMModel.get_n_elements_in_lake" title="pywfm.IWFMModel.get_n_elements_in_lake"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IWFMModel.get_n_elements_in_lake</span></code></a></dt><dd><p>Returns the number of finite element grid cells that make up a lake</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pywfm</span> <span class="kn">import</span> <span class="n">IWFMModel</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dll</span> <span class="o">=</span> <span class="s1">&#39;../../DLL/Bin/IWFM2015_C_x64.dll&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pp_file</span> <span class="o">=</span> <span class="s1">&#39;../Preprocessor/PreProcessor_MAIN.IN&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sim_file</span> <span class="o">=</span> <span class="s1">&#39;Simulation_MAIN.IN&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">IWFMModel</span><span class="p">(</span><span class="n">dll</span><span class="p">,</span> <span class="n">preprocessor_infile</span><span class="p">,</span> <span class="n">simulation_infile</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">get_elements_in_lake</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">array([169, 170, 171, 188, 189, 190, 207, 208, 209, 210])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">kill</span><span class="p">()</span>
+</pre></div>
+</div>
 </dd></dl>
 
 </section>
