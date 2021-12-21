@@ -4272,9 +4272,6 @@ class IWFMModel(IWFMMiscellaneous):
 
         fact : int, float
             conversion factor for x,y coordinates to model length units
-            
-            e.g. if model units in feet and x,y coordinates are provided in 
-            meters, then FACT=3.2808
 
         output_options : int, string, default=1
             selects how output is returned by the function
@@ -4313,6 +4310,8 @@ class IWFMModel(IWFMMiscellaneous):
         Note
         ----
         All return values will be zero if the coordinates provided do not fall within a model element
+
+        If model units are in feet and x,y coordinates are provided in meters, then FACT=3.2808
 
         See Also
         --------
