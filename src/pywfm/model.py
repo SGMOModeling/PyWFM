@@ -4289,7 +4289,7 @@ class IWFMModel(IWFMMiscellaneous):
         Returns
         -------
         if output_options == 1 or 'combined',
-        np.array
+        np.ndarray
             array contains the ground surface elevation and the bottoms of all layers
         
         if output_options == 2 or 'gse',
@@ -4297,23 +4297,39 @@ class IWFMModel(IWFMMiscellaneous):
             ground surface elevation at x,y coordinates
         
         if output_options == 3 or 'tops':
-        np.array
+        np.ndarray
             array containing the top elevations of each model layer
 
         if output_options == 4 or 'bottoms':
-        np.array
+        np.ndarray
             array containing the bottom elevations of each model layer
         
-        if output_options is None or some other integer or string not defined above, 
+        if output_options is some other integer or string not defined above, 
         tuple : length 3
             ground surface elevation at x,y coordinates
             numpy array of top elevation of each layer
             numpy array of bottom elevation of each layer
 
-        Notes
-        -----
-        ground surface elevation, elevations of the tops of each layer,
-        and the elevations of the bottoms of each layer       
+        Note
+        ----
+        All return values will be zero if the coordinates provided do not fall within a model element
+
+        See Also
+        --------
+        IWFMModel.get_ground_surface_elevation : Returns the ground surface elevation for each node specified in the IWFM model
+        IWFMModel.get_aquifer_top_elevation : Returns the aquifer top elevations for each finite element node and each layer
+        IWFMModel.get_aquifer_bottom_elevation : Returns the aquifer bottom elevations for each finite element node and each layer
+        
+        Examples
+        --------
+        >>> from pywfm import IWFMModel
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
+        >>> sim_file = 'Simulation_MAIN.IN'
+        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model.get_stratigraphy_atXYcoordinate(590000.0, 4440000.0, 3.2808, 5)
+        (500.0, array([500.,   0.]), array([   0., -100.]))
+        >>> model.kill()
         '''
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetStratigraphy_AtXYCoordinate"):
@@ -4335,7 +4351,7 @@ class IWFMModel(IWFMMiscellaneous):
         # get number of model layers
         n_layers = ctypes.c_int(self.get_n_layers())
             
-        # convert input variables to ctype equivalent
+        # convert input variables to ctypes
         x = ctypes.c_double(x * fact)
         y = ctypes.c_double(y * fact)
             
@@ -4356,9 +4372,7 @@ class IWFMModel(IWFMMiscellaneous):
                                                          ctypes.byref(self.status))
             
         # user output options
-        if output_options is None:
-            output = (gselev.value, np.array(top_elevs), np.array(bottom_elevs))
-        elif output_options == 1 or output_options == 'combined':
+        if output_options == 1 or output_options == 'combined':
             output = np.concatenate((gselev.value, np.array(bottom_elevs)), axis=None)
         elif output_options == 2 or output_options == 'gse':
             output = gselev.value
