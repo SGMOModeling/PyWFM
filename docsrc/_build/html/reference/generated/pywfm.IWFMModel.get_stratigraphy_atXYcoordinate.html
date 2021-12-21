@@ -1371,41 +1371,70 @@
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>x</strong> (<em>int</em><em>, </em><em>float</em>) – x-coordinate for spatial location</p></li>
 <li><p><strong>y</strong> (<em>int</em><em>, </em><em>float</em>) – y-coordinate for spatial location</p></li>
-<li><p><strong>fact</strong> (<em>int</em><em>, </em><em>float</em>) – <p>conversion factor for x,y coordinates to model length units</p>
-<p>e.g. if model units in feet and x,y coordinates are provided in
-meters, then FACT=3.2808</p>
-</p></li>
-<li><p><strong>output_options</strong> (<em>int</em><em>, </em><em>string</em><em>, </em><em>default=1</em>) – selects how output is returned by the function
-Options
-——-
-None
-1 or ‘combined’
-2 or ‘gse’
-3 or ‘tops’
-4 or ‘bottoms’</p></li>
+<li><p><strong>fact</strong> (<em>int</em><em>, </em><em>float</em><em>, </em><em>default=1.0</em>) – conversion factor for x,y coordinates to model length units</p></li>
+<li><p><strong>output_options</strong> (<em>int</em><em>, </em><em>string</em><em>, </em><em>default=1</em>) – selects how output is returned by the function {1 or ‘combined’, 2 or ‘gse’, 3 or ‘tops’, 4 or ‘bottoms’}</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><ul class="simple">
-<li><p><em>if output_options == 1 or ‘combined’,</em></p></li>
-<li><p><em>np.array</em> – array contains the ground surface elevation and the bottoms of all layers</p></li>
-<li><p><em>if output_options == 2 or ‘gse’,</em></p></li>
-<li><p><em>float</em> – ground surface elevation at x,y coordinates</p></li>
-<li><p><em>if output_options == 3 or ‘tops’</em></p></li>
-<li><p><em>np.array</em> – array containing the top elevations of each model layer</p></li>
-<li><p><em>if output_options == 4 or ‘bottoms’</em></p></li>
-<li><p><em>np.array</em> – array containing the bottom elevations of each model layer</p></li>
-<li><p><em>if output_options is None or some other integer or string not defined above,</em></p></li>
-<li><p><strong>tuple</strong> (<em>length 3</em>) – ground surface elevation at x,y coordinates
-numpy array of top elevation of each layer
+<li><p><strong>np.ndarray</strong> (<em>if output_options == 1 or ‘combined’,</em>) – array contains ground surface elevation and the bottoms of all layers</p></li>
+<li><p><strong>float</strong> (<em>if output_options == 2 or ‘gse’,</em>) – ground surface elevation at x,y coordinates</p></li>
+<li><p><strong>np.ndarray</strong> (<em>if output_options == 3 or ‘tops’:</em>) – array containing the top elevations of each model layer</p></li>
+<li><p><strong>np.ndarray</strong> (<em>if output_options == 4 or ‘bottoms’:</em>) – array containing the bottom elevations of each model layer</p></li>
+<li><p><strong>tuple</strong> (<em>length 3, if output_options is some other integer or string not defined above,</em>) – ground surface elevation at x,y coordinates,
+numpy array of top elevation of each layer,
 numpy array of bottom elevation of each layer</p></li>
 </ul>
 </p>
 </dd>
 </dl>
-<p class="rubric">Notes</p>
-<p>ground surface elevation, elevations of the tops of each layer,
-and the elevations of the bottoms of each layer</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>All return values will be zero if the coordinates provided do not fall within a model element</p>
+<p>If model units are in feet and x,y coordinates are provided in meters, then FACT=3.2808</p>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><a class="reference internal" href="pywfm.IWFMModel.get_ground_surface_elevation.html#pywfm.IWFMModel.get_ground_surface_elevation" title="pywfm.IWFMModel.get_ground_surface_elevation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IWFMModel.get_ground_surface_elevation</span></code></a></dt><dd><p>Returns the ground surface elevation for each node specified in the IWFM model</p>
+</dd>
+<dt><a class="reference internal" href="pywfm.IWFMModel.get_aquifer_top_elevation.html#pywfm.IWFMModel.get_aquifer_top_elevation" title="pywfm.IWFMModel.get_aquifer_top_elevation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IWFMModel.get_aquifer_top_elevation</span></code></a></dt><dd><p>Returns the aquifer top elevations for each finite element node and each layer</p>
+</dd>
+<dt><a class="reference internal" href="pywfm.IWFMModel.get_aquifer_bottom_elevation.html#pywfm.IWFMModel.get_aquifer_bottom_elevation" title="pywfm.IWFMModel.get_aquifer_bottom_elevation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IWFMModel.get_aquifer_bottom_elevation</span></code></a></dt><dd><p>Returns the aquifer bottom elevations for each finite element node and each layer</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pywfm</span> <span class="kn">import</span> <span class="n">IWFMModel</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dll</span> <span class="o">=</span> <span class="s1">&#39;../../DLL/Bin/IWFM2015_C_x64.dll&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pp_file</span> <span class="o">=</span> <span class="s1">&#39;../Preprocessor/PreProcessor_MAIN.IN&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sim_file</span> <span class="o">=</span> <span class="s1">&#39;Simulation_MAIN.IN&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">IWFMModel</span><span class="p">(</span><span class="n">dll</span><span class="p">,</span> <span class="n">pp_file</span><span class="p">,</span> <span class="n">sim_file</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">get_stratigraphy_atXYcoordinate</span><span class="p">(</span><span class="mf">590000.0</span><span class="p">,</span> <span class="mf">4440000.0</span><span class="p">,</span> <span class="mf">3.2808</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="go">(500.0, array([500.,   0.]), array([   0., -100.]))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">kill</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pywfm</span> <span class="kn">import</span> <span class="n">IWFMModel</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dll</span> <span class="o">=</span> <span class="s1">&#39;../../DLL/Bin/IWFM2015_C_x64.dll&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pp_file</span> <span class="o">=</span> <span class="s1">&#39;../Preprocessor/PreProcessor_MAIN.IN&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sim_file</span> <span class="o">=</span> <span class="s1">&#39;Simulation_MAIN.IN&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">IWFMModel</span><span class="p">(</span><span class="n">dll</span><span class="p">,</span> <span class="n">pp_file</span><span class="p">,</span> <span class="n">sim_file</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">get_stratigraphy_atXYcoordinate</span><span class="p">(</span><span class="mf">590000.0</span><span class="p">,</span> <span class="mf">4440000.0</span><span class="p">,</span> <span class="mf">3.2808</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="go">array([ 500.,    0., -100.])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">kill</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pywfm</span> <span class="kn">import</span> <span class="n">IWFMModel</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dll</span> <span class="o">=</span> <span class="s1">&#39;../../DLL/Bin/IWFM2015_C_x64.dll&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pp_file</span> <span class="o">=</span> <span class="s1">&#39;../Preprocessor/PreProcessor_MAIN.IN&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sim_file</span> <span class="o">=</span> <span class="s1">&#39;Simulation_MAIN.IN&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">IWFMModel</span><span class="p">(</span><span class="n">dll</span><span class="p">,</span> <span class="n">pp_file</span><span class="p">,</span> <span class="n">sim_file</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">get_stratigraphy_atXYcoordinate</span><span class="p">(</span><span class="mf">590000.0</span><span class="p">,</span> <span class="mf">4440000.0</span><span class="p">,</span> <span class="mf">3.2808</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="n">gse</span><span class="s1">&#39;)</span>
+<span class="go">500.0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">kill</span><span class="p">()</span>
+</pre></div>
+</div>
 </dd></dl>
 
 </section>
