@@ -1,6 +1,7 @@
 import os
 import ctypes
 import math
+from typing import Type
 import numpy as np
 import pandas as pd
 
@@ -3495,7 +3496,7 @@ class IWFMModel(IWFMMiscellaneous):
         return n_lakes.value
 
     def get_lake_ids(self):
-        ''' Returns the lake identification numbers assigned by the user
+        ''' Returns the lake IDs specified by the user
 
         Returns
         -------
@@ -3558,6 +3559,23 @@ class IWFMModel(IWFMMiscellaneous):
         int
             number of elements representing the lake with the provided
             id number
+
+        See Also
+        --------
+        IWFMModel.get_n_lakes : Returns the number of lakes in an IWFM model
+        IWFMModel.get_lake_ids : Returns the lake IDs specified by the user
+        IWFMModel.get_elements_in_lake : Returns the element ids in the lakes
+
+        Example
+        -------
+        >>> from pywfm import IWFMModel
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
+        >>> sim_file = 'Simulation_MAIN.IN'
+        >>> model = IWFMModel(dll, preprocessor_infile, simulation_infile)
+        >>> model.get_n_elements_in_lake()
+        10
+        >>> model.kill()
         '''
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetLakeIDs"):
@@ -3570,9 +3588,24 @@ class IWFMModel(IWFMMiscellaneous):
         # if no lakes exist, return 0
         if n_lakes == 0:
             return 0
+
+        # check that lake_id is an integer
+        if not isinstance(lake_id, int):
+            raise TypeError('lake_id must be an integer')
+
+        # get all lake ids
+        lake_ids = self.get_lake_ids()
+
+        # check to see if the lake_id provided is a valid lake ID
+        if not np.any(lake_ids == lake_id):
+            raise ValueError('lake_id specified is not valid')
+
+        # convert lake_id to lake index
+        # add 1 to index to convert from python index to fortran index
+        lake_index = np.where(lake_ids == lake_id)[0][0] + 1
         
         # convert lake id to ctypes
-        lake_id = ctypes.c_int(lake_id)
+        lake_index = ctypes.c_int(lake_index)
         
         # initialize output variables
         n_elements_in_lake = ctypes.c_int(0)
@@ -3580,7 +3613,7 @@ class IWFMModel(IWFMMiscellaneous):
         # set instance variable status to 0
         self.status = ctypes.c_int(0)
 
-        self.dll.IW_Model_GetNElementsInLake(ctypes.byref(lake_id),
+        self.dll.IW_Model_GetNElementsInLake(ctypes.byref(lake_index),
                                              ctypes.byref(n_elements_in_lake),
                                              ctypes.byref(self.status))
 
