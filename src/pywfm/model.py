@@ -4270,41 +4270,29 @@ class IWFMModel(IWFMMiscellaneous):
         y : int, float
             y-coordinate for spatial location
 
-        fact : int, float
+        fact : int, float, default=1.0
             conversion factor for x,y coordinates to model length units
 
         output_options : int, string, default=1
-            selects how output is returned by the function
-            Options
-            -------
-            None
-            1 or 'combined'
-            2 or 'gse'
-            3 or 'tops'
-            4 or 'bottoms'
+            selects how output is returned by the function {1 or 'combined', 2 or 'gse', 3 or 'tops', 4 or 'bottoms'}
 
         Returns
         -------
-        if output_options == 1 or 'combined',
-        np.ndarray
-            array contains the ground surface elevation and the bottoms of all layers
+        np.ndarray : if output_options == 1 or 'combined',
+            array contains ground surface elevation and the bottoms of all layers
         
-        if output_options == 2 or 'gse',
-        float
+        float : if output_options == 2 or 'gse',
             ground surface elevation at x,y coordinates
         
-        if output_options == 3 or 'tops':
-        np.ndarray
+        np.ndarray : if output_options == 3 or 'tops':
             array containing the top elevations of each model layer
 
-        if output_options == 4 or 'bottoms':
-        np.ndarray
+        np.ndarray : if output_options == 4 or 'bottoms':
             array containing the bottom elevations of each model layer
         
-        if output_options is some other integer or string not defined above, 
-        tuple : length 3
-            ground surface elevation at x,y coordinates
-            numpy array of top elevation of each layer
+        tuple : length 3, if output_options is some other integer or string not defined above, 
+            ground surface elevation at x,y coordinates,
+            numpy array of top elevation of each layer,
             numpy array of bottom elevation of each layer
 
         Note
