@@ -3895,20 +3895,77 @@ class IWFMModel(IWFMMiscellaneous):
         np.ndarray
             array of ground surface elevation at every finite element 
             node in an IWFM model
+
+        See Also
+        --------
+        IWFMModel.get_aquifer_top_elevation : Returns the aquifer top elevations for each finite element node and each layer
+        IWFMModel.get_aquifer_bottom_elevation : Returns the aquifer top elevations for each finite element node and each layer
+        IWFMModel.get_stratigraphy_atXYcoordinate : Returns the stratigraphy at given X,Y coordinates
+
+        Example
+        -------
+        >>> from pywfm import IWFMModel
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
+        >>> sim_file = 'Simulation_MAIN.IN'
+        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model.get_ground_surface_elevation()
+        array([500., 500., 500., 500., 500., 500., 500., 500., 500., 500., 500.,
+               500., 500., 500., 500., 500., 500., 500., 500., 500., 500., 500.,
+               500., 500., 500., 500., 500., 500., 500., 500., 500., 500., 500.,
+               500., 500., 500., 500., 500., 500., 500., 500., 500., 500., 500.,
+               500., 500., 500., 500., 500., 500., 500., 500., 500., 500., 500.,
+               500., 500., 500., 500., 500., 500., 500., 500., 500., 500., 500.,
+               500., 500., 500., 500., 500., 500., 500., 500., 500., 500., 500.,
+               500., 500., 500., 500., 500., 500., 500., 500., 500., 500., 500.,
+               500., 500., 500., 500., 500., 500., 500., 500., 500., 500., 500.,
+               500., 500., 500., 500., 500., 500., 500., 500., 500., 500., 500.,
+               500., 500., 500., 500., 500., 500., 500., 500., 500., 500., 500.,
+               500., 500., 500., 500., 500., 500., 500., 500., 500., 500., 500.,
+               500., 500., 500., 500., 500., 500., 500., 500., 500., 500., 500.,
+               500., 500., 500., 500., 500., 500., 500., 500., 500., 500., 500.,
+               500., 500., 500., 500., 500., 500., 500., 500., 500., 500., 500.,
+               500., 500., 500., 500., 500., 500., 500., 500., 500., 500., 500.,
+               270., 270., 270., 270., 500., 500., 500., 500., 500., 500., 500.,
+               500., 500., 500., 500., 500., 500., 500., 500., 500., 270., 270.,
+               250., 270., 270., 500., 500., 500., 500., 500., 500., 500., 500.,
+               500., 500., 500., 500., 500., 500., 500., 270., 270., 250., 250.,
+               270., 500., 500., 500., 500., 500., 500., 500., 500., 500., 500.,
+               500., 500., 500., 500., 500., 500., 270., 270., 270., 270., 270.,
+               500., 500., 500., 500., 500., 500., 500., 500., 500., 500., 500.,
+               500., 500., 500., 500., 500., 500., 500., 500., 500., 500., 500.,
+               500., 500., 500., 500., 500., 500., 500., 500., 500., 500., 500.,
+               500., 500., 500., 500., 500., 500., 500., 500., 500., 500., 500.,
+               500., 500., 500., 500., 500., 500., 500., 500., 500., 500., 500.,
+               500., 500., 500., 500., 500., 500., 500., 500., 500., 500., 500.,
+               500., 500., 500., 500., 500., 500., 500., 500., 500., 500., 500.,
+               500., 500., 500., 500., 500., 500., 500., 500., 500., 500., 500.,
+               500., 500., 500., 500., 500., 500., 500., 500., 500., 500., 500.,
+               500., 500., 500., 500., 500., 500., 500., 500., 500., 500., 500.,
+               500., 500., 500., 500., 500., 500., 500., 500., 500., 500., 500.,
+               500., 500., 500., 500., 500., 500., 500., 500., 500., 500., 500.,
+               500., 500., 500., 500., 500., 500., 500., 500., 500., 500., 500.,
+               500., 500., 500., 500., 500., 500., 500., 500., 500., 500., 500.,
+               500., 500., 500., 500., 500., 500., 500., 500., 500., 500., 500.,
+               500., 500., 500., 500., 500., 500., 500., 500., 500., 500., 500.,
+               500., 500., 500., 500., 500., 500., 500., 500., 500., 500., 500.,
+               500., 500., 500., 500., 500., 500., 500., 500., 500., 500., 500.,
+               500.])
+        >>> model.kill()
         '''
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetGSElev"):
             raise AttributeError('IWFM DLL does not have "{}" procedure. '
                                  'Check for an updated version'.format('IW_Model_GetGSElev'))
         
-        # set instance variable status to 0
-        self.status = ctypes.c_int(0)
-
         # get number of model nodes
         n_nodes = ctypes.c_int(self.get_n_nodes())
 
         # initialize output variables
         gselev = (ctypes.c_double*n_nodes.value)()
+
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
         
         self.dll.IW_Model_GetGSElev(ctypes.byref(n_nodes),
                                     gselev,
@@ -3982,9 +4039,8 @@ class IWFMModel(IWFMMiscellaneous):
 
         return np.array(aquifer_bottom_elevations)
 
-    def get_stratigraphy_atXYcoordinate(self, x, y, fact, output_options=1):
-        ''' Returns the stratigraphy at a given X,Y coordinate and 
-        conversion factor.
+    def get_stratigraphy_atXYcoordinate(self, x, y, fact=1.0, output_options=1):
+        ''' Returns the stratigraphy at given X,Y coordinates
 
         Parameters
         ----------
