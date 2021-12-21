@@ -1448,14 +1448,14 @@ class IWFMModel(IWFMMiscellaneous):
         return np.array(stream_inflow_ids)
 
     def get_stream_inflows_at_some_locations(self, 
-                                             stream_inflow_locations, 
+                                             stream_inflow_locations='all', 
                                              inflow_conversion_factor=1.0):
         ''' Returns stream boundary inflows at a specified set of inflow
         locations listed by their indices for the current simulation timestep
         
         Parameters
         ----------
-        stream_inflow_locations : int, list of int, or np.ndarray
+        stream_inflow_locations : int, list, tuple, np.ndarray, or str='all', default='all'
             one or more stream inflow ids used to return flows
 
         inflow_conversion_factor : float, default=1.0
@@ -1530,15 +1530,21 @@ class IWFMModel(IWFMMiscellaneous):
         # get possible stream inflow locations
         stream_inflow_ids = self.get_stream_inflow_ids()
 
+        if isinstance(stream_inflow_locations, str):
+            if stream_inflow_locations.lower() == 'all':
+                stream_inflow_locations = stream_inflow_ids
+            else:
+                raise ValueError('if stream_nodes is a string, must be "all"')
+
         # if int convert to np.ndarray
         if isinstance(stream_inflow_locations, int):
             stream_inflow_locations = np.array([stream_inflow_locations])
         
-        # if list convert to np.ndarray
-        if isinstance(stream_inflow_locations, list):
+        # if list or tuple convert to np.ndarray
+        if isinstance(stream_inflow_locations, (list, tuple)):
             stream_inflow_locations = np.array(stream_inflow_locations)
 
-        # if stream_inflow_locations were provided as an int, list, or 
+        # if stream_inflow_locations were provided as an int, list, tuple, 'all', 
         # np.ndarray they should now all be np.ndarray, so check if np.ndarray
         if not isinstance(stream_inflow_locations, np.ndarray):
             raise TypeError('stream_inflow_locations must be an int, list, or np.ndarray')
@@ -2520,13 +2526,13 @@ class IWFMModel(IWFMMiscellaneous):
         --------
         IWFMModel.get_stream_reach_ids : Returns the user-specified identification numbers for the stream reaches in an IWFM model
         IWFMModel.get_n_nodes_in_stream_reach : Returns the number of stream nodes in a stream reach
-        IWFMModel.get_stream_reach_groundwater_nodes : Returns the groundwater node indices corresponding to stream nodes in a specified reach 
-        IWFMModel.get_stream_reach_stream_nodes : Returns the stream node indices corresponding to stream nodes in a specified reach
+        IWFMModel.get_stream_reach_groundwater_nodes : Returns the groundwater node IDs corresponding to stream nodes in a specified reach 
+        IWFMModel.get_stream_reach_stream_nodes : Returns the stream node IDs corresponding to stream nodes in a specified reach
         IWFMModel.get_stream_reaches_for_stream_nodes : Returns the stream reach indices that correspond to a list of stream nodes
-        IWFMModel.get_upstream_nodes_in_stream_reaches : Returns the indices for the upstream stream node in each stream reach
+        IWFMModel.get_upstream_nodes_in_stream_reaches : Returns the IDs for the upstream stream node in each stream reach
         IWFMModel.get_n_reaches_upstream_of_reach : Returns the number of stream reaches immediately upstream of the specified reach
-        IWFMModel.get_reaches_upstream_of_reach : Returns the indices of the reaches that are immediately upstream of the specified reach
-        IWFMModel.get_downstream_node_in_stream_reaches : Returns the indices for the downstream stream node in each stream reach
+        IWFMModel.get_reaches_upstream_of_reach : Returns the IDs of the reaches that are immediately upstream of the specified reach
+        IWFMModel.get_downstream_node_in_stream_reaches : Returns the IDs for the downstream stream node in each stream reach
         IWFMModel.get_reach_outflow_destination : Returns the destination index that each stream reach flows into
         IWFMModel.get_reach_outflow_destination_types : Returns the outflow destination types that each stream reach flows into.
 
@@ -2569,13 +2575,13 @@ class IWFMModel(IWFMMiscellaneous):
         --------
         IWFMModel.get_n_stream_reaches : Returns the number of stream reaches in an IWFM model
         IWFMModel.get_n_nodes_in_stream_reach : Returns the number of stream nodes in a stream reach
-        IWFMModel.get_stream_reach_groundwater_nodes : Returns the groundwater node indices corresponding to stream nodes in a specified reach 
-        IWFMModel.get_stream_reach_stream_nodes : Returns the stream node indices corresponding to stream nodes in a specified reach
-        IWFMModel.get_stream_reaches_for_stream_nodes : Returns the stream reach indices that correspond to a list of stream nodes
-        IWFMModel.get_upstream_nodes_in_stream_reaches : Returns the indices for the upstream stream node in each stream reach
+        IWFMModel.get_stream_reach_groundwater_nodes : Returns the groundwater node IDs corresponding to stream nodes in a specified reach 
+        IWFMModel.get_stream_reach_stream_nodes : Returns the stream node IDs corresponding to stream nodes in a specified reach
+        IWFMModel.get_stream_reaches_for_stream_nodes : Returns the stream reach IDs that correspond to a list of stream nodes
+        IWFMModel.get_upstream_nodes_in_stream_reaches : Returns the IDs for the upstream stream node in each stream reach
         IWFMModel.get_n_reaches_upstream_of_reach : Returns the number of stream reaches immediately upstream of the specified reach
-        IWFMModel.get_reaches_upstream_of_reach : Returns the indices of the reaches that are immediately upstream of the specified reach
-        IWFMModel.get_downstream_node_in_stream_reaches : Returns the indices for the downstream stream node in each stream reach
+        IWFMModel.get_reaches_upstream_of_reach : Returns the IDs of the reaches that are immediately upstream of the specified reach
+        IWFMModel.get_downstream_node_in_stream_reaches : Returns the IDs for the downstream stream node in each stream reach
         IWFMModel.get_reach_outflow_destination : Returns the destination index that each stream reach flows into
         IWFMModel.get_reach_outflow_destination_types : Returns the outflow destination types that each stream reach flows into.
 
@@ -2626,13 +2632,13 @@ class IWFMModel(IWFMMiscellaneous):
         --------
         IWFMModel.get_n_stream_reaches : Returns the number of stream reaches in an IWFM model
         IWFMModel.get_stream_reach_ids : Returns the user-specified identification numbers for the stream reaches in an IWFM model
-        IWFMModel.get_stream_reach_groundwater_nodes : Returns the groundwater node indices corresponding to stream nodes in a specified reach 
-        IWFMModel.get_stream_reach_stream_nodes : Returns the stream node indices corresponding to stream nodes in a specified reach
-        IWFMModel.get_stream_reaches_for_stream_nodes : Returns the stream reach indices that correspond to a list of stream nodes
-        IWFMModel.get_upstream_nodes_in_stream_reaches : Returns the indices for the upstream stream node in each stream reach
+        IWFMModel.get_stream_reach_groundwater_nodes : Returns the groundwater node IDs corresponding to stream nodes in a specified reach 
+        IWFMModel.get_stream_reach_stream_nodes : Returns the stream node IDs corresponding to stream nodes in a specified reach
+        IWFMModel.get_stream_reaches_for_stream_nodes : Returns the stream reach IDs that correspond to a list of stream nodes
+        IWFMModel.get_upstream_nodes_in_stream_reaches : Returns the IDs for the upstream stream node in each stream reach
         IWFMModel.get_n_reaches_upstream_of_reach : Returns the number of stream reaches immediately upstream of the specified reach
-        IWFMModel.get_reaches_upstream_of_reach : Returns the indices of the reaches that are immediately upstream of the specified reach
-        IWFMModel.get_downstream_node_in_stream_reaches : Returns the indices for the downstream stream node in each stream reach
+        IWFMModel.get_reaches_upstream_of_reach : Returns the IDs of the reaches that are immediately upstream of the specified reach
+        IWFMModel.get_downstream_node_in_stream_reaches : Returns the IDs for the downstream stream node in each stream reach
         IWFMModel.get_reach_outflow_destination : Returns the destination index that each stream reach flows into
         IWFMModel.get_reach_outflow_destination_types : Returns the outflow destination types that each stream reach flows into.
 
@@ -2706,12 +2712,12 @@ class IWFMModel(IWFMMiscellaneous):
         IWFMModel.get_n_stream_reaches : Returns the number of stream reaches in an IWFM model
         IWFMModel.get_stream_reach_ids : Returns the user-specified identification numbers for the stream reaches in an IWFM model
         IWFMModel.get_n_nodes_in_stream_reach : Returns the number of stream nodes in a stream reach
-        IWFMModel.get_stream_reach_stream_nodes : Returns the stream node indices corresponding to stream nodes in a specified reach
-        IWFMModel.get_stream_reaches_for_stream_nodes : Returns the stream reach indices that correspond to a list of stream nodes
-        IWFMModel.get_upstream_nodes_in_stream_reaches : Returns the indices for the upstream stream node in each stream reach
+        IWFMModel.get_stream_reach_stream_nodes : Returns the stream node IDs corresponding to stream nodes in a specified reach
+        IWFMModel.get_stream_reaches_for_stream_nodes : Returns the stream reach IDs that correspond to a list of stream nodes
+        IWFMModel.get_upstream_nodes_in_stream_reaches : Returns the IDs for the upstream stream node in each stream reach
         IWFMModel.get_n_reaches_upstream_of_reach : Returns the number of stream reaches immediately upstream of the specified reach
-        IWFMModel.get_reaches_upstream_of_reach : Returns the indices of the reaches that are immediately upstream of the specified reach
-        IWFMModel.get_downstream_node_in_stream_reaches : Returns the indices for the downstream stream node in each stream reach
+        IWFMModel.get_reaches_upstream_of_reach : Returns the IDs of the reaches that are immediately upstream of the specified reach
+        IWFMModel.get_downstream_node_in_stream_reaches : Returns the IDs for the downstream stream node in each stream reach
         IWFMModel.get_reach_outflow_destination : Returns the destination index that each stream reach flows into
         IWFMModel.get_reach_outflow_destination_types : Returns the outflow destination types that each stream reach flows into.
         
@@ -2787,12 +2793,12 @@ class IWFMModel(IWFMMiscellaneous):
         IWFMModel.get_n_stream_reaches : Returns the number of stream reaches in an IWFM model
         IWFMModel.get_stream_reach_ids : Returns the user-specified identification numbers for the stream reaches in an IWFM model
         IWFMModel.get_n_nodes_in_stream_reach : Returns the number of stream nodes in a stream reach
-        IWFMModel.get_stream_reach_groundwater_nodes : Returns the groundwater node indices corresponding to stream nodes in a specified reach 
-        IWFMModel.get_stream_reaches_for_stream_nodes : Returns the stream reach indices that correspond to a list of stream nodes
-        IWFMModel.get_upstream_nodes_in_stream_reaches : Returns the indices for the upstream stream node in each stream reach
+        IWFMModel.get_stream_reach_groundwater_nodes : Returns the groundwater node IDs corresponding to stream nodes in a specified reach 
+        IWFMModel.get_stream_reaches_for_stream_nodes : Returns the stream reach IDs that correspond to a list of stream nodes
+        IWFMModel.get_upstream_nodes_in_stream_reaches : Returns the IDs for the upstream stream node in each stream reach
         IWFMModel.get_n_reaches_upstream_of_reach : Returns the number of stream reaches immediately upstream of the specified reach
-        IWFMModel.get_reaches_upstream_of_reach : Returns the indices of the reaches that are immediately upstream of the specified reach
-        IWFMModel.get_downstream_node_in_stream_reaches : Returns the indices for the downstream stream node in each stream reach
+        IWFMModel.get_reaches_upstream_of_reach : Returns the IDs of the reaches that are immediately upstream of the specified reach
+        IWFMModel.get_downstream_node_in_stream_reaches : Returns the IDs for the downstream stream node in each stream reach
         IWFMModel.get_reach_outflow_destination : Returns the destination index that each stream reach flows into
         IWFMModel.get_reach_outflow_destination_types : Returns the outflow destination types that each stream reach flows into.
 
@@ -2849,24 +2855,78 @@ class IWFMModel(IWFMMiscellaneous):
 
         return stream_node_ids[stream_node_indices - 1]
 
-    def get_stream_reaches_for_stream_nodes(self, stream_node_indices):
-        ''' Returns the stream reach indices that correspond to a list of stream nodes
+    def get_stream_reaches_for_stream_nodes(self, stream_nodes='all'):
+        ''' Returns the stream reach IDs that correspond to one or more stream node IDs
 
         Parameters
         ---------
-        stream_node_indices : list, np.ndarray
-            list or array of stream node indices where the stream reach
-            indices will be returned
+        stream_node_ids : int, list, tuple, np.ndarray, str='all', default='all'
+            one or more stream node IDs where the stream reach IDs will be returned
 
         Returns
         -------
         np.ndarray
-            array of stream reaches corresponding to stream node indices
+            array of stream reach IDs corresponding to stream node IDs provided
+
+        See Also
+        --------
+        IWFMModel.get_n_stream_reaches : Returns the number of stream reaches in an IWFM model
+        IWFMModel.get_stream_reach_ids : Returns the user-specified identification numbers for the stream reaches in an IWFM model
+        IWFMModel.get_n_nodes_in_stream_reach : Returns the number of stream nodes in a stream reach
+        IWFMModel.get_stream_reach_groundwater_nodes : Returns the groundwater node IDs corresponding to stream nodes in a specified reach 
+        IWFMModel.get_stream_reach_stream_nodes : Returns the stream node IDs corresponding to stream nodes in a specified reach
+        IWFMModel.get_upstream_nodes_in_stream_reaches : Returns the IDs for the upstream stream node in each stream reach
+        IWFMModel.get_n_reaches_upstream_of_reach : Returns the number of stream reaches immediately upstream of the specified reach
+        IWFMModel.get_reaches_upstream_of_reach : Returns the IDs of the reaches that are immediately upstream of the specified reach
+        IWFMModel.get_downstream_node_in_stream_reaches : Returns the IDs for the downstream stream node in each stream reach
+        IWFMModel.get_reach_outflow_destination : Returns the destination index that each stream reach flows into
+        IWFMModel.get_reach_outflow_destination_types : Returns the outflow destination types that each stream reach flows into.
+
+        Example
+        -------
+        >>> from pywfm import IWFMModel
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
+        >>> sim_file = 'Simulation_MAIN.IN'
+        >>> model = IWFMModel(dll, preprocessor_infile, simulation_infile)
+        >>> model.get_stream_reaches_for_stream_nodes()
+        array([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3])
+        >>> model.kill()
         '''
         if not hasattr(self.dll, "IW_Model_GetReaches_ForStrmNodes"):
             raise AttributeError('IWFM DLL does not have "{}" procedure. '
                                  'Check for an updated version'.format("IW_Model_GetReaches_ForStrmNodes"))
 
+        # get possible stream nodes locations
+        stream_node_ids = self.get_stream_node_ids()
+
+        if isinstance(stream_nodes, str):
+            if stream_nodes.lower() == 'all':
+                stream_nodes = stream_node_ids
+            else:
+                raise ValueError('if stream_nodes is a string, must be "all"')
+
+        # if int convert to np.ndarray
+        if isinstance(stream_nodes, int):
+            stream_nodes = np.array([stream_nodes])
+        
+        # if list or tuple convert to np.ndarray
+        if isinstance(stream_nodes, (list, tuple)):
+            stream_nodes = np.array(stream_nodes)
+
+        # if stream_inflow_locations were provided as an int, list, or 
+        # np.ndarray they should now all be np.ndarray, so check if np.ndarray
+        if not isinstance(stream_nodes, np.ndarray):
+            raise TypeError('stream_nodes must be an int, list, tuple, np.ndarray, or "all"')
+
+        # check if all of the provided stream_inflow_locations are valid
+        if not np.all(np.isin(stream_nodes, stream_node_ids)):
+            raise ValueError('One or more stream nodes provided are invalid')
+
+        # convert stream_inflow_locations to stream inflow indices
+        # add 1 to convert between python indices and fortran indices
+        stream_node_indices = np.array([np.where(stream_node_ids == item)[0][0] for item in stream_nodes]) + 1
+        
         # get number of stream nodes indices provided
         n_stream_nodes = ctypes.c_int(len(stream_node_indices))
 
@@ -2884,7 +2944,11 @@ class IWFMModel(IWFMMiscellaneous):
                                                   stream_reaches,
                                                   ctypes.byref(self.status))
 
-        return np.array(stream_reaches)
+        # convert stream reach indices to stream reach IDs
+        stream_reach_ids = self.get_stream_reach_ids()
+        stream_reach_indices = np.array(stream_reaches)
+
+        return stream_reach_ids[stream_reach_indices - 1]
 
     def get_upstream_nodes_in_stream_reaches(self):
         ''' Returns the indices for the upstream stream node in each
