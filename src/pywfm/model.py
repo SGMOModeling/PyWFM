@@ -3500,8 +3500,24 @@ class IWFMModel(IWFMMiscellaneous):
         Returns
         -------
         np.ndarray
-            array of lake identification numbers for each lake in the 
-            model 
+            array of lake identification numbers for each lake in the model
+
+        See Also
+        --------
+        IWFMModel.get_n_lakes : Returns the number of lakes in an IWFM model
+        IWFMModel.get_n_elements_in_lake : Returns the number of finite element grid cells that make up a lake 
+        IWFMModel.get_elements_in_lake : Returns the element ids in the lakes
+
+        Example
+        -------
+        >>> from pywfm import IWFMModel
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
+        >>> sim_file = 'Simulation_MAIN.IN'
+        >>> model = IWFMModel(dll, preprocessor_infile, simulation_infile)
+        >>> model.get_lake_ids()
+        array([1])
+        >>> model.kill() 
         '''
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetLakeIDs"):
