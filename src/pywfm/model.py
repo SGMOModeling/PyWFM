@@ -2399,8 +2399,8 @@ class IWFMModel(IWFMMiscellaneous):
 
         Parameters
         ----------
-        diversion_locations : list, tuple, np.ndarray, str='all', default='all'
-            integer array of diversion indices
+        diversion_locations : int, list, tuple, np.ndarray, str='all', default='all'
+            one or more diversion IDs used to return the corresponding stream node ID
         
         Returns
         -------
@@ -2410,19 +2410,40 @@ class IWFMModel(IWFMMiscellaneous):
         if not hasattr(self.dll, "IW_Model_GetStrmDiversionsExportNodes"):
             raise AttributeError('IWFM DLL does not have "{}" procedure. Check for an updated version'.format("IW_Model_GetStrmDiversionsExportNodes"))
 
-        # set input variables
-        if isinstance(diversion_locations, (np.ndarray, tuple, list)):
-            n_diversions = ctypes.c_int(len(diversion_locations))
-            diversion_list = (ctypes.c_int*n_diversions.value)(*diversion_locations)
-        
-        elif isinstance(diversion_locations, str):
+        # check that diversion locations are provided in correct format
+        # get possible stream inflow locations
+        diversion_ids = self.get_diversion_ids()
+
+        if isinstance(diversion_locations, str):
             if diversion_locations.lower() == 'all':
-                n_diversions = ctypes.c_int(self.get_n_diversions())
-                diversion_list = (ctypes.c_int*n_diversions.value)(*np.arange(1,n_diversions.value + 1))
+                diversion_locations = diversion_ids
             else:
-                raise ValueError('diversion_locations must be a list, tuple, or np.ndarray or use "all"')
-        else:
-            raise TypeError('diversion_locations provided must be a list, tuple, or np.ndarray or use "all"')
+                raise ValueError('if diversion_locations is a string, must be "all"')
+
+        # if int convert to np.ndarray
+        if isinstance(diversion_locations, int):
+            diversion_locations = np.array([diversion_locations])
+        
+        # if list or tuple convert to np.ndarray
+        if isinstance(diversion_locations, (list, tuple)):
+            diversion_locations = np.array(diversion_locations)
+
+        # if stream_inflow_locations were provided as an int, list, or 
+        # np.ndarray they should now all be np.ndarray, so check if np.ndarray
+        if not isinstance(diversion_locations, np.ndarray):
+            raise TypeError('diversion_locations must be an int, list, or np.ndarray')
+
+        # check if all of the provided stream_inflow_locations are valid
+        if not np.all(np.isin(diversion_locations, diversion_ids)):
+            raise ValueError('One or more diversion locations are invalid')
+
+        # convert stream_inflow_locations to stream inflow indices
+        # add 1 to convert between python indices and fortran indices
+        diversion_indices = np.array([np.where(diversion_ids == item)[0][0] for item in diversion_locations]) + 1
+        
+        # set input variables
+        n_diversions = ctypes.c_int(len(diversion_indices))
+        diversion_list = (ctypes.c_int*n_diversions.value)(*diversion_indices)
 
         # set instance variable status to 0
         self.status = ctypes.c_int(0)
