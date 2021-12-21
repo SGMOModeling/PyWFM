@@ -4317,6 +4317,24 @@ class IWFMModel(IWFMMiscellaneous):
         >>> model.get_stratigraphy_atXYcoordinate(590000.0, 4440000.0, 3.2808, 5)
         (500.0, array([500.,   0.]), array([   0., -100.]))
         >>> model.kill()
+
+        >>> from pywfm import IWFMModel
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
+        >>> sim_file = 'Simulation_MAIN.IN'
+        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model.get_stratigraphy_atXYcoordinate(590000.0, 4440000.0, 3.2808, 1)
+        array([ 500.,    0., -100.])
+        >>> model.kill()
+
+        >>> from pywfm import IWFMModel
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
+        >>> sim_file = 'Simulation_MAIN.IN'
+        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model.get_stratigraphy_atXYcoordinate(590000.0, 4440000.0, 3.2808, ''gse')
+        500.0
+        >>> model.kill()
         '''
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetStratigraphy_AtXYCoordinate"):
