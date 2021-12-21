@@ -3874,19 +3874,16 @@ class IWFMModel(IWFMMiscellaneous):
         if not hasattr(self.dll, "IW_Model_GetNLayers"):
             raise AttributeError('IWFM DLL does not have "{}" procedure. '
                                  'Check for an updated version'.format('IW_Model_GetNLayers'))
+    
+        # initialize n_layers variable
+        n_layers = ctypes.c_int(0)
 
         # set instance variable status to 0
         self.status = ctypes.c_int(0)
             
-        # initialize n_layers variable
-        n_layers = ctypes.c_int(0)
-            
         self.dll.IW_Model_GetNLayers(ctypes.byref(n_layers),
                                      ctypes.byref(self.status))
-        
-        if not hasattr(self, "n_layers"):
-            self.n_layers = n_layers.value
-            
+          
         return n_layers.value
 
     def get_ground_surface_elevation(self):
