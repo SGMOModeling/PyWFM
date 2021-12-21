@@ -3141,7 +3141,7 @@ class IWFMModel(IWFMMiscellaneous):
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
         >>> model = IWFMModel(dll, preprocessor_infile, simulation_infile)
-        >>> print(model.get_n_reaches_upstream_of_reach(3))
+        >>> model.get_n_reaches_upstream_of_reach(3)
         array([2])
         >>> model.kill()
         '''
@@ -3192,14 +3192,39 @@ class IWFMModel(IWFMMiscellaneous):
         return stream_reach_ids[upstream_reach_indices - 1]
 
     def get_downstream_node_in_stream_reaches(self):
-        ''' Returns the indices for the downstream stream node in each 
+        ''' Returns the IDs for the downstream stream node in each 
         stream reach
 
         Returns
         -------
         np.ndarray
-            array of stream node indices for the downstream stream node
+            array of stream node IDs for the downstream stream node
             in each stream reach
+
+        See Also
+        --------
+        IWFMModel.get_n_stream_reaches : Returns the number of stream reaches in an IWFM model
+        IWFMModel.get_stream_reach_ids : Returns the user-specified identification numbers for the stream reaches in an IWFM model
+        IWFMModel.get_n_nodes_in_stream_reach : Returns the number of stream nodes in a stream reach
+        IWFMModel.get_stream_reach_groundwater_nodes : Returns the groundwater node IDs corresponding to stream nodes in a specified reach 
+        IWFMModel.get_stream_reach_stream_nodes : Returns the stream node IDs corresponding to stream nodes in a specified reach
+        IWFMModel.get_stream_reaches_for_stream_nodes : Returns the stream reach IDs that correspond to a list of stream nodes
+        IWFMModel.get_upstream_nodes_in_stream_reaches : Returns the IDs for the upstream stream node in each stream reach
+        IWFMModel.get_n_reaches_upstream_of_reach : Returns the number of stream reaches immediately upstream of the specified reach
+        IWFMModel.get_reaches_upstream_of_reach : Returns the IDs of the reaches that are immediately upstream of the specified reach
+        IWFMModel.get_reach_outflow_destination : Returns the destination index that each stream reach flows into
+        IWFMModel.get_reach_outflow_destination_types : Returns the outflow destination types that each stream reach flows into.
+
+        Example
+        -------
+        >>> from pywfm import IWFMModel
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
+        >>> sim_file = 'Simulation_MAIN.IN'
+        >>> model = IWFMModel(dll, preprocessor_infile, simulation_infile)
+        >>> model.get_downstream_node_in_stream_reaches()
+        array([16, 10, 23])
+        >>> model.kill()
         '''
         if not hasattr(self.dll, "IW_Model_GetReachDownstrmNodes"):
             raise AttributeError('IWFM DLL does not have "{}" procedure. '
@@ -3217,8 +3242,12 @@ class IWFMModel(IWFMMiscellaneous):
         self.dll.IW_Model_GetReachDownstrmNodes(ctypes.byref(n_reaches),
                                                 downstream_stream_nodes,
                                                 ctypes.byref(self.status))
+
+        # convert stream node indices to stream node IDs
+        stream_node_ids = self.get_stream_node_ids()
+        downstream_stream_node_indices = np.array(downstream_stream_nodes)
         
-        return np.array(downstream_stream_nodes)
+        return stream_node_ids[downstream_stream_node_indices - 1]
 
     def get_reach_outflow_destination(self):
         ''' Returns the destination index that each stream reach flows 
