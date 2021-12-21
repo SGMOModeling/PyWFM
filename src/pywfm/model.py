@@ -3371,6 +3371,27 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_n_diversions(self):
         ''' Returns the number of surface water diversions in an IWFM model
+
+        Returns
+        -------
+        int
+            number of surface water diversions in the IWFM Model
+
+        See Also
+        --------
+        IWFMModel.get_diversion_ids : Returns the surface water diversion identification numbers specified in an IWFM model
+        IWFMModel.get_stream_diversion_locations : Returns the stream node IDs corresponding to diversion locations
+
+        Example
+        -------
+        >>> from pywfm import IWFMModel
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
+        >>> sim_file = 'Simulation_MAIN.IN'
+        >>> model = IWFMModel(dll, preprocessor_infile, simulation_infile)
+        >>> model.get_n_diversions()
+        5
+        >>> model.kill()
         '''
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetNDiversions"):
@@ -3385,11 +3406,8 @@ class IWFMModel(IWFMMiscellaneous):
             
         self.dll.IW_Model_GetNDiversions(ctypes.byref(n_diversions),
                                          ctypes.byref(self.status))
-        
-        if not hasattr(self, "n_diversions"):
-            self.n_diversions = n_diversions
-            
-        return self.n_diversions.value
+                    
+        return n_diversions.value
 
     def get_diversion_ids(self):
         ''' Returns the surface water diversion identification numbers
