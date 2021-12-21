@@ -1364,20 +1364,19 @@
 <h1>pywfm.IWFMModel.get_actual_stream_diversions_at_some_locations<a class="headerlink" href="#pywfm-iwfmmodel-get-actual-stream-diversions-at-some-locations" title="Permalink to this headline">¶</a></h1>
 <dl class="py method">
 <dt class="sig sig-object py" id="pywfm.IWFMModel.get_actual_stream_diversions_at_some_locations">
-<span class="sig-prename descclassname"><span class="pre">IWFMModel.</span></span><span class="sig-name descname"><span class="pre">get_actual_stream_diversions_at_some_locations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">diversion_indices</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">diversion_conversion_factor</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pywfm.IWFMModel.get_actual_stream_diversions_at_some_locations" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">IWFMModel.</span></span><span class="sig-name descname"><span class="pre">get_actual_stream_diversions_at_some_locations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">diversion_locations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'all'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">diversion_conversion_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pywfm.IWFMModel.get_actual_stream_diversions_at_some_locations" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns actual diversion amounts for a list of diversions during a model simulation</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>diversion_indices</strong> (<em>list of int</em><em>, </em><em>np.ndarray</em>) – one or more diversion indices where actual diversions are
-returned. This is based on order not on the id used in the
-input file</p></li>
-<li><p><strong>diversion_conversion_factor</strong> (<em>float</em>) – conversion factor for actual diversions from the simulation
+<li><p><strong>diversion_locations</strong> (<em>int</em><em>, </em><em>list</em><em>, </em><em>tuple</em><em>, </em><em>np.ndarray</em><em>, or </em><em>str='all'</em><em>, </em><em>default='all'</em>) – one or more diversion ids where actual diversions are
+returned.</p></li>
+<li><p><strong>diversion_conversion_factor</strong> (<em>float</em><em>, </em><em>default=1.0</em>) – conversion factor for actual diversions from the simulation
 unit of volume to a desired unit of volume</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>actual diversions for the diversion indices provided</p>
+<dd class="field-even"><p>actual diversions for the diversion ids provided</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>np.ndarray</p>
