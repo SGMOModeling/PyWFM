@@ -3460,16 +3460,29 @@ class IWFMModel(IWFMMiscellaneous):
         -------
         int
             number of lakes in the IWFM model
+
+        See Also
+        --------
+        IWFMModel.get_lake_ids : Returns the lake IDs specified by the user
+        IWFMModel.get_n_elements_in_lake : Returns the number of finite element grid cells that make up a lake 
+        IWFMModel.get_elements_in_lake : Returns the element ids in the lakes
+
+        Example
+        -------
+        >>> from pywfm import IWFMModel
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
+        >>> sim_file = 'Simulation_MAIN.IN'
+        >>> model = IWFMModel(dll, preprocessor_infile, simulation_infile)
+        >>> model.get_n_lakes()
+        1
+        >>> model.kill()
         '''
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetNLakes"):
             raise AttributeError('IWFM DLL does not have "{}" procedure. '
                                  'Check for an updated version'.format('IW_Model_GetNLakes'))
-
-        # check if instance variable n_lakes already exists
-        if hasattr(self, "n_lakes"):
-            return self.n_lakes
-            
+          
         # initialize n_stream_reaches variable
         n_lakes = ctypes.c_int(0)
             
@@ -3479,9 +3492,6 @@ class IWFMModel(IWFMMiscellaneous):
         self.dll.IW_Model_GetNLakes(ctypes.byref(n_lakes),
                                     ctypes.byref(self.status))
         
-        if not hasattr(self, "n_lakes"):
-            self.n_lakes = n_lakes.value
-            
         return n_lakes.value
 
     def get_lake_ids(self):
