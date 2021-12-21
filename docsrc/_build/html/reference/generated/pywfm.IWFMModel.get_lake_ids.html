@@ -1368,13 +1368,34 @@
 <dd><p>Returns the lake identification numbers assigned by the user</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>array of lake identification numbers for each lake in the
-model</p>
+<dd class="field-odd"><p>array of lake identification numbers for each lake in the model</p>
 </dd>
 <dt class="field-even">Return type</dt>
 <dd class="field-even"><p>np.ndarray</p>
 </dd>
 </dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><a class="reference internal" href="pywfm.IWFMModel.get_n_lakes.html#pywfm.IWFMModel.get_n_lakes" title="pywfm.IWFMModel.get_n_lakes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IWFMModel.get_n_lakes</span></code></a></dt><dd><p>Returns the number of lakes in an IWFM model</p>
+</dd>
+<dt><a class="reference internal" href="pywfm.IWFMModel.get_n_elements_in_lake.html#pywfm.IWFMModel.get_n_elements_in_lake" title="pywfm.IWFMModel.get_n_elements_in_lake"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IWFMModel.get_n_elements_in_lake</span></code></a></dt><dd><p>Returns the number of finite element grid cells that make up a lake</p>
+</dd>
+<dt><a class="reference internal" href="pywfm.IWFMModel.get_elements_in_lake.html#pywfm.IWFMModel.get_elements_in_lake" title="pywfm.IWFMModel.get_elements_in_lake"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IWFMModel.get_elements_in_lake</span></code></a></dt><dd><p>Returns the element ids in the lakes</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pywfm</span> <span class="kn">import</span> <span class="n">IWFMModel</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dll</span> <span class="o">=</span> <span class="s1">&#39;../../DLL/Bin/IWFM2015_C_x64.dll&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pp_file</span> <span class="o">=</span> <span class="s1">&#39;../Preprocessor/PreProcessor_MAIN.IN&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sim_file</span> <span class="o">=</span> <span class="s1">&#39;Simulation_MAIN.IN&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">IWFMModel</span><span class="p">(</span><span class="n">dll</span><span class="p">,</span> <span class="n">preprocessor_infile</span><span class="p">,</span> <span class="n">simulation_infile</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">get_lake_ids</span><span class="p">()</span>
+<span class="go">array([1])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">kill</span><span class="p">()</span>
+</pre></div>
+</div>
 </dd></dl>
 
 </section>
