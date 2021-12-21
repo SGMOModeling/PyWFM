@@ -1368,7 +1368,7 @@
 <dd><p>Returns the stream node IDs corresponding to diversion locations</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>diversion_locations</strong> (<em>list</em><em>, </em><em>tuple</em><em>, </em><em>np.ndarray</em><em>, </em><em>str='all'</em><em>, </em><em>default='all'</em>) – integer array of diversion indices</p>
+<dd class="field-odd"><p><strong>diversion_locations</strong> (<em>int</em><em>, </em><em>list</em><em>, </em><em>tuple</em><em>, </em><em>np.ndarray</em><em>, </em><em>str='all'</em><em>, </em><em>default='all'</em>) – one or more diversion IDs used to return the corresponding stream node ID</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>array of stream node IDs corresponding to where diversions are exported</p>
@@ -1377,6 +1377,26 @@
 <dd class="field-odd"><p>np.ndarray</p>
 </dd>
 </dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><a class="reference internal" href="pywfm.IWFMModel.get_n_diversions.html#pywfm.IWFMModel.get_n_diversions" title="pywfm.IWFMModel.get_n_diversions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IWFMModel.get_n_diversions</span></code></a></dt><dd><p>Returns the number of surface water diversions in an IWFM model</p>
+</dd>
+<dt><a class="reference internal" href="pywfm.IWFMModel.get_diversion_ids.html#pywfm.IWFMModel.get_diversion_ids" title="pywfm.IWFMModel.get_diversion_ids"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IWFMModel.get_diversion_ids</span></code></a></dt><dd><p>Returns the surface water diversion identification numbers specified in an IWFM model</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pywfm</span> <span class="kn">import</span> <span class="n">IWFMModel</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dll</span> <span class="o">=</span> <span class="s1">&#39;../../DLL/Bin/IWFM2015_C_x64.dll&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pp_file</span> <span class="o">=</span> <span class="s1">&#39;../Preprocessor/PreProcessor_MAIN.IN&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sim_file</span> <span class="o">=</span> <span class="s1">&#39;Simulation_MAIN.IN&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">IWFMModel</span><span class="p">(</span><span class="n">dll</span><span class="p">,</span> <span class="n">preprocessor_infile</span><span class="p">,</span> <span class="n">simulation_infile</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">get_stream_diversion_locations</span><span class="p">()</span>
+<span class="go">array([ 9, 12, 12, 22, 23])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">kill</span><span class="p">()</span>
+</pre></div>
+</div>
 </dd></dl>
 
 </section>
