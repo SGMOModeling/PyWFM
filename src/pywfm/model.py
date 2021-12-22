@@ -5208,13 +5208,12 @@ class IWFMModel(IWFMMiscellaneous):
 
         return np.array(supply_purpose_flags)
 
-    def get_diversion_purpose(self, diversion_indices):
-        ''' Returns the flags for the initial purpose of the water 
-        supplies as ag, urban, or both
+    def get_diversion_purpose(self, diversions='all'):
+        ''' Returns the flags for the initial purpose of the diversions as ag, urban, or both
 
         Parameters
         ----------
-        diversion_indices : list of int or np.ndarray
+        diversions : int, list, tuple, np.ndarray, or str='all', default='all'
             One or more diversion identification numbers used to return
             the supply purpose.
 
@@ -5225,15 +5224,106 @@ class IWFMModel(IWFMMiscellaneous):
 
         Note
         ----
+        This method is intended to be used during a model simulation (is_for_inquiry=0)
+        after the timeseries data are read
+        If it is used when is_for_inquiry=1, it will return the urban flag for each diversion
+        regardless if it is urban, ag, or both
+
+        flag equal to 1 for urban water demands
         flag equal to 10 for agricultural water demand
-        flag equal to 01 for urban water demands
         flag equal to 11 for both ag and urban
 
         automatic supply adjustment in IWFM allows the supply purpose 
         to change dynamically, so this only returns the user-specified
-        initial value. 
+        initial value.
+
+        See Also
+        --------
+        IWFMModel.get_well_pumping_purpose : Returns the flags for the initial purpose of the well pumping as ag, urban, or both
+        IWFMModel.get_element_pumping_purpose : Returns the flags for the initial purpose of the element pumping as ag, urban, or both
+
+        Examples
+        --------
+        >>> from pywfm import IWFMModel
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
+        >>> sim_file = 'Simulation_MAIN.IN'
+        >>> model = IWFMModel(dll, pp_file, sim_file, is_for_inquiry=0)
+        >>> while not model.is_end_of_simulation():
+        ...     # advance the simulation time one time step forward
+        ...     model.advance_time()
+        ...
+        ...     # read all time series data from input files
+        ...     model.read_timeseries_data()
+        ...
+        ...     # get diversion supply purpose
+        ...     print(model.get_diversion_purpose())
+        ...
+        ...     # Simulate the hydrologic process for the timestep
+        ...     model.simulate_for_one_timestep()
+        ...
+        ...     # print the results to the user-specified output files
+        ...     model.print_results()
+        ...
+        ...     # advance the state of the hydrologic system in time
+        ...     model.advance_state()
+        .
+        .
+        .
+        [ 1  1 10 10 10]
+        *   TIME STEP 2 AT 10/02/1990_24:00
+        [ 1  1 10 10 10]
+        *   TIME STEP 3 AT 10/03/1990_24:00
+        [ 1  1 10 10 10]
+        .
+        .
+        .
+        *   TIME STEP 3652 AT 09/29/2000_24:00
+        [ 1  1 10 10 10]
+        *   TIME STEP 3653 AT 09/30/2000_24:00
+        [ 1  1 10 10 10]
+        >>> model.kill()
+
+        >>> from pywfm import IWFMModel
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
+        >>> sim_file = 'Simulation_MAIN.IN'
+        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model.get_diversion_purpose()
+        array([1, 1, 1, 1, 1])
+        >>> model.kill()
         '''
         supply_type_id = self.get_supply_type_id_diversion()
+
+        # get all diversion IDs
+        diversion_ids = self.get_diversion_ids()
+
+        if isinstance(diversions, str):
+            if diversions.lower() == 'all':
+                diversions = diversion_ids
+            else:
+                raise ValueError('if diversions is a string, must be "all"')
+
+        # if int convert to np.ndarray
+        if isinstance(diversions, int):
+            diversions = np.array([diversions])
+        
+        # if list or tuple convert to np.ndarray
+        if isinstance(diversions, (list, tuple)):
+            diversions = np.array(diversions)
+
+        # if diversions were provided as an int, list, or 
+        # np.ndarray they should now all be np.ndarray, so check if np.ndarray
+        if not isinstance(diversions, np.ndarray):
+            raise TypeError('diversions must be an int, list, tuple, np.ndarray, or "all"')
+
+        # check if all of the provided diversion IDs are valid
+        if not np.all(np.isin(diversions, diversion_ids)):
+            raise ValueError('One or more diversion IDs provided are invalid')
+
+        # convert diversion IDs to diversion indices
+        # add 1 to convert between python indices and fortran indices
+        diversion_indices = np.array([np.where(diversion_ids == item)[0][0] for item in diversions]) + 1
 
         return self._get_supply_purpose(supply_type_id, diversion_indices)
 
