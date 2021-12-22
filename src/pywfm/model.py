@@ -5050,12 +5050,30 @@ class IWFMModel(IWFMMiscellaneous):
         
         Returns
         -------
-        tuple
-            np.ndarray of aquifer horizontal hydraulic conductivity for each node and layer
-            np.ndarray of aquifer vertical hydraulic conductivity for each node and layer
-            np.ndarray of aquitard vertical hydraulic conductivity for each node and layer
-            np.ndarray of aquifer specific yield for each node and layer
-            np.ndarray of aquifer specific storage for each node and layer
+        tuple : of np.ndarray
+            aquifer horizontal hydraulic conductivity for each node and layer,
+            aquifer vertical hydraulic conductivity for each node and layer,
+            aquitard vertical hydraulic conductivity for each node and layer,
+            aquifer specific yield for each node and layer,
+            aquifer specific storage for each node and layer
+
+        See Also
+        --------
+        IWFMModel.get_aquifer_horizontal_k : Returns the aquifer horizontal hydraulic conductivity for each finite element node and each layer
+        IWFMModel.get_aquifer_vertical_k : Returns the aquifer vertical hydraulic conductivity for each finite element node and each layer
+        IWFMModel.get_aquitard_vertical_k : Returns the aquitard vertical hydraulic conductivity for each finite element node and each layer
+        IWFMModel.get_aquifer_specific_yield : Returns the aquifer specific yield for each finite element node and each layer
+        IWFMModel.get_aquifer_specific_storage : Returns the aquifer specific storage for each finite element node and each layer
+        
+        Example
+        -------
+        >>> from pywfm import IWFMModel
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
+        >>> sim_file = 'Simulation_MAIN.IN'
+        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> hk, vk, avk, sy, ss = model.get_aquifer_parameters()
+        >>> model.kill()
         '''
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetAquiferParameters"):
