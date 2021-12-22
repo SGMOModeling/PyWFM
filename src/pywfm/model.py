@@ -5156,9 +5156,9 @@ class IWFMModel(IWFMMiscellaneous):
             supply type identification number used by IWFM for surface water
             diversions, well pumping, or element pumping
 
-        supply_indices : list of int or np.ndarray
+        supply_indices : np.ndarray
             indices of supplies for which flags are being retrieved. This is
-            one or more identification numbers for the supply type chosen
+            one or more indices for the supply type chosen
             e.g. supply_type_id for diversions supply indices would be one or 
             more diversion ids.
 
@@ -5176,6 +5176,9 @@ class IWFMModel(IWFMMiscellaneous):
         automatic supply adjustment in IWFM allows the supply purpose 
         to change dynamically, so this only returns the user-specified
         initial value.
+
+        It is assumed that type checking and validation is performed in
+        the calling method
         '''
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetSupplyPurpose"):
@@ -5184,10 +5187,6 @@ class IWFMModel(IWFMMiscellaneous):
         
         # convert supply_type_id to ctypes
         supply_type_id = ctypes.c_int(supply_type_id)
-        
-        # check that supply_indices are provided as a list or np.ndarray
-        if not isinstance(supply_indices, (list, np.ndarray)):
-            raise TypeError('supply_indices must be a list or np.ndarray')
 
         # get number of supply indices
         n_supply_indices = ctypes.c_int(len(supply_indices))
