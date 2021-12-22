@@ -1364,12 +1364,11 @@
 <h1>pywfm.IWFMModel.get_diversion_purpose<a class="headerlink" href="#pywfm-iwfmmodel-get-diversion-purpose" title="Permalink to this headline">¶</a></h1>
 <dl class="py method">
 <dt class="sig sig-object py" id="pywfm.IWFMModel.get_diversion_purpose">
-<span class="sig-prename descclassname"><span class="pre">IWFMModel.</span></span><span class="sig-name descname"><span class="pre">get_diversion_purpose</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">diversion_indices</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pywfm.IWFMModel.get_diversion_purpose" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the flags for the initial purpose of the water
-supplies as ag, urban, or both</p>
+<span class="sig-prename descclassname"><span class="pre">IWFMModel.</span></span><span class="sig-name descname"><span class="pre">get_diversion_purpose</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">diversions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'all'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pywfm.IWFMModel.get_diversion_purpose" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the flags for the initial purpose of the diversions as ag, urban, or both</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>diversion_indices</strong> (<em>list of int</em><em> or </em><em>np.ndarray</em>) – One or more diversion identification numbers used to return
+<dd class="field-odd"><p><strong>diversions</strong> (<em>int</em><em>, </em><em>list</em><em>, </em><em>tuple</em><em>, </em><em>np.ndarray</em><em>, or </em><em>str='all'</em><em>, </em><em>default='all'</em>) – One or more diversion identification numbers used to return
 the supply purpose.</p>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -1381,12 +1380,77 @@ the supply purpose.</p>
 </dl>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>flag equal to 10 for agricultural water demand
-flag equal to 01 for urban water demands
+<p>This method is intended to be used during a model simulation (is_for_inquiry=0)
+after the timeseries data are read
+If it is used when is_for_inquiry=1, it will return the urban flag for each diversion
+regardless if it is urban, ag, or both</p>
+<p>flag equal to 1 for urban water demands
+flag equal to 10 for agricultural water demand
 flag equal to 11 for both ag and urban</p>
 <p>automatic supply adjustment in IWFM allows the supply purpose
 to change dynamically, so this only returns the user-specified
 initial value.</p>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><a class="reference internal" href="pywfm.IWFMModel.get_well_pumping_purpose.html#pywfm.IWFMModel.get_well_pumping_purpose" title="pywfm.IWFMModel.get_well_pumping_purpose"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IWFMModel.get_well_pumping_purpose</span></code></a></dt><dd><p>Returns the flags for the initial purpose of the well pumping as ag, urban, or both</p>
+</dd>
+<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">IWFMModel.get_element_pumping_purpose</span></code></dt><dd><p>Returns the flags for the initial purpose of the element pumping as ag, urban, or both</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pywfm</span> <span class="kn">import</span> <span class="n">IWFMModel</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dll</span> <span class="o">=</span> <span class="s1">&#39;../../DLL/Bin/IWFM2015_C_x64.dll&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pp_file</span> <span class="o">=</span> <span class="s1">&#39;../Preprocessor/PreProcessor_MAIN.IN&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sim_file</span> <span class="o">=</span> <span class="s1">&#39;Simulation_MAIN.IN&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">IWFMModel</span><span class="p">(</span><span class="n">dll</span><span class="p">,</span> <span class="n">pp_file</span><span class="p">,</span> <span class="n">sim_file</span><span class="p">,</span> <span class="n">is_for_inquiry</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">while</span> <span class="ow">not</span> <span class="n">model</span><span class="o">.</span><span class="n">is_end_of_simulation</span><span class="p">():</span>
+<span class="gp">... </span>    <span class="c1"># advance the simulation time one time step forward</span>
+<span class="gp">... </span>    <span class="n">model</span><span class="o">.</span><span class="n">advance_time</span><span class="p">()</span>
+<span class="gp">...</span>
+<span class="gp">... </span>    <span class="c1"># read all time series data from input files</span>
+<span class="gp">... </span>    <span class="n">model</span><span class="o">.</span><span class="n">read_timeseries_data</span><span class="p">()</span>
+<span class="gp">...</span>
+<span class="gp">... </span>    <span class="c1"># get diversion supply purpose</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">get_diversion_purpose</span><span class="p">())</span>
+<span class="gp">...</span>
+<span class="gp">... </span>    <span class="c1"># Simulate the hydrologic process for the timestep</span>
+<span class="gp">... </span>    <span class="n">model</span><span class="o">.</span><span class="n">simulate_for_one_timestep</span><span class="p">()</span>
+<span class="gp">...</span>
+<span class="gp">... </span>    <span class="c1"># print the results to the user-specified output files</span>
+<span class="gp">... </span>    <span class="n">model</span><span class="o">.</span><span class="n">print_results</span><span class="p">()</span>
+<span class="gp">...</span>
+<span class="gp">... </span>    <span class="c1"># advance the state of the hydrologic system in time</span>
+<span class="gp">... </span>    <span class="n">model</span><span class="o">.</span><span class="n">advance_state</span><span class="p">()</span>
+<span class="go">.</span>
+<span class="go">.</span>
+<span class="go">.</span>
+<span class="go">[ 1  1 10 10 10]</span>
+<span class="go">*   TIME STEP 2 AT 10/02/1990_24:00</span>
+<span class="go">[ 1  1 10 10 10]</span>
+<span class="go">*   TIME STEP 3 AT 10/03/1990_24:00</span>
+<span class="go">[ 1  1 10 10 10]</span>
+<span class="go">.</span>
+<span class="go">.</span>
+<span class="go">.</span>
+<span class="go">*   TIME STEP 3652 AT 09/29/2000_24:00</span>
+<span class="go">[ 1  1 10 10 10]</span>
+<span class="go">*   TIME STEP 3653 AT 09/30/2000_24:00</span>
+<span class="go">[ 1  1 10 10 10]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">kill</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pywfm</span> <span class="kn">import</span> <span class="n">IWFMModel</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dll</span> <span class="o">=</span> <span class="s1">&#39;../../DLL/Bin/IWFM2015_C_x64.dll&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pp_file</span> <span class="o">=</span> <span class="s1">&#39;../Preprocessor/PreProcessor_MAIN.IN&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sim_file</span> <span class="o">=</span> <span class="s1">&#39;Simulation_MAIN.IN&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">IWFMModel</span><span class="p">(</span><span class="n">dll</span><span class="p">,</span> <span class="n">pp_file</span><span class="p">,</span> <span class="n">sim_file</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">get_diversion_purpose</span><span class="p">()</span>
+<span class="go">array([1, 1, 1, 1, 1])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">kill</span><span class="p">()</span>
+</pre></div>
 </div>
 </dd></dl>
 
