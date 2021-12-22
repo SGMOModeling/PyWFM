@@ -5050,7 +5050,7 @@ class IWFMModel(IWFMMiscellaneous):
         
         Returns
         -------
-        tuple : of np.ndarray
+        tuple of np.ndarray
             aquifer horizontal hydraulic conductivity for each node and layer,
             aquifer vertical hydraulic conductivity for each node and layer,
             aquitard vertical hydraulic conductivity for each node and layer,
