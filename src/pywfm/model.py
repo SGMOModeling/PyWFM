@@ -5327,13 +5327,13 @@ class IWFMModel(IWFMMiscellaneous):
 
         return self._get_supply_purpose(supply_type_id, diversion_indices)
 
-    def get_well_pumping_purpose(self, well_indices):
+    def get_well_pumping_purpose(self, wells='all'):
         ''' Returns the flags for the initial purpose of the water 
         supplies as ag, urban, or both
 
         Parameters
         ----------
-        well_indices : list of int or np.ndarray
+        wells : int, list, tuple, np.ndarray, or str='all', default='all'
             One or more well identification numbers used to return
             the supply purpose.
 
@@ -5342,17 +5342,112 @@ class IWFMModel(IWFMMiscellaneous):
         np.ndarray
             array of flags for each supply index provided
 
+        Important
+        ---------
+        This function is currently not implemented
+
         Note
         ----
+        This method is intended to be used during a model simulation (is_for_inquiry=0)
+        after the timeseries data are read
+        If it is used when is_for_inquiry=1, it will return the urban flag for each diversion
+        regardless if it is urban, ag, or both
+
+        flag equal to 1 for urban water demands
         flag equal to 10 for agricultural water demand
-        flag equal to 01 for urban water demands
         flag equal to 11 for both ag and urban
 
         automatic supply adjustment in IWFM allows the supply purpose 
         to change dynamically, so this only returns the user-specified
         initial value.
-        '''
+
+        See Also
+        --------
+        IWFMModel.get_diversion_purpose : Returns the flags for the initial purpose of the diversions as ag, urban, or both
+        IWFMModel.get_element_pumping_purpose : Returns the flags for the initial purpose of the element pumping as ag, urban, or both
+
+        Examples
+        --------
+        >>> from pywfm import IWFMModel
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
+        >>> sim_file = 'Simulation_MAIN.IN'
+        >>> model = IWFMModel(dll, pp_file, sim_file, is_for_inquiry=0)
+        >>> while not model.is_end_of_simulation():
+        ...     # advance the simulation time one time step forward
+        ...     model.advance_time()
+        ...
+        ...     # read all time series data from input files
+        ...     model.read_timeseries_data()
+        ...
+        ...     # get diversion supply purpose
+        ...     print(model.get_diversion_purpose())
+        ...
+        ...     # Simulate the hydrologic process for the timestep
+        ...     model.simulate_for_one_timestep()
+        ...
+        ...     # print the results to the user-specified output files
+        ...     model.print_results()
+        ...
+        ...     # advance the state of the hydrologic system in time
+        ...     model.advance_state()
+        .
+        .
+        .
+        [ 1  1 10 10 10]
+        *   TIME STEP 2 AT 10/02/1990_24:00
+        [ 1  1 10 10 10]
+        *   TIME STEP 3 AT 10/03/1990_24:00
+        [ 1  1 10 10 10]
+        .
+        .
+        .
+        *   TIME STEP 3652 AT 09/29/2000_24:00
+        [ 1  1 10 10 10]
+        *   TIME STEP 3653 AT 09/30/2000_24:00
+        [ 1  1 10 10 10]
+        >>> model.kill()
+
+        >>> from pywfm import IWFMModel
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
+        >>> sim_file = 'Simulation_MAIN.IN'
+        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model.get_diversion_purpose()
+        array([1, 1, 1, 1, 1])
+        >>> model.kill()'''
         supply_type_id = self.get_supply_type_id_well()
+
+        # get all well IDs
+        #well_ids = self.get_well_ids()
+        raise NotImplementedError('IWFM DLL does not currently have a procedure to get all well ids')
+
+        if isinstance(wells, str):
+            if wells.lower() == 'all':
+                wells = well_ids
+            else:
+                raise ValueError('if wells is a string, must be "all"')
+
+        # if int convert to np.ndarray
+        if isinstance(wells, int):
+            wells = np.array([wells])
+        
+        # if list or tuple convert to np.ndarray
+        if isinstance(wells, (list, tuple)):
+            wells = np.array(wells)
+
+        # if wells were provided as an int, list, or 
+        # np.ndarray they should now all be np.ndarray, so check if np.ndarray
+        if not isinstance(wells, np.ndarray):
+            raise TypeError('wells must be an int, list, tuple, np.ndarray, or "all"')
+
+        # check if all of the provided well IDs are valid
+        if not np.all(np.isin(wells, well_ids)):
+            raise ValueError('One or more well IDs provided are invalid')
+
+        # convert well IDs to well indices
+        # add 1 to convert between python indices and fortran indices
+        well_indices = np.array([np.where(well_ids == item)[0][0] for item in wells]) + 1
 
         return self._get_supply_purpose(supply_type_id, well_indices)
 
