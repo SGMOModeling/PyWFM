@@ -5344,7 +5344,7 @@ class IWFMModel(IWFMMiscellaneous):
 
         Important
         ---------
-        This function is currently not implemented
+        This method is currently not implemented
 
         Note
         ----
