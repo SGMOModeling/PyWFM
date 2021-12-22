@@ -1373,8 +1373,8 @@ agricultural, urban, or both</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>supply_type_id</strong> (<em>int</em>) – supply type identification number used by IWFM for surface water
 diversions, well pumping, or element pumping</p></li>
-<li><p><strong>supply_indices</strong> (<em>list of int</em><em> or </em><em>np.ndarray</em>) – indices of supplies for which flags are being retrieved. This is
-one or more identification numbers for the supply type chosen
+<li><p><strong>supply_indices</strong> (<em>np.ndarray</em>) – indices of supplies for which flags are being retrieved. This is
+one or more indices for the supply type chosen
 e.g. supply_type_id for diversions supply indices would be one or
 more diversion ids.</p></li>
 </ul>
@@ -1394,6 +1394,8 @@ flag equal to 11 for both ag and urban</p>
 <p>automatic supply adjustment in IWFM allows the supply purpose
 to change dynamically, so this only returns the user-specified
 initial value.</p>
+<p>It is assumed that type checking and validation is performed in
+the calling method</p>
 </div>
 </dd></dl>
 
