@@ -5380,8 +5380,8 @@ class IWFMModel(IWFMMiscellaneous):
         ...     # read all time series data from input files
         ...     model.read_timeseries_data()
         ...
-        ...     # get diversion supply purpose
-        ...     print(model.get_diversion_purpose())
+        ...     # get well pumping supply purpose
+        ...     print(model.get_well_pumping_purpose())
         ...
         ...     # Simulate the hydrologic process for the timestep
         ...     model.simulate_for_one_timestep()
