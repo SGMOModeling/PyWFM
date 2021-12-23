@@ -5154,6 +5154,10 @@ class IWFMModel(IWFMMiscellaneous):
         int
             number of wells simulated in the IWFM model
 
+        Note
+        ----
+        This method is intended to be used when is_for_inquiry=0 when performing a model simulation
+
         Example
         -------
         >>> from pywfm import IWFMModel
@@ -5190,13 +5194,17 @@ class IWFMModel(IWFMMiscellaneous):
         int
             number of element pumps simulated in the IWFM model
 
+        Note
+        ----
+        This method is intended to be used when is_for_inquiry=0 when performing a model simulation
+
         Example
         -------
         >>> from pywfm import IWFMModel
         >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(dll, pp_file, sim_file, is_for_inquiry=0)
         >>> model.get_n_element_pumps()
         5
         >>> model.kill()
