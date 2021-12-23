@@ -5145,6 +5145,78 @@ class IWFMModel(IWFMMiscellaneous):
 
         return n_ag_crops.value
 
+    def get_n_wells(self):
+        ''' Returns the number of wells simulated in an 
+        IWFM model
+
+        Returns
+        -------
+        int
+            number of wells simulated in the IWFM model
+
+        Example
+        -------
+        >>> from pywfm import IWFMModel
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
+        >>> sim_file = 'Simulation_MAIN.IN'
+        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model.get_n_wells()
+        0
+        >>> model.kill()
+        '''
+        # check to see if IWFM procedure is available in user version of IWFM DLL
+        if not hasattr(self.dll, "IW_Model_GetNWells"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. '
+                                 'Check for an updated version'.format('IW_Model_GetNWells'))
+        
+        # initialize output variables
+        n_wells = ctypes.c_int(0)
+
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
+
+        self.dll.IW_Model_GetNWells(ctypes.byref(n_wells),
+                                      ctypes.byref(self.status))
+
+        return n_wells.value
+
+    def get_n_element_pumps(self):
+        ''' Returns the number of element pumps simulated in an 
+        IWFM model
+
+        Returns
+        -------
+        int
+            number of element pumps simulated in the IWFM model
+
+        Example
+        -------
+        >>> from pywfm import IWFMModel
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
+        >>> sim_file = 'Simulation_MAIN.IN'
+        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model.get_n_element_pumps()
+        5
+        >>> model.kill()
+        '''
+        # check to see if IWFM procedure is available in user version of IWFM DLL
+        if not hasattr(self.dll, "IW_Model_GetNElemPumps"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. '
+                                 'Check for an updated version'.format('IW_Model_GetNElemPumps'))
+        
+        # initialize output variables
+        n_elem_pumps = ctypes.c_int(0)
+
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
+
+        self.dll.IW_Model_GetNElemPumps(ctypes.byref(n_elem_pumps),
+                                      ctypes.byref(self.status))
+
+        return n_elem_pumps.value
+
     def _get_supply_purpose(self, supply_type_id, supply_indices):
         ''' private method returning the flags for the initial assignment of water supplies
         (diversions, well pumping, element pumping) designating if they serve
@@ -5413,7 +5485,7 @@ class IWFMModel(IWFMMiscellaneous):
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
         >>> model = IWFMModel(dll, pp_file, sim_file)
-        >>> model.get_diversion_purpose()
+        >>> model.get_well_pumping_purpose()
         array([1, 1, 1, 1, 1])
         >>> model.kill()'''
         supply_type_id = self.get_supply_type_id_well()
@@ -5450,6 +5522,119 @@ class IWFMModel(IWFMMiscellaneous):
         well_indices = np.array([np.where(well_ids == item)[0][0] for item in wells]) + 1
 
         return self._get_supply_purpose(supply_type_id, well_indices)
+
+    def get_element_pumping_purpose(self, element_pumping='all'):
+        ''' Returns the flags for the initial purpose of the element 
+        pumping as ag, urban, or both
+
+        Parameters
+        ----------
+        element_pumping : int, list, tuple, np.ndarray, or str='all', default='all'
+            One or more well identification numbers used to return
+            the supply purpose.
+
+        Returns
+        -------
+        np.ndarray
+            array of flags for each supply index provided
+
+        Important
+        ---------
+        This method is currently not implemented
+
+        Note
+        ----
+        This method is intended to be used during a model simulation (is_for_inquiry=0)
+        after the timeseries data are read
+        If it is used when is_for_inquiry=1, it will return the urban flag for each diversion
+        regardless if it is urban, ag, or both
+
+        flag equal to 1 for urban water demands
+        flag equal to 10 for agricultural water demand
+        flag equal to 11 for both ag and urban
+
+        automatic supply adjustment in IWFM allows the supply purpose 
+        to change dynamically, so this only returns the user-specified
+        initial value.
+
+        See Also
+        --------
+        IWFMModel.get_diversion_purpose : Returns the flags for the initial purpose of the diversions as ag, urban, or both
+        IWFMModel.get_well_pumping_purpose : Returns the flags for the initial purpose of the well pumping as ag, urban, or both
+
+        Examples
+        --------
+        >>> from pywfm import IWFMModel
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
+        >>> sim_file = 'Simulation_MAIN.IN'
+        >>> model = IWFMModel(dll, pp_file, sim_file, is_for_inquiry=0)
+        >>> while not model.is_end_of_simulation():
+        ...     # advance the simulation time one time step forward
+        ...     model.advance_time()
+        ...
+        ...     # read all time series data from input files
+        ...     model.read_timeseries_data()
+        ...
+        ...     # get well pumping supply purpose
+        ...     print(model.get_element_pumping_purpose())
+        ...
+        ...     # Simulate the hydrologic process for the timestep
+        ...     model.simulate_for_one_timestep()
+        ...
+        ...     # print the results to the user-specified output files
+        ...     model.print_results()
+        ...
+        ...     # advance the state of the hydrologic system in time
+        ...     model.advance_state()
+        .
+        .
+        .
+        
+        >>> model.kill()
+
+        >>> from pywfm import IWFMModel
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
+        >>> sim_file = 'Simulation_MAIN.IN'
+        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model.get_element_pumping_purpose()
+        
+        >>> model.kill()'''
+        supply_type_id = self.get_supply_type_id_well()
+
+        # get all well IDs
+        #element_pumping_ids = self.get_element_pumping_ids()
+        raise NotImplementedError('IWFM DLL does not currently have a procedure to get all element pumping ids')
+
+        if isinstance(element_pumping, str):
+            if element_pumping.lower() == 'all':
+                element_pumping = element_pumping_ids
+            else:
+                raise ValueError('if element_pumping is a string, must be "all"')
+
+        # if int convert to np.ndarray
+        if isinstance(element_pumping, int):
+            element_pumping = np.array([element_pumping])
+        
+        # if list or tuple convert to np.ndarray
+        if isinstance(element_pumping, (list, tuple)):
+            element_pumping = np.array(element_pumping)
+
+        # if element_pumping were provided as an int, list, or 
+        # np.ndarray they should now all be np.ndarray, so check if np.ndarray
+        if not isinstance(element_pumping, np.ndarray):
+            raise TypeError('element_pumping must be an int, list, tuple, np.ndarray, or "all"')
+
+        # check if all of the provided element pumping IDs are valid
+        if not np.all(np.isin(element_pumping, element_pumping_ids)):
+            raise ValueError('One or more element pumping IDs provided are invalid')
+
+        # convert element pumping IDs to element pumping indices
+        # add 1 to convert between python indices and fortran indices
+        element_pumping_indices = np.array([np.where(element_pumping_ids == item)[0][0] for item in element_pumping]) + 1
+
+        return self._get_supply_purpose(supply_type_id, element_pumping_indices)
 
     def _get_supply_requirement_ag(self, location_type_id, locations_list, 
                                    conversion_factor):
