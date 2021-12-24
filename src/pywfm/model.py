@@ -5795,12 +5795,12 @@ class IWFMModel(IWFMMiscellaneous):
 
         return np.array(ag_supply_requirement)
 
-    def get_supply_requirement_ag_elements(self, elements_list, conversion_factor=1.0):
+    def get_supply_requirement_ag_elements(self, elements='all', conversion_factor=1.0):
         ''' Returns the agricultural supply requirement for one or more model elements
 
         Parameters
         ----------
-        elements_list : list or np.ndarray
+        elements : int, list, tuple, np.ndarray, or str='all', default='all'
             one or more element identification numbers used to return 
             the ag supply requirement
 
@@ -5815,7 +5815,37 @@ class IWFMModel(IWFMMiscellaneous):
         '''
         location_type_id = self.get_location_type_id_element()
 
-        return self._get_supply_requirement_ag(location_type_id, elements_list, conversion_factor)
+        # get all element IDs
+        element_ids = self.get_element_ids()
+
+        if isinstance(elements, str):
+            if elements.lower() == 'all':
+                elements = element_ids
+            else:
+                raise ValueError('if elements is a string, must be "all"')
+
+        # if int convert to np.ndarray
+        if isinstance(elements, int):
+            elements = np.array([elements])
+        
+        # if list or tuple convert to np.ndarray
+        if isinstance(elements, (list, tuple)):
+            elements = np.array(elements)
+
+        # if elements were provided as an int, list, or 
+        # np.ndarray they should now all be np.ndarray, so check if np.ndarray
+        if not isinstance(elements, np.ndarray):
+            raise TypeError('element must be an int, list, tuple, np.ndarray, or "all"')
+
+        # check if all of the provided element IDs are valid
+        if not np.all(np.isin(elements, element_ids)):
+            raise ValueError('One or more element IDs provided are invalid')
+
+        # convert element IDs to element indices
+        # add 1 to convert between python indices and fortran indices
+        element_indices = np.array([np.where(element_ids == item)[0][0] for item in elements]) + 1
+
+        return self._get_supply_requirement_ag(location_type_id, element_indices, conversion_factor)
 
     def get_supply_requirement_ag_subregions(self, subregions_list, conversion_factor=1.0):
         ''' Returns the agricultural supply requirement for one or more model subregions
