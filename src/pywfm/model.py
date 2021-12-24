@@ -5975,53 +5975,131 @@ class IWFMModel(IWFMMiscellaneous):
 
         return np.array(urban_supply_requirement)
 
-    def get_supply_requirement_urban_elements(self, elements_list, conversion_factor=1.0):
+    def get_supply_requirement_urban_elements(self, elements='all', conversion_factor=1.0):
         ''' Returns the urban supply requirement for one or more model elements
 
         Parameters
         ----------
-        elements_list : list or np.ndarray
+        elements : int, list, tuple, np.ndarray, or str='all', default='all'
             one or more element identification numbers used to return 
             the urban supply requirement
 
         conversion_factor : float, default=1.0
-            factor to convert ag supply requirement from model units to
+            factor to convert urban supply requirement from model units to
             desired output units
 
         Returns
         -------
         np.ndarray
-            array of ag supply requirement for elements specified
+            array of urban supply requirement for elements specified
+
+        Note
+        ----
+        This method is intended to be used during a model simulation (is_for_inquiry=0)
+
+        See Also
+        --------
+        IWFMModel.get_supply_requirement_ag_elements : Returns the agricultural supply requirement for one or more model elements 
+        IWFMModel.get_supply_requirement_ag_subregions : Returns the agricultural supply requirement for one or more model subregions
+        IWFMModel.get_supply_requirement_urban_subregions : Returns the urban supply requirement for one or more model subregions
+
         '''
         location_type_id = self.get_location_type_id_element()
 
-        return self._get_supply_requirement_urban(location_type_id, 
-                                                  elements_list, 
-                                                  conversion_factor)
+        # get all element IDs
+        element_ids = self.get_element_ids()
 
-    def get_supply_requirement_urban_subregions(self, subregions_list, conversion_factor=1.0):
+        if isinstance(elements, str):
+            if elements.lower() == 'all':
+                elements = element_ids
+            else:
+                raise ValueError('if elements is a string, must be "all"')
+
+        # if int convert to np.ndarray
+        if isinstance(elements, int):
+            elements = np.array([elements])
+        
+        # if list or tuple convert to np.ndarray
+        if isinstance(elements, (list, tuple)):
+            elements = np.array(elements)
+
+        # if elements were provided as an int, list, or 
+        # np.ndarray they should now all be np.ndarray, so check if np.ndarray
+        if not isinstance(elements, np.ndarray):
+            raise TypeError('element must be an int, list, tuple, np.ndarray, or "all"')
+
+        # check if all of the provided element IDs are valid
+        if not np.all(np.isin(elements, element_ids)):
+            raise ValueError('One or more element IDs provided are invalid')
+
+        # convert element IDs to element indices
+        # add 1 to convert between python indices and fortran indices
+        element_indices = np.array([np.where(element_ids == item)[0][0] for item in elements]) + 1
+
+        return self._get_supply_requirement_urban(location_type_id, element_indices, conversion_factor)
+
+    def get_supply_requirement_urban_subregions(self, subregions='all', conversion_factor=1.0):
         ''' Returns the urban supply requirement for one or more model subregions
 
         Parameters
         ----------
-        subregions_list : list or np.ndarray
+        subregions : int, list, tuple, np.ndarray, or str='all', default='all'
             one or more subregion identification numbers used to return 
             the urban supply requirement
 
         conversion_factor : float, default=1.0
-            factor to convert ag supply requirement from model units to
+            factor to convert urban supply requirement from model units to
             desired output units
 
         Returns
         -------
         np.ndarray
-            array of ag supply requirement for subregions specified
+            array of urban supply requirement for subregions specified
+
+        Note
+        ----
+        This method is intended to be used during a model simulation (is_for_inquiry=0)
+
+        See Also
+        --------
+        IWFMModel.get_supply_requirement_ag_elements : Returns the agricultural supply requirement for one or more model elements
+        IWFMModel.get_supply_requirement_ag_subregions : Returns the agricultural supply requirement for one or more model subregions
+        IWFMModel.get_supply_requirement_urban_elements : Returns the urban supply requirement for one or more model elements 
+
         '''
         location_type_id = self.get_location_type_id_subregion()
 
-        return self._get_supply_requirement_urban(location_type_id, 
-                                                  subregions_list, 
-                                                  conversion_factor)
+        # get all subregion IDs
+        subregion_ids = self.get_subregion_ids()
+
+        if isinstance(subregions, str):
+            if subregions.lower() == 'all':
+                subregions = subregion_ids
+            else:
+                raise ValueError('if subregions is a string, must be "all"')
+
+        # if int convert to np.ndarray
+        if isinstance(subregions, int):
+            subregions = np.array([subregions])
+        
+        # if list or tuple convert to np.ndarray
+        if isinstance(subregions, (list, tuple)):
+            subregions = np.array(subregions)
+
+        # if subregions were provided as an int, list, or 
+        # np.ndarray they should now all be np.ndarray, so check if np.ndarray
+        if not isinstance(subregions, np.ndarray):
+            raise TypeError('subregions must be an int, list, tuple, np.ndarray, or "all"')
+
+        # check if all of the provided subregion IDs are valid
+        if not np.all(np.isin(subregions, subregion_ids)):
+            raise ValueError('One or more subegion IDs provided are invalid')
+
+        # convert subregion IDs to subregion indices
+        # add 1 to convert between python indices and fortran indices
+        subregion_indices = np.array([np.where(subregion_ids == item)[0][0] for item in subregions]) + 1
+
+        return self._get_supply_requirement_urban(location_type_id, subregion_indices, conversion_factor)
 
     def _get_supply_shortage_at_origin_ag(self, supply_type_id, supply_location_list, supply_conversion_factor):
         ''' private method returning the supply shortage for agriculture at the destination of those 
