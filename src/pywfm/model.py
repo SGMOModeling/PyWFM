@@ -5158,6 +5158,12 @@ class IWFMModel(IWFMMiscellaneous):
         ----
         This method is intended to be used when is_for_inquiry=0 when performing a model simulation
 
+        See Also
+        --------
+        IWFMModel.get_well_ids : Returns the well IDs specified in an IWFM model
+        IWFMModel.get_n_element_pumps : Returns the number of element pumping wells in an IWFM model
+        IWFMModel.get_element_pump_ids : Returns the element pump IDs specified in an IWFM model
+
         Example
         -------
         >>> from pywfm import IWFMModel
@@ -5185,6 +5191,54 @@ class IWFMModel(IWFMMiscellaneous):
 
         return n_wells.value
 
+    def get_well_ids(self):
+        ''' Returns the pumping well IDs specified in an IWFM model
+        
+        Returns
+        -------
+        np.ndarray
+            array of well IDs
+
+        Note
+        ----
+        This method is intended to be used when is_for_inquiry=0 when performing a model simulation
+
+        See Also
+        --------
+        IWFMModel.get_n_wells : Returns the number of pumping wells in an IWFM model
+        IWFMModel.get_n_element_pumps : Returns the number of element pumping wells in an IWFM model
+        IWFMModel.get_element_pump_ids : Returns the element pump IDs specified in an IWFM model
+
+        Example
+        -------
+        >>> from pywfm import IWFMModel
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
+        >>> sim_file = 'Simulation_MAIN.IN'
+        >>> model = IWFMModel(dll, pp_file, sim_file, is_for_inquiry=0)
+        >>> model.get_well_ids()
+        
+        >>> model.kill()
+        '''
+        if not hasattr(self.dll, "IW_Model_GetWellIDs"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. '
+                                 'Check for an updated version'.format("IW_Model_GetWellIDs"))
+
+        # set input variables
+        n_wells = ctypes.c_int(self.get_n_wells())
+        
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
+
+        # initialize output variables
+        well_ids = (ctypes.c_int*n_wells.value)()
+
+        self.dll.IW_Model_GetWellIDs(ctypes.byref(n_wells),
+                                          well_ids,
+                                          ctypes.byref(self.status))
+
+        return np.array(well_ids)
+
     def get_n_element_pumps(self):
         ''' Returns the number of element pumps simulated in an 
         IWFM model
@@ -5197,6 +5251,12 @@ class IWFMModel(IWFMMiscellaneous):
         Note
         ----
         This method is intended to be used when is_for_inquiry=0 when performing a model simulation
+
+        See Also
+        --------
+        IWFMModel.get_n_wells : Returns the number of wells simulated in an IWFM model
+        IWFMModel.get_well_ids : Returns the pumping well IDs specified in an IWFM model
+        IWFMModel.get_element_pump_ids : Returns the element pump IDs specified in an IWFM model
 
         Example
         -------
@@ -5224,6 +5284,54 @@ class IWFMModel(IWFMMiscellaneous):
                                       ctypes.byref(self.status))
 
         return n_elem_pumps.value
+
+    def get_element_pump_ids(self):
+        ''' Returns the element pump IDs specified in an IWFM model
+        
+        Returns
+        -------
+        np.ndarray
+            array of element pump IDs
+
+        Note
+        ----
+        This method is intended to be used when is_for_inquiry=0 when performing a model simulation
+
+        See Also
+        --------
+        IWFMModel.get_well_ids : Returns the well IDs specified in an IWFM model
+        IWFMModel.get_n_wells : Returns the number of pumping wells in an IWFM model
+        IWFMModel.get_n_element_pumps : Returns the number of element pumping wells in an IWFM model
+
+        Example
+        -------
+        >>> from pywfm import IWFMModel
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
+        >>> sim_file = 'Simulation_MAIN.IN'
+        >>> model = IWFMModel(dll, pp_file, sim_file, is_for_inquiry=0)
+        >>> model.get_element_pump_ids()
+        
+        >>> model.kill()
+        '''
+        if not hasattr(self.dll, "IW_Model_GetElemPumpIDs"):
+            raise AttributeError('IWFM DLL does not have "{}" procedure. '
+                                 'Check for an updated version'.format("IW_Model_GetElemPumpIDs"))
+
+        # set input variables
+        n_element_pumps = ctypes.c_int(self.get_n_element_pumps())
+        
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
+
+        # initialize output variables
+        element_pump_ids = (ctypes.c_int*n_element_pumps.value)()
+
+        self.dll.IW_Model_GetWellIDs(ctypes.byref(n_element_pumps),
+                                          element_pump_ids,
+                                          ctypes.byref(self.status))
+
+        return np.array(element_pump_ids)
 
     def _get_supply_purpose(self, supply_type_id, supply_indices):
         ''' private method returning the flags for the initial assignment of water supplies
@@ -5408,8 +5516,7 @@ class IWFMModel(IWFMMiscellaneous):
         return self._get_supply_purpose(supply_type_id, diversion_indices)
 
     def get_well_pumping_purpose(self, wells='all'):
-        ''' Returns the flags for the initial purpose of the water 
-        supplies as ag, urban, or both
+        ''' Returns the flags for the initial purpose of the well pumping as ag, urban, or both
 
         Parameters
         ----------
@@ -5421,10 +5528,6 @@ class IWFMModel(IWFMMiscellaneous):
         -------
         np.ndarray
             array of flags for each supply index provided
-
-        Important
-        ---------
-        This method is currently not implemented
 
         Note
         ----
@@ -5444,7 +5547,7 @@ class IWFMModel(IWFMMiscellaneous):
         See Also
         --------
         IWFMModel.get_diversion_purpose : Returns the flags for the initial purpose of the diversions as ag, urban, or both
-        IWFMModel.get_element_pumping_purpose : Returns the flags for the initial purpose of the element pumping as ag, urban, or both
+        IWFMModel.get_element_pump_purpose : Returns the flags for the initial purpose of the element pumping as ag, urban, or both
 
         Examples
         --------
@@ -5499,8 +5602,7 @@ class IWFMModel(IWFMMiscellaneous):
         supply_type_id = self.get_supply_type_id_well()
 
         # get all well IDs
-        #well_ids = self.get_well_ids()
-        raise NotImplementedError('IWFM DLL does not currently have a procedure to get all well ids')
+        well_ids = self.get_well_ids()
 
         if isinstance(wells, str):
             if wells.lower() == 'all':
@@ -5531,24 +5633,19 @@ class IWFMModel(IWFMMiscellaneous):
 
         return self._get_supply_purpose(supply_type_id, well_indices)
 
-    def get_element_pumping_purpose(self, element_pumping='all'):
-        ''' Returns the flags for the initial purpose of the element 
-        pumping as ag, urban, or both
+    def get_element_pump_purpose(self, element_pumps='all'):
+        ''' Returns the flags for the initial purpose of the element pumping as ag, urban, or both
 
         Parameters
         ----------
-        element_pumping : int, list, tuple, np.ndarray, or str='all', default='all'
-            One or more well identification numbers used to return
+        element_pumps : int, list, tuple, np.ndarray, or str='all', default='all'
+            One or more element pump identification numbers used to return
             the supply purpose.
 
         Returns
         -------
         np.ndarray
             array of flags for each supply index provided
-
-        Important
-        ---------
-        This method is currently not implemented
 
         Note
         ----
@@ -5611,38 +5708,37 @@ class IWFMModel(IWFMMiscellaneous):
         >>> model.kill()'''
         supply_type_id = self.get_supply_type_id_well()
 
-        # get all well IDs
-        #element_pumping_ids = self.get_element_pumping_ids()
-        raise NotImplementedError('IWFM DLL does not currently have a procedure to get all element pumping ids')
+        # get all element pump IDs
+        element_pump_ids = self.get_element_pump_ids()
 
-        if isinstance(element_pumping, str):
-            if element_pumping.lower() == 'all':
-                element_pumping = element_pumping_ids
+        if isinstance(element_pumps, str):
+            if element_pumps.lower() == 'all':
+                element_pumps = element_pump_ids
             else:
-                raise ValueError('if element_pumping is a string, must be "all"')
+                raise ValueError('if element_pumps is a string, must be "all"')
 
         # if int convert to np.ndarray
-        if isinstance(element_pumping, int):
-            element_pumping = np.array([element_pumping])
+        if isinstance(element_pumps, int):
+            element_pumps = np.array([element_pumps])
         
         # if list or tuple convert to np.ndarray
-        if isinstance(element_pumping, (list, tuple)):
-            element_pumping = np.array(element_pumping)
+        if isinstance(element_pumps, (list, tuple)):
+            element_pumps = np.array(element_pumps)
 
-        # if element_pumping were provided as an int, list, or 
+        # if element_pumps were provided as an int, list, or 
         # np.ndarray they should now all be np.ndarray, so check if np.ndarray
-        if not isinstance(element_pumping, np.ndarray):
-            raise TypeError('element_pumping must be an int, list, tuple, np.ndarray, or "all"')
+        if not isinstance(element_pumps, np.ndarray):
+            raise TypeError('element_pumps must be an int, list, tuple, np.ndarray, or "all"')
 
-        # check if all of the provided element pumping IDs are valid
-        if not np.all(np.isin(element_pumping, element_pumping_ids)):
-            raise ValueError('One or more element pumping IDs provided are invalid')
+        # check if all of the provided element pump IDs are valid
+        if not np.all(np.isin(element_pumps, element_pump_ids)):
+            raise ValueError('One or more element pump IDs provided are invalid')
 
-        # convert element pumping IDs to element pumping indices
+        # convert element pump IDs to element pump indices
         # add 1 to convert between python indices and fortran indices
-        element_pumping_indices = np.array([np.where(element_pumping_ids == item)[0][0] for item in element_pumping]) + 1
+        element_pump_indices = np.array([np.where(element_pump_ids == item)[0][0] for item in element_pumps]) + 1
 
-        return self._get_supply_purpose(supply_type_id, element_pumping_indices)
+        return self._get_supply_purpose(supply_type_id, element_pump_indices)
 
     def _get_supply_requirement_ag(self, location_type_id, locations_list, 
                                    conversion_factor):
