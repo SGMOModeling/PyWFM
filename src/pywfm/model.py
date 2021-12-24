@@ -6726,6 +6726,24 @@ class IWFMModel(IWFMMiscellaneous):
         -------
         list
             list of names for each stream reach in the model
+
+        See Also
+        --------
+        IWFMModel.get_subregion_names : Returns the subregion names specified in an IWFM model
+        IWFMModel.get_groundwater_observation_names : Returns the groundwater head observation location names specified in an IWFM model
+        IWFMModel.get_stream_observation_names : Returns the stream flow observation location names specified in an IWFM model
+        IWFMModel.get_subsidence_observation_names : Returns the subsidence observation location names specified in an IWFM model
+
+        Example
+        -------
+        >>> from pywfm import IWFMModel
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
+        >>> sim_file = 'Simulation_MAIN.IN'
+        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model.get_stream_reach_names()
+        ['Reach2', 'Reach1', 'Reach3']
+        >>> model.kill()
         '''
         location_type_id = self.get_location_type_id_streamreach()
 
@@ -6739,6 +6757,65 @@ class IWFMModel(IWFMMiscellaneous):
         -------
         list
             list of names for each groundwater head observation location
+
+        See Also
+        --------
+        IWFMModel.get_subregion_names : Returns the subregion names specified in an IWFM model
+        IWFMModel.get_stream_reach_names : Returns the stream reach names specified in an IWFM model
+        IWFMModel.get_stream_observation_names : Returns the stream flow observation location names specified in an IWFM model
+        IWFMModel.get_subsidence_observation_names : Returns the subsidence observation location names specified in an IWFM model
+
+        Example
+        -------
+        >>> from pywfm import IWFMModel
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
+        >>> sim_file = 'Simulation_MAIN.IN'
+        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model.get_groundwater_observation_names()
+        ['GWHyd1',
+         'GWHyd2',
+         'GWHyd3',
+         'GWHyd4',
+         'GWHyd5',
+         'GWHyd6',
+         'GWHyd7',
+         'GWHyd8',
+         'GWHyd9',
+         'GWHyd10',
+         'GWHyd11',
+         'GWHyd12',
+         'GWHyd13',
+         'GWHyd14',
+         'GWHyd15',
+         'GWHyd16',
+         'GWHyd17',
+         'GWHyd18',
+         'GWHyd19',
+         'GWHyd20',
+         'GWHyd21',
+         'GWHyd22',
+         'GWHyd23',
+         'GWHyd24',
+         'GWHyd25',
+         'GWHyd26',
+         'GWHyd27',
+         'GWHyd28',
+         'GWHyd29',
+         'GWHyd30',
+         'GWHyd31',
+         'GWHyd32',
+         'GWHyd33',
+         'GWHyd34',
+         'GWHyd35',
+         'GWHyd36',
+         'GWHyd37',
+         'GWHyd38',
+         'GWHyd39',
+         'GWHyd40',
+         'GWHyd41',
+         'GWHyd42']
+        >>> model.kill()
         '''
         location_type_id = self.get_location_type_id_gwheadobs()
 
@@ -6752,6 +6829,46 @@ class IWFMModel(IWFMMiscellaneous):
         -------
         list
             list of names for each stream observation location
+
+        See Also
+        --------
+        IWFMModel.get_subregion_names : Returns the subregion names specified in an IWFM model
+        IWFMModel.get_stream_reach_names : Returns the stream reach names specified in an IWFM model
+        IWFMModel.get_groundwater_observation_names : Returns the groundwater observation location names specified in an IWFM model
+        IWFMModel.get_subsidence_observation_names : Returns the subsidence observation location names specified in an IWFM model
+
+        Example
+        -------
+        >>> from pywfm import IWFMModel
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
+        >>> sim_file = 'Simulation_MAIN.IN'
+        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model.get_stream_observation_names()
+        ['StrmHyd_1',
+         'StrmHyd_2',
+         'StrmHyd_3',
+         'StrmHyd_4',
+         'StrmHyd_5',
+         'StrmHyd_6',
+         'StrmHyd_7',
+         'StrmHyd_8',
+         'StrmHyd_9',
+         'StrmHyd_10',
+         'StrmHyd_11',
+         'StrmHyd_12',
+         'StrmHyd_13',
+         'StrmHyd_14',
+         'StrmHyd_15',
+         'StrmHyd_16',
+         'StrmHyd_17',
+         'StrmHyd_18',
+         'StrmHyd_19',
+         'StrmHyd_20',
+         'StrmHyd_21',
+         'StrmHyd_22',
+         'StrmHyd_23']
+        >>> model.kill()
         '''
         location_type_id = self.get_location_type_id_streamhydobs()
 
@@ -6765,6 +6882,24 @@ class IWFMModel(IWFMMiscellaneous):
         -------
         list
             list of names for each subsidence observation locations
+
+        See Also
+        --------
+        IWFMModel.get_subregion_names : Returns the subregion names specified in an IWFM model
+        IWFMModel.get_stream_reach_names : Returns the stream reach names specified in an IWFM model
+        IWFMModel.get_stream_observation_names : Returns the stream flow observation location names specified in an IWFM model
+        IWFMModel.get_groundwater_observation_names : Returns the groundwater observation location names specified in an IWFM model
+
+        Example
+        -------
+        >>> from pywfm import IWFMModel
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
+        >>> sim_file = 'Simulation_MAIN.IN'
+        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model.get_subsidence_observation_names()
+        ['SubsHyd1', 'SubsHyd2', 'SubsHyd3', 'SubsHyd4', 'SubsHyd5']
+        >>> model.kill()
         '''
         location_type_id = self.get_location_type_id_subsidenceobs()
 
