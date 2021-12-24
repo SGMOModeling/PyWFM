@@ -5812,6 +5812,17 @@ class IWFMModel(IWFMMiscellaneous):
         -------
         np.ndarray
             array of ag supply requirement for elements specified
+
+        Note
+        ----
+        This method is intended to be used during a model simulation (is_for_inquiry=0)
+
+        See Also
+        --------
+        IWFMModel.get_supply_requirement_ag_subregions : Returns the agricultural supply requirement for one or more model subregions
+        IWFMModel.get_supply_requirement_urban_elements : Returns the urban supply requirement for one or more model elements 
+        IWFMModel.get_supply_requirement_urban_subregions : Returns the urban supply requirement for one or more model subregions
+
         '''
         location_type_id = self.get_location_type_id_element()
 
@@ -5847,12 +5858,12 @@ class IWFMModel(IWFMMiscellaneous):
 
         return self._get_supply_requirement_ag(location_type_id, element_indices, conversion_factor)
 
-    def get_supply_requirement_ag_subregions(self, subregions_list, conversion_factor=1.0):
+    def get_supply_requirement_ag_subregions(self, subregions='all', conversion_factor=1.0):
         ''' Returns the agricultural supply requirement for one or more model subregions
 
         Parameters
         ----------
-        subregions_list : list or np.ndarray
+        subregions : int, list, tuple, np.ndarray, or str='all', default='all'
             one or more subregion identification numbers used to return 
             the ag supply requirement
 
@@ -5864,10 +5875,51 @@ class IWFMModel(IWFMMiscellaneous):
         -------
         np.ndarray
             array of ag supply requirement for subregions specified
+
+        Note
+        ----
+        This method is intended to be used during a model simulation (is_for_inquiry=0)
+
+        See Also
+        --------
+        IWFMModel.get_supply_requirement_ag_elements : Returns the agricultural supply requirement for one or more model elements
+        IWFMModel.get_supply_requirement_urban_elements : Returns the urban supply requirement for one or more model elements 
+        IWFMModel.get_supply_requirement_urban_subregions : Returns the urban supply requirement for one or more model subregions
+
         '''
         location_type_id = self.get_location_type_id_subregion()
 
-        return self._get_supply_requirement_ag(location_type_id, subregions_list, conversion_factor)
+        # get all subregion IDs
+        subregion_ids = self.get_subregion_ids()
+
+        if isinstance(subregions, str):
+            if subregions.lower() == 'all':
+                subregions = subregion_ids
+            else:
+                raise ValueError('if subregions is a string, must be "all"')
+
+        # if int convert to np.ndarray
+        if isinstance(subregions, int):
+            subregions = np.array([subregions])
+        
+        # if list or tuple convert to np.ndarray
+        if isinstance(subregions, (list, tuple)):
+            subregions = np.array(subregions)
+
+        # if subregions were provided as an int, list, or 
+        # np.ndarray they should now all be np.ndarray, so check if np.ndarray
+        if not isinstance(subregions, np.ndarray):
+            raise TypeError('subregions must be an int, list, tuple, np.ndarray, or "all"')
+
+        # check if all of the provided subregion IDs are valid
+        if not np.all(np.isin(subregions, subregion_ids)):
+            raise ValueError('One or more subegion IDs provided are invalid')
+
+        # convert subregion IDs to subregion indices
+        # add 1 to convert between python indices and fortran indices
+        subregion_indices = np.array([np.where(subregion_ids == item)[0][0] for item in subregions]) + 1
+
+        return self._get_supply_requirement_ag(location_type_id, subregion_indices, conversion_factor)
 
     def _get_supply_requirement_urban(self, location_type_id, locations_list, conversion_factor):
         ''' Returns the urban water supply requirement at a 
