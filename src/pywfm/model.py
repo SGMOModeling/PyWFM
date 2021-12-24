@@ -6155,13 +6155,13 @@ class IWFMModel(IWFMMiscellaneous):
 
         return np.array(ag_supply_shortage)
 
-    def get_ag_diversion_supply_shortage_at_origin(self, diversions_list, conversion_factor=1.0):
+    def get_ag_diversion_supply_shortage_at_origin(self, diversions='all', conversion_factor=1.0):
         ''' Returns the supply shortage for agricultural diversions at the destination of those 
         supplies plus any conveyance losses
         
         Parameters
         ----------
-        diversions_list : list or np.ndarray
+        diversions : int, list, tuple, np.ndarray, or str='all', default='all'
             indices of diversions where ag supply shortages are returned
 
         conversion_factor : float, default=1.0
@@ -6172,20 +6172,63 @@ class IWFMModel(IWFMMiscellaneous):
         -------
         np.ndarray
             array of agricultural supply shortages for each diversion location
+
+        Note
+        ----
+        This method is intended to be used during a model simulation (is_for_inquiry=0)
+
+        See Also
+        --------
+        IWFMModel.get_ag_well_supply_shortage_at_origin : Returns the supply shortage for agricultural wells at the destination of those supplies plus any conveyance losses
+        IWFMModel.get_ag_elempump_supply_shortage_at_origin : Returns the supply shortage for agricultural element pumping at the destination of those supplies plus any conveyance losses
+        IWFMModel.get_urban_diversion_supply_shortage_at_origin : Returns the supply shortage for urban diversions at the destination of those supplies plus any conveyance losses
+        IWFMModel.get_urban_well_supply_shortage_at_origin : Returns the supply shortage for urban wells at the destination of those supplies plus any conveyance losses
+        IWFMModel.get_urban_elempump_supply_shortage_at_origin : Returns the supply shortage for urban element pumping at the destination of those supplies plus any conveyance losses
+
         '''
         supply_type_id = self.get_supply_type_id_diversion()
 
+        # get all diversion IDs
+        diversion_ids = self.get_diversion_ids()
+
+        if isinstance(diversions, str):
+            if diversions.lower() == 'all':
+                diversions = diversion_ids
+            else:
+                raise ValueError('if diversions is a string, must be "all"')
+
+        # if int convert to np.ndarray
+        if isinstance(diversions, int):
+            diversions = np.array([diversions])
+        
+        # if list or tuple convert to np.ndarray
+        if isinstance(diversions, (list, tuple)):
+            diversions = np.array(diversions)
+
+        # if diversions were provided as an int, list, or 
+        # np.ndarray they should now all be np.ndarray, so check if np.ndarray
+        if not isinstance(diversions, np.ndarray):
+            raise TypeError('diversions must be an int, list, tuple, np.ndarray, or "all"')
+
+        # check if all of the provided diversion IDs are valid
+        if not np.all(np.isin(diversions, diversion_ids)):
+            raise ValueError('One or more diversion IDs provided are invalid')
+
+        # convert diversion IDs to diversion indices
+        # add 1 to convert between python indices and fortran indices
+        diversion_indices = np.array([np.where(diversion_ids == item)[0][0] for item in diversions]) + 1
+
         return self._get_supply_shortage_at_origin_ag(supply_type_id, 
-                                                      diversions_list, 
+                                                      diversion_indices, 
                                                       conversion_factor)
 
-    def get_ag_well_supply_shortage_at_origin(self, wells_list, conversion_factor=1.0):
+    def get_ag_well_supply_shortage_at_origin(self, wells='all', conversion_factor=1.0):
         ''' Returns the supply shortage for agricultural wells at the destination of those 
         supplies plus any conveyance losses
         
         Parameters
         ----------
-        wells_list : list or np.ndarray
+        wells : int, list, tuple, np.ndarray, or str='all', default='all'
             indices of wells where ag supply shortages are returned
 
         conversion_factor : float, default=1.0
@@ -6196,20 +6239,63 @@ class IWFMModel(IWFMMiscellaneous):
         -------
         np.ndarray
             array of agricultural supply shortages for each well location
+
+        Note
+        ----
+        This method is intended to be used during a model simulation (is_for_inquiry=0)
+
+        See Also
+        --------
+        IWFMModel.get_ag_diversion_supply_shortage_at_origin : Returns the supply shortage for agricultural diversions at the destination of those supplies plus any conveyance losses
+        IWFMModel.get_ag_elempump_supply_shortage_at_origin : Returns the supply shortage for agricultural element pumping at the destination of those supplies plus any conveyance losses
+        IWFMModel.get_urban_diversion_supply_shortage_at_origin : Returns the supply shortage for urban diversions at the destination of those supplies plus any conveyance losses
+        IWFMModel.get_urban_well_supply_shortage_at_origin : Returns the supply shortage for urban wells at the destination of those supplies plus any conveyance losses
+        IWFMModel.get_urban_elempump_supply_shortage_at_origin : Returns the supply shortage for urban element pumping at the destination of those supplies plus any conveyance losses
+
         '''
         supply_type_id = self.get_supply_type_id_well()
 
+        # get all well IDs
+        well_ids = self.get_well_ids()
+
+        if isinstance(wells, str):
+            if wells.lower() == 'all':
+                wells = well_ids
+            else:
+                raise ValueError('if wells is a string, must be "all"')
+
+        # if int convert to np.ndarray
+        if isinstance(wells, int):
+            wells = np.array([wells])
+        
+        # if list or tuple convert to np.ndarray
+        if isinstance(wells, (list, tuple)):
+            wells = np.array(wells)
+
+        # if wells were provided as an int, list, or 
+        # np.ndarray they should now all be np.ndarray, so check if np.ndarray
+        if not isinstance(wells, np.ndarray):
+            raise TypeError('wells must be an int, list, tuple, np.ndarray, or "all"')
+
+        # check if all of the provided well IDs are valid
+        if not np.all(np.isin(wells, well_ids)):
+            raise ValueError('One or more well IDs provided are invalid')
+
+        # convert well IDs to well indices
+        # add 1 to convert between python indices and fortran indices
+        well_indices = np.array([np.where(well_ids == item)[0][0] for item in wells]) + 1
+
         return self._get_supply_shortage_at_origin_ag(supply_type_id, 
-                                                      wells_list, 
+                                                      well_indices, 
                                                       conversion_factor)
 
-    def get_ag_elempump_supply_shortage_at_origin(self, elements_list, conversion_factor=1.0):
+    def get_ag_elempump_supply_shortage_at_origin(self, element_pumps='all', conversion_factor=1.0):
         ''' Returns the supply shortage for agricultural element pumping 
         at the destination of those supplies plus any conveyance losses
         
         Parameters
         ----------
-        elements_list : list or np.ndarray
+        element_pumps : int, list, tuple, np.ndarray, or str='all', default='all'
             indices of element pumping locations where ag supply shortages are returned
 
         conversion_factor : float, default=1.0
@@ -6220,11 +6306,54 @@ class IWFMModel(IWFMMiscellaneous):
         -------
         np.ndarray
             array of agricultural supply shortages for each element pumping location
+
+        Note
+        ----
+        This method is intended to be used during a model simulation (is_for_inquiry=0)
+
+        See Also
+        --------
+        IWFMModel.get_ag_diversion_supply_shortage_at_origin : Returns the supply shortage for agricultural diversions at the destination of those supplies plus any conveyance losses
+        IWFMModel.get_ag_well_supply_shortage_at_origin : Returns the supply shortage for agricultural wells at the destination of those supplies plus any conveyance losses
+        IWFMModel.get_urban_diversion_supply_shortage_at_origin : Returns the supply shortage for urban diversions at the destination of those supplies plus any conveyance losses
+        IWFMModel.get_urban_well_supply_shortage_at_origin : Returns the supply shortage for urban wells at the destination of those supplies plus any conveyance losses
+        IWFMModel.get_urban_elempump_supply_shortage_at_origin : Returns the supply shortage for urban element pumping at the destination of those supplies plus any conveyance losses
+
         '''
         supply_type_id = self.get_supply_type_id_elempump()
 
+        # get all element pump IDs
+        element_pump_ids = self.get_element_pump_ids()
+
+        if isinstance(element_pumps, str):
+            if element_pumps.lower() == 'all':
+                element_pumps = element_pump_ids
+            else:
+                raise ValueError('if element_pumps is a string, must be "all"')
+
+        # if int convert to np.ndarray
+        if isinstance(element_pumps, int):
+            element_pumps = np.array([element_pumps])
+        
+        # if list or tuple convert to np.ndarray
+        if isinstance(element_pumps, (list, tuple)):
+            element_pumps = np.array(element_pumps)
+
+        # if element_pumps were provided as an int, list, or 
+        # np.ndarray they should now all be np.ndarray, so check if np.ndarray
+        if not isinstance(element_pumps, np.ndarray):
+            raise TypeError('element_pumps must be an int, list, tuple, np.ndarray, or "all"')
+
+        # check if all of the provided element pump IDs are valid
+        if not np.all(np.isin(element_pumps, element_pump_ids)):
+            raise ValueError('One or more element pump IDs provided are invalid')
+
+        # convert element pump IDs to element pump indices
+        # add 1 to convert between python indices and fortran indices
+        element_pump_indices = np.array([np.where(element_pump_ids == item)[0][0] for item in element_pumps]) + 1
+
         return self._get_supply_shortage_at_origin_ag(supply_type_id, 
-                                                      elements_list, 
+                                                      element_pump_indices, 
                                                       conversion_factor)
 
     def _get_supply_shortage_at_origin_urban(self, supply_type_id, supply_location_list, supply_conversion_factor):
@@ -6281,13 +6410,13 @@ class IWFMModel(IWFMMiscellaneous):
 
         return np.array(urban_supply_shortage)
 
-    def get_urban_diversion_supply_shortage_at_origin(self, diversions_list, conversion_factor=1.0):
+    def get_urban_diversion_supply_shortage_at_origin(self, diversions='all', conversion_factor=1.0):
         ''' Returns the supply shortage for urban diversions at the destination of those 
         supplies plus any conveyance losses
         
         Parameters
         ----------
-        diversions_list : list or np.ndarray
+        diversions : int, list, tuple, np.ndarray, or str='all', default='all'
             indices of diversions where urban supply shortages are returned
 
         conversion_factor : float, default=1.0
@@ -6298,20 +6427,63 @@ class IWFMModel(IWFMMiscellaneous):
         -------
         np.ndarray
             array of urban supply shortages for each diversion location
+
+        Note
+        ----
+        This method is intended to be used during a model simulation (is_for_inquiry=0)
+
+        See Also
+        --------
+        IWFMModel.get_ag_diversion_supply_shortage_at_origin : Returns the supply shortage for agricultural diversions at the destination of those supplies plus any conveyance losses
+        IWFMModel.get_ag_well_supply_shortage_at_origin : Returns the supply shortage for agricultural wells at the destination of those supplies plus any conveyance losses
+        IWFMModel.get_ag_elempump_supply_shortage_at_origin : Returns the supply shortage for agricultural element pumping at the destination of those supplies plus any conveyance losses
+        IWFMModel.get_urban_well_supply_shortage_at_origin : Returns the supply shortage for urban wells at the destination of those supplies plus any conveyance losses
+        IWFMModel.get_urban_elempump_supply_shortage_at_origin : Returns the supply shortage for urban element pumping at the destination of those supplies plus any conveyance losses
+
         '''
         supply_type_id = self.get_supply_type_id_diversion()
 
+        # get all diversion IDs
+        diversion_ids = self.get_diversion_ids()
+
+        if isinstance(diversions, str):
+            if diversions.lower() == 'all':
+                diversions = diversion_ids
+            else:
+                raise ValueError('if diversions is a string, must be "all"')
+
+        # if int convert to np.ndarray
+        if isinstance(diversions, int):
+            diversions = np.array([diversions])
+        
+        # if list or tuple convert to np.ndarray
+        if isinstance(diversions, (list, tuple)):
+            diversions = np.array(diversions)
+
+        # if diversions were provided as an int, list, or 
+        # np.ndarray they should now all be np.ndarray, so check if np.ndarray
+        if not isinstance(diversions, np.ndarray):
+            raise TypeError('diversions must be an int, list, tuple, np.ndarray, or "all"')
+
+        # check if all of the provided diversion IDs are valid
+        if not np.all(np.isin(diversions, diversion_ids)):
+            raise ValueError('One or more diversion IDs provided are invalid')
+
+        # convert diversion IDs to diversion indices
+        # add 1 to convert between python indices and fortran indices
+        diversion_indices = np.array([np.where(diversion_ids == item)[0][0] for item in diversions]) + 1
+
         return self._get_supply_shortage_at_origin_urban(supply_type_id, 
-                                                         diversions_list, 
+                                                         diversion_indices, 
                                                          conversion_factor)
 
-    def get_urban_well_supply_shortage_at_origin(self, wells_list, conversion_factor=1.0):
+    def get_urban_well_supply_shortage_at_origin(self, wells='all', conversion_factor=1.0):
         ''' Returns the supply shortage for urban wells at the destination of those 
         supplies plus any conveyance losses
         
         Parameters
         ----------
-        wells_list : list or np.ndarray
+        wells : int, list, tuple, np.ndarray, or str='all', default='all'
             indices of wells where urban supply shortages are returned
 
         conversion_factor : float, default=1.0
@@ -6322,20 +6494,63 @@ class IWFMModel(IWFMMiscellaneous):
         -------
         np.ndarray
             array of urban supply shortages for each well location
+
+        Note
+        ----
+        This method is intended to be used during a model simulation (is_for_inquiry=0)
+
+        See Also
+        --------
+        IWFMModel.get_ag_diversion_supply_shortage_at_origin : Returns the supply shortage for agricultural diversions at the destination of those supplies plus any conveyance losses
+        IWFMModel.get_ag_well_supply_shortage_at_origin : Returns the supply shortage for agricultural wells at the destination of those supplies plus any conveyance losses
+        IWFMModel.get_ag_elempump_supply_shortage_at_origin : Returns the supply shortage for agricultural element pumping at the destination of those supplies plus any conveyance losses
+        IWFMModel.get_urban_diversion_supply_shortage_at_origin : Returns the supply shortage for urban diversions at the destination of those supplies plus any conveyance losses
+        IWFMModel.get_urban_elempump_supply_shortage_at_origin : Returns the supply shortage for urban element pumping at the destination of those supplies plus any conveyance losses
+
         '''
         supply_type_id = self.get_supply_type_id_well()
 
+        # get all well IDs
+        well_ids = self.get_well_ids()
+
+        if isinstance(wells, str):
+            if wells.lower() == 'all':
+                wells = well_ids
+            else:
+                raise ValueError('if wells is a string, must be "all"')
+
+        # if int convert to np.ndarray
+        if isinstance(wells, int):
+            wells = np.array([wells])
+        
+        # if list or tuple convert to np.ndarray
+        if isinstance(wells, (list, tuple)):
+            wells = np.array(wells)
+
+        # if wells were provided as an int, list, or 
+        # np.ndarray they should now all be np.ndarray, so check if np.ndarray
+        if not isinstance(wells, np.ndarray):
+            raise TypeError('wells must be an int, list, tuple, np.ndarray, or "all"')
+
+        # check if all of the provided well IDs are valid
+        if not np.all(np.isin(wells, well_ids)):
+            raise ValueError('One or more well IDs provided are invalid')
+
+        # convert well IDs to well indices
+        # add 1 to convert between python indices and fortran indices
+        well_indices = np.array([np.where(well_ids == item)[0][0] for item in wells]) + 1
+
         return self._get_supply_shortage_at_origin_urban(supply_type_id, 
-                                                         wells_list, 
+                                                         well_indices, 
                                                          conversion_factor)
 
-    def get_urban_elempump_supply_shortage_at_origin(self, elements_list, conversion_factor=1.0):
+    def get_urban_elempump_supply_shortage_at_origin(self, element_pumps='all', conversion_factor=1.0):
         ''' Returns the supply shortage for urban element pumping 
         at the destination of those supplies plus any conveyance losses
         
         Parameters
         ----------
-        elements_list : list or np.ndarray
+        element_pumps : int, list, tuple, np.ndarray, or str='all', default='all'
             indices of element pumping locations where urban supply shortages are returned
 
         conversion_factor : float, default=1.0
@@ -6346,11 +6561,54 @@ class IWFMModel(IWFMMiscellaneous):
         -------
         np.ndarray
             array of urban supply shortages for each element pumping location
+
+        Note
+        ----
+        This method is intended to be used during a model simulation (is_for_inquiry=0)
+
+        See Also
+        --------
+        IWFMModel.get_ag_diversion_supply_shortage_at_origin : Returns the supply shortage for agricultural diversions at the destination of those supplies plus any conveyance losses
+        IWFMModel.get_ag_well_supply_shortage_at_origin : Returns the supply shortage for agricultural wells at the destination of those supplies plus any conveyance losses
+        IWFMModel.get_urban_elempump_supply_shortage_at_origin : Returns the supply shortage for agricultural element pumping at the destination of those supplies plus any conveyance losses
+        IWFMModel.get_urban_diversion_supply_shortage_at_origin : Returns the supply shortage for urban diversions at the destination of those supplies plus any conveyance losses
+        IWFMModel.get_urban_well_supply_shortage_at_origin : Returns the supply shortage for urban wells at the destination of those supplies plus any conveyance losses
+
         '''
         supply_type_id = self.get_supply_type_id_elempump()
 
+        # get all element pump IDs
+        element_pump_ids = self.get_element_pump_ids()
+
+        if isinstance(element_pumps, str):
+            if element_pumps.lower() == 'all':
+                element_pumps = element_pump_ids
+            else:
+                raise ValueError('if element_pumps is a string, must be "all"')
+
+        # if int convert to np.ndarray
+        if isinstance(element_pumps, int):
+            element_pumps = np.array([element_pumps])
+        
+        # if list or tuple convert to np.ndarray
+        if isinstance(element_pumps, (list, tuple)):
+            element_pumps = np.array(element_pumps)
+
+        # if element_pumps were provided as an int, list, or 
+        # np.ndarray they should now all be np.ndarray, so check if np.ndarray
+        if not isinstance(element_pumps, np.ndarray):
+            raise TypeError('element_pumps must be an int, list, tuple, np.ndarray, or "all"')
+
+        # check if all of the provided element pump IDs are valid
+        if not np.all(np.isin(element_pumps, element_pump_ids)):
+            raise ValueError('One or more element pump IDs provided are invalid')
+
+        # convert element pump IDs to element pump indices
+        # add 1 to convert between python indices and fortran indices
+        element_pump_indices = np.array([np.where(element_pump_ids == item)[0][0] for item in element_pumps]) + 1
+
         return self._get_supply_shortage_at_origin_urban(supply_type_id, 
-                                                         elements_list, 
+                                                         element_pump_indices, 
                                                          conversion_factor)
 
     def _get_names(self, location_type_id):
