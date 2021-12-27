@@ -7967,7 +7967,7 @@ class IWFMModel(IWFMMiscellaneous):
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
         >>> model = IWFMModel(dll, pp_file, sim_file)
-        >>> dates, values = model.get_groundwater_hydrograph()
+        >>> dates, values = model.get_groundwater_hydrograph(1)
         >>> dates
         array(['1990-10-01', '1990-10-02', '1990-10-03', ..., '2000-09-28',
                '2000-09-29', '2000-09-30'], dtype='datetime64[D]')
@@ -7986,9 +7986,9 @@ class IWFMModel(IWFMMiscellaneous):
 
         # check to see if the groundwater_hydrograph_id provided is a valid groundwater hydrograph ID
         if not np.any(groundwater_hydrograph_ids == groundwater_hydrograph_id):
-            raise ValueError('lake_id specified is not valid')
+            raise ValueError('groundwater_hydrograph_id specified is not valid')
 
-        # convert lake_id to lake index
+        # convert groundwater_hydrograph_id to groundwater hydrograph index
         # add 1 to index to convert from python index to fortran index
         groundwater_hydrograph_index = np.where(groundwater_hydrograph_ids == groundwater_hydrograph_id)[0][0] + 1
         
