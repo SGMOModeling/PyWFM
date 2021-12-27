@@ -7747,7 +7747,7 @@ class IWFMModel(IWFMMiscellaneous):
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
         >>> model = IWFMModel(dll, pp_file, sim_file)
-        >>> x, y = model.get_subsidence_hydrograph_coordinates()
+        >>> x, y = model.get_tile_drain_hydrograph_coordinates()
         >>> x
         array([1837248., 1837248., 1837248., 1837248., 1837248., 1837248.])
         >>> y
@@ -7759,7 +7759,7 @@ class IWFMModel(IWFMMiscellaneous):
 
         return self._get_hydrograph_coordinates(location_type_id)
 
-    def _get_hydrograph(self, hydrograph_type, hydrograph_id, layer_number, 
+    def _get_hydrograph(self, hydrograph_type, hydrograph_index, layer_number, 
                         begin_date, end_date, length_conversion_factor, 
                         volume_conversion_factor):
         ''' private method returning a simulated hydrograph for a selected hydrograph type and hydrograph index 
@@ -7770,8 +7770,8 @@ class IWFMModel(IWFMMiscellaneous):
             one of the available hydrograph types for the model retrieved using
             get_hydrograph_type_list method
             
-        hydrograph_id : int
-            id for hydrograph being retrieved
+        hydrograph_index : int
+            index for hydrograph being retrieved
             
         layer_number : int
             layer number for returning hydrograph. only used for groundwater hydrograph
@@ -7852,7 +7852,7 @@ class IWFMModel(IWFMMiscellaneous):
         hydrograph_type = ctypes.c_int(hydrograph_type)
 
         # convert hydrograph_id to ctypes
-        hydrograph_id = ctypes.c_int(hydrograph_id)
+        hydrograph_index = ctypes.c_int(hydrograph_index)
 
         # convert layer number to ctypes
         layer_number = ctypes.c_int(layer_number)
@@ -7889,7 +7889,7 @@ class IWFMModel(IWFMMiscellaneous):
         self.status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetHydrograph(ctypes.byref(hydrograph_type),
-                                        ctypes.byref(hydrograph_id),
+                                        ctypes.byref(hydrograph_index),
                                         ctypes.byref(layer_number),
                                         ctypes.byref(length_date_string),
                                         begin_date,
@@ -7911,12 +7911,12 @@ class IWFMModel(IWFMMiscellaneous):
                                    end_date=None, length_conversion_factor=1.0, 
                                    volume_conversion_factor=1.0):
         ''' Returns the simulated groundwater hydrograph for the 
-        provided groundwater hydrograph id
+        provided groundwater hydrograph ID
 
         Parameters
         ----------
         groundwater_hydrograph_id : int
-            id for hydrograph being retrieved
+            ID for hydrograph being retrieved
             
         begin_date : str or None, default=None
             IWFM-style date for the beginning date of the simulated groundwater heads
@@ -7938,11 +7938,65 @@ class IWFMModel(IWFMMiscellaneous):
         np.arrays
             1-D array of dates
             1-D array of hydrograph values
+
+        See Also
+        --------
+        IWFMModel.get_n_hydrograph_types : Returns the number of different hydrograph types being printed by the IWFM model
+        IWFMModel.get_hydrograph_type_list : Returns a list of different hydrograph types being printed by the IWFM model
+        IWFMModel.get_n_groundwater_hydrographs : Returns the number of groundwater hydrographs specified in an IWFM model
+        IWFMModel.get_n_subsidence_hydrographs : Returns the number of subsidence hydrographs specified in an IWFM model
+        IWFMModel.get_n_stream_hydrographs : Returns the number of stream flow hydrographs specified in an IWFM model
+        IWFMModel.get_n_tile_drain_hydrographs : Returns the number of tile drain hydrographs specified in an IWFM model
+        IWFMModel.get_groundwater_hydrograph_ids : Returns the IDs for the groundwater hydrographs specified in an IWFM model
+        IWFMModel.get_subsidence_hydrograph_ids : Returns the IDs for the subsidence hydrographs specified in an IWFM model
+        IWFMModel.get_stream_hydrograph_ids : Returns the IDs for the stream hydrographs specified in an IWFM model
+        IWFMModel.get_tile_drain_hydrograph_ids : Returns the IDs for the tile drain hydrographs specified in an IWFM model
+        IWFMModel.get_groundwater_hydrograph_coordinates : Returns the x,y-coordinates for the groundwater hydrographs specified in an IWFM model
+        IWFMModel.get_subsidence_hydrograph_coordinates : Returns the x,y-coordinates for the subsidence hydrograph locations specified in an IWFM model
+        IWFMModel.get_stream_hydrograph_coordinates : Returns the x,y-coordinates for the stream flow observation locations specified in an IWFM model
+        IWFMModel.get_tile_drain_hydrograph_coordinates : Returns the x,y-coordinates for the tile drain observations specified in an IWFM model
+        IWFMModel.get_groundwater_hydrograph_at_node_and_layer : Returns a simulated groundwater hydrograph for a node and layer
+        IWFMModel.get_subsidence_hydrograph : Returns the simulated subsidence hydrograph for the provided subsidence hydrograph id
+        IWFMModel.get_stream_hydrograph : Returns the simulated stream hydrograph for the provided stream hydrograph id
+        IWFMModel.get_tile_drain_hydrograph : Returns the simulated tile drain hydrograph for the provided tile drain hydrograph id
+
+        Example
+        -------
+        >>> from pywfm import IWFMModel
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
+        >>> sim_file = 'Simulation_MAIN.IN'
+        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> dates, values = model.get_groundwater_hydrograph()
+        >>> dates
+        array(['1990-10-01', '1990-10-02', '1990-10-03', ..., '2000-09-28',
+               '2000-09-29', '2000-09-30'], dtype='datetime64[D]')
+        >>> values
+        array([  1.9855,   3.9691,   5.9509, ..., 302.0719, 302.0719, 302.072 ])
+        >>> model.kill()
         '''
         hydrograph_type = self.get_location_type_id_gwheadobs()
+
+        # check that groundwater_hydrograph_id is an integer
+        if not isinstance(groundwater_hydrograph_id, int):
+            raise TypeError('groundwater_hydrograph_id must be an int')
+
+        # get possible groundwater hydrograph IDs
+        groundwater_hydrograph_ids = self.get_groundwater_hydrograph_ids()
+
+        # check to see if the groundwater_hydrograph_id provided is a valid groundwater hydrograph ID
+        if not np.any(groundwater_hydrograph_ids == groundwater_hydrograph_id):
+            raise ValueError('lake_id specified is not valid')
+
+        # convert lake_id to lake index
+        # add 1 to index to convert from python index to fortran index
+        groundwater_hydrograph_index = np.where(groundwater_hydrograph_ids == groundwater_hydrograph_id)[0][0] + 1
+        
+        # layer_number only applies to groundwater hydrographs at node and layer
+        # so hardcoded to layer 1 for _get_hydrograph method, 
         layer_number = 1
 
-        return self._get_hydrograph(hydrograph_type, groundwater_hydrograph_id, 
+        return self._get_hydrograph(hydrograph_type, groundwater_hydrograph_index, 
                                     layer_number, begin_date, end_date, 
                                     length_conversion_factor, volume_conversion_factor)
 
