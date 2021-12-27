@@ -1460,7 +1460,7 @@ e.g. use 2.29568E-8 for ft^3 –&gt; TAF</p></li>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">pp_file</span> <span class="o">=</span> <span class="s1">&#39;../Preprocessor/PreProcessor_MAIN.IN&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">sim_file</span> <span class="o">=</span> <span class="s1">&#39;Simulation_MAIN.IN&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">IWFMModel</span><span class="p">(</span><span class="n">dll</span><span class="p">,</span> <span class="n">pp_file</span><span class="p">,</span> <span class="n">sim_file</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">dates</span><span class="p">,</span> <span class="n">values</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_groundwater_hydrograph</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dates</span><span class="p">,</span> <span class="n">values</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_groundwater_hydrograph</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">dates</span>
 <span class="go">array([&#39;1990-10-01&#39;, &#39;1990-10-02&#39;, &#39;1990-10-03&#39;, ..., &#39;2000-09-28&#39;,</span>
 <span class="go">       &#39;2000-09-29&#39;, &#39;2000-09-30&#39;], dtype=&#39;datetime64[D]&#39;)</span>
