@@ -8092,16 +8092,16 @@ class IWFMModel(IWFMMiscellaneous):
                                     begin_date, end_date, length_conversion_factor,
                                     volume_conversion_factor)
 
-    def get_subsidence_hydrograph(self, subsidence_location_id, begin_date=None,
+    def get_subsidence_hydrograph(self, subsidence_hydrograph_id, begin_date=None,
                                    end_date=None, length_conversion_factor=1.0, 
                                    volume_conversion_factor=1.0):
         ''' Returns the simulated subsidence hydrograph for the 
-        provided subsidence hydrograph id
+        provided subsidence hydrograph ID
 
         Parameters
         ----------
-        subsidence_location_id : int
-            id for subsidence hydrograph location being retrieved
+        subsidence_hydrograph_id : int
+            ID for subsidence hydrograph location being retrieved
             
         begin_date : str or None, default=None
             IWFM-style date for the beginning date of the simulated subsidence
@@ -8123,11 +8123,65 @@ class IWFMModel(IWFMMiscellaneous):
         np.arrays
             1-D array of dates
             1-D array of hydrograph values
+
+        See Also
+        --------
+        IWFMModel.get_n_hydrograph_types : Returns the number of different hydrograph types being printed by the IWFM model
+        IWFMModel.get_hydrograph_type_list : Returns a list of different hydrograph types being printed by the IWFM model
+        IWFMModel.get_n_groundwater_hydrographs : Returns the number of groundwater hydrographs specified in an IWFM model
+        IWFMModel.get_n_subsidence_hydrographs : Returns the number of subsidence hydrographs specified in an IWFM model
+        IWFMModel.get_n_stream_hydrographs : Returns the number of stream flow hydrographs specified in an IWFM model
+        IWFMModel.get_n_tile_drain_hydrographs : Returns the number of tile drain hydrographs specified in an IWFM model
+        IWFMModel.get_groundwater_hydrograph_ids : Returns the IDs for the groundwater hydrographs specified in an IWFM model
+        IWFMModel.get_subsidence_hydrograph_ids : Returns the IDs for the subsidence hydrographs specified in an IWFM model
+        IWFMModel.get_stream_hydrograph_ids : Returns the IDs for the stream hydrographs specified in an IWFM model
+        IWFMModel.get_tile_drain_hydrograph_ids : Returns the IDs for the tile drain hydrographs specified in an IWFM model
+        IWFMModel.get_groundwater_hydrograph_coordinates : Returns the x,y-coordinates for the groundwater hydrographs specified in an IWFM model
+        IWFMModel.get_subsidence_hydrograph_coordinates : Returns the x,y-coordinates for the subsidence hydrograph locations specified in an IWFM model
+        IWFMModel.get_stream_hydrograph_coordinates : Returns the x,y-coordinates for the stream flow observation locations specified in an IWFM model
+        IWFMModel.get_tile_drain_hydrograph_coordinates : Returns the x,y-coordinates for the tile drain observations specified in an IWFM model
+        IWFMModel.get_groundwater_hydrograph : Returns the simulated groundwater hydrograph for the provided groundwater hydrograph id
+        IWFMModel.get_groundwater_hydrograph_at_node_and_layer : Returns a simulated groundwater hydrograph for a node and layer
+        IWFMModel.get_stream_hydrograph : Returns the simulated stream hydrograph for the provided stream hydrograph id
+        IWFMModel.get_tile_drain_hydrograph : Returns the simulated tile drain hydrograph for the provided tile drain hydrograph id
+
+        Example
+        -------
+        >>> from pywfm import IWFMModel
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
+        >>> sim_file = 'Simulation_MAIN.IN'
+        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> dates, values = model.get_subsidence_hydrograph(1)
+        >>> dates
+        array(['1990-10-01', '1990-10-02', '1990-10-03', ..., '2000-09-28',
+               '2000-09-29', '2000-09-30'], dtype='datetime64[D]')
+        >>> values
+        array([-0.0152, -0.0153, -0.0153, ..., -0.0189, -0.0189, -0.0189])
+        >>> model.kill()
         '''
         hydrograph_type = self.get_location_type_id_subsidenceobs()
+        
+        # check that subsidence_hydrograph_id is an integer
+        if not isinstance(subsidence_hydrograph_id, int):
+            raise TypeError('subsidence_hydrograph_id must be an int')
+
+        # get possible groundwater hydrograph IDs
+        subsidence_hydrograph_ids = self.get_subsidence_hydrograph_ids()
+
+        # check to see if the subsidence_hydrograph_id provided is a valid subsidence hydrograph ID
+        if not np.any(subsidence_hydrograph_ids == subsidence_hydrograph_id):
+            raise ValueError('subsidence_hydrograph_id specified is not valid')
+
+        # convert subsidence_hydrograph_id to subsidence hydrograph index
+        # add 1 to index to convert from python index to fortran index
+        subsidence_hydrograph_index = np.where(subsidence_hydrograph_ids == subsidence_hydrograph_id)[0][0] + 1
+        
+        # layer_number only applies to groundwater hydrographs at node and layer
+        # so hardcoded to layer 1 for _get_hydrograph method
         layer_number = 1
 
-        return self._get_hydrograph(hydrograph_type, subsidence_location_id, 
+        return self._get_hydrograph(hydrograph_type, subsidence_hydrograph_index, 
                                     layer_number, begin_date, end_date, 
                                     length_conversion_factor, volume_conversion_factor)
 
