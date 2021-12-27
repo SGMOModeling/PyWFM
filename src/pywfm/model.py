@@ -8034,10 +8034,61 @@ class IWFMModel(IWFMMiscellaneous):
         np.arrays
             1-D array of dates
             1-D array of hydrograph values
+
+        See Also
+        --------
+        IWFMModel.get_n_hydrograph_types : Returns the number of different hydrograph types being printed by the IWFM model
+        IWFMModel.get_hydrograph_type_list : Returns a list of different hydrograph types being printed by the IWFM model
+        IWFMModel.get_n_groundwater_hydrographs : Returns the number of groundwater hydrographs specified in an IWFM model
+        IWFMModel.get_n_subsidence_hydrographs : Returns the number of subsidence hydrographs specified in an IWFM model
+        IWFMModel.get_n_stream_hydrographs : Returns the number of stream flow hydrographs specified in an IWFM model
+        IWFMModel.get_n_tile_drain_hydrographs : Returns the number of tile drain hydrographs specified in an IWFM model
+        IWFMModel.get_groundwater_hydrograph_ids : Returns the IDs for the groundwater hydrographs specified in an IWFM model
+        IWFMModel.get_subsidence_hydrograph_ids : Returns the IDs for the subsidence hydrographs specified in an IWFM model
+        IWFMModel.get_stream_hydrograph_ids : Returns the IDs for the stream hydrographs specified in an IWFM model
+        IWFMModel.get_tile_drain_hydrograph_ids : Returns the IDs for the tile drain hydrographs specified in an IWFM model
+        IWFMModel.get_groundwater_hydrograph_coordinates : Returns the x,y-coordinates for the groundwater hydrographs specified in an IWFM model
+        IWFMModel.get_subsidence_hydrograph_coordinates : Returns the x,y-coordinates for the subsidence hydrograph locations specified in an IWFM model
+        IWFMModel.get_stream_hydrograph_coordinates : Returns the x,y-coordinates for the stream flow observation locations specified in an IWFM model
+        IWFMModel.get_tile_drain_hydrograph_coordinates : Returns the x,y-coordinates for the tile drain observations specified in an IWFM model
+        IWFMModel.get_groundwater_hydrograph : Returns the simulated groundwater hydrograph for the provided groundwater hydrograph id
+        IWFMModel.get_subsidence_hydrograph : Returns the simulated subsidence hydrograph for the provided subsidence hydrograph id
+        IWFMModel.get_stream_hydrograph : Returns the simulated stream hydrograph for the provided stream hydrograph id
+        IWFMModel.get_tile_drain_hydrograph : Returns the simulated tile drain hydrograph for the provided tile drain hydrograph id
+
+        Example
+        -------
+        >>> from pywfm import IWFMModel
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
+        >>> sim_file = 'Simulation_MAIN.IN'
+        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> dates, values = model.get_groundwater_hydrograph_at_node_and_layer(25, 1)
+        >>> dates
+        array(['1990-10-01', '1990-10-02', '1990-10-03', ..., '2000-09-28',
+               '2000-09-29', '2000-09-30'], dtype='datetime64[D]')
+        >>> values
+        array([  0.    ,   0.    ,   0.    , ..., 180.9377, 181.0441, 181.1501])
+        >>> model.kill()
         '''
         hydrograph_type = self.get_location_type_id_node()
 
-        return self._get_hydrograph(hydrograph_type, node_id, layer_number,
+        # check that node_id is an integer
+        if not isinstance(node_id, int):
+            raise TypeError('node_id must be an int')
+
+        # get possible node IDs
+        node_ids = self.get_node_ids()
+
+        # check to see if the node_id provided is a valid node ID
+        if not np.any(node_ids == node_id):
+            raise ValueError('groundwater_hydrograph_id specified is not valid')
+
+        # convert node_id to node index
+        # add 1 to index to convert from python index to fortran index
+        node_index = np.where(node_ids == node_id)[0][0] + 1
+
+        return self._get_hydrograph(hydrograph_type, node_index, layer_number,
                                     begin_date, end_date, length_conversion_factor,
                                     volume_conversion_factor)
 
