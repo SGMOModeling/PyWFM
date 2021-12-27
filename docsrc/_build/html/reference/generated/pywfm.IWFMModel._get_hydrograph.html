@@ -1389,14 +1389,14 @@
 <h1>pywfm.IWFMModel._get_hydrograph<a class="headerlink" href="#pywfm-iwfmmodel-get-hydrograph" title="Permalink to this headline">¶</a></h1>
 <dl class="py method">
 <dt class="sig sig-object py" id="pywfm.IWFMModel._get_hydrograph">
-<span class="sig-prename descclassname"><span class="pre">IWFMModel.</span></span><span class="sig-name descname"><span class="pre">_get_hydrograph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hydrograph_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hydrograph_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layer_number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">begin_date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length_conversion_factor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">volume_conversion_factor</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pywfm.IWFMModel._get_hydrograph" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">IWFMModel.</span></span><span class="sig-name descname"><span class="pre">_get_hydrograph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hydrograph_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hydrograph_index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layer_number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">begin_date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length_conversion_factor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">volume_conversion_factor</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pywfm.IWFMModel._get_hydrograph" title="Permalink to this definition">¶</a></dt>
 <dd><p>private method returning a simulated hydrograph for a selected hydrograph type and hydrograph index</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>hydrograph_type</strong> (<em>int</em>) – one of the available hydrograph types for the model retrieved using
 get_hydrograph_type_list method</p></li>
-<li><p><strong>hydrograph_id</strong> (<em>int</em>) – id for hydrograph being retrieved</p></li>
+<li><p><strong>hydrograph_index</strong> (<em>int</em>) – index for hydrograph being retrieved</p></li>
 <li><p><strong>layer_number</strong> (<em>int</em>) – layer number for returning hydrograph. only used for groundwater hydrograph
 at node and layer</p></li>
 <li><p><strong>begin_date</strong> (<em>str</em>) – IWFM-style date for the beginning date of the simulated groundwater heads</p></li>
