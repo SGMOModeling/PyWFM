@@ -6971,6 +6971,42 @@ class IWFMModel(IWFMMiscellaneous):
         dict
             keys are different hydrograph types printed by the IWFM model
             values are corresponding hydrograph type ids
+
+        See Also
+        --------
+        IWFMModel.get_n_hydrograph_types : Returns the number of different hydrograph types being printed by the IWFM model
+        IWFMModel.get_n_groundwater_hydrographs : Returns the number of groundwater hydrographs specified in an IWFM model
+        IWFMModel.get_n_subsidence_hydrographs : Returns the number of subsidence hydrographs specified in an IWFM model
+        IWFMModel.get_n_stream_hydrographs : Returns the number of stream flow hydrographs specified in an IWFM model
+        IWFMModel.get_n_tile_drain_hydrographs : Returns the number of tile drain hydrographs specified in an IWFM model
+        IWFMModel.get_groundwater_hydrograph_ids : Returns the IDs for the groundwater hydrographs specified in an IWFM model
+        IWFMModel.get_subsidence_hydrograph_ids : Returns the IDs for the subsidence hydrographs specified in an IWFM model
+        IWFMModel.get_stream_hydrograph_ids : Returns the IDs for the stream hydrographs specified in an IWFM model
+        IWFMModel.get_tile_drain_hydrograph_ids : Returns the IDs for the tile drain hydrographs specified in an IWFM model
+        IWFMModel.get_groundwater_hydrograph_coordinates : Returns the x,y-coordinates for the groundwater hydrographs specified in an IWFM model
+        IWFMModel.get_subsidence_hydrograph_coordinates : Returns the x,y-coordinates for the subsidence hydrograph locations specified in an IWFM model
+        IWFMModel.get_stream_hydrograph_coordinates : Returns the x,y-coordinates for the stream flow observation locations specified in an IWFM model
+        IWFMModel.get_tile_drain_hydrograph_coordinates : Returns the x,y-coordinates for the tile drain observations specified in an IWFM model
+        IWFMModel.get_groundwater_hydrograph : Returns the simulated groundwater hydrograph for the provided groundwater hydrograph id
+        IWFMModel.get_groundwater_hydrograph_at_node_and_layer : Returns a simulated groundwater hydrograph for a node and layer
+        IWFMModel.get_subsidence_hydrograph : Returns the simulated subsidence hydrograph for the provided subsidence hydrograph id
+        IWFMModel.get_stream_hydrograph : Returns the simulated stream hydrograph for the provided stream hydrograph id
+        IWFMModel.get_tile_drain_hydrograph : Returns the simulated tile drain hydrograph for the provided tile drain hydrograph id
+
+        Example
+        -------
+        >>> from pywfm import IWFMModel
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
+        >>> sim_file = 'Simulation_MAIN.IN'
+        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model.get_hydrograph_type_list()
+        {'Groundwater hydrograph': 9,
+         'Groundwater hydrograph at node and layer': 8,
+         'Subsidence hydrograph': 10,
+         'Tile drain hydrograph': 13,
+         'Stream hydrograph (flow)': 12}
+        >>> model.kill()
         '''
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetHydrographTypeList"):
