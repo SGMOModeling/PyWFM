@@ -6730,9 +6730,9 @@ class IWFMModel(IWFMMiscellaneous):
         See Also
         --------
         IWFMModel.get_subregion_names : Returns the subregion names specified in an IWFM model
-        IWFMModel.get_groundwater_observation_names : Returns the groundwater head observation location names specified in an IWFM model
-        IWFMModel.get_stream_observation_names : Returns the stream flow observation location names specified in an IWFM model
-        IWFMModel.get_subsidence_observation_names : Returns the subsidence observation location names specified in an IWFM model
+        IWFMModel.get_groundwater_hydrograph_names : Returns the groundwater hydrograph location names specified in an IWFM model
+        IWFMModel.get_stream_hydrograph_names : Returns the stream flow hydrograph location names specified in an IWFM model
+        IWFMModel.get_subsidence_hydrograph_names : Returns the subsidence hydrograph location names specified in an IWFM model
 
         Example
         -------
@@ -6749,21 +6749,21 @@ class IWFMModel(IWFMMiscellaneous):
 
         return self._get_names(location_type_id)
 
-    def get_groundwater_observation_names(self):
-        ''' Returns the groundwater head observation location names
+    def get_groundwater_hydrograph_names(self):
+        ''' Returns the groundwater hydrograph location names
         specified in an IWFM model
 
         Returns
         -------
         list
-            list of names for each groundwater head observation location
+            list of names for each groundwater hydrograph location
 
         See Also
         --------
         IWFMModel.get_subregion_names : Returns the subregion names specified in an IWFM model
         IWFMModel.get_stream_reach_names : Returns the stream reach names specified in an IWFM model
-        IWFMModel.get_stream_observation_names : Returns the stream flow observation location names specified in an IWFM model
-        IWFMModel.get_subsidence_observation_names : Returns the subsidence observation location names specified in an IWFM model
+        IWFMModel.get_stream_hydrograph_names : Returns the stream flow hydrograph location names specified in an IWFM model
+        IWFMModel.get_subsidence_hydrograph_names : Returns the subsidence hydrograph location names specified in an IWFM model
 
         Example
         -------
@@ -6772,7 +6772,7 @@ class IWFMModel(IWFMMiscellaneous):
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
         >>> model = IWFMModel(dll, pp_file, sim_file)
-        >>> model.get_groundwater_observation_names()
+        >>> model.get_groundwater_hydrograph_names()
         ['GWHyd1',
          'GWHyd2',
          'GWHyd3',
@@ -6821,21 +6821,21 @@ class IWFMModel(IWFMMiscellaneous):
 
         return self._get_names(location_type_id)
 
-    def get_stream_observation_names(self):
-        ''' Returns the stream flow observation location names specified
+    def get_stream_hydrograph_names(self):
+        ''' Returns the stream flow hydrograph location names specified
         in an IWFM model
         
         Returns
         -------
         list
-            list of names for each stream observation location
+            list of names for each stream hydrograph location
 
         See Also
         --------
         IWFMModel.get_subregion_names : Returns the subregion names specified in an IWFM model
         IWFMModel.get_stream_reach_names : Returns the stream reach names specified in an IWFM model
-        IWFMModel.get_groundwater_observation_names : Returns the groundwater observation location names specified in an IWFM model
-        IWFMModel.get_subsidence_observation_names : Returns the subsidence observation location names specified in an IWFM model
+        IWFMModel.get_groundwater_hydrograph_names : Returns the groundwater hydrograph location names specified in an IWFM model
+        IWFMModel.get_subsidence_hydrograph_names : Returns the subsidence hydrograph location names specified in an IWFM model
 
         Example
         -------
@@ -6844,7 +6844,7 @@ class IWFMModel(IWFMMiscellaneous):
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
         >>> model = IWFMModel(dll, pp_file, sim_file)
-        >>> model.get_stream_observation_names()
+        >>> model.get_stream_hydrograph_names()
         ['StrmHyd_1',
          'StrmHyd_2',
          'StrmHyd_3',
@@ -6874,21 +6874,21 @@ class IWFMModel(IWFMMiscellaneous):
 
         return self._get_names(location_type_id)
 
-    def get_subsidence_observation_names(self):
-        ''' Returns the subsidence observation location names specified
+    def get_subsidence_hydrograph_names(self):
+        ''' Returns the subsidence hydrograph location names specified
         in an IWFM model
 
         Returns
         -------
         list
-            list of names for each subsidence observation locations
+            list of names for each subsidence hydrograph locations
 
         See Also
         --------
         IWFMModel.get_subregion_names : Returns the subregion names specified in an IWFM model
         IWFMModel.get_stream_reach_names : Returns the stream reach names specified in an IWFM model
-        IWFMModel.get_stream_observation_names : Returns the stream flow observation location names specified in an IWFM model
-        IWFMModel.get_groundwater_observation_names : Returns the groundwater observation location names specified in an IWFM model
+        IWFMModel.get_stream_hydrograph_names : Returns the stream flow hydrograph location names specified in an IWFM model
+        IWFMModel.get_groundwater_hydrograph_names : Returns the groundwater hydrograph location names specified in an IWFM model
 
         Example
         -------
@@ -6897,7 +6897,7 @@ class IWFMModel(IWFMMiscellaneous):
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
         >>> model = IWFMModel(dll, pp_file, sim_file)
-        >>> model.get_subsidence_observation_names()
+        >>> model.get_subsidence_hydrograph_names()
         ['SubsHyd1', 'SubsHyd2', 'SubsHyd3', 'SubsHyd4', 'SubsHyd5']
         >>> model.kill()
         '''
