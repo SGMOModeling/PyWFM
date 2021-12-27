@@ -559,8 +559,33 @@
     </a>
    </li>
    <li class="toctree-l2">
+    <a class="reference internal" href="pywfm.IWFMModel.get_n_wells.html">
+     pywfm.IWFMModel.get_n_wells
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="pywfm.IWFMModel.get_well_ids.html">
+     pywfm.IWFMModel.get_well_ids
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="pywfm.IWFMModel.get_n_element_pumps.html">
+     pywfm.IWFMModel.get_n_element_pumps
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="pywfm.IWFMModel.get_element_pump_ids.html">
+     pywfm.IWFMModel.get_element_pump_ids
+    </a>
+   </li>
+   <li class="toctree-l2">
     <a class="reference internal" href="pywfm.IWFMModel.get_well_pumping_purpose.html">
      pywfm.IWFMModel.get_well_pumping_purpose
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="pywfm.IWFMModel.get_element_pump_purpose.html">
+     pywfm.IWFMModel.get_element_pump_purpose
     </a>
    </li>
    <li class="toctree-l2">
@@ -684,13 +709,13 @@
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="pywfm.IWFMModel.get_subsidence_observation_coordinates.html">
-     pywfm.IWFMModel.get_subsidence_observation_coordinates
+    <a class="reference internal" href="pywfm.IWFMModel.get_subsidence_hydrograph_coordinates.html">
+     pywfm.IWFMModel.get_subsidence_hydrograph_coordinates
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="pywfm.IWFMModel.get_subsidence_observation_names.html">
-     pywfm.IWFMModel.get_subsidence_observation_names
+    <a class="reference internal" href="pywfm.IWFMModel.get_subsidence_hydrograph_names.html">
+     pywfm.IWFMModel.get_subsidence_hydrograph_names
     </a>
    </li>
    <li class="toctree-l2">
@@ -709,8 +734,8 @@
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="pywfm.IWFMModel.get_tile_drain_observation_coordinates.html">
-     pywfm.IWFMModel.get_tile_drain_observation_coordinates
+    <a class="reference internal" href="pywfm.IWFMModel.get_tile_drain_hydrograph_coordinates.html">
+     pywfm.IWFMModel.get_tile_drain_hydrograph_coordinates
     </a>
    </li>
    <li class="toctree-l2">
@@ -729,8 +754,8 @@
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="pywfm.IWFMModel.get_groundwater_observation_names.html">
-     pywfm.IWFMModel.get_groundwater_observation_names
+    <a class="reference internal" href="pywfm.IWFMModel.get_groundwater_hydrograph_names.html">
+     pywfm.IWFMModel.get_groundwater_hydrograph_names
     </a>
    </li>
    <li class="toctree-l2">
@@ -759,13 +784,13 @@
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="pywfm.IWFMModel.get_stream_observation_coordinates.html">
-     pywfm.IWFMModel.get_stream_observation_coordinates
+    <a class="reference internal" href="pywfm.IWFMModel.get_stream_hydrograph_coordinates.html">
+     pywfm.IWFMModel.get_stream_hydrograph_coordinates
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="pywfm.IWFMModel.get_stream_observation_names.html">
-     pywfm.IWFMModel.get_stream_observation_names
+    <a class="reference internal" href="pywfm.IWFMModel.get_stream_hydrograph_names.html">
+     pywfm.IWFMModel.get_stream_hydrograph_names
     </a>
    </li>
    <li class="toctree-l2">
@@ -1364,24 +1389,39 @@
 <h1>pywfm.IWFMModel.get_supply_requirement_urban_subregions<a class="headerlink" href="#pywfm-iwfmmodel-get-supply-requirement-urban-subregions" title="Permalink to this headline">¶</a></h1>
 <dl class="py method">
 <dt class="sig sig-object py" id="pywfm.IWFMModel.get_supply_requirement_urban_subregions">
-<span class="sig-prename descclassname"><span class="pre">IWFMModel.</span></span><span class="sig-name descname"><span class="pre">get_supply_requirement_urban_subregions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subregions_list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conversion_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pywfm.IWFMModel.get_supply_requirement_urban_subregions" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">IWFMModel.</span></span><span class="sig-name descname"><span class="pre">get_supply_requirement_urban_subregions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subregions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'all'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conversion_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pywfm.IWFMModel.get_supply_requirement_urban_subregions" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the urban supply requirement for one or more model subregions</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>subregions_list</strong> (<em>list</em><em> or </em><em>np.ndarray</em>) – one or more subregion identification numbers used to return
+<li><p><strong>subregions</strong> (<em>int</em><em>, </em><em>list</em><em>, </em><em>tuple</em><em>, </em><em>np.ndarray</em><em>, or </em><em>str='all'</em><em>, </em><em>default='all'</em>) – one or more subregion identification numbers used to return
 the urban supply requirement</p></li>
-<li><p><strong>conversion_factor</strong> (<em>float</em><em>, </em><em>default=1.0</em>) – factor to convert ag supply requirement from model units to
+<li><p><strong>conversion_factor</strong> (<em>float</em><em>, </em><em>default=1.0</em>) – factor to convert urban supply requirement from model units to
 desired output units</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>array of ag supply requirement for subregions specified</p>
+<dd class="field-even"><p>array of urban supply requirement for subregions specified</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>np.ndarray</p>
 </dd>
 </dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This method is intended to be used during a model simulation (is_for_inquiry=0)</p>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><a class="reference internal" href="pywfm.IWFMModel.get_supply_requirement_ag_elements.html#pywfm.IWFMModel.get_supply_requirement_ag_elements" title="pywfm.IWFMModel.get_supply_requirement_ag_elements"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IWFMModel.get_supply_requirement_ag_elements</span></code></a></dt><dd><p>Returns the agricultural supply requirement for one or more model elements</p>
+</dd>
+<dt><a class="reference internal" href="pywfm.IWFMModel.get_supply_requirement_ag_subregions.html#pywfm.IWFMModel.get_supply_requirement_ag_subregions" title="pywfm.IWFMModel.get_supply_requirement_ag_subregions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IWFMModel.get_supply_requirement_ag_subregions</span></code></a></dt><dd><p>Returns the agricultural supply requirement for one or more model subregions</p>
+</dd>
+<dt><a class="reference internal" href="pywfm.IWFMModel.get_supply_requirement_urban_elements.html#pywfm.IWFMModel.get_supply_requirement_urban_elements" title="pywfm.IWFMModel.get_supply_requirement_urban_elements"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IWFMModel.get_supply_requirement_urban_elements</span></code></a></dt><dd><p>Returns the urban supply requirement for one or more model elements</p>
+</dd>
+</dl>
+</div>
 </dd></dl>
 
 </section>

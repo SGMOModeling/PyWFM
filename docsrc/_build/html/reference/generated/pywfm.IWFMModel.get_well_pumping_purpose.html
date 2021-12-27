@@ -36,8 +36,8 @@
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="pywfm.IWFMModel.get_urban_diversion_supply_shortage_at_origin" href="pywfm.IWFMModel.get_urban_diversion_supply_shortage_at_origin.html" />
-    <link rel="prev" title="pywfm.IWFMModel.get_n_ag_crops" href="pywfm.IWFMModel.get_n_ag_crops.html" />
+    <link rel="next" title="pywfm.IWFMModel.get_element_pump_purpose" href="pywfm.IWFMModel.get_element_pump_purpose.html" />
+    <link rel="prev" title="pywfm.IWFMModel.get_element_pump_ids" href="pywfm.IWFMModel.get_element_pump_ids.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -558,9 +558,34 @@
      pywfm.IWFMModel.get_n_ag_crops
     </a>
    </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="pywfm.IWFMModel.get_n_wells.html">
+     pywfm.IWFMModel.get_n_wells
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="pywfm.IWFMModel.get_well_ids.html">
+     pywfm.IWFMModel.get_well_ids
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="pywfm.IWFMModel.get_n_element_pumps.html">
+     pywfm.IWFMModel.get_n_element_pumps
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="pywfm.IWFMModel.get_element_pump_ids.html">
+     pywfm.IWFMModel.get_element_pump_ids
+    </a>
+   </li>
    <li class="toctree-l2 current active">
     <a class="current reference internal" href="#">
      pywfm.IWFMModel.get_well_pumping_purpose
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="pywfm.IWFMModel.get_element_pump_purpose.html">
+     pywfm.IWFMModel.get_element_pump_purpose
     </a>
    </li>
    <li class="toctree-l2">
@@ -684,13 +709,13 @@
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="pywfm.IWFMModel.get_subsidence_observation_coordinates.html">
-     pywfm.IWFMModel.get_subsidence_observation_coordinates
+    <a class="reference internal" href="pywfm.IWFMModel.get_subsidence_hydrograph_coordinates.html">
+     pywfm.IWFMModel.get_subsidence_hydrograph_coordinates
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="pywfm.IWFMModel.get_subsidence_observation_names.html">
-     pywfm.IWFMModel.get_subsidence_observation_names
+    <a class="reference internal" href="pywfm.IWFMModel.get_subsidence_hydrograph_names.html">
+     pywfm.IWFMModel.get_subsidence_hydrograph_names
     </a>
    </li>
    <li class="toctree-l2">
@@ -709,8 +734,8 @@
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="pywfm.IWFMModel.get_tile_drain_observation_coordinates.html">
-     pywfm.IWFMModel.get_tile_drain_observation_coordinates
+    <a class="reference internal" href="pywfm.IWFMModel.get_tile_drain_hydrograph_coordinates.html">
+     pywfm.IWFMModel.get_tile_drain_hydrograph_coordinates
     </a>
    </li>
    <li class="toctree-l2">
@@ -729,8 +754,8 @@
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="pywfm.IWFMModel.get_groundwater_observation_names.html">
-     pywfm.IWFMModel.get_groundwater_observation_names
+    <a class="reference internal" href="pywfm.IWFMModel.get_groundwater_hydrograph_names.html">
+     pywfm.IWFMModel.get_groundwater_hydrograph_names
     </a>
    </li>
    <li class="toctree-l2">
@@ -759,13 +784,13 @@
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="pywfm.IWFMModel.get_stream_observation_coordinates.html">
-     pywfm.IWFMModel.get_stream_observation_coordinates
+    <a class="reference internal" href="pywfm.IWFMModel.get_stream_hydrograph_coordinates.html">
+     pywfm.IWFMModel.get_stream_hydrograph_coordinates
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="pywfm.IWFMModel.get_stream_observation_names.html">
-     pywfm.IWFMModel.get_stream_observation_names
+    <a class="reference internal" href="pywfm.IWFMModel.get_stream_hydrograph_names.html">
+     pywfm.IWFMModel.get_stream_hydrograph_names
     </a>
    </li>
    <li class="toctree-l2">
@@ -1365,8 +1390,7 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="pywfm.IWFMModel.get_well_pumping_purpose">
 <span class="sig-prename descclassname"><span class="pre">IWFMModel.</span></span><span class="sig-name descname"><span class="pre">get_well_pumping_purpose</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wells</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'all'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pywfm.IWFMModel.get_well_pumping_purpose" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the flags for the initial purpose of the water
-supplies as ag, urban, or both</p>
+<dd><p>Returns the flags for the initial purpose of the well pumping as ag, urban, or both</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>wells</strong> (<em>int</em><em>, </em><em>list</em><em>, </em><em>tuple</em><em>, </em><em>np.ndarray</em><em>, or </em><em>str='all'</em><em>, </em><em>default='all'</em>) – One or more well identification numbers used to return
@@ -1379,10 +1403,6 @@ the supply purpose.</p>
 <dd class="field-odd"><p>np.ndarray</p>
 </dd>
 </dl>
-<div class="admonition important">
-<p class="admonition-title">Important</p>
-<p>This method is currently not implemented</p>
-</div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>This method is intended to be used during a model simulation (is_for_inquiry=0)
@@ -1401,7 +1421,7 @@ initial value.</p>
 <dl class="simple">
 <dt><a class="reference internal" href="pywfm.IWFMModel.get_diversion_purpose.html#pywfm.IWFMModel.get_diversion_purpose" title="pywfm.IWFMModel.get_diversion_purpose"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IWFMModel.get_diversion_purpose</span></code></a></dt><dd><p>Returns the flags for the initial purpose of the diversions as ag, urban, or both</p>
 </dd>
-<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">IWFMModel.get_element_pumping_purpose</span></code></dt><dd><p>Returns the flags for the initial purpose of the element pumping as ag, urban, or both</p>
+<dt><a class="reference internal" href="pywfm.IWFMModel.get_element_pump_purpose.html#pywfm.IWFMModel.get_element_pump_purpose" title="pywfm.IWFMModel.get_element_pump_purpose"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IWFMModel.get_element_pump_purpose</span></code></a></dt><dd><p>Returns the flags for the initial purpose of the element pumping as ag, urban, or both</p>
 </dd>
 </dl>
 </div>
@@ -1452,7 +1472,7 @@ initial value.</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">pp_file</span> <span class="o">=</span> <span class="s1">&#39;../Preprocessor/PreProcessor_MAIN.IN&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">sim_file</span> <span class="o">=</span> <span class="s1">&#39;Simulation_MAIN.IN&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">IWFMModel</span><span class="p">(</span><span class="n">dll</span><span class="p">,</span> <span class="n">pp_file</span><span class="p">,</span> <span class="n">sim_file</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">get_diversion_purpose</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">get_well_pumping_purpose</span><span class="p">()</span>
 <span class="go">array([1, 1, 1, 1, 1])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">kill</span><span class="p">()</span>
 </pre></div>
@@ -1467,17 +1487,17 @@ initial value.</p>
               
               <!-- Previous / next buttons -->
 <div class='prev-next-area'> 
-    <a class='left-prev' id="prev-link" href="pywfm.IWFMModel.get_n_ag_crops.html" title="previous page">
+    <a class='left-prev' id="prev-link" href="pywfm.IWFMModel.get_element_pump_ids.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">pywfm.IWFMModel.get_n_ag_crops</p>
+            <p class="prev-next-title">pywfm.IWFMModel.get_element_pump_ids</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="pywfm.IWFMModel.get_urban_diversion_supply_shortage_at_origin.html" title="next page">
+    <a class='right-next' id="next-link" href="pywfm.IWFMModel.get_element_pump_purpose.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">pywfm.IWFMModel.get_urban_diversion_supply_shortage_at_origin</p>
+        <p class="prev-next-title">pywfm.IWFMModel.get_element_pump_purpose</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>

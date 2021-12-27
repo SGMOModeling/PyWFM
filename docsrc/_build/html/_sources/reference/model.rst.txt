@@ -122,7 +122,12 @@ Supply and Demand
    :toctree: generated/
 
    get_n_ag_crops
+   get_n_wells
+   get_well_ids
+   get_n_element_pumps
+   get_element_pump_ids
    get_well_pumping_purpose
+   get_element_pump_purpose
    get_urban_diversion_supply_shortage_at_origin
    get_urban_elempump_supply_shortage_at_origin
    get_urban_well_supply_shortage_at_origin
@@ -169,23 +174,23 @@ Simulation Hydrographs
 
    get_n_subsidence_hydrographs
    get_subsidence_hydrograph_ids
-   get_subsidence_observation_coordinates
-   get_subsidence_observation_names
+   get_subsidence_hydrograph_coordinates
+   get_subsidence_hydrograph_names
    get_subsidence_hydrograph
    get_n_tile_drain_hydrographs
    get_tile_drain_hydrograph_ids
-   get_tile_drain_observation_coordinates  
+   get_tile_drain_hydrograph_coordinates  
    get_n_groundwater_hydrographs
    get_groundwater_hydrograph_ids
    get_groundwater_hydrograph_coordinates
-   get_groundwater_observation_names
+   get_groundwater_hydrograph_names
    get_groundwater_hydrograph_info
    get_groundwater_hydrograph
    get_groundwater_hydrograph_at_node_and_layer
    get_n_stream_hydrographs
    get_stream_hydrograph_ids
-   get_stream_observation_coordinates
-   get_stream_observation_names
+   get_stream_hydrograph_coordinates
+   get_stream_hydrograph_names
    get_stream_hydrograph
    get_n_hydrograph_types
    get_hydrograph_type_list

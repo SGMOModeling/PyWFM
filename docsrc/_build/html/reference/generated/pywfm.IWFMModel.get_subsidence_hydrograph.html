@@ -37,7 +37,7 @@
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="pywfm.IWFMModel.get_n_tile_drain_hydrographs" href="pywfm.IWFMModel.get_n_tile_drain_hydrographs.html" />
-    <link rel="prev" title="pywfm.IWFMModel.get_subsidence_observation_names" href="pywfm.IWFMModel.get_subsidence_observation_names.html" />
+    <link rel="prev" title="pywfm.IWFMModel.get_subsidence_hydrograph_names" href="pywfm.IWFMModel.get_subsidence_hydrograph_names.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -559,8 +559,33 @@
     </a>
    </li>
    <li class="toctree-l2">
+    <a class="reference internal" href="pywfm.IWFMModel.get_n_wells.html">
+     pywfm.IWFMModel.get_n_wells
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="pywfm.IWFMModel.get_well_ids.html">
+     pywfm.IWFMModel.get_well_ids
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="pywfm.IWFMModel.get_n_element_pumps.html">
+     pywfm.IWFMModel.get_n_element_pumps
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="pywfm.IWFMModel.get_element_pump_ids.html">
+     pywfm.IWFMModel.get_element_pump_ids
+    </a>
+   </li>
+   <li class="toctree-l2">
     <a class="reference internal" href="pywfm.IWFMModel.get_well_pumping_purpose.html">
      pywfm.IWFMModel.get_well_pumping_purpose
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="pywfm.IWFMModel.get_element_pump_purpose.html">
+     pywfm.IWFMModel.get_element_pump_purpose
     </a>
    </li>
    <li class="toctree-l2">
@@ -684,13 +709,13 @@
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="pywfm.IWFMModel.get_subsidence_observation_coordinates.html">
-     pywfm.IWFMModel.get_subsidence_observation_coordinates
+    <a class="reference internal" href="pywfm.IWFMModel.get_subsidence_hydrograph_coordinates.html">
+     pywfm.IWFMModel.get_subsidence_hydrograph_coordinates
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="pywfm.IWFMModel.get_subsidence_observation_names.html">
-     pywfm.IWFMModel.get_subsidence_observation_names
+    <a class="reference internal" href="pywfm.IWFMModel.get_subsidence_hydrograph_names.html">
+     pywfm.IWFMModel.get_subsidence_hydrograph_names
     </a>
    </li>
    <li class="toctree-l2 current active">
@@ -709,8 +734,8 @@
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="pywfm.IWFMModel.get_tile_drain_observation_coordinates.html">
-     pywfm.IWFMModel.get_tile_drain_observation_coordinates
+    <a class="reference internal" href="pywfm.IWFMModel.get_tile_drain_hydrograph_coordinates.html">
+     pywfm.IWFMModel.get_tile_drain_hydrograph_coordinates
     </a>
    </li>
    <li class="toctree-l2">
@@ -729,8 +754,8 @@
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="pywfm.IWFMModel.get_groundwater_observation_names.html">
-     pywfm.IWFMModel.get_groundwater_observation_names
+    <a class="reference internal" href="pywfm.IWFMModel.get_groundwater_hydrograph_names.html">
+     pywfm.IWFMModel.get_groundwater_hydrograph_names
     </a>
    </li>
    <li class="toctree-l2">
@@ -759,13 +784,13 @@
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="pywfm.IWFMModel.get_stream_observation_coordinates.html">
-     pywfm.IWFMModel.get_stream_observation_coordinates
+    <a class="reference internal" href="pywfm.IWFMModel.get_stream_hydrograph_coordinates.html">
+     pywfm.IWFMModel.get_stream_hydrograph_coordinates
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="pywfm.IWFMModel.get_stream_observation_names.html">
-     pywfm.IWFMModel.get_stream_observation_names
+    <a class="reference internal" href="pywfm.IWFMModel.get_stream_hydrograph_names.html">
+     pywfm.IWFMModel.get_stream_hydrograph_names
     </a>
    </li>
    <li class="toctree-l2">
@@ -1365,14 +1390,14 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="pywfm.IWFMModel.get_subsidence_hydrograph">
 <span class="sig-prename descclassname"><span class="pre">IWFMModel.</span></span><span class="sig-name descname"><span class="pre">get_subsidence_hydrograph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subsidence_location_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">begin_date</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_date</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length_conversion_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">volume_conversion_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pywfm.IWFMModel.get_subsidence_hydrograph" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the simulated groundwater hydrograph for the
-provided groundwater hydrograph id</p>
+<dd><p>Returns the simulated subsidence hydrograph for the
+provided subsidence hydrograph id</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>subsidence_location_id</strong> (<em>int</em>) – id for subsidence hydrograph location being retrieved</p></li>
-<li><p><strong>begin_date</strong> (<em>str</em><em> or </em><em>None</em><em>, </em><em>default=None</em>) – IWFM-style date for the beginning date of the simulated groundwater heads</p></li>
-<li><p><strong>end_date</strong> (<em>str</em><em> or </em><em>None</em><em>, </em><em>default=None</em>) – IWFM-style date for the end date of the simulated groundwater heads</p></li>
+<li><p><strong>begin_date</strong> (<em>str</em><em> or </em><em>None</em><em>, </em><em>default=None</em>) – IWFM-style date for the beginning date of the simulated subsidence</p></li>
+<li><p><strong>end_date</strong> (<em>str</em><em> or </em><em>None</em><em>, </em><em>default=None</em>) – IWFM-style date for the end date of the simulated subsidence</p></li>
 <li><p><strong>length_conversion_factor</strong> (<em>float</em><em>, </em><em>int</em><em>, </em><em>default=1.0</em>) – hydrographs with units of length are multiplied by this
 value to convert simulation units to desired output units</p></li>
 <li><p><strong>volume_conversion_factor</strong> (<em>float</em><em>, </em><em>int</em><em>, </em><em>default=1.0</em>) – hydrographs with units of volume are multiplied by this
@@ -1398,11 +1423,11 @@ e.g. use 2.29568E-8 for ft^3 –&gt; TAF</p></li>
               
               <!-- Previous / next buttons -->
 <div class='prev-next-area'> 
-    <a class='left-prev' id="prev-link" href="pywfm.IWFMModel.get_subsidence_observation_names.html" title="previous page">
+    <a class='left-prev' id="prev-link" href="pywfm.IWFMModel.get_subsidence_hydrograph_names.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">pywfm.IWFMModel.get_subsidence_observation_names</p>
+            <p class="prev-next-title">pywfm.IWFMModel.get_subsidence_hydrograph_names</p>
         </div>
     </a>
     <a class='right-next' id="next-link" href="pywfm.IWFMModel.get_n_tile_drain_hydrographs.html" title="next page">

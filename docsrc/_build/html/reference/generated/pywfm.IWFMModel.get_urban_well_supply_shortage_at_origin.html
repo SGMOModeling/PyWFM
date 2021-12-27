@@ -559,8 +559,33 @@
     </a>
    </li>
    <li class="toctree-l2">
+    <a class="reference internal" href="pywfm.IWFMModel.get_n_wells.html">
+     pywfm.IWFMModel.get_n_wells
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="pywfm.IWFMModel.get_well_ids.html">
+     pywfm.IWFMModel.get_well_ids
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="pywfm.IWFMModel.get_n_element_pumps.html">
+     pywfm.IWFMModel.get_n_element_pumps
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="pywfm.IWFMModel.get_element_pump_ids.html">
+     pywfm.IWFMModel.get_element_pump_ids
+    </a>
+   </li>
+   <li class="toctree-l2">
     <a class="reference internal" href="pywfm.IWFMModel.get_well_pumping_purpose.html">
      pywfm.IWFMModel.get_well_pumping_purpose
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="pywfm.IWFMModel.get_element_pump_purpose.html">
+     pywfm.IWFMModel.get_element_pump_purpose
     </a>
    </li>
    <li class="toctree-l2">
@@ -684,13 +709,13 @@
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="pywfm.IWFMModel.get_subsidence_observation_coordinates.html">
-     pywfm.IWFMModel.get_subsidence_observation_coordinates
+    <a class="reference internal" href="pywfm.IWFMModel.get_subsidence_hydrograph_coordinates.html">
+     pywfm.IWFMModel.get_subsidence_hydrograph_coordinates
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="pywfm.IWFMModel.get_subsidence_observation_names.html">
-     pywfm.IWFMModel.get_subsidence_observation_names
+    <a class="reference internal" href="pywfm.IWFMModel.get_subsidence_hydrograph_names.html">
+     pywfm.IWFMModel.get_subsidence_hydrograph_names
     </a>
    </li>
    <li class="toctree-l2">
@@ -709,8 +734,8 @@
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="pywfm.IWFMModel.get_tile_drain_observation_coordinates.html">
-     pywfm.IWFMModel.get_tile_drain_observation_coordinates
+    <a class="reference internal" href="pywfm.IWFMModel.get_tile_drain_hydrograph_coordinates.html">
+     pywfm.IWFMModel.get_tile_drain_hydrograph_coordinates
     </a>
    </li>
    <li class="toctree-l2">
@@ -729,8 +754,8 @@
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="pywfm.IWFMModel.get_groundwater_observation_names.html">
-     pywfm.IWFMModel.get_groundwater_observation_names
+    <a class="reference internal" href="pywfm.IWFMModel.get_groundwater_hydrograph_names.html">
+     pywfm.IWFMModel.get_groundwater_hydrograph_names
     </a>
    </li>
    <li class="toctree-l2">
@@ -759,13 +784,13 @@
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="pywfm.IWFMModel.get_stream_observation_coordinates.html">
-     pywfm.IWFMModel.get_stream_observation_coordinates
+    <a class="reference internal" href="pywfm.IWFMModel.get_stream_hydrograph_coordinates.html">
+     pywfm.IWFMModel.get_stream_hydrograph_coordinates
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="pywfm.IWFMModel.get_stream_observation_names.html">
-     pywfm.IWFMModel.get_stream_observation_names
+    <a class="reference internal" href="pywfm.IWFMModel.get_stream_hydrograph_names.html">
+     pywfm.IWFMModel.get_stream_hydrograph_names
     </a>
    </li>
    <li class="toctree-l2">
@@ -1364,13 +1389,13 @@
 <h1>pywfm.IWFMModel.get_urban_well_supply_shortage_at_origin<a class="headerlink" href="#pywfm-iwfmmodel-get-urban-well-supply-shortage-at-origin" title="Permalink to this headline">¶</a></h1>
 <dl class="py method">
 <dt class="sig sig-object py" id="pywfm.IWFMModel.get_urban_well_supply_shortage_at_origin">
-<span class="sig-prename descclassname"><span class="pre">IWFMModel.</span></span><span class="sig-name descname"><span class="pre">get_urban_well_supply_shortage_at_origin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wells_list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conversion_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pywfm.IWFMModel.get_urban_well_supply_shortage_at_origin" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">IWFMModel.</span></span><span class="sig-name descname"><span class="pre">get_urban_well_supply_shortage_at_origin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wells</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'all'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conversion_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pywfm.IWFMModel.get_urban_well_supply_shortage_at_origin" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the supply shortage for urban wells at the destination of those
 supplies plus any conveyance losses</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>wells_list</strong> (<em>list</em><em> or </em><em>np.ndarray</em>) – indices of wells where urban supply shortages are returned</p></li>
+<li><p><strong>wells</strong> (<em>int</em><em>, </em><em>list</em><em>, </em><em>tuple</em><em>, </em><em>np.ndarray</em><em>, or </em><em>str='all'</em><em>, </em><em>default='all'</em>) – indices of wells where urban supply shortages are returned</p></li>
 <li><p><strong>conversion_factor</strong> (<em>float</em><em>, </em><em>default=1.0</em>) – factor to convert urban supply shortage from model
 units to the desired output units</p></li>
 </ul>
@@ -1382,6 +1407,25 @@ units to the desired output units</p></li>
 <dd class="field-odd"><p>np.ndarray</p>
 </dd>
 </dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This method is intended to be used during a model simulation (is_for_inquiry=0)</p>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><a class="reference internal" href="pywfm.IWFMModel.get_ag_diversion_supply_shortage_at_origin.html#pywfm.IWFMModel.get_ag_diversion_supply_shortage_at_origin" title="pywfm.IWFMModel.get_ag_diversion_supply_shortage_at_origin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IWFMModel.get_ag_diversion_supply_shortage_at_origin</span></code></a></dt><dd><p>Returns the supply shortage for agricultural diversions at the destination of those supplies plus any conveyance losses</p>
+</dd>
+<dt><a class="reference internal" href="pywfm.IWFMModel.get_ag_well_supply_shortage_at_origin.html#pywfm.IWFMModel.get_ag_well_supply_shortage_at_origin" title="pywfm.IWFMModel.get_ag_well_supply_shortage_at_origin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IWFMModel.get_ag_well_supply_shortage_at_origin</span></code></a></dt><dd><p>Returns the supply shortage for agricultural wells at the destination of those supplies plus any conveyance losses</p>
+</dd>
+<dt><a class="reference internal" href="pywfm.IWFMModel.get_ag_elempump_supply_shortage_at_origin.html#pywfm.IWFMModel.get_ag_elempump_supply_shortage_at_origin" title="pywfm.IWFMModel.get_ag_elempump_supply_shortage_at_origin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IWFMModel.get_ag_elempump_supply_shortage_at_origin</span></code></a></dt><dd><p>Returns the supply shortage for agricultural element pumping at the destination of those supplies plus any conveyance losses</p>
+</dd>
+<dt><a class="reference internal" href="pywfm.IWFMModel.get_urban_diversion_supply_shortage_at_origin.html#pywfm.IWFMModel.get_urban_diversion_supply_shortage_at_origin" title="pywfm.IWFMModel.get_urban_diversion_supply_shortage_at_origin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IWFMModel.get_urban_diversion_supply_shortage_at_origin</span></code></a></dt><dd><p>Returns the supply shortage for urban diversions at the destination of those supplies plus any conveyance losses</p>
+</dd>
+<dt><a class="reference internal" href="pywfm.IWFMModel.get_urban_elempump_supply_shortage_at_origin.html#pywfm.IWFMModel.get_urban_elempump_supply_shortage_at_origin" title="pywfm.IWFMModel.get_urban_elempump_supply_shortage_at_origin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IWFMModel.get_urban_elempump_supply_shortage_at_origin</span></code></a></dt><dd><p>Returns the supply shortage for urban element pumping at the destination of those supplies plus any conveyance losses</p>
+</dd>
+</dl>
+</div>
 </dd></dl>
 
 </section>

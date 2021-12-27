@@ -44,6 +44,8 @@
       ~IWFMModel.get_element_config
       ~IWFMModel.get_element_ids
       ~IWFMModel.get_element_info
+      ~IWFMModel.get_element_pump_ids
+      ~IWFMModel.get_element_pump_purpose
       ~IWFMModel.get_element_spatial_info
       ~IWFMModel.get_elements_in_lake
       ~IWFMModel.get_flow_destination_type_id
@@ -60,7 +62,7 @@
       ~IWFMModel.get_groundwater_hydrograph_coordinates
       ~IWFMModel.get_groundwater_hydrograph_ids
       ~IWFMModel.get_groundwater_hydrograph_info
-      ~IWFMModel.get_groundwater_observation_names
+      ~IWFMModel.get_groundwater_hydrograph_names
       ~IWFMModel.get_gwheads_all
       ~IWFMModel.get_gwheads_foralayer
       ~IWFMModel.get_hydrograph_type_list
@@ -90,6 +92,7 @@
       ~IWFMModel.get_location_type_ids
       ~IWFMModel.get_n_ag_crops
       ~IWFMModel.get_n_diversions
+      ~IWFMModel.get_n_element_pumps
       ~IWFMModel.get_n_elements
       ~IWFMModel.get_n_elements_in_lake
       ~IWFMModel.get_n_groundwater_hydrographs
@@ -113,6 +116,7 @@
       ~IWFMModel.get_n_tile_drain_hydrographs
       ~IWFMModel.get_n_tile_drains
       ~IWFMModel.get_n_time_steps
+      ~IWFMModel.get_n_wells
       ~IWFMModel.get_net_bypass_inflows
       ~IWFMModel.get_node_coordinates
       ~IWFMModel.get_node_ids
@@ -130,14 +134,14 @@
       ~IWFMModel.get_stream_gain_from_groundwater
       ~IWFMModel.get_stream_gain_from_lakes
       ~IWFMModel.get_stream_hydrograph
+      ~IWFMModel.get_stream_hydrograph_coordinates
       ~IWFMModel.get_stream_hydrograph_ids
+      ~IWFMModel.get_stream_hydrograph_names
       ~IWFMModel.get_stream_inflow_ids
       ~IWFMModel.get_stream_inflow_nodes
       ~IWFMModel.get_stream_inflows_at_some_locations
       ~IWFMModel.get_stream_node_ids
       ~IWFMModel.get_stream_nodes_upstream_of_stream_node
-      ~IWFMModel.get_stream_observation_coordinates
-      ~IWFMModel.get_stream_observation_names
       ~IWFMModel.get_stream_rainfall_runoff
       ~IWFMModel.get_stream_rating_table
       ~IWFMModel.get_stream_reach_groundwater_nodes
@@ -157,9 +161,9 @@
       ~IWFMModel.get_subregions_by_element
       ~IWFMModel.get_subsidence_all
       ~IWFMModel.get_subsidence_hydrograph
+      ~IWFMModel.get_subsidence_hydrograph_coordinates
       ~IWFMModel.get_subsidence_hydrograph_ids
-      ~IWFMModel.get_subsidence_observation_coordinates
-      ~IWFMModel.get_subsidence_observation_names
+      ~IWFMModel.get_subsidence_hydrograph_names
       ~IWFMModel.get_supply_requirement_ag_elements
       ~IWFMModel.get_supply_requirement_ag_subregions
       ~IWFMModel.get_supply_requirement_urban_elements
@@ -167,16 +171,17 @@
       ~IWFMModel.get_supply_type_id_diversion
       ~IWFMModel.get_supply_type_id_elempump
       ~IWFMModel.get_supply_type_id_well
+      ~IWFMModel.get_tile_drain_hydrograph_coordinates
       ~IWFMModel.get_tile_drain_hydrograph_ids
       ~IWFMModel.get_tile_drain_ids
       ~IWFMModel.get_tile_drain_nodes
-      ~IWFMModel.get_tile_drain_observation_coordinates
       ~IWFMModel.get_time_specs
       ~IWFMModel.get_upstream_nodes_in_stream_reaches
       ~IWFMModel.get_urban_diversion_supply_shortage_at_origin
       ~IWFMModel.get_urban_elempump_supply_shortage_at_origin
       ~IWFMModel.get_urban_well_supply_shortage_at_origin
       ~IWFMModel.get_version
+      ~IWFMModel.get_well_ids
       ~IWFMModel.get_well_pumping_purpose
       ~IWFMModel.get_zbudget_type_ids
       ~IWFMModel.get_zone_ag_pumping_average_depth_to_water
