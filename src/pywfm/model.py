@@ -9581,18 +9581,78 @@ class IWFMModel(IWFMMiscellaneous):
     ### methods that wrap two or more DLL calls
     def get_groundwater_hydrograph_info(self):
         ''' Returns model information for the groundwater hydrographs,
-        including hydrograph id, x- and y- coordinates, name, and 
+        including hydrograph ID, x- and y- coordinates, name, and 
         stratigraphy.
 
         Returns
         -------
         pd.DataFrame
-            columns: id, name, x, y, gse, bottom_layer1, bottom_layer2, ..., bottom_layern
+            columns: id, name, x, y, gse, BTM_Lay1, BTM_Lay2, ..., BTM_Layn
+
+        See Also
+        --------
+        IWFMModel.get_groundwater_hydrograph_ids : Returns the IDs for the groundwater hydrographs specified in an IWFM model
+        IWFMModel.get_groundwater_hydrograph_coordinates : Returns the x,y-coordinates for the groundwater hydrographs specified in an IWFM model
+        IWFMModel.get_groundwater_hydrograph_names : Returns the groundwater hydrograph location names specified in an IWFM model
+        IWFMModel.get_stratigraphy_atXYcoordinate : Returns the stratigraphy at given X,Y coordinates
+
+        Example
+        -------
+        >>> from pywfm import IWFMModel
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
+        >>> sim_file = 'Simulation_MAIN.IN'
+        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model.get_groundwater_hydrograph_info()
+            ID       Name              X            Y    GSE   BTM_Lay1 BTM_Lay2
+        0	 1     GWHyd1      1883179.2   14566752.0  500.0        0.0   -100.0
+        1	 2     GWHyd2      1883179.2   14560190.4  500.0        0.0   -100.0
+        2	 3     GWHyd3      1883179.2   14553628.8  500.0        0.0   -100.0
+        3	 4     GWHyd4      1883179.2   14547067.2  500.0        0.0   -100.0
+        4	 5     GWHyd5      1883179.2   14540505.6  500.0        0.0   -100.0
+        5	 6     GWHyd6      1883179.2   14533944.0  500.0        0.0   -100.0
+        6	 7     GWHyd7      1883179.2   14527382.4  500.0        0.0   -100.0
+        7	 8     GWHyd8      1883179.2   14520820.8  500.0        0.0   -100.0
+        8	 9     GWHyd9      1883179.2   14514259.2  500.0        0.0   -100.0
+        9   10    GWHyd10      1883179.2   14507697.6  500.0        0.0   -100.0
+        10  11    GWHyd11      1883179.2   14501136.0  500.0        0.0   -110.0
+        11  12    GWHyd12      1883179.2   14494574.4  500.0        0.0   -110.0
+        12  13    GWHyd13      1883179.2   14488012.8  500.0        0.0   -110.0
+        13  14    GWHyd14      1883179.2   14481451.2  500.0        0.0   -110.0
+        14  15    GWHyd15      1883179.2   14474889.6  500.0        0.0   -110.0
+        15  16    GWHyd16      1883179.2   14468328.0  500.0        0.0   -110.0
+        16  17    GWHyd17      1883179.2   14461766.4  500.0        0.0   -110.0
+        17  18    GWHyd18      1883179.2   14455204.8  500.0        0.0   -110.0
+        18  19    GWHyd19      1883179.2   14448643.2  500.0        0.0   -110.0
+        19  20    GWHyd20      1883179.2   14442081.6  500.0        0.0   -110.0
+        20  21    GWHyd21      1883179.2   14435520.0  500.0        0.0   -110.0
+        21  22    GWHyd22      1883179.2   14566752.0  500.0        0.0   -100.0
+        22  23    GWHyd23      1883179.2   14560190.4  500.0        0.0   -100.0
+        23  24    GWHyd24      1883179.2   14553628.8  500.0        0.0   -100.0
+        24  25    GWHyd25      1883179.2   14547067.2  500.0        0.0   -100.0
+        25  26    GWHyd26      1883179.2   14540505.6  500.0        0.0   -100.0
+        26  27    GWHyd27      1883179.2   14533944.0  500.0        0.0   -100.0
+        27  28    GWHyd28      1883179.2   14527382.4  500.0        0.0   -100.0
+        28  29    GWHyd29      1883179.2   14520820.8  500.0        0.0   -100.0
+        29  30    GWHyd30      1883179.2   14514259.2  500.0        0.0   -100.0
+        30  31    GWHyd31      1883179.2   14507697.6  500.0        0.0   -100.0
+        31  32    GWHyd32      1883179.2   14501136.0  500.0        0.0   -110.0
+        32  33    GWHyd33      1883179.2   14494574.4  500.0        0.0   -110.0
+        33  34    GWHyd34      1883179.2   14488012.8  500.0        0.0   -110.0
+        34  35    GWHyd35      1883179.2   14481451.2  500.0        0.0   -110.0
+        35  36    GWHyd36      1883179.2   14474889.6  500.0        0.0   -110.0
+        36  37    GWHyd37      1883179.2   14468328.0  500.0        0.0   -110.0
+        37  38    GWHyd38      1883179.2   14461766.4  500.0        0.0   -110.0
+        38  39    GWHyd39      1883179.2   14455204.8  500.0        0.0   -110.0
+        39  40    GWHyd40      1883179.2   14448643.2  500.0        0.0   -110.0
+        40  41    GWHyd41      1883179.2   14442081.6  500.0        0.0   -110.0
+        41  42    GWHyd42      1883179.2   14435520.0  500.0        0.0   -110.0
+        >>> model.kill()
         '''
         hydrograph_ids = self.get_groundwater_hydrograph_ids()
         hydrograph_x_coord, hydrograph_y_coord = self.get_groundwater_hydrograph_coordinates()
         hydrograph_names = self.get_groundwater_hydrograph_names()
-        df = pd.DataFrame({'id': hydrograph_ids, 'Name': hydrograph_names, 
+        df = pd.DataFrame({'ID': hydrograph_ids, 'Name': hydrograph_names, 
                            'X': hydrograph_x_coord, 'Y': hydrograph_y_coord})
         
         columns = ['GSE'] + ['BTM_Lay{}'.format(layer + 1) for layer in range(self.get_n_layers())]
