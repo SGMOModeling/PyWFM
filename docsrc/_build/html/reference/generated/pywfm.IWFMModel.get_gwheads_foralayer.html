@@ -1414,14 +1414,17 @@ every model node over a user-specified time interval.</p>
 <p>the interval between the begin_date and the end_date is determined from the model time interval
 using get_time_specs()</p>
 </div>
-<p class="rubric">Examples</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><a class="reference internal" href="pywfm.IWFMModel.get_gwheads_all.html#pywfm.IWFMModel.get_gwheads_all" title="pywfm.IWFMModel.get_gwheads_all"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IWFMModel.get_gwheads_all</span></code></a></dt><dd><p>Returns the groundwater heads at all nodes in every aquifer layer for the current simulation time step</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Example</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">IWFMModel</span><span class="p">(</span><span class="n">dll</span><span class="p">,</span> <span class="n">preprocessor_file</span><span class="p">,</span> <span class="n">simulation_file</span><span class="p">)</span>
-</pre></div>
-</div>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">dates</span><span class="p">,</span> <span class="n">heads</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_gwheadsall_foralayer</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;09/30/1980_24:00&#39;</span><span class="p">,</span> <span class="s1">&#39;09/30/2000_24:00&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">dates</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dates</span><span class="p">,</span> <span class="n">heads</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_gwheadsall_foralayer</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;09/30/1980_24:00&#39;</span><span class="p">,</span> <span class="s1">&#39;09/30/2000_24:00&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dates</span>
 <span class="go">    [&#39;09/30/1980&#39;,</span>
 <span class="go">     &#39;10/31/1980&#39;,</span>
 <span class="go">     &#39;11/30/1980&#39;,</span>
@@ -1430,9 +1433,7 @@ using get_time_specs()</p>
 <span class="go">     .</span>
 <span class="go">     .</span>
 <span class="go">     &#39;09/30/2000&#39;]</span>
-</pre></div>
-</div>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">heads</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">heads</span>
 <span class="go">    [[458.57, 460.32, 457.86, ..., 686.42],</span>
 <span class="go">     [459.86, 462.38, 459.11, ..., 689.05],</span>
 <span class="go">     .</span>
