@@ -9696,7 +9696,6 @@ class IWFMModel(IWFMMiscellaneous):
         438     439  1922548.8   14566752.0
         439     440  1929110.4   14566752.0
         440     441  1935672.0   14566752.0
-        441 rows × 3 columns
         >>> model.kill()
         '''
         # get array of node ids
@@ -9746,7 +9745,6 @@ class IWFMModel(IWFMMiscellaneous):
         1597  400    2    Node2     420
         1598  400    2    Node3     441
         1599  400    2    Node4     440
-        1600 rows x 4 columns
         >>> model.kill()
         '''
         df = pd.DataFrame({'IE': self.get_element_ids()})
@@ -9870,7 +9868,6 @@ class IWFMModel(IWFMMiscellaneous):
         1597  400    2    Node2    420 1935672.0 14560190.4     4    2
         1598  400    2    Node3    441 1935672.0 14566752.0     4    2
         1599  400    2    Node4    440 1929110.4 14566752.0     4   79
-        1600 rows × 8 columns
         >>> model.kill()
         '''
         node_info = self.get_node_info()
