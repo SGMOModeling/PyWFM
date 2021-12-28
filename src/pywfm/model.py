@@ -8445,6 +8445,7 @@ class IWFMModel(IWFMMiscellaneous):
         See Also
         --------
         IWFMModel.get_gwheads_foralayer : Returns the simulated groundwater heads for a single user-specified model layer for every model node over a user-specified time interval
+        IWFMModel.get_subsidence_all : Returns the simulated subsidence at all nodes in every aquifer layer for the current simulation time step
 
         Example
         -------
@@ -8526,7 +8527,7 @@ class IWFMModel(IWFMMiscellaneous):
         return np.array(heads)
 
     def get_subsidence_all(self, subsidence_conversion_factor=1.0):
-        ''' Returns the groundwater heads at all nodes in every aquifer 
+        ''' Returns the simulated subsidence at all nodes in every aquifer 
         layer for the current simulation time step
         
         Parameters
@@ -8540,11 +8541,59 @@ class IWFMModel(IWFMMiscellaneous):
         np.ndarray
             2-D array of subsidence at each node and layer (n_nodes x n_layers)
 
-        Notes
-        -----
+        Note
+        ----
         This method is designed for use when is_for_inquiry=0 to return 
         the simulated subsidence after one time step is simulated
         i.e. after calling simulate_for_one_time_step method
+
+        See Also
+        --------
+        IWFMModel.get_gwheads_all : Returns the groundwater heads at all nodes in every aquifer layer for the current simulation time step
+
+        Example
+        -------
+        >>> from pywfm import IWFMModel
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
+        >>> sim_file = 'Simulation_MAIN.IN'
+        >>> model = IWFMModel(dll, pp_file, sim_file, is_for_inquiry=0)
+        >>> while not model.is_end_of_simulation():
+        ...     # advance the simulation time one time step forward
+        ...     model.advance_time()
+        ...
+        ...     # read all time series data from input files
+        ...     model.read_timeseries_data()
+        ...
+        ...     # Simulate the hydrologic process for the timestep
+        ...     model.simulate_for_one_timestep()
+        ...
+        ...     # get subsidence
+        ...     subsidence = model.get_subsidence_all()
+        ...
+        ...     # print the results to the user-specified output files
+        ...     model.print_results()
+        ...
+        ...     # advance the state of the hydrologic system in time
+        ...     model.advance_state()
+        >>> print(subsidence)
+        [[-0.00000000e+00 -1.12421873e-06 -1.73373541e-06 -1.63445271e-06
+          -1.04725462e-06 -4.92948676e-07 -2.86274019e-07 -4.11426842e-07
+          -9.21177410e-07 -1.62634163e-06 -1.59144202e-06 -1.22135411e-07
+           3.85916107e-09 -1.56677111e-06 -5.15424348e-06 -8.17841866e-06
+          ...
+          -1.36860631e-07 -3.07195572e-07 -3.52772869e-07 -2.18096043e-07
+          -8.84415247e-10 -3.02272008e-07 -5.16997563e-07 -5.97240436e-07
+          -6.66264783e-07 -7.44911097e-07 -6.84703993e-07 -4.14116606e-07
+          -0.00000000e+00]
+         [-1.77884442e-08 -2.07113403e-06 -3.81570268e-06 -4.87282031e-06
+          -4.94854603e-06 -4.18511495e-06 -3.61317621e-06 -4.07439096e-06
+          -5.06630654e-06 -5.30119974e-06 -3.51566730e-06 -2.43953427e-07
+          ...
+          -3.77063898e-08 -6.31092635e-07 -1.42168088e-06 -2.20884863e-06
+          -2.89134140e-06 -2.49219032e-06 -1.60718472e-06 -7.37134674e-07
+          -4.80396324e-08]]
+        >>> model.kill()
         '''
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetSubsidence_All"):
