@@ -8308,12 +8308,14 @@ class IWFMModel(IWFMMiscellaneous):
         the interval between the begin_date and the end_date is determined from the model time interval
         using get_time_specs()
 
-        Examples
+        See Also
         --------
-        >>> model = IWFMModel(dll, preprocessor_file, simulation_file)
+        IWFMModel.get_gwheads_all : Returns the groundwater heads at all nodes in every aquifer layer for the current simulation time step
 
+        Example
+        -------
+        >>> model = IWFMModel(dll, preprocessor_file, simulation_file)
         >>> dates, heads = model.get_gwheadsall_foralayer(1, '09/30/1980_24:00', '09/30/2000_24:00')
-        
         >>> dates
             ['09/30/1980',
              '10/31/1980',
@@ -8323,7 +8325,6 @@ class IWFMModel(IWFMMiscellaneous):
              .
              .
              '09/30/2000']
-
         >>> heads
             [[458.57, 460.32, 457.86, ..., 686.42],
              [459.86, 462.38, 459.11, ..., 689.05],
@@ -8331,7 +8332,6 @@ class IWFMModel(IWFMMiscellaneous):
              .
              .
              [435.75, 439.23, 440.99, ..., 650.78]]
-
         '''
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetGWHeads_ForALayer"):
@@ -8342,6 +8342,16 @@ class IWFMModel(IWFMMiscellaneous):
         if not isinstance(layer_number, int):
             raise TypeError('layer_number must be an integer, '
                              'value {} provided is of type {}'.format(layer_number, type(layer_number)))
+
+        # check if layer_number provided is a valid layer
+        n_layers = self.get_n_layers()
+        layers = np.arange(1, n_layers + 1)
+
+        if not np.any(layers == layer_number):
+            raise ValueError('layer_number entered is invalid')
+        
+        # convert specified layer number to ctypes
+        layer_number = ctypes.c_int(layer_number)
 
         # handle start and end dates
         # get time specs
@@ -8369,12 +8379,6 @@ class IWFMModel(IWFMMiscellaneous):
         # check that length conversion factor is a number
         if not isinstance(length_conversion_factor, (int, float)):
             raise TypeError('length_conversion_factor must be a number. value {} provides is of type {}'.format(length_conversion_factor, type(length_conversion_factor)))
-        
-        # set instance variable status to 0
-        self.status = ctypes.c_int(0)
-
-        # convert specified layer number to ctypes
-        layer_number = ctypes.c_int(layer_number)
 
         # get number of time intervals between dates
         num_time_intervals = ctypes.c_int(self.get_n_intervals(begin_date, end_date, output_interval))
@@ -8395,6 +8399,9 @@ class IWFMModel(IWFMMiscellaneous):
         # initialize output variables
         output_dates = (ctypes.c_double*num_time_intervals.value)()
         output_gwheads = ((ctypes.c_double*num_nodes.value)*num_time_intervals.value)()
+
+        # set instance variable status to 0
+        self.status = ctypes.c_int(0)
 
         # call DLL procedure
         self.dll.IW_Model_GetGWHeads_ForALayer(ctypes.byref(layer_number),
