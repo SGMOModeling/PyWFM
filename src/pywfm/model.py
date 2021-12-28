@@ -663,7 +663,7 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_subregion_ids : Returns an array of IDs for subregions specified in an IWFM model
+        IWFMModel.get_subregion_ids : Returns an array of IDs for subregions in an IWFM model
         IWFMModel.get_subregion_name : Returns the name corresponding to the subregion_id in an IWFM model
         IWFMModel.get_subregions_by_element : Returns an array identifying the IWFM Model elements contained within each subregion.
 
@@ -827,7 +827,7 @@ class IWFMModel(IWFMMiscellaneous):
         See Also
         --------
         IWFMModel.get_n_subregions : Returns the number of subregions in an IWFM model
-        IWFMModel.get_subregion_ids : Returns an array of IDs for subregions specified in an IWFM model
+        IWFMModel.get_subregion_ids : Returns an array of IDs for subregions in an IWFM model
         IWFMModel.get_subregion_name : Returns the name corresponding to the subregion_id in an IWFM model
         IWFMModel.get_n_elements : Returns the number of elements in an IWFM model
 
@@ -892,7 +892,7 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_stream_node_ids : Returns an array of stream node IDs from an IWFM model application
+        IWFMModel.get_stream_node_ids : Returns an array of stream node IDs in an IWFM model
         IWFMModel.get_n_stream_nodes_upstream_of_stream_node : Returns the number of stream nodes immediately upstream of the provided stream node id
         IWFMModel.get_stream_nodes_upstream_of_stream_node : Returns an array of the stream node ids immediately upstream of the provided stream node id
         IWFMModel.get_n_nodes : Returns the number of nodes in an IWFM model
@@ -929,7 +929,7 @@ class IWFMModel(IWFMMiscellaneous):
         return self.n_stream_nodes.value
 
     def get_stream_node_ids(self):
-        ''' Returns an array of stream node IDs from the IWFM model application
+        ''' Returns an array of stream node IDs in the IWFM model
         
         Returns
         -------
@@ -999,7 +999,7 @@ class IWFMModel(IWFMMiscellaneous):
         See Also
         --------
         IWFMModel.get_n_stream_nodes : Returns the number of stream nodes in an IWFM model
-        IWFMModel.get_stream_node_ids : Returns an array of stream node IDs from an IWFM model application
+        IWFMModel.get_stream_node_ids : Returns an array of stream node IDs in an IWFM model
         IWFMModel.get_stream_nodes_upstream_of_stream_node : Returns an array of the stream node ids immediately upstream of the provided stream node id
 
         Example
@@ -1068,7 +1068,7 @@ class IWFMModel(IWFMMiscellaneous):
         --------
         IWFMModel.get_n_stream_nodes_upstream_of_stream_node : Returns the number of stream nodes immediately upstream of the provided stream node id
         IWFMModel.get_n_stream_nodes : Returns the number of stream nodes in an IWFM model
-        IWFMModel.get_stream_node_ids : Returns an array of stream node IDs from the IWFM model application
+        IWFMModel.get_stream_node_ids : Returns an array of stream node IDs in an IWFM model
 
         Examples
         --------
@@ -1143,7 +1143,7 @@ class IWFMModel(IWFMMiscellaneous):
         See Also
         --------
         IWFMModel.get_n_stream_nodes : Returns the number of stream nodes in an IWFM model
-        IWFMModel.get_stream_node_ids : Returns an array of stream node IDs from the IWFM model application
+        IWFMModel.get_stream_node_ids : Returns an array of stream node IDs in an IWFM model
         IWFMModel.get_n_rating_table_points : Returns the number of data points in the stream flow rating table for a stream node
         IWFMModel.get_stream_rating_table : Returns the stream rating table for a specified stream node
 
@@ -1198,7 +1198,7 @@ class IWFMModel(IWFMMiscellaneous):
         --------
         IWFMModel.get_stream_rating_table : Returns the stream rating table for a specified stream node
         IWFMModel.get_n_stream_nodes : Returns the number of stream nodes in an IWFM model
-        IWFMModel.get_stream_node_ids : Returns an array of stream node IDs from the IWFM model application
+        IWFMModel.get_stream_node_ids : Returns an array of stream node IDs in an IWFM model
         IWFMModel.get_stream_bottom_elevations : Returns the stream channel bottom elevation at each stream node
 
         Example
@@ -1262,7 +1262,7 @@ class IWFMModel(IWFMMiscellaneous):
         --------
         IWFMModel.get_n_rating_table_points : Returns the number of data points in the stream flow rating table for a stream node
         IWFMModel.get_n_stream_nodes : Returns the number of stream nodes in an IWFM model
-        IWFMModel.get_stream_node_ids : Returns an array of stream node IDs from the IWFM model application
+        IWFMModel.get_stream_node_ids : Returns an array of stream node IDs in an IWFM model
         IWFMModel.get_stream_bottom_elevations : Returns the stream channel bottom elevation at each stream node
 
         Example
@@ -2525,7 +2525,7 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_stream_reach_ids : Returns the user-specified identification numbers for the stream reaches in an IWFM model
+        IWFMModel.get_stream_reach_ids : Returns an array of stream reach IDs in an IWFM model
         IWFMModel.get_n_nodes_in_stream_reach : Returns the number of stream nodes in a stream reach
         IWFMModel.get_stream_reach_groundwater_nodes : Returns the groundwater node IDs corresponding to stream nodes in a specified reach 
         IWFMModel.get_stream_reach_stream_nodes : Returns the stream node IDs corresponding to stream nodes in a specified reach
@@ -2564,7 +2564,7 @@ class IWFMModel(IWFMMiscellaneous):
         return n_stream_reaches.value
 
     def get_stream_reach_ids(self):
-        ''' Returns the user-specified identification numbers for the
+        ''' Returns an array of stream reach IDs in an IWFM Model
         stream reaches in an IWFM model 
         
         Returns
@@ -2632,7 +2632,7 @@ class IWFMModel(IWFMMiscellaneous):
         See Also
         --------
         IWFMModel.get_n_stream_reaches : Returns the number of stream reaches in an IWFM model
-        IWFMModel.get_stream_reach_ids : Returns the user-specified identification numbers for the stream reaches in an IWFM model
+        IWFMModel.get_stream_reach_ids : Returns an array of stream reach IDs in an IWFM model
         IWFMModel.get_stream_reach_groundwater_nodes : Returns the groundwater node IDs corresponding to stream nodes in a specified reach 
         IWFMModel.get_stream_reach_stream_nodes : Returns the stream node IDs corresponding to stream nodes in a specified reach
         IWFMModel.get_stream_reaches_for_stream_nodes : Returns the stream reach IDs that correspond to a list of stream nodes
@@ -2711,7 +2711,7 @@ class IWFMModel(IWFMMiscellaneous):
         See Also
         --------
         IWFMModel.get_n_stream_reaches : Returns the number of stream reaches in an IWFM model
-        IWFMModel.get_stream_reach_ids : Returns the user-specified identification numbers for the stream reaches in an IWFM model
+        IWFMModel.get_stream_reach_ids : Returns an array of stream reach IDs in an IWFM model
         IWFMModel.get_n_nodes_in_stream_reach : Returns the number of stream nodes in a stream reach
         IWFMModel.get_stream_reach_stream_nodes : Returns the stream node IDs corresponding to stream nodes in a specified reach
         IWFMModel.get_stream_reaches_for_stream_nodes : Returns the stream reach IDs that correspond to a list of stream nodes
@@ -2792,7 +2792,7 @@ class IWFMModel(IWFMMiscellaneous):
         See Also
         --------
         IWFMModel.get_n_stream_reaches : Returns the number of stream reaches in an IWFM model
-        IWFMModel.get_stream_reach_ids : Returns the user-specified identification numbers for the stream reaches in an IWFM model
+        IWFMModel.get_stream_reach_ids : Returns an array of stream reach IDs in an IWFM model
         IWFMModel.get_n_nodes_in_stream_reach : Returns the number of stream nodes in a stream reach
         IWFMModel.get_stream_reach_groundwater_nodes : Returns the groundwater node IDs corresponding to stream nodes in a specified reach 
         IWFMModel.get_stream_reaches_for_stream_nodes : Returns the stream reach IDs that correspond to a list of stream nodes
@@ -2872,7 +2872,7 @@ class IWFMModel(IWFMMiscellaneous):
         See Also
         --------
         IWFMModel.get_n_stream_reaches : Returns the number of stream reaches in an IWFM model
-        IWFMModel.get_stream_reach_ids : Returns the user-specified identification numbers for the stream reaches in an IWFM model
+        IWFMModel.get_stream_reach_ids : Returns an array of stream reach IDs in an IWFM model
         IWFMModel.get_n_nodes_in_stream_reach : Returns the number of stream nodes in a stream reach
         IWFMModel.get_stream_reach_groundwater_nodes : Returns the groundwater node IDs corresponding to stream nodes in a specified reach 
         IWFMModel.get_stream_reach_stream_nodes : Returns the stream node IDs corresponding to stream nodes in a specified reach
@@ -2964,7 +2964,7 @@ class IWFMModel(IWFMMiscellaneous):
         See Also
         --------
         IWFMModel.get_n_stream_reaches : Returns the number of stream reaches in an IWFM model
-        IWFMModel.get_stream_reach_ids : Returns the user-specified identification numbers for the stream reaches in an IWFM model
+        IWFMModel.get_stream_reach_ids : Returns an array of stream reach IDs in an IWFM model
         IWFMModel.get_n_nodes_in_stream_reach : Returns the number of stream nodes in a stream reach
         IWFMModel.get_stream_reach_groundwater_nodes : Returns the groundwater node IDs corresponding to stream nodes in a specified reach 
         IWFMModel.get_stream_reach_stream_nodes : Returns the stream node IDs corresponding to stream nodes in a specified reach
@@ -3033,7 +3033,7 @@ class IWFMModel(IWFMMiscellaneous):
         See Also
         --------
         IWFMModel.get_n_stream_reaches : Returns the number of stream reaches in an IWFM model
-        IWFMModel.get_stream_reach_ids : Returns the user-specified identification numbers for the stream reaches in an IWFM model
+        IWFMModel.get_stream_reach_ids : Returns an array of stream reach IDs in an IWFM model
         IWFMModel.get_n_nodes_in_stream_reach : Returns the number of stream nodes in a stream reach
         IWFMModel.get_stream_reach_groundwater_nodes : Returns the groundwater node IDs corresponding to stream nodes in a specified reach 
         IWFMModel.get_stream_reach_stream_nodes : Returns the stream node IDs corresponding to stream nodes in a specified reach
@@ -3115,7 +3115,7 @@ class IWFMModel(IWFMMiscellaneous):
         See Also
         --------
         IWFMModel.get_n_stream_reaches : Returns the number of stream reaches in an IWFM model
-        IWFMModel.get_stream_reach_ids : Returns the user-specified identification numbers for the stream reaches in an IWFM model
+        IWFMModel.get_stream_reach_ids : Returns an array of stream reach IDs in an IWFM model
         IWFMModel.get_n_nodes_in_stream_reach : Returns the number of stream nodes in a stream reach
         IWFMModel.get_stream_reach_groundwater_nodes : Returns the groundwater node IDs corresponding to stream nodes in a specified reach 
         IWFMModel.get_stream_reach_stream_nodes : Returns the stream node IDs corresponding to stream nodes in a specified reach
@@ -3205,7 +3205,7 @@ class IWFMModel(IWFMMiscellaneous):
         See Also
         --------
         IWFMModel.get_n_stream_reaches : Returns the number of stream reaches in an IWFM model
-        IWFMModel.get_stream_reach_ids : Returns the user-specified identification numbers for the stream reaches in an IWFM model
+        IWFMModel.get_stream_reach_ids : Returns an array of stream reach IDs in an IWFM model
         IWFMModel.get_n_nodes_in_stream_reach : Returns the number of stream nodes in a stream reach
         IWFMModel.get_stream_reach_groundwater_nodes : Returns the groundwater node IDs corresponding to stream nodes in a specified reach 
         IWFMModel.get_stream_reach_stream_nodes : Returns the stream node IDs corresponding to stream nodes in a specified reach
@@ -3270,7 +3270,7 @@ class IWFMModel(IWFMMiscellaneous):
         See Also
         --------
         IWFMModel.get_n_stream_reaches : Returns the number of stream reaches in an IWFM model
-        IWFMModel.get_stream_reach_ids : Returns the user-specified identification numbers for the stream reaches in an IWFM model
+        IWFMModel.get_stream_reach_ids : Returns an array of stream reach IDs in an IWFM model
         IWFMModel.get_n_nodes_in_stream_reach : Returns the number of stream nodes in a stream reach
         IWFMModel.get_stream_reach_groundwater_nodes : Returns the groundwater node IDs corresponding to stream nodes in a specified reach 
         IWFMModel.get_stream_reach_stream_nodes : Returns the stream node IDs corresponding to stream nodes in a specified reach
@@ -3329,7 +3329,7 @@ class IWFMModel(IWFMMiscellaneous):
         See Also
         --------
         IWFMModel.get_n_stream_reaches : Returns the number of stream reaches in an IWFM model
-        IWFMModel.get_stream_reach_ids : Returns the user-specified identification numbers for the stream reaches in an IWFM model
+        IWFMModel.get_stream_reach_ids : Returns an array of stream reach IDs in an IWFM model
         IWFMModel.get_n_nodes_in_stream_reach : Returns the number of stream nodes in a stream reach
         IWFMModel.get_stream_reach_groundwater_nodes : Returns the groundwater node IDs corresponding to stream nodes in a specified reach 
         IWFMModel.get_stream_reach_stream_nodes : Returns the stream node IDs corresponding to stream nodes in a specified reach
@@ -3464,7 +3464,7 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_lake_ids : Returns the lake IDs specified by the user
+        IWFMModel.get_lake_ids : Returns an array of lake IDs in an IWFM model
         IWFMModel.get_n_elements_in_lake : Returns the number of finite element grid cells that make up a lake 
         IWFMModel.get_elements_in_lake : Returns the element ids with the specified lake ID
 
@@ -3496,7 +3496,7 @@ class IWFMModel(IWFMMiscellaneous):
         return n_lakes.value
 
     def get_lake_ids(self):
-        ''' Returns the lake IDs specified by the user
+        ''' Returns an array of lake IDs in an IWFM model
 
         Returns
         -------
@@ -3563,7 +3563,7 @@ class IWFMModel(IWFMMiscellaneous):
         See Also
         --------
         IWFMModel.get_n_lakes : Returns the number of lakes in an IWFM model
-        IWFMModel.get_lake_ids : Returns the lake IDs specified by the user
+        IWFMModel.get_lake_ids : Returns an array of the lake IDs in an IWFM model
         IWFMModel.get_elements_in_lake : Returns the element ids with the specified lake ID
 
         Example
@@ -3636,7 +3636,7 @@ class IWFMModel(IWFMMiscellaneous):
         See Also
         --------
         IWFMModel.get_n_lakes : Returns the number of lakes in an IWFM model
-        IWFMModel.get_lake_ids : Returns the lake IDs specified by the user
+        IWFMModel.get_lake_ids : Returns an array of the lake IDs in an IWFM model
         IWFMModel.get_n_elements_in_lake : Returns the number of finite element grid cells that make up a lake
 
         Example
@@ -6702,7 +6702,7 @@ class IWFMModel(IWFMMiscellaneous):
         --------
         IWFMModel.get_subregion_name : Returns the name corresponding to the subregion_id in an IWFM model
         IWFMModel.get_n_subregions : Returns the number of subregions in an IWFM model
-        IWFMModel.get_subregion_ids : Returns an array of IDs for subregions identified in an IWFM model
+        IWFMModel.get_subregion_ids : Returns an array of IDs for subregions in an IWFM model
 
         Example
         -------
@@ -8959,6 +8959,11 @@ class IWFMModel(IWFMMiscellaneous):
         ----------
         preprocessor_path : str
             file path to where preprocessor main input file is stored
+
+        Returns
+        -------
+        None
+            internally sets the path of the preprocessor main input file
         '''
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_SetPreProcessorPath"):
@@ -8986,6 +8991,11 @@ class IWFMModel(IWFMMiscellaneous):
         ----------
         simulation_path : str
             file path to where simulation main input file is stored
+
+        Returns
+        -------
+        None
+            internally sets the path of the simulation main input file
         '''
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_SetSimulationPath"):
@@ -9581,7 +9591,7 @@ class IWFMModel(IWFMMiscellaneous):
         '''
         hydrograph_ids = self.get_groundwater_hydrograph_ids()
         hydrograph_x_coord, hydrograph_y_coord = self.get_groundwater_hydrograph_coordinates()
-        hydrograph_names = self.get_groundwater_observation_names()
+        hydrograph_names = self.get_groundwater_hydrograph_names()
         df = pd.DataFrame({'id': hydrograph_ids, 'Name': hydrograph_names, 
                            'X': hydrograph_x_coord, 'Y': hydrograph_y_coord})
         
