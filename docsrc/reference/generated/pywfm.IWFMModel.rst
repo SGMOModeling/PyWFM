@@ -1,0 +1,216 @@
+﻿pywfm.IWFMModel
+===============
+
+.. currentmodule:: pywfm
+
+.. autoclass:: IWFMModel
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~IWFMModel.__init__
+      ~IWFMModel.advance_state
+      ~IWFMModel.advance_time
+      ~IWFMModel.close_log_file
+      ~IWFMModel.delete_inquiry_data_file
+      ~IWFMModel.get_actual_stream_diversions_at_some_locations
+      ~IWFMModel.get_ag_diversion_supply_shortage_at_origin
+      ~IWFMModel.get_ag_elempump_supply_shortage_at_origin
+      ~IWFMModel.get_ag_well_supply_shortage_at_origin
+      ~IWFMModel.get_aquifer_bottom_elevation
+      ~IWFMModel.get_aquifer_horizontal_k
+      ~IWFMModel.get_aquifer_parameters
+      ~IWFMModel.get_aquifer_specific_storage
+      ~IWFMModel.get_aquifer_specific_yield
+      ~IWFMModel.get_aquifer_top_elevation
+      ~IWFMModel.get_aquifer_vertical_k
+      ~IWFMModel.get_aquitard_vertical_k
+      ~IWFMModel.get_boundary_nodes
+      ~IWFMModel.get_budget_type_ids
+      ~IWFMModel.get_current_date_and_time
+      ~IWFMModel.get_data_unit_type_id_area
+      ~IWFMModel.get_data_unit_type_id_length
+      ~IWFMModel.get_data_unit_type_ids
+      ~IWFMModel.get_data_unit_type_volume
+      ~IWFMModel.get_depth_to_water
+      ~IWFMModel.get_diversion_ids
+      ~IWFMModel.get_diversion_purpose
+      ~IWFMModel.get_downstream_node_in_stream_reaches
+      ~IWFMModel.get_element_config
+      ~IWFMModel.get_element_ids
+      ~IWFMModel.get_element_info
+      ~IWFMModel.get_element_pump_ids
+      ~IWFMModel.get_element_pump_purpose
+      ~IWFMModel.get_element_spatial_info
+      ~IWFMModel.get_elements_in_lake
+      ~IWFMModel.get_flow_destination_type_id
+      ~IWFMModel.get_flow_destination_type_id_element
+      ~IWFMModel.get_flow_destination_type_id_elementset
+      ~IWFMModel.get_flow_destination_type_id_gwelement
+      ~IWFMModel.get_flow_destination_type_id_lake
+      ~IWFMModel.get_flow_destination_type_id_outside
+      ~IWFMModel.get_flow_destination_type_id_streamnode
+      ~IWFMModel.get_flow_destination_type_id_subregion
+      ~IWFMModel.get_ground_surface_elevation
+      ~IWFMModel.get_groundwater_hydrograph
+      ~IWFMModel.get_groundwater_hydrograph_at_node_and_layer
+      ~IWFMModel.get_groundwater_hydrograph_coordinates
+      ~IWFMModel.get_groundwater_hydrograph_ids
+      ~IWFMModel.get_groundwater_hydrograph_info
+      ~IWFMModel.get_groundwater_hydrograph_names
+      ~IWFMModel.get_gwheads_all
+      ~IWFMModel.get_gwheads_foralayer
+      ~IWFMModel.get_hydrograph_type_list
+      ~IWFMModel.get_lake_ids
+      ~IWFMModel.get_land_use_ids
+      ~IWFMModel.get_land_use_type_id_gen_ag
+      ~IWFMModel.get_land_use_type_id_native_riparian
+      ~IWFMModel.get_land_use_type_id_nonponded_ag
+      ~IWFMModel.get_land_use_type_id_refuge
+      ~IWFMModel.get_land_use_type_id_rice
+      ~IWFMModel.get_land_use_type_id_urban
+      ~IWFMModel.get_last_message
+      ~IWFMModel.get_location_type_id_element
+      ~IWFMModel.get_location_type_id_gwheadobs
+      ~IWFMModel.get_location_type_id_lake
+      ~IWFMModel.get_location_type_id_node
+      ~IWFMModel.get_location_type_id_smallwatershed
+      ~IWFMModel.get_location_type_id_streamhydobs
+      ~IWFMModel.get_location_type_id_streamnode
+      ~IWFMModel.get_location_type_id_streamnodebud
+      ~IWFMModel.get_location_type_id_streamreach
+      ~IWFMModel.get_location_type_id_subregion
+      ~IWFMModel.get_location_type_id_subsidenceobs
+      ~IWFMModel.get_location_type_id_tiledrainobs
+      ~IWFMModel.get_location_type_id_zone
+      ~IWFMModel.get_location_type_ids
+      ~IWFMModel.get_n_ag_crops
+      ~IWFMModel.get_n_diversions
+      ~IWFMModel.get_n_element_pumps
+      ~IWFMModel.get_n_elements
+      ~IWFMModel.get_n_elements_in_lake
+      ~IWFMModel.get_n_groundwater_hydrographs
+      ~IWFMModel.get_n_hydrograph_types
+      ~IWFMModel.get_n_intervals
+      ~IWFMModel.get_n_lakes
+      ~IWFMModel.get_n_layers
+      ~IWFMModel.get_n_nodes
+      ~IWFMModel.get_n_nodes_in_stream_reach
+      ~IWFMModel.get_n_rating_table_points
+      ~IWFMModel.get_n_reaches_upstream_of_reach
+      ~IWFMModel.get_n_small_watersheds
+      ~IWFMModel.get_n_stream_hydrographs
+      ~IWFMModel.get_n_stream_inflows
+      ~IWFMModel.get_n_stream_nodes
+      ~IWFMModel.get_n_stream_nodes_upstream_of_stream_node
+      ~IWFMModel.get_n_stream_reaches
+      ~IWFMModel.get_n_subregions
+      ~IWFMModel.get_n_subsidence_hydrographs
+      ~IWFMModel.get_n_tile_drain_hydrographs
+      ~IWFMModel.get_n_tile_drains
+      ~IWFMModel.get_n_time_steps
+      ~IWFMModel.get_n_wells
+      ~IWFMModel.get_net_bypass_inflows
+      ~IWFMModel.get_node_coordinates
+      ~IWFMModel.get_node_ids
+      ~IWFMModel.get_node_info
+      ~IWFMModel.get_output_interval
+      ~IWFMModel.get_reach_outflow_destination
+      ~IWFMModel.get_reach_outflow_destination_types
+      ~IWFMModel.get_reaches_upstream_of_reach
+      ~IWFMModel.get_small_watershed_ids
+      ~IWFMModel.get_stratigraphy_atXYcoordinate
+      ~IWFMModel.get_stream_bottom_elevations
+      ~IWFMModel.get_stream_diversion_locations
+      ~IWFMModel.get_stream_flow_at_location
+      ~IWFMModel.get_stream_flows
+      ~IWFMModel.get_stream_gain_from_groundwater
+      ~IWFMModel.get_stream_gain_from_lakes
+      ~IWFMModel.get_stream_hydrograph
+      ~IWFMModel.get_stream_hydrograph_coordinates
+      ~IWFMModel.get_stream_hydrograph_ids
+      ~IWFMModel.get_stream_hydrograph_names
+      ~IWFMModel.get_stream_inflow_ids
+      ~IWFMModel.get_stream_inflow_nodes
+      ~IWFMModel.get_stream_inflows_at_some_locations
+      ~IWFMModel.get_stream_node_ids
+      ~IWFMModel.get_stream_nodes_upstream_of_stream_node
+      ~IWFMModel.get_stream_rainfall_runoff
+      ~IWFMModel.get_stream_rating_table
+      ~IWFMModel.get_stream_reach_groundwater_nodes
+      ~IWFMModel.get_stream_reach_ids
+      ~IWFMModel.get_stream_reach_names
+      ~IWFMModel.get_stream_reach_stream_nodes
+      ~IWFMModel.get_stream_reaches_for_stream_nodes
+      ~IWFMModel.get_stream_return_flows
+      ~IWFMModel.get_stream_riparian_evapotranspiration
+      ~IWFMModel.get_stream_stages
+      ~IWFMModel.get_stream_tile_drain_flows
+      ~IWFMModel.get_stream_tributary_inflows
+      ~IWFMModel.get_subregion_ag_pumping_average_depth_to_water
+      ~IWFMModel.get_subregion_ids
+      ~IWFMModel.get_subregion_name
+      ~IWFMModel.get_subregion_names
+      ~IWFMModel.get_subregions_by_element
+      ~IWFMModel.get_subsidence_all
+      ~IWFMModel.get_subsidence_hydrograph
+      ~IWFMModel.get_subsidence_hydrograph_coordinates
+      ~IWFMModel.get_subsidence_hydrograph_ids
+      ~IWFMModel.get_subsidence_hydrograph_names
+      ~IWFMModel.get_supply_requirement_ag_elements
+      ~IWFMModel.get_supply_requirement_ag_subregions
+      ~IWFMModel.get_supply_requirement_urban_elements
+      ~IWFMModel.get_supply_requirement_urban_subregions
+      ~IWFMModel.get_supply_type_id_diversion
+      ~IWFMModel.get_supply_type_id_elempump
+      ~IWFMModel.get_supply_type_id_well
+      ~IWFMModel.get_tile_drain_hydrograph_coordinates
+      ~IWFMModel.get_tile_drain_hydrograph_ids
+      ~IWFMModel.get_tile_drain_ids
+      ~IWFMModel.get_tile_drain_nodes
+      ~IWFMModel.get_time_specs
+      ~IWFMModel.get_upstream_nodes_in_stream_reaches
+      ~IWFMModel.get_urban_diversion_supply_shortage_at_origin
+      ~IWFMModel.get_urban_elempump_supply_shortage_at_origin
+      ~IWFMModel.get_urban_well_supply_shortage_at_origin
+      ~IWFMModel.get_version
+      ~IWFMModel.get_well_ids
+      ~IWFMModel.get_well_pumping_purpose
+      ~IWFMModel.get_zbudget_type_ids
+      ~IWFMModel.get_zone_ag_pumping_average_depth_to_water
+      ~IWFMModel.get_zone_extent_id_horizontal
+      ~IWFMModel.get_zone_extent_id_vertical
+      ~IWFMModel.get_zone_extent_ids
+      ~IWFMModel.increment_time
+      ~IWFMModel.is_date_greater
+      ~IWFMModel.is_end_of_simulation
+      ~IWFMModel.is_model_instantiated
+      ~IWFMModel.is_stream_upstream_node
+      ~IWFMModel.kill
+      ~IWFMModel.log_last_message
+      ~IWFMModel.order_boundary_nodes
+      ~IWFMModel.plot_elements
+      ~IWFMModel.print_results
+      ~IWFMModel.read_timeseries_data
+      ~IWFMModel.read_timeseries_data_overwrite
+      ~IWFMModel.restore_pumping_to_read_values
+      ~IWFMModel.set_log_file
+      ~IWFMModel.set_preprocessor_path
+      ~IWFMModel.set_simulation_path
+      ~IWFMModel.set_supply_adjustment_max_iterations
+      ~IWFMModel.set_supply_adjustment_tolerance
+      ~IWFMModel.simulate_all
+      ~IWFMModel.simulate_for_an_interval
+      ~IWFMModel.simulate_for_one_timestep
+      ~IWFMModel.turn_supply_adjustment_on_off
+   
+   
+
+   
+   
+   
