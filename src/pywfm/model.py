@@ -9925,39 +9925,36 @@ class IWFMModel(IWFMMiscellaneous):
 
         Returns
         -------
-        pandas DataFrame object
+        pd.DataFrame
             depth to water by model node and date
-        '''
-        # check layer number is valid
-        if not isinstance(layer_number, int):
-            raise ValueError('layer_number must be an integer, value {} provided is of type {}'.format(layer_number, type(layer_number)))
-        num_layers = self.get_n_layers()
-        if layer_number < 0 or layer_number > num_layers:
-            raise ValueError('layer number must be between 1 and {} (the total number of model layers)'.format(num_layers))
-        
-        # handle start and end dates
-        # get time specs
-        dates_list, output_interval = self.get_time_specs()
-        
-        if begin_date is None:
-            begin_date = dates_list[0]
-        else:
-            self._validate_iwfm_date(begin_date)
 
-            if begin_date not in dates_list:
-                raise ValueError('begin_date was not recognized as a model time step. use IWFMModel.get_time_specs() method to check.')
-        
-        if end_date is None:
-            end_date = dates_list[-1]
-        else:
-            self._validate_iwfm_date(end_date)
+        See Also
+        --------
+        IWFMModel.get_ground_surface_elevation : Returns the ground surface elevation for each node specified in the IWFM model
+        IWFMModel.get_gwheads_foralayer : Returns the simulated groundwater heads for a single user-specified model layer for every model node over a user-specified time interval.
 
-            if end_date not in dates_list:
-                raise ValueError('end_date was not recognized as a model time step. use IWFMModel.get_time_specs() method to check.')
-
-        if self.is_date_greater(begin_date, end_date):
-            raise ValueError('end_date must occur after begin_date')
-        
+        Example
+        -------
+        >>> from pywfm import IWFMModel
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
+        >>> sim_file = 'Simulation_MAIN.IN'
+        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model.get_depth_to_water(1, '09/01/2000_24:00')
+                      Date NodeID	DTW         X          Y
+            0   2000-09-01      1 210.0 1804440.0 14435520.0
+            1   2000-09-02      1 210.0 1804440.0 14435520.0
+            2   2000-09-03      1 210.0 1804440.0 14435520.0
+            3   2000-09-04      1 210.0 1804440.0 14435520.0
+            4   2000-09-05      1 210.0 1804440.0 14435520.0
+          ...          ...    ...   ...	      ...        ...         
+        13225   2000-09-26    441 150.0 1935672.0 14566752.0
+        13226   2000-09-27    441 150.0 1935672.0 14566752.0
+        13227   2000-09-28    441 150.0 1935672.0 14566752.0
+        13228   2000-09-29    441 150.0 1935672.0 14566752.0
+        13229   2000-09-30    441 150.0 1935672.0 14566752.0
+        >>> model.kill()
+        '''        
         # get ground surface elevations
         gs_elevs = self.get_ground_surface_elevation()
 
