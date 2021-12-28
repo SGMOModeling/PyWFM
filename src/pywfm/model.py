@@ -8624,8 +8624,8 @@ class IWFMModel(IWFMMiscellaneous):
         return np.array(subsidence)
 
     def get_subregion_ag_pumping_average_depth_to_water(self):
-        ''' Returns subregional depth to groundwater values that are 
-        weighted-average with respect to agricultural pumping rates
+        ''' Returns subregional depth-to-groundwater values that are 
+        weighted-averaged with respect to agricultural pumping rates 
         during a model run
 
         Returns
@@ -8640,7 +8640,7 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_zone_ag_pumping_average_depth_to_water : Returns average depth to groundwater for user-defined zones
+        IWFMModel.get_zone_ag_pumping_average_depth_to_water : Returns zonal depth-to-groundwater values that are weighted-averaged with respect to agricultural pumping rates during a model run
 
         Example
         -------
@@ -8707,7 +8707,9 @@ class IWFMModel(IWFMMiscellaneous):
         return np.array(average_depth_to_groundwater)
 
     def get_zone_ag_pumping_average_depth_to_water(self, elements_list, zones_list):
-        ''' Returns average depth to groundwater for user-defined zones
+        ''' Returns zonal depth-to-groundwater values that are 
+        weighted-averaged with respect to agricultural pumping rates 
+        during a model run
 
         Parameters
         ----------
@@ -8721,6 +8723,61 @@ class IWFMModel(IWFMMiscellaneous):
         -------
         np.ndarray
             average depth to water for each zone specified
+
+        Note
+        ----
+        This method is intended to be used when is_for_inquiry=0 while performing a simulation
+        i.e. after calling IWFMModel.simulate_for_one_timestep
+
+        See Also
+        --------
+        IWFMModel.get_subregion_ag_pumping_average_depth_to_water : Returns subregional depth-to-groundwater values that are weighted-averaged with respect to agricultural pumping rates during a model run
+
+        Example
+        -------
+        >>> from pywfm import IWFMModel
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
+        >>> sim_file = 'Simulation_MAIN.IN'
+        >>> model = IWFMModel(dll, pp_file, sim_file, is_for_inquiry=0)
+        >>> while not model.is_end_of_simulation():
+        ...     # advance the simulation time one time step forward
+        ...     model.advance_time()
+        ...
+        ...     # read all time series data from input files
+        ...     model.read_timeseries_data()
+        ...
+        ...     # Simulate the hydrologic process for the timestep
+        ...     model.simulate_for_one_timestep()
+        ...
+        ...     # get subregion average depth to water
+        ...     elements = model.get_element_ids()
+        ...     subregions = model.get_subregions_by_element()
+        ...     avg_dtw = model.get_zone_ag_pumping_average_depth_to_water(elements, subregions)
+        ...     print(avg_dtw)
+        ...
+        ...     # print the results to the user-specified output files
+        ...     model.print_results()
+        ...
+        ...     # advance the state of the hydrologic system in time
+        ...     model.advance_state()
+        .
+        .
+        .
+        *   TIME STEP 2 AT 10/02/1990_24:00
+        [-999. 0.]
+        *   TIME STEP 3 AT 10/03/1990_24:00
+        [-999. 0.]
+        *   TIME STEP 4 AT 10/04/1990_24:00
+        [-999. 0.]
+        ...
+        *   TIME STEP 3651 AT 09/28/2000_24:00
+        [ 266.03824182 0.        ]
+        *   TIME STEP 3652 AT 09/29/2000_24:00
+        [ 266.19381051 0.        ]
+        *   TIME STEP 3653 AT 09/30/2000_24:00
+        [ 266.34883635 0.        ]
+        >>> model.kill()
         '''
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetZoneAgPumpingAverageDepthToGW"):
@@ -8738,17 +8795,18 @@ class IWFMModel(IWFMMiscellaneous):
             raise ValueError('elements_list and zone_list should be 1D'
                              ' arrays of the same length')
 
-        # get length of elements list
+        # get length of elements list and element zones list
         len_elements_list = ctypes.c_int(len(elements_list))
 
-        # get length of zones list
-        n_zones = ctypes.c_int(len(np.unique(zones_list)))
+        # get list of zones and number
+        zones = np.unique(zones_list)
+        n_zones = ctypes.c_int(len(zones))
 
         # convert elements_list to ctypes
         elements_list = (ctypes.c_int*len_elements_list.value)(*elements_list)
 
         # convert zones_list to ctypes
-        zones_list = (ctypes.c_int*len_elements_list.value)()
+        zones_list = (ctypes.c_int*len_elements_list.value)(*zones_list)
 
         # initialize output variables
         average_depth_to_groundwater = (ctypes.c_double*n_zones.value)()
