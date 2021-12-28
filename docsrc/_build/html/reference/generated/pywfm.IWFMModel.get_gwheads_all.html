@@ -1395,7 +1395,7 @@ layer for the current simulation time step</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>end_of_timestep</strong> (<em>boolean</em><em>, </em><em>default=True</em>) – flag to specify if the groundwater heads are returned for
+<li><p><strong>end_of_timestep</strong> (<em>bool</em><em>, </em><em>default=True</em>) – flag to specify if the groundwater heads are returned for
 the beginning of the timestep or end of the time step</p></li>
 <li><p><strong>head_conversion_factor</strong> (<em>float</em><em>, </em><em>default=1.0</em>) – factor to convert groundwater heads from simulation unit
 of length to a desired unit of length</p></li>
@@ -1408,10 +1408,64 @@ of length to a desired unit of length</p></li>
 <dd class="field-odd"><p>np.ndarray</p>
 </dd>
 </dl>
-<p class="rubric">Notes</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
 <p>This method is designed for use when is_for_inquiry=0 to return
 the simulated groundwater heads after one time step is simulated
 i.e. after calling simulate_for_one_time_step method</p>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><a class="reference internal" href="pywfm.IWFMModel.get_gwheads_foralayer.html#pywfm.IWFMModel.get_gwheads_foralayer" title="pywfm.IWFMModel.get_gwheads_foralayer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IWFMModel.get_gwheads_foralayer</span></code></a></dt><dd><p>Returns the simulated groundwater heads for a single user-specified model layer for every model node over a user-specified time interval</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pywfm</span> <span class="kn">import</span> <span class="n">IWFMModel</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dll</span> <span class="o">=</span> <span class="s1">&#39;../../DLL/Bin/IWFM2015_C_x64.dll&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pp_file</span> <span class="o">=</span> <span class="s1">&#39;../Preprocessor/PreProcessor_MAIN.IN&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sim_file</span> <span class="o">=</span> <span class="s1">&#39;Simulation_MAIN.IN&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">IWFMModel</span><span class="p">(</span><span class="n">dll</span><span class="p">,</span> <span class="n">pp_file</span><span class="p">,</span> <span class="n">sim_file</span><span class="p">,</span> <span class="n">is_for_inquiry</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">while</span> <span class="ow">not</span> <span class="n">model</span><span class="o">.</span><span class="n">is_end_of_simulation</span><span class="p">():</span>
+<span class="gp">... </span>    <span class="c1"># advance the simulation time one time step forward</span>
+<span class="gp">... </span>    <span class="n">model</span><span class="o">.</span><span class="n">advance_time</span><span class="p">()</span>
+<span class="gp">...</span>
+<span class="gp">... </span>    <span class="c1"># read all time series data from input files</span>
+<span class="gp">... </span>    <span class="n">model</span><span class="o">.</span><span class="n">read_timeseries_data</span><span class="p">()</span>
+<span class="gp">...</span>
+<span class="gp">... </span>    <span class="c1"># Simulate the hydrologic process for the timestep</span>
+<span class="gp">... </span>    <span class="n">model</span><span class="o">.</span><span class="n">simulate_for_one_timestep</span><span class="p">()</span>
+<span class="gp">...</span>
+<span class="gp">... </span>    <span class="c1"># get groundwater heads</span>
+<span class="gp">... </span>    <span class="n">heads</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_gwheads_all</span><span class="p">()</span>
+<span class="gp">...</span>
+<span class="gp">... </span>    <span class="c1"># print the results to the user-specified output files</span>
+<span class="gp">... </span>    <span class="n">model</span><span class="o">.</span><span class="n">print_results</span><span class="p">()</span>
+<span class="gp">...</span>
+<span class="gp">... </span>    <span class="c1"># advance the state of the hydrologic system in time</span>
+<span class="gp">... </span>    <span class="n">model</span><span class="o">.</span><span class="n">advance_state</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">heads</span><span class="p">)</span>
+<span class="go">[[290.         270.91608535 227.00867495 167.74555991 105.91475847</span>
+<span class="go">   59.04810571  39.79054585  50.65187809  91.00726903 153.29920797</span>
+<span class="go">  226.15115974 271.19315214 260.2607369  303.35660843 311.31169633</span>
+<span class="go">  305.90957475 321.35463253 355.7188358  384.48837442 386.49402002</span>
+<span class="go">  ...</span>
+<span class="go">   18.12576488   8.93821192  17.6193171   49.84626859 106.55261355</span>
+<span class="go">  173.83027192 241.06147185 302.07195334 242.38004499 182.36353339</span>
+<span class="go">  135.25658569 113.92664973 148.55304883 213.27613546 283.62446262</span>
+<span class="go">  350.        ]</span>
+<span class="go"> [289.86590389 270.87158528 227.06977264 167.88058171 106.13198455</span>
+<span class="go">   59.32285765  40.07646505  50.94091062  91.26247611 153.4724245</span>
+<span class="go">  226.06276796 270.90750721 260.56535206 303.12285555 311.18101766</span>
+<span class="go">  305.9841988  321.44444412 355.67939387 384.33129245 386.27373876</span>
+<span class="go">  ...</span>
+<span class="go">  173.79083667 240.64972466 298.0367555  242.18629887 182.68916297</span>
+<span class="go">  136.05482407 115.70455947 149.58589408 213.48004259 283.3592372</span>
+<span class="go">  345.65879897]]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">kill</span><span class="p">()</span>
+</pre></div>
+</div>
 </dd></dl>
 
 </section>
