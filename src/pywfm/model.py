@@ -8632,6 +8632,59 @@ class IWFMModel(IWFMMiscellaneous):
         -------
         np.ndarray
             array of weighted-average depth to groundwater
+
+        Note
+        ----
+        This method is intended to be used when is_for_inquiry=0 while performing a simulation
+        i.e. after calling IWFMModel.simulate_for_one_timestep
+
+        See Also
+        --------
+        IWFMModel.get_zone_ag_pumping_average_depth_to_water : Returns average depth to groundwater for user-defined zones
+
+        Example
+        -------
+        >>> from pywfm import IWFMModel
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
+        >>> sim_file = 'Simulation_MAIN.IN'
+        >>> model = IWFMModel(dll, pp_file, sim_file, is_for_inquiry=0)
+        >>> while not model.is_end_of_simulation():
+        ...     # advance the simulation time one time step forward
+        ...     model.advance_time()
+        ...
+        ...     # read all time series data from input files
+        ...     model.read_timeseries_data()
+        ...
+        ...     # Simulate the hydrologic process for the timestep
+        ...     model.simulate_for_one_timestep()
+        ...
+        ...     # get subregion average depth to water
+        ...     avg_dtw = model.get_subregion_ag_pumping_average_depth_to_water()
+        ...     print(avg_dtw)
+        ...
+        ...     # print the results to the user-specified output files
+        ...     model.print_results()
+        ...
+        ...     # advance the state of the hydrologic system in time
+        ...     model.advance_state()
+        .
+        .
+        .
+        *   TIME STEP 2 AT 10/02/1990_24:00
+        [-999. -999.]
+        *   TIME STEP 3 AT 10/03/1990_24:00
+        [-999. -999.]
+        *   TIME STEP 4 AT 10/04/1990_24:00
+        [-999. -999.]
+        ...
+        *   TIME STEP 3651 AT 09/28/2000_24:00
+        [ 266.03824182 -999.        ]
+        *   TIME STEP 3652 AT 09/29/2000_24:00
+        [ 266.19381051 -999.        ]
+        *   TIME STEP 3653 AT 09/30/2000_24:00
+        [ 266.34883635 -999.        ]
+        >>> model.kill()
         '''
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetSubregionAgPumpingAverageDepthToGW"):
