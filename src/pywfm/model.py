@@ -8423,7 +8423,7 @@ class IWFMModel(IWFMMiscellaneous):
         
         Parameters
         ----------
-        end_of_timestep : boolean, default=True
+        end_of_timestep : bool, default=True
             flag to specify if the groundwater heads are returned for 
             the beginning of the timestep or end of the time step
 
@@ -8436,11 +8436,60 @@ class IWFMModel(IWFMMiscellaneous):
         np.ndarray
             2-D array of heads (n_nodes x n_layers)
 
-        Notes
-        -----
+        Note
+        ----
         This method is designed for use when is_for_inquiry=0 to return 
         the simulated groundwater heads after one time step is simulated
         i.e. after calling simulate_for_one_time_step method
+
+        See Also
+        --------
+        IWFMModel.get_gwheads_foralayer : Returns the simulated groundwater heads for a single user-specified model layer for every model node over a user-specified time interval
+
+        Example
+        -------
+        >>> from pywfm import IWFMModel
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
+        >>> sim_file = 'Simulation_MAIN.IN'
+        >>> model = IWFMModel(dll, pp_file, sim_file, is_for_inquiry=0)
+        >>> while not model.is_end_of_simulation():
+        ...     # advance the simulation time one time step forward
+        ...     model.advance_time()
+        ...
+        ...     # read all time series data from input files
+        ...     model.read_timeseries_data()
+        ...
+        ...     # Simulate the hydrologic process for the timestep
+        ...     model.simulate_for_one_timestep()
+        ...
+        ...     # get groundwater heads
+        ...     heads = model.get_gwheads_all()
+        ...
+        ...     # print the results to the user-specified output files
+        ...     model.print_results()
+        ...
+        ...     # advance the state of the hydrologic system in time
+        ...     model.advance_state()
+        >>> print(heads)
+        [[290.         270.91608535 227.00867495 167.74555991 105.91475847
+           59.04810571  39.79054585  50.65187809  91.00726903 153.29920797
+          226.15115974 271.19315214 260.2607369  303.35660843 311.31169633
+          305.90957475 321.35463253 355.7188358  384.48837442 386.49402002
+          ...
+           18.12576488   8.93821192  17.6193171   49.84626859 106.55261355
+          173.83027192 241.06147185 302.07195334 242.38004499 182.36353339
+          135.25658569 113.92664973 148.55304883 213.27613546 283.62446262
+          350.        ]
+         [289.86590389 270.87158528 227.06977264 167.88058171 106.13198455
+           59.32285765  40.07646505  50.94091062  91.26247611 153.4724245
+          226.06276796 270.90750721 260.56535206 303.12285555 311.18101766
+          305.9841988  321.44444412 355.67939387 384.33129245 386.27373876
+          ...
+          173.79083667 240.64972466 298.0367555  242.18629887 182.68916297
+          136.05482407 115.70455947 149.58589408 213.48004259 283.3592372
+          345.65879897]]
+        >>> model.kill()
         '''
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetGWHeads_All"):
