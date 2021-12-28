@@ -1390,7 +1390,7 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="pywfm.IWFMModel.get_subsidence_all">
 <span class="sig-prename descclassname"><span class="pre">IWFMModel.</span></span><span class="sig-name descname"><span class="pre">get_subsidence_all</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subsidence_conversion_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pywfm.IWFMModel.get_subsidence_all" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the groundwater heads at all nodes in every aquifer
+<dd><p>Returns the simulated subsidence at all nodes in every aquifer
 layer for the current simulation time step</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1404,10 +1404,63 @@ of length to a desired unit of length</p>
 <dd class="field-odd"><p>np.ndarray</p>
 </dd>
 </dl>
-<p class="rubric">Notes</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
 <p>This method is designed for use when is_for_inquiry=0 to return
 the simulated subsidence after one time step is simulated
 i.e. after calling simulate_for_one_time_step method</p>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><a class="reference internal" href="pywfm.IWFMModel.get_gwheads_all.html#pywfm.IWFMModel.get_gwheads_all" title="pywfm.IWFMModel.get_gwheads_all"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IWFMModel.get_gwheads_all</span></code></a></dt><dd><p>Returns the groundwater heads at all nodes in every aquifer layer for the current simulation time step</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pywfm</span> <span class="kn">import</span> <span class="n">IWFMModel</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dll</span> <span class="o">=</span> <span class="s1">&#39;../../DLL/Bin/IWFM2015_C_x64.dll&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pp_file</span> <span class="o">=</span> <span class="s1">&#39;../Preprocessor/PreProcessor_MAIN.IN&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sim_file</span> <span class="o">=</span> <span class="s1">&#39;Simulation_MAIN.IN&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">IWFMModel</span><span class="p">(</span><span class="n">dll</span><span class="p">,</span> <span class="n">pp_file</span><span class="p">,</span> <span class="n">sim_file</span><span class="p">,</span> <span class="n">is_for_inquiry</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">while</span> <span class="ow">not</span> <span class="n">model</span><span class="o">.</span><span class="n">is_end_of_simulation</span><span class="p">():</span>
+<span class="gp">... </span>    <span class="c1"># advance the simulation time one time step forward</span>
+<span class="gp">... </span>    <span class="n">model</span><span class="o">.</span><span class="n">advance_time</span><span class="p">()</span>
+<span class="gp">...</span>
+<span class="gp">... </span>    <span class="c1"># read all time series data from input files</span>
+<span class="gp">... </span>    <span class="n">model</span><span class="o">.</span><span class="n">read_timeseries_data</span><span class="p">()</span>
+<span class="gp">...</span>
+<span class="gp">... </span>    <span class="c1"># Simulate the hydrologic process for the timestep</span>
+<span class="gp">... </span>    <span class="n">model</span><span class="o">.</span><span class="n">simulate_for_one_timestep</span><span class="p">()</span>
+<span class="gp">...</span>
+<span class="gp">... </span>    <span class="c1"># get subsidence</span>
+<span class="gp">... </span>    <span class="n">subsidence</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_subsidence_all</span><span class="p">()</span>
+<span class="gp">...</span>
+<span class="gp">... </span>    <span class="c1"># print the results to the user-specified output files</span>
+<span class="gp">... </span>    <span class="n">model</span><span class="o">.</span><span class="n">print_results</span><span class="p">()</span>
+<span class="gp">...</span>
+<span class="gp">... </span>    <span class="c1"># advance the state of the hydrologic system in time</span>
+<span class="gp">... </span>    <span class="n">model</span><span class="o">.</span><span class="n">advance_state</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">subsidence</span><span class="p">)</span>
+<span class="go">[[-0.00000000e+00 -1.12421873e-06 -1.73373541e-06 -1.63445271e-06</span>
+<span class="go">  -1.04725462e-06 -4.92948676e-07 -2.86274019e-07 -4.11426842e-07</span>
+<span class="go">  -9.21177410e-07 -1.62634163e-06 -1.59144202e-06 -1.22135411e-07</span>
+<span class="go">   3.85916107e-09 -1.56677111e-06 -5.15424348e-06 -8.17841866e-06</span>
+<span class="go">  ...</span>
+<span class="go">  -1.36860631e-07 -3.07195572e-07 -3.52772869e-07 -2.18096043e-07</span>
+<span class="go">  -8.84415247e-10 -3.02272008e-07 -5.16997563e-07 -5.97240436e-07</span>
+<span class="go">  -6.66264783e-07 -7.44911097e-07 -6.84703993e-07 -4.14116606e-07</span>
+<span class="go">  -0.00000000e+00]</span>
+<span class="go"> [-1.77884442e-08 -2.07113403e-06 -3.81570268e-06 -4.87282031e-06</span>
+<span class="go">  -4.94854603e-06 -4.18511495e-06 -3.61317621e-06 -4.07439096e-06</span>
+<span class="go">  -5.06630654e-06 -5.30119974e-06 -3.51566730e-06 -2.43953427e-07</span>
+<span class="go">  ...</span>
+<span class="go">  -3.77063898e-08 -6.31092635e-07 -1.42168088e-06 -2.20884863e-06</span>
+<span class="go">  -2.89134140e-06 -2.49219032e-06 -1.60718472e-06 -7.37134674e-07</span>
+<span class="go">  -4.80396324e-08]]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">kill</span><span class="p">()</span>
+</pre></div>
+</div>
 </dd></dl>
 
 </section>
