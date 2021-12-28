@@ -72,7 +72,6 @@ Model Geometry
    get_n_tile_drains
    get_tile_drain_ids
    get_tile_drain_nodes
-   get_n_locations
    get_boundary_nodes
    order_boundary_nodes
    plot_elements
@@ -252,6 +251,8 @@ Private Methods
    _get_supply_requirement_urban
    _get_supply_shortage_at_origin_ag
    _get_supply_shortage_at_origin_urban
+   _get_n_locations
+   _get_location_ids
 
 IWFM-Internal
 =============
@@ -278,7 +279,6 @@ IWFM-Internal
    get_land_use_type_id_refuge
    get_land_use_type_id_rice
    get_land_use_type_id_urban
-   get_location_ids
    get_location_type_id_element
    get_location_type_id_gwheadobs
    get_location_type_id_lake
