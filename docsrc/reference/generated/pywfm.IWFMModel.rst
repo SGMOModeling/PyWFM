@@ -196,6 +196,7 @@
       ~IWFMModel.log_last_message
       ~IWFMModel.order_boundary_nodes
       ~IWFMModel.plot_elements
+      ~IWFMModel.plot_nodes
       ~IWFMModel.print_results
       ~IWFMModel.read_timeseries_data
       ~IWFMModel.read_timeseries_data_overwrite

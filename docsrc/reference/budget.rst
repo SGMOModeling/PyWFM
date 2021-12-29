@@ -10,7 +10,7 @@ Time-Related
 ============
 
 .. autosummary::
-   :toctree: generated/
+   :toctree: generated/budget/time/
 
    get_n_time_steps
    get_time_specs
@@ -19,7 +19,7 @@ Location Information
 ====================
 
 .. autosummary::
-   :toctree: generated/
+   :toctree: generated/budget/location/
 
    get_n_locations
    get_location_names
@@ -28,7 +28,7 @@ Titles
 ======
 
 .. autosummary::
-   :toctree: generated/
+   :toctree: generated/budget/titles/
 
    get_n_title_lines
    get_title_length
@@ -38,7 +38,7 @@ Data-Retrieval
 ==============
 
 .. autosummary::
-   :toctree: generated/   
+   :toctree: generated/budget/data   
 
    get_n_columns
    get_column_headers
@@ -49,6 +49,6 @@ Other
 =====
 
 .. autosummary::
-   :toctree: generated/   
+   :toctree: generated/budget/other 
    
    close_budget_file

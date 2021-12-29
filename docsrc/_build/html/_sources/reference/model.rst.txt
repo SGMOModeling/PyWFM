@@ -23,32 +23,72 @@ Time-Related
 Model Geometry
 ==============
 
+Nodes
+-----
+
 .. autosummary::
-   :toctree: generated/geometry/
+   :toctree: generated/geometry/nodes/
 
    get_n_nodes
    get_node_coordinates
    get_node_ids
    get_node_info
+   get_boundary_nodes
+   order_boundary_nodes
+   
+Elements
+--------
+
+.. autosummary::
+   :toctree: generated/geometry/elements/
+
    get_n_elements
    get_element_config
    get_element_ids
    get_element_info
    get_element_spatial_info
+   
+Subregions
+----------
+
+.. autosummary::
+   :toctree: generated/geometry/subregions/
+   
    get_n_subregions
    get_subregion_ids
    get_subregion_name
    get_subregion_names
    get_subregions_by_element
+   
+Stratigraphy
+------------
+
+.. autosummary::
+   :toctree: generated/geometry/stratigraphy/
+   
    get_n_layers
    get_ground_surface_elevation
    get_aquifer_top_elevation
    get_aquifer_bottom_elevation
    get_stratigraphy_atXYcoordinate
+   
+Lakes
+-----
+
+.. autosummary::
+   :toctree: generated/geometry/lakes/
+   
    get_n_lakes
    get_lake_ids
    get_n_elements_in_lake
    get_elements_in_lake
+   
+Streams
+-------
+
+.. autosummary::
+   :toctree: generated/geometry/streams/
+   
    get_n_stream_reaches
    get_stream_reach_ids
    get_stream_reach_names
@@ -70,9 +110,6 @@ Model Geometry
    get_reaches_upstream_of_reach
    is_stream_upstream_node
    get_stream_network
-   get_boundary_nodes
-   order_boundary_nodes
-   plot_elements
 
 Inflows and Small Watersheds
 ============================
@@ -100,7 +137,7 @@ Land Use
 ========
 
 .. autosummary::
-   :toctree: generated/landuse
+   :toctree: generated/landuse/
    
    get_n_ag_crops
 
@@ -209,6 +246,18 @@ Simulation Hydrographs
    get_stream_hydrograph
    get_n_hydrograph_types
    get_hydrograph_type_list
+
+Plotting
+========
+
+.. autosummary::
+   :toctree: generated/plotting
+   
+   plot_nodes
+   plot_elements
+  
+
+
 
 Model Simulation
 ================

@@ -10,7 +10,7 @@ Time-Related
 ============
 
 .. autosummary::
-   :toctree: generated/
+   :toctree: generated/zbudget/time/
 
    get_n_time_steps
    get_time_specs
@@ -19,7 +19,7 @@ Zone Information
 ================
 
 .. autosummary::
-   :toctree: generated/
+   :toctree: generated/zbudget/zones/
 
    generate_zone_list_from_file
    get_n_zones
@@ -30,7 +30,7 @@ ZBudget Titles
 ==============
 
 .. autosummary::
-   :toctree: generated/
+   :toctree: generated/zbudget/titles/
 
    get_n_title_lines
    get_title_lines
@@ -39,7 +39,7 @@ Data-Retrieval
 ==============
 
 .. autosummary::
-   :toctree: generated/
+   :toctree: generated/zbudget/data/
 
    get_column_headers_for_a_zone
    get_values_for_a_zone
@@ -49,6 +49,6 @@ Other
 =====
 
 .. autosummary::
-   :toctree: generated/
+   :toctree: generated/zbudget/other
 
    close_zbudget_file
