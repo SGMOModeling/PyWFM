@@ -1405,11 +1405,11 @@
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>location_id</strong> (<em>int</em>) – ID for location (1 to number of locations)</p></li>
-<li><p><strong>area_conversion_factor</strong> (<em>float</em><em>, </em><em>default=2.295684E-05 -&gt; ft to acres</em>) – factor to convert budget file area units to user desired output area units
+<li><p><strong>area_conversion_factor</strong> (<em>float</em><em>, </em><em>default=1.0</em>) – factor to convert budget file area units to user desired output area units
 note: only the area shows up in the title lines</p></li>
 <li><p><strong>length_units</strong> (<em>str</em><em>, </em><em>default='ft'</em>) – units of length used in the budget results</p></li>
-<li><p><strong>area_units</strong> (<em>str</em><em>, </em><em>default='Acres'</em>) – units of area used in the budget results</p></li>
-<li><p><strong>volume_units</strong> (<em>str</em><em>, </em><em>default='TAF'</em>) – units of volume used in the budget results</p></li>
+<li><p><strong>area_units</strong> (<em>str</em><em>, </em><em>default='sq ft'</em>) – units of area used in the budget results</p></li>
+<li><p><strong>volume_units</strong> (<em>str</em><em>, </em><em>default='cu ft'</em>) – units of volume used in the budget results</p></li>
 <li><p><strong>alternate_location_name</strong> (<em>str</em><em>, </em><em>default=None</em>) – alternate name for location given by the location_id</p></li>
 </ul>
 </dd>
@@ -1420,6 +1420,10 @@ note: only the area shows up in the title lines</p></li>
 <dd class="field-odd"><p>list</p>
 </dd>
 </dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>conversion from model area units of sq ft to acres is 2.29568E-05</p>
+</div>
 <p class="rubric">Example</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pywfm</span> <span class="kn">import</span> <span class="n">IWFMBudget</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">dll</span> <span class="o">=</span> <span class="s1">&#39;../../DLL/Bin/IWFM2015_C_x64.dll&#39;</span>
