@@ -1399,8 +1399,52 @@
 <h1>pywfm.IWFMBudget.get_column_headers<a class="headerlink" href="#pywfm-iwfmbudget-get-column-headers" title="Permalink to this headline">¶</a></h1>
 <dl class="py method">
 <dt class="sig sig-object py" id="pywfm.IWFMBudget.get_column_headers">
-<span class="sig-prename descclassname"><span class="pre">IWFMBudget.</span></span><span class="sig-name descname"><span class="pre">get_column_headers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">location_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length_unit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ft'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">area_unit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Acres'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">volume_unit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'TAF'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pywfm.IWFMBudget.get_column_headers" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<span class="sig-prename descclassname"><span class="pre">IWFMBudget.</span></span><span class="sig-name descname"><span class="pre">get_column_headers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">location_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length_unit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ft'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">area_unit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sq</span> <span class="pre">ft'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">volume_unit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'cu</span> <span class="pre">ft'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pywfm.IWFMBudget.get_column_headers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the column headers for a budget location</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>location_id</strong> (<em>int</em>) – location identification number for budget e.g. subregion id,
+stream reach id, etc.</p></li>
+<li><p><strong>length_unit</strong> (<em>str</em><em>, </em><em>default='ft'</em>) – unit of length used in column headers if one is used</p></li>
+<li><p><strong>area_unit</strong> (<em>str</em><em>, </em><em>default='sq ft'</em>) – unit of area used in column headers if one is used</p></li>
+<li><p><strong>volume_unit</strong> (<em>str</em><em>, </em><em>default='cu ft'</em>) – unit of volume used in column headers if one is used</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>list of column headers for the budget type</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pywfm</span> <span class="kn">import</span> <span class="n">IWFMBudget</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dll</span> <span class="o">=</span> <span class="s1">&#39;../../DLL/Bin/IWFM2015_C_x64.dll&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">bud_file</span> <span class="o">=</span> <span class="s1">&#39;../Results/GW.hdf&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gw_bud</span> <span class="o">=</span> <span class="n">IWFMBudget</span><span class="p">(</span><span class="n">dll</span><span class="p">,</span> <span class="n">bud_file</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gw_bud</span><span class="o">.</span><span class="n">get_column_headers</span><span class="p">()</span>
+<span class="go">[&#39;Time&#39;,</span>
+<span class="go"> &#39;Percolation&#39;,</span>
+<span class="go"> &#39;Beginning Storage (+)&#39;,</span>
+<span class="go"> &#39;Ending Storage (-)&#39;,</span>
+<span class="go"> &#39;Deep Percolation (+)&#39;,</span>
+<span class="go"> &#39;Gain from Stream (+)&#39;,</span>
+<span class="go"> &#39;Recharge (+)&#39;,</span>
+<span class="go"> &#39;Gain from Lake (+)&#39;,</span>
+<span class="go"> &#39;Boundary Inflow (+)&#39;,</span>
+<span class="go"> &#39;Subsidence (+)&#39;,</span>
+<span class="go"> &#39;Subsurface Irrigation (+)&#39;,</span>
+<span class="go"> &#39;Tile Drain Outflow (-)&#39;,</span>
+<span class="go"> &#39;Pumping (-)&#39;,</span>
+<span class="go"> &#39;Outflow to Root Zone (-)&#39;,</span>
+<span class="go"> &#39;Net Subsurface Inflow (+)&#39;,</span>
+<span class="go"> &#39;Discrepancy (=)&#39;,</span>
+<span class="go"> &#39;Cumulative Subsidence&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gw_bud</span><span class="o">.</span><span class="n">close_budget_file</span><span class="p">()</span>
+</pre></div>
+</div>
+</dd></dl>
 
 </section>
 

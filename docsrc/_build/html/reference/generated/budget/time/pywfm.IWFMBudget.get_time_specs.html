@@ -1409,6 +1409,28 @@
 <dd class="field-even"><p>length-2 tuple</p>
 </dd>
 </dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pywfm</span> <span class="kn">import</span> <span class="n">IWFMBudget</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dll</span> <span class="o">=</span> <span class="s1">&#39;../../DLL/Bin/IWFM2015_C_x64.dll&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">bud_file</span> <span class="o">=</span> <span class="s1">&#39;../Results/GW.hdf&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gw_bud</span> <span class="o">=</span> <span class="n">IWFMBudget</span><span class="p">(</span><span class="n">dll</span><span class="p">,</span> <span class="n">bud_file</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dates</span><span class="p">,</span> <span class="n">output_interval</span> <span class="o">=</span> <span class="n">gw_bud</span><span class="o">.</span><span class="n">get_time_specs</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dates</span>
+<span class="go">[&#39;10/01/1990_24:00&#39;,</span>
+<span class="go"> &#39;10/02/1990_24:00&#39;,</span>
+<span class="go"> &#39;10/03/1990_24:00&#39;,</span>
+<span class="go"> &#39;10/04/1990_24:00&#39;,</span>
+<span class="go"> ...</span>
+<span class="go"> &#39;07/18/1992_24:00&#39;,</span>
+<span class="go"> &#39;07/19/1992_24:00&#39;,</span>
+<span class="go"> &#39;07/20/1992_24:00&#39;,</span>
+<span class="go"> &#39;07/21/1992_24:00&#39;,</span>
+<span class="go"> ...]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">output_interval</span>
+<span class="go">&#39;1DAY&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gw_bud</span><span class="o">.</span><span class="n">close_budget_file</span><span class="p">()</span>
+</pre></div>
+</div>
 </dd></dl>
 
 </section>

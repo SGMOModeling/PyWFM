@@ -1404,7 +1404,7 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>location_id</strong> (<em>int</em>) – location identiication number for budget e.g. subregion id,
+<li><p><strong>location_id</strong> (<em>int</em>) – location identification number for budget e.g. subregion id,
 stream reach id, etc.</p></li>
 <li><p><strong>columns</strong> (<em>str</em><em> or </em><em>list of str</em><em>, </em><em>default='all'</em>) – column names to obtain budget data</p></li>
 <li><p><strong>begin_date</strong> (<em>str</em>) – first date where budget data are returned</p></li>
@@ -1416,10 +1416,10 @@ to another length</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>2-D array of floats containing budget data</p>
+<dd class="field-even"><p>DataFrame containing budget data for one or more columns</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>np.ndarray</p>
+<dd class="field-odd"><p>pd.DataFrame</p>
 </dd>
 </dl>
 <div class="admonition note">
@@ -1434,6 +1434,27 @@ more aggregated.</p>
 <dt><a class="reference internal" href="pywfm.IWFMBudget.get_values_for_a_column.html#pywfm.IWFMBudget.get_values_for_a_column" title="pywfm.IWFMBudget.get_values_for_a_column"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IWFMBudget.get_values_for_a_column</span></code></a></dt><dd><p>returns the budget data for a single column and location for specified beginning and ending dates.</p>
 </dd>
 </dl>
+</div>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pywfm</span> <span class="kn">import</span> <span class="n">IWFMBudget</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dll</span> <span class="o">=</span> <span class="s1">&#39;../../DLL/Bin/IWFM2015_C_x64.dll&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">bud_file</span> <span class="o">=</span> <span class="s1">&#39;../Results/GW.hdf&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gw_bud</span> <span class="o">=</span> <span class="n">IWFMBudget</span><span class="p">(</span><span class="n">dll</span><span class="p">,</span> <span class="n">bud_file</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gw_bud</span><span class="o">.</span><span class="n">get_values</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;Percolation&#39;</span><span class="p">,</span> <span class="s1">&#39;Pumping (-)&#39;</span><span class="p">],</span> <span class="s1">&#39;10/31/1999_24:00&#39;</span><span class="p">,</span> <span class="s1">&#39;09/30/2000_24:00&#39;</span><span class="p">)</span>
+<span class="go">           Time   Percolation  Pumping (-)</span>
+<span class="go">  0  1999-10-31  6.398415e+11          0.0</span>
+<span class="go">  1  1999-11-01  6.399953e+11          0.0</span>
+<span class="go">  2  1999-11-02  6.401542e+11          0.0</span>
+<span class="go">  3  1999-11-03  6.403144e+11          0.0</span>
+<span class="go">  4  1999-11-04  6.404747e+11          0.0</span>
+<span class="gp">... </span>        <span class="o">...</span>           <span class="o">...</span>          <span class="o">...</span>
+<span class="go">331  2000-09-26  6.972351e+11          0.0</span>
+<span class="go">332  2000-09-27  6.973616e+11          0.0</span>
+<span class="go">333  2000-09-28  6.974884e+11          0.0</span>
+<span class="go">334  2000-09-29  6.976152e+11          0.0</span>
+<span class="go">335  2000-09-30  6.977418e+11          0.0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gw_bud</span><span class="o">.</span><span class="n">close_budget_file</span><span class="p">()</span>
+</pre></div>
 </div>
 </dd></dl>
 

@@ -1418,10 +1418,10 @@ to some other volume unit</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>np.ndarrays representing dates and values</p>
+<dd class="field-even"><p>DataFrame representing dates and values</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>tuple</p>
+<dd class="field-odd"><p>pd.DataFrame</p>
 </dd>
 </dl>
 <div class="admonition seealso">
@@ -1430,6 +1430,27 @@ to some other volume unit</p></li>
 <dt><a class="reference internal" href="pywfm.IWFMBudget.get_values.html#pywfm.IWFMBudget.get_values" title="pywfm.IWFMBudget.get_values"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IWFMBudget.get_values</span></code></a></dt><dd><p>returns budget data for selected budget columns for a location and specified time interval</p>
 </dd>
 </dl>
+</div>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pywfm</span> <span class="kn">import</span> <span class="n">IWFMBudget</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dll</span> <span class="o">=</span> <span class="s1">&#39;../../DLL/Bin/IWFM2015_C_x64.dll&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">bud_file</span> <span class="o">=</span> <span class="s1">&#39;../Results/GW.hdf&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gw_bud</span> <span class="o">=</span> <span class="n">IWFMBudget</span><span class="p">(</span><span class="n">dll</span><span class="p">,</span> <span class="n">bud_file</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gw_bud</span><span class="o">.</span><span class="n">get_values_for_a_column</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;Pumping (-)&#39;</span><span class="p">,</span> <span class="s1">&#39;10/31/1999_24:00&#39;</span><span class="p">,</span> <span class="s1">&#39;09/30/2000_24:00&#39;</span><span class="p">)</span>
+<span class="go">           Time Pumping (-)</span>
+<span class="go">  0  1999-10-31         0.0</span>
+<span class="go">  1  1999-11-01         0.0</span>
+<span class="go">  2  1999-11-02         0.0</span>
+<span class="go">  3  1999-11-03         0.0</span>
+<span class="go">  4  1999-11-04         0.0</span>
+<span class="gp">... </span>        <span class="o">...</span>         <span class="o">...</span>
+<span class="go">331  2000-09-26         0.0</span>
+<span class="go">332  2000-09-27         0.0</span>
+<span class="go">333  2000-09-28         0.0</span>
+<span class="go">334  2000-09-29         0.0</span>
+<span class="go">335  2000-09-30         0.0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gw_bud</span><span class="o">.</span><span class="n">close_budget_file</span><span class="p">()</span>
+</pre></div>
 </div>
 </dd></dl>
 
