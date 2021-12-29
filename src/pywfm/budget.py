@@ -321,17 +321,17 @@ class IWFMBudget(IWFMMiscellaneous):
         location_id : int
             ID for location (1 to number of locations)
             
-        area_conversion_factor : float, default=2.295684E-05 -> ft to acres
+        area_conversion_factor : float, default=1.0
             factor to convert budget file area units to user desired output area units
             note: only the area shows up in the title lines
 
         length_units : str, default='ft'
             units of length used in the budget results
 
-        area_units : str, default='Acres'
+        area_units : str, default='sq ft'
             units of area used in the budget results
 
-        volume_units : str, default='TAF'
+        volume_units : str, default='cu ft'
             units of volume used in the budget results
 
         alternate_location_name : str, default=None
@@ -341,6 +341,10 @@ class IWFMBudget(IWFMMiscellaneous):
         -------
         list
             titles generated for the Budget
+
+        Note
+        ----
+        conversion from model area units of sq ft to acres is 2.29568E-05
 
         Example
         -------
