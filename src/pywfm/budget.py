@@ -1,5 +1,6 @@
 import ctypes
 import numpy as np
+import pandas as pd
 
 from pywfm.misc import IWFMMiscellaneous
 
@@ -71,13 +72,23 @@ class IWFMBudget(IWFMMiscellaneous):
         int
             number of locations
 
-        Notes
-        -----
-        - if the budget file used is the stream reach budget, the number of
-          locations is the number of stream reaches.
+        Note
+        ----
+        e.g. if the budget file used is the stream reach budget, the number of
+        locations is the number of stream reaches.
         
-        - if the budget file used is the groundwater budget, the number of
-          locations is the number of subregions.
+        e.g. if the budget file used is the groundwater budget, the number of
+        locations is the number of subregions plus one (for the entire model area).
+
+        Example
+        -------
+        >>> from pywfm import IWFMBudget
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> bud_file = '../Results/GW.hdf'
+        >>> gw_bud = IWFMBudget(dll, bud_file)
+        >>> gw_bud.get_n_locations()
+        3
+        >>> gw_bud.close_budget_file()
         '''
         # check to see if the procedure exists in the dll provided
         if not hasattr(self.dll, 'IW_Budget_GetNLocations'):
@@ -101,7 +112,17 @@ class IWFMBudget(IWFMMiscellaneous):
         Returns
         -------
         list
-            list of names for the locations 
+            list of names for the locations
+
+        Example
+        -------
+        >>> from pywfm import IWFMBudget
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> bud_file = '../Results/GW.hdf'
+        >>> gw_bud = IWFMBudget(dll, bud_file)
+        >>> gw_bud.get_location_names()
+        ['Region1 (SR1)', 'Region2 (SR2)', 'ENTIRE MODEL AREA']
+        >>> gw_bud.close_budget_file() 
         '''
         # check to see if the procedure exists in the dll provided
         if not hasattr(self.dll, 'IW_Budget_GetLocationNames'):
@@ -135,6 +156,16 @@ class IWFMBudget(IWFMMiscellaneous):
         -------
         int
             number of time steps
+
+        Example
+        -------
+        >>> from pywfm import IWFMBudget
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> bud_file = '../Results/GW.hdf'
+        >>> gw_bud = IWFMBudget(dll, bud_file)
+        >>> gw_bud.get_n_time_steps()
+        3653
+        >>> gw_bud.close_budget_file()
         '''
         # check to see if the procedure exists in the dll provided
         if not hasattr(self.dll, 'IW_Budget_GetNTimeSteps'):
@@ -157,6 +188,28 @@ class IWFMBudget(IWFMMiscellaneous):
         -------
         length-2 tuple
             time stamps (list), time interval (string)
+
+        Example
+        -------
+        >>> from pywfm import IWFMBudget
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> bud_file = '../Results/GW.hdf'
+        >>> gw_bud = IWFMBudget(dll, bud_file)
+        >>> dates, output_interval = gw_bud.get_time_specs()
+        >>> dates
+        ['10/01/1990_24:00',
+         '10/02/1990_24:00',
+         '10/03/1990_24:00',
+         '10/04/1990_24:00',
+         ...
+         '07/18/1992_24:00',
+         '07/19/1992_24:00',
+         '07/20/1992_24:00',
+         '07/21/1992_24:00',
+         ...]
+        >>> output_interval
+        '1DAY'
+        >>> gw_bud.close_budget_file()
         '''
         # check to see if the procedure exists in the dll provided
         if not hasattr(self.dll, 'IW_Budget_GetTimeSpecs'):
@@ -200,6 +253,16 @@ class IWFMBudget(IWFMMiscellaneous):
         -------
         int
             number of title lines
+        
+        Example
+        -------
+        >>> from pywfm import IWFMBudget
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> bud_file = '../Results/GW.hdf'
+        >>> gw_bud = IWFMBudget(dll, bud_file)
+        >>> gw_bud.get_n_title_lines()
+        3
+        >>> gw_bud.close_budget_file()
         '''
         # check to see if the procedure exists in the dll provided
         if not hasattr(self.dll, 'IW_Budget_GetNTitleLines'):
@@ -223,6 +286,16 @@ class IWFMBudget(IWFMMiscellaneous):
         -------
         int
             number of characters that make up the title lines
+
+        Example
+        -------
+        >>> from pywfm import IWFMBudget
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> bud_file = '../Results/GW.hdf'
+        >>> gw_bud = IWFMBudget(dll, bud_file)
+        >>> gw_bud.get_title_length()
+        242
+        >>> gw_bud.close_budget_file()
         '''
         # check to see if the procedure exists in the dll provided
         if not hasattr(self.dll, 'IW_Budget_GetTitleLength'):
@@ -239,8 +312,8 @@ class IWFMBudget(IWFMMiscellaneous):
 
         return title_length.value
 
-    def get_title_lines(self, location_id, area_conversion_factor=2.295684E-05, length_units='ft', 
-                        area_units='Acres', volume_units='TAF', alternate_location_name=None):
+    def get_title_lines(self, location_id, area_conversion_factor=1.0, length_units='ft', 
+                        area_units='sq ft', volume_units='cu ft', alternate_location_name=None):
         ''' returns the title lines for the budget data for a location to be displayed in the files 
         
         Parameters
@@ -268,6 +341,18 @@ class IWFMBudget(IWFMMiscellaneous):
         -------
         list
             titles generated for the Budget
+
+        Example
+        -------
+        >>> from pywfm import IWFMBudget
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> bud_file = '../Results/GW.hdf'
+        >>> gw_bud = IWFMBudget(dll, bud_file)
+        >>> gw_bud.get_title_lines()
+        ['IWFM (v2015.0.1273)',
+         'GROUNDWATER BUDGET IN cu ft FOR Region1 (SR1)',
+         'SUBREGION AREA: 8610918912.00 sq ft']
+        >>> gw_bud.close_budget_file()
         '''
         # check to see if the procedure exists in the dll provided
         if not hasattr(self.dll, 'IW_Budget_GetTitleLines'):
@@ -348,7 +433,17 @@ class IWFMBudget(IWFMMiscellaneous):
         Returns
         -------
         int
-            number of budget data columns 
+            number of budget data columns
+
+        Example
+        -------
+        >>> from pywfm import IWFMBudget
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> bud_file = '../Results/GW.hdf'
+        >>> gw_bud = IWFMBudget(dll, bud_file)
+        >>> gw_bud.get_n_columns()
+        17
+        >>> gw_bud.close_budget_file() 
         '''
         # check to see if the procedure exists in the dll provided
         if not hasattr(self.dll, 'IW_Budget_GetNColumns'):
@@ -377,9 +472,55 @@ class IWFMBudget(IWFMMiscellaneous):
         return n_columns.value
 
 
-    def get_column_headers(self, location_id, length_unit='ft', area_unit='Acres', volume_unit='TAF'):
-        # IW_Budget_GetColumnHeaders(iLoc,cColumnHeaders,iLenColumnHeaders,NColumns,LengthUnit,AreaUnit,VolumeUnit,
-        #                            iLenUnit,iLocArray,iStat)
+    def get_column_headers(self, location_id, length_unit='ft', area_unit='sq ft', volume_unit='cu ft'):
+        ''' Returns the column headers for a budget location 
+        
+        Parameters
+        ----------
+        location_id : int
+            location identification number for budget e.g. subregion id,
+            stream reach id, etc.
+
+        length_unit : str, default='ft'
+            unit of length used in column headers if one is used
+
+        area_unit : str, default='sq ft'
+            unit of area used in column headers if one is used
+
+        volume_unit : str, default='cu ft'
+            unit of volume used in column headers if one is used
+
+        Returns
+        -------
+        list
+            list of column headers for the budget type
+
+        Example
+        -------
+        >>> from pywfm import IWFMBudget
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> bud_file = '../Results/GW.hdf'
+        >>> gw_bud = IWFMBudget(dll, bud_file)
+        >>> gw_bud.get_column_headers()
+        ['Time',
+         'Percolation',
+         'Beginning Storage (+)',
+         'Ending Storage (-)',
+         'Deep Percolation (+)',
+         'Gain from Stream (+)',
+         'Recharge (+)',
+         'Gain from Lake (+)',
+         'Boundary Inflow (+)',
+         'Subsidence (+)',
+         'Subsurface Irrigation (+)',
+         'Tile Drain Outflow (-)',
+         'Pumping (-)',
+         'Outflow to Root Zone (-)',
+         'Net Subsurface Inflow (+)',
+         'Discrepancy (=)',
+         'Cumulative Subsidence']
+        >>> gw_bud.close_budget_file()
+        '''
         if not hasattr(self.dll, 'IW_Budget_GetColumnHeaders'):
             raise AttributeError('IWFM DLL does not have "{}" procedure. '
                                  'Check for an updated version'.format('IW_Budget_GetColumnHeaders'))
@@ -437,7 +578,7 @@ class IWFMBudget(IWFMMiscellaneous):
         Parameters
         ----------
         location_id : int
-            location identiication number for budget e.g. subregion id,
+            location identification number for budget e.g. subregion id,
             stream reach id, etc.
             
         columns : str or list of str, default='all'
@@ -461,8 +602,8 @@ class IWFMBudget(IWFMMiscellaneous):
 
         Returns
         -------
-        np.ndarray
-            2-D array of floats containing budget data
+        pd.DataFrame
+            DataFrame containing budget data for one or more columns
 
         Note
         ----
@@ -473,6 +614,27 @@ class IWFMBudget(IWFMMiscellaneous):
         See Also
         --------
         IWFMBudget.get_values_for_a_column : returns the budget data for a single column and location for specified beginning and ending dates.
+
+        Example
+        -------
+        >>> from pywfm import IWFMBudget
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> bud_file = '../Results/GW.hdf'
+        >>> gw_bud = IWFMBudget(dll, bud_file)
+        >>> gw_bud.get_values(1, ['Percolation', 'Pumping (-)'], '10/31/1999_24:00', '09/30/2000_24:00')
+                   Time   Percolation  Pumping (-)
+          0  1999-10-31  6.398415e+11          0.0
+          1  1999-11-01  6.399953e+11          0.0
+          2  1999-11-02  6.401542e+11          0.0
+          3  1999-11-03  6.403144e+11          0.0
+          4  1999-11-04  6.404747e+11          0.0
+        ...         ...           ...          ...
+        331  2000-09-26  6.972351e+11          0.0
+        332  2000-09-27  6.973616e+11          0.0
+        333  2000-09-28  6.974884e+11          0.0
+        334  2000-09-29  6.976152e+11          0.0
+        335  2000-09-30  6.977418e+11          0.0
+        >>> gw_bud.close_budget_file()
         '''
         if not hasattr(self.dll, 'IW_Budget_GetValues'):
             raise AttributeError('IWFM DLL does not have "{}" procedure. '
@@ -488,31 +650,35 @@ class IWFMBudget(IWFMMiscellaneous):
         # convert location_id to ctypes
         location_id = ctypes.c_int(location_id)
 
-        # handle list of columns
-        if isinstance(columns, str) and columns == 'all':
-            # get number of columns of data, reduce by 1 since get_n_columns includes time
-            n_columns = ctypes.c_int(self.get_n_columns(location_id.value) - 1)
-            #n_columns = ctypes.c_int(self.get_n_columns(location_id.value))
-            columns = (ctypes.c_int*n_columns.value)(*[i+1 for i in range(n_columns.value)])
-                   
-        elif isinstance(columns, list):
-            # get column headers
-            column_headers = self.get_column_headers(location_id.value)
-            
-            # check that all column names provided exist if so create list of column numbers
-            column_numbers = []
-            for val in columns:
-                if val not in column_headers:
-                    raise ValueError('columns provided must be one of the following:\n {}'.format(', '.join(column_headers)))
-                else:
-                    column_numbers.append(column_headers.index(val)) # i+1 is used for fortran array indexing
-            
-            # convert column numbers list to ctypes
-            n_columns = ctypes.c_int(len(column_numbers))
-            columns = (ctypes.c_int*n_columns.value)(*column_numbers)
+        # get column headers
+        column_headers = self.get_column_headers(location_id.value)
 
-        else:
-            raise TypeError('columns must be a list or "all"')
+        # handle columns as a list
+        if isinstance(columns, str):
+            if columns == 'all':
+                columns = column_headers[1:]
+            
+            else:    
+                columns = [columns]
+                   
+        # if columns provided as a str, it should now be a list
+        if not isinstance(columns, list):
+            raise TypeError('columns must be a list or str')
+                       
+        # check that all column names provided exist if so create list of column numbers
+        column_numbers = []
+        for val in columns:
+            if val not in column_headers:
+                raise ValueError('columns provided must be one of the following:\n {}'.format(', '.join(column_headers)))
+            else:
+                column_numbers.append(column_headers.index(val))
+
+        # convert python index to fortran index for column numbers
+        column_numbers = np.array(column_numbers) + 1           
+
+        # convert column numbers to ctypes
+        n_columns = ctypes.c_int(len(column_numbers))
+        column_numbers = (ctypes.c_int*n_columns.value)(*column_numbers)
 
         # handle start and end dates
         # get time specs
@@ -561,13 +727,15 @@ class IWFMBudget(IWFMMiscellaneous):
         # initialize output variables
         budget_values = ((ctypes.c_double*(n_columns.value + 1))*n_timestep_intervals.value)()
         n_output_intervals = ctypes.c_int(0)
-        status = ctypes.c_int(-1)
+        
+        # set status to 0
+        status = ctypes.c_int(0)
 
         # IW_Budget_GetValues(iLoc,nReadCols,iReadCols,cDateAndTimeBegin,cDateAndTimeEnd,iLenDateAndTime,
         #                     cOutputInterval,iLenInterval,rFact_LT,rFact_AR,rFact_VL,nTimes_In,Values,nTimes_Out,iStat)
         self.dll.IW_Budget_GetValues(ctypes.byref(location_id),
                                      ctypes.byref(n_columns),
-                                     columns,
+                                     column_numbers,
                                      begin_date,
                                      end_date,
                                      ctypes.byref(length_date),
@@ -581,7 +749,10 @@ class IWFMBudget(IWFMMiscellaneous):
                                      ctypes.byref(n_output_intervals),
                                      ctypes.byref(status))
 
-        return np.array(budget_values)
+        budget = pd.DataFrame(data=np.array(budget_values), columns=['Time'] + columns)
+        budget['Time'] = budget['Time'] = budget['Time'].astype('timedelta64[D]') + np.array('1899-12-30', dtype='datetime64')
+
+        return budget
 
     def get_values_for_a_column(self, location_id, column_name, begin_date=None, 
                                 end_date=None, length_conversion_factor=1.0, 
@@ -618,12 +789,33 @@ class IWFMBudget(IWFMMiscellaneous):
 
         Returns
         -------
-        tuple 
-            np.ndarrays representing dates and values
+        pd.DataFrame 
+            DataFrame representing dates and values
 
         See Also
         --------
         IWFMBudget.get_values : returns budget data for selected budget columns for a location and specified time interval
+
+        Example
+        -------
+        >>> from pywfm import IWFMBudget
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> bud_file = '../Results/GW.hdf'
+        >>> gw_bud = IWFMBudget(dll, bud_file)
+        >>> gw_bud.get_values_for_a_column(1, 'Pumping (-)', '10/31/1999_24:00', '09/30/2000_24:00')
+                   Time Pumping (-)
+          0  1999-10-31         0.0
+          1  1999-11-01         0.0
+          2  1999-11-02         0.0
+          3  1999-11-03         0.0
+          4  1999-11-04         0.0
+        ...         ...         ...
+        331  2000-09-26         0.0
+        332  2000-09-27         0.0
+        333  2000-09-28         0.0
+        334  2000-09-29         0.0
+        335  2000-09-30         0.0
+        >>> gw_bud.close_budget_file()
         '''
         if not hasattr(self.dll, 'IW_Budget_GetValues_ForAColumn'):
             raise AttributeError('IWFM DLL does not have "{}" procedure. '
@@ -643,11 +835,10 @@ class IWFMBudget(IWFMMiscellaneous):
         column_headers = self.get_column_headers(location_id.value)
 
         # check that column name provided exists. if so, get column index.
-        try:
-            column_id = ctypes.c_int(column_headers.index(column_name))
-        except ValueError:
-            add_message = 'Must be one of the following:\n{}'.format(', '.join(column_headers))
-            raise ValueError(add_message)
+        if column_name not in column_headers:
+                raise ValueError('column_name provided must be one of the following:\n {}'.format(', '.join(column_headers)))
+        
+        column_id = ctypes.c_int(column_headers.index(column_name) + 1)
             
         # handle start and end dates
         # get time specs
@@ -695,7 +886,9 @@ class IWFMBudget(IWFMMiscellaneous):
         n_output_intervals = ctypes.c_int(0)
         dates = (ctypes.c_double*n_timestep_intervals.value)()
         values = (ctypes.c_double*n_timestep_intervals.value)()
-        status = ctypes.c_int(-1)
+        
+        # set status to 0
+        status = ctypes.c_int(0)
 
         # IW_Budget_GetValues_ForAColumn(iLoc,iCol,cOutputInterval,iLenInterval,cOutputBeginDateAndTime,cOutputEndDateAndTime,
         #                                iLenDateAndTime,rFact_LT,rFact_AR,rFact_VL,iDim_In,iDim_Out,Dates,Values,iStat)
@@ -718,4 +911,4 @@ class IWFMBudget(IWFMMiscellaneous):
         dates = np.array('1899-12-30', dtype='datetime64') + np.array(dates, dtype='timedelta64')
         values = np.array(values)
 
-        return dates, values
+        return pd.DataFrame({'Time': dates, column_name: values})
