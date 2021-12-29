@@ -9608,16 +9608,16 @@ class IWFMModel(IWFMMiscellaneous):
         >>> model = IWFMModel(dll, pp_file, sim_file)
         >>> model.get_groundwater_hydrograph_info()
             ID       Name              X            Y    GSE   BTM_Lay1 BTM_Lay2
-        0  1     GWHyd1      1883179.2   14566752.0  500.0        0.0   -100.0
-        1  2     GWHyd2      1883179.2   14560190.4  500.0        0.0   -100.0
-        2  3     GWHyd3      1883179.2   14553628.8  500.0        0.0   -100.0
-        3  4     GWHyd4      1883179.2   14547067.2  500.0        0.0   -100.0
-        4  5     GWHyd5      1883179.2   14540505.6  500.0        0.0   -100.0
-        5  6     GWHyd6      1883179.2   14533944.0  500.0        0.0   -100.0
-        6  7     GWHyd7      1883179.2   14527382.4  500.0        0.0   -100.0
-        7  8     GWHyd8      1883179.2   14520820.8  500.0        0.0   -100.0
-        8  9     GWHyd9      1883179.2   14514259.2  500.0        0.0   -100.0
-        9   10    GWHyd10      1883179.2   14507697.6  500.0        0.0   -100.0
+         0   1     GWHyd1      1883179.2   14566752.0  500.0        0.0   -100.0
+         1   2     GWHyd2      1883179.2   14560190.4  500.0        0.0   -100.0
+         2   3     GWHyd3      1883179.2   14553628.8  500.0        0.0   -100.0
+         3   4     GWHyd4      1883179.2   14547067.2  500.0        0.0   -100.0
+         4   5     GWHyd5      1883179.2   14540505.6  500.0        0.0   -100.0
+         5   6     GWHyd6      1883179.2   14533944.0  500.0        0.0   -100.0
+         6   7     GWHyd7      1883179.2   14527382.4  500.0        0.0   -100.0
+         7   8     GWHyd8      1883179.2   14520820.8  500.0        0.0   -100.0
+         8   9     GWHyd9      1883179.2   14514259.2  500.0        0.0   -100.0
+         9  10    GWHyd10      1883179.2   14507697.6  500.0        0.0   -100.0
         10  11    GWHyd11      1883179.2   14501136.0  500.0        0.0   -110.0
         11  12    GWHyd12      1883179.2   14494574.4  500.0        0.0   -110.0
         12  13    GWHyd13      1883179.2   14488012.8  500.0        0.0   -110.0
@@ -10029,6 +10029,92 @@ class IWFMModel(IWFMMiscellaneous):
 
 
     ### plotting methods
+    def plot_nodes(self, axes, values=None, cmap='jet', scale_factor=10000,
+                      buffer_distance=10000, write_to_file=False, 
+                      file_name=None):
+        ''' plots model nodes on predefined axes
+
+        Parameters
+        ----------
+        axes : plt.Axes
+            axes object for matplotlib figure
+
+        values : list, tuple, np.ndarray, or None, default=None
+            values to display color
+
+        cmap : str or `~matplotlib.colors.Colormap`, default='jet'
+            colormap used to map normalized data values to RGBA colors
+
+        scale_factor : int, default=10000
+            used to scale the limits of the x and y axis of the plot
+            e.g. scale_factor=1 rounds the x and y min and max values 
+            down and up, respectively to the nearest whole number
+
+        buffer_distance : int, default=10000
+            value used to buffer the min and max axis values by a 
+            number of units
+
+        write_to_file : boolean, default=False
+            save plot to file. if True, file_name is required
+
+        file_name : str
+            file path and name (with extension for valid matplotlib.pyplot 
+            savefig output type)
+
+        Returns
+        -------
+        None
+            matplotlib figure is generated
+        '''
+        if not isinstance(axes, plt.Axes):
+            raise TypeError('axes must be an instance of matplotlib.pyplot.Axes')
+
+        if values is not None:
+            if isinstance(values, list):
+                values = np.array(values)
+
+            if not isinstance(values, np.ndarray):
+                raise TypeError('values must be either a list or np.ndarray')
+
+            if len(values) != self.get_n_nodes():
+                raise ValueError('length of values must be the same as the number of nodes')
+
+        if not isinstance(scale_factor, int):
+            raise TypeError('scale_factor must be an integer')
+
+        if not isinstance(buffer_distance, int):
+            raise TypeError('buffer distance must be an integer')
+
+        if not isinstance(write_to_file, bool):
+            raise TypeError('write_to_file must be True or False')
+
+        if write_to_file and file_name is None:
+            raise ValueError('to save figure, user must specify a file_name')
+
+        if file_name is not None:
+            if not isinstance(file_name, str):
+                raise TypeError('file_name must be a string')
+
+            else:
+                if not os.path.isdir(os.path.dirname(file_name)):
+                    raise ValueError('file path: {} does not exist'.format(os.path.dirname(file_name)))
+
+        model_data = self.get_node_info()
+
+        xmin = math.floor(model_data['X'].min()/scale_factor)*scale_factor - buffer_distance
+        xmax = math.ceil(model_data['X'].max()/scale_factor)*scale_factor + buffer_distance
+        ymin = math.floor(model_data['Y'].min()/scale_factor)*scale_factor - buffer_distance
+        ymax = math.ceil(model_data['Y'].max()/scale_factor)*scale_factor + buffer_distance
+
+        axes.scatter(model_data['X'], model_data['Y'], s=2, c=values, cmap=cmap)
+        
+        axes.set_xlim(xmin, xmax)
+        axes.set_ylim(ymin, ymax)
+        #axes.grid()
+
+        if write_to_file:
+            plt.savefig(file_name)
+    
     def plot_elements(self, axes, values=None, cmap='jet', scale_factor=10000,
                       buffer_distance=10000, write_to_file=False, 
                       file_name=None):
