@@ -9954,7 +9954,7 @@ class IWFMModel(IWFMMiscellaneous):
         Returns
         -------
         pd.DataFrame
-            stream nodes and groundwater nodes for each reach in the IWFM model
+            stream nodes, groundwater nodes, and name for each reach in the IWFM model
 
         Note
         ----
@@ -9975,30 +9975,30 @@ class IWFMModel(IWFMMiscellaneous):
         >>> sim_file = 'Simulation_MAIN.IN'
         >>> model = IWFMModel(dll, pp_file, sim_file)
         >>> model.get_stream_network()
-           StreamReach StreamNodes GroundwaterNodes
-         0           1           1              433
-         1           1           2              412
-         2           1           3              391
-         3           1           4              370
-         4           1           5              349
-         5           1           6              328
-         6           1           7              307
-         7           1           8              286
-         8           1           9              265
-         9           1          10              264
-        10           2          11              222
-        11           2          12              223
-        12           2          13              202
-        13           2          14              181
-        14           2          15              160
-        15           2          16              139
-        16           3          17              139
-        17           3          18              118
-        18           3          19               97
-        19           3          20               76
-        20           3          21               55
-        21           3          22               34
-        22           3          23               13
+           StreamReach StreamNodes GroundwaterNodes ReachName
+         0           1           1              433    Reach1
+         1           1           2              412    Reach1
+         2           1           3              391    Reach1
+         3           1           4              370    Reach1
+         4           1           5              349    Reach1
+         5           1           6              328    Reach1
+         6           1           7              307    Reach1
+         7           1           8              286    Reach1
+         8           1           9              265    Reach1
+         9           1          10              264    Reach1
+        10           2          11              222    Reach2
+        11           2          12              223    Reach2
+        12           2          13              202    Reach2
+        13           2          14              181    Reach2
+        14           2          15              160    Reach2
+        15           2          16              139    Reach2
+        16           3          17              139    Reach3
+        17           3          18              118    Reach3
+        18           3          19               97    Reach3
+        19           3          20               76    Reach3
+        20           3          21               55    Reach3
+        21           3          22               34    Reach3
+        22           3          23               13    Reach3
         >>> model.kill()
         '''
         # get stream reach IDs 
@@ -10013,11 +10013,19 @@ class IWFMModel(IWFMMiscellaneous):
             df['StreamReach'] = rch
             dfs.append(df)
 
+        # assemble all stream reaches into a single DataFrame
         stream_network = pd.concat(dfs)
+
+        # get stream reach names
+        stream_reach_names = self.get_stream_reach_names()
+
+        reach_names = pd.DataFrame({'StreamReach': stream_reach_ids, 'ReachName': stream_reach_names})
+
+        stream_network = pd.merge(stream_network, reach_names, on='StreamReach')
 
         stream_network.sort_values(by=['StreamReach', 'StreamNodes'], ignore_index=True, inplace=True)
 
-        return stream_network[['StreamReach', 'StreamNodes', 'GroundwaterNodes']]
+        return stream_network[['StreamReach', 'StreamNodes', 'GroundwaterNodes', 'ReachName']]
 
 
     ### plotting methods
