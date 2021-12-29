@@ -6,8 +6,11 @@ import numpy as np
 import pandas as pd
 
 import matplotlib.pyplot as plt
+import matplotlib.cm as cm
 from matplotlib.path import Path
 import matplotlib.patches as patches
+from matplotlib.collections import PolyCollection
+import matplotlib.colors as colors
 
 from pywfm.misc import IWFMMiscellaneous
 
@@ -9841,7 +9844,7 @@ class IWFMModel(IWFMMiscellaneous):
         Returns
         -------
         pd.DataFrame
-            DataFrame containing element IDs, Subregions, NodeID for each element with x-y coordinates, and Code for matplotlib patch plotting
+            DataFrame containing element IDs, Subregions, NodeID for each element with x-y coordinates
         
         See Also
         --------
@@ -9856,18 +9859,18 @@ class IWFMModel(IWFMMiscellaneous):
         >>> sim_file = 'Simulation_MAIN.IN'
         >>> model = IWFMModel(dll, pp_file, sim_file)
         >>> model.get_element_spatial_info()
-               IE   SR  NodeNum NodeID         X          Y Count code
-           0    1    1    Node1      1 1804440.0 14435520.0     4    1
-           1    1    1    Node2      2 1811001.6 14435520.0     4    2
-           2    1    1    Node3     23 1811001.6 14442081.6     4    2
-           3    1    1    Node4     22 1804440.0 14442081.6     4   79
-           4    2    1    Node1      2 1811001.6 14435520.0     4    1
-         ...  ...  ...    ...      ...       ...        ...   ...  ...
-        1595  399    2    Node4    439 1922548.8 14566752.0     4   79
-        1596  400    2    Node1    419 1929110.4 14560190.4     4    1
-        1597  400    2    Node2    420 1935672.0 14560190.4     4    2
-        1598  400    2    Node3    441 1935672.0 14566752.0     4    2
-        1599  400    2    Node4    440 1929110.4 14566752.0     4   79
+               IE   SR  NodeNum NodeID         X          Y
+           0    1    1    Node1      1 1804440.0 14435520.0
+           1    1    1    Node2      2 1811001.6 14435520.0
+           2    1    1    Node3     23 1811001.6 14442081.6
+           3    1    1    Node4     22 1804440.0 14442081.6
+           4    2    1    Node1      2 1811001.6 14435520.0
+         ...  ...  ...    ...      ...       ...        ...
+        1595  399    2    Node4    439 1922548.8 14566752.0
+        1596  400    2    Node1    419 1929110.4 14560190.4
+        1597  400    2    Node2    420 1935672.0 14560190.4
+        1598  400    2    Node3    441 1935672.0 14566752.0
+        1599  400    2    Node4    440 1929110.4 14566752.0
         >>> model.kill()
         '''
         node_info = self.get_node_info()
@@ -9877,32 +9880,7 @@ class IWFMModel(IWFMMiscellaneous):
         element_geometry = pd.merge(element_info, node_info, on='NodeID')
         element_geometry.sort_values(by=['IE', 'NodeNum'], inplace=True)
 
-        # generate count of nodes for each element
-        elem_node_count = element_geometry.groupby('IE')['IE'].count().to_frame()
-        elem_node_count.rename(columns={'IE': 'Count'}, inplace=True)
-        elem_node_count.reset_index(inplace=True)
-        
-        element_geometry_info = pd.merge(element_geometry, elem_node_count, on='IE')
-
-        # create internal function to assign plotting codes
-        def apply_code(node_num, node_count):
-            if node_num == "Node1":
-                return Path.MOVETO
-            elif node_num == "Node2":
-                return Path.LINETO
-            elif node_num == "Node3":
-                if node_count == 3:
-                    return Path.CLOSEPOLY
-                elif node_count == 4:
-                    return Path.LINETO
-            else:
-                return Path.CLOSEPOLY
-
-        func = lambda row: apply_code(row["NodeNum"], row["Count"])
-        element_geometry_info["code"] = element_geometry_info.apply(func, 
-                                                                    axis=1)
-
-        return element_geometry_info
+        return element_geometry
 
     def get_depth_to_water(self, layer_number, begin_date=None, end_date=None):
         ''' calculates a depth to water for an IWFM model layer for all dates between
@@ -10043,7 +10021,7 @@ class IWFMModel(IWFMMiscellaneous):
 
 
     ### plotting methods
-    def plot_elements(self, axes, scale_factor=10000,
+    def plot_elements(self, axes, values=None, cmap='jet', scale_factor=10000,
                       buffer_distance=10000, write_to_file=False, 
                       file_name=None):
         ''' plots model elements on predefined axes
@@ -10052,6 +10030,12 @@ class IWFMModel(IWFMMiscellaneous):
         ----------
         axes : plt.Axes
             axes object for matplotlib figure
+
+        values : list, tuple, np.ndarray, or None, default=None
+            values to display color
+
+        cmap : str or `~matplotlib.colors.Colormap`, default='jet'
+            colormap used to map normalized data values to RGBA colors
 
         scale_factor : int, default=10000
             used to scale the limits of the x and y axis of the plot
@@ -10104,13 +10088,48 @@ class IWFMModel(IWFMMiscellaneous):
         ymin = math.floor(model_data['Y'].min()/scale_factor)*scale_factor - buffer_distance
         ymax = math.ceil(model_data['Y'].max()/scale_factor)*scale_factor + buffer_distance
         
-        vertices = model_data[['X', 'Y']].values
-        codes = model_data['code'].values
 
-        elempath = Path(vertices, codes)
+        dfs = []
+        for e in model_data['IE'].unique():
+            node_ids = model_data[model_data['IE'] == e]['NodeID'].to_numpy()
+            node_ids = np.append(node_ids, node_ids[0])
+            
+            x = model_data[model_data['IE'] == e]['X'].to_numpy()
+            x = np.append(x, x[0])
+            
+            y = model_data[model_data['IE'] == e]['Y'].to_numpy()
+            y = np.append(y, y[0])
+            
+            elem = pd.DataFrame({'NodeID': node_ids, 'X': x, 'Y': y})
+            
+            dfs.append(elem)
+        
+        vertices = [list(zip(df['X'].to_numpy(), df['Y'].to_numpy())) for df in dfs]
 
-        elempatch = patches.PathPatch(elempath, facecolor=None, edgecolor='0.6', lw=0.5)
-        axes.add_patch(elempatch)
+        if values is not None:
+            if isinstance(values, list):
+                values = np.array(values)
+
+            if not isinstance(values, np.ndarray):
+                raise TypeError('values must be either a list or np.ndarray')
+
+            if len(values) != self.get_n_elements():
+                raise ValueError('length of values must be the same as the number of elements')
+
+            minima = values.min()
+            maxima = values.max()
+
+            norm = colors.Normalize(vmin=minima, vmax=maxima, clip=True)
+            mapper = cm.ScalarMappable(norm=norm, cmap=cmap)
+
+            c = [mapper.to_rgba(val) for val in values]
+
+        else:
+            c = None
+        
+        poly = PolyCollection(vertices, facecolors=c, edgecolor='0.6', lw=0.5)
+        axes.add_collection(poly)
+        
         axes.set_xlim(xmin, xmax)
         axes.set_ylim(ymin, ymax)
         #axes.grid()
