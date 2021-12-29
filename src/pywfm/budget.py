@@ -609,8 +609,8 @@ class IWFMBudget(IWFMMiscellaneous):
         pd.DataFrame
             DataFrame containing budget data for one or more columns
 
-        Note
-        ----
+        Important
+        ---------
         At this time, output is always returned using the default output 
         interval. In the future, it could be the output interval or
         more aggregated.
