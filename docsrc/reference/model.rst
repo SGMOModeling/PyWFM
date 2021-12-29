@@ -10,7 +10,7 @@ Time-Related
 ============
 
 .. autosummary::
-   :toctree: generated/
+   :toctree: generated/time/
 
    get_current_date_and_time
    get_n_time_steps
@@ -24,7 +24,7 @@ Model Geometry
 ==============
 
 .. autosummary::
-   :toctree: generated/
+   :toctree: generated/geometry/
 
    get_n_nodes
    get_node_coordinates
@@ -69,33 +69,47 @@ Model Geometry
    get_n_reaches_upstream_of_reach
    get_reaches_upstream_of_reach
    is_stream_upstream_node
-   get_n_tile_drains
-   get_tile_drain_ids
-   get_tile_drain_nodes
+   get_stream_network
    get_boundary_nodes
    order_boundary_nodes
    plot_elements
 
-Inflows and Diversions
-======================
+Inflows and Small Watersheds
+============================
 
 .. autosummary::
-   :toctree: generated/
+   :toctree: generated/inflows/
 
    get_n_stream_inflows
    get_stream_inflow_ids
    get_stream_inflow_nodes
    get_n_small_watersheds
    get_small_watershed_ids
-   get_n_diversions
-   get_diversion_ids
-   get_diversion_purpose
+   
+Tile Drains
+===========
 
+.. autosummary::
+   :toctree: generated/drains/
+   
+   get_n_tile_drains
+   get_tile_drain_ids
+   get_tile_drain_nodes
+   
+Land Use
+========
+
+.. autosummary::
+   :toctree: generated/landuse
+   
+   get_n_ag_crops
+
+   
 Streams and Bypasses
 ====================
 
 .. autosummary::
-   :toctree: generated/
+   :toctree: generated/streams/
 
    get_stream_flow_at_location
    get_stream_flows
@@ -109,23 +123,25 @@ Streams and Bypasses
    get_stream_stages
    get_stream_tile_drain_flows
    get_stream_tributary_inflows
-   get_stream_diversion_locations
    get_net_bypass_inflows
    get_actual_stream_diversions_at_some_locations
    
 
-Supply and Demand
-=================
+Diversions and Pumping
+======================
 
 .. autosummary::
-   :toctree: generated/
+   :toctree: generated/diversions/
 
-   get_n_ag_crops
+   get_n_diversions
+   get_diversion_ids
+   get_diversion_purpose
+   get_stream_diversion_locations
    get_n_wells
    get_well_ids
+   get_well_pumping_purpose
    get_n_element_pumps
    get_element_pump_ids
-   get_well_pumping_purpose
    get_element_pump_purpose
    get_urban_diversion_supply_shortage_at_origin
    get_urban_elempump_supply_shortage_at_origin
@@ -142,7 +158,7 @@ Aquifer Properties
 ==================
 
 .. autosummary::
-   :toctree: generated/
+   :toctree: generated/aquiferprops
 
    get_aquifer_horizontal_k
    get_aquifer_vertical_k
@@ -155,11 +171,11 @@ Simulation Results
 ==================
 
 .. autosummary::
-   :toctree: generated/
+   :toctree: generated/heads/
 
-   get_gwheads_all
    get_gwheads_foralayer
    get_depth_to_water
+   get_gwheads_all
    get_subsidence_all
    get_subregion_ag_pumping_average_depth_to_water
    get_zone_ag_pumping_average_depth_to_water
@@ -169,7 +185,7 @@ Simulation Hydrographs
 ======================
 
 .. autosummary::
-   :toctree: generated/
+   :toctree: generated/hydrographs/
 
    get_n_subsidence_hydrographs
    get_subsidence_hydrograph_ids
@@ -198,7 +214,7 @@ Model Simulation
 ================
 
 .. autosummary::
-   :toctree: generated/
+   :toctree: generated/simulation/
 
    advance_state
    advance_time
@@ -224,7 +240,7 @@ General
 =======
 
 .. autosummary::
-   :toctree: generated/
+   :toctree: generated/general/
 
    kill
    is_model_instantiated
@@ -235,7 +251,7 @@ Private Methods
 ===============
 
 .. autosummary::
-   :toctree: generated/
+   :toctree: generated/private/
 
    _is_time_interval_greater_or_equal
    _get_names
@@ -258,7 +274,7 @@ IWFM-Internal
 =============
 
 .. autosummary::
-   :toctree: generated/
+   :toctree: generated/internal/
 
    get_data_unit_type_id_area
    get_data_unit_type_id_length
