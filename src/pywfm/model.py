@@ -9605,15 +9605,15 @@ class IWFMModel(IWFMMiscellaneous):
         >>> model = IWFMModel(dll, pp_file, sim_file)
         >>> model.get_groundwater_hydrograph_info()
             ID       Name              X            Y    GSE   BTM_Lay1 BTM_Lay2
-        0	 1     GWHyd1      1883179.2   14566752.0  500.0        0.0   -100.0
-        1	 2     GWHyd2      1883179.2   14560190.4  500.0        0.0   -100.0
-        2	 3     GWHyd3      1883179.2   14553628.8  500.0        0.0   -100.0
-        3	 4     GWHyd4      1883179.2   14547067.2  500.0        0.0   -100.0
-        4	 5     GWHyd5      1883179.2   14540505.6  500.0        0.0   -100.0
-        5	 6     GWHyd6      1883179.2   14533944.0  500.0        0.0   -100.0
-        6	 7     GWHyd7      1883179.2   14527382.4  500.0        0.0   -100.0
-        7	 8     GWHyd8      1883179.2   14520820.8  500.0        0.0   -100.0
-        8	 9     GWHyd9      1883179.2   14514259.2  500.0        0.0   -100.0
+        0  1     GWHyd1      1883179.2   14566752.0  500.0        0.0   -100.0
+        1  2     GWHyd2      1883179.2   14560190.4  500.0        0.0   -100.0
+        2  3     GWHyd3      1883179.2   14553628.8  500.0        0.0   -100.0
+        3  4     GWHyd4      1883179.2   14547067.2  500.0        0.0   -100.0
+        4  5     GWHyd5      1883179.2   14540505.6  500.0        0.0   -100.0
+        5  6     GWHyd6      1883179.2   14533944.0  500.0        0.0   -100.0
+        6  7     GWHyd7      1883179.2   14527382.4  500.0        0.0   -100.0
+        7  8     GWHyd8      1883179.2   14520820.8  500.0        0.0   -100.0
+        8  9     GWHyd9      1883179.2   14514259.2  500.0        0.0   -100.0
         9   10    GWHyd10      1883179.2   14507697.6  500.0        0.0   -100.0
         10  11    GWHyd11      1883179.2   14501136.0  500.0        0.0   -110.0
         11  12    GWHyd12      1883179.2   14494574.4  500.0        0.0   -110.0
@@ -9938,13 +9938,13 @@ class IWFMModel(IWFMMiscellaneous):
         >>> sim_file = 'Simulation_MAIN.IN'
         >>> model = IWFMModel(dll, pp_file, sim_file)
         >>> model.get_depth_to_water(1, '09/01/2000_24:00')
-                      Date NodeID	DTW         X          Y
+                      Date NodeID DTW         X          Y
             0   2000-09-01      1 210.0 1804440.0 14435520.0
             1   2000-09-02      1 210.0 1804440.0 14435520.0
             2   2000-09-03      1 210.0 1804440.0 14435520.0
             3   2000-09-04      1 210.0 1804440.0 14435520.0
             4   2000-09-05      1 210.0 1804440.0 14435520.0
-          ...          ...    ...   ...	      ...        ...         
+          ...          ...    ...   ...       ...        ...         
         13225   2000-09-26    441 150.0 1935672.0 14566752.0
         13226   2000-09-27    441 150.0 1935672.0 14566752.0
         13227   2000-09-28    441 150.0 1935672.0 14566752.0
@@ -9969,6 +9969,77 @@ class IWFMModel(IWFMMiscellaneous):
         dtw_df.rename(columns={'level_0': 'Date', 'level_1': 'NodeID', 0: 'DTW'}, inplace=True)
 
         return pd.merge(dtw_df, self.get_node_info(), on='NodeID')
+
+    def get_stream_network(self):
+        ''' Returns the stream nodes and groundwater nodes for every reach in an IWFM model
+
+        Returns
+        -------
+        pd.DataFrame
+            stream nodes and groundwater nodes for each reach in the IWFM model
+
+        Note
+        ----
+        For IWFM models using the wide stream feature in Stream Package Version #4.2,
+        only the first groundwater node will be returned.
+
+        See Also
+        --------
+        IWFMModel.get_stream_reach_ids : Returns an array of stream reach IDs in an IWFM model
+        IWFMModel.get_stream_reach_stream_nodes : Returns the stream node IDs corresponding to stream nodes in a specified reach
+        IWFMModel.get_stream_reach_groundwater_nodes : Returns the groundwater node IDs corresponding to stream nodes in a specified reach
+
+        Example
+        -------
+        >>> from pywfm import IWFMModel
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
+        >>> sim_file = 'Simulation_MAIN.IN'
+        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model.get_stream_network()
+           StreamReach StreamNodes GroundwaterNodes
+         0           1           1              433
+         1           1           2              412
+         2           1           3              391
+         3           1           4              370
+         4           1           5              349
+         5           1           6              328
+         6           1           7              307
+         7           1           8              286
+         8           1           9              265
+         9           1          10              264
+        10           2          11              222
+        11           2          12              223
+        12           2          13              202
+        13           2          14              181
+        14           2          15              160
+        15           2          16              139
+        16           3          17              139
+        17           3          18              118
+        18           3          19               97
+        19           3          20               76
+        20           3          21               55
+        21           3          22               34
+        22           3          23               13
+        >>> model.kill()
+        '''
+        # get stream reach IDs 
+        stream_reach_ids = self.get_stream_reach_ids()
+
+        # get stream nodes and groundwater nodes for each stream reach
+        dfs = []
+        for rch in stream_reach_ids:
+            stream_nodes = self.get_stream_reach_stream_nodes(int(rch))
+            groundwater_nodes = self.get_stream_reach_groundwater_nodes(int(rch))
+            df = pd.DataFrame({'StreamNodes': stream_nodes, 'GroundwaterNodes': groundwater_nodes})
+            df['StreamReach'] = rch
+            dfs.append(df)
+
+        stream_network = pd.concat(dfs)
+
+        stream_network.sort_values(by=['StreamReach', 'StreamNodes'], ignore_index=True, inplace=True)
+
+        return stream_network[['StreamReach', 'StreamNodes', 'GroundwaterNodes']]
 
 
     ### plotting methods
