@@ -1399,7 +1399,7 @@
 coordinates for nodes</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>DataFrame containing element IDs, Subregions, NodeID for each element with x-y coordinates, and Code for matplotlib patch plotting</p>
+<dd class="field-odd"><p>DataFrame containing element IDs, Subregions, NodeID for each element with x-y coordinates</p>
 </dd>
 <dt class="field-even">Return type</dt>
 <dd class="field-even"><p>pd.DataFrame</p>
@@ -1421,18 +1421,18 @@ coordinates for nodes</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">sim_file</span> <span class="o">=</span> <span class="s1">&#39;Simulation_MAIN.IN&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">IWFMModel</span><span class="p">(</span><span class="n">dll</span><span class="p">,</span> <span class="n">pp_file</span><span class="p">,</span> <span class="n">sim_file</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">get_element_spatial_info</span><span class="p">()</span>
-<span class="go">       IE   SR  NodeNum NodeID         X          Y Count code</span>
-<span class="go">   0    1    1    Node1      1 1804440.0 14435520.0     4    1</span>
-<span class="go">   1    1    1    Node2      2 1811001.6 14435520.0     4    2</span>
-<span class="go">   2    1    1    Node3     23 1811001.6 14442081.6     4    2</span>
-<span class="go">   3    1    1    Node4     22 1804440.0 14442081.6     4   79</span>
-<span class="go">   4    2    1    Node1      2 1811001.6 14435520.0     4    1</span>
-<span class="go"> ...  ...  ...    ...      ...       ...        ...   ...  ...</span>
-<span class="go">1595  399    2    Node4    439 1922548.8 14566752.0     4   79</span>
-<span class="go">1596  400    2    Node1    419 1929110.4 14560190.4     4    1</span>
-<span class="go">1597  400    2    Node2    420 1935672.0 14560190.4     4    2</span>
-<span class="go">1598  400    2    Node3    441 1935672.0 14566752.0     4    2</span>
-<span class="go">1599  400    2    Node4    440 1929110.4 14566752.0     4   79</span>
+<span class="go">       IE   SR  NodeNum NodeID         X          Y</span>
+<span class="go">   0    1    1    Node1      1 1804440.0 14435520.0</span>
+<span class="go">   1    1    1    Node2      2 1811001.6 14435520.0</span>
+<span class="go">   2    1    1    Node3     23 1811001.6 14442081.6</span>
+<span class="go">   3    1    1    Node4     22 1804440.0 14442081.6</span>
+<span class="go">   4    2    1    Node1      2 1811001.6 14435520.0</span>
+<span class="go"> ...  ...  ...    ...      ...       ...        ...</span>
+<span class="go">1595  399    2    Node4    439 1922548.8 14566752.0</span>
+<span class="go">1596  400    2    Node1    419 1929110.4 14560190.4</span>
+<span class="go">1597  400    2    Node2    420 1935672.0 14560190.4</span>
+<span class="go">1598  400    2    Node3    441 1935672.0 14566752.0</span>
+<span class="go">1599  400    2    Node4    440 1929110.4 14566752.0</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">kill</span><span class="p">()</span>
 </pre></div>
 </div>

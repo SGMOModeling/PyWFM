@@ -1398,7 +1398,7 @@
 <dd><p>Returns the stream nodes and groundwater nodes for every reach in an IWFM model</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>stream nodes and groundwater nodes for each reach in the IWFM model</p>
+<dd class="field-odd"><p>stream nodes, groundwater nodes, and name for each reach in the IWFM model</p>
 </dd>
 <dt class="field-even">Return type</dt>
 <dd class="field-even"><p>pd.DataFrame</p>
@@ -1427,30 +1427,30 @@ only the first groundwater node will be returned.</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">sim_file</span> <span class="o">=</span> <span class="s1">&#39;Simulation_MAIN.IN&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">IWFMModel</span><span class="p">(</span><span class="n">dll</span><span class="p">,</span> <span class="n">pp_file</span><span class="p">,</span> <span class="n">sim_file</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">get_stream_network</span><span class="p">()</span>
-<span class="go">   StreamReach StreamNodes GroundwaterNodes</span>
-<span class="go"> 0           1           1              433</span>
-<span class="go"> 1           1           2              412</span>
-<span class="go"> 2           1           3              391</span>
-<span class="go"> 3           1           4              370</span>
-<span class="go"> 4           1           5              349</span>
-<span class="go"> 5           1           6              328</span>
-<span class="go"> 6           1           7              307</span>
-<span class="go"> 7           1           8              286</span>
-<span class="go"> 8           1           9              265</span>
-<span class="go"> 9           1          10              264</span>
-<span class="go">10           2          11              222</span>
-<span class="go">11           2          12              223</span>
-<span class="go">12           2          13              202</span>
-<span class="go">13           2          14              181</span>
-<span class="go">14           2          15              160</span>
-<span class="go">15           2          16              139</span>
-<span class="go">16           3          17              139</span>
-<span class="go">17           3          18              118</span>
-<span class="go">18           3          19               97</span>
-<span class="go">19           3          20               76</span>
-<span class="go">20           3          21               55</span>
-<span class="go">21           3          22               34</span>
-<span class="go">22           3          23               13</span>
+<span class="go">   StreamReach StreamNodes GroundwaterNodes ReachName</span>
+<span class="go"> 0           1           1              433    Reach1</span>
+<span class="go"> 1           1           2              412    Reach1</span>
+<span class="go"> 2           1           3              391    Reach1</span>
+<span class="go"> 3           1           4              370    Reach1</span>
+<span class="go"> 4           1           5              349    Reach1</span>
+<span class="go"> 5           1           6              328    Reach1</span>
+<span class="go"> 6           1           7              307    Reach1</span>
+<span class="go"> 7           1           8              286    Reach1</span>
+<span class="go"> 8           1           9              265    Reach1</span>
+<span class="go"> 9           1          10              264    Reach1</span>
+<span class="go">10           2          11              222    Reach2</span>
+<span class="go">11           2          12              223    Reach2</span>
+<span class="go">12           2          13              202    Reach2</span>
+<span class="go">13           2          14              181    Reach2</span>
+<span class="go">14           2          15              160    Reach2</span>
+<span class="go">15           2          16              139    Reach2</span>
+<span class="go">16           3          17              139    Reach3</span>
+<span class="go">17           3          18              118    Reach3</span>
+<span class="go">18           3          19               97    Reach3</span>
+<span class="go">19           3          20               76    Reach3</span>
+<span class="go">20           3          21               55    Reach3</span>
+<span class="go">21           3          22               34    Reach3</span>
+<span class="go">22           3          23               13    Reach3</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">kill</span><span class="p">()</span>
 </pre></div>
 </div>
