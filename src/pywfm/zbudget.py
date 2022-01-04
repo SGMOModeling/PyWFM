@@ -644,17 +644,17 @@ class IWFMZBudget(IWFMMiscellaneous):
 
         Parameters
         ----------
-        zone_ids : list, np.ndarray, int
+        zone_ids : int, list, np.ndarray, or str='all', default='all'
             one or more zone identification numbers to retrieve zbudget
             data
 
         column_ids : int, list, or 'all', default='all'
             one or more data column indices to retrieve zbudget data
 
-        current_date : str
+        current_date : str or None, default=None
             valid IWFM date used to return zbudget data
 
-        output_interval : str
+        output_interval : str or None, default=None
             valid IWFM output time interval for returning zbudget data.
             This must be greater than or equal to the simulation time 
             step
@@ -687,16 +687,17 @@ class IWFMZBudget(IWFMMiscellaneous):
         if zone_ids == 'all':
             zone_ids = zones
 
-        elif isinstance(zone_ids, (int, list, np.ndarray)):
-            if isinstance(zone_ids, list):
-                zone_ids = np.array(zone_ids)
-            
-            elif isinstance(zone_ids, int):
-                zone_ids = np.array([zone_ids])
+        if isinstance(zone_ids, int):
+            zone_ids = np.array([zone_ids])
+
+        if isinstance(zone_ids, list):
+            zone_ids = np.array(zone_ids)
         
-        else:
+        # now zone_ids should all be np.ndarray, so check if np.ndarray
+        if not isinstance(zone_ids, np.ndarray):
             raise TypeError('zone_ids must be an int, list or np.ndarray')
 
+        # make sure all zone_ids are valid zones
         if not np.all(np.isin(zone_ids, zones)):
             raise ValueError('zone_ids were not found in zone definitions provided')
 
