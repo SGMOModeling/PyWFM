@@ -1,6 +1,7 @@
 import ctypes
 from typing import Type
 import numpy as np
+import pandas as pd
 
 from pywfm.misc import IWFMMiscellaneous
 
@@ -880,7 +881,7 @@ class IWFMZBudget(IWFMMiscellaneous):
         zone_id : int
             zone identification number used to return zbudget results
 
-        column_ids : list, np.ndarray, int
+        column_ids : int, list, np.ndarray, or str='all', default='all'
             one or more column identification numbers for returning zbudget results
 
         begin_date : str
@@ -902,8 +903,8 @@ class IWFMZBudget(IWFMMiscellaneous):
 
         Returns
         -------
-        np.ndarray
-            array of ZBudget output for user-specified columns for a zone
+        pd.DataFrame
+            DataFrame of ZBudget output for user-specified columns for a zone
 
         Note
         ----
@@ -914,35 +915,45 @@ class IWFMZBudget(IWFMMiscellaneous):
             raise AttributeError('IWFM DLL does not have "{}" procedure. '
                                  'Check for an updated version'.format('IW_ZBudget_GetValues_ForAZone'))
 
-        # check that zone is valid
+        # check zone_id is an integer
+        if not isinstance(zone_id, int):
+            raise TypeError('zone_id must be an integer')
+
+        # get possible zones numbers
         zones = self.get_zone_list()
 
+        # check that zone_id is a valid zone ID
         if zone_id not in zones:
             raise ValueError('zone_id was not found in zone definitions provided')
 
-        # get valid column_ids
-        _, column_header_ids = self.get_column_headers_for_a_zone(zone_id, include_time=True)
+        # get all column headers and column IDs
+        column_headers, column_header_ids = self.get_column_headers_for_a_zone(zone_id, include_time=True)
 
         if column_ids == 'all':
             column_ids = column_header_ids[column_header_ids > 0]
-                
-        # otherwise check that column_ids are valid
-        elif isinstance(column_ids, (int, list, np.ndarray)):
-            
-            if isinstance(column_ids, (int, list)):
-                column_ids = np.array(column_ids)
 
-            # check that all column_ids are in the list of possible 
-            # column header ids for the given zone
-            if not np.all(np.isin(column_ids, column_header_ids)):
-                raise ValueError('one or more column ids provided were not found')
-
-            # if column_id 1 i.e. Time is not included, add it.
-            if 1 not in column_ids:
-                column_ids = np.concatenate((np.array([1]), column_ids))
+        if isinstance(column_ids, int):
+            column_ids = np.array([column_ids])
         
-        else:
-            raise TypeError('column_ids must be an integer, list of integers or numpy array')
+        if isinstance(column_ids, list):
+            column_ids = np.array(column_ids)
+                
+        # valid column_ids should now all be np.ndarray, so validate column_ids
+        if not isinstance(column_ids, np.ndarray):
+            raise TypeError('column_ids must be an int, list, np.ndarray or str="all"')
+            
+        # check that all column_ids are in the list of possible 
+        # column header ids for the given zone
+        if not np.all(np.isin(column_ids, column_header_ids)):
+            raise ValueError('one or more column_ids provided are not valid')
+
+        # if column_id 1 i.e. Time is not included, add it.
+        if 1 not in column_ids:
+            column_ids = np.concatenate((np.array([1]), column_ids))
+
+        # get list of column names from column_ids
+        column_headers = np.array(column_headers)
+        columns = column_headers[column_ids - 1]
 
         # convert zone_id to ctypes
         zone_id = ctypes.c_int(zone_id)
@@ -1025,8 +1036,7 @@ class IWFMZBudget(IWFMMiscellaneous):
 
         values = np.array(zbudget_values)
 
-        #dates = np.array('1899-12-30', dtype='datetime64') + values[:,0].astype('timedelta64')
-        #zbudget = values[:,1:]
+        zbudget = pd.DataFrame(data=values, columns=columns)
+        zbudget['Time'] = zbudget['Time'].astype('timedelta64[D]') + np.array('1899-12-30', dtype='datetime64')
         
-        #return dates, zbudget
-        return values
+        return zbudget
