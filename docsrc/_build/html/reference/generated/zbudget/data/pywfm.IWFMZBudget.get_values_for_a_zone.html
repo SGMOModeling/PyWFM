@@ -1405,7 +1405,7 @@
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>zone_id</strong> (<em>int</em>) – zone identification number used to return zbudget results</p></li>
-<li><p><strong>column_ids</strong> (<em>list</em><em>, </em><em>np.ndarray</em><em>, </em><em>int</em>) – one or more column identification numbers for returning zbudget results</p></li>
+<li><p><strong>column_ids</strong> (<em>int</em><em>, </em><em>list</em><em>, </em><em>np.ndarray</em><em>, or </em><em>str='all'</em><em>, </em><em>default='all'</em>) – one or more column identification numbers for returning zbudget results</p></li>
 <li><p><strong>begin_date</strong> (<em>str</em>) – first date where zbudget results are returned</p></li>
 <li><p><strong>end_date</strong> (<em>str</em>) – last date where zbudget results are returned</p></li>
 <li><p><strong>output_interval</strong> (<em>str</em>) – output interval greater than or equal to the model simulation time step</p></li>
@@ -1416,10 +1416,10 @@ to the desired output units</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>array of ZBudget output for user-specified columns for a zone</p>
+<dd class="field-even"><p>DataFrame of ZBudget output for user-specified columns for a zone</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>np.ndarray</p>
+<dd class="field-odd"><p>pd.DataFrame</p>
 </dd>
 </dl>
 <div class="admonition note">
