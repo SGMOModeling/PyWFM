@@ -852,6 +852,9 @@ class IWFMZBudget(IWFMMiscellaneous):
 
         output_interval : str or None, default=None
             valid IWFM output time interval for returning zbudget data.
+            
+            Note
+            ----
             This must be greater than or equal to the simulation time 
             step
 
