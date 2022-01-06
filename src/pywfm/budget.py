@@ -574,7 +574,7 @@ class IWFMBudget(IWFMMiscellaneous):
         return self._string_to_list_by_array(raw_column_headers, delimiter_position_array, n_columns)
 
     def get_values(self, location_id, columns='all', begin_date=None, 
-                   end_date=None, length_conversion_factor=1.0, 
+                   end_date=None, output_interval=None, length_conversion_factor=1.0, 
                    area_conversion_factor=1.0, 
                    volume_conversion_factor=1.0):
         ''' returns budget data for selected budget columns for a location and specified time interval  
@@ -594,6 +594,14 @@ class IWFMBudget(IWFMMiscellaneous):
         end_date : str
             last date where budget data are returned
 
+        output_interval : str or None, default=None
+            valid IWFM output time interval for returning budget data.
+            
+            Note
+            ----
+            This must be greater than or equal to the simulation time 
+            step
+
         length_conversion_factor : float, default=1.0 
             conversion factor to convert simulation units for length
             to another length
@@ -608,12 +616,6 @@ class IWFMBudget(IWFMMiscellaneous):
         -------
         pd.DataFrame
             DataFrame containing budget data for one or more columns
-
-        Important
-        ---------
-        At this time, output is always returned using the default output 
-        interval. In the future, it could be the output interval or
-        more aggregated.
 
         See Also
         --------
@@ -686,7 +688,7 @@ class IWFMBudget(IWFMMiscellaneous):
 
         # handle start and end dates
         # get time specs
-        dates_list, output_interval = self.get_time_specs()
+        dates_list, sim_output_interval = self.get_time_specs()
         
         if begin_date is None:
             begin_date = dates_list[0]
@@ -718,6 +720,15 @@ class IWFMBudget(IWFMMiscellaneous):
         end_date = ctypes.create_string_buffer(end_date.encode('utf-8'))
 
         length_date = ctypes.c_int(ctypes.sizeof(begin_date))
+
+        # handle output interval
+        if output_interval is None:
+            output_interval = sim_output_interval
+                
+        # check output interval is greater than or equal to simulation
+        if not self._is_time_interval_greater_or_equal(output_interval, sim_output_interval):
+            raise ValueError('output_interval must be greater than or '
+                             'equal to the simulation time step')
 
         # convert output_interval to ctypes
         output_interval = ctypes.create_string_buffer(output_interval.encode('utf-8'))
@@ -759,7 +770,8 @@ class IWFMBudget(IWFMMiscellaneous):
         return budget
 
     def get_values_for_a_column(self, location_id, column_name, begin_date=None, 
-                                end_date=None, length_conversion_factor=1.0, 
+                                end_date=None, output_interval=None, 
+                                length_conversion_factor=1.0, 
                                 area_conversion_factor=1.0, 
                                 volume_conversion_factor=1.0):
         ''' returns the budget data for a single column and location for a specified
@@ -778,6 +790,14 @@ class IWFMBudget(IWFMMiscellaneous):
 
         end_date : str or None, default=None
             last date for budget values
+
+        output_interval : str or None, default=None
+            valid IWFM output time interval for returning budget data.
+            
+            Note
+            ----
+            This must be greater than or equal to the simulation time 
+            step
 
         length_conversion_factor : float, default=1.0
             unit conversion factor for length units used in the model 
@@ -846,7 +866,7 @@ class IWFMBudget(IWFMMiscellaneous):
             
         # handle start and end dates
         # get time specs
-        dates_list, output_interval = self.get_time_specs()
+        dates_list, sim_output_interval = self.get_time_specs()
         
         if begin_date is None:
             begin_date = dates_list[0]
@@ -876,6 +896,15 @@ class IWFMBudget(IWFMMiscellaneous):
         end_date = ctypes.create_string_buffer(end_date.encode('utf-8'))
 
         length_date = ctypes.c_int(ctypes.sizeof(begin_date))
+
+        # handle output interval
+        if output_interval is None:
+            output_interval = sim_output_interval
+                
+        # check output interval is greater than or equal to simulation
+        if not self._is_time_interval_greater_or_equal(output_interval, sim_output_interval):
+            raise ValueError('output_interval must be greater than or '
+                             'equal to the simulation time step')
 
         # convert output_interval to ctypes
         output_interval = ctypes.create_string_buffer(output_interval.encode('utf-8'))
