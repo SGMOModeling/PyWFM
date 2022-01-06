@@ -1409,6 +1409,33 @@
 <dd class="field-even"><p>length-2 tuple</p>
 </dd>
 </dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><a class="reference internal" href="pywfm.IWFMZBudget.get_n_time_steps.html#pywfm.IWFMZBudget.get_n_time_steps" title="pywfm.IWFMZBudget.get_n_time_steps"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IWFMZBudget.get_n_time_steps</span></code></a></dt><dd><p>Returns the number of time steps where zbudget data is available</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pywfm</span> <span class="kn">import</span> <span class="n">IWFMZBudget</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dll</span> <span class="o">=</span> <span class="s1">&#39;../../DLL/Bin/IWFM2015_C_x64.dll&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">zbud_file</span> <span class="o">=</span> <span class="s1">&#39;../Results/GW_ZBud.hdf&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">zone_defs</span> <span class="o">=</span> <span class="s1">&#39;../ZBudget/ZoneDef_SRs.dat&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gw_zbud</span> <span class="o">=</span> <span class="n">IWFMZBudget</span><span class="p">(</span><span class="n">dll</span><span class="p">,</span> <span class="n">zbud_file</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gw_zbud</span><span class="o">.</span><span class="n">generate_zone_list_from_file</span><span class="p">(</span><span class="n">zone_defs</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dates</span><span class="p">,</span> <span class="n">interval</span> <span class="o">=</span> <span class="n">gw_zbud</span><span class="o">.</span><span class="n">get_time_specs</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dates</span>
+<span class="go">[&#39;10/01/1990_24:00&#39;,</span>
+<span class="go"> &#39;10/02/1990_24:00&#39;,</span>
+<span class="go"> &#39;10/03/1990_24:00&#39;,</span>
+<span class="go"> &#39;10/04/1990_24:00&#39;,</span>
+<span class="go"> &#39;10/05/1990_24:00&#39;,</span>
+<span class="go"> ...]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">interval</span>
+<span class="go">&#39;1DAY&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gw_zbud</span><span class="o">.</span><span class="n">close_zbudget_file</span><span class="p">()</span>
+</pre></div>
+</div>
 </dd></dl>
 
 </section>

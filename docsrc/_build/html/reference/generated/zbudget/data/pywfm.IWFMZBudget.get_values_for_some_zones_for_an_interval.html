@@ -1441,6 +1441,46 @@ to the desired output units</p></li>
 </dd>
 </dl>
 </div>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pywfm</span> <span class="kn">import</span> <span class="n">IWFMZBudget</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dll</span> <span class="o">=</span> <span class="s1">&#39;../../DLL/Bin/IWFM2015_C_x64.dll&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">zbud_file</span> <span class="o">=</span> <span class="s1">&#39;../Results/GW_ZBud.hdf&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">zone_defs</span> <span class="o">=</span> <span class="s1">&#39;../ZBudget/ZoneDef_SRs.dat&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gw_zbud</span> <span class="o">=</span> <span class="n">IWFMZBudget</span><span class="p">(</span><span class="n">dll</span><span class="p">,</span> <span class="n">zbud_file</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gw_zbud</span><span class="o">.</span><span class="n">generate_zone_list_from_file</span><span class="p">(</span><span class="n">zone_defs</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">zone_values</span> <span class="o">=</span> <span class="n">gw_zbud</span><span class="o">.</span><span class="n">get_values_for_some_zones_for_an_interval</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">zone_values</span><span class="p">[</span><span class="s1">&#39;Region1&#39;</span><span class="p">]</span>
+<span class="go">        Time GW Storage_Inflow (+) GW Storage_Outflow (-) Streams_Inflow (+) Streams_Outflow (-) Tile Drains_Inflow (+) Tile Drains_Outflow (-) Subsidence_Inflow (+) Subsidence_Outflow (-) Deep Percolation_Inflow (+) ... Lakes_Inflow (+) Lakes_Outflow (-) Pumping by Element_Inflow (+) Pumping by Element_Outflow (-) Root Water Uptake_Inflow (+) Root Water Uptake_Outflow (-) Inflow from zone 2 (+) Outflow to zone 2 (-) Discrepancy (=) Absolute Storage</span>
+<span class="go">0 1990-10-01              0.888134           3.152751e+09                0.0                 0.0                    0.0                     0.0                   0.0           7.384521e+06                         0.0 ...     3.068518e+09               0.0                           0.0                            0.0                          0.0                           0.0            9448.000542         499542.470953        0.822217     2.507244e+11</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gw_zbud</span><span class="o">.</span><span class="n">close_zbudget_file</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pywfm</span> <span class="kn">import</span> <span class="n">IWFMZBudget</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dll</span> <span class="o">=</span> <span class="s1">&#39;../../DLL/Bin/IWFM2015_C_x64.dll&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">zbud_file</span> <span class="o">=</span> <span class="s1">&#39;../Results/GW_ZBud.hdf&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">zone_defs</span> <span class="o">=</span> <span class="s1">&#39;../ZBudget/ZoneDef_SRs.dat&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gw_zbud</span> <span class="o">=</span> <span class="n">IWFMZBudget</span><span class="p">(</span><span class="n">dll</span><span class="p">,</span> <span class="n">zbud_file</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gw_zbud</span><span class="o">.</span><span class="n">generate_zone_list_from_file</span><span class="p">(</span><span class="n">zone_defs</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gw_zbud</span><span class="o">.</span><span class="n">get_values_for_some_zones_for_an_interval</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="go">{&#39;Region1&#39;:         Time  GW Storage_Inflow (+)  GW Storage_Outflow (-)</span>
+<span class="go">            0 1990-10-01               0.888134            3.152751e+09}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gw_zbud</span><span class="o">.</span><span class="n">close_zbudget_file</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pywfm</span> <span class="kn">import</span> <span class="n">IWFMZBudget</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dll</span> <span class="o">=</span> <span class="s1">&#39;../../DLL/Bin/IWFM2015_C_x64.dll&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">zbud_file</span> <span class="o">=</span> <span class="s1">&#39;../Results/GW_ZBud.hdf&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">zone_defs</span> <span class="o">=</span> <span class="s1">&#39;../ZBudget/ZoneDef_SRs.dat&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gw_zbud</span> <span class="o">=</span> <span class="n">IWFMZBudget</span><span class="p">(</span><span class="n">dll</span><span class="p">,</span> <span class="n">zbud_file</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gw_zbud</span><span class="o">.</span><span class="n">generate_zone_list_from_file</span><span class="p">(</span><span class="n">zone_defs</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gw_zbud</span><span class="o">.</span><span class="n">get_values_for_some_zones_for_an_interval</span><span class="p">(</span><span class="n">column_ids</span><span class="o">=</span><span class="p">[[</span><span class="mi">28</span><span class="p">,</span> <span class="mi">29</span><span class="p">],</span> <span class="p">[</span><span class="mi">28</span><span class="p">,</span> <span class="mi">29</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">31</span><span class="p">]])</span>
+<span class="go">{&#39;Region1&#39;:         Time  Inflow from zone 2 (+)  Outflow to zone 2 (-)</span>
+<span class="go">            0 1990-10-01             9448.000542          499542.470953,</span>
+<span class="go"> &#39;Region2&#39;:         Time  Inflow from zone 1 (+)  Outflow to zone 1 (-)  Discrepancy (=) Absolute Storage</span>
+<span class="go">            0 1990-10-01           499542.470953            9448.000542        -0.151709     2.492766e+11}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gw_zbud</span><span class="o">.</span><span class="n">close_zbudget_file</span><span class="p">()</span>
+</pre></div>
+</div>
 </dd></dl>
 
 </section>

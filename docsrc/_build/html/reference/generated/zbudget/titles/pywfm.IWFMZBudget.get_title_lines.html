@@ -1399,19 +1399,17 @@
 <h1>pywfm.IWFMZBudget.get_title_lines<a class="headerlink" href="#pywfm-iwfmzbudget-get-title-lines" title="Permalink to this headline">¶</a></h1>
 <dl class="py method">
 <dt class="sig sig-object py" id="pywfm.IWFMZBudget.get_title_lines">
-<span class="sig-prename descclassname"><span class="pre">IWFMZBudget.</span></span><span class="sig-name descname"><span class="pre">get_title_lines</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">zone_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">area_conversion_factor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">area_unit</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">volume_unit</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pywfm.IWFMZBudget.get_title_lines" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the title lines for the Z-Budget data for a zone to
-be displayed in the files (text, spreadsheet, etc.) where the
-Z-Budget data is being imported into.</p>
+<span class="sig-prename descclassname"><span class="pre">IWFMZBudget.</span></span><span class="sig-name descname"><span class="pre">get_title_lines</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">zone_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">area_conversion_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">area_unit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'SQ</span> <span class="pre">FT'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">volume_unit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'CU</span> <span class="pre">FT'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pywfm.IWFMZBudget.get_title_lines" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the title lines for the ZBudget data for a zone</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>zone_id</strong> (<em>int</em>) – zone identification number used to retrieve the title lines</p></li>
-<li><p><strong>area_conversion_factor</strong> (<em>int</em><em>, </em><em>float</em>) – factor used to convert area units between the default model
+<li><p><strong>area_conversion_factor</strong> (<em>int</em><em>, </em><em>float</em><em>, </em><em>default=1.0</em>) – factor used to convert area units between the default model
 unit and the desired output unit
 e.g. ft^2 –&gt; Acre = 2.29568E-05</p></li>
-<li><p><strong>area_unit</strong> (<em>str</em>) – desired output unit for area</p></li>
-<li><p><strong>volume_unit</strong> (<em>str</em>) – desired output unit for volume</p></li>
+<li><p><strong>area_unit</strong> (<em>str</em><em>, </em><em>default='SQ FT'</em>) – desired output unit for area</p></li>
+<li><p><strong>volume_unit</strong> (<em>str</em><em>, </em><em>default='CU FT'</em>) – desired output unit for volume</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -1421,6 +1419,32 @@ e.g. ft^2 –&gt; Acre = 2.29568E-05</p></li>
 <dd class="field-odd"><p>list</p>
 </dd>
 </dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Title lines are usefule to be displayed when Z-Budget data is
+imported into files (text, spreadsheet, etc.)</p>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><a class="reference internal" href="pywfm.IWFMZBudget.get_n_title_lines.html#pywfm.IWFMZBudget.get_n_title_lines" title="pywfm.IWFMZBudget.get_n_title_lines"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IWFMZBudget.get_n_title_lines</span></code></a></dt><dd><p>Returns the number of title lines in a ZBudget</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pywfm</span> <span class="kn">import</span> <span class="n">IWFMZBudget</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dll</span> <span class="o">=</span> <span class="s1">&#39;../../DLL/Bin/IWFM2015_C_x64.dll&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">zbud_file</span> <span class="o">=</span> <span class="s1">&#39;../Results/GW_ZBud.hdf&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">zone_defs</span> <span class="o">=</span> <span class="s1">&#39;../ZBudget/ZoneDef_SRs.dat&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gw_zbud</span> <span class="o">=</span> <span class="n">IWFMZBudget</span><span class="p">(</span><span class="n">dll</span><span class="p">,</span> <span class="n">zbud_file</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gw_zbud</span><span class="o">.</span><span class="n">generate_zone_list_from_file</span><span class="p">(</span><span class="n">zone_defs</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gw_zbud</span><span class="o">.</span><span class="n">get_title_lines</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">[&#39;IWFM (v2015.0.1273)&#39;,</span>
+<span class="go"> &#39;GROUNDWATER ZONE BUDGET IN CU FT FOR ZONE 1 (Region1)&#39;,</span>
+<span class="go"> &#39;ZONE AREA: 8610918912.00 SQ FT&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gw_zbud</span><span class="o">.</span><span class="n">close_zbudget_file</span><span class="p">()</span>
+</pre></div>
+</div>
 </dd></dl>
 
 </section>
