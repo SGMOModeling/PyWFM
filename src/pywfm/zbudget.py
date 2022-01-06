@@ -694,12 +694,16 @@ class IWFMZBudget(IWFMMiscellaneous):
                                              n_zones)
 
     def get_n_title_lines(self):
-        ''' Returns the number of title lines in a Zbudget 
+        ''' Returns the number of title lines in a ZBudget 
         
         Returns
         -------
         int
             number of title lines
+
+        See Also
+        --------
+        IWFMZBudget.get_title_lines : Returns the title lines for the Z-Budget data for a zone
         '''
         # check to see if the procedure exists in the dll provided
         if not hasattr(self.dll, 'IW_ZBudget_GetNTitleLines'):
@@ -718,9 +722,7 @@ class IWFMZBudget(IWFMMiscellaneous):
 
     def get_title_lines(self, zone_id, area_conversion_factor, area_unit,
                         volume_unit):
-        ''' Returns the title lines for the Z-Budget data for a zone to
-        be displayed in the files (text, spreadsheet, etc.) where the 
-        Z-Budget data is being imported into. 
+        ''' Returns the title lines for the Z-Budget data for a zone 
         
         Parameters
         ----------
@@ -742,6 +744,15 @@ class IWFMZBudget(IWFMMiscellaneous):
         -------
         list
             title lines for zone
+
+        Note
+        ----
+        Title lines are usefule to be displayed when Z-Budget data is 
+        imported into files (text, spreadsheet, etc.)
+
+        See Also
+        --------
+        IWFMZBudget.get_n_title_lines : Returns the number of title lines in a ZBudget
         '''
         # check to see if the procedure exists in the dll provided
         if not hasattr(self.dll, 'IW_ZBudget_GetTitleLines'):
