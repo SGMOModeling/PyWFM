@@ -204,7 +204,7 @@ class IWFMZBudget(IWFMMiscellaneous):
                                              ctypes.byref(status))
 
     def get_n_zones(self):
-        ''' returns the number of zones specified in the zbudget
+        ''' Returns the number of zones specified in the zbudget
 
         Returns
         -------
@@ -228,7 +228,7 @@ class IWFMZBudget(IWFMMiscellaneous):
         return n_zones.value
 
     def get_zone_list(self):
-        ''' returns the list of zone numbers
+        ''' Returns the list of zone numbers
 
         Returns
         -------
@@ -256,7 +256,7 @@ class IWFMZBudget(IWFMMiscellaneous):
         return np.array(zone_list)
 
     def get_n_time_steps(self):
-        ''' returns the number of time steps where zbudget data is 
+        ''' Returns the number of time steps where zbudget data is 
         available
 
         Returns
@@ -281,7 +281,7 @@ class IWFMZBudget(IWFMMiscellaneous):
         return n_time_steps.value
     
     def get_time_specs(self):
-        ''' returns a list of all the time stamps and the time interval for the zbudget 
+        ''' Returns a list of all the time stamps and the time interval for the zbudget 
         
         Returns
         -------
@@ -384,24 +384,22 @@ class IWFMZBudget(IWFMMiscellaneous):
                                              delimiter_position_array, 
                                              n_columns)
 
-    def get_column_headers_for_a_zone(self, zone_id, area_unit='SQ FT', 
-                                      volume_unit='CU FT', column_list='all',
+    def get_column_headers_for_a_zone(self, zone_id, column_list='all',
+                                      area_unit='SQ FT', volume_unit='CU FT',
                                       include_time=True):
-        ''' This procedure retrieves the Z-Budget column headers (i.e. 
-        titles) for a specified zone for selected data columns. For flow 
-        processes that simulate flow exchange between neighboring zones 
-        (e.g. groundwater process), the column headers for inflows from 
-        and outflows to neighboring zones are listed separately for each 
-        neighboring zone. These columns are referred to as “diversified 
-        columns” since the inflows from and outflows to each neighboring 
-        zone are treated as separate columns
+        ''' Returns the Z-Budget column headers (i.e. titles) for a 
+        specified zone for selected data columns. For flow processes 
+        that simulate flow exchange between neighboring zones (e.g. 
+        groundwater process), the column headers for inflows from and 
+        outflows to neighboring zones are listed separately for each 
+        neighboring zone.
 
         Parameters
         ----------
         zone_id : int
             zone identification number used to return the column headers
 
-        column_list : int, list, np.ndarray, or 'all', default='all'
+        column_list : int, list, np.ndarray, or str='all', default='all'
             list of header column indices. this is based on the results 
             from the get_column_headers_general method
 
@@ -418,7 +416,13 @@ class IWFMZBudget(IWFMMiscellaneous):
         -------
         tuple (length=2)
             index 0 - list of column headers
-            index 1 - np.ndarray of column indices 
+            index 1 - np.ndarray of column indices
+
+        Note
+        ----
+        These columns are referred to as “diversified columns” since 
+        the inflows from and outflows to each neighboring zone are 
+        treated as separate columns
         '''
         # check to see if the procedure exists in the dll provided
         if not hasattr(self.dll, 'IW_ZBudget_GetColumnHeaders_ForAZone'):
@@ -438,22 +442,22 @@ class IWFMZBudget(IWFMMiscellaneous):
         general_column_indices = np.arange(1, n_general_columns + 1)
 
         # validate column_list
-        if column_list == 'all':
+        if isinstance(column_list, str) and column_list == 'all':
             column_list = general_column_indices
         
-        elif isinstance(column_list, (int, np.ndarray, list)):
-            if isinstance(column_list, list):
-                column_list = np.array(column_list)
+        if isinstance(column_list, int):
+            column_list = np.array([column_list])
+        
+        if isinstance(column_list, list):
+            column_list = np.array(column_list)
             
-            elif isinstance(column_list, int):
-                column_list = np.array([column_list])
-
-            # check values in column list are in general_column_indices
-            if not np.all(np.isin(column_list, general_column_indices)):
-                raise ValueError('provided indices in column_list are invalid')
-
-        else:
+        # now column_list should be np.ndarray, so validate type
+        if not isinstance(column_list, np.ndarray):
             raise TypeError("column_list must be an int, list, np.ndarray, or 'all'")
+
+        # check values in column list are in general_column_indices
+        if not np.all(np.isin(column_list, general_column_indices)):
+            raise ValueError('one or more indices provided in column_list are invalid')
 
         # convert column_list to ctypes
         if include_time:
@@ -504,7 +508,7 @@ class IWFMZBudget(IWFMMiscellaneous):
         return column_headers, np.array(diversified_columns_list)
 
     def get_zone_names(self):
-        ''' returns the zone names specified by the user in the zone
+        ''' Returns the zone names specified by the user in the zone
         definitions
         
         Returns
@@ -539,7 +543,7 @@ class IWFMZBudget(IWFMMiscellaneous):
                                              n_zones)
 
     def get_n_title_lines(self):
-        ''' returns the number of title lines in a Zbudget 
+        ''' Returns the number of title lines in a Zbudget 
         
         Returns
         -------
@@ -563,7 +567,7 @@ class IWFMZBudget(IWFMMiscellaneous):
 
     def get_title_lines(self, zone_id, area_conversion_factor, area_unit,
                         volume_unit):
-        ''' returns the title lines for the Z-Budget data for a zone to
+        ''' Returns the title lines for the Z-Budget data for a zone to
         be displayed in the files (text, spreadsheet, etc.) where the 
         Z-Budget data is being imported into. 
         
@@ -639,8 +643,8 @@ class IWFMZBudget(IWFMMiscellaneous):
                                                   output_interval=None, 
                                                   area_conversion_factor=1.0, 
                                                   volume_conversion_factor=1.0):
-        ''' returns specified zone flow values for a specified list of 
-        zones for a given time interval.
+        ''' Returns specified zone flow values for one or more 
+        zones at a given date and time interval.
 
         Parameters
         ----------
@@ -648,11 +652,15 @@ class IWFMZBudget(IWFMMiscellaneous):
             one or more zone identification numbers to retrieve zbudget
             data
 
-        column_ids : int, list, or 'all', default='all'
+        column_ids : int, list, or str='all', default='all'
             one or more data column indices to retrieve zbudget data
 
         current_date : str or None, default=None
             valid IWFM date used to return zbudget data
+            
+            Important
+            ---------
+            if None (default), uses the first date
 
         output_interval : str or None, default=None
             valid IWFM output time interval for returning zbudget data.
@@ -669,22 +677,28 @@ class IWFMZBudget(IWFMMiscellaneous):
 
         Returns
         -------
-        np.ndarray
-            array of ZBudget output for user-specified columns and specified zones
+        dict
+            DataFrames of ZBudget output for user-specified columns by zone names
 
         Note
         ----
         Return value includes Time as the first column whether the user provided it or not
+
+        See Also
+        --------
+        IWFMZBudget.get_values_for_a_zone : Returns specified Z-Budget data columns for a specified zone for a time period
+
         '''
         # check to see if the procedure exists in the dll provided
         if not hasattr(self.dll, 'IW_ZBudget_GetValues_ForSomeZones_ForAnInterval'):
             raise AttributeError('IWFM DLL does not have "{}" procedure. '
                                  'Check for an updated version'.format('IW_ZBudget_GetValues_ForSomeZones_ForAnInterval'))
 
-        # check that zone is valid
+        # get all zone ids
         zones = self.get_zone_list()
-
-        if zone_ids == 'all':
+        
+        # check that zone_ids are valid
+        if isinstance(zone_ids, str) and zone_ids == 'all':
             zone_ids = zones
 
         if isinstance(zone_ids, int):
@@ -695,11 +709,11 @@ class IWFMZBudget(IWFMMiscellaneous):
         
         # now zone_ids should all be np.ndarray, so check if np.ndarray
         if not isinstance(zone_ids, np.ndarray):
-            raise TypeError('zone_ids must be an int, list or np.ndarray')
+            raise TypeError('zone_ids must be an int, list, np.ndarray, or str="all"')
 
         # make sure all zone_ids are valid zones
         if not np.all(np.isin(zone_ids, zones)):
-            raise ValueError('zone_ids were not found in zone definitions provided')
+            raise ValueError('one or more zone_ids were not found in zone definitions provided')
 
         # convert zone_ids to ctypes
         n_zones = ctypes.c_int(len(zone_ids))
@@ -707,109 +721,97 @@ class IWFMZBudget(IWFMMiscellaneous):
 
         # get all possible column ids for each zone and place in zone_header_array
         zone_header_array = []
+        column_name_array = []
         n_columns_max = 0
         for zone_id in zone_ids:
-            _, column_header_ids = self.get_column_headers_for_a_zone(zone_id, include_time=True)
+            column_names, column_header_ids = self.get_column_headers_for_a_zone(zone_id, include_time=True)
             n_columns = len(column_header_ids[column_header_ids > 0])
             
             if n_columns > n_columns_max:
                 n_columns_max = n_columns
             
             zone_header_array.append(column_header_ids)
+            column_name_array.append(column_names)
 
         zone_header_array = np.array(zone_header_array)[:,:n_columns_max]
 
         # handle different options for providing column_ids
-        if column_ids == 'all':
-            max_n_columns = ctypes.c_int(n_columns_max)
+        # all must be converted to 2D arrays with each row having same length
+        if isinstance(column_ids, str) and column_ids == 'all':
             column_ids= zone_header_array
 
-        elif isinstance(column_ids, (int, list)):
+        if isinstance(column_ids, int):
+            # add the 'Time' column if user did not include it
+            if column_ids != 1:
+                column_ids = np.array([[1, column_ids]])
             
-            if isinstance(column_ids, int):
+            else:
+                print('Note: only the time column will be returned for the zone requested')
+                column_ids = np.array([[column_ids]])
+
+        if isinstance(column_ids, list):
+                
+            # first sort each row
+            if all([isinstance(val, int) for val in column_ids]):
+                if len(column_ids) > 1:
+                    column_ids = sorted(column_ids)
+
                 # add the 'Time' column if user did not include it
-                if column_ids != 1:
-                    column_ids = np.array([1, column_ids])
-                else:
-                    column_ids = np.array([column_ids])
+                if 1 not in column_ids:
+                    column_ids = [1] + column_ids
 
-            elif isinstance(column_ids, list):
-                
+                max_row_length = len(column_ids)
+
+                column_ids = np.array([column_ids])
+
+            elif all([isinstance(val, list) for val in column_ids]):
                 # first sort each row
-                if all([isinstance(val, int) for val in column_ids]):
-                    if len(column_ids) > 1:
-                        column_ids = sorted(column_ids)
+                column_ids = [sorted(val) for val in column_ids]
 
-                    # add the 'Time' column if user did not include it
-                    if 1 not in column_ids:
-                        column_ids = [1] + column_ids
-
-                    max_row_length = len(column_ids)
-
-                elif all([isinstance(val, list) for val in column_ids]):
-                    # first sort each row
-                    column_ids = [sorted(val) for val in column_ids]
-
-                    # if column id 1 i.e. Time is not included add it as the first column
-                    column_ids = [[1] + val if 1 not in val else val for val in column_ids]
+                # if column id 1 i.e. Time is not included add it as the first column
+                column_ids = [[1] + val if 1 not in val else val for val in column_ids]
                 
-                    # get the number of columns in each zone
-                    max_row_list = [len(val) for val in column_ids]
+                # get the number of columns in each zone
+                max_row_list = [len(val) for val in column_ids]
 
-                    # get the maximum number of columns in any of the zones
-                    max_row_length = max(max_row_list)
+                # get the maximum number of columns in any of the zones
+                max_row_length = max(max_row_list)
 
-                    # if list does not have same number of elements in each 
-                    # row, then need to pad the end with zeros before 
-                    # converting to a numpy array
-                    if len(max_row_list) > 1:
-                        for i, row in enumerate(column_ids):
+                # if list does not have same number of elements in each 
+                # row, then need to pad the end with zeros before 
+                # converting to a numpy array
+                if len(max_row_list) > 1:
+                    for i, row in enumerate(column_ids):
+                        len_row = len(row)
+                        while len_row < max_row_length:
+                            row.append(0)
                             len_row = len(row)
-                            while len_row < max_row_length:
-                                row.append(0)
-                                len_row = len(row)
                 
                 column_ids = np.array(column_ids)
 
-            # valid user inputs have been converted to a np.ndarray so validation is performed using numpy
-            # check: number of rows in column_ids must match number of zones
-            if (column_ids.ndim == 2) and (column_ids.shape[0] != n_zones.value):
-                raise ValueError('Each number of rows in column_ids '
-                                 'must match number of zones\nThe number '
-                                 'of zones provided is {}.\nThe number '
-                                 'of zones implied by column_ids is {}'.format(n_zones.value, column_ids.shape[0]))
+        # valid inputs should all now be np.ndarray so validate type
+        if not isinstance(column_ids, np.ndarray):
+            raise TypeError("column_ids must be an int, list, or str='all'")
 
-            elif (column_ids.ndim == 1) and (n_zones.value != 1):
-                raise ValueError('Each number of rows in column_ids '
-                                 'must match number of zones\nThe number '
-                                 'of zones provided is {}.\nThe number '
-                                 'of zones implied by column_ids is {}'.format(n_zones.value, column_ids.ndim))
-            
-            if column_ids.ndim == 1:
-                if not np.all(np.isin(column_ids, zone_header_array[zone_header_array > 0])):
-                    raise ValueError('column_ids for zone {} are invalid'.format(np.array(zone_ids)))
+        # check: number of rows in column_ids must match number of zones
+        if (column_ids.ndim == 2) and (column_ids.shape[0] != n_zones.value):
+            raise ValueError('Each number of rows in column_ids '
+                             'must match number of zones\nThe number '
+                             'of zones provided is {}.\nThe number '
+                             'of zones implied by column_ids is {}'.format(n_zones.value, column_ids.shape[0]))
 
-                max_n_columns = ctypes.c_int(column_ids.shape[0])
-
-            else:
-                # check row by row if the column_ids are valid for a particular zone
-                # this will only catch the first error it finds
-                for i, row in enumerate(column_ids):
-                    if not np.all(np.isin(row, zone_header_array[i][zone_header_array[i] > 0])):
-                        raise ValueError('column_ids for zone {} are invalid'.format(np.array(zone_ids)[i]))
-
-                max_n_columns = ctypes.c_int(column_ids.shape[-1])
-
-        else:
-            raise TypeError("column_ids must be 'all', an integer or list")
+        # check row by row if the column_ids are valid for a particular zone
+        # this will only catch the first error it finds
+        for i, row in enumerate(column_ids):
+            if not np.all(np.isin(row, zone_header_array[i][zone_header_array[i] > 0])):
+                raise ValueError('column_ids for zone {} are invalid'.format(np.array(zone_ids)[i]))
         
-        # populate ctypes array containing column ids for each zone
-        if n_zones.value == 1:
-            column_id_array = (ctypes.c_int*max_n_columns.value)(*column_ids)
-        else:
-            column_id_array = ((ctypes.c_int*max_n_columns.value)*n_zones.value)()
-            for i, row in enumerate(column_ids):
-                column_id_array[i][:] = row
+        max_n_columns = ctypes.c_int(column_ids.shape[-1])
+        
+        # convert column_ids to 2D ctypes array
+        column_id_array = ((ctypes.c_int*max_n_columns.value)*n_zones.value)()
+        for i, row in enumerate(column_ids):
+            column_id_array[i][:] = row
 
         
         # handle current date
@@ -865,17 +867,24 @@ class IWFMZBudget(IWFMMiscellaneous):
 
         values = np.array(zbudget_values)
 
-        #dates = np.array('1899-12-30', dtype='datetime64') + values[:,0].astype('timedelta64')
-        #zbudget = values[:,1:]
-        
-        #return dates, zbudget
-        return values
+        # get zone names
+        zone_names = self.get_zone_names()
+
+        # convert output to a dictionary by zone name
+        value_dict = {}
+        for i, z in enumerate(np.array(zone_names)[np.array(zone_ids) - 1]):
+            col_names = np.array(column_name_array)[0, np.array(column_id_array) - 1]
+            df = pd.DataFrame(data=np.atleast_2d(values[i]), columns=col_names[i])
+            df['Time'] = df['Time'].astype('timedelta64[D]') + np.array('1899-12-30', dtype='datetime64')
+            value_dict[z] = df
+
+        return value_dict
 
     def get_values_for_a_zone(self, zone_id, column_ids='all', begin_date=None, 
                               end_date=None, output_interval=None, 
                               area_conversion_factor=1.0, 
                               volume_conversion_factor=1.0):
-        ''' returns specified Z-Budget data columns for a specified zone for a time period.
+        ''' Returns specified Z-Budget data columns for a specified zone for a time period
 
         Parameters
         ----------
@@ -930,7 +939,7 @@ class IWFMZBudget(IWFMMiscellaneous):
         # get all column headers and column IDs
         column_headers, column_header_ids = self.get_column_headers_for_a_zone(zone_id, include_time=True)
 
-        if column_ids == 'all':
+        if isinstance(column_ids, str) and column_ids == 'all':
             column_ids = column_header_ids[column_header_ids > 0]
 
         if isinstance(column_ids, int):
