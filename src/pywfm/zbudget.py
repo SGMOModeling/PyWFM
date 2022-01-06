@@ -501,6 +501,62 @@ class IWFMZBudget(IWFMMiscellaneous):
         These columns are referred to as “diversified columns” since 
         the inflows from and outflows to each neighboring zone are 
         treated as separate columns
+
+        Example
+        -------
+        >>> from pywfm import IWFMZBudget
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> zbud_file = '../Results/GW_ZBud.hdf'
+        >>> zone_defs = '../ZBudget/ZoneDef_SRs.dat'
+        >>> gw_zbud = IWFMZBudget(dll, zbud_file)
+        >>> gw_zbud.generate_zone_list_from_file(zone_defs)
+        >>> column_names, column_ids = gw_zbud.get_column_headers_for_a_zone(1)
+        >>> column_names
+        ['Time',
+         'GW Storage_Inflow (+)',
+         'GW Storage_Outflow (-)',
+         'Streams_Inflow (+)',
+         'Streams_Outflow (-)',
+         'Tile Drains_Inflow (+)',
+         'Tile Drains_Outflow (-)',
+         'Subsidence_Inflow (+)',
+         'Subsidence_Outflow (-)',
+         'Deep Percolation_Inflow (+)',
+         'Deep Percolation_Outflow (-)',
+         'Specified Head BC_Inflow (+)',
+         'Specified Head BC_Outflow (-)',
+         'Small Watershed Baseflow_Inflow (+)',
+         'Small Watershed Baseflow_Outflow (-)',
+         'Small Watershed Percolation_Inflow (+)',
+         'Small Watershed Percolation_Outflow (-)',
+         'Diversion Recoverable Loss_Inflow (+)',
+         'Diversion Recoverable Loss_Outflow (-)',
+         'Bypass Recoverable Loss_Inflow (+)',
+         'Bypass Recoverable Loss_Outflow (-)',
+         'Lakes_Inflow (+)',
+         'Lakes_Outflow (-)',
+         'Pumping by Element_Inflow (+)',
+         'Pumping by Element_Outflow (-)',
+         'Root Water Uptake_Inflow (+)',
+         'Root Water Uptake_Outflow (-)',
+         'Inflow from zone 2 (+)',
+         'Outflow to zone 2 (-)',
+         'Discrepancy (=)',
+         'Absolute Storage']
+        >>> column_ids
+        array([ 1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16, 17,
+               18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31,  0,  0,  0,
+                0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+                0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+                0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+                0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+                0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+                0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+                0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+                0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+                0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+                0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0])
+        >>> gw_zbud.close_zbudget_file()
         '''
         # check to see if the procedure exists in the dll provided
         if not hasattr(self.dll, 'IW_ZBudget_GetColumnHeaders_ForAZone'):
