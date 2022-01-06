@@ -910,11 +910,8 @@ class IWFMZBudget(IWFMMiscellaneous):
         >>> gw_zbud.get_values_for_some_zones_for_an_interval(column_ids=[[28, 29], [28, 29, 30, 31]])
         {'Region1':         Time  Inflow from zone 2 (+)  Outflow to zone 2 (-)
                     0 1990-10-01             9448.000542          499542.470953,
-         'Region2':         Time  Inflow from zone 1 (+)  Outflow to zone 1 (-)  Discrepancy (=)  \
-                    0 1990-10-01           499542.470953            9448.000542        -0.151709   
-         
-                       Absolute Storage  
-                    0      2.492766e+11  }
+         'Region2':         Time  Inflow from zone 1 (+)  Outflow to zone 1 (-)  Discrepancy (=) Absolute Storage
+                    0 1990-10-01           499542.470953            9448.000542        -0.151709     2.492766e+11}
         >>> gw_zbud.close_zbudget_file()
         '''
         # check to see if the procedure exists in the dll provided
