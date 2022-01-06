@@ -79,6 +79,10 @@ class IWFMZBudget(IWFMMiscellaneous):
         -------
         None
             generates the list of zones and adjacent zones
+
+        Note
+        ----
+        See IWFM Sample Model ZBudget folder for format examples
         '''
         # check to see if the open file procedure exists in the dll provided
         if not hasattr(self.dll, 'IW_ZBudget_GenerateZoneList_FromFile'):
