@@ -754,7 +754,7 @@ class IWFMBudget(IWFMMiscellaneous):
                                      ctypes.byref(status))
 
         budget = pd.DataFrame(data=np.array(budget_values), columns=['Time'] + columns)
-        budget['Time'] = budget['Time'] = budget['Time'].astype('timedelta64[D]') + np.array('1899-12-30', dtype='datetime64')
+        budget['Time'] = budget['Time'].astype('timedelta64[D]') + np.array('1899-12-30', dtype='datetime64')
 
         return budget
 
