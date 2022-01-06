@@ -884,57 +884,10 @@ class IWFMZBudget(IWFMMiscellaneous):
         >>> zone_defs = '../ZBudget/ZoneDef_SRs.dat'
         >>> gw_zbud = IWFMZBudget(dll, zbud_file)
         >>> gw_zbud.generate_zone_list_from_file(zone_defs)
-        >>> gw_zbud.get_values_for_some_zones_for_an_interval()
-        {'Region1':         Time  GW Storage_Inflow (+)  GW Storage_Outflow (-)
-                    0 1990-10-01               0.888134            3.152751e+09   
-                    
-                       Streams_Inflow (+)  Streams_Outflow (-)  Tile Drains_Inflow (+)  
-                    0                 0.0                  0.0                     0.0   
-                    
-                       Tile Drains_Outflow (-)  Subsidence_Inflow (+)  Subsidence_Outflow (-)  
-                    0                      0.0                    0.0            7.384521e+06   
-                    
-                       Deep Percolation_Inflow (+)  ...  Lakes_Inflow (+)  Lakes_Outflow (-)  
-                    0                          0.0  ...      3.068518e+09                0.0   
-                    
-                       Pumping by Element_Inflow (+)  Pumping by Element_Outflow (-)  
-                    0                            0.0                             0.0   
-                    
-                       Root Water Uptake_Inflow (+)  Root Water Uptake_Outflow (-)  
-                    0                           0.0                            0.0   
-                    
-                       Inflow from zone 2 (+)  Outflow to zone 2 (-)  Discrepancy (=)  
-                    0             9448.000542          499542.470953         0.822217   
-                    
-                       Absolute Storage  
-                    0      2.507244e+11  
-                    
-                    [1 rows x 31 columns],
-         'Region2':         Time  GW Storage_Inflow (+)  GW Storage_Outflow (-)  
-                    0 1990-10-01          309206.740657            1.712625e+09   
-                    
-                       Streams_Inflow (+)  Streams_Outflow (-)  Tile Drains_Inflow (+)  
-                    0        9.690562e+07                  0.0                     0.0   
-                    
-                       Tile Drains_Outflow (-)  Subsidence_Inflow (+)  Subsidence_Outflow (-)  
-                    0                      0.0             618.340981            6.726632e+06   
-                    
-                       Deep Percolation_Inflow (+)  ...  Lakes_Inflow (+)  Lakes_Outflow (-)  
-                    0                          0.0  ...      1.534259e+09                0.0   
-                    
-                       Pumping by Element_Inflow (+)  Pumping by Element_Outflow (-)  
-                    0                            0.0                   562064.516129   
-                    
-                       Root Water Uptake_Inflow (+)  Root Water Uptake_Outflow (-)  
-                    0                           0.0                            0.0   
-                    
-                       Inflow from zone 1 (+)  Outflow to zone 1 (-)  Discrepancy (=)  
-                    0           499542.470953            9448.000542        -0.151709   
-                    
-                       Absolute Storage  
-                    0      2.492766e+11  
-                    
-                    [1 rows x 31 columns]}
+        >>> zone_values = gw_zbud.get_values_for_some_zones_for_an_interval()
+        >>> zone_values['Region1']
+                Time GW Storage_Inflow (+) GW Storage_Outflow (-) Streams_Inflow (+) Streams_Outflow (-) Tile Drains_Inflow (+) Tile Drains_Outflow (-) Subsidence_Inflow (+) Subsidence_Outflow (-) Deep Percolation_Inflow (+) ... Lakes_Inflow (+) Lakes_Outflow (-) Pumping by Element_Inflow (+) Pumping by Element_Outflow (-) Root Water Uptake_Inflow (+) Root Water Uptake_Outflow (-) Inflow from zone 2 (+) Outflow to zone 2 (-) Discrepancy (=) Absolute Storage
+        0 1990-10-01              0.888134           3.152751e+09                0.0                 0.0                    0.0                     0.0                   0.0           7.384521e+06                         0.0 ...     3.068518e+09               0.0                           0.0                            0.0                          0.0                           0.0            9448.000542         499542.470953        0.822217     2.507244e+11
         >>> gw_zbud.close_zbudget_file()
 
         >>> from pywfm import IWFMZBudget
