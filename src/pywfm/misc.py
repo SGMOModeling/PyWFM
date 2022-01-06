@@ -1339,4 +1339,4 @@ class IWFMMiscellaneous:
                 else:
                     string_list.append(in_string[position_array[i]:])
 
-        return string_list
+        return [val.strip() for val in string_list]
