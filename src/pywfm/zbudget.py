@@ -704,6 +704,18 @@ class IWFMZBudget(IWFMMiscellaneous):
         See Also
         --------
         IWFMZBudget.get_title_lines : Returns the title lines for the Z-Budget data for a zone
+
+        Example
+        -------
+        >>> from pywfm import IWFMZBudget
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> zbud_file = '../Results/GW_ZBud.hdf'
+        >>> zone_defs = '../ZBudget/ZoneDef_SRs.dat'
+        >>> gw_zbud = IWFMZBudget(dll, zbud_file)
+        >>> gw_zbud.generate_zone_list_from_file(zone_defs)
+        >>> gw_zbud.get_n_title_lines()
+        3
+        >>> gw_zbud.close_zbudget_file()
         '''
         # check to see if the procedure exists in the dll provided
         if not hasattr(self.dll, 'IW_ZBudget_GetNTitleLines'):
@@ -720,24 +732,24 @@ class IWFMZBudget(IWFMMiscellaneous):
 
         return n_title_lines.value
 
-    def get_title_lines(self, zone_id, area_conversion_factor, area_unit,
-                        volume_unit):
-        ''' Returns the title lines for the Z-Budget data for a zone 
+    def get_title_lines(self, zone_id, area_conversion_factor=1.0, area_unit='SQ FT',
+                        volume_unit='CU FT'):
+        ''' Returns the title lines for the ZBudget data for a zone 
         
         Parameters
         ----------
         zone_id : int
             zone identification number used to retrieve the title lines
             
-        area_conversion_factor : int, float
+        area_conversion_factor : int, float, default=1.0
             factor used to convert area units between the default model
             unit and the desired output unit 
             e.g. ft^2 --> Acre = 2.29568E-05 
             
-        area_unit : str
+        area_unit : str, default='SQ FT'
             desired output unit for area
                       
-        volume_unit : str
+        volume_unit : str, default='CU FT'
             desired output unit for volume
             
         Returns
@@ -753,6 +765,20 @@ class IWFMZBudget(IWFMMiscellaneous):
         See Also
         --------
         IWFMZBudget.get_n_title_lines : Returns the number of title lines in a ZBudget
+
+        Example
+        -------
+        >>> from pywfm import IWFMZBudget
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> zbud_file = '../Results/GW_ZBud.hdf'
+        >>> zone_defs = '../ZBudget/ZoneDef_SRs.dat'
+        >>> gw_zbud = IWFMZBudget(dll, zbud_file)
+        >>> gw_zbud.generate_zone_list_from_file(zone_defs)
+        >>> gw_zbud.get_title_lines(1)
+        ['IWFM (v2015.0.1273)',
+         'GROUNDWATER ZONE BUDGET IN CU FT FOR ZONE 1 (Region1)',
+         'ZONE AREA: 8610918912.00 SQ FT']
+        >>> gw_zbud.close_zbudget_file()
         '''
         # check to see if the procedure exists in the dll provided
         if not hasattr(self.dll, 'IW_ZBudget_GetTitleLines'):
