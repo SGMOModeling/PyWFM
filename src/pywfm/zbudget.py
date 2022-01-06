@@ -301,6 +301,22 @@ class IWFMZBudget(IWFMMiscellaneous):
         -------
         int
             number of time steps
+
+        See Also
+        --------
+        IWFMZBudget.get_time_specs : Returns a list of all the time stamps and the time interval for the zbudget
+
+        Example
+        -------
+        >>> from pywfm import IWFMZBudget
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> zbud_file = '../Results/GW_ZBud.hdf'
+        >>> zone_defs = '../ZBudget/ZoneDef_SRs.dat'
+        >>> gw_zbud = IWFMZBudget(dll, zbud_file)
+        >>> gw_zbud.generate_zone_list_from_file(zone_defs)
+        >>> gw_zbud.get_n_time_steps()
+        3653
+        >>> gw_zbud.close_zbudget_file()
         '''
         # check to see if the open file procedure exists in the dll provided
         if not hasattr(self.dll, 'IW_ZBudget_GetNTimeSteps'):
