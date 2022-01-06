@@ -803,7 +803,7 @@ class IWFMZBudget(IWFMMiscellaneous):
         # check row by row if the column_ids are valid for a particular zone
         # this will only catch the first error it finds
         for i, row in enumerate(column_ids):
-            if not np.all(np.isin(row, zone_header_array[i][zone_header_array[i] > 0])):
+            if not np.all(np.isin(row, zone_header_array[i])):
                 raise ValueError('column_ids for zone {} are invalid'.format(np.array(zone_ids)[i]))
         
         max_n_columns = ctypes.c_int(column_ids.shape[-1])
@@ -868,14 +868,22 @@ class IWFMZBudget(IWFMMiscellaneous):
         values = np.array(zbudget_values)
 
         # get zone names
-        zone_names = np.array(self.get_zone_names())
+        zone_names_all = np.array(self.get_zone_names())
+
+        # convert zone_ids and column_id_array back to np.ndarray
+        zone_ids = np.array(zone_ids)
+        column_id_array = np.array(column_id_array)
+
+        zone_names = zone_names_all[zone_ids - 1]
 
         # convert output to a dictionary of DataFrames by zone name
         value_dict = {}
-        for i, z in enumerate(zone_names[np.array(zone_ids) - 1]):
-            col_names = np.array(column_name_array)[i, np.array(column_id_array)[i] - 1]
+        for i, z in enumerate(zone_names):
+            zone_columns = column_id_array[i] > 0
+            col_ids = column_id_array[i, zone_columns]
+            col_names = np.array(column_name_array[i])[col_ids - 1]
             
-            df = pd.DataFrame(data=np.atleast_2d(values[i]), columns=col_names)
+            df = pd.DataFrame(data=np.atleast_2d(values[i, zone_columns]), columns=col_names)
             df['Time'] = df['Time'].astype('timedelta64[D]') + np.array('1899-12-30', dtype='datetime64')
             
             value_dict[z] = df
