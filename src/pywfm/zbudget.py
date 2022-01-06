@@ -876,6 +876,93 @@ class IWFMZBudget(IWFMMiscellaneous):
         --------
         IWFMZBudget.get_values_for_a_zone : Returns specified Z-Budget data columns for a specified zone for a time period
 
+        Examples
+        --------
+        >>> from pywfm import IWFMZBudget
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> zbud_file = '../Results/GW_ZBud.hdf'
+        >>> zone_defs = '../ZBudget/ZoneDef_SRs.dat'
+        >>> gw_zbud = IWFMZBudget(dll, zbud_file)
+        >>> gw_zbud.generate_zone_list_from_file(zone_defs)
+        >>> gw_zbud.get_values_for_some_zones_for_an_interval()
+        {'Region1':         Time  GW Storage_Inflow (+)  GW Storage_Outflow (-)  \
+                    0 1990-10-01               0.888134            3.152751e+09   
+                    
+                       Streams_Inflow (+)  Streams_Outflow (-)  Tile Drains_Inflow (+)  \
+                    0                 0.0                  0.0                     0.0   
+                    
+                       Tile Drains_Outflow (-)  Subsidence_Inflow (+)  Subsidence_Outflow (-)  \
+                    0                      0.0                    0.0            7.384521e+06   
+                    
+                       Deep Percolation_Inflow (+)  ...  Lakes_Inflow (+)  Lakes_Outflow (-)  \
+                    0                          0.0  ...      3.068518e+09                0.0   
+                    
+                       Pumping by Element_Inflow (+)  Pumping by Element_Outflow (-)  \
+                    0                            0.0                             0.0   
+                    
+                       Root Water Uptake_Inflow (+)  Root Water Uptake_Outflow (-)  \
+                    0                           0.0                            0.0   
+                    
+                       Inflow from zone 2 (+)  Outflow to zone 2 (-)  Discrepancy (=)  \
+                    0             9448.000542          499542.470953         0.822217   
+                    
+                       Absolute Storage  
+                    0      2.507244e+11  
+                    
+                    [1 rows x 31 columns],
+         'Region2':         Time  GW Storage_Inflow (+)  GW Storage_Outflow (-)  \
+                    0 1990-10-01          309206.740657            1.712625e+09   
+                    
+                       Streams_Inflow (+)  Streams_Outflow (-)  Tile Drains_Inflow (+)  \
+                    0        9.690562e+07                  0.0                     0.0   
+                    
+                       Tile Drains_Outflow (-)  Subsidence_Inflow (+)  Subsidence_Outflow (-)  \
+                    0                      0.0             618.340981            6.726632e+06   
+                    
+                       Deep Percolation_Inflow (+)  ...  Lakes_Inflow (+)  Lakes_Outflow (-)  \
+                    0                          0.0  ...      1.534259e+09                0.0   
+                    
+                       Pumping by Element_Inflow (+)  Pumping by Element_Outflow (-)  \
+                    0                            0.0                   562064.516129   
+                    
+                       Root Water Uptake_Inflow (+)  Root Water Uptake_Outflow (-)  \
+                    0                           0.0                            0.0   
+                    
+                       Inflow from zone 1 (+)  Outflow to zone 1 (-)  Discrepancy (=)  \
+                    0           499542.470953            9448.000542        -0.151709   
+                    
+                       Absolute Storage  
+                    0      2.492766e+11  
+                    
+                    [1 rows x 31 columns]}
+        >>> gw_zbud.close_zbudget_file()
+
+        >>> from pywfm import IWFMZBudget
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> zbud_file = '../Results/GW_ZBud.hdf'
+        >>> zone_defs = '../ZBudget/ZoneDef_SRs.dat'
+        >>> gw_zbud = IWFMZBudget(dll, zbud_file)
+        >>> gw_zbud.generate_zone_list_from_file(zone_defs)
+        >>> gw_zbud.get_values_for_some_zones_for_an_interval(1, [1, 2, 3])
+        {'Region1':         Time  GW Storage_Inflow (+)  GW Storage_Outflow (-)
+                    0 1990-10-01               0.888134            3.152751e+09}
+        >>> gw_zbud.close_zbudget_file()
+
+        >>> from pywfm import IWFMZBudget
+        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
+        >>> zbud_file = '../Results/GW_ZBud.hdf'
+        >>> zone_defs = '../ZBudget/ZoneDef_SRs.dat'
+        >>> gw_zbud = IWFMZBudget(dll, zbud_file)
+        >>> gw_zbud.generate_zone_list_from_file(zone_defs)
+        >>> gw_zbud.get_values_for_some_zones_for_an_interval(column_ids=[[28, 29], [28, 29, 30, 31]])
+        {'Region1':         Time  Inflow from zone 2 (+)  Outflow to zone 2 (-)
+                    0 1990-10-01             9448.000542          499542.470953,
+         'Region2':         Time  Inflow from zone 1 (+)  Outflow to zone 1 (-)  Discrepancy (=)  \
+                    0 1990-10-01           499542.470953            9448.000542        -0.151709   
+         
+                       Absolute Storage  
+                    0      2.492766e+11  }
+        >>> gw_zbud.close_zbudget_file()
         '''
         # check to see if the procedure exists in the dll provided
         if not hasattr(self.dll, 'IW_ZBudget_GetValues_ForSomeZones_ForAnInterval'):
@@ -990,8 +1077,9 @@ class IWFMZBudget(IWFMMiscellaneous):
 
         # check row by row if the column_ids are valid for a particular zone
         # this will only catch the first error it finds
+        # only check the non-zero values
         for i, row in enumerate(column_ids):
-            if not np.all(np.isin(row, zone_header_array[i])):
+            if not np.all(np.isin(row[row > 0], zone_header_array[i])):
                 raise ValueError('column_ids for zone {} are invalid'.format(np.array(zone_ids)[i]))
         
         max_n_columns = ctypes.c_int(column_ids.shape[-1])
