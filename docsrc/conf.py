@@ -12,13 +12,14 @@
 #
 import os
 import sys
+from datetime import date
 sys.path.insert(0, os.path.abspath('../src/pywfm'))
 
 import pywfm
 # -- Project information -----------------------------------------------------
 
 project = 'PyWFM'
-copyright = '2021, California Department of Water Resources'
+copyright = '{}, California Department of Water Resources'.format(date.today().year)
 author = 'Tyler Hatch'
 
 # The full version, including alpha/beta/rc tags

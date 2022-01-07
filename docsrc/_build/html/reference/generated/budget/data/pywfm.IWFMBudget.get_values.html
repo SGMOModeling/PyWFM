@@ -1399,7 +1399,7 @@
 <h1>pywfm.IWFMBudget.get_values<a class="headerlink" href="#pywfm-iwfmbudget-get-values" title="Permalink to this headline">¶</a></h1>
 <dl class="py method">
 <dt class="sig sig-object py" id="pywfm.IWFMBudget.get_values">
-<span class="sig-prename descclassname"><span class="pre">IWFMBudget.</span></span><span class="sig-name descname"><span class="pre">get_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">location_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">columns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'all'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">begin_date</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_date</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length_conversion_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">area_conversion_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">volume_conversion_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pywfm.IWFMBudget.get_values" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">IWFMBudget.</span></span><span class="sig-name descname"><span class="pre">get_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">location_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">columns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'all'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">begin_date</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_date</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_interval</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length_conversion_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">area_conversion_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">volume_conversion_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pywfm.IWFMBudget.get_values" title="Permalink to this definition">¶</a></dt>
 <dd><p>returns budget data for selected budget columns for a location and specified time interval</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1409,6 +1409,13 @@ stream reach id, etc.</p></li>
 <li><p><strong>columns</strong> (<em>str</em><em> or </em><em>list of str</em><em>, </em><em>default='all'</em>) – column names to obtain budget data</p></li>
 <li><p><strong>begin_date</strong> (<em>str</em>) – first date where budget data are returned</p></li>
 <li><p><strong>end_date</strong> (<em>str</em>) – last date where budget data are returned</p></li>
+<li><p><strong>output_interval</strong> (<em>str</em><em> or </em><em>None</em><em>, </em><em>default=None</em>) – <p>valid IWFM output time interval for returning budget data.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This must be greater than or equal to the simulation time
+step</p>
+</div>
+</p></li>
 <li><p><strong>length_conversion_factor</strong> (<em>float</em><em>, </em><em>default=1.0</em>) – conversion factor to convert simulation units for length
 to another length</p></li>
 <li><p><strong>area_conversion_factor</strong> (<em>float</em><em>, </em><em>default=1.0</em>) – conversion factor to convert simulation units for area</p></li>
@@ -1422,12 +1429,6 @@ to another length</p></li>
 <dd class="field-odd"><p>pd.DataFrame</p>
 </dd>
 </dl>
-<div class="admonition important">
-<p class="admonition-title">Important</p>
-<p>At this time, output is always returned using the default output
-interval. In the future, it could be the output interval or
-more aggregated.</p>
-</div>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <dl class="simple">
@@ -1494,7 +1495,7 @@ more aggregated.</p>
     
     <div class="footer-item">
       <p class="copyright">
-    &copy; Copyright 2021, California Department of Water Resources.<br>
+    &copy; Copyright 2022, California Department of Water Resources.<br>
 </p>
     </div>
     
