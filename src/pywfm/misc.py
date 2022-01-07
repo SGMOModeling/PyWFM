@@ -1071,7 +1071,7 @@ class IWFMMiscellaneous:
         Returns
         -------
         str
-            error message for the 
+            error message for the procedure if it returns an error code
         '''
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_GetLastMessage"):
