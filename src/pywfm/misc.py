@@ -11,8 +11,8 @@ class IWFMMiscellaneous:
         instance of the IWFMMiscellaneous class and access to the IWFM
         Miscellaneous fortran procedures.
 
-    Notes
-    -----
+    Note
+    ----
     This class is a base class and is not meant to be called directly.
     It is not provided with an __init__ method, so the self.dll used in
     each of the methods must be provided through the subclass.
