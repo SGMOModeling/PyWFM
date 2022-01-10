@@ -37,7 +37,8 @@ class IWFMModel(IWFMMiscellaneous):
         option=1 for model being accessed to return input and output data
         option=0 for model simulations
 
-        notes:
+        Note
+        ----
         is_for_inquiry=1: when an instance of the IWFMModel class is 
         created for the first time, the entire model object will be 
         available for returning data. A binary file will be generated 
