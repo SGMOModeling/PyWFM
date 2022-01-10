@@ -16,35 +16,37 @@ from pywfm.misc import IWFMMiscellaneous
 
 class IWFMModel(IWFMMiscellaneous):
     '''
-    IWFM Model Class for interacting with the IWFM DLL
+    IWFM Model Class for interacting with the IWFM DLL.
 
     Parameters
     ----------
     dll_path : str
-        file path and name of the IWFM DLL to access IWFM procedures
+        file path and name of the IWFM DLL to access IWFM procedures.
 
     preprocessor_file_name : str
-        file path and name of the model preprocessor input file
+        file path and name of the model preprocessor input file.
 
     simulation_file_name : str
-        file path and name of the model simulation input file
+        file path and name of the model simulation input file.
 
-    has_routed_streams : int, default=1
-        option=1 for model having routed streams
-        option=0 for model not having routed streams
+    has_routed_streams : {1 or 0}, default 1
+        if the model has routed streams:
+            1: has routed streams.
+            0: does not have routed streams.
 
-    is_for_inquiry : int, default=1
-        option=1 for model being accessed to return input and output data
-        option=0 for model simulations
-
+    is_for_inquiry : {1 or 0}, default 1
+        if model is being instantiated for inquiry:
+            1: model is instantiated for inquiry.
+            0: model is instantiated for simulations.
+    
         Note
         ----
-        is_for_inquiry=1: when an instance of the IWFMModel class is 
-        created for the first time, the entire model object will be 
-        available for returning data. A binary file will be generated 
-        for quicker loading, if this binary file exists when subsequent 
-        instances of the IWFMModel object are created, not all functions
-        will be available.
+        When an instance of the IWFMModel class is created for the 
+        first time, the entire model object will be available for 
+        returning data. A binary file will be generated for quicker 
+        loading, if this binary file exists when subsequent instances
+        of the IWFMModel object are created, not all functions will be
+        available.
 
     Returns
     -------
