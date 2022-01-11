@@ -194,6 +194,7 @@
       ~IWFMModel.is_stream_upstream_node
       ~IWFMModel.kill
       ~IWFMModel.log_last_message
+      ~IWFMModel.new
       ~IWFMModel.order_boundary_nodes
       ~IWFMModel.plot_elements
       ~IWFMModel.plot_nodes
