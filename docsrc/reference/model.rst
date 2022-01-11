@@ -291,6 +291,7 @@ General
 .. autosummary::
    :toctree: generated/general/
 
+   new
    kill
    is_model_instantiated
    delete_inquiry_data_file
