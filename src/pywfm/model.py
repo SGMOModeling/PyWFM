@@ -189,11 +189,11 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_n_time_steps : Returns the number of timesteps in an IWFM simulation
-        IWFMModel.get_time_specs : Returns the IWFM simulation dates and time step
-        IWFMModel.get_n_intervals : Returns the number of time intervals between a provided start date and end date
-        IWFMModel.get_output_interval : Returns a list of the possible time intervals a selected time-series data can be retrieved at.
-        IWFMModel.is_date_greater : Returns True if first_date is greater than comparison_date
+        IWFMModel.get_n_time_steps : Return the number of timesteps in an IWFM simulation
+        IWFMModel.get_time_specs : Return the IWFM simulation dates and time step
+        IWFMModel.get_n_intervals : Return the number of time intervals between a provided start date and end date
+        IWFMModel.get_output_interval : Return a list of the possible time intervals a selected time-series data can be retrieved at.
+        IWFMModel.is_date_greater : Return True if first_date is greater than comparison_date
         IWFMModel.increment_time : increments the date provided by the specified time interval
 
         Examples
@@ -249,7 +249,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_n_time_steps(self):
         '''
-        Returns the number of timesteps in an IWFM simulation
+        Return the number of timesteps in an IWFM simulation
 
         Returns
         -------
@@ -258,11 +258,11 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_current_date_and_time : Returns the current simulation date and time
-        IWFMModel.get_time_specs : Returns the IWFM simulation dates and time step
-        IWFMModel.get_n_intervals : Returns the number of time intervals between a provided start date and end date
-        IWFMModel.get_output_interval : Returns a list of the possible time intervals a selected time-series data can be retrieved at.
-        IWFMModel.is_date_greater : Returns True if first_date is greater than comparison_date
+        IWFMModel.get_current_date_and_time : Return the current simulation date and time
+        IWFMModel.get_time_specs : Return the IWFM simulation dates and time step
+        IWFMModel.get_n_intervals : Return the number of time intervals between a provided start date and end date
+        IWFMModel.get_output_interval : Return a list of the possible time intervals a selected time-series data can be retrieved at.
+        IWFMModel.is_date_greater : Return True if first_date is greater than comparison_date
         IWFMModel.increment_time : increments the date provided by the specified time interval
 
         Example
@@ -294,7 +294,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_time_specs(self):
         '''
-        Returns the IWFM simulation dates and time step
+        Return the IWFM simulation dates and time step
 
         Returns
         -------
@@ -303,11 +303,11 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_current_date_and_time : Returns the current simulation date and time
-        IWFMModel.get_n_time_steps : Returns the number of timesteps in an IWFM simulation
-        IWFMModel.get_n_intervals : Returns the number of time intervals between a provided start date and end date
-        IWFMModel.get_output_interval : Returns a list of the possible time intervals a selected time-series data can be retrieved at.
-        IWFMModel.is_date_greater : Returns True if first_date is greater than comparison_date
+        IWFMModel.get_current_date_and_time : Return the current simulation date and time
+        IWFMModel.get_n_time_steps : Return the number of timesteps in an IWFM simulation
+        IWFMModel.get_n_intervals : Return the number of time intervals between a provided start date and end date
+        IWFMModel.get_output_interval : Return a list of the possible time intervals a selected time-series data can be retrieved at.
+        IWFMModel.is_date_greater : Return True if first_date is greater than comparison_date
         IWFMModel.increment_time : increments the date provided by the specified time interval
 
         Example
@@ -368,7 +368,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_output_interval(self):
         '''
-        Returns a list of the possible time intervals a selected
+        Return a list of the possible time intervals a selected
         time-series data can be retrieved at.
 
         Returns
@@ -378,11 +378,11 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_current_date_and_time : Returns the current simulation date and time
-        IWFMModel.get_n_time_steps : Returns the number of timesteps in an IWFM simulation
-        IWFMModel.get_time_specs : Returns the IWFM simulation dates and time step 
-        IWFMModel.get_n_intervals : Returns the number of time intervals between a provided start date and end date
-        IWFMModel.is_date_greater : Returns True if first_date is greater than comparison_date
+        IWFMModel.get_current_date_and_time : Return the current simulation date and time
+        IWFMModel.get_n_time_steps : Return the number of timesteps in an IWFM simulation
+        IWFMModel.get_time_specs : Return the IWFM simulation dates and time step 
+        IWFMModel.get_n_intervals : Return the number of time intervals between a provided start date and end date
+        IWFMModel.is_date_greater : Return True if first_date is greater than comparison_date
         IWFMModel.increment_time : increments the date provided by the specified time interval
 
         Example
@@ -428,7 +428,7 @@ class IWFMModel(IWFMMiscellaneous):
   
     def get_n_nodes(self):
         '''
-        Returns the number of nodes in an IWFM model
+        Return the number of nodes in an IWFM model
 
         Returns
         -------
@@ -437,13 +437,13 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_node_coordinates : Returns the x,y coordinates of the nodes in an IWFM model
-        IWFMModel.get_node_ids : Returns an array of node ids in an IWFM model
-        IWFMModel.get_n_elements : Returns the number of elements in an IWFM model
-        IWFMModel.get_n_subregions : Returns the number of subregions in an IWFM model
-        IWFMModel.get_n_stream_nodes : Returns the number of stream nodes in an IWFM model
-        IWFMModel.get_n_stream_inflows : Returns the number of stream boundary inflows specified by the user as timeseries input data
-        IWFMModel.get_n_layers : Returns the number of layers in an IWFM model
+        IWFMModel.get_node_coordinates : Return the x,y coordinates of the nodes in an IWFM model
+        IWFMModel.get_node_ids : Return an array of node ids in an IWFM model
+        IWFMModel.get_n_elements : Return the number of elements in an IWFM model
+        IWFMModel.get_n_subregions : Return the number of subregions in an IWFM model
+        IWFMModel.get_n_stream_nodes : Return the number of stream nodes in an IWFM model
+        IWFMModel.get_n_stream_inflows : Return the number of stream boundary inflows specified by the user as timeseries input data
+        IWFMModel.get_n_layers : Return the number of layers in an IWFM model
 
         Example
         -------
@@ -476,7 +476,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_node_coordinates(self):
         '''
-        Returns the x,y coordinates of the nodes in an IWFM model
+        Return the x,y coordinates of the nodes in an IWFM model
 
         Returns
         -------
@@ -486,8 +486,8 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_n_nodes : Returns the number of nodes in an IWFM model
-        IWFMModel.get_node_ids : Returns an array of node ids in an IWFM model
+        IWFMModel.get_n_nodes : Return the number of nodes in an IWFM model
+        IWFMModel.get_node_ids : Return an array of node ids in an IWFM model
 
         Example
         -------
@@ -526,7 +526,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_node_ids(self):
         '''
-        Returns an array of node ids in an IWFM model
+        Return an array of node ids in an IWFM model
 
         Returns
         -------
@@ -535,8 +535,8 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_n_nodes : Returns the number of nodes in an IWFM model
-        IWFMModel.get_node_coordinates : Returns the x,y coordinates of the nodes in an IWFM model
+        IWFMModel.get_n_nodes : Return the number of nodes in an IWFM model
+        IWFMModel.get_node_coordinates : Return the x,y coordinates of the nodes in an IWFM model
 
         Example
         -------
@@ -570,7 +570,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_n_elements(self):
         '''
-        Returns the number of elements in an IWFM model
+        Return the number of elements in an IWFM model
 
         Returns
         -------
@@ -579,13 +579,13 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_element_ids : Returns an array of element IDs in an IWFM model
-        IWFMModel.get_element_config : Returns an array of node IDs for an IWFM element
-        IWFMModel.get_n_nodes : Returns the number of nodes in an IWFM model
-        IWFMModel.get_n_subregions : Returns the number of subregions in an IWFM model
-        IWFMModel.get_n_stream_nodes : Returns the number of stream nodes in an IWFM model
-        IWFMModel.get_n_stream_inflows : Returns the number of stream boundary inflows specified by the user as timeseries input data
-        IWFMModel.get_n_layers : Returns the number of layers in an IWFM model
+        IWFMModel.get_element_ids : Return an array of element IDs in an IWFM model
+        IWFMModel.get_element_config : Return an array of node IDs for an IWFM element
+        IWFMModel.get_n_nodes : Return the number of nodes in an IWFM model
+        IWFMModel.get_n_subregions : Return the number of subregions in an IWFM model
+        IWFMModel.get_n_stream_nodes : Return the number of stream nodes in an IWFM model
+        IWFMModel.get_n_stream_inflows : Return the number of stream boundary inflows specified by the user as timeseries input data
+        IWFMModel.get_n_layers : Return the number of layers in an IWFM model
         
 
         Example
@@ -619,7 +619,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_element_ids(self):
         '''
-        Returns an array of element ids in an IWFM model
+        Return an array of element ids in an IWFM model
 
         Returns
         -------
@@ -628,8 +628,8 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_n_elements : Returns the number of elements in the IWFM model
-        IWFMModel.get_element_config : Returns an array of node IDs for an IWFM element
+        IWFMModel.get_n_elements : Return the number of elements in the IWFM model
+        IWFMModel.get_element_config : Return an array of node IDs for an IWFM element
 
         Example
         -------
@@ -663,7 +663,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_element_config(self, element_id):
         '''
-        Returns an array of node ids for an IWFM element.
+        Return an array of node ids for an IWFM element.
         The node ids are provided in a counter-clockwise direction
 
         Parameters
@@ -685,8 +685,8 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_n_elements : Returns the number of elements in an IWFM model
-        IWFMModel.get_element_ids : Returns an array of element IDs in an IWFM model
+        IWFMModel.get_n_elements : Return the number of elements in an IWFM model
+        IWFMModel.get_element_ids : Return an array of element IDs in an IWFM model
 
         Example
         -------
@@ -738,7 +738,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_n_subregions(self):
         '''
-        Returns the number of subregions in an IWFM model
+        Return the number of subregions in an IWFM model
 
         Returns
         -------
@@ -747,9 +747,9 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_subregion_ids : Returns an array of IDs for subregions in an IWFM model
-        IWFMModel.get_subregion_name : Returns the name corresponding to the subregion_id in an IWFM model
-        IWFMModel.get_subregions_by_element : Returns an array identifying the IWFM Model elements contained within each subregion.
+        IWFMModel.get_subregion_ids : Return an array of IDs for subregions in an IWFM model
+        IWFMModel.get_subregion_name : Return the name corresponding to the subregion_id in an IWFM model
+        IWFMModel.get_subregions_by_element : Return an array identifying the IWFM Model elements contained within each subregion.
 
         Example
         -------
@@ -782,7 +782,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_subregion_ids(self):
         '''
-        Returns an array of IDs for subregions identified in an IWFM model 
+        Return an array of IDs for subregions identified in an IWFM model 
         
         Returns
         -------
@@ -795,9 +795,9 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_n_subregions : Returns the number of subregions in an IWFM model
-        IWFMModel.get_subregion_name : Returns the name corresponding to the subregion_id in an IWFM model
-        IWFMModel.get_subregions_by_element ; Returns an array identifying the IWFM Model elements contained within each subregion.
+        IWFMModel.get_n_subregions : Return the number of subregions in an IWFM model
+        IWFMModel.get_subregion_name : Return the name corresponding to the subregion_id in an IWFM model
+        IWFMModel.get_subregions_by_element ; Return an array identifying the IWFM Model elements contained within each subregion.
 
         Example
         -------
@@ -832,7 +832,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_subregion_name(self, subregion_id):
         '''
-        Returns the name corresponding to the subregion_id in an IWFM model 
+        Return the name corresponding to the subregion_id in an IWFM model 
         
         Parameters
         ----------
@@ -846,9 +846,9 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_n_subregions : Returns the number of subregions in an IWFM model
-        IWFMModel.get_subregion_ids : Returns an array of IDs for subregions identified in an IWFM model
-        IWFMModel.get_subregions_by_element : Returns an array identifying the IWFM Model elements contained within each subregion.
+        IWFMModel.get_n_subregions : Return the number of subregions in an IWFM model
+        IWFMModel.get_subregion_ids : Return an array of IDs for subregions identified in an IWFM model
+        IWFMModel.get_subregions_by_element : Return an array identifying the IWFM Model elements contained within each subregion.
 
         Example
         -------
@@ -901,7 +901,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_subregions_by_element(self):
         '''
-        Returns an array identifying the IWFM Model elements contained within each subregion.
+        Return an array identifying the IWFM Model elements contained within each subregion.
 
         Returns
         -------
@@ -913,10 +913,10 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_n_subregions : Returns the number of subregions in an IWFM model
-        IWFMModel.get_subregion_ids : Returns an array of IDs for subregions in an IWFM model
-        IWFMModel.get_subregion_name : Returns the name corresponding to the subregion_id in an IWFM model
-        IWFMModel.get_n_elements : Returns the number of elements in an IWFM model
+        IWFMModel.get_n_subregions : Return the number of subregions in an IWFM model
+        IWFMModel.get_subregion_ids : Return an array of IDs for subregions in an IWFM model
+        IWFMModel.get_subregion_name : Return the name corresponding to the subregion_id in an IWFM model
+        IWFMModel.get_n_elements : Return the number of elements in an IWFM model
 
         Example
         -------
@@ -971,7 +971,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_n_stream_nodes(self):
         '''
-        Returns the number of stream nodes in an IWFM model
+        Return the number of stream nodes in an IWFM model
 
         Returns
         -------
@@ -980,12 +980,12 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_stream_node_ids : Returns an array of stream node IDs in an IWFM model
-        IWFMModel.get_n_stream_nodes_upstream_of_stream_node : Returns the number of stream nodes immediately upstream of the provided stream node id
-        IWFMModel.get_stream_nodes_upstream_of_stream_node : Returns an array of the stream node ids immediately upstream of the provided stream node id
-        IWFMModel.get_n_nodes : Returns the number of nodes in an IWFM model
-        IWFMModel.get_n_subregions : Returns the number of subregions in an IWFM model
-        IWFMModel.get_n_stream_inflows : Returns the number of stream boundary inflows specified by the user as timeseries input data
+        IWFMModel.get_stream_node_ids : Return an array of stream node IDs in an IWFM model
+        IWFMModel.get_n_stream_nodes_upstream_of_stream_node : Return the number of stream nodes immediately upstream of the provided stream node id
+        IWFMModel.get_stream_nodes_upstream_of_stream_node : Return an array of the stream node ids immediately upstream of the provided stream node id
+        IWFMModel.get_n_nodes : Return the number of nodes in an IWFM model
+        IWFMModel.get_n_subregions : Return the number of subregions in an IWFM model
+        IWFMModel.get_n_stream_inflows : Return the number of stream boundary inflows specified by the user as timeseries input data
 
         Example
         -------
@@ -1018,7 +1018,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_stream_node_ids(self):
         '''
-        Returns an array of stream node IDs in the IWFM model
+        Return an array of stream node IDs in the IWFM model
         
         Returns
         -------
@@ -1031,9 +1031,9 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_n_stream_nodes : Reutrns the number of stream nodes in an IWFM model
-        IWFMModel.get_n_stream_nodes_upstream_of_stream_node : Returns the number of stream nodes immediately upstream of the provided stream node id
-        IWFMModel.get_stream_nodes_upstream_of_stream_node : Returns an array of the stream node ids immediately upstream of the provided stream node id
+        IWFMModel.get_n_stream_nodes : Return the number of stream nodes in an IWFM model
+        IWFMModel.get_n_stream_nodes_upstream_of_stream_node : Return the number of stream nodes immediately upstream of the provided stream node id
+        IWFMModel.get_stream_nodes_upstream_of_stream_node : Return an array of the stream node ids immediately upstream of the provided stream node id
 
         Example
         -------
@@ -1067,7 +1067,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_n_stream_nodes_upstream_of_stream_node(self, stream_node_id):
         '''
-        Returns the number of stream nodes immediately upstream of
+        Return the number of stream nodes immediately upstream of
         the provided stream node id
         
         Parameters
@@ -1088,9 +1088,9 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_n_stream_nodes : Returns the number of stream nodes in an IWFM model
-        IWFMModel.get_stream_node_ids : Returns an array of stream node IDs in an IWFM model
-        IWFMModel.get_stream_nodes_upstream_of_stream_node : Returns an array of the stream node ids immediately upstream of the provided stream node id
+        IWFMModel.get_n_stream_nodes : Return the number of stream nodes in an IWFM model
+        IWFMModel.get_stream_node_ids : Return an array of stream node IDs in an IWFM model
+        IWFMModel.get_stream_nodes_upstream_of_stream_node : Return an array of the stream node ids immediately upstream of the provided stream node id
 
         Example
         -------
@@ -1137,7 +1137,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_stream_nodes_upstream_of_stream_node(self, stream_node_id):
         '''
-        Returns an array of the stream node ids immediately upstream
+        Return an array of the stream node ids immediately upstream
         of the provided stream node id
         
         Parameters
@@ -1157,9 +1157,9 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_n_stream_nodes_upstream_of_stream_node : Returns the number of stream nodes immediately upstream of the provided stream node id
-        IWFMModel.get_n_stream_nodes : Returns the number of stream nodes in an IWFM model
-        IWFMModel.get_stream_node_ids : Returns an array of stream node IDs in an IWFM model
+        IWFMModel.get_n_stream_nodes_upstream_of_stream_node : Return the number of stream nodes immediately upstream of the provided stream node id
+        IWFMModel.get_n_stream_nodes : Return the number of stream nodes in an IWFM model
+        IWFMModel.get_stream_node_ids : Return an array of stream node IDs in an IWFM model
 
         Examples
         --------
@@ -1225,7 +1225,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_stream_bottom_elevations(self):
         '''
-        Returns the stream channel bottom elevation at each stream node
+        Return the stream channel bottom elevation at each stream node
         
         Returns
         -------
@@ -1234,10 +1234,10 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_n_stream_nodes : Returns the number of stream nodes in an IWFM model
-        IWFMModel.get_stream_node_ids : Returns an array of stream node IDs in an IWFM model
-        IWFMModel.get_n_rating_table_points : Returns the number of data points in the stream flow rating table for a stream node
-        IWFMModel.get_stream_rating_table : Returns the stream rating table for a specified stream node
+        IWFMModel.get_n_stream_nodes : Return the number of stream nodes in an IWFM model
+        IWFMModel.get_stream_node_ids : Return an array of stream node IDs in an IWFM model
+        IWFMModel.get_n_rating_table_points : Return the number of data points in the stream flow rating table for a stream node
+        IWFMModel.get_stream_rating_table : Return the stream rating table for a specified stream node
 
         Example
         -------
@@ -1273,7 +1273,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_n_rating_table_points(self, stream_node_id):
         '''
-        Returns the number of data points in the stream flow rating 
+        Return the number of data points in the stream flow rating 
         table for a stream node
 
         Parameters
@@ -1289,10 +1289,10 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_stream_rating_table : Returns the stream rating table for a specified stream node
-        IWFMModel.get_n_stream_nodes : Returns the number of stream nodes in an IWFM model
-        IWFMModel.get_stream_node_ids : Returns an array of stream node IDs in an IWFM model
-        IWFMModel.get_stream_bottom_elevations : Returns the stream channel bottom elevation at each stream node
+        IWFMModel.get_stream_rating_table : Return the stream rating table for a specified stream node
+        IWFMModel.get_n_stream_nodes : Return the number of stream nodes in an IWFM model
+        IWFMModel.get_stream_node_ids : Return an array of stream node IDs in an IWFM model
+        IWFMModel.get_stream_bottom_elevations : Return the stream channel bottom elevation at each stream node
 
         Example
         -------
@@ -1340,7 +1340,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_stream_rating_table(self, stream_node_id):
         '''
-        Returns the stream rating table for a specified stream node 
+        Return the stream rating table for a specified stream node 
         
         Parameters
         ----------
@@ -1354,10 +1354,10 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_n_rating_table_points : Returns the number of data points in the stream flow rating table for a stream node
-        IWFMModel.get_n_stream_nodes : Returns the number of stream nodes in an IWFM model
-        IWFMModel.get_stream_node_ids : Returns an array of stream node IDs in an IWFM model
-        IWFMModel.get_stream_bottom_elevations : Returns the stream channel bottom elevation at each stream node
+        IWFMModel.get_n_rating_table_points : Return the number of data points in the stream flow rating table for a stream node
+        IWFMModel.get_n_stream_nodes : Return the number of stream nodes in an IWFM model
+        IWFMModel.get_stream_node_ids : Return an array of stream node IDs in an IWFM model
+        IWFMModel.get_stream_bottom_elevations : Return the stream channel bottom elevation at each stream node
 
         Example
         -------
@@ -1412,7 +1412,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_n_stream_inflows(self):
         '''
-        Returns the number of stream boundary inflows specified by the 
+        Return the number of stream boundary inflows specified by the 
         user as timeseries input data
 
         Returns
@@ -1422,8 +1422,8 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_stream_inflow_nodes : Returns the stream nodes indices that receive boundary inflows specified by the user as timeseries input data
-        IWFMModel.get_stream_inflow_ids : Returns the identification numbers for the stream boundary inflows specified by the user as timeseries input data
+        IWFMModel.get_stream_inflow_nodes : Return the stream nodes indices that receive boundary inflows specified by the user as timeseries input data
+        IWFMModel.get_stream_inflow_ids : Return the identification numbers for the stream boundary inflows specified by the user as timeseries input data
 
         Example
         -------
@@ -1453,7 +1453,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_stream_inflow_nodes(self):
         '''
-        Returns the stream node indices that receive boundary 
+        Return the stream node indices that receive boundary 
         inflows specified by the user as timeseries input data 
         
         Returns
@@ -1463,8 +1463,8 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_n_stream_inflows : Returns the number of stream boundary inflows specified by the user as timeseries input data
-        IWFMModel.get_stream_inflow_ids : Returns the identification numbers for the stream boundary inflows specified by the user as timeseries input data
+        IWFMModel.get_n_stream_inflows : Return the number of stream boundary inflows specified by the user as timeseries input data
+        IWFMModel.get_stream_inflow_ids : Return the identification numbers for the stream boundary inflows specified by the user as timeseries input data
 
         Example
         -------
@@ -1502,7 +1502,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_stream_inflow_ids(self):
         '''
-        Returns the identification numbers for the stream boundary 
+        Return the identification numbers for the stream boundary 
         inflows specified by the user as timeseries input data 
         
         Returns
@@ -1512,8 +1512,8 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_n_stream_inflows : Returns the number of stream boundary inflows specified by the user as timeseries input data
-        IWFMModel.get_stream_inflow_nodes : Returns the stream node indices that receive boundary inflows specified by the user as timeseries input data
+        IWFMModel.get_n_stream_inflows : Return the number of stream boundary inflows specified by the user as timeseries input data
+        IWFMModel.get_stream_inflow_nodes : Return the stream node indices that receive boundary inflows specified by the user as timeseries input data
 
         Example
         -------
@@ -1549,7 +1549,7 @@ class IWFMModel(IWFMMiscellaneous):
                                              stream_inflow_locations='all', 
                                              inflow_conversion_factor=1.0):
         '''
-        Returns stream boundary inflows at a specified set of inflow
+        Return stream boundary inflows at a specified set of inflow
         locations listed by their indices for the current simulation timestep
         
         Parameters
@@ -1574,9 +1574,9 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_stream_flow_at_location : Returns stream flow at a stream node for the current time step in a simulation
-        IWFMModel.get_stream_flows : Returns stream flows at every stream node for the current timestep
-        IWFMModel.get_stream_stages : Returns stream stages at every stream node for the current timestep
+        IWFMModel.get_stream_flow_at_location : Return stream flow at a stream node for the current time step in a simulation
+        IWFMModel.get_stream_flows : Return stream flows at every stream node for the current timestep
+        IWFMModel.get_stream_stages : Return stream stages at every stream node for the current timestep
 
         Example
         -------
@@ -1677,7 +1677,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_stream_flow_at_location(self, stream_node_id, flow_conversion_factor=1.0):
         '''
-        Returns stream flow at a stream node for the current time
+        Return stream flow at a stream node for the current time
         step in a simulation 
 
         Parameters
@@ -1701,9 +1701,9 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_stream_inflows_at_some_locations : Returns stream boundary inflows at a specified set of inflow locations listed by their indices for the current simulation timestep
-        IWFMModel.get_stream_flows : Returns stream flows at every stream node for the current timestep
-        IWFMModel.get_stream_stages : Returns stream stages at every stream node for the current timestep
+        IWFMModel.get_stream_inflows_at_some_locations : Return stream boundary inflows at a specified set of inflow locations listed by their indices for the current simulation timestep
+        IWFMModel.get_stream_flows : Return stream flows at every stream node for the current timestep
+        IWFMModel.get_stream_stages : Return stream stages at every stream node for the current timestep
 
         Example
         -------
@@ -1781,7 +1781,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_stream_flows(self, flow_conversion_factor=1.0):
         '''
-        Returns stream flows at every stream node for the current timestep 
+        Return stream flows at every stream node for the current timestep 
         
         Parameters
         ----------
@@ -1801,9 +1801,9 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_stream_inflows_at_some_locations : Returns stream boundary inflows at a specified set of inflow locations listed by their indices for the current simulation timestep
-        IWFMModel.get_stream_flow_at_location : Returns stream flow at a stream node for the current time step in a simulation
-        IWFMModel.get_stream_stages : Returns stream stages at every stream node for the current timestep
+        IWFMModel.get_stream_inflows_at_some_locations : Return stream boundary inflows at a specified set of inflow locations listed by their indices for the current simulation timestep
+        IWFMModel.get_stream_flow_at_location : Return stream flow at a stream node for the current time step in a simulation
+        IWFMModel.get_stream_stages : Return stream stages at every stream node for the current timestep
 
         Example
         -------
@@ -1884,7 +1884,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_stream_stages(self, stage_conversion_factor=1.0):
         '''
-        Returns stream stages at every stream node for the current timestep
+        Return stream stages at every stream node for the current timestep
         
         Parameters
         ----------
@@ -1904,9 +1904,9 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_stream_inflows_at_some_locations : Returns stream boundary inflows at a specified set of inflow locations listed by their indices for the current simulation timestep
-        IWFMModel.get_stream_flow_at_location : Returns stream flow at a stream node for the current time step in a simulation
-        IWFMModel.get_stream_flows : Returns stream flows at every stream node for the current timestep
+        IWFMModel.get_stream_inflows_at_some_locations : Return stream boundary inflows at a specified set of inflow locations listed by their indices for the current simulation timestep
+        IWFMModel.get_stream_flow_at_location : Return stream flow at a stream node for the current time step in a simulation
+        IWFMModel.get_stream_flows : Return stream flows at every stream node for the current timestep
 
         Example
         -------
@@ -1987,7 +1987,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_stream_tributary_inflows(self, inflow_conversion_factor=1.0):
         '''
-        Returns small watershed inflows at every stream node for the current timestep
+        Return small watershed inflows at every stream node for the current timestep
         
         Parameters
         ----------
@@ -2010,14 +2010,14 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_stream_rainfall_runoff : Returns rainfall runoff at every stream node for the current timestep
-        IWFMModel.get_stream_return_flows : Returns agricultural and urban return flows at every stream node for the current timestep
-        IWFMModel.get_stream_tile_drain_flows : Returns tile drain flows into every stream node for the current timestep
-        IWFMModel.get_stream_riparian_evapotranspiration : Returns riparian evapotranspiration from every stream node for the current timestep
-        IWFMModel.get_stream_gain_from_groundwater : Returns gain from groundwater for every stream node for the current timestep
-        IWFMModel.get_stream_gain_from_lakes : Returns gain from lakes for every stream node for the current timestep
-        IWFMModel.get_net_bypass_inflows : Returns net bypass inflows for every stream node for the current timestep
-        IWFMModel.get_actual_stream_diversions_at_some_locations : Returns actual diversion amounts for a list of diversions during a model simulation
+        IWFMModel.get_stream_rainfall_runoff : Return rainfall runoff at every stream node for the current timestep
+        IWFMModel.get_stream_return_flows : Return agricultural and urban return flows at every stream node for the current timestep
+        IWFMModel.get_stream_tile_drain_flows : Return tile drain flows into every stream node for the current timestep
+        IWFMModel.get_stream_riparian_evapotranspiration : Return riparian evapotranspiration from every stream node for the current timestep
+        IWFMModel.get_stream_gain_from_groundwater : Return gain from groundwater for every stream node for the current timestep
+        IWFMModel.get_stream_gain_from_lakes : Return gain from lakes for every stream node for the current timestep
+        IWFMModel.get_net_bypass_inflows : Return net bypass inflows for every stream node for the current timestep
+        IWFMModel.get_actual_stream_diversions_at_some_locations : Return actual diversion amounts for a list of diversions during a model simulation
         '''
         if not hasattr(self.dll, "IW_Model_GetStrmTributaryInflows"):
             raise AttributeError('IWFM DLL does not have "{}" procedure. '
@@ -2044,7 +2044,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_stream_rainfall_runoff(self, runoff_conversion_factor=1.0):
         '''
-        Returns rainfall runoff at every stream node for the current timestep
+        Return rainfall runoff at every stream node for the current timestep
         
         Parameters
         ----------
@@ -2067,14 +2067,14 @@ class IWFMModel(IWFMMiscellaneous):
         
         See Also
         --------
-        IWFMModel.get_stream_tributary_inflows : Returns small watershed inflows at every stream node for the current timestep
-        IWFMModel.get_stream_return_flows : Returns agricultural and urban return flows at every stream node for the current timestep
-        IWFMModel.get_stream_tile_drain_flows : Returns tile drain flows into every stream node for the current timestep
-        IWFMModel.get_stream_riparian_evapotranspiration : Returns riparian evapotranspiration from every stream node for the current timestep
-        IWFMModel.get_stream_gain_from_groundwater : Returns gain from groundwater for every stream node for the current timestep
-        IWFMModel.get_stream_gain_from_lakes : Returns gain from lakes for every stream node for the current timestep
-        IWFMModel.get_net_bypass_inflows : Returns net bypass inflows for every stream node for the current timestep
-        IWFMModel.get_actual_stream_diversions_at_some_locations : Returns actual diversion amounts for a list of diversions during a model simulation
+        IWFMModel.get_stream_tributary_inflows : Return small watershed inflows at every stream node for the current timestep
+        IWFMModel.get_stream_return_flows : Return agricultural and urban return flows at every stream node for the current timestep
+        IWFMModel.get_stream_tile_drain_flows : Return tile drain flows into every stream node for the current timestep
+        IWFMModel.get_stream_riparian_evapotranspiration : Return riparian evapotranspiration from every stream node for the current timestep
+        IWFMModel.get_stream_gain_from_groundwater : Return gain from groundwater for every stream node for the current timestep
+        IWFMModel.get_stream_gain_from_lakes : Return gain from lakes for every stream node for the current timestep
+        IWFMModel.get_net_bypass_inflows : Return net bypass inflows for every stream node for the current timestep
+        IWFMModel.get_actual_stream_diversions_at_some_locations : Return actual diversion amounts for a list of diversions during a model simulation
         '''
         if not hasattr(self.dll, "IW_Model_GetStrmRainfallRunoff"):
             raise AttributeError('IWFM DLL does not have "{}" procedure. '
@@ -2101,7 +2101,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_stream_return_flows(self, return_flow_conversion_factor=1.0):
         '''
-        Returns agricultural and urban return flows at every stream
+        Return agricultural and urban return flows at every stream
         node for the current timestep
         
         Parameters
@@ -2125,14 +2125,14 @@ class IWFMModel(IWFMMiscellaneous):
         
         See Also
         --------
-        IWFMModel.get_stream_tributary_inflows : Returns small watershed inflows at every stream node for the current timestep
-        IWFMModel.get_stream_rainfall_runoff : Returns rainfall runoff at every stream node for the current timestep
-        IWFMModel.get_stream_tile_drain_flows : Returns tile drain flows into every stream node for the current timestep
-        IWFMModel.get_stream_riparian_evapotranspiration : Returns riparian evapotranspiration from every stream node for the current timestep
-        IWFMModel.get_stream_gain_from_groundwater : Returns gain from groundwater for every stream node for the current timestep
-        IWFMModel.get_stream_gain_from_lakes : Returns gain from lakes for every stream node for the current timestep
-        IWFMModel.get_net_bypass_inflows : Returns net bypass inflows for every stream node for the current timestep
-        IWFMModel.get_actual_stream_diversions_at_some_locations : Returns actual diversion amounts for a list of diversions during a model simulation
+        IWFMModel.get_stream_tributary_inflows : Return small watershed inflows at every stream node for the current timestep
+        IWFMModel.get_stream_rainfall_runoff : Return rainfall runoff at every stream node for the current timestep
+        IWFMModel.get_stream_tile_drain_flows : Return tile drain flows into every stream node for the current timestep
+        IWFMModel.get_stream_riparian_evapotranspiration : Return riparian evapotranspiration from every stream node for the current timestep
+        IWFMModel.get_stream_gain_from_groundwater : Return gain from groundwater for every stream node for the current timestep
+        IWFMModel.get_stream_gain_from_lakes : Return gain from lakes for every stream node for the current timestep
+        IWFMModel.get_net_bypass_inflows : Return net bypass inflows for every stream node for the current timestep
+        IWFMModel.get_actual_stream_diversions_at_some_locations : Return actual diversion amounts for a list of diversions during a model simulation
         '''
         if not hasattr(self.dll, "IW_Model_GetStrmReturnFlows"):
             raise AttributeError('IWFM DLL does not have "{}" procedure. '
@@ -2159,7 +2159,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_stream_tile_drain_flows(self, tile_drain_conversion_factor=1.0):
         '''
-        Returns tile drain flows into every stream node for the current timestep
+        Return tile drain flows into every stream node for the current timestep
         
         Parameters
         ----------
@@ -2182,14 +2182,14 @@ class IWFMModel(IWFMMiscellaneous):
         
         See Also
         --------
-        IWFMModel.get_stream_tributary_inflows : Returns small watershed inflows at every stream node for the current timestep
-        IWFMModel.get_stream_rainfall_runoff : Returns rainfall runoff at every stream node for the current timestep
-        IWFMModel.get_stream_return_flows : Returns agricultural and urban return flows at every stream node for the current timestep
-        IWFMModel.get_stream_riparian_evapotranspiration : Returns riparian evapotranspiration from every stream node for the current timestep
-        IWFMModel.get_stream_gain_from_groundwater : Returns gain from groundwater for every stream node for the current timestep
-        IWFMModel.get_stream_gain_from_lakes : Returns gain from lakes for every stream node for the current timestep
-        IWFMModel.get_net_bypass_inflows : Returns net bypass inflows for every stream node for the current timestep
-        IWFMModel.get_actual_stream_diversions_at_some_locations : Returns actual diversion amounts for a list of diversions during a model simulation
+        IWFMModel.get_stream_tributary_inflows : Return small watershed inflows at every stream node for the current timestep
+        IWFMModel.get_stream_rainfall_runoff : Return rainfall runoff at every stream node for the current timestep
+        IWFMModel.get_stream_return_flows : Return agricultural and urban return flows at every stream node for the current timestep
+        IWFMModel.get_stream_riparian_evapotranspiration : Return riparian evapotranspiration from every stream node for the current timestep
+        IWFMModel.get_stream_gain_from_groundwater : Return gain from groundwater for every stream node for the current timestep
+        IWFMModel.get_stream_gain_from_lakes : Return gain from lakes for every stream node for the current timestep
+        IWFMModel.get_net_bypass_inflows : Return net bypass inflows for every stream node for the current timestep
+        IWFMModel.get_actual_stream_diversions_at_some_locations : Return actual diversion amounts for a list of diversions during a model simulation
         '''
         if not hasattr(self.dll, "IW_Model_GetStrmTileDrains"):
             raise AttributeError('IWFM DLL does not have "{}" procedure. '
@@ -2216,7 +2216,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_stream_riparian_evapotranspiration(self, evapotranspiration_conversion_factor=1.0):
         '''
-        Returns riparian evapotranspiration from every stream node for the current timestep
+        Return riparian evapotranspiration from every stream node for the current timestep
         
         Parameters
         ----------
@@ -2240,14 +2240,14 @@ class IWFMModel(IWFMMiscellaneous):
         
         See Also
         --------
-        IWFMModel.get_stream_tributary_inflows : Returns small watershed inflows at every stream node for the current timestep
-        IWFMModel.get_stream_rainfall_runoff : Returns rainfall runoff at every stream node for the current timestep
-        IWFMModel.get_stream_return_flows : Returns agricultural and urban return flows at every stream node for the current timestep
-        IWFMModel.get_stream_tile_drain_flows : Returns tile drain flows into every stream node for the current timestep
-        IWFMModel.get_stream_gain_from_groundwater : Returns gain from groundwater for every stream node for the current timestep
-        IWFMModel.get_stream_gain_from_lakes : Returns gain from lakes for every stream node for the current timestep
-        IWFMModel.get_net_bypass_inflows : Returns net bypass inflows for every stream node for the current timestep
-        IWFMModel.get_actual_stream_diversions_at_some_locations : Returns actual diversion amounts for a list of diversions during a model simulation
+        IWFMModel.get_stream_tributary_inflows : Return small watershed inflows at every stream node for the current timestep
+        IWFMModel.get_stream_rainfall_runoff : Return rainfall runoff at every stream node for the current timestep
+        IWFMModel.get_stream_return_flows : Return agricultural and urban return flows at every stream node for the current timestep
+        IWFMModel.get_stream_tile_drain_flows : Return tile drain flows into every stream node for the current timestep
+        IWFMModel.get_stream_gain_from_groundwater : Return gain from groundwater for every stream node for the current timestep
+        IWFMModel.get_stream_gain_from_lakes : Return gain from lakes for every stream node for the current timestep
+        IWFMModel.get_net_bypass_inflows : Return net bypass inflows for every stream node for the current timestep
+        IWFMModel.get_actual_stream_diversions_at_some_locations : Return actual diversion amounts for a list of diversions during a model simulation
         '''
         if not hasattr(self.dll, "IW_Model_GetStrmRiparianETs"):
             raise AttributeError('IWFM DLL does not have "{}" procedure. '
@@ -2274,7 +2274,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_stream_gain_from_groundwater(self, stream_gain_conversion_factor=1.0):
         '''
-        Returns gain from groundwater for every stream node for the current timestep
+        Return gain from groundwater for every stream node for the current timestep
         
         Parameters
         ----------
@@ -2299,14 +2299,14 @@ class IWFMModel(IWFMMiscellaneous):
         
         See Also
         --------
-        IWFMModel.get_stream_tributary_inflows : Returns small watershed inflows at every stream node for the current timestep
-        IWFMModel.get_stream_rainfall_runoff : Returns rainfall runoff at every stream node for the current timestep
-        IWFMModel.get_stream_return_flows : Returns agricultural and urban return flows at every stream node for the current timestep
-        IWFMModel.get_stream_tile_drain_flows : Returns tile drain flows into every stream node for the current timestep
-        IWFMModel.get_stream_riparian_evapotranspiration : Returns riparian evapotranspiration from every stream node for the current timestep
-        IWFMModel.get_stream_gain_from_lakes : Returns gain from lakes for every stream node for the current timestep
-        IWFMModel.get_net_bypass_inflows : Returns net bypass inflows for every stream node for the current timestep
-        IWFMModel.get_actual_stream_diversions_at_some_locations : Returns actual diversion amounts for a list of diversions during a model simulation
+        IWFMModel.get_stream_tributary_inflows : Return small watershed inflows at every stream node for the current timestep
+        IWFMModel.get_stream_rainfall_runoff : Return rainfall runoff at every stream node for the current timestep
+        IWFMModel.get_stream_return_flows : Return agricultural and urban return flows at every stream node for the current timestep
+        IWFMModel.get_stream_tile_drain_flows : Return tile drain flows into every stream node for the current timestep
+        IWFMModel.get_stream_riparian_evapotranspiration : Return riparian evapotranspiration from every stream node for the current timestep
+        IWFMModel.get_stream_gain_from_lakes : Return gain from lakes for every stream node for the current timestep
+        IWFMModel.get_net_bypass_inflows : Return net bypass inflows for every stream node for the current timestep
+        IWFMModel.get_actual_stream_diversions_at_some_locations : Return actual diversion amounts for a list of diversions during a model simulation
         '''
         if not hasattr(self.dll, "IW_Model_GetStrmGainFromGW"):
             raise AttributeError('IWFM DLL does not have "{}" procedure. '
@@ -2333,7 +2333,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_stream_gain_from_lakes(self, lake_inflow_conversion_factor=1.0):
         '''
-        Returns gain from lakes for every stream node for the current timestep
+        Return gain from lakes for every stream node for the current timestep
         
         Parameters
         ----------
@@ -2357,14 +2357,14 @@ class IWFMModel(IWFMMiscellaneous):
         
         See Also
         --------
-        IWFMModel.get_stream_tributary_inflows : Returns small watershed inflows at every stream node for the current timestep
-        IWFMModel.get_stream_rainfall_runoff : Returns rainfall runoff at every stream node for the current timestep
-        IWFMModel.get_stream_return_flows : Returns agricultural and urban return flows at every stream node for the current timestep
-        IWFMModel.get_stream_tile_drain_flows : Returns tile drain flows into every stream node for the current timestep
-        IWFMModel.get_stream_riparian_evapotranspiration : Returns riparian evapotranspiration from every stream node for the current timestep
-        IWFMModel.get_stream_gain_from_groundwater : Returns gain from groundwater for every stream node for the current timestep
-        IWFMModel.get_net_bypass_inflows : Returns net bypass inflows for every stream node for the current timestep
-        IWFMModel.get_actual_stream_diversions_at_some_locations : Returns actual diversion amounts for a list of diversions during a model simulation
+        IWFMModel.get_stream_tributary_inflows : Return small watershed inflows at every stream node for the current timestep
+        IWFMModel.get_stream_rainfall_runoff : Return rainfall runoff at every stream node for the current timestep
+        IWFMModel.get_stream_return_flows : Return agricultural and urban return flows at every stream node for the current timestep
+        IWFMModel.get_stream_tile_drain_flows : Return tile drain flows into every stream node for the current timestep
+        IWFMModel.get_stream_riparian_evapotranspiration : Return riparian evapotranspiration from every stream node for the current timestep
+        IWFMModel.get_stream_gain_from_groundwater : Return gain from groundwater for every stream node for the current timestep
+        IWFMModel.get_net_bypass_inflows : Return net bypass inflows for every stream node for the current timestep
+        IWFMModel.get_actual_stream_diversions_at_some_locations : Return actual diversion amounts for a list of diversions during a model simulation
         '''
         if not hasattr(self.dll, "IW_Model_GetStrmGainFromLakes"):
             raise AttributeError('IWFM DLL does not have "{}" procedure. '
@@ -2391,7 +2391,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_net_bypass_inflows(self, bypass_inflow_conversion_factor=1.0):
         '''
-        Returns net bypass inflows for every stream node for the current timestep
+        Return net bypass inflows for every stream node for the current timestep
         
         Parameters
         ----------
@@ -2415,14 +2415,14 @@ class IWFMModel(IWFMMiscellaneous):
         
         See Also
         --------
-        IWFMModel.get_stream_tributary_inflows : Returns small watershed inflows at every stream node for the current timestep
-        IWFMModel.get_stream_rainfall_runoff : Returns rainfall runoff at every stream node for the current timestep
-        IWFMModel.get_stream_return_flows : Returns agricultural and urban return flows at every stream node for the current timestep
-        IWFMModel.get_stream_tile_drain_flows : Returns tile drain flows into every stream node for the current timestep
-        IWFMModel.get_stream_riparian_evapotranspiration : Returns riparian evapotranspiration from every stream node for the current timestep
-        IWFMModel.get_stream_gain_from_groundwater : Returns gain from groundwater for every stream node for the current timestep
-        IWFMModel.get_stream_gain_from_lakes : Returns gain from lakes for every stream node for the current timestep
-        IWFMModel.get_actual_stream_diversions_at_some_locations : Returns actual diversion amounts for a list of diversions during a model simulation
+        IWFMModel.get_stream_tributary_inflows : Return small watershed inflows at every stream node for the current timestep
+        IWFMModel.get_stream_rainfall_runoff : Return rainfall runoff at every stream node for the current timestep
+        IWFMModel.get_stream_return_flows : Return agricultural and urban return flows at every stream node for the current timestep
+        IWFMModel.get_stream_tile_drain_flows : Return tile drain flows into every stream node for the current timestep
+        IWFMModel.get_stream_riparian_evapotranspiration : Return riparian evapotranspiration from every stream node for the current timestep
+        IWFMModel.get_stream_gain_from_groundwater : Return gain from groundwater for every stream node for the current timestep
+        IWFMModel.get_stream_gain_from_lakes : Return gain from lakes for every stream node for the current timestep
+        IWFMModel.get_actual_stream_diversions_at_some_locations : Return actual diversion amounts for a list of diversions during a model simulation
         '''
         if not hasattr(self.dll, "IW_Model_GetStrmGainFromLakes"):
             raise AttributeError('IWFM DLL does not have "{}" procedure. '
@@ -2449,7 +2449,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_actual_stream_diversions_at_some_locations(self, diversion_locations='all', diversion_conversion_factor=1.0):
         '''
-        Returns actual diversion amounts for a list of diversions during a model simulation
+        Return actual diversion amounts for a list of diversions during a model simulation
         
         Parameters
         ----------
@@ -2478,14 +2478,14 @@ class IWFMModel(IWFMMiscellaneous):
         
         See Also
         --------
-        IWFMModel.get_stream_tributary_inflows : Returns small watershed inflows at every stream node for the current timestep
-        IWFMModel.get_stream_rainfall_runoff : Returns rainfall runoff at every stream node for the current timestep
-        IWFMModel.get_stream_return_flows : Returns agricultural and urban return flows at every stream node for the current timestep
-        IWFMModel.get_stream_tile_drain_flows : Returns tile drain flows into every stream node for the current timestep
-        IWFMModel.get_stream_riparian_evapotranspiration : Returns riparian evapotranspiration from every stream node for the current timestep
-        IWFMModel.get_stream_gain_from_groundwater : Returns gain from groundwater for every stream node for the current timestep
-        IWFMModel.get_stream_gain_from_lakes : Returns gain from lakes for every stream node for the current timestep
-        IWFMModel.get_net_bypass_inflows : Returns net bypass inflows for every stream node for the current timestep
+        IWFMModel.get_stream_tributary_inflows : Return small watershed inflows at every stream node for the current timestep
+        IWFMModel.get_stream_rainfall_runoff : Return rainfall runoff at every stream node for the current timestep
+        IWFMModel.get_stream_return_flows : Return agricultural and urban return flows at every stream node for the current timestep
+        IWFMModel.get_stream_tile_drain_flows : Return tile drain flows into every stream node for the current timestep
+        IWFMModel.get_stream_riparian_evapotranspiration : Return riparian evapotranspiration from every stream node for the current timestep
+        IWFMModel.get_stream_gain_from_groundwater : Return gain from groundwater for every stream node for the current timestep
+        IWFMModel.get_stream_gain_from_lakes : Return gain from lakes for every stream node for the current timestep
+        IWFMModel.get_net_bypass_inflows : Return net bypass inflows for every stream node for the current timestep
         '''
         if not hasattr(self.dll, "IW_Model_GetStrmActualDiversions_AtSomeDiversions"):
             raise AttributeError('IWFM DLL does not have "{}" procedure. '
@@ -2543,7 +2543,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_stream_diversion_locations(self, diversion_locations='all'):
         '''
-        Returns the stream node IDs corresponding to diversion locations
+        Return the stream node IDs corresponding to diversion locations
 
         Parameters
         ----------
@@ -2557,8 +2557,8 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_n_diversions : Returns the number of surface water diversions in an IWFM model
-        IWFMModel.get_diversion_ids : Returns the surface water diversion identification numbers specified in an IWFM model
+        IWFMModel.get_n_diversions : Return the number of surface water diversions in an IWFM model
+        IWFMModel.get_diversion_ids : Return the surface water diversion identification numbers specified in an IWFM model
 
         Example
         -------
@@ -2628,7 +2628,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_n_stream_reaches(self):
         '''
-        Returns the number of stream reaches in an IWFM model
+        Return the number of stream reaches in an IWFM model
 
         Returns
         -------
@@ -2637,17 +2637,17 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_stream_reach_ids : Returns an array of stream reach IDs in an IWFM model
-        IWFMModel.get_n_nodes_in_stream_reach : Returns the number of stream nodes in a stream reach
-        IWFMModel.get_stream_reach_groundwater_nodes : Returns the groundwater node IDs corresponding to stream nodes in a specified reach 
-        IWFMModel.get_stream_reach_stream_nodes : Returns the stream node IDs corresponding to stream nodes in a specified reach
-        IWFMModel.get_stream_reaches_for_stream_nodes : Returns the stream reach indices that correspond to a list of stream nodes
-        IWFMModel.get_upstream_nodes_in_stream_reaches : Returns the IDs for the upstream stream node in each stream reach
-        IWFMModel.get_n_reaches_upstream_of_reach : Returns the number of stream reaches immediately upstream of the specified reach
-        IWFMModel.get_reaches_upstream_of_reach : Returns the IDs of the reaches that are immediately upstream of the specified reach
-        IWFMModel.get_downstream_node_in_stream_reaches : Returns the IDs for the downstream stream node in each stream reach
-        IWFMModel.get_reach_outflow_destination : Returns the destination index that each stream reach flows into
-        IWFMModel.get_reach_outflow_destination_types : Returns the outflow destination types that each stream reach flows into.
+        IWFMModel.get_stream_reach_ids : Return an array of stream reach IDs in an IWFM model
+        IWFMModel.get_n_nodes_in_stream_reach : Return the number of stream nodes in a stream reach
+        IWFMModel.get_stream_reach_groundwater_nodes : Return the groundwater node IDs corresponding to stream nodes in a specified reach 
+        IWFMModel.get_stream_reach_stream_nodes : Return the stream node IDs corresponding to stream nodes in a specified reach
+        IWFMModel.get_stream_reaches_for_stream_nodes : Return the stream reach indices that correspond to a list of stream nodes
+        IWFMModel.get_upstream_nodes_in_stream_reaches : Return the IDs for the upstream stream node in each stream reach
+        IWFMModel.get_n_reaches_upstream_of_reach : Return the number of stream reaches immediately upstream of the specified reach
+        IWFMModel.get_reaches_upstream_of_reach : Return the IDs of the reaches that are immediately upstream of the specified reach
+        IWFMModel.get_downstream_node_in_stream_reaches : Return the IDs for the downstream stream node in each stream reach
+        IWFMModel.get_reach_outflow_destination : Return the destination index that each stream reach flows into
+        IWFMModel.get_reach_outflow_destination_types : Return the outflow destination types that each stream reach flows into.
 
         Example
         -------
@@ -2677,7 +2677,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_stream_reach_ids(self):
         '''
-        Returns an array of stream reach IDs in an IWFM Model
+        Return an array of stream reach IDs in an IWFM Model
         stream reaches in an IWFM model 
         
         Returns
@@ -2687,17 +2687,17 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_n_stream_reaches : Returns the number of stream reaches in an IWFM model
-        IWFMModel.get_n_nodes_in_stream_reach : Returns the number of stream nodes in a stream reach
-        IWFMModel.get_stream_reach_groundwater_nodes : Returns the groundwater node IDs corresponding to stream nodes in a specified reach 
-        IWFMModel.get_stream_reach_stream_nodes : Returns the stream node IDs corresponding to stream nodes in a specified reach
-        IWFMModel.get_stream_reaches_for_stream_nodes : Returns the stream reach IDs that correspond to a list of stream nodes
-        IWFMModel.get_upstream_nodes_in_stream_reaches : Returns the IDs for the upstream stream node in each stream reach
-        IWFMModel.get_n_reaches_upstream_of_reach : Returns the number of stream reaches immediately upstream of the specified reach
-        IWFMModel.get_reaches_upstream_of_reach : Returns the IDs of the reaches that are immediately upstream of the specified reach
-        IWFMModel.get_downstream_node_in_stream_reaches : Returns the IDs for the downstream stream node in each stream reach
-        IWFMModel.get_reach_outflow_destination : Returns the destination index that each stream reach flows into
-        IWFMModel.get_reach_outflow_destination_types : Returns the outflow destination types that each stream reach flows into.
+        IWFMModel.get_n_stream_reaches : Return the number of stream reaches in an IWFM model
+        IWFMModel.get_n_nodes_in_stream_reach : Return the number of stream nodes in a stream reach
+        IWFMModel.get_stream_reach_groundwater_nodes : Return the groundwater node IDs corresponding to stream nodes in a specified reach 
+        IWFMModel.get_stream_reach_stream_nodes : Return the stream node IDs corresponding to stream nodes in a specified reach
+        IWFMModel.get_stream_reaches_for_stream_nodes : Return the stream reach IDs that correspond to a list of stream nodes
+        IWFMModel.get_upstream_nodes_in_stream_reaches : Return the IDs for the upstream stream node in each stream reach
+        IWFMModel.get_n_reaches_upstream_of_reach : Return the number of stream reaches immediately upstream of the specified reach
+        IWFMModel.get_reaches_upstream_of_reach : Return the IDs of the reaches that are immediately upstream of the specified reach
+        IWFMModel.get_downstream_node_in_stream_reaches : Return the IDs for the downstream stream node in each stream reach
+        IWFMModel.get_reach_outflow_destination : Return the destination index that each stream reach flows into
+        IWFMModel.get_reach_outflow_destination_types : Return the outflow destination types that each stream reach flows into.
 
         Example
         -------
@@ -2731,7 +2731,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_n_nodes_in_stream_reach(self, reach_id):
         '''
-        Returns the number of stream nodes in a stream reach
+        Return the number of stream nodes in a stream reach
         
         Parameters
         ----------
@@ -2745,17 +2745,17 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_n_stream_reaches : Returns the number of stream reaches in an IWFM model
-        IWFMModel.get_stream_reach_ids : Returns an array of stream reach IDs in an IWFM model
-        IWFMModel.get_stream_reach_groundwater_nodes : Returns the groundwater node IDs corresponding to stream nodes in a specified reach 
-        IWFMModel.get_stream_reach_stream_nodes : Returns the stream node IDs corresponding to stream nodes in a specified reach
-        IWFMModel.get_stream_reaches_for_stream_nodes : Returns the stream reach IDs that correspond to a list of stream nodes
-        IWFMModel.get_upstream_nodes_in_stream_reaches : Returns the IDs for the upstream stream node in each stream reach
-        IWFMModel.get_n_reaches_upstream_of_reach : Returns the number of stream reaches immediately upstream of the specified reach
-        IWFMModel.get_reaches_upstream_of_reach : Returns the IDs of the reaches that are immediately upstream of the specified reach
-        IWFMModel.get_downstream_node_in_stream_reaches : Returns the IDs for the downstream stream node in each stream reach
-        IWFMModel.get_reach_outflow_destination : Returns the destination index that each stream reach flows into
-        IWFMModel.get_reach_outflow_destination_types : Returns the outflow destination types that each stream reach flows into.
+        IWFMModel.get_n_stream_reaches : Return the number of stream reaches in an IWFM model
+        IWFMModel.get_stream_reach_ids : Return an array of stream reach IDs in an IWFM model
+        IWFMModel.get_stream_reach_groundwater_nodes : Return the groundwater node IDs corresponding to stream nodes in a specified reach 
+        IWFMModel.get_stream_reach_stream_nodes : Return the stream node IDs corresponding to stream nodes in a specified reach
+        IWFMModel.get_stream_reaches_for_stream_nodes : Return the stream reach IDs that correspond to a list of stream nodes
+        IWFMModel.get_upstream_nodes_in_stream_reaches : Return the IDs for the upstream stream node in each stream reach
+        IWFMModel.get_n_reaches_upstream_of_reach : Return the number of stream reaches immediately upstream of the specified reach
+        IWFMModel.get_reaches_upstream_of_reach : Return the IDs of the reaches that are immediately upstream of the specified reach
+        IWFMModel.get_downstream_node_in_stream_reaches : Return the IDs for the downstream stream node in each stream reach
+        IWFMModel.get_reach_outflow_destination : Return the destination index that each stream reach flows into
+        IWFMModel.get_reach_outflow_destination_types : Return the outflow destination types that each stream reach flows into.
 
         Example
         -------
@@ -2804,7 +2804,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_stream_reach_groundwater_nodes(self, reach_id):
         '''
-        Returns the groundwater node IDs corresponding to stream
+        Return the groundwater node IDs corresponding to stream
         nodes in a specified reach 
 
         Parameters
@@ -2825,17 +2825,17 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_n_stream_reaches : Returns the number of stream reaches in an IWFM model
-        IWFMModel.get_stream_reach_ids : Returns an array of stream reach IDs in an IWFM model
-        IWFMModel.get_n_nodes_in_stream_reach : Returns the number of stream nodes in a stream reach
-        IWFMModel.get_stream_reach_stream_nodes : Returns the stream node IDs corresponding to stream nodes in a specified reach
-        IWFMModel.get_stream_reaches_for_stream_nodes : Returns the stream reach IDs that correspond to a list of stream nodes
-        IWFMModel.get_upstream_nodes_in_stream_reaches : Returns the IDs for the upstream stream node in each stream reach
-        IWFMModel.get_n_reaches_upstream_of_reach : Returns the number of stream reaches immediately upstream of the specified reach
-        IWFMModel.get_reaches_upstream_of_reach : Returns the IDs of the reaches that are immediately upstream of the specified reach
-        IWFMModel.get_downstream_node_in_stream_reaches : Returns the IDs for the downstream stream node in each stream reach
-        IWFMModel.get_reach_outflow_destination : Returns the destination index that each stream reach flows into
-        IWFMModel.get_reach_outflow_destination_types : Returns the outflow destination types that each stream reach flows into.
+        IWFMModel.get_n_stream_reaches : Return the number of stream reaches in an IWFM model
+        IWFMModel.get_stream_reach_ids : Return an array of stream reach IDs in an IWFM model
+        IWFMModel.get_n_nodes_in_stream_reach : Return the number of stream nodes in a stream reach
+        IWFMModel.get_stream_reach_stream_nodes : Return the stream node IDs corresponding to stream nodes in a specified reach
+        IWFMModel.get_stream_reaches_for_stream_nodes : Return the stream reach IDs that correspond to a list of stream nodes
+        IWFMModel.get_upstream_nodes_in_stream_reaches : Return the IDs for the upstream stream node in each stream reach
+        IWFMModel.get_n_reaches_upstream_of_reach : Return the number of stream reaches immediately upstream of the specified reach
+        IWFMModel.get_reaches_upstream_of_reach : Return the IDs of the reaches that are immediately upstream of the specified reach
+        IWFMModel.get_downstream_node_in_stream_reaches : Return the IDs for the downstream stream node in each stream reach
+        IWFMModel.get_reach_outflow_destination : Return the destination index that each stream reach flows into
+        IWFMModel.get_reach_outflow_destination_types : Return the outflow destination types that each stream reach flows into.
         
         Example
         -------
@@ -2892,7 +2892,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_stream_reach_stream_nodes(self, reach_id):
         '''
-        Returns the stream node IDs corresponding to stream
+        Return the stream node IDs corresponding to stream
         nodes in a specified reach 
 
         Parameters
@@ -2907,17 +2907,17 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_n_stream_reaches : Returns the number of stream reaches in an IWFM model
-        IWFMModel.get_stream_reach_ids : Returns an array of stream reach IDs in an IWFM model
-        IWFMModel.get_n_nodes_in_stream_reach : Returns the number of stream nodes in a stream reach
-        IWFMModel.get_stream_reach_groundwater_nodes : Returns the groundwater node IDs corresponding to stream nodes in a specified reach 
-        IWFMModel.get_stream_reaches_for_stream_nodes : Returns the stream reach IDs that correspond to a list of stream nodes
-        IWFMModel.get_upstream_nodes_in_stream_reaches : Returns the IDs for the upstream stream node in each stream reach
-        IWFMModel.get_n_reaches_upstream_of_reach : Returns the number of stream reaches immediately upstream of the specified reach
-        IWFMModel.get_reaches_upstream_of_reach : Returns the IDs of the reaches that are immediately upstream of the specified reach
-        IWFMModel.get_downstream_node_in_stream_reaches : Returns the IDs for the downstream stream node in each stream reach
-        IWFMModel.get_reach_outflow_destination : Returns the destination index that each stream reach flows into
-        IWFMModel.get_reach_outflow_destination_types : Returns the outflow destination types that each stream reach flows into.
+        IWFMModel.get_n_stream_reaches : Return the number of stream reaches in an IWFM model
+        IWFMModel.get_stream_reach_ids : Return an array of stream reach IDs in an IWFM model
+        IWFMModel.get_n_nodes_in_stream_reach : Return the number of stream nodes in a stream reach
+        IWFMModel.get_stream_reach_groundwater_nodes : Return the groundwater node IDs corresponding to stream nodes in a specified reach 
+        IWFMModel.get_stream_reaches_for_stream_nodes : Return the stream reach IDs that correspond to a list of stream nodes
+        IWFMModel.get_upstream_nodes_in_stream_reaches : Return the IDs for the upstream stream node in each stream reach
+        IWFMModel.get_n_reaches_upstream_of_reach : Return the number of stream reaches immediately upstream of the specified reach
+        IWFMModel.get_reaches_upstream_of_reach : Return the IDs of the reaches that are immediately upstream of the specified reach
+        IWFMModel.get_downstream_node_in_stream_reaches : Return the IDs for the downstream stream node in each stream reach
+        IWFMModel.get_reach_outflow_destination : Return the destination index that each stream reach flows into
+        IWFMModel.get_reach_outflow_destination_types : Return the outflow destination types that each stream reach flows into.
 
         Example
         -------
@@ -2974,7 +2974,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_stream_reaches_for_stream_nodes(self, stream_nodes='all'):
         '''
-        Returns the stream reach IDs that correspond to one or more stream node IDs
+        Return the stream reach IDs that correspond to one or more stream node IDs
 
         Parameters
         ---------
@@ -2988,17 +2988,17 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_n_stream_reaches : Returns the number of stream reaches in an IWFM model
-        IWFMModel.get_stream_reach_ids : Returns an array of stream reach IDs in an IWFM model
-        IWFMModel.get_n_nodes_in_stream_reach : Returns the number of stream nodes in a stream reach
-        IWFMModel.get_stream_reach_groundwater_nodes : Returns the groundwater node IDs corresponding to stream nodes in a specified reach 
-        IWFMModel.get_stream_reach_stream_nodes : Returns the stream node IDs corresponding to stream nodes in a specified reach
-        IWFMModel.get_upstream_nodes_in_stream_reaches : Returns the IDs for the upstream stream node in each stream reach
-        IWFMModel.get_n_reaches_upstream_of_reach : Returns the number of stream reaches immediately upstream of the specified reach
-        IWFMModel.get_reaches_upstream_of_reach : Returns the IDs of the reaches that are immediately upstream of the specified reach
-        IWFMModel.get_downstream_node_in_stream_reaches : Returns the IDs for the downstream stream node in each stream reach
-        IWFMModel.get_reach_outflow_destination : Returns the destination index that each stream reach flows into
-        IWFMModel.get_reach_outflow_destination_types : Returns the outflow destination types that each stream reach flows into.
+        IWFMModel.get_n_stream_reaches : Return the number of stream reaches in an IWFM model
+        IWFMModel.get_stream_reach_ids : Return an array of stream reach IDs in an IWFM model
+        IWFMModel.get_n_nodes_in_stream_reach : Return the number of stream nodes in a stream reach
+        IWFMModel.get_stream_reach_groundwater_nodes : Return the groundwater node IDs corresponding to stream nodes in a specified reach 
+        IWFMModel.get_stream_reach_stream_nodes : Return the stream node IDs corresponding to stream nodes in a specified reach
+        IWFMModel.get_upstream_nodes_in_stream_reaches : Return the IDs for the upstream stream node in each stream reach
+        IWFMModel.get_n_reaches_upstream_of_reach : Return the number of stream reaches immediately upstream of the specified reach
+        IWFMModel.get_reaches_upstream_of_reach : Return the IDs of the reaches that are immediately upstream of the specified reach
+        IWFMModel.get_downstream_node_in_stream_reaches : Return the IDs for the downstream stream node in each stream reach
+        IWFMModel.get_reach_outflow_destination : Return the destination index that each stream reach flows into
+        IWFMModel.get_reach_outflow_destination_types : Return the outflow destination types that each stream reach flows into.
 
         Example
         -------
@@ -3070,7 +3070,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_upstream_nodes_in_stream_reaches(self):
         '''
-        Returns the IDs for the upstream stream node in each
+        Return the IDs for the upstream stream node in each
         stream reach
 
         Returns
@@ -3081,17 +3081,17 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_n_stream_reaches : Returns the number of stream reaches in an IWFM model
-        IWFMModel.get_stream_reach_ids : Returns an array of stream reach IDs in an IWFM model
-        IWFMModel.get_n_nodes_in_stream_reach : Returns the number of stream nodes in a stream reach
-        IWFMModel.get_stream_reach_groundwater_nodes : Returns the groundwater node IDs corresponding to stream nodes in a specified reach 
-        IWFMModel.get_stream_reach_stream_nodes : Returns the stream node IDs corresponding to stream nodes in a specified reach
-        IWFMModel.get_stream_reaches_for_stream_nodes : Returns the stream reach IDs that correspond to a list of stream nodes
-        IWFMModel.get_n_reaches_upstream_of_reach : Returns the number of stream reaches immediately upstream of the specified reach
-        IWFMModel.get_reaches_upstream_of_reach : Returns the IDs of the reaches that are immediately upstream of the specified reach
-        IWFMModel.get_downstream_node_in_stream_reaches : Returns the IDs for the downstream stream node in each stream reach
-        IWFMModel.get_reach_outflow_destination : Returns the destination index that each stream reach flows into
-        IWFMModel.get_reach_outflow_destination_types : Returns the outflow destination types that each stream reach flows into.
+        IWFMModel.get_n_stream_reaches : Return the number of stream reaches in an IWFM model
+        IWFMModel.get_stream_reach_ids : Return an array of stream reach IDs in an IWFM model
+        IWFMModel.get_n_nodes_in_stream_reach : Return the number of stream nodes in a stream reach
+        IWFMModel.get_stream_reach_groundwater_nodes : Return the groundwater node IDs corresponding to stream nodes in a specified reach 
+        IWFMModel.get_stream_reach_stream_nodes : Return the stream node IDs corresponding to stream nodes in a specified reach
+        IWFMModel.get_stream_reaches_for_stream_nodes : Return the stream reach IDs that correspond to a list of stream nodes
+        IWFMModel.get_n_reaches_upstream_of_reach : Return the number of stream reaches immediately upstream of the specified reach
+        IWFMModel.get_reaches_upstream_of_reach : Return the IDs of the reaches that are immediately upstream of the specified reach
+        IWFMModel.get_downstream_node_in_stream_reaches : Return the IDs for the downstream stream node in each stream reach
+        IWFMModel.get_reach_outflow_destination : Return the destination index that each stream reach flows into
+        IWFMModel.get_reach_outflow_destination_types : Return the outflow destination types that each stream reach flows into.
 
         Example
         -------
@@ -3129,7 +3129,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_n_reaches_upstream_of_reach(self, reach_id):
         '''
-        Returns the number of stream reaches immediately upstream 
+        Return the number of stream reaches immediately upstream 
         of the specified reach
 
         Parameters
@@ -3145,23 +3145,23 @@ class IWFMModel(IWFMMiscellaneous):
 
         Note
         ----
-        if there are no stream reaches upstream, this method returns 0
-        if the reach is downstream of a confluence of tributaries, this method returns the number 
-        of tributary reaches. Otherwise, this method returns 1
+        0 if there are no stream reaches upstream.
+        Number of tributaries if the reach is downstream of a confluence. 
+        Otherwise, 1.
 
         See Also
         --------
-        IWFMModel.get_n_stream_reaches : Returns the number of stream reaches in an IWFM model
-        IWFMModel.get_stream_reach_ids : Returns an array of stream reach IDs in an IWFM model
-        IWFMModel.get_n_nodes_in_stream_reach : Returns the number of stream nodes in a stream reach
-        IWFMModel.get_stream_reach_groundwater_nodes : Returns the groundwater node IDs corresponding to stream nodes in a specified reach 
-        IWFMModel.get_stream_reach_stream_nodes : Returns the stream node IDs corresponding to stream nodes in a specified reach
-        IWFMModel.get_stream_reaches_for_stream_nodes : Returns the stream reach IDs that correspond to a list of stream nodes
-        IWFMModel.get_upstream_nodes_in_stream_reaches : Returns the IDs for the upstream stream node in each stream reach
-        IWFMModel.get_reaches_upstream_of_reach : Returns the IDs of the reaches that are immediately upstream of the specified reach
-        IWFMModel.get_downstream_node_in_stream_reaches : Returns the IDs for the downstream stream node in each stream reach
-        IWFMModel.get_reach_outflow_destination : Returns the destination index that each stream reach flows into
-        IWFMModel.get_reach_outflow_destination_types : Returns the outflow destination types that each stream reach flows into.
+        IWFMModel.get_n_stream_reaches : Return the number of stream reaches in an IWFM model
+        IWFMModel.get_stream_reach_ids : Return an array of stream reach IDs in an IWFM model
+        IWFMModel.get_n_nodes_in_stream_reach : Return the number of stream nodes in a stream reach
+        IWFMModel.get_stream_reach_groundwater_nodes : Return the groundwater node IDs corresponding to stream nodes in a specified reach 
+        IWFMModel.get_stream_reach_stream_nodes : Return the stream node IDs corresponding to stream nodes in a specified reach
+        IWFMModel.get_stream_reaches_for_stream_nodes : Return the stream reach IDs that correspond to a list of stream nodes
+        IWFMModel.get_upstream_nodes_in_stream_reaches : Return the IDs for the upstream stream node in each stream reach
+        IWFMModel.get_reaches_upstream_of_reach : Return the IDs of the reaches that are immediately upstream of the specified reach
+        IWFMModel.get_downstream_node_in_stream_reaches : Return the IDs for the downstream stream node in each stream reach
+        IWFMModel.get_reach_outflow_destination : Return the destination index that each stream reach flows into
+        IWFMModel.get_reach_outflow_destination_types : Return the outflow destination types that each stream reach flows into.
 
         Examples
         --------
@@ -3219,7 +3219,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_reaches_upstream_of_reach(self, reach_id):
         '''
-        Returns the IDs of the reaches that are immediately 
+        Return the IDs of the reaches that are immediately 
         upstream of the specified reach
 
         Parameters
@@ -3234,17 +3234,17 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_n_stream_reaches : Returns the number of stream reaches in an IWFM model
-        IWFMModel.get_stream_reach_ids : Returns an array of stream reach IDs in an IWFM model
-        IWFMModel.get_n_nodes_in_stream_reach : Returns the number of stream nodes in a stream reach
-        IWFMModel.get_stream_reach_groundwater_nodes : Returns the groundwater node IDs corresponding to stream nodes in a specified reach 
-        IWFMModel.get_stream_reach_stream_nodes : Returns the stream node IDs corresponding to stream nodes in a specified reach
-        IWFMModel.get_stream_reaches_for_stream_nodes : Returns the stream reach IDs that correspond to a list of stream nodes
-        IWFMModel.get_upstream_nodes_in_stream_reaches : Returns the IDs for the upstream stream node in each stream reach
-        IWFMModel.get_n_reaches_upstream_of_reach : Returns the number of stream reaches immediately upstream of the specified reach
-        IWFMModel.get_downstream_node_in_stream_reaches : Returns the IDs for the downstream stream node in each stream reach
-        IWFMModel.get_reach_outflow_destination : Returns the destination index that each stream reach flows into
-        IWFMModel.get_reach_outflow_destination_types : Returns the outflow destination types that each stream reach flows into.
+        IWFMModel.get_n_stream_reaches : Return the number of stream reaches in an IWFM model
+        IWFMModel.get_stream_reach_ids : Return an array of stream reach IDs in an IWFM model
+        IWFMModel.get_n_nodes_in_stream_reach : Return the number of stream nodes in a stream reach
+        IWFMModel.get_stream_reach_groundwater_nodes : Return the groundwater node IDs corresponding to stream nodes in a specified reach 
+        IWFMModel.get_stream_reach_stream_nodes : Return the stream node IDs corresponding to stream nodes in a specified reach
+        IWFMModel.get_stream_reaches_for_stream_nodes : Return the stream reach IDs that correspond to a list of stream nodes
+        IWFMModel.get_upstream_nodes_in_stream_reaches : Return the IDs for the upstream stream node in each stream reach
+        IWFMModel.get_n_reaches_upstream_of_reach : Return the number of stream reaches immediately upstream of the specified reach
+        IWFMModel.get_downstream_node_in_stream_reaches : Return the IDs for the downstream stream node in each stream reach
+        IWFMModel.get_reach_outflow_destination : Return the destination index that each stream reach flows into
+        IWFMModel.get_reach_outflow_destination_types : Return the outflow destination types that each stream reach flows into.
 
         Examples
         --------
@@ -3314,7 +3314,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_downstream_node_in_stream_reaches(self):
         '''
-        Returns the IDs for the downstream stream node in each 
+        Return the IDs for the downstream stream node in each 
         stream reach
 
         Returns
@@ -3325,17 +3325,17 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_n_stream_reaches : Returns the number of stream reaches in an IWFM model
-        IWFMModel.get_stream_reach_ids : Returns an array of stream reach IDs in an IWFM model
-        IWFMModel.get_n_nodes_in_stream_reach : Returns the number of stream nodes in a stream reach
-        IWFMModel.get_stream_reach_groundwater_nodes : Returns the groundwater node IDs corresponding to stream nodes in a specified reach 
-        IWFMModel.get_stream_reach_stream_nodes : Returns the stream node IDs corresponding to stream nodes in a specified reach
-        IWFMModel.get_stream_reaches_for_stream_nodes : Returns the stream reach IDs that correspond to a list of stream nodes
-        IWFMModel.get_upstream_nodes_in_stream_reaches : Returns the IDs for the upstream stream node in each stream reach
-        IWFMModel.get_n_reaches_upstream_of_reach : Returns the number of stream reaches immediately upstream of the specified reach
-        IWFMModel.get_reaches_upstream_of_reach : Returns the IDs of the reaches that are immediately upstream of the specified reach
-        IWFMModel.get_reach_outflow_destination : Returns the destination index that each stream reach flows into
-        IWFMModel.get_reach_outflow_destination_types : Returns the outflow destination types that each stream reach flows into.
+        IWFMModel.get_n_stream_reaches : Return the number of stream reaches in an IWFM model
+        IWFMModel.get_stream_reach_ids : Return an array of stream reach IDs in an IWFM model
+        IWFMModel.get_n_nodes_in_stream_reach : Return the number of stream nodes in a stream reach
+        IWFMModel.get_stream_reach_groundwater_nodes : Return the groundwater node IDs corresponding to stream nodes in a specified reach 
+        IWFMModel.get_stream_reach_stream_nodes : Return the stream node IDs corresponding to stream nodes in a specified reach
+        IWFMModel.get_stream_reaches_for_stream_nodes : Return the stream reach IDs that correspond to a list of stream nodes
+        IWFMModel.get_upstream_nodes_in_stream_reaches : Return the IDs for the upstream stream node in each stream reach
+        IWFMModel.get_n_reaches_upstream_of_reach : Return the number of stream reaches immediately upstream of the specified reach
+        IWFMModel.get_reaches_upstream_of_reach : Return the IDs of the reaches that are immediately upstream of the specified reach
+        IWFMModel.get_reach_outflow_destination : Return the destination index that each stream reach flows into
+        IWFMModel.get_reach_outflow_destination_types : Return the outflow destination types that each stream reach flows into.
 
         Example
         -------
@@ -3373,7 +3373,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_reach_outflow_destination(self):
         '''
-        Returns the destination index that each stream reach flows 
+        Return the destination index that each stream reach flows 
         into.
 
         Returns
@@ -3391,17 +3391,17 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_n_stream_reaches : Returns the number of stream reaches in an IWFM model
-        IWFMModel.get_stream_reach_ids : Returns an array of stream reach IDs in an IWFM model
-        IWFMModel.get_n_nodes_in_stream_reach : Returns the number of stream nodes in a stream reach
-        IWFMModel.get_stream_reach_groundwater_nodes : Returns the groundwater node IDs corresponding to stream nodes in a specified reach 
-        IWFMModel.get_stream_reach_stream_nodes : Returns the stream node IDs corresponding to stream nodes in a specified reach
-        IWFMModel.get_stream_reaches_for_stream_nodes : Returns the stream reach IDs that correspond to a list of stream nodes
-        IWFMModel.get_upstream_nodes_in_stream_reaches : Returns the IDs for the upstream stream node in each stream reach
-        IWFMModel.get_n_reaches_upstream_of_reach : Returns the number of stream reaches immediately upstream of the specified reach
-        IWFMModel.get_reaches_upstream_of_reach : Returns the IDs of the reaches that are immediately upstream of the specified reach
-        IWFMModel.get_downstream_node_in_stream_reaches : Returns the IDs for the downstream stream node in each stream reach
-        IWFMModel.get_reach_outflow_destination_types : Returns the outflow destination types that each stream reach flows into.
+        IWFMModel.get_n_stream_reaches : Return the number of stream reaches in an IWFM model
+        IWFMModel.get_stream_reach_ids : Return an array of stream reach IDs in an IWFM model
+        IWFMModel.get_n_nodes_in_stream_reach : Return the number of stream nodes in a stream reach
+        IWFMModel.get_stream_reach_groundwater_nodes : Return the groundwater node IDs corresponding to stream nodes in a specified reach 
+        IWFMModel.get_stream_reach_stream_nodes : Return the stream node IDs corresponding to stream nodes in a specified reach
+        IWFMModel.get_stream_reaches_for_stream_nodes : Return the stream reach IDs that correspond to a list of stream nodes
+        IWFMModel.get_upstream_nodes_in_stream_reaches : Return the IDs for the upstream stream node in each stream reach
+        IWFMModel.get_n_reaches_upstream_of_reach : Return the number of stream reaches immediately upstream of the specified reach
+        IWFMModel.get_reaches_upstream_of_reach : Return the IDs of the reaches that are immediately upstream of the specified reach
+        IWFMModel.get_downstream_node_in_stream_reaches : Return the IDs for the downstream stream node in each stream reach
+        IWFMModel.get_reach_outflow_destination_types : Return the outflow destination types that each stream reach flows into.
 
         Example
         -------
@@ -3435,7 +3435,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_reach_outflow_destination_types(self):
         '''
-        Returns the outflow destination types that each stream reach
+        Return the outflow destination types that each stream reach
         flows into.
 
         Returns
@@ -3451,17 +3451,17 @@ class IWFMModel(IWFMMiscellaneous):
         
         See Also
         --------
-        IWFMModel.get_n_stream_reaches : Returns the number of stream reaches in an IWFM model
-        IWFMModel.get_stream_reach_ids : Returns an array of stream reach IDs in an IWFM model
-        IWFMModel.get_n_nodes_in_stream_reach : Returns the number of stream nodes in a stream reach
-        IWFMModel.get_stream_reach_groundwater_nodes : Returns the groundwater node IDs corresponding to stream nodes in a specified reach 
-        IWFMModel.get_stream_reach_stream_nodes : Returns the stream node IDs corresponding to stream nodes in a specified reach
-        IWFMModel.get_stream_reaches_for_stream_nodes : Returns the stream reach IDs that correspond to a list of stream nodes
-        IWFMModel.get_upstream_nodes_in_stream_reaches : Returns the IDs for the upstream stream node in each stream reach
-        IWFMModel.get_n_reaches_upstream_of_reach : Returns the number of stream reaches immediately upstream of the specified reach
-        IWFMModel.get_reaches_upstream_of_reach : Returns the IDs of the reaches that are immediately upstream of the specified reach
-        IWFMModel.get_downstream_node_in_stream_reaches : Returns the IDs for the downstream stream node in each stream reach
-        IWFMModel.get_reach_outflow_destination : Returns the destination index that each stream reach flows into
+        IWFMModel.get_n_stream_reaches : Return the number of stream reaches in an IWFM model
+        IWFMModel.get_stream_reach_ids : Return an array of stream reach IDs in an IWFM model
+        IWFMModel.get_n_nodes_in_stream_reach : Return the number of stream nodes in a stream reach
+        IWFMModel.get_stream_reach_groundwater_nodes : Return the groundwater node IDs corresponding to stream nodes in a specified reach 
+        IWFMModel.get_stream_reach_stream_nodes : Return the stream node IDs corresponding to stream nodes in a specified reach
+        IWFMModel.get_stream_reaches_for_stream_nodes : Return the stream reach IDs that correspond to a list of stream nodes
+        IWFMModel.get_upstream_nodes_in_stream_reaches : Return the IDs for the upstream stream node in each stream reach
+        IWFMModel.get_n_reaches_upstream_of_reach : Return the number of stream reaches immediately upstream of the specified reach
+        IWFMModel.get_reaches_upstream_of_reach : Return the IDs of the reaches that are immediately upstream of the specified reach
+        IWFMModel.get_downstream_node_in_stream_reaches : Return the IDs for the downstream stream node in each stream reach
+        IWFMModel.get_reach_outflow_destination : Return the destination index that each stream reach flows into
         
         Example
         -------
@@ -3495,7 +3495,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_n_diversions(self):
         '''
-        Returns the number of surface water diversions in an IWFM model
+        Return the number of surface water diversions in an IWFM model
 
         Returns
         -------
@@ -3504,8 +3504,8 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_diversion_ids : Returns the surface water diversion identification numbers specified in an IWFM model
-        IWFMModel.get_stream_diversion_locations : Returns the stream node IDs corresponding to diversion locations
+        IWFMModel.get_diversion_ids : Return the surface water diversion identification numbers specified in an IWFM model
+        IWFMModel.get_stream_diversion_locations : Return the stream node IDs corresponding to diversion locations
 
         Example
         -------
@@ -3536,7 +3536,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_diversion_ids(self):
         '''
-        Returns the surface water diversion identification numbers
+        Return the surface water diversion identification numbers
         specified in an IWFM model
         
         Returns
@@ -3546,8 +3546,8 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_n_diversions : Returns the number of surface water diversions in an IWFM model
-        IWFMModel.get_stream_diversion_locations : Returns the stream node IDs corresponding to diversion locations
+        IWFMModel.get_n_diversions : Return the number of surface water diversions in an IWFM model
+        IWFMModel.get_stream_diversion_locations : Return the stream node IDs corresponding to diversion locations
 
         Example
         -------
@@ -3581,7 +3581,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_n_lakes(self):
         '''
-        Returns the number of lakes in an IWFM model
+        Return the number of lakes in an IWFM model
 
         Returns
         -------
@@ -3590,9 +3590,9 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_lake_ids : Returns an array of lake IDs in an IWFM model
-        IWFMModel.get_n_elements_in_lake : Returns the number of finite element grid cells that make up a lake 
-        IWFMModel.get_elements_in_lake : Returns the element ids with the specified lake ID
+        IWFMModel.get_lake_ids : Return an array of lake IDs in an IWFM model
+        IWFMModel.get_n_elements_in_lake : Return the number of finite element grid cells that make up a lake 
+        IWFMModel.get_elements_in_lake : Return the element ids with the specified lake ID
 
         Example
         -------
@@ -3623,7 +3623,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_lake_ids(self):
         '''
-        Returns an array of lake IDs in an IWFM model
+        Return an array of lake IDs in an IWFM model
 
         Returns
         -------
@@ -3632,9 +3632,9 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_n_lakes : Returns the number of lakes in an IWFM model
-        IWFMModel.get_n_elements_in_lake : Returns the number of finite element grid cells that make up a lake 
-        IWFMModel.get_elements_in_lake : Returns the element ids with the specified lake ID
+        IWFMModel.get_n_lakes : Return the number of lakes in an IWFM model
+        IWFMModel.get_n_elements_in_lake : Return the number of finite element grid cells that make up a lake 
+        IWFMModel.get_elements_in_lake : Return the element ids with the specified lake ID
 
         Example
         -------
@@ -3673,7 +3673,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_n_elements_in_lake(self, lake_id):
         '''
-        Returns the number of finite element grid cells that make
+        Return the number of finite element grid cells that make
         up a lake
 
         Parameters
@@ -3690,9 +3690,9 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_n_lakes : Returns the number of lakes in an IWFM model
-        IWFMModel.get_lake_ids : Returns an array of the lake IDs in an IWFM model
-        IWFMModel.get_elements_in_lake : Returns the element ids with the specified lake ID
+        IWFMModel.get_n_lakes : Return the number of lakes in an IWFM model
+        IWFMModel.get_lake_ids : Return an array of the lake IDs in an IWFM model
+        IWFMModel.get_elements_in_lake : Return the element ids with the specified lake ID
 
         Example
         -------
@@ -3749,7 +3749,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_elements_in_lake(self, lake_id):
         '''
-        Returns the element ids with the specified lake ID
+        Return the element ids with the specified lake ID
         
         Parameters
         ----------
@@ -3764,9 +3764,9 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_n_lakes : Returns the number of lakes in an IWFM model
-        IWFMModel.get_lake_ids : Returns an array of the lake IDs in an IWFM model
-        IWFMModel.get_n_elements_in_lake : Returns the number of finite element grid cells that make up a lake
+        IWFMModel.get_n_lakes : Return the number of lakes in an IWFM model
+        IWFMModel.get_lake_ids : Return an array of the lake IDs in an IWFM model
+        IWFMModel.get_n_elements_in_lake : Return the number of finite element grid cells that make up a lake
 
         Example
         -------
@@ -3831,7 +3831,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_n_tile_drains(self):
         '''
-        Returns the number of tile drain nodes in an IWFM model
+        Return the number of tile drain nodes in an IWFM model
 
         Returns
         -------
@@ -3841,8 +3841,8 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_tile_drain_ids : Returns the user-specified IDs for tile drains simulated in an IWFM model
-        IWFMModel.get_tile_drain_nodes : Returns the node ids where tile drains are specified
+        IWFMModel.get_tile_drain_ids : Return the user-specified IDs for tile drains simulated in an IWFM model
+        IWFMModel.get_tile_drain_nodes : Return the node ids where tile drains are specified
 
         Example
         -------
@@ -3873,7 +3873,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_tile_drain_ids(self):
         '''
-        Returns the user-specified IDs for tile drains simulated in an IWFM model
+        Return the user-specified IDs for tile drains simulated in an IWFM model
 
         Returns
         -------
@@ -3882,8 +3882,8 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_n_tile_drains : Returns the number of tile drain nodes in an IWFM model
-        IWFMModel.get_tile_drain_nodes : Returns the node ids where tile drains are specified
+        IWFMModel.get_n_tile_drains : Return the number of tile drain nodes in an IWFM model
+        IWFMModel.get_tile_drain_nodes : Return the node ids where tile drains are specified
 
         Example
         -------
@@ -3923,7 +3923,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_tile_drain_nodes(self):
         '''
-        Returns the node ids where tile drains are specified
+        Return the node ids where tile drains are specified
         
         Returns
         -------
@@ -3932,8 +3932,8 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_n_tile_drains : Returns the number of tile drain nodes in an IWFM model
-        IWFMModel.get_tile_drain_ids : Returns the user-specified IDs for tile drains simulated in an IWFM model
+        IWFMModel.get_n_tile_drains : Return the number of tile drain nodes in an IWFM model
+        IWFMModel.get_tile_drain_ids : Return the user-specified IDs for tile drains simulated in an IWFM model
 
         Example
         -------
@@ -3977,7 +3977,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_n_layers(self):
         '''
-        Returns the number of layers in an IWFM model
+        Return the number of layers in an IWFM model
 
         Returns
         -------
@@ -3986,11 +3986,11 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_n_nodes : Returns the number of nodes in an IWFM model
-        IWFMModel.get_n_elements : Returns the number of elements in an IWFM model
-        IWFMModel.get_n_subregions : Returns the number of subregions in an IWFM model
-        IWFMModel.get_n_stream_nodes : Returns the number of stream nodes in an IWFM model
-        IWFMModel.get_n_stream_inflows : Returns the number of stream boundary inflows specified by the user as timeseries input data
+        IWFMModel.get_n_nodes : Return the number of nodes in an IWFM model
+        IWFMModel.get_n_elements : Return the number of elements in an IWFM model
+        IWFMModel.get_n_subregions : Return the number of subregions in an IWFM model
+        IWFMModel.get_n_stream_nodes : Return the number of stream nodes in an IWFM model
+        IWFMModel.get_n_stream_inflows : Return the number of stream boundary inflows specified by the user as timeseries input data
 
         Example
         -------
@@ -4021,7 +4021,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_ground_surface_elevation(self):
         '''
-        Returns the ground surface elevation for each node specified 
+        Return the ground surface elevation for each node specified 
         in the IWFM model
 
         Returns
@@ -4032,9 +4032,9 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_aquifer_top_elevation : Returns the aquifer top elevations for each finite element node and each layer
-        IWFMModel.get_aquifer_bottom_elevation : Returns the aquifer bottom elevations for each finite element node and each layer
-        IWFMModel.get_stratigraphy_atXYcoordinate : Returns the stratigraphy at given X,Y coordinates
+        IWFMModel.get_aquifer_top_elevation : Return the aquifer top elevations for each finite element node and each layer
+        IWFMModel.get_aquifer_bottom_elevation : Return the aquifer bottom elevations for each finite element node and each layer
+        IWFMModel.get_stratigraphy_atXYcoordinate : Return the stratigraphy at given X,Y coordinates
 
         Example
         -------
@@ -4109,7 +4109,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_aquifer_top_elevation(self):
         '''
-        Returns the aquifer top elevations for each finite element 
+        Return the aquifer top elevations for each finite element 
         node and each layer
 
         Returns
@@ -4123,9 +4123,9 @@ class IWFMModel(IWFMMiscellaneous):
         
         See Also
         --------
-        IWFMModel.get_ground_surface_elevation : Returns the ground surface elevation for each node specified in the IWFM model
-        IWFMModel.get_aquifer_bottom_elevation : Returns the aquifer bottom elevations for each finite element node and each layer
-        IWFMModel.get_stratigraphy_atXYcoordinate : Returns the stratigraphy at given X,Y coordinates
+        IWFMModel.get_ground_surface_elevation : Return the ground surface elevation for each node specified in the IWFM model
+        IWFMModel.get_aquifer_bottom_elevation : Return the aquifer bottom elevations for each finite element node and each layer
+        IWFMModel.get_stratigraphy_atXYcoordinate : Return the stratigraphy at given X,Y coordinates
 
         Example
         -------
@@ -4245,7 +4245,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_aquifer_bottom_elevation(self):
         '''
-        Returns the aquifer bottom elevations for each finite element 
+        Return the aquifer bottom elevations for each finite element 
         node and each layer
 
         Returns
@@ -4259,9 +4259,9 @@ class IWFMModel(IWFMMiscellaneous):
         
         See Also
         --------
-        IWFMModel.get_ground_surface_elevation : Returns the ground surface elevation for each node specified in the IWFM model
-        IWFMModel.get_aquifer_top_elevation : Returns the aquifer top elevations for each finite element node and each layer
-        IWFMModel.get_stratigraphy_atXYcoordinate : Returns the stratigraphy at given X,Y coordinates
+        IWFMModel.get_ground_surface_elevation : Return the ground surface elevation for each node specified in the IWFM model
+        IWFMModel.get_aquifer_top_elevation : Return the aquifer top elevations for each finite element node and each layer
+        IWFMModel.get_stratigraphy_atXYcoordinate : Return the stratigraphy at given X,Y coordinates
 
         Example
         -------
@@ -4397,7 +4397,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_stratigraphy_atXYcoordinate(self, x, y, fact=1.0, output_options=1):
         '''
-        Returns the stratigraphy at given X,Y coordinates
+        Return the stratigraphy at given X,Y coordinates
 
         Parameters
         ----------
@@ -4440,9 +4440,9 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_ground_surface_elevation : Returns the ground surface elevation for each node specified in the IWFM model
-        IWFMModel.get_aquifer_top_elevation : Returns the aquifer top elevations for each finite element node and each layer
-        IWFMModel.get_aquifer_bottom_elevation : Returns the aquifer bottom elevations for each finite element node and each layer
+        IWFMModel.get_ground_surface_elevation : Return the ground surface elevation for each node specified in the IWFM model
+        IWFMModel.get_aquifer_top_elevation : Return the aquifer top elevations for each finite element node and each layer
+        IWFMModel.get_aquifer_bottom_elevation : Return the aquifer bottom elevations for each finite element node and each layer
         
         Examples
         --------
@@ -4529,7 +4529,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_aquifer_horizontal_k(self):
         '''
-        Returns the aquifer horizontal hydraulic conductivity for 
+        Return the aquifer horizontal hydraulic conductivity for 
         each finite element node and each layer
 
         Returns
@@ -4539,11 +4539,11 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_aquifer_vertical_k : Returns the aquifer vertical hydraulic conductivity for each finite element node and each layer
-        IWFMModel.get_aquitard_vertical_k : Returns the aquitard vertical hydraulic conductivity for each finite element node and each layer
-        IWFMModel.get_aquifer_specific_yield : Returns the aquifer specific yield for each finite element node and each layer
-        IWFMModel.get_aquifer_specific_storage : Returns the aquifer specific storage for each finite element node and each layer
-        IWFMModel.get_aquifer_parameters : Returns all aquifer parameters at each model node and layer
+        IWFMModel.get_aquifer_vertical_k : Return the aquifer vertical hydraulic conductivity for each finite element node and each layer
+        IWFMModel.get_aquitard_vertical_k : Return the aquitard vertical hydraulic conductivity for each finite element node and each layer
+        IWFMModel.get_aquifer_specific_yield : Return the aquifer specific yield for each finite element node and each layer
+        IWFMModel.get_aquifer_specific_storage : Return the aquifer specific storage for each finite element node and each layer
+        IWFMModel.get_aquifer_parameters : Return all aquifer parameters at each model node and layer
 
         Example
         -------
@@ -4649,7 +4649,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_aquifer_vertical_k(self):
         '''
-        Returns the aquifer vertical hydraulic conductivity for each finite element 
+        Return the aquifer vertical hydraulic conductivity for each finite element 
         node and each layer
 
         Returns
@@ -4659,11 +4659,11 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_aquifer_horizontal_k : Returns the aquifer horizontal hydraulic conductivity for each finite element node and each layer
-        IWFMModel.get_aquitard_vertical_k : Returns the aquitard vertical hydraulic conductivity for each finite element node and each layer
-        IWFMModel.get_aquifer_specific_yield : Returns the aquifer specific yield for each finite element node and each layer
-        IWFMModel.get_aquifer_specific_storage : Returns the aquifer specific storage for each finite element node and each layer
-        IWFMModel.get_aquifer_parameters : Returns all aquifer parameters at each model node and layer
+        IWFMModel.get_aquifer_horizontal_k : Return the aquifer horizontal hydraulic conductivity for each finite element node and each layer
+        IWFMModel.get_aquitard_vertical_k : Return the aquitard vertical hydraulic conductivity for each finite element node and each layer
+        IWFMModel.get_aquifer_specific_yield : Return the aquifer specific yield for each finite element node and each layer
+        IWFMModel.get_aquifer_specific_storage : Return the aquifer specific storage for each finite element node and each layer
+        IWFMModel.get_aquifer_parameters : Return all aquifer parameters at each model node and layer
 
         Example
         -------
@@ -4757,7 +4757,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_aquitard_vertical_k(self):
         '''
-        Returns the aquitard vertical hydraulic conductivity for 
+        Return the aquitard vertical hydraulic conductivity for 
         each finite element node and each layer
 
         Returns
@@ -4767,11 +4767,11 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_aquifer_horizontal_k : Returns the aquifer horizontal hydraulic conductivity for each finite element node and each layer
-        IWFMModel.get_aquifer_vertical_k : Returns the aquifer vertical hydraulic conductivity for each finite element node and each layer
-        IWFMModel.get_aquifer_specific_yield : Returns the aquifer specific yield for each finite element node and each layer
-        IWFMModel.get_aquifer_specific_storage : Returns the aquifer specific storage for each finite element node and each layer
-        IWFMModel.get_aquifer_parameters : Returns all aquifer parameters at each model node and layer
+        IWFMModel.get_aquifer_horizontal_k : Return the aquifer horizontal hydraulic conductivity for each finite element node and each layer
+        IWFMModel.get_aquifer_vertical_k : Return the aquifer vertical hydraulic conductivity for each finite element node and each layer
+        IWFMModel.get_aquifer_specific_yield : Return the aquifer specific yield for each finite element node and each layer
+        IWFMModel.get_aquifer_specific_storage : Return the aquifer specific storage for each finite element node and each layer
+        IWFMModel.get_aquifer_parameters : Return all aquifer parameters at each model node and layer
 
         Example
         -------
@@ -4877,7 +4877,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_aquifer_specific_yield(self):
         '''
-        Returns the aquifer specific yield for each finite element 
+        Return the aquifer specific yield for each finite element 
         node and each layer
 
         Returns
@@ -4887,11 +4887,11 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_aquifer_horizontal_k : Returns the aquifer horizontal hydraulic conductivity for each finite element node and each layer
-        IWFMModel.get_aquifer_vertical_k : Returns the aquifer vertical hydraulic conductivity for each finite element node and each layer
-        IWFMModel.get_aquitard_vertical_k : Returns the aquitard vertical hydraulic conductivity for each finite element node and each layer
-        IWFMModel.get_aquifer_specific_storage : Returns the aquifer specific storage for each finite element node and each layer
-        IWFMModel.get_aquifer_parameters : Returns all aquifer parameters at each model node and layer
+        IWFMModel.get_aquifer_horizontal_k : Return the aquifer horizontal hydraulic conductivity for each finite element node and each layer
+        IWFMModel.get_aquifer_vertical_k : Return the aquifer vertical hydraulic conductivity for each finite element node and each layer
+        IWFMModel.get_aquitard_vertical_k : Return the aquitard vertical hydraulic conductivity for each finite element node and each layer
+        IWFMModel.get_aquifer_specific_storage : Return the aquifer specific storage for each finite element node and each layer
+        IWFMModel.get_aquifer_parameters : Return all aquifer parameters at each model node and layer
 
         Example
         -------
@@ -5011,7 +5011,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_aquifer_specific_storage(self):
         '''
-        Returns the aquifer specific storage for each finite element 
+        Return the aquifer specific storage for each finite element 
         node and each layer
 
         Returns
@@ -5021,11 +5021,11 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_aquifer_horizontal_k : Returns the aquifer horizontal hydraulic conductivity for each finite element node and each layer
-        IWFMModel.get_aquifer_vertical_k : Returns the aquifer vertical hydraulic conductivity for each finite element node and each layer
-        IWFMModel.get_aquitard_vertical_k : Returns the aquitard vertical hydraulic conductivity for each finite element node and each layer
-        IWFMModel.get_aquifer_specific_yield : Returns the aquifer specific yield for each finite element node and each layer
-        IWFMModel.get_aquifer_parameters : Returns all aquifer parameters at each model node and layer
+        IWFMModel.get_aquifer_horizontal_k : Return the aquifer horizontal hydraulic conductivity for each finite element node and each layer
+        IWFMModel.get_aquifer_vertical_k : Return the aquifer vertical hydraulic conductivity for each finite element node and each layer
+        IWFMModel.get_aquitard_vertical_k : Return the aquitard vertical hydraulic conductivity for each finite element node and each layer
+        IWFMModel.get_aquifer_specific_yield : Return the aquifer specific yield for each finite element node and each layer
+        IWFMModel.get_aquifer_parameters : Return all aquifer parameters at each model node and layer
 
         Example
         -------
@@ -5189,7 +5189,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_aquifer_parameters(self):
         '''
-        Returns all aquifer parameters at each model node and layer 
+        Return all aquifer parameters at each model node and layer 
         
         Returns
         -------
@@ -5202,11 +5202,11 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_aquifer_horizontal_k : Returns the aquifer horizontal hydraulic conductivity for each finite element node and each layer
-        IWFMModel.get_aquifer_vertical_k : Returns the aquifer vertical hydraulic conductivity for each finite element node and each layer
-        IWFMModel.get_aquitard_vertical_k : Returns the aquitard vertical hydraulic conductivity for each finite element node and each layer
-        IWFMModel.get_aquifer_specific_yield : Returns the aquifer specific yield for each finite element node and each layer
-        IWFMModel.get_aquifer_specific_storage : Returns the aquifer specific storage for each finite element node and each layer
+        IWFMModel.get_aquifer_horizontal_k : Return the aquifer horizontal hydraulic conductivity for each finite element node and each layer
+        IWFMModel.get_aquifer_vertical_k : Return the aquifer vertical hydraulic conductivity for each finite element node and each layer
+        IWFMModel.get_aquitard_vertical_k : Return the aquitard vertical hydraulic conductivity for each finite element node and each layer
+        IWFMModel.get_aquifer_specific_yield : Return the aquifer specific yield for each finite element node and each layer
+        IWFMModel.get_aquifer_specific_storage : Return the aquifer specific storage for each finite element node and each layer
         
         Example
         -------
@@ -5254,7 +5254,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_n_ag_crops(self):
         '''
-        Returns the number of agricultural crops simulated in an 
+        Return the number of agricultural crops simulated in an 
         IWFM model
 
         Returns
@@ -5291,7 +5291,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_n_wells(self):
         '''
-        Returns the number of wells simulated in an 
+        Return the number of wells simulated in an 
         IWFM model
 
         Returns
@@ -5305,9 +5305,9 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_well_ids : Returns the well IDs specified in an IWFM model
-        IWFMModel.get_n_element_pumps : Returns the number of element pumping wells in an IWFM model
-        IWFMModel.get_element_pump_ids : Returns the element pump IDs specified in an IWFM model
+        IWFMModel.get_well_ids : Return the well IDs specified in an IWFM model
+        IWFMModel.get_n_element_pumps : Return the number of element pumping wells in an IWFM model
+        IWFMModel.get_element_pump_ids : Return the element pump IDs specified in an IWFM model
 
         Example
         -------
@@ -5338,7 +5338,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_well_ids(self):
         '''
-        Returns the pumping well IDs specified in an IWFM model
+        Return the pumping well IDs specified in an IWFM model
         
         Returns
         -------
@@ -5351,9 +5351,9 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_n_wells : Returns the number of pumping wells in an IWFM model
-        IWFMModel.get_n_element_pumps : Returns the number of element pumping wells in an IWFM model
-        IWFMModel.get_element_pump_ids : Returns the element pump IDs specified in an IWFM model
+        IWFMModel.get_n_wells : Return the number of pumping wells in an IWFM model
+        IWFMModel.get_n_element_pumps : Return the number of element pumping wells in an IWFM model
+        IWFMModel.get_element_pump_ids : Return the element pump IDs specified in an IWFM model
 
         Example
         -------
@@ -5387,7 +5387,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_n_element_pumps(self):
         '''
-        Returns the number of element pumps simulated in an 
+        Return the number of element pumps simulated in an 
         IWFM model
 
         Returns
@@ -5401,9 +5401,9 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_n_wells : Returns the number of wells simulated in an IWFM model
-        IWFMModel.get_well_ids : Returns the pumping well IDs specified in an IWFM model
-        IWFMModel.get_element_pump_ids : Returns the element pump IDs specified in an IWFM model
+        IWFMModel.get_n_wells : Return the number of wells simulated in an IWFM model
+        IWFMModel.get_well_ids : Return the pumping well IDs specified in an IWFM model
+        IWFMModel.get_element_pump_ids : Return the element pump IDs specified in an IWFM model
 
         Example
         -------
@@ -5434,7 +5434,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_element_pump_ids(self):
         '''
-        Returns the element pump IDs specified in an IWFM model
+        Return the element pump IDs specified in an IWFM model
         
         Returns
         -------
@@ -5447,9 +5447,9 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_well_ids : Returns the well IDs specified in an IWFM model
-        IWFMModel.get_n_wells : Returns the number of pumping wells in an IWFM model
-        IWFMModel.get_n_element_pumps : Returns the number of element pumping wells in an IWFM model
+        IWFMModel.get_well_ids : Return the well IDs specified in an IWFM model
+        IWFMModel.get_n_wells : Return the number of pumping wells in an IWFM model
+        IWFMModel.get_n_element_pumps : Return the number of element pumping wells in an IWFM model
 
         Example
         -------
@@ -5547,7 +5547,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_diversion_purpose(self, diversions='all'):
         '''
-        Returns the flags for the initial purpose of the diversions as ag, urban, or both
+        Return the flags for the initial purpose of the diversions as ag, urban, or both
 
         Parameters
         ----------
@@ -5577,8 +5577,8 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_well_pumping_purpose : Returns the flags for the initial purpose of the well pumping as ag, urban, or both
-        IWFMModel.get_element_pumping_purpose : Returns the flags for the initial purpose of the element pumping as ag, urban, or both
+        IWFMModel.get_well_pumping_purpose : Return the flags for the initial purpose of the well pumping as ag, urban, or both
+        IWFMModel.get_element_pumping_purpose : Return the flags for the initial purpose of the element pumping as ag, urban, or both
 
         Examples
         --------
@@ -5667,7 +5667,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_well_pumping_purpose(self, wells='all'):
         '''
-        Returns the flags for the initial purpose of the well pumping as ag, urban, or both
+        Return the flags for the initial purpose of the well pumping as ag, urban, or both
 
         Parameters
         ----------
@@ -5697,8 +5697,8 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_diversion_purpose : Returns the flags for the initial purpose of the diversions as ag, urban, or both
-        IWFMModel.get_element_pump_purpose : Returns the flags for the initial purpose of the element pumping as ag, urban, or both
+        IWFMModel.get_diversion_purpose : Return the flags for the initial purpose of the diversions as ag, urban, or both
+        IWFMModel.get_element_pump_purpose : Return the flags for the initial purpose of the element pumping as ag, urban, or both
 
         Examples
         --------
@@ -5786,7 +5786,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_element_pump_purpose(self, element_pumps='all'):
         '''
-        Returns the flags for the initial purpose of the element pumping as ag, urban, or both
+        Return the flags for the initial purpose of the element pumping as ag, urban, or both
 
         Parameters
         ----------
@@ -5816,8 +5816,8 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_diversion_purpose : Returns the flags for the initial purpose of the diversions as ag, urban, or both
-        IWFMModel.get_well_pumping_purpose : Returns the flags for the initial purpose of the well pumping as ag, urban, or both
+        IWFMModel.get_diversion_purpose : Return the flags for the initial purpose of the diversions as ag, urban, or both
+        IWFMModel.get_well_pumping_purpose : Return the flags for the initial purpose of the well pumping as ag, urban, or both
 
         Examples
         --------
@@ -5895,7 +5895,7 @@ class IWFMModel(IWFMMiscellaneous):
     def _get_supply_requirement_ag(self, location_type_id, locations_list, 
                                    conversion_factor):
         '''
-        Returns the agricultural water supply requirement at a 
+        Return the agricultural water supply requirement at a 
         specified set of locations
 
         Parameters
@@ -5950,7 +5950,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_supply_requirement_ag_elements(self, elements='all', conversion_factor=1.0):
         '''
-        Returns the agricultural supply requirement for one or more model elements
+        Return the agricultural supply requirement for one or more model elements
 
         Parameters
         ----------
@@ -5973,9 +5973,9 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_supply_requirement_ag_subregions : Returns the agricultural supply requirement for one or more model subregions
-        IWFMModel.get_supply_requirement_urban_elements : Returns the urban supply requirement for one or more model elements 
-        IWFMModel.get_supply_requirement_urban_subregions : Returns the urban supply requirement for one or more model subregions
+        IWFMModel.get_supply_requirement_ag_subregions : Return the agricultural supply requirement for one or more model subregions
+        IWFMModel.get_supply_requirement_urban_elements : Return the urban supply requirement for one or more model elements 
+        IWFMModel.get_supply_requirement_urban_subregions : Return the urban supply requirement for one or more model subregions
 
         '''
         location_type_id = self.get_location_type_id_element()
@@ -6014,7 +6014,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_supply_requirement_ag_subregions(self, subregions='all', conversion_factor=1.0):
         '''
-        Returns the agricultural supply requirement for one or more model subregions
+        Return the agricultural supply requirement for one or more model subregions
 
         Parameters
         ----------
@@ -6037,9 +6037,9 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_supply_requirement_ag_elements : Returns the agricultural supply requirement for one or more model elements
-        IWFMModel.get_supply_requirement_urban_elements : Returns the urban supply requirement for one or more model elements 
-        IWFMModel.get_supply_requirement_urban_subregions : Returns the urban supply requirement for one or more model subregions
+        IWFMModel.get_supply_requirement_ag_elements : Return the agricultural supply requirement for one or more model elements
+        IWFMModel.get_supply_requirement_urban_elements : Return the urban supply requirement for one or more model elements 
+        IWFMModel.get_supply_requirement_urban_subregions : Return the urban supply requirement for one or more model subregions
 
         '''
         location_type_id = self.get_location_type_id_subregion()
@@ -6078,7 +6078,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def _get_supply_requirement_urban(self, location_type_id, locations_list, conversion_factor):
         '''
-        Returns the urban water supply requirement at a 
+        Return the urban water supply requirement at a 
         specified set of locations
 
         Parameters
@@ -6133,7 +6133,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_supply_requirement_urban_elements(self, elements='all', conversion_factor=1.0):
         '''
-        Returns the urban supply requirement for one or more model elements
+        Return the urban supply requirement for one or more model elements
 
         Parameters
         ----------
@@ -6156,9 +6156,9 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_supply_requirement_ag_elements : Returns the agricultural supply requirement for one or more model elements 
-        IWFMModel.get_supply_requirement_ag_subregions : Returns the agricultural supply requirement for one or more model subregions
-        IWFMModel.get_supply_requirement_urban_subregions : Returns the urban supply requirement for one or more model subregions
+        IWFMModel.get_supply_requirement_ag_elements : Return the agricultural supply requirement for one or more model elements 
+        IWFMModel.get_supply_requirement_ag_subregions : Return the agricultural supply requirement for one or more model subregions
+        IWFMModel.get_supply_requirement_urban_subregions : Return the urban supply requirement for one or more model subregions
 
         '''
         location_type_id = self.get_location_type_id_element()
@@ -6197,7 +6197,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_supply_requirement_urban_subregions(self, subregions='all', conversion_factor=1.0):
         '''
-        Returns the urban supply requirement for one or more model subregions
+        Return the urban supply requirement for one or more model subregions
 
         Parameters
         ----------
@@ -6220,9 +6220,9 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_supply_requirement_ag_elements : Returns the agricultural supply requirement for one or more model elements
-        IWFMModel.get_supply_requirement_ag_subregions : Returns the agricultural supply requirement for one or more model subregions
-        IWFMModel.get_supply_requirement_urban_elements : Returns the urban supply requirement for one or more model elements 
+        IWFMModel.get_supply_requirement_ag_elements : Return the agricultural supply requirement for one or more model elements
+        IWFMModel.get_supply_requirement_ag_subregions : Return the agricultural supply requirement for one or more model subregions
+        IWFMModel.get_supply_requirement_urban_elements : Return the urban supply requirement for one or more model elements 
 
         '''
         location_type_id = self.get_location_type_id_subregion()
@@ -6316,7 +6316,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_ag_diversion_supply_shortage_at_origin(self, diversions='all', conversion_factor=1.0):
         '''
-        Returns the supply shortage for agricultural diversions at the destination of those 
+        Return the supply shortage for agricultural diversions at the destination of those 
         supplies plus any conveyance losses
         
         Parameters
@@ -6339,11 +6339,11 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_ag_well_supply_shortage_at_origin : Returns the supply shortage for agricultural wells at the destination of those supplies plus any conveyance losses
-        IWFMModel.get_ag_elempump_supply_shortage_at_origin : Returns the supply shortage for agricultural element pumping at the destination of those supplies plus any conveyance losses
-        IWFMModel.get_urban_diversion_supply_shortage_at_origin : Returns the supply shortage for urban diversions at the destination of those supplies plus any conveyance losses
-        IWFMModel.get_urban_well_supply_shortage_at_origin : Returns the supply shortage for urban wells at the destination of those supplies plus any conveyance losses
-        IWFMModel.get_urban_elempump_supply_shortage_at_origin : Returns the supply shortage for urban element pumping at the destination of those supplies plus any conveyance losses
+        IWFMModel.get_ag_well_supply_shortage_at_origin : Return the supply shortage for agricultural wells at the destination of those supplies plus any conveyance losses
+        IWFMModel.get_ag_elempump_supply_shortage_at_origin : Return the supply shortage for agricultural element pumping at the destination of those supplies plus any conveyance losses
+        IWFMModel.get_urban_diversion_supply_shortage_at_origin : Return the supply shortage for urban diversions at the destination of those supplies plus any conveyance losses
+        IWFMModel.get_urban_well_supply_shortage_at_origin : Return the supply shortage for urban wells at the destination of those supplies plus any conveyance losses
+        IWFMModel.get_urban_elempump_supply_shortage_at_origin : Return the supply shortage for urban element pumping at the destination of those supplies plus any conveyance losses
 
         '''
         supply_type_id = self.get_supply_type_id_diversion()
@@ -6384,7 +6384,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_ag_well_supply_shortage_at_origin(self, wells='all', conversion_factor=1.0):
         '''
-        Returns the supply shortage for agricultural wells at the destination of those 
+        Return the supply shortage for agricultural wells at the destination of those 
         supplies plus any conveyance losses
         
         Parameters
@@ -6407,11 +6407,11 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_ag_diversion_supply_shortage_at_origin : Returns the supply shortage for agricultural diversions at the destination of those supplies plus any conveyance losses
-        IWFMModel.get_ag_elempump_supply_shortage_at_origin : Returns the supply shortage for agricultural element pumping at the destination of those supplies plus any conveyance losses
-        IWFMModel.get_urban_diversion_supply_shortage_at_origin : Returns the supply shortage for urban diversions at the destination of those supplies plus any conveyance losses
-        IWFMModel.get_urban_well_supply_shortage_at_origin : Returns the supply shortage for urban wells at the destination of those supplies plus any conveyance losses
-        IWFMModel.get_urban_elempump_supply_shortage_at_origin : Returns the supply shortage for urban element pumping at the destination of those supplies plus any conveyance losses
+        IWFMModel.get_ag_diversion_supply_shortage_at_origin : Return the supply shortage for agricultural diversions at the destination of those supplies plus any conveyance losses
+        IWFMModel.get_ag_elempump_supply_shortage_at_origin : Return the supply shortage for agricultural element pumping at the destination of those supplies plus any conveyance losses
+        IWFMModel.get_urban_diversion_supply_shortage_at_origin : Return the supply shortage for urban diversions at the destination of those supplies plus any conveyance losses
+        IWFMModel.get_urban_well_supply_shortage_at_origin : Return the supply shortage for urban wells at the destination of those supplies plus any conveyance losses
+        IWFMModel.get_urban_elempump_supply_shortage_at_origin : Return the supply shortage for urban element pumping at the destination of those supplies plus any conveyance losses
 
         '''
         supply_type_id = self.get_supply_type_id_well()
@@ -6452,7 +6452,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_ag_elempump_supply_shortage_at_origin(self, element_pumps='all', conversion_factor=1.0):
         '''
-        Returns the supply shortage for agricultural element pumping 
+        Return the supply shortage for agricultural element pumping 
         at the destination of those supplies plus any conveyance losses
         
         Parameters
@@ -6475,11 +6475,11 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_ag_diversion_supply_shortage_at_origin : Returns the supply shortage for agricultural diversions at the destination of those supplies plus any conveyance losses
-        IWFMModel.get_ag_well_supply_shortage_at_origin : Returns the supply shortage for agricultural wells at the destination of those supplies plus any conveyance losses
-        IWFMModel.get_urban_diversion_supply_shortage_at_origin : Returns the supply shortage for urban diversions at the destination of those supplies plus any conveyance losses
-        IWFMModel.get_urban_well_supply_shortage_at_origin : Returns the supply shortage for urban wells at the destination of those supplies plus any conveyance losses
-        IWFMModel.get_urban_elempump_supply_shortage_at_origin : Returns the supply shortage for urban element pumping at the destination of those supplies plus any conveyance losses
+        IWFMModel.get_ag_diversion_supply_shortage_at_origin : Return the supply shortage for agricultural diversions at the destination of those supplies plus any conveyance losses
+        IWFMModel.get_ag_well_supply_shortage_at_origin : Return the supply shortage for agricultural wells at the destination of those supplies plus any conveyance losses
+        IWFMModel.get_urban_diversion_supply_shortage_at_origin : Return the supply shortage for urban diversions at the destination of those supplies plus any conveyance losses
+        IWFMModel.get_urban_well_supply_shortage_at_origin : Return the supply shortage for urban wells at the destination of those supplies plus any conveyance losses
+        IWFMModel.get_urban_elempump_supply_shortage_at_origin : Return the supply shortage for urban element pumping at the destination of those supplies plus any conveyance losses
 
         '''
         supply_type_id = self.get_supply_type_id_elempump()
@@ -6520,7 +6520,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def _get_supply_shortage_at_origin_urban(self, supply_type_id, supply_location_list, supply_conversion_factor):
         '''
-        Returns the supply shortage for agriculture at the destination of those 
+        Return the supply shortage for agriculture at the destination of those 
         supplies plus any conveyance losses
         
         Parameters
@@ -6575,7 +6575,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_urban_diversion_supply_shortage_at_origin(self, diversions='all', conversion_factor=1.0):
         '''
-        Returns the supply shortage for urban diversions at the destination of those 
+        Return the supply shortage for urban diversions at the destination of those 
         supplies plus any conveyance losses
         
         Parameters
@@ -6598,11 +6598,11 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_ag_diversion_supply_shortage_at_origin : Returns the supply shortage for agricultural diversions at the destination of those supplies plus any conveyance losses
-        IWFMModel.get_ag_well_supply_shortage_at_origin : Returns the supply shortage for agricultural wells at the destination of those supplies plus any conveyance losses
-        IWFMModel.get_ag_elempump_supply_shortage_at_origin : Returns the supply shortage for agricultural element pumping at the destination of those supplies plus any conveyance losses
-        IWFMModel.get_urban_well_supply_shortage_at_origin : Returns the supply shortage for urban wells at the destination of those supplies plus any conveyance losses
-        IWFMModel.get_urban_elempump_supply_shortage_at_origin : Returns the supply shortage for urban element pumping at the destination of those supplies plus any conveyance losses
+        IWFMModel.get_ag_diversion_supply_shortage_at_origin : Return the supply shortage for agricultural diversions at the destination of those supplies plus any conveyance losses
+        IWFMModel.get_ag_well_supply_shortage_at_origin : Return the supply shortage for agricultural wells at the destination of those supplies plus any conveyance losses
+        IWFMModel.get_ag_elempump_supply_shortage_at_origin : Return the supply shortage for agricultural element pumping at the destination of those supplies plus any conveyance losses
+        IWFMModel.get_urban_well_supply_shortage_at_origin : Return the supply shortage for urban wells at the destination of those supplies plus any conveyance losses
+        IWFMModel.get_urban_elempump_supply_shortage_at_origin : Return the supply shortage for urban element pumping at the destination of those supplies plus any conveyance losses
 
         '''
         supply_type_id = self.get_supply_type_id_diversion()
@@ -6643,7 +6643,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_urban_well_supply_shortage_at_origin(self, wells='all', conversion_factor=1.0):
         '''
-        Returns the supply shortage for urban wells at the destination of those 
+        Return the supply shortage for urban wells at the destination of those 
         supplies plus any conveyance losses
         
         Parameters
@@ -6666,11 +6666,11 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_ag_diversion_supply_shortage_at_origin : Returns the supply shortage for agricultural diversions at the destination of those supplies plus any conveyance losses
-        IWFMModel.get_ag_well_supply_shortage_at_origin : Returns the supply shortage for agricultural wells at the destination of those supplies plus any conveyance losses
-        IWFMModel.get_ag_elempump_supply_shortage_at_origin : Returns the supply shortage for agricultural element pumping at the destination of those supplies plus any conveyance losses
-        IWFMModel.get_urban_diversion_supply_shortage_at_origin : Returns the supply shortage for urban diversions at the destination of those supplies plus any conveyance losses
-        IWFMModel.get_urban_elempump_supply_shortage_at_origin : Returns the supply shortage for urban element pumping at the destination of those supplies plus any conveyance losses
+        IWFMModel.get_ag_diversion_supply_shortage_at_origin : Return the supply shortage for agricultural diversions at the destination of those supplies plus any conveyance losses
+        IWFMModel.get_ag_well_supply_shortage_at_origin : Return the supply shortage for agricultural wells at the destination of those supplies plus any conveyance losses
+        IWFMModel.get_ag_elempump_supply_shortage_at_origin : Return the supply shortage for agricultural element pumping at the destination of those supplies plus any conveyance losses
+        IWFMModel.get_urban_diversion_supply_shortage_at_origin : Return the supply shortage for urban diversions at the destination of those supplies plus any conveyance losses
+        IWFMModel.get_urban_elempump_supply_shortage_at_origin : Return the supply shortage for urban element pumping at the destination of those supplies plus any conveyance losses
 
         '''
         supply_type_id = self.get_supply_type_id_well()
@@ -6711,7 +6711,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_urban_elempump_supply_shortage_at_origin(self, element_pumps='all', conversion_factor=1.0):
         '''
-        Returns the supply shortage for urban element pumping 
+        Return the supply shortage for urban element pumping 
         at the destination of those supplies plus any conveyance losses
         
         Parameters
@@ -6734,11 +6734,11 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_ag_diversion_supply_shortage_at_origin : Returns the supply shortage for agricultural diversions at the destination of those supplies plus any conveyance losses
-        IWFMModel.get_ag_well_supply_shortage_at_origin : Returns the supply shortage for agricultural wells at the destination of those supplies plus any conveyance losses
-        IWFMModel.get_urban_elempump_supply_shortage_at_origin : Returns the supply shortage for agricultural element pumping at the destination of those supplies plus any conveyance losses
-        IWFMModel.get_urban_diversion_supply_shortage_at_origin : Returns the supply shortage for urban diversions at the destination of those supplies plus any conveyance losses
-        IWFMModel.get_urban_well_supply_shortage_at_origin : Returns the supply shortage for urban wells at the destination of those supplies plus any conveyance losses
+        IWFMModel.get_ag_diversion_supply_shortage_at_origin : Return the supply shortage for agricultural diversions at the destination of those supplies plus any conveyance losses
+        IWFMModel.get_ag_well_supply_shortage_at_origin : Return the supply shortage for agricultural wells at the destination of those supplies plus any conveyance losses
+        IWFMModel.get_urban_elempump_supply_shortage_at_origin : Return the supply shortage for agricultural element pumping at the destination of those supplies plus any conveyance losses
+        IWFMModel.get_urban_diversion_supply_shortage_at_origin : Return the supply shortage for urban diversions at the destination of those supplies plus any conveyance losses
+        IWFMModel.get_urban_well_supply_shortage_at_origin : Return the supply shortage for urban wells at the destination of those supplies plus any conveyance losses
 
         '''
         supply_type_id = self.get_supply_type_id_elempump()
@@ -6779,7 +6779,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def _get_names(self, location_type_id):
         '''
-        Returns the available names for a given location_type
+        Return the available names for a given location_type
 
         Parameters
         ----------
@@ -6858,7 +6858,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_subregion_names(self):
         '''
-        Returns the subregions names specified
+        Return the subregions names specified
         in an IWFM model
         
         Returns
@@ -6868,9 +6868,9 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_subregion_name : Returns the name corresponding to the subregion_id in an IWFM model
-        IWFMModel.get_n_subregions : Returns the number of subregions in an IWFM model
-        IWFMModel.get_subregion_ids : Returns an array of IDs for subregions in an IWFM model
+        IWFMModel.get_subregion_name : Return the name corresponding to the subregion_id in an IWFM model
+        IWFMModel.get_n_subregions : Return the number of subregions in an IWFM model
+        IWFMModel.get_subregion_ids : Return an array of IDs for subregions in an IWFM model
 
         Example
         -------
@@ -6889,7 +6889,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_stream_reach_names(self):
         '''
-        Returns the stream reach names specified in an IWFM model
+        Return the stream reach names specified in an IWFM model
         
         Returns
         -------
@@ -6898,10 +6898,10 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_subregion_names : Returns the subregion names specified in an IWFM model
-        IWFMModel.get_groundwater_hydrograph_names : Returns the groundwater hydrograph location names specified in an IWFM model
-        IWFMModel.get_stream_hydrograph_names : Returns the stream flow hydrograph location names specified in an IWFM model
-        IWFMModel.get_subsidence_hydrograph_names : Returns the subsidence hydrograph location names specified in an IWFM model
+        IWFMModel.get_subregion_names : Return the subregion names specified in an IWFM model
+        IWFMModel.get_groundwater_hydrograph_names : Return the groundwater hydrograph location names specified in an IWFM model
+        IWFMModel.get_stream_hydrograph_names : Return the stream flow hydrograph location names specified in an IWFM model
+        IWFMModel.get_subsidence_hydrograph_names : Return the subsidence hydrograph location names specified in an IWFM model
 
         Example
         -------
@@ -6920,7 +6920,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_groundwater_hydrograph_names(self):
         '''
-        Returns the groundwater hydrograph location names
+        Return the groundwater hydrograph location names
         specified in an IWFM model
 
         Returns
@@ -6930,10 +6930,10 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_subregion_names : Returns the subregion names specified in an IWFM model
-        IWFMModel.get_stream_reach_names : Returns the stream reach names specified in an IWFM model
-        IWFMModel.get_stream_hydrograph_names : Returns the stream flow hydrograph location names specified in an IWFM model
-        IWFMModel.get_subsidence_hydrograph_names : Returns the subsidence hydrograph location names specified in an IWFM model
+        IWFMModel.get_subregion_names : Return the subregion names specified in an IWFM model
+        IWFMModel.get_stream_reach_names : Return the stream reach names specified in an IWFM model
+        IWFMModel.get_stream_hydrograph_names : Return the stream flow hydrograph location names specified in an IWFM model
+        IWFMModel.get_subsidence_hydrograph_names : Return the subsidence hydrograph location names specified in an IWFM model
 
         Example
         -------
@@ -6993,7 +6993,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_stream_hydrograph_names(self):
         '''
-        Returns the stream flow hydrograph location names specified
+        Return the stream flow hydrograph location names specified
         in an IWFM model
         
         Returns
@@ -7003,10 +7003,10 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_subregion_names : Returns the subregion names specified in an IWFM model
-        IWFMModel.get_stream_reach_names : Returns the stream reach names specified in an IWFM model
-        IWFMModel.get_groundwater_hydrograph_names : Returns the groundwater hydrograph location names specified in an IWFM model
-        IWFMModel.get_subsidence_hydrograph_names : Returns the subsidence hydrograph location names specified in an IWFM model
+        IWFMModel.get_subregion_names : Return the subregion names specified in an IWFM model
+        IWFMModel.get_stream_reach_names : Return the stream reach names specified in an IWFM model
+        IWFMModel.get_groundwater_hydrograph_names : Return the groundwater hydrograph location names specified in an IWFM model
+        IWFMModel.get_subsidence_hydrograph_names : Return the subsidence hydrograph location names specified in an IWFM model
 
         Example
         -------
@@ -7047,7 +7047,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_subsidence_hydrograph_names(self):
         '''
-        Returns the subsidence hydrograph location names specified
+        Return the subsidence hydrograph location names specified
         in an IWFM model
 
         Returns
@@ -7057,10 +7057,10 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_subregion_names : Returns the subregion names specified in an IWFM model
-        IWFMModel.get_stream_reach_names : Returns the stream reach names specified in an IWFM model
-        IWFMModel.get_stream_hydrograph_names : Returns the stream flow hydrograph location names specified in an IWFM model
-        IWFMModel.get_groundwater_hydrograph_names : Returns the groundwater hydrograph location names specified in an IWFM model
+        IWFMModel.get_subregion_names : Return the subregion names specified in an IWFM model
+        IWFMModel.get_stream_reach_names : Return the stream reach names specified in an IWFM model
+        IWFMModel.get_stream_hydrograph_names : Return the stream flow hydrograph location names specified in an IWFM model
+        IWFMModel.get_groundwater_hydrograph_names : Return the groundwater hydrograph location names specified in an IWFM model
 
         Example
         -------
@@ -7079,7 +7079,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_n_hydrograph_types(self):
         '''
-        Returns the number of different hydrograph types being
+        Return the number of different hydrograph types being
         printed by the IWFM model
         
         Returns
@@ -7089,24 +7089,24 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_hydrograph_type_list : Returns a list of different hydrograph types being printed by the IWFM model
-        IWFMModel.get_n_groundwater_hydrographs : Returns the number of groundwater hydrographs specified in an IWFM model
-        IWFMModel.get_n_subsidence_hydrographs : Returns the number of subsidence hydrographs specified in an IWFM model
-        IWFMModel.get_n_stream_hydrographs : Returns the number of stream flow hydrographs specified in an IWFM model
-        IWFMModel.get_n_tile_drain_hydrographs : Returns the number of tile drain hydrographs specified in an IWFM model
-        IWFMModel.get_groundwater_hydrograph_ids : Returns the IDs for the groundwater hydrographs specified in an IWFM model
-        IWFMModel.get_subsidence_hydrograph_ids : Returns the IDs for the subsidence hydrographs specified in an IWFM model
-        IWFMModel.get_stream_hydrograph_ids : Returns the IDs for the stream hydrographs specified in an IWFM model
-        IWFMModel.get_tile_drain_hydrograph_ids : Returns the IDs for the tile drain hydrographs specified in an IWFM model
-        IWFMModel.get_groundwater_hydrograph_coordinates : Returns the x,y-coordinates for the groundwater hydrographs specified in an IWFM model
-        IWFMModel.get_subsidence_hydrograph_coordinates : Returns the x,y-coordinates for the subsidence hydrograph locations specified in an IWFM model
-        IWFMModel.get_stream_hydrograph_coordinates : Returns the x,y-coordinates for the stream flow observation locations specified in an IWFM model
-        IWFMModel.get_tile_drain_hydrograph_coordinates : Returns the x,y-coordinates for the tile drain observations specified in an IWFM model
-        IWFMModel.get_groundwater_hydrograph : Returns the simulated groundwater hydrograph for the provided groundwater hydrograph id
-        IWFMModel.get_groundwater_hydrograph_at_node_and_layer : Returns a simulated groundwater hydrograph for a node and layer
-        IWFMModel.get_subsidence_hydrograph : Returns the simulated subsidence hydrograph for the provided subsidence hydrograph id
-        IWFMModel.get_stream_hydrograph : Returns the simulated stream hydrograph for the provided stream hydrograph id
-        IWFMModel.get_tile_drain_hydrograph : Returns the simulated tile drain hydrograph for the provided tile drain hydrograph id
+        IWFMModel.get_hydrograph_type_list : Return a list of different hydrograph types being printed by the IWFM model
+        IWFMModel.get_n_groundwater_hydrographs : Return the number of groundwater hydrographs specified in an IWFM model
+        IWFMModel.get_n_subsidence_hydrographs : Return the number of subsidence hydrographs specified in an IWFM model
+        IWFMModel.get_n_stream_hydrographs : Return the number of stream flow hydrographs specified in an IWFM model
+        IWFMModel.get_n_tile_drain_hydrographs : Return the number of tile drain hydrographs specified in an IWFM model
+        IWFMModel.get_groundwater_hydrograph_ids : Return the IDs for the groundwater hydrographs specified in an IWFM model
+        IWFMModel.get_subsidence_hydrograph_ids : Return the IDs for the subsidence hydrographs specified in an IWFM model
+        IWFMModel.get_stream_hydrograph_ids : Return the IDs for the stream hydrographs specified in an IWFM model
+        IWFMModel.get_tile_drain_hydrograph_ids : Return the IDs for the tile drain hydrographs specified in an IWFM model
+        IWFMModel.get_groundwater_hydrograph_coordinates : Return the x,y-coordinates for the groundwater hydrographs specified in an IWFM model
+        IWFMModel.get_subsidence_hydrograph_coordinates : Return the x,y-coordinates for the subsidence hydrograph locations specified in an IWFM model
+        IWFMModel.get_stream_hydrograph_coordinates : Return the x,y-coordinates for the stream flow observation locations specified in an IWFM model
+        IWFMModel.get_tile_drain_hydrograph_coordinates : Return the x,y-coordinates for the tile drain observations specified in an IWFM model
+        IWFMModel.get_groundwater_hydrograph : Return the simulated groundwater hydrograph for the provided groundwater hydrograph id
+        IWFMModel.get_groundwater_hydrograph_at_node_and_layer : Return a simulated groundwater hydrograph for a node and layer
+        IWFMModel.get_subsidence_hydrograph : Return the simulated subsidence hydrograph for the provided subsidence hydrograph id
+        IWFMModel.get_stream_hydrograph : Return the simulated stream hydrograph for the provided stream hydrograph id
+        IWFMModel.get_tile_drain_hydrograph : Return the simulated tile drain hydrograph for the provided tile drain hydrograph id
 
         Example
         -------
@@ -7137,7 +7137,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_hydrograph_type_list(self):
         '''
-        Returns a list of different hydrograph types being printed
+        Return a list of different hydrograph types being printed
         by the IWFM model 
         
         Returns
@@ -7148,24 +7148,24 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_n_hydrograph_types : Returns the number of different hydrograph types being printed by the IWFM model
-        IWFMModel.get_n_groundwater_hydrographs : Returns the number of groundwater hydrographs specified in an IWFM model
-        IWFMModel.get_n_subsidence_hydrographs : Returns the number of subsidence hydrographs specified in an IWFM model
-        IWFMModel.get_n_stream_hydrographs : Returns the number of stream flow hydrographs specified in an IWFM model
-        IWFMModel.get_n_tile_drain_hydrographs : Returns the number of tile drain hydrographs specified in an IWFM model
-        IWFMModel.get_groundwater_hydrograph_ids : Returns the IDs for the groundwater hydrographs specified in an IWFM model
-        IWFMModel.get_subsidence_hydrograph_ids : Returns the IDs for the subsidence hydrographs specified in an IWFM model
-        IWFMModel.get_stream_hydrograph_ids : Returns the IDs for the stream hydrographs specified in an IWFM model
-        IWFMModel.get_tile_drain_hydrograph_ids : Returns the IDs for the tile drain hydrographs specified in an IWFM model
-        IWFMModel.get_groundwater_hydrograph_coordinates : Returns the x,y-coordinates for the groundwater hydrographs specified in an IWFM model
-        IWFMModel.get_subsidence_hydrograph_coordinates : Returns the x,y-coordinates for the subsidence hydrograph locations specified in an IWFM model
-        IWFMModel.get_stream_hydrograph_coordinates : Returns the x,y-coordinates for the stream flow observation locations specified in an IWFM model
-        IWFMModel.get_tile_drain_hydrograph_coordinates : Returns the x,y-coordinates for the tile drain observations specified in an IWFM model
-        IWFMModel.get_groundwater_hydrograph : Returns the simulated groundwater hydrograph for the provided groundwater hydrograph id
-        IWFMModel.get_groundwater_hydrograph_at_node_and_layer : Returns a simulated groundwater hydrograph for a node and layer
-        IWFMModel.get_subsidence_hydrograph : Returns the simulated subsidence hydrograph for the provided subsidence hydrograph id
-        IWFMModel.get_stream_hydrograph : Returns the simulated stream hydrograph for the provided stream hydrograph id
-        IWFMModel.get_tile_drain_hydrograph : Returns the simulated tile drain hydrograph for the provided tile drain hydrograph id
+        IWFMModel.get_n_hydrograph_types : Return the number of different hydrograph types being printed by the IWFM model
+        IWFMModel.get_n_groundwater_hydrographs : Return the number of groundwater hydrographs specified in an IWFM model
+        IWFMModel.get_n_subsidence_hydrographs : Return the number of subsidence hydrographs specified in an IWFM model
+        IWFMModel.get_n_stream_hydrographs : Return the number of stream flow hydrographs specified in an IWFM model
+        IWFMModel.get_n_tile_drain_hydrographs : Return the number of tile drain hydrographs specified in an IWFM model
+        IWFMModel.get_groundwater_hydrograph_ids : Return the IDs for the groundwater hydrographs specified in an IWFM model
+        IWFMModel.get_subsidence_hydrograph_ids : Return the IDs for the subsidence hydrographs specified in an IWFM model
+        IWFMModel.get_stream_hydrograph_ids : Return the IDs for the stream hydrographs specified in an IWFM model
+        IWFMModel.get_tile_drain_hydrograph_ids : Return the IDs for the tile drain hydrographs specified in an IWFM model
+        IWFMModel.get_groundwater_hydrograph_coordinates : Return the x,y-coordinates for the groundwater hydrographs specified in an IWFM model
+        IWFMModel.get_subsidence_hydrograph_coordinates : Return the x,y-coordinates for the subsidence hydrograph locations specified in an IWFM model
+        IWFMModel.get_stream_hydrograph_coordinates : Return the x,y-coordinates for the stream flow observation locations specified in an IWFM model
+        IWFMModel.get_tile_drain_hydrograph_coordinates : Return the x,y-coordinates for the tile drain observations specified in an IWFM model
+        IWFMModel.get_groundwater_hydrograph : Return the simulated groundwater hydrograph for the provided groundwater hydrograph id
+        IWFMModel.get_groundwater_hydrograph_at_node_and_layer : Return a simulated groundwater hydrograph for a node and layer
+        IWFMModel.get_subsidence_hydrograph : Return the simulated subsidence hydrograph for the provided subsidence hydrograph id
+        IWFMModel.get_stream_hydrograph : Return the simulated stream hydrograph for the provided stream hydrograph id
+        IWFMModel.get_tile_drain_hydrograph : Return the simulated tile drain hydrograph for the provided tile drain hydrograph id
 
         Example
         -------
@@ -7254,7 +7254,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_n_groundwater_hydrographs(self):
         '''
-        Returns the number of groundwater hydrographs specified in
+        Return the number of groundwater hydrographs specified in
         an IWFM model
 
         Returns
@@ -7264,24 +7264,24 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_n_hydrograph_types : Returns the number of different hydrograph types being printed by the IWFM model
-        IWFMModel.get_hydrograph_type_list : Returns a list of different hydrograph types being printed by the IWFM model
-        IWFMModel.get_n_subsidence_hydrographs : Returns the number of subsidence hydrographs specified in an IWFM model
-        IWFMModel.get_n_stream_hydrographs : Returns the number of stream flow hydrographs specified in an IWFM model
-        IWFMModel.get_n_tile_drain_hydrographs : Returns the number of tile drain hydrographs specified in an IWFM model
-        IWFMModel.get_groundwater_hydrograph_ids : Returns the IDs for the groundwater hydrographs specified in an IWFM model
-        IWFMModel.get_subsidence_hydrograph_ids : Returns the IDs for the subsidence hydrographs specified in an IWFM model
-        IWFMModel.get_stream_hydrograph_ids : Returns the IDs for the stream hydrographs specified in an IWFM model
-        IWFMModel.get_tile_drain_hydrograph_ids : Returns the IDs for the tile drain hydrographs specified in an IWFM model
-        IWFMModel.get_groundwater_hydrograph_coordinates : Returns the x,y-coordinates for the groundwater hydrographs specified in an IWFM model
-        IWFMModel.get_subsidence_hydrograph_coordinates : Returns the x,y-coordinates for the subsidence hydrograph locations specified in an IWFM model
-        IWFMModel.get_stream_hydrograph_coordinates : Returns the x,y-coordinates for the stream flow observation locations specified in an IWFM model
-        IWFMModel.get_tile_drain_hydrograph_coordinates : Returns the x,y-coordinates for the tile drain observations specified in an IWFM model
-        IWFMModel.get_groundwater_hydrograph : Returns the simulated groundwater hydrograph for the provided groundwater hydrograph id
-        IWFMModel.get_groundwater_hydrograph_at_node_and_layer : Returns a simulated groundwater hydrograph for a node and layer
-        IWFMModel.get_subsidence_hydrograph : Returns the simulated subsidence hydrograph for the provided subsidence hydrograph id
-        IWFMModel.get_stream_hydrograph : Returns the simulated stream hydrograph for the provided stream hydrograph id
-        IWFMModel.get_tile_drain_hydrograph : Returns the simulated tile drain hydrograph for the provided tile drain hydrograph id
+        IWFMModel.get_n_hydrograph_types : Return the number of different hydrograph types being printed by the IWFM model
+        IWFMModel.get_hydrograph_type_list : Return a list of different hydrograph types being printed by the IWFM model
+        IWFMModel.get_n_subsidence_hydrographs : Return the number of subsidence hydrographs specified in an IWFM model
+        IWFMModel.get_n_stream_hydrographs : Return the number of stream flow hydrographs specified in an IWFM model
+        IWFMModel.get_n_tile_drain_hydrographs : Return the number of tile drain hydrographs specified in an IWFM model
+        IWFMModel.get_groundwater_hydrograph_ids : Return the IDs for the groundwater hydrographs specified in an IWFM model
+        IWFMModel.get_subsidence_hydrograph_ids : Return the IDs for the subsidence hydrographs specified in an IWFM model
+        IWFMModel.get_stream_hydrograph_ids : Return the IDs for the stream hydrographs specified in an IWFM model
+        IWFMModel.get_tile_drain_hydrograph_ids : Return the IDs for the tile drain hydrographs specified in an IWFM model
+        IWFMModel.get_groundwater_hydrograph_coordinates : Return the x,y-coordinates for the groundwater hydrographs specified in an IWFM model
+        IWFMModel.get_subsidence_hydrograph_coordinates : Return the x,y-coordinates for the subsidence hydrograph locations specified in an IWFM model
+        IWFMModel.get_stream_hydrograph_coordinates : Return the x,y-coordinates for the stream flow observation locations specified in an IWFM model
+        IWFMModel.get_tile_drain_hydrograph_coordinates : Return the x,y-coordinates for the tile drain observations specified in an IWFM model
+        IWFMModel.get_groundwater_hydrograph : Return the simulated groundwater hydrograph for the provided groundwater hydrograph id
+        IWFMModel.get_groundwater_hydrograph_at_node_and_layer : Return a simulated groundwater hydrograph for a node and layer
+        IWFMModel.get_subsidence_hydrograph : Return the simulated subsidence hydrograph for the provided subsidence hydrograph id
+        IWFMModel.get_stream_hydrograph : Return the simulated stream hydrograph for the provided stream hydrograph id
+        IWFMModel.get_tile_drain_hydrograph : Return the simulated tile drain hydrograph for the provided tile drain hydrograph id
 
         Example
         -------
@@ -7300,7 +7300,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_n_subsidence_hydrographs(self):
         '''
-        Returns the number of subsidence hydrographs specified in 
+        Return the number of subsidence hydrographs specified in 
         an IWFM model
 
         Returns
@@ -7310,24 +7310,24 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_n_hydrograph_types : Returns the number of different hydrograph types being printed by the IWFM model
-        IWFMModel.get_hydrograph_type_list : Returns a list of different hydrograph types being printed by the IWFM model
-        IWFMModel.get_n_groundwater_hydrographs : Returns the number of groundwater hydrographs specified in an IWFM model
-        IWFMModel.get_n_stream_hydrographs : Returns the number of stream flow hydrographs specified in an IWFM model
-        IWFMModel.get_n_tile_drain_hydrographs : Returns the number of tile drain hydrographs specified in an IWFM model
-        IWFMModel.get_groundwater_hydrograph_ids : Returns the IDs for the groundwater hydrographs specified in an IWFM model
-        IWFMModel.get_subsidence_hydrograph_ids : Returns the IDs for the subsidence hydrographs specified in an IWFM model
-        IWFMModel.get_stream_hydrograph_ids : Returns the IDs for the stream hydrographs specified in an IWFM model
-        IWFMModel.get_tile_drain_hydrograph_ids : Returns the IDs for the tile drain hydrographs specified in an IWFM model
-        IWFMModel.get_groundwater_hydrograph_coordinates : Returns the x,y-coordinates for the groundwater hydrographs specified in an IWFM model
-        IWFMModel.get_subsidence_hydrograph_coordinates : Returns the x,y-coordinates for the subsidence hydrograph locations specified in an IWFM model
-        IWFMModel.get_stream_hydrograph_coordinates : Returns the x,y-coordinates for the stream flow observation locations specified in an IWFM model
-        IWFMModel.get_tile_drain_hydrograph_coordinates : Returns the x,y-coordinates for the tile drain observations specified in an IWFM model
-        IWFMModel.get_groundwater_hydrograph : Returns the simulated groundwater hydrograph for the provided groundwater hydrograph id
-        IWFMModel.get_groundwater_hydrograph_at_node_and_layer : Returns a simulated groundwater hydrograph for a node and layer
-        IWFMModel.get_subsidence_hydrograph : Returns the simulated subsidence hydrograph for the provided subsidence hydrograph id
-        IWFMModel.get_stream_hydrograph : Returns the simulated stream hydrograph for the provided stream hydrograph id
-        IWFMModel.get_tile_drain_hydrograph : Returns the simulated tile drain hydrograph for the provided tile drain hydrograph id
+        IWFMModel.get_n_hydrograph_types : Return the number of different hydrograph types being printed by the IWFM model
+        IWFMModel.get_hydrograph_type_list : Return a list of different hydrograph types being printed by the IWFM model
+        IWFMModel.get_n_groundwater_hydrographs : Return the number of groundwater hydrographs specified in an IWFM model
+        IWFMModel.get_n_stream_hydrographs : Return the number of stream flow hydrographs specified in an IWFM model
+        IWFMModel.get_n_tile_drain_hydrographs : Return the number of tile drain hydrographs specified in an IWFM model
+        IWFMModel.get_groundwater_hydrograph_ids : Return the IDs for the groundwater hydrographs specified in an IWFM model
+        IWFMModel.get_subsidence_hydrograph_ids : Return the IDs for the subsidence hydrographs specified in an IWFM model
+        IWFMModel.get_stream_hydrograph_ids : Return the IDs for the stream hydrographs specified in an IWFM model
+        IWFMModel.get_tile_drain_hydrograph_ids : Return the IDs for the tile drain hydrographs specified in an IWFM model
+        IWFMModel.get_groundwater_hydrograph_coordinates : Return the x,y-coordinates for the groundwater hydrographs specified in an IWFM model
+        IWFMModel.get_subsidence_hydrograph_coordinates : Return the x,y-coordinates for the subsidence hydrograph locations specified in an IWFM model
+        IWFMModel.get_stream_hydrograph_coordinates : Return the x,y-coordinates for the stream flow observation locations specified in an IWFM model
+        IWFMModel.get_tile_drain_hydrograph_coordinates : Return the x,y-coordinates for the tile drain observations specified in an IWFM model
+        IWFMModel.get_groundwater_hydrograph : Return the simulated groundwater hydrograph for the provided groundwater hydrograph id
+        IWFMModel.get_groundwater_hydrograph_at_node_and_layer : Return a simulated groundwater hydrograph for a node and layer
+        IWFMModel.get_subsidence_hydrograph : Return the simulated subsidence hydrograph for the provided subsidence hydrograph id
+        IWFMModel.get_stream_hydrograph : Return the simulated stream hydrograph for the provided stream hydrograph id
+        IWFMModel.get_tile_drain_hydrograph : Return the simulated tile drain hydrograph for the provided tile drain hydrograph id
 
         Example
         -------
@@ -7346,7 +7346,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_n_stream_hydrographs(self):
         '''
-        Returns the number of stream flow hydrographs specified in
+        Return the number of stream flow hydrographs specified in
         an IWFM model
 
         Returns
@@ -7356,24 +7356,24 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_n_hydrograph_types : Returns the number of different hydrograph types being printed by the IWFM model
-        IWFMModel.get_hydrograph_type_list : Returns a list of different hydrograph types being printed by the IWFM model
-        IWFMModel.get_n_groundwater_hydrographs : Returns the number of groundwater hydrographs specified in an IWFM model
-        IWFMModel.get_n_subsidence_hydrographs : Returns the number of subsidence hydrographs specified in an IWFM model
-        IWFMModel.get_n_tile_drain_hydrographs : Returns the number of tile drain hydrographs specified in an IWFM model
-        IWFMModel.get_groundwater_hydrograph_ids : Returns the IDs for the groundwater hydrographs specified in an IWFM model
-        IWFMModel.get_subsidence_hydrograph_ids : Returns the IDs for the subsidence hydrographs specified in an IWFM model
-        IWFMModel.get_stream_hydrograph_ids : Returns the IDs for the stream hydrographs specified in an IWFM model
-        IWFMModel.get_tile_drain_hydrograph_ids : Returns the IDs for the tile drain hydrographs specified in an IWFM model
-        IWFMModel.get_groundwater_hydrograph_coordinates : Returns the x,y-coordinates for the groundwater hydrographs specified in an IWFM model
-        IWFMModel.get_subsidence_hydrograph_coordinates : Returns the x,y-coordinates for the subsidence hydrograph locations specified in an IWFM model
-        IWFMModel.get_stream_hydrograph_coordinates : Returns the x,y-coordinates for the stream flow observation locations specified in an IWFM model
-        IWFMModel.get_tile_drain_hydrograph_coordinates : Returns the x,y-coordinates for the tile drain observations specified in an IWFM model
-        IWFMModel.get_groundwater_hydrograph : Returns the simulated groundwater hydrograph for the provided groundwater hydrograph id
-        IWFMModel.get_groundwater_hydrograph_at_node_and_layer : Returns a simulated groundwater hydrograph for a node and layer
-        IWFMModel.get_subsidence_hydrograph : Returns the simulated subsidence hydrograph for the provided subsidence hydrograph id
-        IWFMModel.get_stream_hydrograph : Returns the simulated stream hydrograph for the provided stream hydrograph id
-        IWFMModel.get_tile_drain_hydrograph : Returns the simulated tile drain hydrograph for the provided tile drain hydrograph id
+        IWFMModel.get_n_hydrograph_types : Return the number of different hydrograph types being printed by the IWFM model
+        IWFMModel.get_hydrograph_type_list : Return a list of different hydrograph types being printed by the IWFM model
+        IWFMModel.get_n_groundwater_hydrographs : Return the number of groundwater hydrographs specified in an IWFM model
+        IWFMModel.get_n_subsidence_hydrographs : Return the number of subsidence hydrographs specified in an IWFM model
+        IWFMModel.get_n_tile_drain_hydrographs : Return the number of tile drain hydrographs specified in an IWFM model
+        IWFMModel.get_groundwater_hydrograph_ids : Return the IDs for the groundwater hydrographs specified in an IWFM model
+        IWFMModel.get_subsidence_hydrograph_ids : Return the IDs for the subsidence hydrographs specified in an IWFM model
+        IWFMModel.get_stream_hydrograph_ids : Return the IDs for the stream hydrographs specified in an IWFM model
+        IWFMModel.get_tile_drain_hydrograph_ids : Return the IDs for the tile drain hydrographs specified in an IWFM model
+        IWFMModel.get_groundwater_hydrograph_coordinates : Return the x,y-coordinates for the groundwater hydrographs specified in an IWFM model
+        IWFMModel.get_subsidence_hydrograph_coordinates : Return the x,y-coordinates for the subsidence hydrograph locations specified in an IWFM model
+        IWFMModel.get_stream_hydrograph_coordinates : Return the x,y-coordinates for the stream flow observation locations specified in an IWFM model
+        IWFMModel.get_tile_drain_hydrograph_coordinates : Return the x,y-coordinates for the tile drain observations specified in an IWFM model
+        IWFMModel.get_groundwater_hydrograph : Return the simulated groundwater hydrograph for the provided groundwater hydrograph id
+        IWFMModel.get_groundwater_hydrograph_at_node_and_layer : Return a simulated groundwater hydrograph for a node and layer
+        IWFMModel.get_subsidence_hydrograph : Return the simulated subsidence hydrograph for the provided subsidence hydrograph id
+        IWFMModel.get_stream_hydrograph : Return the simulated stream hydrograph for the provided stream hydrograph id
+        IWFMModel.get_tile_drain_hydrograph : Return the simulated tile drain hydrograph for the provided tile drain hydrograph id
 
         Example
         -------
@@ -7392,7 +7392,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_n_tile_drain_hydrographs(self):
         '''
-        Returns the number of tile drain hydrographs specified in 
+        Return the number of tile drain hydrographs specified in 
         an IWFM model
 
         Returns
@@ -7402,24 +7402,24 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_n_hydrograph_types : Returns the number of different hydrograph types being printed by the IWFM model
-        IWFMModel.get_hydrograph_type_list : Returns a list of different hydrograph types being printed by the IWFM model
-        IWFMModel.get_n_groundwater_hydrographs : Returns the number of groundwater hydrographs specified in an IWFM model
-        IWFMModel.get_n_subsidence_hydrographs : Returns the number of subsidence hydrographs specified in an IWFM model
-        IWFMModel.get_n_stream_hydrographs : Returns the number of stream flow hydrographs specified in an IWFM model
-        IWFMModel.get_groundwater_hydrograph_ids : Returns the IDs for the groundwater hydrographs specified in an IWFM model
-        IWFMModel.get_subsidence_hydrograph_ids : Returns the IDs for the subsidence hydrographs specified in an IWFM model
-        IWFMModel.get_stream_hydrograph_ids : Returns the IDs for the stream hydrographs specified in an IWFM model
-        IWFMModel.get_tile_drain_hydrograph_ids : Returns the IDs for the tile drain hydrographs specified in an IWFM model
-        IWFMModel.get_groundwater_hydrograph_coordinates : Returns the x,y-coordinates for the groundwater hydrographs specified in an IWFM model
-        IWFMModel.get_subsidence_hydrograph_coordinates : Returns the x,y-coordinates for the subsidence hydrograph locations specified in an IWFM model
-        IWFMModel.get_stream_hydrograph_coordinates : Returns the x,y-coordinates for the stream flow observation locations specified in an IWFM model
-        IWFMModel.get_tile_drain_hydrograph_coordinates : Returns the x,y-coordinates for the tile drain observations specified in an IWFM model
-        IWFMModel.get_groundwater_hydrograph : Returns the simulated groundwater hydrograph for the provided groundwater hydrograph id
-        IWFMModel.get_groundwater_hydrograph_at_node_and_layer : Returns a simulated groundwater hydrograph for a node and layer
-        IWFMModel.get_subsidence_hydrograph : Returns the simulated subsidence hydrograph for the provided subsidence hydrograph id
-        IWFMModel.get_stream_hydrograph : Returns the simulated stream hydrograph for the provided stream hydrograph id
-        IWFMModel.get_tile_drain_hydrograph : Returns the simulated tile drain hydrograph for the provided tile drain hydrograph id
+        IWFMModel.get_n_hydrograph_types : Return the number of different hydrograph types being printed by the IWFM model
+        IWFMModel.get_hydrograph_type_list : Return a list of different hydrograph types being printed by the IWFM model
+        IWFMModel.get_n_groundwater_hydrographs : Return the number of groundwater hydrographs specified in an IWFM model
+        IWFMModel.get_n_subsidence_hydrographs : Return the number of subsidence hydrographs specified in an IWFM model
+        IWFMModel.get_n_stream_hydrographs : Return the number of stream flow hydrographs specified in an IWFM model
+        IWFMModel.get_groundwater_hydrograph_ids : Return the IDs for the groundwater hydrographs specified in an IWFM model
+        IWFMModel.get_subsidence_hydrograph_ids : Return the IDs for the subsidence hydrographs specified in an IWFM model
+        IWFMModel.get_stream_hydrograph_ids : Return the IDs for the stream hydrographs specified in an IWFM model
+        IWFMModel.get_tile_drain_hydrograph_ids : Return the IDs for the tile drain hydrographs specified in an IWFM model
+        IWFMModel.get_groundwater_hydrograph_coordinates : Return the x,y-coordinates for the groundwater hydrographs specified in an IWFM model
+        IWFMModel.get_subsidence_hydrograph_coordinates : Return the x,y-coordinates for the subsidence hydrograph locations specified in an IWFM model
+        IWFMModel.get_stream_hydrograph_coordinates : Return the x,y-coordinates for the stream flow observation locations specified in an IWFM model
+        IWFMModel.get_tile_drain_hydrograph_coordinates : Return the x,y-coordinates for the tile drain observations specified in an IWFM model
+        IWFMModel.get_groundwater_hydrograph : Return the simulated groundwater hydrograph for the provided groundwater hydrograph id
+        IWFMModel.get_groundwater_hydrograph_at_node_and_layer : Return a simulated groundwater hydrograph for a node and layer
+        IWFMModel.get_subsidence_hydrograph : Return the simulated subsidence hydrograph for the provided subsidence hydrograph id
+        IWFMModel.get_stream_hydrograph : Return the simulated stream hydrograph for the provided stream hydrograph id
+        IWFMModel.get_tile_drain_hydrograph : Return the simulated tile drain hydrograph for the provided tile drain hydrograph id
 
         Example
         -------
@@ -7487,7 +7487,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_groundwater_hydrograph_ids(self):
         '''
-        Returns the ids for the groundwater hydrographs specified
+        Return the ids for the groundwater hydrographs specified
         in an IWFM model
 
         Returns
@@ -7497,24 +7497,24 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_n_hydrograph_types : Returns the number of different hydrograph types being printed by the IWFM model
-        IWFMModel.get_hydrograph_type_list : Returns a list of different hydrograph types being printed by the IWFM model
-        IWFMModel.get_n_groundwater_hydrographs : Returns the number of groundwater hydrographs specified in an IWFM model
-        IWFMModel.get_n_subsidence_hydrographs : Returns the number of subsidence hydrographs specified in an IWFM model
-        IWFMModel.get_n_stream_hydrographs : Returns the number of stream flow hydrographs specified in an IWFM model
-        IWFMModel.get_n_tile_drain_hydrographs : Returns the number of tile drain hydrographs specified in an IWFM model
-        IWFMModel.get_subsidence_hydrograph_ids : Returns the IDs for the subsidence hydrographs specified in an IWFM model
-        IWFMModel.get_stream_hydrograph_ids : Returns the IDs for the stream hydrographs specified in an IWFM model
-        IWFMModel.get_tile_drain_hydrograph_ids : Returns the IDs for the tile drain hydrographs specified in an IWFM model
-        IWFMModel.get_groundwater_hydrograph_coordinates : Returns the x,y-coordinates for the groundwater hydrographs specified in an IWFM model
-        IWFMModel.get_subsidence_hydrograph_coordinates : Returns the x,y-coordinates for the subsidence hydrograph locations specified in an IWFM model
-        IWFMModel.get_stream_hydrograph_coordinates : Returns the x,y-coordinates for the stream flow observation locations specified in an IWFM model
-        IWFMModel.get_tile_drain_hydrograph_coordinates : Returns the x,y-coordinates for the tile drain observations specified in an IWFM model
-        IWFMModel.get_groundwater_hydrograph : Returns the simulated groundwater hydrograph for the provided groundwater hydrograph id
-        IWFMModel.get_groundwater_hydrograph_at_node_and_layer : Returns a simulated groundwater hydrograph for a node and layer
-        IWFMModel.get_subsidence_hydrograph : Returns the simulated subsidence hydrograph for the provided subsidence hydrograph id
-        IWFMModel.get_stream_hydrograph : Returns the simulated stream hydrograph for the provided stream hydrograph id
-        IWFMModel.get_tile_drain_hydrograph : Returns the simulated tile drain hydrograph for the provided tile drain hydrograph id
+        IWFMModel.get_n_hydrograph_types : Return the number of different hydrograph types being printed by the IWFM model
+        IWFMModel.get_hydrograph_type_list : Return a list of different hydrograph types being printed by the IWFM model
+        IWFMModel.get_n_groundwater_hydrographs : Return the number of groundwater hydrographs specified in an IWFM model
+        IWFMModel.get_n_subsidence_hydrographs : Return the number of subsidence hydrographs specified in an IWFM model
+        IWFMModel.get_n_stream_hydrographs : Return the number of stream flow hydrographs specified in an IWFM model
+        IWFMModel.get_n_tile_drain_hydrographs : Return the number of tile drain hydrographs specified in an IWFM model
+        IWFMModel.get_subsidence_hydrograph_ids : Return the IDs for the subsidence hydrographs specified in an IWFM model
+        IWFMModel.get_stream_hydrograph_ids : Return the IDs for the stream hydrographs specified in an IWFM model
+        IWFMModel.get_tile_drain_hydrograph_ids : Return the IDs for the tile drain hydrographs specified in an IWFM model
+        IWFMModel.get_groundwater_hydrograph_coordinates : Return the x,y-coordinates for the groundwater hydrographs specified in an IWFM model
+        IWFMModel.get_subsidence_hydrograph_coordinates : Return the x,y-coordinates for the subsidence hydrograph locations specified in an IWFM model
+        IWFMModel.get_stream_hydrograph_coordinates : Return the x,y-coordinates for the stream flow observation locations specified in an IWFM model
+        IWFMModel.get_tile_drain_hydrograph_coordinates : Return the x,y-coordinates for the tile drain observations specified in an IWFM model
+        IWFMModel.get_groundwater_hydrograph : Return the simulated groundwater hydrograph for the provided groundwater hydrograph id
+        IWFMModel.get_groundwater_hydrograph_at_node_and_layer : Return a simulated groundwater hydrograph for a node and layer
+        IWFMModel.get_subsidence_hydrograph : Return the simulated subsidence hydrograph for the provided subsidence hydrograph id
+        IWFMModel.get_stream_hydrograph : Return the simulated stream hydrograph for the provided stream hydrograph id
+        IWFMModel.get_tile_drain_hydrograph : Return the simulated tile drain hydrograph for the provided tile drain hydrograph id
 
         Example
         -------
@@ -7536,7 +7536,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_subsidence_hydrograph_ids(self):
         '''
-        Returns the ids for the subsidence hydrographs specified
+        Return the ids for the subsidence hydrographs specified
         in an IWFM model
         
         Returns
@@ -7546,24 +7546,24 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_n_hydrograph_types : Returns the number of different hydrograph types being printed by the IWFM model
-        IWFMModel.get_hydrograph_type_list : Returns a list of different hydrograph types being printed by the IWFM model
-        IWFMModel.get_n_groundwater_hydrographs : Returns the number of groundwater hydrographs specified in an IWFM model
-        IWFMModel.get_n_subsidence_hydrographs : Returns the number of subsidence hydrographs specified in an IWFM model
-        IWFMModel.get_n_stream_hydrographs : Returns the number of stream flow hydrographs specified in an IWFM model
-        IWFMModel.get_n_tile_drain_hydrographs : Returns the number of tile drain hydrographs specified in an IWFM model
-        IWFMModel.get_groundwater_hydrograph_ids : Returns the IDs for the groundwater hydrographs specified in an IWFM model
-        IWFMModel.get_stream_hydrograph_ids : Returns the IDs for the stream hydrographs specified in an IWFM model
-        IWFMModel.get_tile_drain_hydrograph_ids : Returns the IDs for the tile drain hydrographs specified in an IWFM model
-        IWFMModel.get_groundwater_hydrograph_coordinates : Returns the x,y-coordinates for the groundwater hydrographs specified in an IWFM model
-        IWFMModel.get_subsidence_hydrograph_coordinates : Returns the x,y-coordinates for the subsidence hydrograph locations specified in an IWFM model
-        IWFMModel.get_stream_hydrograph_coordinates : Returns the x,y-coordinates for the stream flow observation locations specified in an IWFM model
-        IWFMModel.get_tile_drain_hydrograph_coordinates : Returns the x,y-coordinates for the tile drain observations specified in an IWFM model
-        IWFMModel.get_groundwater_hydrograph : Returns the simulated groundwater hydrograph for the provided groundwater hydrograph id
-        IWFMModel.get_groundwater_hydrograph_at_node_and_layer : Returns a simulated groundwater hydrograph for a node and layer
-        IWFMModel.get_subsidence_hydrograph : Returns the simulated subsidence hydrograph for the provided subsidence hydrograph id
-        IWFMModel.get_stream_hydrograph : Returns the simulated stream hydrograph for the provided stream hydrograph id
-        IWFMModel.get_tile_drain_hydrograph : Returns the simulated tile drain hydrograph for the provided tile drain hydrograph id
+        IWFMModel.get_n_hydrograph_types : Return the number of different hydrograph types being printed by the IWFM model
+        IWFMModel.get_hydrograph_type_list : Return a list of different hydrograph types being printed by the IWFM model
+        IWFMModel.get_n_groundwater_hydrographs : Return the number of groundwater hydrographs specified in an IWFM model
+        IWFMModel.get_n_subsidence_hydrographs : Return the number of subsidence hydrographs specified in an IWFM model
+        IWFMModel.get_n_stream_hydrographs : Return the number of stream flow hydrographs specified in an IWFM model
+        IWFMModel.get_n_tile_drain_hydrographs : Return the number of tile drain hydrographs specified in an IWFM model
+        IWFMModel.get_groundwater_hydrograph_ids : Return the IDs for the groundwater hydrographs specified in an IWFM model
+        IWFMModel.get_stream_hydrograph_ids : Return the IDs for the stream hydrographs specified in an IWFM model
+        IWFMModel.get_tile_drain_hydrograph_ids : Return the IDs for the tile drain hydrographs specified in an IWFM model
+        IWFMModel.get_groundwater_hydrograph_coordinates : Return the x,y-coordinates for the groundwater hydrographs specified in an IWFM model
+        IWFMModel.get_subsidence_hydrograph_coordinates : Return the x,y-coordinates for the subsidence hydrograph locations specified in an IWFM model
+        IWFMModel.get_stream_hydrograph_coordinates : Return the x,y-coordinates for the stream flow observation locations specified in an IWFM model
+        IWFMModel.get_tile_drain_hydrograph_coordinates : Return the x,y-coordinates for the tile drain observations specified in an IWFM model
+        IWFMModel.get_groundwater_hydrograph : Return the simulated groundwater hydrograph for the provided groundwater hydrograph id
+        IWFMModel.get_groundwater_hydrograph_at_node_and_layer : Return a simulated groundwater hydrograph for a node and layer
+        IWFMModel.get_subsidence_hydrograph : Return the simulated subsidence hydrograph for the provided subsidence hydrograph id
+        IWFMModel.get_stream_hydrograph : Return the simulated stream hydrograph for the provided stream hydrograph id
+        IWFMModel.get_tile_drain_hydrograph : Return the simulated tile drain hydrograph for the provided tile drain hydrograph id
 
         Example
         -------
@@ -7583,7 +7583,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_stream_hydrograph_ids(self):
         '''
-        Returns the ids for the stream hydrographs specified
+        Return the ids for the stream hydrographs specified
         in an IWFM model
         
         Returns
@@ -7593,24 +7593,24 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_n_hydrograph_types : Returns the number of different hydrograph types being printed by the IWFM model
-        IWFMModel.get_hydrograph_type_list : Returns a list of different hydrograph types being printed by the IWFM model
-        IWFMModel.get_n_groundwater_hydrographs : Returns the number of groundwater hydrographs specified in an IWFM model
-        IWFMModel.get_n_subsidence_hydrographs : Returns the number of subsidence hydrographs specified in an IWFM model
-        IWFMModel.get_n_stream_hydrographs : Returns the number of stream flow hydrographs specified in an IWFM model
-        IWFMModel.get_n_tile_drain_hydrographs : Returns the number of tile drain hydrographs specified in an IWFM model
-        IWFMModel.get_groundwater_hydrograph_ids : Returns the IDs for the groundwater hydrographs specified in an IWFM model
-        IWFMModel.get_subsidence_hydrograph_ids : Returns the IDs for the subsidence hydrographs specified in an IWFM model
-        IWFMModel.get_tile_drain_hydrograph_ids : Returns the IDs for the tile drain hydrographs specified in an IWFM model
-        IWFMModel.get_groundwater_hydrograph_coordinates : Returns the x,y-coordinates for the groundwater hydrographs specified in an IWFM model
-        IWFMModel.get_subsidence_hydrograph_coordinates : Returns the x,y-coordinates for the subsidence hydrograph locations specified in an IWFM model
-        IWFMModel.get_stream_hydrograph_coordinates : Returns the x,y-coordinates for the stream flow observation locations specified in an IWFM model
-        IWFMModel.get_tile_drain_hydrograph_coordinates : Returns the x,y-coordinates for the tile drain observations specified in an IWFM model
-        IWFMModel.get_groundwater_hydrograph : Returns the simulated groundwater hydrograph for the provided groundwater hydrograph id
-        IWFMModel.get_groundwater_hydrograph_at_node_and_layer : Returns a simulated groundwater hydrograph for a node and layer
-        IWFMModel.get_subsidence_hydrograph : Returns the simulated subsidence hydrograph for the provided subsidence hydrograph id
-        IWFMModel.get_stream_hydrograph : Returns the simulated stream hydrograph for the provided stream hydrograph id
-        IWFMModel.get_tile_drain_hydrograph : Returns the simulated tile drain hydrograph for the provided tile drain hydrograph id
+        IWFMModel.get_n_hydrograph_types : Return the number of different hydrograph types being printed by the IWFM model
+        IWFMModel.get_hydrograph_type_list : Return a list of different hydrograph types being printed by the IWFM model
+        IWFMModel.get_n_groundwater_hydrographs : Return the number of groundwater hydrographs specified in an IWFM model
+        IWFMModel.get_n_subsidence_hydrographs : Return the number of subsidence hydrographs specified in an IWFM model
+        IWFMModel.get_n_stream_hydrographs : Return the number of stream flow hydrographs specified in an IWFM model
+        IWFMModel.get_n_tile_drain_hydrographs : Return the number of tile drain hydrographs specified in an IWFM model
+        IWFMModel.get_groundwater_hydrograph_ids : Return the IDs for the groundwater hydrographs specified in an IWFM model
+        IWFMModel.get_subsidence_hydrograph_ids : Return the IDs for the subsidence hydrographs specified in an IWFM model
+        IWFMModel.get_tile_drain_hydrograph_ids : Return the IDs for the tile drain hydrographs specified in an IWFM model
+        IWFMModel.get_groundwater_hydrograph_coordinates : Return the x,y-coordinates for the groundwater hydrographs specified in an IWFM model
+        IWFMModel.get_subsidence_hydrograph_coordinates : Return the x,y-coordinates for the subsidence hydrograph locations specified in an IWFM model
+        IWFMModel.get_stream_hydrograph_coordinates : Return the x,y-coordinates for the stream flow observation locations specified in an IWFM model
+        IWFMModel.get_tile_drain_hydrograph_coordinates : Return the x,y-coordinates for the tile drain observations specified in an IWFM model
+        IWFMModel.get_groundwater_hydrograph : Return the simulated groundwater hydrograph for the provided groundwater hydrograph id
+        IWFMModel.get_groundwater_hydrograph_at_node_and_layer : Return a simulated groundwater hydrograph for a node and layer
+        IWFMModel.get_subsidence_hydrograph : Return the simulated subsidence hydrograph for the provided subsidence hydrograph id
+        IWFMModel.get_stream_hydrograph : Return the simulated stream hydrograph for the provided stream hydrograph id
+        IWFMModel.get_tile_drain_hydrograph : Return the simulated tile drain hydrograph for the provided tile drain hydrograph id
 
         Example
         -------
@@ -7631,7 +7631,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_tile_drain_hydrograph_ids(self):
         '''
-        Returns the ids for the tile drain hydrographs specified
+        Return the ids for the tile drain hydrographs specified
         in an IWFM model
         
         Returns
@@ -7641,24 +7641,24 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_n_hydrograph_types : Returns the number of different hydrograph types being printed by the IWFM model
-        IWFMModel.get_hydrograph_type_list : Returns a list of different hydrograph types being printed by the IWFM model
-        IWFMModel.get_n_groundwater_hydrographs : Returns the number of groundwater hydrographs specified in an IWFM model
-        IWFMModel.get_n_subsidence_hydrographs : Returns the number of subsidence hydrographs specified in an IWFM model
-        IWFMModel.get_n_stream_hydrographs : Returns the number of stream flow hydrographs specified in an IWFM model
-        IWFMModel.get_n_tile_drain_hydrographs : Returns the number of tile drain hydrographs specified in an IWFM model
-        IWFMModel.get_groundwater_hydrograph_ids : Returns the IDs for the groundwater hydrographs specified in an IWFM model
-        IWFMModel.get_subsidence_hydrograph_ids : Returns the IDs for the subsidence hydrographs specified in an IWFM model
-        IWFMModel.get_stream_hydrograph_ids : Returns the IDs for the stream hydrographs specified in an IWFM model
-        IWFMModel.get_groundwater_hydrograph_coordinates : Returns the x,y-coordinates for the groundwater hydrographs specified in an IWFM model
-        IWFMModel.get_subsidence_hydrograph_coordinates : Returns the x,y-coordinates for the subsidence hydrograph locations specified in an IWFM model
-        IWFMModel.get_stream_hydrograph_coordinates : Returns the x,y-coordinates for the stream flow observation locations specified in an IWFM model
-        IWFMModel.get_tile_drain_hydrograph_coordinates : Returns the x,y-coordinates for the tile drain observations specified in an IWFM model
-        IWFMModel.get_groundwater_hydrograph : Returns the simulated groundwater hydrograph for the provided groundwater hydrograph id
-        IWFMModel.get_groundwater_hydrograph_at_node_and_layer : Returns a simulated groundwater hydrograph for a node and layer
-        IWFMModel.get_subsidence_hydrograph : Returns the simulated subsidence hydrograph for the provided subsidence hydrograph id
-        IWFMModel.get_stream_hydrograph : Returns the simulated stream hydrograph for the provided stream hydrograph id
-        IWFMModel.get_tile_drain_hydrograph : Returns the simulated tile drain hydrograph for the provided tile drain hydrograph id
+        IWFMModel.get_n_hydrograph_types : Return the number of different hydrograph types being printed by the IWFM model
+        IWFMModel.get_hydrograph_type_list : Return a list of different hydrograph types being printed by the IWFM model
+        IWFMModel.get_n_groundwater_hydrographs : Return the number of groundwater hydrographs specified in an IWFM model
+        IWFMModel.get_n_subsidence_hydrographs : Return the number of subsidence hydrographs specified in an IWFM model
+        IWFMModel.get_n_stream_hydrographs : Return the number of stream flow hydrographs specified in an IWFM model
+        IWFMModel.get_n_tile_drain_hydrographs : Return the number of tile drain hydrographs specified in an IWFM model
+        IWFMModel.get_groundwater_hydrograph_ids : Return the IDs for the groundwater hydrographs specified in an IWFM model
+        IWFMModel.get_subsidence_hydrograph_ids : Return the IDs for the subsidence hydrographs specified in an IWFM model
+        IWFMModel.get_stream_hydrograph_ids : Return the IDs for the stream hydrographs specified in an IWFM model
+        IWFMModel.get_groundwater_hydrograph_coordinates : Return the x,y-coordinates for the groundwater hydrographs specified in an IWFM model
+        IWFMModel.get_subsidence_hydrograph_coordinates : Return the x,y-coordinates for the subsidence hydrograph locations specified in an IWFM model
+        IWFMModel.get_stream_hydrograph_coordinates : Return the x,y-coordinates for the stream flow observation locations specified in an IWFM model
+        IWFMModel.get_tile_drain_hydrograph_coordinates : Return the x,y-coordinates for the tile drain observations specified in an IWFM model
+        IWFMModel.get_groundwater_hydrograph : Return the simulated groundwater hydrograph for the provided groundwater hydrograph id
+        IWFMModel.get_groundwater_hydrograph_at_node_and_layer : Return a simulated groundwater hydrograph for a node and layer
+        IWFMModel.get_subsidence_hydrograph : Return the simulated subsidence hydrograph for the provided subsidence hydrograph id
+        IWFMModel.get_stream_hydrograph : Return the simulated stream hydrograph for the provided stream hydrograph id
+        IWFMModel.get_tile_drain_hydrograph : Return the simulated tile drain hydrograph for the provided tile drain hydrograph id
 
         Example
         -------
@@ -7728,7 +7728,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_groundwater_hydrograph_coordinates(self):
         '''
-        Returns the x,y-coordinates for the groundwater hydrographs
+        Return the x,y-coordinates for the groundwater hydrographs
         specified in an IWFM model
 
         Returns
@@ -7739,24 +7739,24 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_n_hydrograph_types : Returns the number of different hydrograph types being printed by the IWFM model
-        IWFMModel.get_hydrograph_type_list : Returns a list of different hydrograph types being printed by the IWFM model
-        IWFMModel.get_n_groundwater_hydrographs : Returns the number of groundwater hydrographs specified in an IWFM model
-        IWFMModel.get_n_subsidence_hydrographs : Returns the number of subsidence hydrographs specified in an IWFM model
-        IWFMModel.get_n_stream_hydrographs : Returns the number of stream flow hydrographs specified in an IWFM model
-        IWFMModel.get_n_tile_drain_hydrographs : Returns the number of tile drain hydrographs specified in an IWFM model
-        IWFMModel.get_groundwater_hydrograph_ids : Returns the IDs for the groundwater hydrographs specified in an IWFM model
-        IWFMModel.get_subsidence_hydrograph_ids : Returns the IDs for the subsidence hydrographs specified in an IWFM model
-        IWFMModel.get_stream_hydrograph_ids : Returns the IDs for the stream hydrographs specified in an IWFM model
-        IWFMModel.get_tile_drain_hydrograph_ids : Returns the IDs for the tile drain hydrographs specified in an IWFM model
-        IWFMModel.get_subsidence_hydrograph_coordinates : Returns the x,y-coordinates for the subsidence hydrograph locations specified in an IWFM model
-        IWFMModel.get_stream_hydrograph_coordinates : Returns the x,y-coordinates for the stream flow observation locations specified in an IWFM model
-        IWFMModel.get_tile_drain_hydrograph_coordinates : Returns the x,y-coordinates for the tile drain observations specified in an IWFM model
-        IWFMModel.get_groundwater_hydrograph : Returns the simulated groundwater hydrograph for the provided groundwater hydrograph id
-        IWFMModel.get_groundwater_hydrograph_at_node_and_layer : Returns a simulated groundwater hydrograph for a node and layer
-        IWFMModel.get_subsidence_hydrograph : Returns the simulated subsidence hydrograph for the provided subsidence hydrograph id
-        IWFMModel.get_stream_hydrograph : Returns the simulated stream hydrograph for the provided stream hydrograph id
-        IWFMModel.get_tile_drain_hydrograph : Returns the simulated tile drain hydrograph for the provided tile drain hydrograph id
+        IWFMModel.get_n_hydrograph_types : Return the number of different hydrograph types being printed by the IWFM model
+        IWFMModel.get_hydrograph_type_list : Return a list of different hydrograph types being printed by the IWFM model
+        IWFMModel.get_n_groundwater_hydrographs : Return the number of groundwater hydrographs specified in an IWFM model
+        IWFMModel.get_n_subsidence_hydrographs : Return the number of subsidence hydrographs specified in an IWFM model
+        IWFMModel.get_n_stream_hydrographs : Return the number of stream flow hydrographs specified in an IWFM model
+        IWFMModel.get_n_tile_drain_hydrographs : Return the number of tile drain hydrographs specified in an IWFM model
+        IWFMModel.get_groundwater_hydrograph_ids : Return the IDs for the groundwater hydrographs specified in an IWFM model
+        IWFMModel.get_subsidence_hydrograph_ids : Return the IDs for the subsidence hydrographs specified in an IWFM model
+        IWFMModel.get_stream_hydrograph_ids : Return the IDs for the stream hydrographs specified in an IWFM model
+        IWFMModel.get_tile_drain_hydrograph_ids : Return the IDs for the tile drain hydrographs specified in an IWFM model
+        IWFMModel.get_subsidence_hydrograph_coordinates : Return the x,y-coordinates for the subsidence hydrograph locations specified in an IWFM model
+        IWFMModel.get_stream_hydrograph_coordinates : Return the x,y-coordinates for the stream flow observation locations specified in an IWFM model
+        IWFMModel.get_tile_drain_hydrograph_coordinates : Return the x,y-coordinates for the tile drain observations specified in an IWFM model
+        IWFMModel.get_groundwater_hydrograph : Return the simulated groundwater hydrograph for the provided groundwater hydrograph id
+        IWFMModel.get_groundwater_hydrograph_at_node_and_layer : Return a simulated groundwater hydrograph for a node and layer
+        IWFMModel.get_subsidence_hydrograph : Return the simulated subsidence hydrograph for the provided subsidence hydrograph id
+        IWFMModel.get_stream_hydrograph : Return the simulated stream hydrograph for the provided stream hydrograph id
+        IWFMModel.get_tile_drain_hydrograph : Return the simulated tile drain hydrograph for the provided tile drain hydrograph id
 
         Example
         -------
@@ -7792,7 +7792,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_subsidence_hydrograph_coordinates(self):
         '''
-        Returns the x,y-coordinates for the subsidence hydrograph
+        Return the x,y-coordinates for the subsidence hydrograph
         locations specified in an IWFM model
 
         Returns
@@ -7803,24 +7803,24 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_n_hydrograph_types : Returns the number of different hydrograph types being printed by the IWFM model
-        IWFMModel.get_hydrograph_type_list : Returns a list of different hydrograph types being printed by the IWFM model
-        IWFMModel.get_n_groundwater_hydrographs : Returns the number of groundwater hydrographs specified in an IWFM model
-        IWFMModel.get_n_subsidence_hydrographs : Returns the number of subsidence hydrographs specified in an IWFM model
-        IWFMModel.get_n_stream_hydrographs : Returns the number of stream flow hydrographs specified in an IWFM model
-        IWFMModel.get_n_tile_drain_hydrographs : Returns the number of tile drain hydrographs specified in an IWFM model
-        IWFMModel.get_groundwater_hydrograph_ids : Returns the IDs for the groundwater hydrographs specified in an IWFM model
-        IWFMModel.get_subsidence_hydrograph_ids : Returns the IDs for the subsidence hydrographs specified in an IWFM model
-        IWFMModel.get_stream_hydrograph_ids : Returns the IDs for the stream hydrographs specified in an IWFM model
-        IWFMModel.get_tile_drain_hydrograph_ids : Returns the IDs for the tile drain hydrographs specified in an IWFM model
-        IWFMModel.get_groundwater_hydrograph_coordinates : Returns the x,y-coordinates for the groundwater hydrographs specified in an IWFM model
-        IWFMModel.get_stream_hydrograph_coordinates : Returns the x,y-coordinates for the stream flow observation locations specified in an IWFM model
-        IWFMModel.get_tile_drain_hydrograph_coordinates : Returns the x,y-coordinates for the tile drain observations specified in an IWFM model
-        IWFMModel.get_groundwater_hydrograph : Returns the simulated groundwater hydrograph for the provided groundwater hydrograph id
-        IWFMModel.get_groundwater_hydrograph_at_node_and_layer : Returns a simulated groundwater hydrograph for a node and layer
-        IWFMModel.get_subsidence_hydrograph : Returns the simulated subsidence hydrograph for the provided subsidence hydrograph id
-        IWFMModel.get_stream_hydrograph : Returns the simulated stream hydrograph for the provided stream hydrograph id
-        IWFMModel.get_tile_drain_hydrograph : Returns the simulated tile drain hydrograph for the provided tile drain hydrograph id
+        IWFMModel.get_n_hydrograph_types : Return the number of different hydrograph types being printed by the IWFM model
+        IWFMModel.get_hydrograph_type_list : Return a list of different hydrograph types being printed by the IWFM model
+        IWFMModel.get_n_groundwater_hydrographs : Return the number of groundwater hydrographs specified in an IWFM model
+        IWFMModel.get_n_subsidence_hydrographs : Return the number of subsidence hydrographs specified in an IWFM model
+        IWFMModel.get_n_stream_hydrographs : Return the number of stream flow hydrographs specified in an IWFM model
+        IWFMModel.get_n_tile_drain_hydrographs : Return the number of tile drain hydrographs specified in an IWFM model
+        IWFMModel.get_groundwater_hydrograph_ids : Return the IDs for the groundwater hydrographs specified in an IWFM model
+        IWFMModel.get_subsidence_hydrograph_ids : Return the IDs for the subsidence hydrographs specified in an IWFM model
+        IWFMModel.get_stream_hydrograph_ids : Return the IDs for the stream hydrographs specified in an IWFM model
+        IWFMModel.get_tile_drain_hydrograph_ids : Return the IDs for the tile drain hydrographs specified in an IWFM model
+        IWFMModel.get_groundwater_hydrograph_coordinates : Return the x,y-coordinates for the groundwater hydrographs specified in an IWFM model
+        IWFMModel.get_stream_hydrograph_coordinates : Return the x,y-coordinates for the stream flow observation locations specified in an IWFM model
+        IWFMModel.get_tile_drain_hydrograph_coordinates : Return the x,y-coordinates for the tile drain observations specified in an IWFM model
+        IWFMModel.get_groundwater_hydrograph : Return the simulated groundwater hydrograph for the provided groundwater hydrograph id
+        IWFMModel.get_groundwater_hydrograph_at_node_and_layer : Return a simulated groundwater hydrograph for a node and layer
+        IWFMModel.get_subsidence_hydrograph : Return the simulated subsidence hydrograph for the provided subsidence hydrograph id
+        IWFMModel.get_stream_hydrograph : Return the simulated stream hydrograph for the provided stream hydrograph id
+        IWFMModel.get_tile_drain_hydrograph : Return the simulated tile drain hydrograph for the provided tile drain hydrograph id
 
         Example
         -------
@@ -7842,7 +7842,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_stream_hydrograph_coordinates(self):
         '''
-        Returns the x,y-coordinates for the stream flow observation
+        Return the x,y-coordinates for the stream flow observation
         locations specified in an IWFM model
 
         Returns
@@ -7853,24 +7853,24 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_n_hydrograph_types : Returns the number of different hydrograph types being printed by the IWFM model
-        IWFMModel.get_hydrograph_type_list : Returns a list of different hydrograph types being printed by the IWFM model
-        IWFMModel.get_n_groundwater_hydrographs : Returns the number of groundwater hydrographs specified in an IWFM model
-        IWFMModel.get_n_subsidence_hydrographs : Returns the number of subsidence hydrographs specified in an IWFM model
-        IWFMModel.get_n_stream_hydrographs : Returns the number of stream flow hydrographs specified in an IWFM model
-        IWFMModel.get_n_tile_drain_hydrographs : Returns the number of tile drain hydrographs specified in an IWFM model
-        IWFMModel.get_groundwater_hydrograph_ids : Returns the IDs for the groundwater hydrographs specified in an IWFM model
-        IWFMModel.get_subsidence_hydrograph_ids : Returns the IDs for the subsidence hydrographs specified in an IWFM model
-        IWFMModel.get_stream_hydrograph_ids : Returns the IDs for the stream hydrographs specified in an IWFM model
-        IWFMModel.get_tile_drain_hydrograph_ids : Returns the IDs for the tile drain hydrographs specified in an IWFM model
-        IWFMModel.get_groundwater_hydrograph_coordinates : Returns the x,y-coordinates for the groundwater hydrographs specified in an IWFM model
-        IWFMModel.get_subsidence_hydrograph_coordinates : Returns the x,y-coordinates for the subsidence hydrograph locations specified in an IWFM model
-        IWFMModel.get_tile_drain_hydrograph_coordinates : Returns the x,y-coordinates for the tile drain observations specified in an IWFM model
-        IWFMModel.get_groundwater_hydrograph : Returns the simulated groundwater hydrograph for the provided groundwater hydrograph id
-        IWFMModel.get_groundwater_hydrograph_at_node_and_layer : Returns a simulated groundwater hydrograph for a node and layer
-        IWFMModel.get_subsidence_hydrograph : Returns the simulated subsidence hydrograph for the provided subsidence hydrograph id
-        IWFMModel.get_stream_hydrograph : Returns the simulated stream hydrograph for the provided stream hydrograph id
-        IWFMModel.get_tile_drain_hydrograph : Returns the simulated tile drain hydrograph for the provided tile drain hydrograph id
+        IWFMModel.get_n_hydrograph_types : Return the number of different hydrograph types being printed by the IWFM model
+        IWFMModel.get_hydrograph_type_list : Return a list of different hydrograph types being printed by the IWFM model
+        IWFMModel.get_n_groundwater_hydrographs : Return the number of groundwater hydrographs specified in an IWFM model
+        IWFMModel.get_n_subsidence_hydrographs : Return the number of subsidence hydrographs specified in an IWFM model
+        IWFMModel.get_n_stream_hydrographs : Return the number of stream flow hydrographs specified in an IWFM model
+        IWFMModel.get_n_tile_drain_hydrographs : Return the number of tile drain hydrographs specified in an IWFM model
+        IWFMModel.get_groundwater_hydrograph_ids : Return the IDs for the groundwater hydrographs specified in an IWFM model
+        IWFMModel.get_subsidence_hydrograph_ids : Return the IDs for the subsidence hydrographs specified in an IWFM model
+        IWFMModel.get_stream_hydrograph_ids : Return the IDs for the stream hydrographs specified in an IWFM model
+        IWFMModel.get_tile_drain_hydrograph_ids : Return the IDs for the tile drain hydrographs specified in an IWFM model
+        IWFMModel.get_groundwater_hydrograph_coordinates : Return the x,y-coordinates for the groundwater hydrographs specified in an IWFM model
+        IWFMModel.get_subsidence_hydrograph_coordinates : Return the x,y-coordinates for the subsidence hydrograph locations specified in an IWFM model
+        IWFMModel.get_tile_drain_hydrograph_coordinates : Return the x,y-coordinates for the tile drain observations specified in an IWFM model
+        IWFMModel.get_groundwater_hydrograph : Return the simulated groundwater hydrograph for the provided groundwater hydrograph id
+        IWFMModel.get_groundwater_hydrograph_at_node_and_layer : Return a simulated groundwater hydrograph for a node and layer
+        IWFMModel.get_subsidence_hydrograph : Return the simulated subsidence hydrograph for the provided subsidence hydrograph id
+        IWFMModel.get_stream_hydrograph : Return the simulated stream hydrograph for the provided stream hydrograph id
+        IWFMModel.get_tile_drain_hydrograph : Return the simulated tile drain hydrograph for the provided tile drain hydrograph id
 
         Example
         -------
@@ -7899,7 +7899,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_tile_drain_hydrograph_coordinates(self):
         '''
-        Returns the x,y-coordinates for the tile drain observations
+        Return the x,y-coordinates for the tile drain observations
         specified in an IWFM model
 
         Returns
@@ -7910,24 +7910,24 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_n_hydrograph_types : Returns the number of different hydrograph types being printed by the IWFM model
-        IWFMModel.get_hydrograph_type_list : Returns a list of different hydrograph types being printed by the IWFM model
-        IWFMModel.get_n_groundwater_hydrographs : Returns the number of groundwater hydrographs specified in an IWFM model
-        IWFMModel.get_n_subsidence_hydrographs : Returns the number of subsidence hydrographs specified in an IWFM model
-        IWFMModel.get_n_stream_hydrographs : Returns the number of stream flow hydrographs specified in an IWFM model
-        IWFMModel.get_n_tile_drain_hydrographs : Returns the number of tile drain hydrographs specified in an IWFM model
-        IWFMModel.get_groundwater_hydrograph_ids : Returns the IDs for the groundwater hydrographs specified in an IWFM model
-        IWFMModel.get_subsidence_hydrograph_ids : Returns the IDs for the subsidence hydrographs specified in an IWFM model
-        IWFMModel.get_stream_hydrograph_ids : Returns the IDs for the stream hydrographs specified in an IWFM model
-        IWFMModel.get_tile_drain_hydrograph_ids : Returns the IDs for the tile drain hydrographs specified in an IWFM model
-        IWFMModel.get_groundwater_hydrograph_coordinates : Returns the x,y-coordinates for the groundwater hydrographs specified in an IWFM model
-        IWFMModel.get_subsidence_hydrograph_coordinates : Returns the x,y-coordinates for the subsidence hydrograph locations specified in an IWFM model
-        IWFMModel.get_stream_hydrograph_coordinates : Returns the x,y-coordinates for the stream flow observation locations specified in an IWFM model
-        IWFMModel.get_groundwater_hydrograph : Returns the simulated groundwater hydrograph for the provided groundwater hydrograph id
-        IWFMModel.get_groundwater_hydrograph_at_node_and_layer : Returns a simulated groundwater hydrograph for a node and layer
-        IWFMModel.get_subsidence_hydrograph : Returns the simulated subsidence hydrograph for the provided subsidence hydrograph id
-        IWFMModel.get_stream_hydrograph : Returns the simulated stream hydrograph for the provided stream hydrograph id
-        IWFMModel.get_tile_drain_hydrograph : Returns the simulated tile drain hydrograph for the provided tile drain hydrograph id
+        IWFMModel.get_n_hydrograph_types : Return the number of different hydrograph types being printed by the IWFM model
+        IWFMModel.get_hydrograph_type_list : Return a list of different hydrograph types being printed by the IWFM model
+        IWFMModel.get_n_groundwater_hydrographs : Return the number of groundwater hydrographs specified in an IWFM model
+        IWFMModel.get_n_subsidence_hydrographs : Return the number of subsidence hydrographs specified in an IWFM model
+        IWFMModel.get_n_stream_hydrographs : Return the number of stream flow hydrographs specified in an IWFM model
+        IWFMModel.get_n_tile_drain_hydrographs : Return the number of tile drain hydrographs specified in an IWFM model
+        IWFMModel.get_groundwater_hydrograph_ids : Return the IDs for the groundwater hydrographs specified in an IWFM model
+        IWFMModel.get_subsidence_hydrograph_ids : Return the IDs for the subsidence hydrographs specified in an IWFM model
+        IWFMModel.get_stream_hydrograph_ids : Return the IDs for the stream hydrographs specified in an IWFM model
+        IWFMModel.get_tile_drain_hydrograph_ids : Return the IDs for the tile drain hydrographs specified in an IWFM model
+        IWFMModel.get_groundwater_hydrograph_coordinates : Return the x,y-coordinates for the groundwater hydrographs specified in an IWFM model
+        IWFMModel.get_subsidence_hydrograph_coordinates : Return the x,y-coordinates for the subsidence hydrograph locations specified in an IWFM model
+        IWFMModel.get_stream_hydrograph_coordinates : Return the x,y-coordinates for the stream flow observation locations specified in an IWFM model
+        IWFMModel.get_groundwater_hydrograph : Return the simulated groundwater hydrograph for the provided groundwater hydrograph id
+        IWFMModel.get_groundwater_hydrograph_at_node_and_layer : Return a simulated groundwater hydrograph for a node and layer
+        IWFMModel.get_subsidence_hydrograph : Return the simulated subsidence hydrograph for the provided subsidence hydrograph id
+        IWFMModel.get_stream_hydrograph : Return the simulated stream hydrograph for the provided stream hydrograph id
+        IWFMModel.get_tile_drain_hydrograph : Return the simulated tile drain hydrograph for the provided tile drain hydrograph id
 
         Example
         -------
@@ -8101,7 +8101,7 @@ class IWFMModel(IWFMMiscellaneous):
                                    end_date=None, length_conversion_factor=1.0, 
                                    volume_conversion_factor=1.0):
         '''
-        Returns the simulated groundwater hydrograph for the 
+        Return the simulated groundwater hydrograph for the 
         provided groundwater hydrograph ID
 
         Parameters
@@ -8132,24 +8132,24 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_n_hydrograph_types : Returns the number of different hydrograph types being printed by the IWFM model
-        IWFMModel.get_hydrograph_type_list : Returns a list of different hydrograph types being printed by the IWFM model
-        IWFMModel.get_n_groundwater_hydrographs : Returns the number of groundwater hydrographs specified in an IWFM model
-        IWFMModel.get_n_subsidence_hydrographs : Returns the number of subsidence hydrographs specified in an IWFM model
-        IWFMModel.get_n_stream_hydrographs : Returns the number of stream flow hydrographs specified in an IWFM model
-        IWFMModel.get_n_tile_drain_hydrographs : Returns the number of tile drain hydrographs specified in an IWFM model
-        IWFMModel.get_groundwater_hydrograph_ids : Returns the IDs for the groundwater hydrographs specified in an IWFM model
-        IWFMModel.get_subsidence_hydrograph_ids : Returns the IDs for the subsidence hydrographs specified in an IWFM model
-        IWFMModel.get_stream_hydrograph_ids : Returns the IDs for the stream hydrographs specified in an IWFM model
-        IWFMModel.get_tile_drain_hydrograph_ids : Returns the IDs for the tile drain hydrographs specified in an IWFM model
-        IWFMModel.get_groundwater_hydrograph_coordinates : Returns the x,y-coordinates for the groundwater hydrographs specified in an IWFM model
-        IWFMModel.get_subsidence_hydrograph_coordinates : Returns the x,y-coordinates for the subsidence hydrograph locations specified in an IWFM model
-        IWFMModel.get_stream_hydrograph_coordinates : Returns the x,y-coordinates for the stream flow observation locations specified in an IWFM model
-        IWFMModel.get_tile_drain_hydrograph_coordinates : Returns the x,y-coordinates for the tile drain observations specified in an IWFM model
-        IWFMModel.get_groundwater_hydrograph_at_node_and_layer : Returns a simulated groundwater hydrograph for a node and layer
-        IWFMModel.get_subsidence_hydrograph : Returns the simulated subsidence hydrograph for the provided subsidence hydrograph id
-        IWFMModel.get_stream_hydrograph : Returns the simulated stream hydrograph for the provided stream hydrograph id
-        IWFMModel.get_tile_drain_hydrograph : Returns the simulated tile drain hydrograph for the provided tile drain hydrograph id
+        IWFMModel.get_n_hydrograph_types : Return the number of different hydrograph types being printed by the IWFM model
+        IWFMModel.get_hydrograph_type_list : Return a list of different hydrograph types being printed by the IWFM model
+        IWFMModel.get_n_groundwater_hydrographs : Return the number of groundwater hydrographs specified in an IWFM model
+        IWFMModel.get_n_subsidence_hydrographs : Return the number of subsidence hydrographs specified in an IWFM model
+        IWFMModel.get_n_stream_hydrographs : Return the number of stream flow hydrographs specified in an IWFM model
+        IWFMModel.get_n_tile_drain_hydrographs : Return the number of tile drain hydrographs specified in an IWFM model
+        IWFMModel.get_groundwater_hydrograph_ids : Return the IDs for the groundwater hydrographs specified in an IWFM model
+        IWFMModel.get_subsidence_hydrograph_ids : Return the IDs for the subsidence hydrographs specified in an IWFM model
+        IWFMModel.get_stream_hydrograph_ids : Return the IDs for the stream hydrographs specified in an IWFM model
+        IWFMModel.get_tile_drain_hydrograph_ids : Return the IDs for the tile drain hydrographs specified in an IWFM model
+        IWFMModel.get_groundwater_hydrograph_coordinates : Return the x,y-coordinates for the groundwater hydrographs specified in an IWFM model
+        IWFMModel.get_subsidence_hydrograph_coordinates : Return the x,y-coordinates for the subsidence hydrograph locations specified in an IWFM model
+        IWFMModel.get_stream_hydrograph_coordinates : Return the x,y-coordinates for the stream flow observation locations specified in an IWFM model
+        IWFMModel.get_tile_drain_hydrograph_coordinates : Return the x,y-coordinates for the tile drain observations specified in an IWFM model
+        IWFMModel.get_groundwater_hydrograph_at_node_and_layer : Return a simulated groundwater hydrograph for a node and layer
+        IWFMModel.get_subsidence_hydrograph : Return the simulated subsidence hydrograph for the provided subsidence hydrograph id
+        IWFMModel.get_stream_hydrograph : Return the simulated stream hydrograph for the provided stream hydrograph id
+        IWFMModel.get_tile_drain_hydrograph : Return the simulated tile drain hydrograph for the provided tile drain hydrograph id
 
         Example
         -------
@@ -8195,7 +8195,7 @@ class IWFMModel(IWFMMiscellaneous):
                         begin_date=None, end_date=None, length_conversion_factor=1.0, 
                         volume_conversion_factor=1.0):
         '''
-        Returns a simulated groundwater hydrograph for a node and layer
+        Return a simulated groundwater hydrograph for a node and layer
 
         Parameters
         ----------
@@ -8229,24 +8229,24 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_n_hydrograph_types : Returns the number of different hydrograph types being printed by the IWFM model
-        IWFMModel.get_hydrograph_type_list : Returns a list of different hydrograph types being printed by the IWFM model
-        IWFMModel.get_n_groundwater_hydrographs : Returns the number of groundwater hydrographs specified in an IWFM model
-        IWFMModel.get_n_subsidence_hydrographs : Returns the number of subsidence hydrographs specified in an IWFM model
-        IWFMModel.get_n_stream_hydrographs : Returns the number of stream flow hydrographs specified in an IWFM model
-        IWFMModel.get_n_tile_drain_hydrographs : Returns the number of tile drain hydrographs specified in an IWFM model
-        IWFMModel.get_groundwater_hydrograph_ids : Returns the IDs for the groundwater hydrographs specified in an IWFM model
-        IWFMModel.get_subsidence_hydrograph_ids : Returns the IDs for the subsidence hydrographs specified in an IWFM model
-        IWFMModel.get_stream_hydrograph_ids : Returns the IDs for the stream hydrographs specified in an IWFM model
-        IWFMModel.get_tile_drain_hydrograph_ids : Returns the IDs for the tile drain hydrographs specified in an IWFM model
-        IWFMModel.get_groundwater_hydrograph_coordinates : Returns the x,y-coordinates for the groundwater hydrographs specified in an IWFM model
-        IWFMModel.get_subsidence_hydrograph_coordinates : Returns the x,y-coordinates for the subsidence hydrograph locations specified in an IWFM model
-        IWFMModel.get_stream_hydrograph_coordinates : Returns the x,y-coordinates for the stream flow observation locations specified in an IWFM model
-        IWFMModel.get_tile_drain_hydrograph_coordinates : Returns the x,y-coordinates for the tile drain observations specified in an IWFM model
-        IWFMModel.get_groundwater_hydrograph : Returns the simulated groundwater hydrograph for the provided groundwater hydrograph id
-        IWFMModel.get_subsidence_hydrograph : Returns the simulated subsidence hydrograph for the provided subsidence hydrograph id
-        IWFMModel.get_stream_hydrograph : Returns the simulated stream hydrograph for the provided stream hydrograph id
-        IWFMModel.get_tile_drain_hydrograph : Returns the simulated tile drain hydrograph for the provided tile drain hydrograph id
+        IWFMModel.get_n_hydrograph_types : Return the number of different hydrograph types being printed by the IWFM model
+        IWFMModel.get_hydrograph_type_list : Return a list of different hydrograph types being printed by the IWFM model
+        IWFMModel.get_n_groundwater_hydrographs : Return the number of groundwater hydrographs specified in an IWFM model
+        IWFMModel.get_n_subsidence_hydrographs : Return the number of subsidence hydrographs specified in an IWFM model
+        IWFMModel.get_n_stream_hydrographs : Return the number of stream flow hydrographs specified in an IWFM model
+        IWFMModel.get_n_tile_drain_hydrographs : Return the number of tile drain hydrographs specified in an IWFM model
+        IWFMModel.get_groundwater_hydrograph_ids : Return the IDs for the groundwater hydrographs specified in an IWFM model
+        IWFMModel.get_subsidence_hydrograph_ids : Return the IDs for the subsidence hydrographs specified in an IWFM model
+        IWFMModel.get_stream_hydrograph_ids : Return the IDs for the stream hydrographs specified in an IWFM model
+        IWFMModel.get_tile_drain_hydrograph_ids : Return the IDs for the tile drain hydrographs specified in an IWFM model
+        IWFMModel.get_groundwater_hydrograph_coordinates : Return the x,y-coordinates for the groundwater hydrographs specified in an IWFM model
+        IWFMModel.get_subsidence_hydrograph_coordinates : Return the x,y-coordinates for the subsidence hydrograph locations specified in an IWFM model
+        IWFMModel.get_stream_hydrograph_coordinates : Return the x,y-coordinates for the stream flow observation locations specified in an IWFM model
+        IWFMModel.get_tile_drain_hydrograph_coordinates : Return the x,y-coordinates for the tile drain observations specified in an IWFM model
+        IWFMModel.get_groundwater_hydrograph : Return the simulated groundwater hydrograph for the provided groundwater hydrograph id
+        IWFMModel.get_subsidence_hydrograph : Return the simulated subsidence hydrograph for the provided subsidence hydrograph id
+        IWFMModel.get_stream_hydrograph : Return the simulated stream hydrograph for the provided stream hydrograph id
+        IWFMModel.get_tile_drain_hydrograph : Return the simulated tile drain hydrograph for the provided tile drain hydrograph id
 
         Example
         -------
@@ -8288,7 +8288,7 @@ class IWFMModel(IWFMMiscellaneous):
                                    end_date=None, length_conversion_factor=1.0, 
                                    volume_conversion_factor=1.0):
         '''
-        Returns the simulated subsidence hydrograph for the 
+        Return the simulated subsidence hydrograph for the 
         provided subsidence hydrograph ID
 
         Parameters
@@ -8319,24 +8319,24 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_n_hydrograph_types : Returns the number of different hydrograph types being printed by the IWFM model
-        IWFMModel.get_hydrograph_type_list : Returns a list of different hydrograph types being printed by the IWFM model
-        IWFMModel.get_n_groundwater_hydrographs : Returns the number of groundwater hydrographs specified in an IWFM model
-        IWFMModel.get_n_subsidence_hydrographs : Returns the number of subsidence hydrographs specified in an IWFM model
-        IWFMModel.get_n_stream_hydrographs : Returns the number of stream flow hydrographs specified in an IWFM model
-        IWFMModel.get_n_tile_drain_hydrographs : Returns the number of tile drain hydrographs specified in an IWFM model
-        IWFMModel.get_groundwater_hydrograph_ids : Returns the IDs for the groundwater hydrographs specified in an IWFM model
-        IWFMModel.get_subsidence_hydrograph_ids : Returns the IDs for the subsidence hydrographs specified in an IWFM model
-        IWFMModel.get_stream_hydrograph_ids : Returns the IDs for the stream hydrographs specified in an IWFM model
-        IWFMModel.get_tile_drain_hydrograph_ids : Returns the IDs for the tile drain hydrographs specified in an IWFM model
-        IWFMModel.get_groundwater_hydrograph_coordinates : Returns the x,y-coordinates for the groundwater hydrographs specified in an IWFM model
-        IWFMModel.get_subsidence_hydrograph_coordinates : Returns the x,y-coordinates for the subsidence hydrograph locations specified in an IWFM model
-        IWFMModel.get_stream_hydrograph_coordinates : Returns the x,y-coordinates for the stream flow observation locations specified in an IWFM model
-        IWFMModel.get_tile_drain_hydrograph_coordinates : Returns the x,y-coordinates for the tile drain observations specified in an IWFM model
-        IWFMModel.get_groundwater_hydrograph : Returns the simulated groundwater hydrograph for the provided groundwater hydrograph id
-        IWFMModel.get_groundwater_hydrograph_at_node_and_layer : Returns a simulated groundwater hydrograph for a node and layer
-        IWFMModel.get_stream_hydrograph : Returns the simulated stream hydrograph for the provided stream hydrograph id
-        IWFMModel.get_tile_drain_hydrograph : Returns the simulated tile drain hydrograph for the provided tile drain hydrograph id
+        IWFMModel.get_n_hydrograph_types : Return the number of different hydrograph types being printed by the IWFM model
+        IWFMModel.get_hydrograph_type_list : Return a list of different hydrograph types being printed by the IWFM model
+        IWFMModel.get_n_groundwater_hydrographs : Return the number of groundwater hydrographs specified in an IWFM model
+        IWFMModel.get_n_subsidence_hydrographs : Return the number of subsidence hydrographs specified in an IWFM model
+        IWFMModel.get_n_stream_hydrographs : Return the number of stream flow hydrographs specified in an IWFM model
+        IWFMModel.get_n_tile_drain_hydrographs : Return the number of tile drain hydrographs specified in an IWFM model
+        IWFMModel.get_groundwater_hydrograph_ids : Return the IDs for the groundwater hydrographs specified in an IWFM model
+        IWFMModel.get_subsidence_hydrograph_ids : Return the IDs for the subsidence hydrographs specified in an IWFM model
+        IWFMModel.get_stream_hydrograph_ids : Return the IDs for the stream hydrographs specified in an IWFM model
+        IWFMModel.get_tile_drain_hydrograph_ids : Return the IDs for the tile drain hydrographs specified in an IWFM model
+        IWFMModel.get_groundwater_hydrograph_coordinates : Return the x,y-coordinates for the groundwater hydrographs specified in an IWFM model
+        IWFMModel.get_subsidence_hydrograph_coordinates : Return the x,y-coordinates for the subsidence hydrograph locations specified in an IWFM model
+        IWFMModel.get_stream_hydrograph_coordinates : Return the x,y-coordinates for the stream flow observation locations specified in an IWFM model
+        IWFMModel.get_tile_drain_hydrograph_coordinates : Return the x,y-coordinates for the tile drain observations specified in an IWFM model
+        IWFMModel.get_groundwater_hydrograph : Return the simulated groundwater hydrograph for the provided groundwater hydrograph id
+        IWFMModel.get_groundwater_hydrograph_at_node_and_layer : Return a simulated groundwater hydrograph for a node and layer
+        IWFMModel.get_stream_hydrograph : Return the simulated stream hydrograph for the provided stream hydrograph id
+        IWFMModel.get_tile_drain_hydrograph : Return the simulated tile drain hydrograph for the provided tile drain hydrograph id
 
         Example
         -------
@@ -8382,7 +8382,7 @@ class IWFMModel(IWFMMiscellaneous):
                               end_date=None, length_conversion_factor=1.0, 
                               volume_conversion_factor=1.0):
         '''
-        Returns the simulated stream hydrograph for the 
+        Return the simulated stream hydrograph for the 
         provided stream hydrograph id
 
         Parameters
@@ -8413,24 +8413,24 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_n_hydrograph_types : Returns the number of different hydrograph types being printed by the IWFM model
-        IWFMModel.get_hydrograph_type_list : Returns a list of different hydrograph types being printed by the IWFM model
-        IWFMModel.get_n_groundwater_hydrographs : Returns the number of groundwater hydrographs specified in an IWFM model
-        IWFMModel.get_n_subsidence_hydrographs : Returns the number of subsidence hydrographs specified in an IWFM model
-        IWFMModel.get_n_stream_hydrographs : Returns the number of stream flow hydrographs specified in an IWFM model
-        IWFMModel.get_n_tile_drain_hydrographs : Returns the number of tile drain hydrographs specified in an IWFM model
-        IWFMModel.get_groundwater_hydrograph_ids : Returns the IDs for the groundwater hydrographs specified in an IWFM model
-        IWFMModel.get_subsidence_hydrograph_ids : Returns the IDs for the subsidence hydrographs specified in an IWFM model
-        IWFMModel.get_stream_hydrograph_ids : Returns the IDs for the stream hydrographs specified in an IWFM model
-        IWFMModel.get_tile_drain_hydrograph_ids : Returns the IDs for the tile drain hydrographs specified in an IWFM model
-        IWFMModel.get_groundwater_hydrograph_coordinates : Returns the x,y-coordinates for the groundwater hydrographs specified in an IWFM model
-        IWFMModel.get_subsidence_hydrograph_coordinates : Returns the x,y-coordinates for the subsidence hydrograph locations specified in an IWFM model
-        IWFMModel.get_stream_hydrograph_coordinates : Returns the x,y-coordinates for the stream flow observation locations specified in an IWFM model
-        IWFMModel.get_tile_drain_hydrograph_coordinates : Returns the x,y-coordinates for the tile drain observations specified in an IWFM model
-        IWFMModel.get_groundwater_hydrograph : Returns the simulated groundwater hydrograph for the provided groundwater hydrograph ID
-        IWFMModel.get_groundwater_hydrograph_at_node_and_layer : Returns a simulated groundwater hydrograph for a node and layer
-        IWFMModel.get_subsidence_hydrograph : Returns the simulated subsidence hydrograph for the provided subsidence hydrograph ID
-        IWFMModel.get_tile_drain_hydrograph : Returns the simulated tile drain hydrograph for the provided tile drain hydrograph ID
+        IWFMModel.get_n_hydrograph_types : Return the number of different hydrograph types being printed by the IWFM model
+        IWFMModel.get_hydrograph_type_list : Return a list of different hydrograph types being printed by the IWFM model
+        IWFMModel.get_n_groundwater_hydrographs : Return the number of groundwater hydrographs specified in an IWFM model
+        IWFMModel.get_n_subsidence_hydrographs : Return the number of subsidence hydrographs specified in an IWFM model
+        IWFMModel.get_n_stream_hydrographs : Return the number of stream flow hydrographs specified in an IWFM model
+        IWFMModel.get_n_tile_drain_hydrographs : Return the number of tile drain hydrographs specified in an IWFM model
+        IWFMModel.get_groundwater_hydrograph_ids : Return the IDs for the groundwater hydrographs specified in an IWFM model
+        IWFMModel.get_subsidence_hydrograph_ids : Return the IDs for the subsidence hydrographs specified in an IWFM model
+        IWFMModel.get_stream_hydrograph_ids : Return the IDs for the stream hydrographs specified in an IWFM model
+        IWFMModel.get_tile_drain_hydrograph_ids : Return the IDs for the tile drain hydrographs specified in an IWFM model
+        IWFMModel.get_groundwater_hydrograph_coordinates : Return the x,y-coordinates for the groundwater hydrographs specified in an IWFM model
+        IWFMModel.get_subsidence_hydrograph_coordinates : Return the x,y-coordinates for the subsidence hydrograph locations specified in an IWFM model
+        IWFMModel.get_stream_hydrograph_coordinates : Return the x,y-coordinates for the stream flow observation locations specified in an IWFM model
+        IWFMModel.get_tile_drain_hydrograph_coordinates : Return the x,y-coordinates for the tile drain observations specified in an IWFM model
+        IWFMModel.get_groundwater_hydrograph : Return the simulated groundwater hydrograph for the provided groundwater hydrograph ID
+        IWFMModel.get_groundwater_hydrograph_at_node_and_layer : Return a simulated groundwater hydrograph for a node and layer
+        IWFMModel.get_subsidence_hydrograph : Return the simulated subsidence hydrograph for the provided subsidence hydrograph ID
+        IWFMModel.get_tile_drain_hydrograph : Return the simulated tile drain hydrograph for the provided tile drain hydrograph ID
 
         Example
         -------
@@ -8475,7 +8475,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_gwheads_foralayer(self, layer_number, begin_date=None, end_date=None, length_conversion_factor=1.0):
         '''
-        Returns the simulated groundwater heads for a single user-specified model layer for
+        Return the simulated groundwater heads for a single user-specified model layer for
         every model node over a user-specified time interval.
 
         Parameters
@@ -8505,7 +8505,7 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_gwheads_all : Returns the groundwater heads at all nodes in every aquifer layer for the current simulation time step
+        IWFMModel.get_gwheads_all : Return the groundwater heads at all nodes in every aquifer layer for the current simulation time step
 
         Example
         -------
@@ -8614,7 +8614,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_gwheads_all(self, end_of_timestep=True, head_conversion_factor=1.0):
         '''
-        Returns the groundwater heads at all nodes in every aquifer 
+        Return the groundwater heads at all nodes in every aquifer 
         layer for the current simulation time step
         
         Parameters
@@ -8640,8 +8640,8 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_gwheads_foralayer : Returns the simulated groundwater heads for a single user-specified model layer for every model node over a user-specified time interval
-        IWFMModel.get_subsidence_all : Returns the simulated subsidence at all nodes in every aquifer layer for the current simulation time step
+        IWFMModel.get_gwheads_foralayer : Return the simulated groundwater heads for a single user-specified model layer for every model node over a user-specified time interval
+        IWFMModel.get_subsidence_all : Return the simulated subsidence at all nodes in every aquifer layer for the current simulation time step
 
         Example
         -------
@@ -8724,7 +8724,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_subsidence_all(self, subsidence_conversion_factor=1.0):
         '''
-        Returns the simulated subsidence at all nodes in every aquifer 
+        Return the simulated subsidence at all nodes in every aquifer 
         layer for the current simulation time step
         
         Parameters
@@ -8746,7 +8746,7 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_gwheads_all : Returns the groundwater heads at all nodes in every aquifer layer for the current simulation time step
+        IWFMModel.get_gwheads_all : Return the groundwater heads at all nodes in every aquifer layer for the current simulation time step
 
         Example
         -------
@@ -8822,7 +8822,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_subregion_ag_pumping_average_depth_to_water(self):
         '''
-        Returns subregional depth-to-groundwater values that are 
+        Return subregional depth-to-groundwater values that are 
         weighted-averaged with respect to agricultural pumping rates 
         during a model run
 
@@ -8838,7 +8838,7 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_zone_ag_pumping_average_depth_to_water : Returns zonal depth-to-groundwater values that are weighted-averaged with respect to agricultural pumping rates during a model run
+        IWFMModel.get_zone_ag_pumping_average_depth_to_water : Return zonal depth-to-groundwater values that are weighted-averaged with respect to agricultural pumping rates during a model run
 
         Example
         -------
@@ -8906,7 +8906,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_zone_ag_pumping_average_depth_to_water(self, elements_list, zones_list):
         '''
-        Returns zonal depth-to-groundwater values that are 
+        Return zonal depth-to-groundwater values that are 
         weighted-averaged with respect to agricultural pumping rates 
         during a model run
 
@@ -8930,7 +8930,7 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_subregion_ag_pumping_average_depth_to_water : Returns subregional depth-to-groundwater values that are weighted-averaged with respect to agricultural pumping rates during a model run
+        IWFMModel.get_subregion_ag_pumping_average_depth_to_water : Return subregional depth-to-groundwater values that are weighted-averaged with respect to agricultural pumping rates during a model run
 
         Example
         -------
@@ -9065,7 +9065,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_n_small_watersheds(self):
         '''
-        Returns the number of small watersheds specified in an IWFM
+        Return the number of small watersheds specified in an IWFM
         model
         
         Returns
@@ -9075,12 +9075,12 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_n_nodes : Returns the number of nodes in an IWFM model
-        IWFMModel.get_n_elements : Returns the number of elements in an IWFM model
-        IWFMModel.get_n_subregions : Returns the number of subregions in an IWFM model
-        IWFMModel.get_n_stream_nodes : Returns the number of stream nodes in an IWFM model
-        IWFMModel.get_n_stream_reaches : Returns the number of stream reaches in an IWFM model
-        IWFMModel.get_n_lakes : Returns the number of lakes in an IWFM model
+        IWFMModel.get_n_nodes : Return the number of nodes in an IWFM model
+        IWFMModel.get_n_elements : Return the number of elements in an IWFM model
+        IWFMModel.get_n_subregions : Return the number of subregions in an IWFM model
+        IWFMModel.get_n_stream_nodes : Return the number of stream nodes in an IWFM model
+        IWFMModel.get_n_stream_reaches : Return the number of stream reaches in an IWFM model
+        IWFMModel.get_n_lakes : Return the number of lakes in an IWFM model
         '''
         location_type_id = self.get_location_type_id_smallwatershed()
 
@@ -9133,7 +9133,7 @@ class IWFMModel(IWFMMiscellaneous):
     
     def get_small_watershed_ids(self):
         '''
-        Returns the small watershed identification numbers specified
+        Return the small watershed identification numbers specified
         in the IWFM model
         
         Returns
@@ -9143,12 +9143,12 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_node_ids : Returns an array of node ids in an IWFM model
-        IWFMModel.get_element_ids : Returns an array of element ids in an IWFM model
-        IWFMModel.get_subregion_ids : Returns an array of IDs for subregions in an IWFM model
-        IWFMModel.get_stream_node_ids : Returns an array of stream node IDs in an IWFM model
-        IWFMModel.get_stream_reach_ids : Returns an array of stream reach IDs in an IWFM model
-        IWFMModel.get_lake_ids : Returns an array of the lake IDs in an IWFM model
+        IWFMModel.get_node_ids : Return an array of node ids in an IWFM model
+        IWFMModel.get_element_ids : Return an array of element ids in an IWFM model
+        IWFMModel.get_subregion_ids : Return an array of IDs for subregions in an IWFM model
+        IWFMModel.get_stream_node_ids : Return an array of stream node IDs in an IWFM model
+        IWFMModel.get_stream_reach_ids : Return an array of stream reach IDs in an IWFM model
+        IWFMModel.get_lake_ids : Return an array of the lake IDs in an IWFM model
         '''
         location_type_id = self.get_location_type_id_smallwatershed()
 
@@ -9806,7 +9806,7 @@ class IWFMModel(IWFMMiscellaneous):
     ### methods that wrap two or more DLL calls
     def get_groundwater_hydrograph_info(self):
         '''
-        Returns model information for the groundwater hydrographs,
+        Return model information for the groundwater hydrographs,
         including hydrograph ID, x- and y- coordinates, name, and 
         stratigraphy.
 
@@ -9817,10 +9817,10 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_groundwater_hydrograph_ids : Returns the IDs for the groundwater hydrographs specified in an IWFM model
-        IWFMModel.get_groundwater_hydrograph_coordinates : Returns the x,y-coordinates for the groundwater hydrographs specified in an IWFM model
-        IWFMModel.get_groundwater_hydrograph_names : Returns the groundwater hydrograph location names specified in an IWFM model
-        IWFMModel.get_stratigraphy_atXYcoordinate : Returns the stratigraphy at given X,Y coordinates
+        IWFMModel.get_groundwater_hydrograph_ids : Return the IDs for the groundwater hydrographs specified in an IWFM model
+        IWFMModel.get_groundwater_hydrograph_coordinates : Return the x,y-coordinates for the groundwater hydrographs specified in an IWFM model
+        IWFMModel.get_groundwater_hydrograph_names : Return the groundwater hydrograph location names specified in an IWFM model
+        IWFMModel.get_stratigraphy_atXYcoordinate : Return the stratigraphy at given X,Y coordinates
 
         Example
         -------
@@ -9890,7 +9890,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_node_info(self):
         '''
-        Returns node id, x-, and y-coordinates for each node in an IWFM model
+        Return node id, x-, and y-coordinates for each node in an IWFM model
 
         Returns
         -------
@@ -9899,9 +9899,9 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_n_nodes : Returns the number of nodes in an IWFM model
-        IWFMModel.get_node_ids : Returns an array of node IDs in an IWFM model
-        IWFMModel.get_node_coordinates : Returns the x,y coordinates of the nodes in an IWFM model 
+        IWFMModel.get_n_nodes : Return the number of nodes in an IWFM model
+        IWFMModel.get_node_ids : Return an array of node IDs in an IWFM model
+        IWFMModel.get_node_coordinates : Return the x,y coordinates of the nodes in an IWFM model 
 
         Example
         -------
@@ -9938,7 +9938,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_element_info(self):
         '''
-        Returns element configuration information for all 
+        Return element configuration information for all 
         elements in an IWFM model
 
         Returns
@@ -9948,10 +9948,10 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_n_elements : Returns the number of elements in an IWFM model
-        IWFMModel.get_element_ids : Returns an array of element IDs in an IWFM model
-        IWFMModel.get_element_config : Returns an array of node IDs for an IWFM element
-        IWFMModel.get_subregions_by_element : Returns an array of IWFM elements contained in each subregion
+        IWFMModel.get_n_elements : Return the number of elements in an IWFM model
+        IWFMModel.get_element_ids : Return an array of element IDs in an IWFM model
+        IWFMModel.get_element_config : Return an array of node IDs for an IWFM element
+        IWFMModel.get_subregions_by_element : Return an array of IWFM elements contained in each subregion
 
         Example
         -------
@@ -9992,7 +9992,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_boundary_nodes(self, subregions=False, remove_duplicates=False):
         '''
-        Returns nodes that make up the boundary of an IWFM model
+        Return nodes that make up the boundary of an IWFM model
 
         Parameters
         ----------
@@ -10065,7 +10065,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_element_spatial_info(self):
         '''
-        Returns element configuration information including x-y 
+        Return element configuration information including x-y 
         coordinates for nodes
 
         Returns
@@ -10075,8 +10075,8 @@ class IWFMModel(IWFMMiscellaneous):
         
         See Also
         --------
-        IWFMModel.get_element_info : Returns element configuration information for all elements in an IWFM model
-        IWFMModel.get_node_info : Returns node id, x-, and y-coordinates for each node in an IWFM model
+        IWFMModel.get_element_info : Return element configuration information for all elements in an IWFM model
+        IWFMModel.get_node_info : Return node id, x-, and y-coordinates for each node in an IWFM model
 
         Example
         -------
@@ -10133,8 +10133,8 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_ground_surface_elevation : Returns the ground surface elevation for each node specified in the IWFM model
-        IWFMModel.get_gwheads_foralayer : Returns the simulated groundwater heads for a single user-specified model layer for every model node over a user-specified time interval.
+        IWFMModel.get_ground_surface_elevation : Return the ground surface elevation for each node specified in the IWFM model
+        IWFMModel.get_gwheads_foralayer : Return the simulated groundwater heads for a single user-specified model layer for every model node over a user-specified time interval.
 
         Example
         -------
@@ -10178,7 +10178,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_stream_network(self):
         '''
-        Returns the stream nodes and groundwater nodes for every reach in an IWFM model
+        Return the stream nodes and groundwater nodes for every reach in an IWFM model
 
         Returns
         -------
@@ -10192,9 +10192,9 @@ class IWFMModel(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMModel.get_stream_reach_ids : Returns an array of stream reach IDs in an IWFM model
-        IWFMModel.get_stream_reach_stream_nodes : Returns the stream node IDs corresponding to stream nodes in a specified reach
-        IWFMModel.get_stream_reach_groundwater_nodes : Returns the groundwater node IDs corresponding to stream nodes in a specified reach
+        IWFMModel.get_stream_reach_ids : Return an array of stream reach IDs in an IWFM model
+        IWFMModel.get_stream_reach_stream_nodes : Return the stream node IDs corresponding to stream nodes in a specified reach
+        IWFMModel.get_stream_reach_groundwater_nodes : Return the groundwater node IDs corresponding to stream nodes in a specified reach
 
         Example
         -------
