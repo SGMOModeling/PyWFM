@@ -5,20 +5,21 @@ import pandas as pd
 from pywfm.misc import IWFMMiscellaneous
 
 class IWFMBudget(IWFMMiscellaneous):
-    ''' IWFM Budget Class for interacting with the IWFM DLL
+    '''
+    IWFM Budget Class for interacting with the IWFM DLL
 
     Parameters
     ----------
     dll_path : str
-        file path and name of the IWFM DLL to access IWFM procedures
+        File path and name of the IWFM DLL to access IWFM procedures.
 
     budget_file_name : str
-        file path and name of the budget file
+        File path and name of the budget file.
 
     Returns
     -------
     IWFMBudget Object
-        instance of the IWFMBudget class and access to the IWFM Budget 
+        instance of the IWFMBudget class and access to the IWFM Budget
         fortran procedures.
     '''
     def __init__(self, dll_path, budget_file_name):
@@ -53,7 +54,9 @@ class IWFMBudget(IWFMMiscellaneous):
         self.close_budget_file()
 
     def close_budget_file(self):
-        ''' closes an open budget file for an IWFM model application '''
+        ''' 
+        Close an open budget file for an IWFM model application 
+        '''
         # check to see if the procedure exists in the dll provided
         if not hasattr(self.dll, 'IW_Budget_CloseFile'):
             raise AttributeError('IWFM DLL does not have "{}" procedure. '
@@ -65,20 +68,22 @@ class IWFMBudget(IWFMMiscellaneous):
         self.dll.IW_Budget_CloseFile(ctypes.byref(status))
 
     def get_n_locations(self):
-        ''' returns the number of locations where budget data is available
+        '''
+        Return the number of locations where budget data is available.
              
         Returns
         -------
         int
-            number of locations
+            Number of locations.
 
         Note
         ----
-        e.g. if the budget file used is the stream reach budget, the number of
-        locations is the number of stream reaches.
+        e.g. if the budget file used is the stream reach budget, the
+        number of locations is the number of stream reaches.
         
-        e.g. if the budget file used is the groundwater budget, the number of
-        locations is the number of subregions plus one (for the entire model area).
+        e.g. if the budget file used is the groundwater budget, the
+        number of locations is the number of subregions plus one 
+        (for the entire model area).
 
         Example
         -------
@@ -106,13 +111,14 @@ class IWFMBudget(IWFMMiscellaneous):
         return n_locations.value
 
     def get_location_names(self):
-        ''' retrieves the location names e.g. subregion names, lake names, etc.
-        from the open budget file 
+        '''
+        Retrieve the location names e.g. subregion names, lake names,
+        etc. from the open budget file.
         
         Returns
         -------
         list
-            list of names for the locations
+            Names for each location.
 
         Example
         -------
@@ -150,12 +156,13 @@ class IWFMBudget(IWFMMiscellaneous):
         return self._string_to_list_by_array(raw_names_string, delimiter_position_array, n_locations)
 
     def get_n_time_steps(self):
-        ''' returns the number of time steps where budget data is available 
+        '''
+        Return the number of time steps where budget data is available.
         
         Returns
         -------
         int
-            number of time steps
+            Number of time steps.
 
         Example
         -------
@@ -182,12 +189,16 @@ class IWFMBudget(IWFMMiscellaneous):
         return n_time_steps.value
 
     def get_time_specs(self):
-        ''' returns a list of all the time stamps and the time interval for the budget 
+        '''
+        Return a list of all the time stamps and the time interval for
+        the budget.
         
         Returns
         -------
-        length-2 tuple
-            time stamps (list), time interval (string)
+        dates_list : list
+            List of time stamps in the budget.
+        interval : str
+            Time interval for the time stamps.
 
         Example
         -------
@@ -247,12 +258,14 @@ class IWFMBudget(IWFMMiscellaneous):
         return dates_list, interval 
     
     def get_n_title_lines(self):
-        ''' returns the number of title lines for a water budget of a location 
+        '''
+        Return the number of title lines for a water budget of a
+        location.
         
         Returns
         -------
         int
-            number of title lines
+            Number of title lines.
         
         Example
         -------
@@ -280,12 +293,13 @@ class IWFMBudget(IWFMMiscellaneous):
         return n_title_lines.value
 
     def get_title_length(self):
-        ''' retrieves the length of the title lines
+        '''
+        Retrieve the length of the title lines.
         
         Returns
         -------
         int
-            number of characters that make up the title lines
+            Number of characters that make up the title lines.
 
         Example
         -------
@@ -312,9 +326,16 @@ class IWFMBudget(IWFMMiscellaneous):
 
         return title_length.value
 
-    def get_title_lines(self, location_id, area_conversion_factor=1.0, length_units='ft', 
-                        area_units='sq ft', volume_units='cu ft', alternate_location_name=None):
-        ''' returns the title lines for the budget data for a location to be displayed in the files 
+    def get_title_lines(self, 
+                        location_id, 
+                        area_conversion_factor=1.0,
+                        length_units='FT', 
+                        area_units='SQ FT', 
+                        volume_units='CU FT', 
+                        alternate_location_name=None
+    ):
+        '''
+        Return the title lines for the budget data.
         
         Parameters
         ----------
@@ -322,29 +343,33 @@ class IWFMBudget(IWFMMiscellaneous):
             ID for location (1 to number of locations)
             
         area_conversion_factor : float, default=1.0
-            factor to convert budget file area units to user desired output area units
-            note: only the area shows up in the title lines
+            Factor to convert budget file area units to user desired
+            output area units.
+            
+            Note
+            ----
+            Only the area shows up in the title lines.
 
-        length_units : str, default='ft'
-            units of length used in the budget results
+        length_units : str, default='FT'
+            Units of length used in the budget results.
 
-        area_units : str, default='sq ft'
-            units of area used in the budget results
+        area_units : str, default='SQ FT'
+            Units of area used in the budget results.
 
-        volume_units : str, default='cu ft'
-            units of volume used in the budget results
+        volume_units : str, default='CU FT'
+            Units of volume used in the budget results.
 
-        alternate_location_name : str, default=None
-            alternate name for location given by the location_id
+        alternate_location_name : str, optional
+            Alternate name for location given by the location_id.
 
         Returns
         -------
         list
-            titles generated for the Budget
+            Titles generated for the Budget.
 
         Note
         ----
-        conversion from model area units of sq ft to acres is 2.29568E-05
+        Conversion from model area units of SQ FT to Acres is 2.29568E-05.
 
         Example
         -------
@@ -404,11 +429,10 @@ class IWFMBudget(IWFMMiscellaneous):
         # initialize output variables
         raw_title_string = ctypes.create_string_buffer(length_titles.value)
         delimiter_position_array = (ctypes.c_int*n_title_lines.value)()
-        status = ctypes.c_int(-1)
+        
+        # set variable status to 0
+        status = ctypes.c_int(0)
 
-
-        # IW_Budget_GetTitleLines(NTitles,iLocation,FactArea,LengthUnit,AreaUnit,VolumeUnit,iLenUnit,
-        #                         cAltLocName,iLenAltLocName,cTitles,iLenTitles,iLocArray,iStat)
         self.dll.IW_Budget_GetTitleLines(ctypes.byref(n_title_lines),
                                          ctypes.byref(location_id),
                                          ctypes.byref(area_conversion_factor),
@@ -423,21 +447,26 @@ class IWFMBudget(IWFMMiscellaneous):
                                          delimiter_position_array,
                                          ctypes.byref(status))
 
-        return self._string_to_list_by_array(raw_title_string, delimiter_position_array, n_title_lines)
+        return self._string_to_list_by_array(raw_title_string, 
+                                             delimiter_position_array,
+                                             n_title_lines)
 
     def get_n_columns(self, location_id):
-        ''' retrieves the number of budget data columns for a specified location
+        '''
+        Retrieve the number of budget data columns for a specified
+        location.
         
         Parameters
         ----------
         location_id : int
-            location identification number e.g. subregion number, lake number, stream reach number
-            where budget data is being retrieved
+            Location identification number e.g. subregion number, lake
+            number, stream reach number where budget data is being 
+            retrieved.
             
         Returns
         -------
         int
-            number of budget data columns
+            Number of budget data columns.
 
         Example
         -------
@@ -466,7 +495,7 @@ class IWFMBudget(IWFMMiscellaneous):
 
         # initialize output variables
         n_columns = ctypes.c_int(0)
-        status = ctypes.c_int(-1)
+        status = ctypes.c_int(0)
         
         # IW_Budget_GetNColumns(iLoc,NColumns,iStat)
         self.dll.IW_Budget_GetNColumns(ctypes.byref(location_id),
@@ -476,28 +505,34 @@ class IWFMBudget(IWFMMiscellaneous):
         return n_columns.value
 
 
-    def get_column_headers(self, location_id, length_unit='ft', area_unit='sq ft', volume_unit='cu ft'):
-        ''' Returns the column headers for a budget location 
+    def get_column_headers(self, 
+                           location_id, 
+                           length_unit='FT', 
+                           area_unit='SQ FT', 
+                           volume_unit='CU FT'
+    ):
+        '''
+        Return the column headers for a budget location.
         
         Parameters
         ----------
         location_id : int
-            location identification number for budget e.g. subregion id,
-            stream reach id, etc.
+            Location identification number for budget 
+            e.g. subregion id, stream reach id, etc.
 
-        length_unit : str, default='ft'
-            unit of length used in column headers if one is used
+        length_unit : str, default 'FT'
+            Unit of length used in column headers if one is used.
 
-        area_unit : str, default='sq ft'
-            unit of area used in column headers if one is used
+        area_unit : str, default 'SQ FT'
+            Unit of area used in column headers if one is used.
 
-        volume_unit : str, default='cu ft'
-            unit of volume used in column headers if one is used
+        volume_unit : str, default 'CU FT'
+            Unit of volume used in column headers if one is used.
 
         Returns
         -------
         list
-            list of column headers for the budget type
+            List of column headers for the budget type.
 
         Example
         -------
@@ -556,10 +591,10 @@ class IWFMBudget(IWFMMiscellaneous):
         # initialize output variables
         raw_column_headers = ctypes.create_string_buffer(length_column_headers.value)
         delimiter_position_array = (ctypes.c_int*n_columns.value)()
-        status = ctypes.c_int(-1)
+        
+        # set variable status to 0
+        status = ctypes.c_int(0)
 
-        # IW_Budget_GetColumnHeaders(iLoc,cColumnHeaders,iLenColumnHeaders,NColumns,LengthUnit,AreaUnit,VolumeUnit,
-        #                            iLenUnit,iLocArray,iStat)
         self.dll.IW_Budget_GetColumnHeaders(ctypes.byref(location_id),
                                             raw_column_headers,
                                             ctypes.byref(length_column_headers),
@@ -577,49 +612,52 @@ class IWFMBudget(IWFMMiscellaneous):
                    end_date=None, output_interval=None, length_conversion_factor=1.0, 
                    area_conversion_factor=1.0, 
                    volume_conversion_factor=1.0):
-        ''' returns budget data for selected budget columns for a location and specified time interval  
+        '''
+        Return budget data for selected budget columns for a location and specified time interval.
         
         Parameters
         ----------
         location_id : int
-            location identification number for budget e.g. subregion id,
+            Location identification number for budget e.g. subregion id,
             stream reach id, etc.
             
         columns : str or list of str, default='all'
-            column names to obtain budget data
+            Column names to obtain budget data.
 
         begin_date : str
-            first date where budget data are returned
+            First date where budget data are returned.
 
         end_date : str
-            last date where budget data are returned
+            Last date where budget data are returned.
 
-        output_interval : str or None, default=None
-            valid IWFM output time interval for returning budget data.
+        output_interval : str or None, default None
+            Valid IWFM output time interval for returning budget data.
             
             Note
             ----
             This must be greater than or equal to the simulation time 
-            step
+            step.
 
-        length_conversion_factor : float, default=1.0 
-            conversion factor to convert simulation units for length
-            to another length
+        length_conversion_factor : float, default 1.0 
+            Conversion factor to convert simulation units for length
+            to another length.
         
-        area_conversion_factor : float, default=1.0
-            conversion factor to convert simulation units for area
+        area_conversion_factor : float, default 1.0
+            Conversion factor to convert simulation units for area.
 
-        volume_conversion_factor : float, default=1.0
-            conversion factor to convert simulation units for volume
+        volume_conversion_factor : float, default 1.0
+            Conversion factor to convert simulation units for volume.
 
         Returns
         -------
         pd.DataFrame
-            DataFrame containing budget data for one or more columns
+            DataFrame containing budget data for one or more columns.
 
         See Also
         --------
-        IWFMBudget.get_values_for_a_column : returns the budget data for a single column and location for specified beginning and ending dates.
+        IWFMBudget.get_values_for_a_column : Return the budget data for
+            a single column and location for specified beginning and 
+            ending dates.
 
         Example
         -------
@@ -774,51 +812,53 @@ class IWFMBudget(IWFMMiscellaneous):
                                 length_conversion_factor=1.0, 
                                 area_conversion_factor=1.0, 
                                 volume_conversion_factor=1.0):
-        ''' returns the budget data for a single column and location for a specified
+        '''
+        Return the budget data for a single column and location for a specified
         beginning and ending dates.
 
         Parameters
         ----------
         location_id : int
-            location_id where the budget data is returned
+            Location_id where the budget data is returned.
 
         column_name : str
-            name of the budget column to return
+            Name of the budget column to return.
 
         begin_date : str or None, default=None
-            first date for budget values
+            First date for budget values.
 
         end_date : str or None, default=None
-            last date for budget values
+            Last date for budget values.
 
         output_interval : str or None, default=None
-            valid IWFM output time interval for returning budget data.
+            Valid IWFM output time interval for returning budget data.
             
             Note
             ----
             This must be greater than or equal to the simulation time 
-            step
+            step.
 
-        length_conversion_factor : float, default=1.0
-            unit conversion factor for length units used in the model 
-            to some other length unit
+        length_conversion_factor : float, default 1.0
+            Unit conversion factor for length units used in the model 
+            to some other length unit.
 
-        area_conversion_factor : float, default=1.0
-            unit conversion factor for area units used in the model
-            to some other area unit
+        area_conversion_factor : float, default 1.0
+            Unit conversion factor for area units used in the model
+            to some other area unit.
 
-        volume_conversion_factor : float, default=1.0
-            unit conversion factor for volume units used in the model
-            to some other volume unit
+        volume_conversion_factor : float, default 1.0
+            Unit conversion factor for volume units used in the model
+            to some other volume unit.
 
         Returns
         -------
         pd.DataFrame 
-            DataFrame representing dates and values
+            DataFrame representing dates and values.
 
         See Also
         --------
-        IWFMBudget.get_values : returns budget data for selected budget columns for a location and specified time interval
+        IWFMBudget.get_values : Return budget data for selected budget
+            columns for a location and specified time interval.
 
         Example
         -------
