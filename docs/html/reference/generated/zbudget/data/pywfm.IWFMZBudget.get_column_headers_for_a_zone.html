@@ -1405,36 +1405,41 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="pywfm.IWFMZBudget.get_column_headers_for_a_zone">
 <span class="sig-prename descclassname"><span class="pre">IWFMZBudget.</span></span><span class="sig-name descname"><span class="pre">get_column_headers_for_a_zone</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">zone_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">column_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'all'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">area_unit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'SQ</span> <span class="pre">FT'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">volume_unit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'CU</span> <span class="pre">FT'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_time</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pywfm.IWFMZBudget.get_column_headers_for_a_zone" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the Z-Budget column headers (i.e. titles) for a
-specified zone for selected data columns. For flow processes
-that simulate flow exchange between neighboring zones (e.g.
-groundwater process), the column headers for inflows from and
-outflows to neighboring zones are listed separately for each
-neighboring zone.</p>
+<dd><p>Return the Z-Budget column headers (i.e. titles) for a
+specified zone for selected data columns.</p>
+<p>For flow processes that simulate flow exchange between neighboring
+zones (e.g. groundwater process), the column headers for inflows
+from and outflows to neighboring zones are listed separately
+for each neighboring zone.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>zone_id</strong> (<em>int</em>) – zone identification number used to return the column headers</p></li>
-<li><p><strong>column_list</strong> (<em>int</em><em>, </em><em>list</em><em>, </em><em>np.ndarray</em><em>, or </em><em>str='all'</em><em>, </em><em>default='all'</em>) – list of header column indices. this is based on the results
-from the get_column_headers_general method</p></li>
-<li><p><strong>area_unit</strong> (<em>str</em><em>, </em><em>default='SQ FT'</em>) – unit of area appearing in the Zbudget column headers</p></li>
-<li><p><strong>volume_unit</strong> (<em>str</em><em>, </em><em>default='CU FT'</em>) – unit of volume appearing in the ZBudget column headers</p></li>
-<li><p><strong>include_time</strong> (<em>boolean</em><em>, </em><em>default=True</em>) – flag to determine if columns headers include the time column</p></li>
+<li><p><strong>zone_id</strong> (<em>int</em>) – Zone identification number used to return the column headers.</p></li>
+<li><p><strong>column_list</strong> (<em>int</em><em>, </em><em>list</em><em>, </em><em>np.ndarray</em><em>, or </em><em>str='all'</em><em>, </em><em>default 'all'</em>) – <p>List of header column indices.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This is based on the results from the get_column_headers_general
+method</p>
+</div>
+</p></li>
+<li><p><strong>area_unit</strong> (<em>str</em><em>, </em><em>default 'SQ FT'</em>) – Unit of area appearing in the Zbudget column headers.</p></li>
+<li><p><strong>volume_unit</strong> (<em>str</em><em>, </em><em>default 'CU FT'</em>) – Unit of volume appearing in the ZBudget column headers.</p></li>
+<li><p><strong>include_time</strong> (<em>boolean</em><em>, </em><em>default True</em>) – Flag to determine if columns headers include the time column.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>index 0 - list of column headers
-index 1 - np.ndarray of column indices</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>tuple (length=2)</p>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>column_headers</strong> (<em>list</em>) – Column names.</p></li>
+<li><p><strong>column_indices</strong> (<em>np.ndarray</em>) – Indices for column names.</p></li>
+</ul>
+</p>
 </dd>
 </dl>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>These columns are referred to as “diversified columns” since
 the inflows from and outflows to each neighboring zone are
-treated as separate columns</p>
+treated as separate columns.</p>
 </div>
 <p class="rubric">Example</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pywfm</span> <span class="kn">import</span> <span class="n">IWFMZBudget</span>

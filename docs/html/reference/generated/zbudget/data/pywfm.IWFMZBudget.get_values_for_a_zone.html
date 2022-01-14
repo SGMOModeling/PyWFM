@@ -1405,23 +1405,27 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="pywfm.IWFMZBudget.get_values_for_a_zone">
 <span class="sig-prename descclassname"><span class="pre">IWFMZBudget.</span></span><span class="sig-name descname"><span class="pre">get_values_for_a_zone</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">zone_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">column_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'all'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">begin_date</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_date</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_interval</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">area_conversion_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">volume_conversion_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pywfm.IWFMZBudget.get_values_for_a_zone" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns specified Z-Budget data columns for a specified zone for a time period</p>
+<dd><p>Return specified Z-Budget data columns for a specified zone for
+a time period.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>zone_id</strong> (<em>int</em>) – zone identification number used to return zbudget results</p></li>
-<li><p><strong>column_ids</strong> (<em>int</em><em>, </em><em>list</em><em>, </em><em>np.ndarray</em><em>, or </em><em>str='all'</em><em>, </em><em>default='all'</em>) – one or more column identification numbers for returning zbudget results</p></li>
-<li><p><strong>begin_date</strong> (<em>str</em>) – first date where zbudget results are returned</p></li>
-<li><p><strong>end_date</strong> (<em>str</em>) – last date where zbudget results are returned</p></li>
-<li><p><strong>output_interval</strong> (<em>str</em>) – output interval greater than or equal to the model simulation time step</p></li>
-<li><p><strong>area_conversion_factor</strong> (<em>float</em><em> or </em><em>int</em><em>, </em><em>default=1.0</em>) – factor to convert area units from the default model units
-to the desired output units</p></li>
-<li><p><strong>volume_conversion_factor</strong> (<em>float</em><em> or </em><em>int</em><em>, </em><em>default=1.0</em>) – factor to convert volume units from the default model units
-to the desired output units</p></li>
+<li><p><strong>zone_id</strong> (<em>int</em>) – Zone identification number used to return zbudget results.</p></li>
+<li><p><strong>column_ids</strong> (<em>int</em><em>, </em><em>list</em><em>, </em><em>np.ndarray</em><em>, or </em><em>str='all'</em><em>, </em><em>default 'all'</em>) – One or more column identification numbers for returning
+ZBudget results.</p></li>
+<li><p><strong>begin_date</strong> (<em>str</em>) – First date where zbudget results are returned.</p></li>
+<li><p><strong>end_date</strong> (<em>str</em>) – Last date where zbudget results are returned.</p></li>
+<li><p><strong>output_interval</strong> (<em>str</em>) – Output interval greater than or equal to the model
+simulation time step.</p></li>
+<li><p><strong>area_conversion_factor</strong> (<em>float</em><em> or </em><em>int</em><em>, </em><em>default 1.0</em>) – Factor to convert area units from the default model units
+to the desired output units.</p></li>
+<li><p><strong>volume_conversion_factor</strong> (<em>float</em><em> or </em><em>int</em><em>, </em><em>default 1.0</em>) – Factor to convert volume units from the default model units
+to the desired output units.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>DataFrame of ZBudget output for user-specified columns for a zone</p>
+<dd class="field-even"><p>DataFrame of ZBudget output for user-specified columns for
+a zone.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>pd.DataFrame</p>
@@ -1429,12 +1433,13 @@ to the desired output units</p></li>
 </dl>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Return value includes Time as the first column whether the user provided it or not</p>
+<p>Return value includes Time as the first column whether the user
+provided it or not.</p>
 </div>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <dl class="simple">
-<dt><a class="reference internal" href="pywfm.IWFMZBudget.get_values_for_some_zones_for_an_interval.html#pywfm.IWFMZBudget.get_values_for_some_zones_for_an_interval" title="pywfm.IWFMZBudget.get_values_for_some_zones_for_an_interval"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IWFMZBudget.get_values_for_some_zones_for_an_interval</span></code></a></dt><dd><p>Returns specified zone flow values for one or more zones at a given date and time interval</p>
+<dt><a class="reference internal" href="pywfm.IWFMZBudget.get_values_for_some_zones_for_an_interval.html#pywfm.IWFMZBudget.get_values_for_some_zones_for_an_interval" title="pywfm.IWFMZBudget.get_values_for_some_zones_for_an_interval"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IWFMZBudget.get_values_for_some_zones_for_an_interval</span></code></a></dt><dd><p>Return specified zone flow values for one or more zones at a given date and time interval.</p>
 </dd>
 </dl>
 </div>
