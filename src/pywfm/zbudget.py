@@ -6,20 +6,21 @@ import pandas as pd
 from pywfm.misc import IWFMMiscellaneous
 
 class IWFMZBudget(IWFMMiscellaneous):
-    ''' IWFM ZBudget Class for interacting with the IWFM DLL
+    '''
+    IWFM ZBudget Class for interacting with the IWFM DLL.
 
     Parameters
     ----------
     dll_path : str
-        file path and name of the IWFM DLL to access IWFM procedures
+        File path and name of the IWFM DLL to access IWFM procedures.
 
     zbudget_file_name : str
-        file path and name of the budget file
+        File path and name of the budget file
 
     Returns
     -------
     IWFMZBudget Object
-        instance of the IWFMZBudget class and access to the IWFM Budget 
+        Instance of the IWFMZBudget class and access to the IWFM Budget 
         fortran procedures.
     '''
     def __init__(self, dll_path, zbudget_file_name):
@@ -54,7 +55,9 @@ class IWFMZBudget(IWFMMiscellaneous):
         self.close_budget_file()
 
     def close_zbudget_file(self):
-        ''' closes an open budget file for an IWFM model application '''
+        '''
+        Close an open budget file for an IWFM model application.
+        '''
         # check to see if the procedure exists in the dll provided
         if not hasattr(self.dll, 'IW_ZBudget_CloseFile'):
             raise AttributeError('IWFM DLL does not have "{}" procedure. '
@@ -66,23 +69,27 @@ class IWFMZBudget(IWFMMiscellaneous):
         self.dll.IW_ZBudget_CloseFile(ctypes.byref(status))
 
     def generate_zone_list_from_file(self, zone_definition_file):
-        ''' generates a list of zones and their neighboring zones based
-        on data provided in a text file. This file must be in the same 
-        format as the Zone Definition File used by the Z-Budget post-
-        processor. 
+        '''
+        Generate a list of zones and their neighboring zones based
+        on data provided in a text file. 
+        
+        This file must be in the same format as the Zone Definition 
+        File used by the Z-Budget post-processor. 
+        
         Parameters
         ----------
         zone_definition_file : str
-            file name for the zone definition file used to generate the list of zones
+            File name for the zone definition file used to generate the
+            list of zones.
             
         Returns
         -------
         None
-            generates the list of zones and adjacent zones
+            Generates the list of zones and adjacent zones.
 
         Note
         ----
-        See IWFM Sample Model ZBudget folder for format examples
+        See IWFM Sample Model ZBudget folder for format examples.
         '''
         # check to see if the open file procedure exists in the dll provided
         if not hasattr(self.dll, 'IW_ZBudget_GenerateZoneList_FromFile'):
@@ -101,34 +108,35 @@ class IWFMZBudget(IWFMMiscellaneous):
                                                       ctypes.byref(status))
 
     def _generate_zone_list(self, zone_extent_id, elements, layers, zones, zone_names):
-        ''' private method that generates a list of zones and their neighboring zones based
-        on data provided directly by the client software
+        '''
+        Private method that generates a list of zones and their neighboring
+        zones based on data provided directly by the client software.
         
         Parameters
         ----------
         zone_extent_id : int
-            valid IWFM zone extent identification number. Options can
-            be obtained using the get_zone_extent_ids method
+            Valid IWFM zone extent identification number. Options can
+            be obtained using the get_zone_extent_ids method.
 
         elements : list, np.ndarray
-            list of element identification numbers used to identify 
-            zone definitions
+            List of element identification numbers used to identify 
+            zone definitions.
 
         layers : list, np.ndarray
-            list of layer numbers used to identify zone definitions. 
-            if using the zone extent id for horizontal, this is not used
+            List of layer numbers used to identify zone definitions. 
+            if using the zone extent id for horizontal, this is not used.
 
         zones : list, np.ndarray
-            list of identification numbers used to identify which zone
+            List of identification numbers used to identify which zone
             each element and layer are specified in.
 
         zone_names : list
-            list of zone names. there can be fewer names than zones defined.
+            List of zone names. there can be fewer names than zones defined.
 
         Returns
         -------
         None
-            generates the zone definitions
+            Generates the zone definitions.
         '''
         # check to see if the open file procedure exists in the dll provided
         if not hasattr(self.dll, 'IW_ZBudget_GenerateZoneList'):
@@ -208,17 +216,19 @@ class IWFMZBudget(IWFMMiscellaneous):
                                              ctypes.byref(status))
 
     def get_n_zones(self):
-        ''' Returns the number of zones specified in the zbudget
+        '''
+        Return the number of zones specified in the zbudget.
 
         Returns
         -------
         int
-            number of zones
+            Number of zones.
 
         See Also
         --------
-        IWFMZBudget.get_zone_list : Returns the list of zone numbers
-        IWFMZBudget.get_zone_names : Returns the zone names specified by the user in the zone definitions
+        IWFMZBudget.get_zone_list : Return the list of zone numbers.
+        IWFMZBudget.get_zone_names : Return the zone names specified 
+            by the user in the zone definitions.
 
         Example
         -------
@@ -249,17 +259,20 @@ class IWFMZBudget(IWFMMiscellaneous):
         return n_zones.value
 
     def get_zone_list(self):
-        ''' Returns the list of zone numbers
+        '''
+        Return the list of zone numbers.
 
         Returns
         -------
         np.ndarray
-            array of zone numbers 
+            Array of zone numbers.
 
         See Also
         --------
-        IWFMZBudget.get_n_zones : Returns the number of zones specified in the zbudget
-        IWFMZBudget.get_zone_names : Returns the zone names specified by the user in the zone definitions
+        IWFMZBudget.get_n_zones : Return the number of zones specified
+            in the zbudget.
+        IWFMZBudget.get_zone_names : Return the zone names specified by
+            the user in the zone definitions.
 
         Example
         -------
@@ -294,17 +307,18 @@ class IWFMZBudget(IWFMMiscellaneous):
         return np.array(zone_list)
 
     def get_n_time_steps(self):
-        ''' Returns the number of time steps where zbudget data is 
-        available
+        '''
+        Return the number of time steps where zbudget data is available.
 
         Returns
         -------
         int
-            number of time steps
+            Number of time steps.
 
         See Also
         --------
-        IWFMZBudget.get_time_specs : Returns a list of all the time stamps and the time interval for the zbudget
+        IWFMZBudget.get_time_specs : Return a list of all the time
+            stamps and the time interval for the zbudget.
 
         Example
         -------
@@ -335,16 +349,22 @@ class IWFMZBudget(IWFMMiscellaneous):
         return n_time_steps.value
     
     def get_time_specs(self):
-        ''' Returns a list of all the time stamps and the time interval for the zbudget 
+        ''' 
+        Return a list of all the time stamps and the time interval
+        for the zbudget 
         
         Returns
         -------
-        length-2 tuple
-            time stamps (list), time interval (string)
+        dates_list : list
+            Dates and times for zbudget results.
+        
+        interval: str
+            Time interval for dates.
 
         See Also
         --------
-        IWFMZBudget.get_n_time_steps : Returns the number of time steps where zbudget data is available
+        IWFMZBudget.get_n_time_steps : Return the number of time steps
+            where zbudget data is available.
 
         Example
         -------
@@ -402,27 +422,29 @@ class IWFMZBudget(IWFMMiscellaneous):
         return dates_list, interval
 
     def _get_column_headers_general(self, area_unit='SQ FT', volume_unit='CU FT'):
-        ''' private method returning the Z-Budget column headers (i.e. 
-        titles). For flow processes that simulate flow exchange between 
-        neighboring zones (e.g. groundwater process) the inflow and 
-        outflow columns are lumped into two columns (e.g. “Inflows from 
-        Adjacent Zones” and “Outflows to Adjacent Zones”) instead of 
-        identifying inflows from and outflows to individual neighboring 
-        zones. These column headers apply to any zone regardless of the 
-        number of neighboring zones.
+        '''
+        Private method returning the Z-Budget column headers (i.e. titles). 
+        
+        For flow processes that simulate flow exchange between neighboring 
+        zones (e.g. groundwater process) the inflow and outflow columns
+        are lumped into two columns (e.g. “Inflows from Adjacent Zones” 
+        and “Outflows to Adjacent Zones”) instead of identifying inflows 
+        from and outflows to individual neighboring zones. These column 
+        headers apply to any zone regardless of the number of neighboring 
+        zones.
 
         Parameters
         ----------
-        area_unit : str, default='SQ FT'
-            unit of area appearing in the Zbudget column headers
+        area_unit : str, default 'SQ FT'
+            Unit of area appearing in the Zbudget column headers.
 
-        volume_unit : str, default='CU FT'
-            unit of volume appearing in the ZBudget column headers
+        volume_unit : str, default 'CU FT'
+            Unit of volume appearing in the ZBudget column headers.
 
         Returns
         -------
         list
-            list of column headers
+            List of column names.
         '''
         # check to see if the procedure exists in the dll provided
         if not hasattr(self.dll, 'IW_ZBudget_GetColumnHeaders_General'):
@@ -465,42 +487,50 @@ class IWFMZBudget(IWFMMiscellaneous):
     def get_column_headers_for_a_zone(self, zone_id, column_list='all',
                                       area_unit='SQ FT', volume_unit='CU FT',
                                       include_time=True):
-        ''' Returns the Z-Budget column headers (i.e. titles) for a 
-        specified zone for selected data columns. For flow processes 
-        that simulate flow exchange between neighboring zones (e.g. 
-        groundwater process), the column headers for inflows from and 
-        outflows to neighboring zones are listed separately for each 
-        neighboring zone.
+        '''
+        Return the Z-Budget column headers (i.e. titles) for a 
+        specified zone for selected data columns. 
+        
+        For flow processes that simulate flow exchange between neighboring
+        zones (e.g. groundwater process), the column headers for inflows
+        from and outflows to neighboring zones are listed separately 
+        for each neighboring zone.
 
         Parameters
         ----------
         zone_id : int
-            zone identification number used to return the column headers
+            Zone identification number used to return the column headers.
 
-        column_list : int, list, np.ndarray, or str='all', default='all'
-            list of header column indices. this is based on the results 
-            from the get_column_headers_general method
+        column_list : int, list, np.ndarray, or str='all', default 'all'
+            List of header column indices. 
+            
+            Note
+            ----
+            This is based on the results from the get_column_headers_general
+            method
 
-        area_unit : str, default='SQ FT'
-            unit of area appearing in the Zbudget column headers
+        area_unit : str, default 'SQ FT'
+            Unit of area appearing in the Zbudget column headers.
 
-        volume_unit : str, default='CU FT'
-            unit of volume appearing in the ZBudget column headers
+        volume_unit : str, default 'CU FT'
+            Unit of volume appearing in the ZBudget column headers.
 
-        include_time : boolean, default=True
-            flag to determine if columns headers include the time column
+        include_time : boolean, default True
+            Flag to determine if columns headers include the time column.
 
         Returns
         -------
-        tuple (length=2)
-            index 0 - list of column headers
-            index 1 - np.ndarray of column indices
+        column_headers : list
+            Column names.
+        
+        column_indices : np.ndarray 
+            Indices for column names.
 
         Note
         ----
         These columns are referred to as “diversified columns” since 
         the inflows from and outflows to each neighboring zone are 
-        treated as separate columns
+        treated as separate columns.
 
         Example
         -------
@@ -639,21 +669,24 @@ class IWFMZBudget(IWFMMiscellaneous):
                                                         delimiter_position_array, 
                                                         n_columns)
 
-        return column_headers, np.array(diversified_columns_list)
+        column_indices = np.array(diversified_columns_list)
+
+        return column_headers, column_indices
 
     def get_zone_names(self):
-        ''' Returns the zone names specified by the user in the zone
-        definitions
+        '''
+        Return the zone names specified by the user in the zone definitions.
         
         Returns
         -------
         list
-            list of names for each zone defined
+            Names for each zone defined.
 
         See Also
         --------
-        IWFMZBudget.get_n_zones : Returns the number of zones specified in the zbudget
-        IWFMZBudget.get_zone_list : Returns the list of zone numbers
+        IWFMZBudget.get_n_zones : Return the number of zones specified
+            in the zbudget.
+        IWFMZBudget.get_zone_list : Return the list of zone numbers.
 
         Example
         -------
@@ -694,16 +727,18 @@ class IWFMZBudget(IWFMMiscellaneous):
                                              n_zones)
 
     def get_n_title_lines(self):
-        ''' Returns the number of title lines in a ZBudget 
+        '''
+        Return the number of title lines in a ZBudget.
         
         Returns
         -------
         int
-            number of title lines
+            Number of title lines.
 
         See Also
         --------
-        IWFMZBudget.get_title_lines : Returns the title lines for the Z-Budget data for a zone
+        IWFMZBudget.get_title_lines : Return the title lines for the
+            ZBudget data for a zone.
 
         Example
         -------
@@ -734,37 +769,39 @@ class IWFMZBudget(IWFMMiscellaneous):
 
     def get_title_lines(self, zone_id, area_conversion_factor=1.0, area_unit='SQ FT',
                         volume_unit='CU FT'):
-        ''' Returns the title lines for the ZBudget data for a zone 
+        '''
+        Return the title lines for the ZBudget data for a zone.
         
         Parameters
         ----------
         zone_id : int
-            zone identification number used to retrieve the title lines
+            Zone identification number used to retrieve the title lines.
             
-        area_conversion_factor : int, float, default=1.0
-            factor used to convert area units between the default model
-            unit and the desired output unit 
+        area_conversion_factor : int, float, default 1.0
+            Factor used to convert area units between the default model
+            unit and the desired output unit.
             e.g. ft^2 --> Acre = 2.29568E-05 
             
-        area_unit : str, default='SQ FT'
-            desired output unit for area
+        area_unit : str, default 'SQ FT'
+            Desired output unit for area.
                       
-        volume_unit : str, default='CU FT'
-            desired output unit for volume
+        volume_unit : str, default 'CU FT'
+            Desired output unit for volume.
             
         Returns
         -------
         list
-            title lines for zone
+            Title lines for zone.
 
         Note
         ----
-        Title lines are usefule to be displayed when Z-Budget data is 
-        imported into files (text, spreadsheet, etc.)
+        Title lines are useful for display when ZBudget data is 
+        imported into files (text, spreadsheet, etc.).
 
         See Also
         --------
-        IWFMZBudget.get_n_title_lines : Returns the number of title lines in a ZBudget
+        IWFMZBudget.get_n_title_lines : Return the number of title lines
+            in a ZBudget
 
         Example
         -------
@@ -831,53 +868,57 @@ class IWFMZBudget(IWFMMiscellaneous):
                                                   output_interval=None, 
                                                   area_conversion_factor=1.0, 
                                                   volume_conversion_factor=1.0):
-        ''' Returns specified zone flow values for one or more 
-        zones at a given date and time interval.
+        '''
+        Return specified zone flow values for one or more zones at a given 
+        date and time interval.
 
         Parameters
         ----------
-        zone_ids : int, list, np.ndarray, or str='all', default='all'
-            one or more zone identification numbers to retrieve zbudget
+        zone_ids : int, list, np.ndarray, or str='all', default 'all'
+            One or more zone identification numbers to retrieve ZBudget
             data
 
-        column_ids : int, list, or str='all', default='all'
-            one or more data column indices to retrieve zbudget data
+        column_ids : int, list, or str='all', default 'all'
+            One or more data column indices to retrieve ZBudget data
 
-        current_date : str or None, default=None
-            valid IWFM date used to return zbudget data
+        current_date : str or None, default None
+            Valid IWFM date used to return ZBudget data.
             
             Important
             ---------
-            if None (default), uses the first date
+            If None (default), uses the first date.
 
-        output_interval : str or None, default=None
-            valid IWFM output time interval for returning zbudget data.
+        output_interval : str or None, default None
+            Valid IWFM output time interval for returning ZBudget data.
             
             Note
             ----
             This must be greater than or equal to the simulation time 
-            step
+            step.
 
-        area_conversion_factor : float or int, default=1.0
-            factor to convert area units from the default model units
-            to the desired output units
+        area_conversion_factor : float or int, default 1.0
+            Factor to convert area units from the default model units
+            to the desired output units.
 
-        volume_conversion_factor : float or int, default=1.0
-            factor to convert volume units from the default model units
-            to the desired output units
+        volume_conversion_factor : float or int, default 1.0
+            Factor to convert volume units from the default model units
+            to the desired output units.
 
         Returns
         -------
         dict
-            DataFrames of ZBudget output for user-specified columns by zone names
+            DataFrames of ZBudget output for user-specified columns by
+            zone names
 
         Note
         ----
-        Return value includes Time as the first column whether the user provided it or not
+        Return value includes Time as the first column whether the user
+        provided it or not.
 
         See Also
         --------
-        IWFMZBudget.get_values_for_a_zone : Returns specified Z-Budget data columns for a specified zone for a time period
+        IWFMZBudget.get_values_for_a_zone : Return specified ZBudget
+            data columns for a specified zone for a time period.
 
         Examples
         --------
@@ -1123,45 +1164,53 @@ class IWFMZBudget(IWFMMiscellaneous):
                               end_date=None, output_interval=None, 
                               area_conversion_factor=1.0, 
                               volume_conversion_factor=1.0):
-        ''' Returns specified Z-Budget data columns for a specified zone for a time period
+        ''' 
+        Return specified Z-Budget data columns for a specified zone for
+        a time period.
 
         Parameters
         ----------
         zone_id : int
-            zone identification number used to return zbudget results
+            Zone identification number used to return zbudget results.
 
-        column_ids : int, list, np.ndarray, or str='all', default='all'
-            one or more column identification numbers for returning zbudget results
+        column_ids : int, list, np.ndarray, or str='all', default 'all'
+            One or more column identification numbers for returning 
+            ZBudget results.
 
         begin_date : str
-            first date where zbudget results are returned
+            First date where zbudget results are returned.
 
         end_date : str
-            last date where zbudget results are returned
+            Last date where zbudget results are returned.
 
         output_interval : str
-            output interval greater than or equal to the model simulation time step
+            Output interval greater than or equal to the model
+            simulation time step.
 
-        area_conversion_factor : float or int, default=1.0
-            factor to convert area units from the default model units
-            to the desired output units
+        area_conversion_factor : float or int, default 1.0
+            Factor to convert area units from the default model units
+            to the desired output units.
 
-        volume_conversion_factor : float or int, default=1.0
-            factor to convert volume units from the default model units
-            to the desired output units
+        volume_conversion_factor : float or int, default 1.0
+            Factor to convert volume units from the default model units
+            to the desired output units.
 
         Returns
         -------
         pd.DataFrame
-            DataFrame of ZBudget output for user-specified columns for a zone
+            DataFrame of ZBudget output for user-specified columns for
+            a zone.
 
         Note
         ----
-        Return value includes Time as the first column whether the user provided it or not
+        Return value includes Time as the first column whether the user
+        provided it or not.
 
         See Also
         --------
-        IWFMZBudget.get_values_for_some_zones_for_an_interval : Returns specified zone flow values for one or more zones at a given date and time interval
+        IWFMZBudget.get_values_for_some_zones_for_an_interval : Return 
+            specified zone flow values for one or more zones at a given
+            date and time interval.
 
         Example
         -------
