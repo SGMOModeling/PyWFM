@@ -758,13 +758,13 @@ class IWFMBudget(IWFMMiscellaneous):
             raise ValueError('output_interval must be greater than or '
                              'equal to the simulation time step')
 
-        # convert output_interval to ctypes
-        output_interval = ctypes.create_string_buffer(output_interval.encode('utf-8'))
-        length_output_interval = ctypes.c_int(ctypes.sizeof(output_interval))
-
         # get number of timestep intervals
         n_timestep_intervals = ctypes.c_int(self.get_n_intervals(begin_date, end_date, 
                                                                  output_interval, includes_end_date=True))
+
+        # convert output_interval to ctypes
+        output_interval = ctypes.create_string_buffer(output_interval.encode('utf-8'))
+        length_output_interval = ctypes.c_int(ctypes.sizeof(output_interval))
 
         # convert beginning and end dates to ctypes
         begin_date = ctypes.create_string_buffer(begin_date.encode('utf-8'))
@@ -936,13 +936,13 @@ class IWFMBudget(IWFMMiscellaneous):
             raise ValueError('output_interval must be greater than or '
                              'equal to the simulation time step')
 
-        # convert output_interval to ctypes
-        output_interval = ctypes.create_string_buffer(output_interval.encode('utf-8'))
-        length_output_interval = ctypes.c_int(ctypes.sizeof(output_interval))
-
         # get number of timestep intervals
         n_timestep_intervals = ctypes.c_int(self.get_n_intervals(begin_date, end_date, 
                                                                  output_interval, includes_end_date=True))
+
+        # convert output_interval to ctypes
+        output_interval = ctypes.create_string_buffer(output_interval.encode('utf-8'))
+        length_output_interval = ctypes.c_int(ctypes.sizeof(output_interval))
 
         # convert beginning and end dates to ctypes
         begin_date = ctypes.create_string_buffer(begin_date.encode('utf-8'))
