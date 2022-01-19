@@ -377,7 +377,7 @@ class IWFMBudget(IWFMMiscellaneous):
         >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> bud_file = '../Results/GW.hdf'
         >>> gw_bud = IWFMBudget(dll, bud_file)
-        >>> gw_bud.get_title_lines()
+        >>> gw_bud.get_title_lines(1)
         ['IWFM (v2015.0.1273)',
          'GROUNDWATER BUDGET IN cu ft FOR Region1 (SR1)',
          'SUBREGION AREA: 8610918912.00 sq ft']
@@ -749,16 +749,6 @@ class IWFMBudget(IWFMMiscellaneous):
         if self.is_date_greater(begin_date, end_date):
             raise ValueError('end_date must occur after begin_date')
 
-        # get number of timestep intervals
-        n_timestep_intervals = ctypes.c_int(self.get_n_intervals(begin_date, end_date, 
-                                                                 output_interval, includes_end_date=True))
-
-        # convert beginning and end dates to ctypes
-        begin_date = ctypes.create_string_buffer(begin_date.encode('utf-8'))
-        end_date = ctypes.create_string_buffer(end_date.encode('utf-8'))
-
-        length_date = ctypes.c_int(ctypes.sizeof(begin_date))
-
         # handle output interval
         if output_interval is None:
             output_interval = sim_output_interval
@@ -771,6 +761,16 @@ class IWFMBudget(IWFMMiscellaneous):
         # convert output_interval to ctypes
         output_interval = ctypes.create_string_buffer(output_interval.encode('utf-8'))
         length_output_interval = ctypes.c_int(ctypes.sizeof(output_interval))
+
+        # get number of timestep intervals
+        n_timestep_intervals = ctypes.c_int(self.get_n_intervals(begin_date, end_date, 
+                                                                 output_interval, includes_end_date=True))
+
+        # convert beginning and end dates to ctypes
+        begin_date = ctypes.create_string_buffer(begin_date.encode('utf-8'))
+        end_date = ctypes.create_string_buffer(end_date.encode('utf-8'))
+
+        length_date = ctypes.c_int(ctypes.sizeof(begin_date))
 
         # convert unit conversion factors to ctypes
         length_conversion_factor = ctypes.c_double(length_conversion_factor)
@@ -927,16 +927,6 @@ class IWFMBudget(IWFMMiscellaneous):
         if self.is_date_greater(begin_date, end_date):
             raise ValueError('end_date must occur after begin_date')
 
-        # get number of timestep intervals
-        n_timestep_intervals = ctypes.c_int(self.get_n_intervals(begin_date, end_date, 
-                                                                 output_interval, includes_end_date=True))
-
-        # convert beginning and end dates to ctypes
-        begin_date = ctypes.create_string_buffer(begin_date.encode('utf-8'))
-        end_date = ctypes.create_string_buffer(end_date.encode('utf-8'))
-
-        length_date = ctypes.c_int(ctypes.sizeof(begin_date))
-
         # handle output interval
         if output_interval is None:
             output_interval = sim_output_interval
@@ -949,6 +939,16 @@ class IWFMBudget(IWFMMiscellaneous):
         # convert output_interval to ctypes
         output_interval = ctypes.create_string_buffer(output_interval.encode('utf-8'))
         length_output_interval = ctypes.c_int(ctypes.sizeof(output_interval))
+
+        # get number of timestep intervals
+        n_timestep_intervals = ctypes.c_int(self.get_n_intervals(begin_date, end_date, 
+                                                                 output_interval, includes_end_date=True))
+
+        # convert beginning and end dates to ctypes
+        begin_date = ctypes.create_string_buffer(begin_date.encode('utf-8'))
+        end_date = ctypes.create_string_buffer(end_date.encode('utf-8'))
+
+        length_date = ctypes.c_int(ctypes.sizeof(begin_date))
 
         # convert unit conversion factors to ctypes
         length_conversion_factor = ctypes.c_double(length_conversion_factor)
