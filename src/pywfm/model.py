@@ -319,7 +319,8 @@ class IWFMModel(IWFMMiscellaneous):
         >>> model = IWFMModel(dll, pp_file, sim_file)
         >>> time_stamps, time_interval = model.get_time_specs()
         >>> time_stamps
-        ['10/02/1990_24:00',
+        ['10/01/1990_24:00',
+         '10/02/1990_24:00',
          '10/03/1990_24:00',
          '10/04/1990_24:00',
          '10/05/1990_24:00',
