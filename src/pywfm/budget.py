@@ -63,7 +63,7 @@ class IWFMBudget(IWFMMiscellaneous):
                                  'Check for an updated version'.format('IW_Budget_CloseFile'))
         
         # initialize output variable status
-        status = ctypes.c_int(-1)
+        status = ctypes.c_int(0)
 
         self.dll.IW_Budget_CloseFile(ctypes.byref(status))
 
@@ -102,7 +102,7 @@ class IWFMBudget(IWFMMiscellaneous):
         
         # initialize output variables
         n_locations = ctypes.c_int(0)
-        status = ctypes.c_int(-1)
+        status = ctypes.c_int(0)
 
 
         self.dll.IW_Budget_GetNLocations(ctypes.byref(n_locations),
@@ -144,7 +144,7 @@ class IWFMBudget(IWFMMiscellaneous):
         raw_names_string = ctypes.create_string_buffer(location_names_length.value)
         delimiter_position_array = (ctypes.c_int*location_names_length.value)()
         
-        status = ctypes.c_int(-1)
+        status = ctypes.c_int(0)
         
         # IW_Budget_GetLocationNames(cLocNames,iLenLocNames,NLocations,iLocArray,iStat)
         self.dll.IW_Budget_GetLocationNames(raw_names_string,
@@ -180,7 +180,7 @@ class IWFMBudget(IWFMMiscellaneous):
                                  'Check for an updated version'.format('IW_Budget_GetNTimeSteps'))
 
         n_time_steps = ctypes.c_int(0)
-        status = ctypes.c_int(-1)
+        status = ctypes.c_int(0)
 
         # IW_Budget_GetNTimeSteps(NTimeSteps,iStat)
         self.dll.IW_Budget_GetNTimeSteps(ctypes.byref(n_time_steps),
@@ -240,7 +240,7 @@ class IWFMBudget(IWFMMiscellaneous):
         raw_dates_string = ctypes.create_string_buffer(length_date_string.value)
         time_interval = ctypes.create_string_buffer(length_time_interval.value)
         delimiter_position_array = (ctypes.c_int*n_time_steps.value)()
-        status = ctypes.c_int(-1)
+        status = ctypes.c_int(0)
 
         # IW_Budget_GetTimeSpecs(cDataDatesAndTimes,iLenDates,cInterval,iLenInterval,NData,iLocArray,iStat)
         self.dll.IW_Budget_GetTimeSpecs(raw_dates_string,
@@ -284,7 +284,7 @@ class IWFMBudget(IWFMMiscellaneous):
 
         # initialize output variables
         n_title_lines = ctypes.c_int(0)
-        status = ctypes.c_int(-1)
+        status = ctypes.c_int(0)
 
         # IW_Budget_GetNTitleLines(NTitles,iStat)
         self.dll.IW_Budget_GetNTitleLines(ctypes.byref(n_title_lines),
@@ -318,7 +318,7 @@ class IWFMBudget(IWFMMiscellaneous):
         
         # initialize output variables
         title_length = ctypes.c_int(0)
-        status = ctypes.c_int(-1)
+        status = ctypes.c_int(0)
 
         # IW_Budget_GetTitleLength(iLen,iStat)
         self.dll.IW_Budget_GetTitleLength(ctypes.byref(title_length),
