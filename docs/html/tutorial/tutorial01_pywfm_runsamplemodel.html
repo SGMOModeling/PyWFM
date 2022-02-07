@@ -4,30 +4,29 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PyWFM Tutorial 1 &#8212; PyWFM 0.0.1 documentation</title>
     
-  <link href="../_static/css/theme.css" rel="stylesheet">
-  <link href="../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
-
+    <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+  
     
-  <link rel="stylesheet"
-    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
-
+    <link rel="stylesheet"
+      href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+    <link rel="preload" as="font" type="font/woff2" crossorigin
+      href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+    <link rel="preload" as="font" type="font/woff2" crossorigin
+      href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+  
     
       
-
+  
     
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/css/blank.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/pydata-sphinx-theme.css" />
     
-  <link rel="preload" as="script" href="../_static/js/index.be7d3bbb2ef33a8344ce.js">
-
+    <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+  
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
@@ -116,7 +115,8 @@
           
             
             <!-- Only show if we have sidebars configured, else just a small margin  -->
-            <div class="col-12 col-md-3 bd-sidebar"><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+            <div class="col-12 col-md-3 bd-sidebar">
+              <div class="sidebar-start-items"><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
   <i class="icon fas fa-search"></i>
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
@@ -145,6 +145,9 @@
 
   </div>
 </nav>
+              </div>
+              <div class="sidebar-end-items">
+              </div>
             </div>
             
           
@@ -202,17 +205,17 @@
               
               <div>
                 
-  <section id="pywfm-tutorial-1">
+  <div class="section" id="pywfm-tutorial-1">
 <h1>PyWFM Tutorial 1<a class="headerlink" href="#pywfm-tutorial-1" title="Permalink to this headline">¶</a></h1>
 <p>Created by: Tyler Hatch/DWR</p>
 <p><strong>Description:</strong> This tutorial walks a user of pywfm through how to run the IWFM Sample Model from python</p>
-<section id="getting-started">
+<div class="section" id="getting-started">
 <h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pywfm</span> <span class="kn">import</span> <span class="n">IWFMModel</span>
 </pre></div>
 </div>
-</section>
-<section id="create-a-function-to-perform-the-simulation">
+</div>
+<div class="section" id="create-a-function-to-perform-the-simulation">
 <h2>Create a Function to Perform the Simulation<a class="headerlink" href="#create-a-function-to-perform-the-simulation" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">run_model</span><span class="p">(</span><span class="n">model</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39; uses an IWFM model object to run a model simulation &#39;&#39;&#39;</span>
@@ -239,8 +242,8 @@
 by timestep basis. If the user only wants to run the entire simulation from python using IWFMModel.simulate_all().</p>
 <p>Otherwise, certain time series data can be updated during a simulation using IWFMModel.read_timeseries_data_overwrite()</p>
 </div>
-</section>
-<section id="set-paths-to-the-iwfm-dll-preprocessor-input-file-and-simulation-input-file">
+</div>
+<div class="section" id="set-paths-to-the-iwfm-dll-preprocessor-input-file-and-simulation-input-file">
 <h2>Set Paths to the IWFM DLL, Preprocessor Input File, and Simulation Input File<a class="headerlink" href="#set-paths-to-the-iwfm-dll-preprocessor-input-file-and-simulation-input-file" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="c1"># specify path to IWFM DLL</span>
 <span class="n">dll</span> <span class="o">=</span> <span class="s1">&#39;../../DLL/Bin/IWFM2015_C_x64.dll&#39;</span>
@@ -255,8 +258,8 @@ by timestep basis. If the user only wants to run the entire simulation from pyth
 <p>These paths assume this code is saved in the simulation folder of the Sample Model and the DLL is in a location
 relative to the simulation folder</p>
 </div>
-</section>
-<section id="create-the-model-object-and-run-the-simulation">
+</div>
+<div class="section" id="create-the-model-object-and-run-the-simulation">
 <h2>Create the Model Object and Run the Simulation<a class="headerlink" href="#create-the-model-object-and-run-the-simulation" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">IWFMModel</span><span class="p">(</span><span class="n">dll</span><span class="p">,</span> <span class="n">pp_file</span><span class="p">,</span> <span class="n">sim_file</span><span class="p">,</span> <span class="n">is_for_inquiry</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="k">as</span> <span class="n">sm</span><span class="p">:</span>
     <span class="n">run_model</span><span class="p">(</span><span class="n">sm</span><span class="p">)</span>
@@ -271,15 +274,15 @@ relative to the simulation folder</p>
 </pre></div>
 </div>
 </div>
-</section>
-</section>
+</div>
+</div>
 
 
               </div>
               
               
               <!-- Previous / next buttons -->
-<div class='prev-next-area'> 
+<div class='prev-next-area'>
     <a class='left-prev' id="prev-link" href="index.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
@@ -302,8 +305,8 @@ relative to the simulation folder</p>
       </div>
     </div>
   
-  <script src="../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
-<footer class="footer mt-5 mt-md-0">
+    <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+  <footer class="footer mt-5 mt-md-0">
   <div class="container">
     
     <div class="footer-item">
@@ -314,7 +317,7 @@ relative to the simulation folder</p>
     
     <div class="footer-item">
       <p class="sphinx-version">
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.3.1.<br>
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.4.0.<br>
 </p>
     </div>
     
