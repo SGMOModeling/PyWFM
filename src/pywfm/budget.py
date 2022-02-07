@@ -899,7 +899,7 @@ class IWFMBudget(IWFMMiscellaneous):
         if column_name not in column_headers:
                 raise ValueError('column_name provided must be one of the following:\n {}'.format(', '.join(column_headers)))
         
-        column_id = ctypes.c_int(column_headers.index(column_name) + 1)
+        column_id = ctypes.c_int(column_headers.index(column_name))
             
         # handle start and end dates
         # get time specs
