@@ -2,6 +2,8 @@
 ---
 python library to expose the functionality of the IWFM DLL
 
+Full documentation of PyWFM is available [here](https://sgmomodeling.github.io/PyWFM/html/index.html)
+
 To use the pywfm module, users need to download this repository
 
 **Note** Users must also download the IWFM DLL.
