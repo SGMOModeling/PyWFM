@@ -81,4 +81,4 @@ To use the pywfm package there are several steps required.
 
 .. rubric Footnotes
 
-.. [#pythonversion] The pywfm module has been tested using python 3.7.9 and 3.7.11
+.. [#pythonversion] The pywfm module has been tested using python 3.7.9, 3.7.11, 3.10.2
