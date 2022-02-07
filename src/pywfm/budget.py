@@ -717,9 +717,6 @@ class IWFMBudget(IWFMMiscellaneous):
             else:
                 column_numbers.append(column_headers.index(val))
 
-        # convert python index to fortran index for column numbers
-        column_numbers = np.array(column_numbers) + 1           
-
         # convert column numbers to ctypes
         n_columns = ctypes.c_int(len(column_numbers))
         column_numbers = (ctypes.c_int*n_columns.value)(*column_numbers)
