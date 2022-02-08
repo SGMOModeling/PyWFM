@@ -26,9 +26,13 @@ To use the pywfm package there are several steps required.
    .. note::
       if this command does not work, you will need to either install python or add python to the Path Environment Variable
 
-      To install python, go to: https://www.python.org/
+      To install python:
+      
+      go to: https://www.python.org/
 
+      or
 
+      go to https://www.anaconda.com/products/individual
 
 
 2. Download the pywfm python code
@@ -38,6 +42,15 @@ To use the pywfm package there are several steps required.
       
 	  pip install git+https://github.com/SGMOModeling/PyWFM.git
 
+   .. tip::
+      if pywfm is already installed and you want to install the latest version
+      it is recommended to uninstall first as pip may not see a difference between 
+      the version installed and the updates.
+
+      .. code-block:: bash
+
+         pip uninstall pywfm
+   
    or
 
    go to https://github.com/SGMOModeling/PyWFM and download the code as a ZIP archive.
