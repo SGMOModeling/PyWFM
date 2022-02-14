@@ -1,3 +1,4 @@
+import os
 import ctypes
 import numpy as np
 import pandas as pd
@@ -26,7 +27,17 @@ class IWFMBudget(IWFMMiscellaneous):
         if not isinstance(dll_path, str):
             raise TypeError('dll path provided: {} is not a string'.format(dll_path))
         
+        if not os.path.exists(dll_path):
+            raise FileNotFoundError('{} was not found'.format(dll_path))
+
         self.dll_path = dll_path
+
+        if not isinstance(budget_file_name, str):
+            raise TypeError('budget_file_name must be a string')
+
+        if not os.path.exists(budget_file_name):
+            raise FileNotFoundError('{} was not found'.format(budget_file_name))
+            
         self.budget_file_name = budget_file_name
 
         self.dll = ctypes.windll.LoadLibrary(self.dll_path)
