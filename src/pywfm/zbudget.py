@@ -1,3 +1,4 @@
+import os
 import ctypes
 from typing import Type
 import numpy as np
@@ -26,8 +27,18 @@ class IWFMZBudget(IWFMMiscellaneous):
     def __init__(self, dll_path, zbudget_file_name):
         if not isinstance(dll_path, str):
             raise TypeError('dll path provided: {} is not a string'.format(dll_path))
+
+        if not os.path.exists(dll_path):
+            raise FileNotFoundError('{} was not found'.format(dll_path))
         
         self.dll_path = dll_path
+
+        if not isinstance(zbudget_file_name, str):
+            raise TypeError('zbudget_file_name must be a string')
+
+        if not os.path.exists(zbudget_file_name):
+            raise FileNotFoundError('{} was not found'.format(zbudget_file_name))
+
         self.zbudget_file_name = zbudget_file_name
 
         self.dll = ctypes.windll.LoadLibrary(self.dll_path)
