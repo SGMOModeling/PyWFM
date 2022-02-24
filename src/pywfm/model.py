@@ -45,20 +45,25 @@ class IWFMModel(IWFMMiscellaneous):
     delete_inquiry_data_file : bool, default True
         flag to delete inquiry data file, if it exists
 
+    log_file : str, default 'message.log'
+        name of the file used for logging simulation messages
+
     Returns
     -------
     IWFMModel Object
         instance of the IWFMModel class and access to the IWFM Model Object 
         fortran procedures.
     '''
-    def __init__(self, 
-                 dll_path, 
-                 preprocessor_file_name, 
-                 simulation_file_name, 
-                 has_routed_streams=1, 
-                 is_for_inquiry=1,
-                 instantiate=True,
-                 delete_inquiry_data_file=True
+    def __init__(
+        self, 
+        dll_path, 
+        preprocessor_file_name, 
+        simulation_file_name, 
+        has_routed_streams=1, 
+        is_for_inquiry=1,
+        instantiate=True,
+        delete_inquiry_data_file=True,
+        log_file='message.log'
     ):
         
         if not isinstance(dll_path, str):
@@ -103,6 +108,12 @@ class IWFMModel(IWFMMiscellaneous):
         if delete_inquiry_data_file:
             self.delete_inquiry_data_file()
 
+        if log_file is not None:
+            if not isinstance(log_file, str):
+                raise TypeError("log_file must be a str or None")
+
+            self.set_log_file(log_file)
+
         if instantiate:
             self.new()
 
@@ -111,6 +122,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def __exit__(self, exc_type, exc_value, traceback):
         self.kill()
+        self.close_log_file()
 
     def new(self):
         '''
