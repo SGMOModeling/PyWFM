@@ -108,11 +108,10 @@ class IWFMModel(IWFMMiscellaneous):
         if delete_inquiry_data_file:
             self.delete_inquiry_data_file()
 
-        if log_file is not None:
-            if not isinstance(log_file, str):
-                raise TypeError("log_file must be a str or None")
+        if not isinstance(log_file, str):
+            raise TypeError("log_file must be a str or None")
 
-            self.set_log_file(log_file)
+        self.set_log_file(log_file)
 
         if instantiate:
             self.new()
