@@ -844,11 +844,20 @@ class IWFMBudget(IWFMMiscellaneous):
 
         return budget
 
-    def get_values_for_a_column(self, location_id, column_name, begin_date=None, 
-                                end_date=None, output_interval=None, 
-                                length_conversion_factor=1.0, 
-                                area_conversion_factor=1.0, 
-                                volume_conversion_factor=1.0):
+    def get_values_for_a_column(
+        self, 
+        location_id, 
+        column_name, 
+        begin_date=None, 
+        end_date=None, 
+        output_interval=None, 
+        length_conversion_factor=1.0, 
+        length_units='FT',
+        area_conversion_factor=1.0, 
+        area_units='SQ FT',
+        volume_conversion_factor=1.0,
+        volume_units='CU FT'
+    ):
         '''
         Return the budget data for a single column and location for a specified
         beginning and ending dates.
@@ -879,13 +888,20 @@ class IWFMBudget(IWFMMiscellaneous):
             Unit conversion factor for length units used in the model 
             to some other length unit.
 
+        length_units : str, default 'FT'
+            output units of length
+        
         area_conversion_factor : float, default 1.0
-            Unit conversion factor for area units used in the model
-            to some other area unit.
+            Conversion factor to convert simulation units for area.
+
+        area_units : str, default 'SQ FT'
+            output units of area
 
         volume_conversion_factor : float, default 1.0
-            Unit conversion factor for volume units used in the model
-            to some other volume unit.
+            Conversion factor to convert simulation units for volume.
+
+        volume_units : str, default 'CU FT'
+            output units of volume
 
         Returns
         -------
@@ -919,25 +935,38 @@ class IWFMBudget(IWFMMiscellaneous):
         >>> gw_bud.close_budget_file()
         '''
         if not hasattr(self.dll, 'IW_Budget_GetValues_ForAColumn'):
-            raise AttributeError('IWFM DLL does not have "{}" procedure. '
-                                 'Check for an updated version'.format('IW_Budget_GetValues_ForAColumn'))
+            raise AttributeError(
+                'IWFM DLL does not have "{}" procedure. '
+                'Check for an updated version'.format('IW_Budget_GetValues_ForAColumn')
+                )
         
         # get number of locations
         n_locations = self.get_n_locations()
 
         # check that location_id is a number between 1 and n_locations
         if location_id not in [i+1 for i in range(n_locations)]:
-            raise ValueError('location_id is not valid. Must be a value between 1 and {}.'.format(n_locations))
+            raise ValueError(
+                'location_id is not valid. Must be a value '
+                'between 1 and {}.'.format(n_locations)
+                )
 
         # convert location_id to ctypes
         location_id = ctypes.c_int(location_id)
 
         # get column_headers
-        column_headers = self.get_column_headers(location_id.value)
+        column_headers = self.get_column_headers(
+            location_id.value,
+            length_units,
+            area_units,
+            volume_units
+        )
 
         # check that column name provided exists. if so, get column index.
         if column_name not in column_headers:
-                raise ValueError('column_name provided must be one of the following:\n {}'.format(', '.join(column_headers)))
+                raise ValueError(
+                    'column_name provided must be one of the '
+                    'following:\n {}'.format(', '.join(column_headers))
+                    )
         
         column_id = ctypes.c_int(column_headers.index(column_name))
             
@@ -1000,8 +1029,6 @@ class IWFMBudget(IWFMMiscellaneous):
         # set status to 0
         status = ctypes.c_int(0)
 
-        # IW_Budget_GetValues_ForAColumn(iLoc,iCol,cOutputInterval,iLenInterval,cOutputBeginDateAndTime,cOutputEndDateAndTime,
-        #                                iLenDateAndTime,rFact_LT,rFact_AR,rFact_VL,iDim_In,iDim_Out,Dates,Values,iStat)
         self.dll.IW_Budget_GetValues_ForAColumn(ctypes.byref(location_id),
                                                 ctypes.byref(column_id),
                                                 output_interval,
@@ -1018,7 +1045,8 @@ class IWFMBudget(IWFMMiscellaneous):
                                                 values,
                                                 ctypes.byref(status))
 
-        dates = np.array('1899-12-30', dtype='datetime64') + np.array(dates, dtype='timedelta64')
+        dates = np.array('1899-12-30', dtype='datetime64') \
+              + np.array(dates, dtype='timedelta64')
         values = np.array(values)
 
         return pd.DataFrame({'Time': dates, column_name: values})
