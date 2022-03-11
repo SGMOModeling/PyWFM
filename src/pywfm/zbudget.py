@@ -1171,10 +1171,18 @@ class IWFMZBudget(IWFMMiscellaneous):
 
         return value_dict
 
-    def get_values_for_a_zone(self, zone_id, column_ids='all', begin_date=None, 
-                              end_date=None, output_interval=None, 
-                              area_conversion_factor=1.0, 
-                              volume_conversion_factor=1.0):
+    def get_values_for_a_zone(
+        self, 
+        zone_id, 
+        column_ids='all', 
+        begin_date=None, 
+        end_date=None, 
+        output_interval=None, 
+        area_conversion_factor=1.0, 
+        area_units='SQ FT',
+        volume_conversion_factor=1.0,
+        volume_units='CU FT'
+    ):
         ''' 
         Return specified Z-Budget data columns for a specified zone for
         a time period.
@@ -1202,9 +1210,15 @@ class IWFMZBudget(IWFMMiscellaneous):
             Factor to convert area units from the default model units
             to the desired output units.
 
+        area_units : str, default 'SQ FT'
+            output units of area
+
         volume_conversion_factor : float or int, default 1.0
             Factor to convert volume units from the default model units
             to the desired output units.
+
+        volume_units : str, default 'CU FT'
+            output units of volume
 
         Returns
         -------
@@ -1283,7 +1297,11 @@ class IWFMZBudget(IWFMMiscellaneous):
             raise ValueError('zone_id was not found in zone definitions provided')
 
         # get all column headers and column IDs
-        column_headers, column_header_ids = self.get_column_headers_for_a_zone(zone_id, include_time=True)
+        column_headers, column_header_ids = self.get_column_headers_for_a_zone(
+            zone_id, 
+            area_units,
+            volume_units,
+            include_time=True)
 
         if isinstance(column_ids, str) and column_ids == 'all':
             column_ids = column_header_ids[column_header_ids > 0]
@@ -1393,6 +1411,7 @@ class IWFMZBudget(IWFMMiscellaneous):
         values = np.array(zbudget_values)
 
         zbudget = pd.DataFrame(data=values, columns=columns)
-        zbudget['Time'] = zbudget['Time'].astype('timedelta64[D]') + np.array('1899-12-30', dtype='datetime64')
+        zbudget['Time'] = zbudget['Time'].astype('timedelta64[D]') \
+                        + np.array('1899-12-30', dtype='datetime64')
         
         return zbudget
