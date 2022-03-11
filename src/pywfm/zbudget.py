@@ -873,12 +873,17 @@ class IWFMZBudget(IWFMMiscellaneous):
                                              delimiter_position_array, 
                                              n_title_lines)
 
-    def get_values_for_some_zones_for_an_interval(self, zone_ids='all', 
-                                                  column_ids='all', 
-                                                  current_date=None, 
-                                                  output_interval=None, 
-                                                  area_conversion_factor=1.0, 
-                                                  volume_conversion_factor=1.0):
+    def get_values_for_some_zones_for_an_interval(
+        self, 
+        zone_ids='all', 
+        column_ids='all', 
+        current_date=None, 
+        output_interval=None, 
+        area_conversion_factor=1.0,
+        area_units='SQ FT', 
+        volume_conversion_factor=1.0,
+        volume_units='CU FT'
+    ):
         '''
         Return specified zone flow values for one or more zones at a given 
         date and time interval.
@@ -911,9 +916,15 @@ class IWFMZBudget(IWFMMiscellaneous):
             Factor to convert area units from the default model units
             to the desired output units.
 
+        area_units : str, default 'SQ FT'
+            output units of area
+
         volume_conversion_factor : float or int, default 1.0
             Factor to convert volume units from the default model units
             to the desired output units.
+
+        volume_units : str, default 'CU FT'
+            output units of volume
 
         Returns
         -------
@@ -1003,8 +1014,16 @@ class IWFMZBudget(IWFMMiscellaneous):
         zone_header_array = []
         column_name_array = []
         n_columns_max = 0
+        
         for zone_id in zone_ids:
-            column_names, column_header_ids = self.get_column_headers_for_a_zone(zone_id, include_time=True)
+            
+            column_names, column_header_ids = self.get_column_headers_for_a_zone(
+                zone_id, 
+                area_units,
+                volume_units,
+                include_time=True
+            )
+            
             n_columns = len(column_header_ids[column_header_ids > 0])
             
             if n_columns > n_columns_max:
