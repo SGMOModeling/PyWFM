@@ -619,10 +619,20 @@ class IWFMBudget(IWFMMiscellaneous):
 
         return self._string_to_list_by_array(raw_column_headers, delimiter_position_array, n_columns)
 
-    def get_values(self, location_id, columns='all', begin_date=None, 
-                   end_date=None, output_interval=None, length_conversion_factor=1.0, 
-                   area_conversion_factor=1.0, 
-                   volume_conversion_factor=1.0):
+    def get_values(
+        self, 
+        location_id, 
+        columns='all', 
+        begin_date=None,
+        end_date=None, 
+        output_interval=None, 
+        length_conversion_factor=1.0,
+        length_units='FT', 
+        area_conversion_factor=1.0,
+        area_units='SQ FT', 
+        volume_conversion_factor=1.0,
+        volume_units='CU FT'
+    ):
         '''
         Return budget data for selected budget columns for a location and specified time interval.
         
@@ -652,12 +662,21 @@ class IWFMBudget(IWFMMiscellaneous):
         length_conversion_factor : float, default 1.0 
             Conversion factor to convert simulation units for length
             to another length.
+
+        length_units : str, default 'FT'
+            output units of length
         
         area_conversion_factor : float, default 1.0
             Conversion factor to convert simulation units for area.
 
+        area_units : str, default 'SQ FT'
+            output units of area
+
         volume_conversion_factor : float, default 1.0
             Conversion factor to convert simulation units for volume.
+
+        volume_units : str, default 'CU FT'
+            output units of volume
 
         Returns
         -------
@@ -700,13 +719,20 @@ class IWFMBudget(IWFMMiscellaneous):
 
         # check that location_id is a number between 1 and n_locations
         if location_id not in [i+1 for i in range(n_locations)]:
-            raise ValueError('location_id is not valid. Must be a value between 1 and {}.'.format(n_locations))
+            raise ValueError(
+                'location_id is not valid. '
+                'Must be a value between 1 and {}.'.format(n_locations))
 
         # convert location_id to ctypes
         location_id = ctypes.c_int(location_id)
 
         # get column headers
-        column_headers = self.get_column_headers(location_id.value)
+        column_headers = self.get_column_headers(
+            location_id.value, 
+            length_units, 
+            area_units, 
+            volume_units
+        )
 
         # handle columns as a list
         if isinstance(columns, str):
@@ -724,7 +750,10 @@ class IWFMBudget(IWFMMiscellaneous):
         column_numbers = []
         for val in columns:
             if val not in column_headers:
-                raise ValueError('columns provided must be one of the following:\n {}'.format(', '.join(column_headers)))
+                raise ValueError(
+                    'columns provided must be one of the '
+                    'following:\n {}'.format(', '.join(column_headers))
+                    )
             else:
                 column_numbers.append(column_headers.index(val))
 
