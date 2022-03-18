@@ -1,8 +1,12 @@
 import os
 import ctypes
-from typing import Type
 import numpy as np
 import pandas as pd
+
+from pywfm import (
+    DLL_PATH,
+    DLL
+)
 
 from pywfm.misc import IWFMMiscellaneous
 
@@ -12,9 +16,6 @@ class IWFMZBudget(IWFMMiscellaneous):
 
     Parameters
     ----------
-    dll_path : str
-        File path and name of the IWFM DLL to access IWFM procedures.
-
     zbudget_file_name : str
         File path and name of the budget file
 
@@ -24,15 +25,8 @@ class IWFMZBudget(IWFMMiscellaneous):
         Instance of the IWFMZBudget class and access to the IWFM Budget 
         fortran procedures.
     '''
-    def __init__(self, dll_path, zbudget_file_name):
-        if not isinstance(dll_path, str):
-            raise TypeError('dll path provided: {} is not a string'.format(dll_path))
-
-        if not os.path.exists(dll_path):
-            raise FileNotFoundError('{} was not found'.format(dll_path))
+    def __init__(self, zbudget_file_name):
         
-        self.dll_path = dll_path
-
         if not isinstance(zbudget_file_name, str):
             raise TypeError('zbudget_file_name must be a string')
 
@@ -41,7 +35,7 @@ class IWFMZBudget(IWFMMiscellaneous):
 
         self.zbudget_file_name = zbudget_file_name
 
-        self.dll = ctypes.windll.LoadLibrary(self.dll_path)
+        self.dll = ctypes.windll.LoadLibrary(os.path.join(DLL_PATH, DLL))
 
         # check to see if the open file procedure exists in the dll provided
         if not hasattr(self.dll, 'IW_ZBudget_OpenFile'):
