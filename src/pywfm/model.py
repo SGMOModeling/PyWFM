@@ -1,7 +1,6 @@
 import os
 import ctypes
 import math
-from typing import Type
 import numpy as np
 import pandas as pd
 
@@ -12,6 +11,11 @@ import matplotlib.patches as patches
 from matplotlib.collections import PolyCollection
 import matplotlib.colors as colors
 
+from pywfm import (
+    DLL_PATH,
+    DLL
+)
+
 from pywfm.misc import IWFMMiscellaneous
 
 class IWFMModel(IWFMMiscellaneous):
@@ -20,9 +24,6 @@ class IWFMModel(IWFMMiscellaneous):
 
     Parameters
     ----------
-    dll_path : str
-        file path and name of the IWFM DLL to access IWFM procedures.
-
     preprocessor_file_name : str
         file path and name of the model preprocessor input file.
 
@@ -56,7 +57,6 @@ class IWFMModel(IWFMMiscellaneous):
     '''
     def __init__(
         self, 
-        dll_path, 
         preprocessor_file_name, 
         simulation_file_name, 
         has_routed_streams=1, 
@@ -66,11 +66,6 @@ class IWFMModel(IWFMMiscellaneous):
         log_file='message.log'
     ):
         
-        if not isinstance(dll_path, str):
-            raise TypeError("DLL path must be a string.\nProvided {} is a {}".format(dll_path, type(dll_path)))
-
-        self.dll_path = dll_path
-
         if not isinstance(preprocessor_file_name, str):
             raise TypeError("preprocessor_file_name must be a str")
 
@@ -103,7 +98,7 @@ class IWFMModel(IWFMMiscellaneous):
 
         self.is_for_inquiry = is_for_inquiry
             
-        self.dll = ctypes.windll.LoadLibrary(self.dll_path)
+        self.dll = ctypes.windll.LoadLibrary(os.path.join(DLL_PATH, DLL))
 
         if delete_inquiry_data_file:
             self.delete_inquiry_data_file()
