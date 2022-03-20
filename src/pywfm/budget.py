@@ -97,9 +97,8 @@ class IWFMBudget(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMBudget
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> bud_file = '../Results/GW.hdf'
-        >>> gw_bud = IWFMBudget(dll, bud_file)
+        >>> gw_bud = IWFMBudget(bud_file)
         >>> gw_bud.get_n_locations()
         3
         >>> gw_bud.close_budget_file()
@@ -134,9 +133,8 @@ class IWFMBudget(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMBudget
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> bud_file = '../Results/GW.hdf'
-        >>> gw_bud = IWFMBudget(dll, bud_file)
+        >>> gw_bud = IWFMBudget(bud_file)
         >>> gw_bud.get_location_names()
         ['Region1 (SR1)', 'Region2 (SR2)', 'ENTIRE MODEL AREA']
         >>> gw_bud.close_budget_file()
@@ -184,9 +182,8 @@ class IWFMBudget(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMBudget
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> bud_file = '../Results/GW.hdf'
-        >>> gw_bud = IWFMBudget(dll, bud_file)
+        >>> gw_bud = IWFMBudget(bud_file)
         >>> gw_bud.get_n_time_steps()
         3653
         >>> gw_bud.close_budget_file()
@@ -223,9 +220,8 @@ class IWFMBudget(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMBudget
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> bud_file = '../Results/GW.hdf'
-        >>> gw_bud = IWFMBudget(dll, bud_file)
+        >>> gw_bud = IWFMBudget(bud_file)
         >>> dates, output_interval = gw_bud.get_time_specs()
         >>> dates
         ['10/01/1990_24:00',
@@ -296,9 +292,8 @@ class IWFMBudget(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMBudget
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> bud_file = '../Results/GW.hdf'
-        >>> gw_bud = IWFMBudget(dll, bud_file)
+        >>> gw_bud = IWFMBudget(bud_file)
         >>> gw_bud.get_n_title_lines()
         3
         >>> gw_bud.close_budget_file()
@@ -333,9 +328,8 @@ class IWFMBudget(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMBudget
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> bud_file = '../Results/GW.hdf'
-        >>> gw_bud = IWFMBudget(dll, bud_file)
+        >>> gw_bud = IWFMBudget(bud_file)
         >>> gw_bud.get_title_length()
         242
         >>> gw_bud.close_budget_file()
@@ -407,9 +401,8 @@ class IWFMBudget(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMBudget
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> bud_file = '../Results/GW.hdf'
-        >>> gw_bud = IWFMBudget(dll, bud_file)
+        >>> gw_bud = IWFMBudget(bud_file)
         >>> gw_bud.get_title_lines(1)
         ['IWFM (v2015.0.1273)',
          'GROUNDWATER BUDGET IN cu ft FOR Region1 (SR1)',
@@ -518,9 +511,8 @@ class IWFMBudget(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMBudget
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> bud_file = '../Results/GW.hdf'
-        >>> gw_bud = IWFMBudget(dll, bud_file)
+        >>> gw_bud = IWFMBudget(bud_file)
         >>> gw_bud.get_n_columns()
         17
         >>> gw_bud.close_budget_file()
@@ -586,9 +578,8 @@ class IWFMBudget(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMBudget
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> bud_file = '../Results/GW.hdf'
-        >>> gw_bud = IWFMBudget(dll, bud_file)
+        >>> gw_bud = IWFMBudget(bud_file)
         >>> gw_bud.get_column_headers()
         ['Time',
          'Percolation',
@@ -742,9 +733,8 @@ class IWFMBudget(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMBudget
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> bud_file = '../Results/GW.hdf'
-        >>> gw_bud = IWFMBudget(dll, bud_file)
+        >>> gw_bud = IWFMBudget(bud_file)
         >>> gw_bud.get_values(1, ['Percolation', 'Pumping (-)'], '10/31/1999_24:00', '09/30/2000_24:00')
                      Time     Percolation     Pumping (-)
           0    1999-10-31    5.409162e+06    0.000000e+00
@@ -983,9 +973,8 @@ class IWFMBudget(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMBudget
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> bud_file = '../Results/GW.hdf'
-        >>> gw_bud = IWFMBudget(dll, bud_file)
+        >>> gw_bud = IWFMBudget(bud_file)
         >>> gw_bud.get_values_for_a_column(1, 'Pumping (-)')
                       Time     Pumping (-)
            0    1990-10-01    0.000000e+00
