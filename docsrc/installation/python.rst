@@ -1,0 +1,92 @@
+#########################
+Installation using Python
+#########################
+
+1. Make sure python 3 [#pythonversion]_ is installed on your computer and pip runs from the command line
+========================================================================================================
+
+   To check your python version, open command prompt and type:
+
+   .. code-block:: bash
+   
+      python --version
+
+   .. image:: ../_static/checkpythonversion.png
+      :alt: command prompt window showing command to check python version
+
+   .. note::
+      if this command does not work, you will need to either install python or add python to the Path Environment Variable
+
+      To install python:
+      
+      go to: https://www.python.org/
+
+      or
+
+      go to https://www.anaconda.com/products/individual
+
+
+2. Download the pywfm python code
+===================================
+
+   .. code-block:: bash
+      
+	  pip install git+https://github.com/SGMOModeling/PyWFM.git
+
+   .. tip::
+      if pywfm is already installed and you want to install the latest version
+      it is recommended to uninstall first as pip may not see a difference between 
+      the version installed and the updates.
+
+      .. code-block:: bash
+
+         pip uninstall pywfm
+   
+   or
+
+   go to https://github.com/SGMOModeling/PyWFM and download the code as a ZIP archive.
+
+   .. image:: ../_static/CodeDownload.png
+      :alt: github link to download pywfm module
+
+   .. note::
+      By downloading the ZIP archive of the pywfm package, the module can be upzipped and placed 
+      in a location of the users choice. a .pth file containing the path to the pywfm package can 
+      be saved in the site-packages folder of the python installation.
+
+      For example, with an ArcGIS Pro python environment the site packages folder for a cloned
+      environment may be located here:
+
+      C:\\Users\\<UserName>\\AppData\\Local\\ESRI\\conda\\envs\\<VirtualEnvironmentName>\\Lib\\site-packages
+
+
+3. Download the latest version of IWFM
+======================================
+
+   Go to https://data.cnra.ca.gov/dataset/iwfm-integrated-water-flow-model
+
+   Click on the download button next to the latest version of IWFM
+
+   .. image:: ../_static/DownloadIWFM.png
+      :alt: Download IWFM from the CNRA Open Data Platform
+
+   .. important::
+      Downloading IWFM includes the IWFM dll that the pywfm python module is dependent on to work
+
+4. Copy IWFM2015_C_x64.dll to the Library/bin folder in your python installation or virtual environment
+=======================================================================================================
+
+   .. important::
+      if this is not done, pywfm will not work as-is. The path to the dll could be updated in the pywfm __init__.py file
+
+
+4. Once installed, you should be able to open a python console or jupyter notebook and run the following:
+=========================================================================================================
+
+   .. code-block:: py
+      
+	  import pywfm
+
+.. rubric Footnotes
+
+.. [#pythonversion] The pywfm module has been tested using python 3.7.9, 3.7.11, 3.10.2

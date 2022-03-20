@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>pywfm.IWFMBudget.get_values &#8212; PyWFM 0.0.1 documentation</title>
+    <title>pywfm.IWFMBudget.get_values &#8212; PyWFM 0.1.0 documentation</title>
     
     <link href="../../../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
 <link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -1450,9 +1450,8 @@ to another length.</p></li>
 </div>
 <p class="rubric">Example</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pywfm</span> <span class="kn">import</span> <span class="n">IWFMBudget</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">dll</span> <span class="o">=</span> <span class="s1">&#39;../../DLL/Bin/IWFM2015_C_x64.dll&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">bud_file</span> <span class="o">=</span> <span class="s1">&#39;../Results/GW.hdf&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">gw_bud</span> <span class="o">=</span> <span class="n">IWFMBudget</span><span class="p">(</span><span class="n">dll</span><span class="p">,</span> <span class="n">bud_file</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gw_bud</span> <span class="o">=</span> <span class="n">IWFMBudget</span><span class="p">(</span><span class="n">bud_file</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">gw_bud</span><span class="o">.</span><span class="n">get_values</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;Percolation&#39;</span><span class="p">,</span> <span class="s1">&#39;Pumping (-)&#39;</span><span class="p">],</span> <span class="s1">&#39;10/31/1999_24:00&#39;</span><span class="p">,</span> <span class="s1">&#39;09/30/2000_24:00&#39;</span><span class="p">)</span>
 <span class="go">             Time     Percolation     Pumping (-)</span>
 <span class="go">  0    1999-10-31    5.409162e+06    0.000000e+00</span>

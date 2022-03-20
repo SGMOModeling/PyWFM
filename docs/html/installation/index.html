@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Installation &#8212; PyWFM 0.0.1 documentation</title>
+    <title>Installation &#8212; PyWFM 0.1.0 documentation</title>
     
     <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
 <link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -36,7 +36,7 @@
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Tutorials" href="../tutorial/index.html" />
+    <link rel="next" title="Installation using Anaconda" href="anaconda.html" />
     <link rel="prev" title="PyWFM Documentation" href="../index.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -122,7 +122,19 @@
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
   <div class="bd-toc-item active">
-    
+    <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="anaconda.html">
+   Installation using Anaconda
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="python.html">
+   Installation using Python
+  </a>
+ </li>
+</ul>
+
   </div>
 </nav>
               </div>
@@ -148,28 +160,6 @@
   <a class="reference internal nav-link" href="#overview">
    Overview
   </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#make-sure-python-3-is-installed-on-your-computer-and-pip-runs-from-the-command-line">
-     1. Make sure python 3  is installed on your computer and pip runs from the command line
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#download-the-pywfm-python-code">
-     2. Download the pywfm python code
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#download-the-latest-version-of-iwfm">
-     3. Download the latest version of IWFM
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#once-installed-you-should-be-able-to-open-a-python-console-or-jupyter-notebook-and-run-the-following">
-     4. Once installed, you should be able to open a python console or jupyter notebook and run the following:
-    </a>
-   </li>
-  </ul>
  </li>
 </ul>
 
@@ -194,81 +184,14 @@
                 
   <div class="section" id="installation">
 <h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
-<p>This guide is an overview and explains the installation process.</p>
+<p>This guide explains the installation process.</p>
 <div class="section" id="overview">
 <h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
-<p>To use the pywfm package there are several steps required.</p>
-<div class="section" id="make-sure-python-3-is-installed-on-your-computer-and-pip-runs-from-the-command-line">
-<h3>1. Make sure python 3 <a class="footnote-reference brackets" href="#pythonversion" id="id1">1</a> is installed on your computer and pip runs from the command line<a class="headerlink" href="#make-sure-python-3-is-installed-on-your-computer-and-pip-runs-from-the-command-line" title="Permalink to this headline">¶</a></h3>
-<blockquote>
-<div><p>To check your python version, open command prompt and type:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python --version
-</pre></div>
+<p>To use the pywfm package, there are several installation steps required.</p>
+<div class="button docutils container">
+<p><a class="reference internal" href="anaconda.html"><span class="doc">Installation with Anaconda</span></a> <a class="reference internal" href="python.html"><span class="doc">Installation with Python</span></a></p>
 </div>
-<img alt="command prompt window showing command to check python version" src="../_images/checkpythonversion.png" />
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>if this command does not work, you will need to either install python or add python to the Path Environment Variable</p>
-<p>To install python:</p>
-<p>go to: <a class="reference external" href="https://www.python.org/">https://www.python.org/</a></p>
-<p>or</p>
-<p>go to <a class="reference external" href="https://www.anaconda.com/products/individual">https://www.anaconda.com/products/individual</a></p>
-</div>
-</div></blockquote>
-</div>
-<div class="section" id="download-the-pywfm-python-code">
-<h3>2. Download the pywfm python code<a class="headerlink" href="#download-the-pywfm-python-code" title="Permalink to this headline">¶</a></h3>
-<blockquote>
-<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install git+https://github.com/SGMOModeling/PyWFM.git
-</pre></div>
-</div>
-<div class="admonition tip">
-<p class="admonition-title">Tip</p>
-<p>if pywfm is already installed and you want to install the latest version
-it is recommended to uninstall first as pip may not see a difference between
-the version installed and the updates.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip uninstall pywfm
-</pre></div>
-</div>
-</div>
-<p>or</p>
-<p>go to <a class="reference external" href="https://github.com/SGMOModeling/PyWFM">https://github.com/SGMOModeling/PyWFM</a> and download the code as a ZIP archive.</p>
-<img alt="github link to download pywfm module" src="../_images/CodeDownload.png" />
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>By downloading the ZIP archive of the pywfm package, the module can be upzipped and placed
-in a location of the users choice. a .pth file containing the path to the pywfm package can
-be saved in the site-packages folder of the python installation.</p>
-<p>For example, with an ArcGIS Pro python environment the site packages folder for a cloned
-environment may be located here:</p>
-<p>C:\Users\&lt;UserName&gt;\AppData\Local\ESRI\conda\envs\&lt;VirtualEnvironmentName&gt;\Lib\site-packages</p>
-</div>
-</div></blockquote>
-</div>
-<div class="section" id="download-the-latest-version-of-iwfm">
-<h3>3. Download the latest version of IWFM<a class="headerlink" href="#download-the-latest-version-of-iwfm" title="Permalink to this headline">¶</a></h3>
-<blockquote>
-<div><p>Go to <a class="reference external" href="https://data.cnra.ca.gov/dataset/iwfm-integrated-water-flow-model">https://data.cnra.ca.gov/dataset/iwfm-integrated-water-flow-model</a></p>
-<p>Click on the download button next to the latest version of IWFM</p>
-<img alt="Download IWFM from the CNRA Open Data Platform" src="../_images/DownloadIWFM.png" />
-<div class="admonition important">
-<p class="admonition-title">Important</p>
-<p>Downloading IWFM includes the IWFM dll that the pywfm python module is dependent on to work</p>
-</div>
-</div></blockquote>
-</div>
-<div class="section" id="once-installed-you-should-be-able-to-open-a-python-console-or-jupyter-notebook-and-run-the-following">
-<h3>4. Once installed, you should be able to open a python console or jupyter notebook and run the following:<a class="headerlink" href="#once-installed-you-should-be-able-to-open-a-python-console-or-jupyter-notebook-and-run-the-following" title="Permalink to this headline">¶</a></h3>
-<blockquote>
-<div><div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pywfm</span>
-</pre></div>
-</div>
-</div></blockquote>
-<dl class="footnote brackets">
-<dt class="label" id="pythonversion"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
-<dd><p>The pywfm module has been tested using python 3.7.9, 3.7.11, 3.10.2</p>
-</dd>
-</dl>
+<div class="toctree-wrapper compound">
 </div>
 </div>
 </div>
@@ -286,10 +209,10 @@ environment may be located here:</p>
             <p class="prev-next-title">PyWFM Documentation</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="../tutorial/index.html" title="next page">
+    <a class='right-next' id="next-link" href="anaconda.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Tutorials</p>
+        <p class="prev-next-title">Installation using Anaconda</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
