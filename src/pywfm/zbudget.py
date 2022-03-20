@@ -262,10 +262,9 @@ class IWFMZBudget(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMZBudget
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> zbud_file = '../Results/GW_ZBud.hdf'
         >>> zone_defs = '../ZBudget/ZoneDef_SRs.dat'
-        >>> gw_zbud = IWFMZBudget(dll, zbud_file)
+        >>> gw_zbud = IWFMZBudget(zbud_file)
         >>> gw_zbud.generate_zone_list_from_file(zone_defs)
         >>> gw_zbud.get_n_zones()
         2
@@ -307,10 +306,9 @@ class IWFMZBudget(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMZBudget
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> zbud_file = '../Results/GW_ZBud.hdf'
         >>> zone_defs = '../ZBudget/ZoneDef_SRs.dat'
-        >>> gw_zbud = IWFMZBudget(dll, zbud_file)
+        >>> gw_zbud = IWFMZBudget(zbud_file)
         >>> gw_zbud.generate_zone_list_from_file(zone_defs)
         >>> gw_zbud.get_zone_list()
         array([1, 2])
@@ -355,10 +353,9 @@ class IWFMZBudget(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMZBudget
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> zbud_file = '../Results/GW_ZBud.hdf'
         >>> zone_defs = '../ZBudget/ZoneDef_SRs.dat'
-        >>> gw_zbud = IWFMZBudget(dll, zbud_file)
+        >>> gw_zbud = IWFMZBudget(zbud_file)
         >>> gw_zbud.generate_zone_list_from_file(zone_defs)
         >>> gw_zbud.get_n_time_steps()
         3653
@@ -404,10 +401,9 @@ class IWFMZBudget(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMZBudget
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> zbud_file = '../Results/GW_ZBud.hdf'
         >>> zone_defs = '../ZBudget/ZoneDef_SRs.dat'
-        >>> gw_zbud = IWFMZBudget(dll, zbud_file)
+        >>> gw_zbud = IWFMZBudget(zbud_file)
         >>> gw_zbud.generate_zone_list_from_file(zone_defs)
         >>> dates, interval = gw_zbud.get_time_specs()
         >>> dates
@@ -589,10 +585,9 @@ class IWFMZBudget(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMZBudget
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> zbud_file = '../Results/GW_ZBud.hdf'
         >>> zone_defs = '../ZBudget/ZoneDef_SRs.dat'
-        >>> gw_zbud = IWFMZBudget(dll, zbud_file)
+        >>> gw_zbud = IWFMZBudget(zbud_file)
         >>> gw_zbud.generate_zone_list_from_file(zone_defs)
         >>> column_names, column_ids = gw_zbud.get_column_headers_for_a_zone(1)
         >>> column_names
@@ -755,10 +750,9 @@ class IWFMZBudget(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMZBudget
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> zbud_file = '../Results/GW_ZBud.hdf'
         >>> zone_defs = '../ZBudget/ZoneDef_SRs.dat'
-        >>> gw_zbud = IWFMZBudget(dll, zbud_file)
+        >>> gw_zbud = IWFMZBudget(zbud_file)
         >>> gw_zbud.generate_zone_list_from_file(zone_defs)
         >>> gw_zbud.get_zone_names()
         ['Region1', 'Region2']
@@ -811,10 +805,9 @@ class IWFMZBudget(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMZBudget
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> zbud_file = '../Results/GW_ZBud.hdf'
         >>> zone_defs = '../ZBudget/ZoneDef_SRs.dat'
-        >>> gw_zbud = IWFMZBudget(dll, zbud_file)
+        >>> gw_zbud = IWFMZBudget(zbud_file)
         >>> gw_zbud.generate_zone_list_from_file(zone_defs)
         >>> gw_zbud.get_n_title_lines()
         3
@@ -882,10 +875,9 @@ class IWFMZBudget(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMZBudget
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> zbud_file = '../Results/GW_ZBud.hdf'
         >>> zone_defs = '../ZBudget/ZoneDef_SRs.dat'
-        >>> gw_zbud = IWFMZBudget(dll, zbud_file)
+        >>> gw_zbud = IWFMZBudget(zbud_file)
         >>> gw_zbud.generate_zone_list_from_file(zone_defs)
         >>> gw_zbud.get_title_lines(1)
         ['IWFM (v2015.0.1273)',
@@ -1015,10 +1007,9 @@ class IWFMZBudget(IWFMMiscellaneous):
         Examples
         --------
         >>> from pywfm import IWFMZBudget
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> zbud_file = '../Results/GW_ZBud.hdf'
         >>> zone_defs = '../ZBudget/ZoneDef_SRs.dat'
-        >>> gw_zbud = IWFMZBudget(dll, zbud_file)
+        >>> gw_zbud = IWFMZBudget(zbud_file)
         >>> gw_zbud.generate_zone_list_from_file(zone_defs)
         >>> zone_values = gw_zbud.get_values_for_some_zones_for_an_interval()
         >>> zone_values['Region1']
@@ -1027,10 +1018,9 @@ class IWFMZBudget(IWFMMiscellaneous):
         >>> gw_zbud.close_zbudget_file()
 
         >>> from pywfm import IWFMZBudget
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> zbud_file = '../Results/GW_ZBud.hdf'
         >>> zone_defs = '../ZBudget/ZoneDef_SRs.dat'
-        >>> gw_zbud = IWFMZBudget(dll, zbud_file)
+        >>> gw_zbud = IWFMZBudget(zbud_file)
         >>> gw_zbud.generate_zone_list_from_file(zone_defs)
         >>> gw_zbud.get_values_for_some_zones_for_an_interval(1, [1, 2, 3])
         {'Region1':         Time  GW Storage_Inflow (+)  GW Storage_Outflow (-)
@@ -1038,10 +1028,9 @@ class IWFMZBudget(IWFMMiscellaneous):
         >>> gw_zbud.close_zbudget_file()
 
         >>> from pywfm import IWFMZBudget
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> zbud_file = '../Results/GW_ZBud.hdf'
         >>> zone_defs = '../ZBudget/ZoneDef_SRs.dat'
-        >>> gw_zbud = IWFMZBudget(dll, zbud_file)
+        >>> gw_zbud = IWFMZBudget(zbud_file)
         >>> gw_zbud.generate_zone_list_from_file(zone_defs)
         >>> gw_zbud.get_values_for_some_zones_for_an_interval(column_ids=[[28, 29], [28, 29, 30, 31]])
         {'Region1':         Time  Inflow from zone 2 (+)  Outflow to zone 2 (-)
@@ -1351,10 +1340,9 @@ class IWFMZBudget(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMZBudget
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> zbud_file = '../Results/GW_ZBud.hdf'
         >>> zone_defs = '../ZBudget/ZoneDef_SRs.dat'
-        >>> gw_zbud = IWFMZBudget(dll, zbud_file)
+        >>> gw_zbud = IWFMZBudget(zbud_file)
         >>> gw_zbud.generate_zone_list_from_file(zone_defs)
         >>> gw_zbud.get_values_for_a_zone(1, begin_date='10/01/1997_24:00', end_date='10/31/1997_24:00', volume_conversion_factor=2.295684E-08)
                   Time GW Storage_Inflow (+) GW Storage_Outflow (-) Streams_Inflow (+) Streams_Outflow (-) Tile Drains_Inflow (+) Tile Drains_Outflow (-) Subsidence_Inflow (+) Subsidence_Outflow (-) Deep Percolation_Inflow (+) ... Lakes_Inflow (+) Lakes_Outflow (-) Pumping by Element_Inflow (+) Pumping by Element_Outflow (-) Root Water Uptake_Inflow (+) Root Water Uptake_Outflow (-) Inflow from zone 2 (+) Outflow to zone 2 (-) Discrepancy (=) Absolute Storage
