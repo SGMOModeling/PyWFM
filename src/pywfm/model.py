@@ -222,19 +222,17 @@ class IWFMModel(IWFMMiscellaneous):
         Examples
         --------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_current_date_and_time()
         '09/30/1990_24:00'
         >>> model.kill()
 
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file, is_for_inquiry=0)
+        >>> model = IWFMModel(pp_file, sim_file, is_for_inquiry=0)
         >>> model.advance_time()
         >>> model.get_current_date_and_time()
         '10/01/1990_24:00'
@@ -293,10 +291,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_n_time_steps()
         3653
         >>> model.kill()
@@ -341,10 +338,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> time_stamps, time_interval = model.get_time_specs()
         >>> time_stamps
         ['10/01/1990_24:00',
@@ -422,10 +418,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_output_interval()
         ['1DAY', '1WEEK', '1MON', '1YEAR']
         >>> model.kill()
@@ -486,10 +481,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_n_nodes()
         441
         >>> model.kill()
@@ -533,10 +527,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> x, y = model.get_node_coordinates()
         >>> x
         array([1804440. , 1811001.6, 1817563.2, 1824124.8, 1830686.4, 1837248. , ..., 1902864. , 1909425.6, 1915987.2, 1922548.8, 1929110.4, 1935672. ])
@@ -585,10 +578,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_node_ids()
         array([  1,   2,   3,   4,   5, ..., 437, 438, 439, 440, 441])
         >>> model.kill()
@@ -639,10 +631,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_n_elements()
         400
         >>> model.kill()
@@ -685,10 +676,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_element_ids()
         array([ 1, 2, 3, ..., 398, 399, 400])
         >>> model.kill()
@@ -746,10 +736,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_element_config(1)
         array([ 1, 2, 23, 22])
         >>> model.kill()
@@ -815,10 +804,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_n_subregions()
         2
         >>> model.kill()
@@ -868,10 +856,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_subregion_ids()
         array([1, 2])
         >>> model.kill()
@@ -923,10 +910,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_subregion_name(1)
         'Region1 (SR1)'
         >>> model.kill()
@@ -999,10 +985,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_subregions_by_element()
         array([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
                1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
@@ -1072,10 +1057,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_n_stream_nodes()
         23
         >>> model.kill()
@@ -1125,10 +1109,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_stream_node_ids()
         array([ 1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16, 17,
                18, 19, 20, 21, 22, 23])
@@ -1186,10 +1169,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_n_stream_nodes_upstream_of_stream_node(11)
         0
         >>> model.kill()
@@ -1263,19 +1245,17 @@ class IWFMModel(IWFMMiscellaneous):
         Examples
         --------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> print(model.get_stream_nodes_upstream_of_stream_node(11))
         None
         >>> model.kill()
 
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_stream_nodes_upstream_of_stream_node(2)
         array([1])
         >>> model.kill()
@@ -1347,10 +1327,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_stream_bottom_elevations()
         array([300., 298., 296., 294., 292., 290., 288., 286., 284., 282., 282.,
                280., 278., 276., 274., 272., 272., 270., 268., 266., 264., 262.,
@@ -1404,10 +1383,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_n_rating_table_points(1)
         5
         >>> model.kill()
@@ -1474,10 +1452,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> stage, flow = model.get_stream_rating_table(1)
         >>> stage
         array([ 0.,  2.,  5., 15., 25.])
@@ -1546,10 +1523,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_n_stream_inflows()
         1
         >>> model.kill()
@@ -1590,10 +1566,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_stream_inflow_nodes()
         array([1])
         >>> model.kill()
@@ -1641,10 +1616,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_stream_inflow_ids()
         array([1])
         >>> model.kill()
@@ -1706,10 +1680,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file, is_for_inquiry=0)
+        >>> model = IWFMModel(pp_file, sim_file, is_for_inquiry=0)
         >>> while not model.is_end_of_simulation():
         ...     # advance the simulation time one time step forward
         ...     model.advance_time()
@@ -1851,10 +1824,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file, is_for_inquiry=0)
+        >>> model = IWFMModel(pp_file, sim_file, is_for_inquiry=0)
         >>> while not model.is_end_of_simulation():
         ...     # advance the simulation time one time step forward
         ...     model.advance_time()
@@ -1955,10 +1927,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file, is_for_inquiry=0)
+        >>> model = IWFMModel(pp_file, sim_file, is_for_inquiry=0)
         >>> while not model.is_end_of_simulation():
         ...     # advance the simulation time one time step forward
         ...     model.advance_time()
@@ -2062,10 +2033,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file, is_for_inquiry=0)
+        >>> model = IWFMModel(pp_file, sim_file, is_for_inquiry=0)
         >>> while not model.is_end_of_simulation():
         ...     # advance the simulation time one time step forward
         ...     model.advance_time()
@@ -2771,10 +2741,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_stream_diversion_locations()
         array([ 9, 12, 12, 22, 23])
         >>> model.kill()
@@ -2871,10 +2840,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_n_stream_reaches()
         3
         >>> model.kill()
@@ -2926,10 +2894,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_stream_ids()
         array([2, 1, 3])
         >>> model.kill()
@@ -2986,10 +2953,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_n_nodes_in_stream_reach(1)
         10
         >>> model.kill()
@@ -3070,10 +3036,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_stream_reach_groundwater_nodes(1)
         array([433, 412, 391, 370, 349, 328, 307, 286, 265, 264])
         >>> model.kill()
@@ -3156,10 +3121,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_stream_reach_stream_nodes(1)
         array([ 1,  2,  3,  4,  5,  6,  7,  8,  9, 10])
         >>> model.kill()
@@ -3241,10 +3205,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_stream_reaches_for_stream_nodes()
         array([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3])
         >>> model.kill()
@@ -3347,10 +3310,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_upstream_nodes_in_stream_reaches()
         array([11,  1, 17])
         >>> model.kill()
@@ -3419,19 +3381,17 @@ class IWFMModel(IWFMMiscellaneous):
         Examples
         --------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_n_reaches_upstream_of_reach(1)
         0
         >>> model.kill()
 
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_n_reaches_upstream_of_reach(3)
         1
         >>> model.kill()
@@ -3506,19 +3466,17 @@ class IWFMModel(IWFMMiscellaneous):
         Examples
         --------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> print(model.get_n_reaches_upstream_of_reach(1))
         None
         >>> model.kill()
 
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_n_reaches_upstream_of_reach(3)
         array([2])
         >>> model.kill()
@@ -3603,10 +3561,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_downstream_node_in_stream_reaches()
         array([16, 10, 23])
         >>> model.kill()
@@ -3671,10 +3628,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_reach_outflow_destination()
         array([17, 1, 0])
         >>> model.kill()
@@ -3733,10 +3689,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_reach_outflow_destination_types()
         array([1, 3, 0])
         >>> model.kill()
@@ -3783,10 +3738,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_n_diversions()
         5
         >>> model.kill()
@@ -3828,10 +3782,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_diversion_ids()
         array([1, 2, 3, 4, 5])
         >>> model.kill()
@@ -3875,10 +3828,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_n_lakes()
         1
         >>> model.kill()
@@ -3918,10 +3870,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_lake_ids()
         array([1])
         >>> model.kill()
@@ -3978,10 +3929,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_n_elements_in_lake()
         10
         >>> model.kill()
@@ -4056,10 +4006,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_elements_in_lake(1)
         array([169, 170, 171, 188, 189, 190, 207, 208, 209, 210])
         >>> model.kill()
@@ -4136,10 +4085,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_n_tile_drains()
         21
         >>> model.kill()
@@ -4180,10 +4128,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_tile_drain_ids()
         array([ 1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16, 17,
                18, 19, 20, 21])
@@ -4232,10 +4179,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_tile_drain_nodes()
         array([  6,  27,  48,  69,  90, 111, 132, 153, 174, 195, 216, 237, 258,
                279, 300, 321, 342, 363, 384, 405, 426])
@@ -4291,10 +4237,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_n_layers()
         2
         >>> model.kill()
@@ -4336,10 +4281,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_ground_surface_elevation()
         array([500., 500., 500., 500., 500., 500., 500., 500., 500., 500., 500.,
                500., 500., 500., 500., 500., 500., 500., 500., 500., 500., 500.,
@@ -4427,10 +4371,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_aquifer_top_elevation()
         array([[500., 500., 500., 500., 500., 500., 500., 500., 500., 500., 500.,
                 500., 500., 500., 500., 500., 500., 500., 500., 500., 500., 500.,
@@ -4567,10 +4510,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_aquifer_bottom_elevation()
         array([[   0.,    0.,    0.,    0.,    0.,    0.,    0.,    0.,    0.,
                    0.,    0.,    0.,    0.,    0.,    0.,    0.,    0.,    0.,
@@ -4754,28 +4696,25 @@ class IWFMModel(IWFMMiscellaneous):
         Examples
         --------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_stratigraphy_atXYcoordinate(590000.0, 4440000.0, 3.2808, 5)
         (500.0, array([500.,   0.]), array([   0., -100.]))
         >>> model.kill()
 
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_stratigraphy_atXYcoordinate(590000.0, 4440000.0, 3.2808, 1)
         array([ 500.,    0., -100.])
         >>> model.kill()
 
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_stratigraphy_atXYcoordinate(590000.0, 4440000.0, 3.2808, ''gse')
         500.0
         >>> model.kill()
@@ -4861,10 +4800,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_aquifer_horizontal_k()
         array([[50., 50., 50., 50., 50., 50., 50., 50., 50., 50., 50., 50., 50.,
                 50., 50., 50., 50., 50., 50., 50., 50., 50., 50., 50., 50., 50.,
@@ -4985,10 +4923,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_aquifer_vertical_k()
         array([[1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.,
                 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.,
@@ -5097,10 +5034,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_aquitard_vertical_k()
         array([[0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2,
                 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2,
@@ -5221,10 +5157,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_aquifer_specific_yield()
         array([[0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25,
                 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25,
@@ -5359,10 +5294,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_aquifer_specific_yield()
         array([[2.5e-01, 2.5e-01, 2.5e-01, 2.5e-01, 2.5e-01, 2.5e-01, 2.5e-01,
                 2.5e-01, 2.5e-01, 2.5e-01, 2.5e-01, 2.5e-01, 2.5e-01, 2.5e-01,
@@ -5546,10 +5480,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> hk, vk, avk, sy, ss = model.get_aquifer_parameters()
         >>> model.kill()
         """
@@ -5610,10 +5543,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_n_ag_crops()
         7
         >>> model.kill()
@@ -5658,10 +5590,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_n_wells()
         0
         >>> model.kill()
@@ -5705,7 +5636,6 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
         >>> model = IWFMModel(dll, pp_file, sim_file, is_for_inquiry=0)
@@ -5757,7 +5687,6 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
         >>> model = IWFMModel(dll, pp_file, sim_file, is_for_inquiry=0)
@@ -5806,7 +5735,6 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
         >>> model = IWFMModel(dll, pp_file, sim_file, is_for_inquiry=0)
@@ -5941,7 +5869,6 @@ class IWFMModel(IWFMMiscellaneous):
         Examples
         --------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
         >>> model = IWFMModel(dll, pp_file, sim_file, is_for_inquiry=0)
@@ -5981,10 +5908,9 @@ class IWFMModel(IWFMMiscellaneous):
         >>> model.kill()
 
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_diversion_purpose()
         array([1, 1, 1, 1, 1])
         >>> model.kill()
@@ -6065,7 +5991,6 @@ class IWFMModel(IWFMMiscellaneous):
         Examples
         --------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
         >>> model = IWFMModel(dll, pp_file, sim_file, is_for_inquiry=0)
@@ -6105,10 +6030,9 @@ class IWFMModel(IWFMMiscellaneous):
         >>> model.kill()
 
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_well_pumping_purpose()
         array([1, 1, 1, 1, 1])
         >>> model.kill()"""
@@ -6186,7 +6110,6 @@ class IWFMModel(IWFMMiscellaneous):
         Examples
         --------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
         >>> model = IWFMModel(dll, pp_file, sim_file, is_for_inquiry=0)
@@ -6215,10 +6138,9 @@ class IWFMModel(IWFMMiscellaneous):
         >>> model.kill()
 
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_element_pumping_purpose()
 
         >>> model.kill()"""
@@ -7347,10 +7269,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_subregion_names()
         ['Region1 (SR1)', 'Region2 (SR2)']
         >>> model.kill()
@@ -7378,10 +7299,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_stream_reach_names()
         ['Reach2', 'Reach1', 'Reach3']
         >>> model.kill()
@@ -7410,10 +7330,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_groundwater_hydrograph_names()
         ['GWHyd1',
          'GWHyd2',
@@ -7483,10 +7402,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_stream_hydrograph_names()
         ['StrmHyd_1',
          'StrmHyd_2',
@@ -7537,10 +7455,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_subsidence_hydrograph_names()
         ['SubsHyd1', 'SubsHyd2', 'SubsHyd3', 'SubsHyd4', 'SubsHyd5']
         >>> model.kill()
@@ -7583,10 +7500,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_n_hydrograph_types()
         5
         >>> model.kill()
@@ -7645,10 +7561,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_hydrograph_type_list()
         {'Groundwater hydrograph': 9,
          'Groundwater hydrograph at node and layer': 8,
@@ -7777,10 +7692,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_n_groundwater_hydrographs()
         42
         >>> model.kill()
@@ -7823,10 +7737,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_n_subsidence_hydrographs()
         5
         >>> model.kill()
@@ -7869,10 +7782,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_n_stream_hydrographs()
         23
         >>> model.kill()
@@ -7915,10 +7827,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_n_tile_drain_hydrographs()
         6
         >>> model.kill()
@@ -8015,10 +7926,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_groundwater_hydrograph_ids()
         array([ 1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16, 17,
                18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34,
@@ -8064,10 +7974,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_subsidence_hydrograph_ids()
         array([1, 2, 3, 4, 5])
         >>> model.kill()
@@ -8111,10 +8020,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_stream_hydrograph_ids()
         array([ 1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16, 17,
                18, 19, 20, 21, 22, 23])
@@ -8159,10 +8067,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_tile_drain_hydrograph_ids()
         array([ 1,  4,  7, 10, 13, 16])
         >>> model.kill()
@@ -8263,10 +8170,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> x, y = model.get_groundwater_hydrograph_coordinates()
         >>> x
         array([1883179.2, 1883179.2, 1883179.2, 1883179.2, 1883179.2, 1883179.2,
@@ -8327,10 +8233,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> x, y = model.get_subsidence_hydrograph_coordinates()
         >>> x
         array([1935672. , 1804440. , 1811001.6, 1817563.2, 1863494.4])
@@ -8377,10 +8282,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> x, y = model.get_subsidence_hydrograph_coordinates()
         >>> x
         array([1883179.2, 1883179.2, 1883179.2, 1883179.2, 1883179.2, 1883179.2,
@@ -8434,10 +8338,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> x, y = model.get_tile_drain_hydrograph_coordinates()
         >>> x
         array([1837248., 1837248., 1837248., 1837248., 1837248., 1837248.])
@@ -8692,10 +8595,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> dates, values = model.get_groundwater_hydrograph(1)
         >>> dates
         array(['1990-10-01', '1990-10-02', '1990-10-03', ..., '2000-09-28',
@@ -8803,10 +8705,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> dates, values = model.get_groundwater_hydrograph_at_node_and_layer(25, 1)
         >>> dates
         array(['1990-10-01', '1990-10-02', '1990-10-03', ..., '2000-09-28',
@@ -8904,10 +8805,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> dates, values = model.get_subsidence_hydrograph(1)
         >>> dates
         array(['1990-10-01', '1990-10-02', '1990-10-03', ..., '2000-09-28',
@@ -9011,10 +8911,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> dates, values = model.get_stream_hydrograph(1)
         >>> dates
         array(['1990-10-01', '1990-10-02', '1990-10-03', ..., '2000-09-28',
@@ -9254,7 +9153,6 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
         >>> model = IWFMModel(dll, pp_file, sim_file, is_for_inquiry=0)
@@ -9363,7 +9261,6 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
         >>> model = IWFMModel(dll, pp_file, sim_file, is_for_inquiry=0)
@@ -9459,7 +9356,6 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
         >>> model = IWFMModel(dll, pp_file, sim_file, is_for_inquiry=0)
@@ -9557,7 +9453,6 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
         >>> model = IWFMModel(dll, pp_file, sim_file, is_for_inquiry=0)
@@ -10555,10 +10450,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_groundwater_hydrograph_info()
             ID       Name              X            Y    GSE   BTM_Lay1 BTM_Lay2
          0   1     GWHyd1      1883179.2   14566752.0  500.0        0.0   -100.0
@@ -10647,10 +10541,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_node_info()
              NodeID          X            Y
           0       1  1804440.0   14435520.0
@@ -10697,10 +10590,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_element_info()
                IE   SR  NodeNum  NodeID
            0    1    1    Node1       1
@@ -10851,10 +10743,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_element_spatial_info()
                IE   SR  NodeNum NodeID         X          Y
            0    1    1    Node1      1 1804440.0 14435520.0
@@ -10909,10 +10800,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_depth_to_water(1, '09/01/2000_24:00')
                       Date NodeID DTW         X          Y
             0   2000-09-01      1 210.0 1804440.0 14435520.0
@@ -10975,10 +10865,9 @@ class IWFMModel(IWFMMiscellaneous):
         Example
         -------
         >>> from pywfm import IWFMModel
-        >>> dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
         >>> sim_file = 'Simulation_MAIN.IN'
-        >>> model = IWFMModel(dll, pp_file, sim_file)
+        >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_stream_network()
            StreamReach StreamNodes GroundwaterNodes ReachName
          0           1           1              433    Reach1
