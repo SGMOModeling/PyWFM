@@ -3,15 +3,13 @@ import ctypes
 import numpy as np
 import pandas as pd
 
-from pywfm import (
-    DLL_PATH,
-    DLL
-)
+from pywfm import DLL_PATH, DLL
 
 from pywfm.misc import IWFMMiscellaneous
 
+
 class IWFMZBudget(IWFMMiscellaneous):
-    '''
+    """
     IWFM ZBudget Class for interacting with the IWFM DLL.
 
     Parameters
@@ -22,36 +20,41 @@ class IWFMZBudget(IWFMMiscellaneous):
     Returns
     -------
     IWFMZBudget Object
-        Instance of the IWFMZBudget class and access to the IWFM Budget 
+        Instance of the IWFMZBudget class and access to the IWFM Budget
         fortran procedures.
-    '''
+    """
+
     def __init__(self, zbudget_file_name):
-        
+
         if not isinstance(zbudget_file_name, str):
-            raise TypeError('zbudget_file_name must be a string')
+            raise TypeError("zbudget_file_name must be a string")
 
         if not os.path.exists(zbudget_file_name):
-            raise FileNotFoundError('{} was not found'.format(zbudget_file_name))
+            raise FileNotFoundError("{} was not found".format(zbudget_file_name))
 
         self.zbudget_file_name = zbudget_file_name
 
         self.dll = ctypes.windll.LoadLibrary(os.path.join(DLL_PATH, DLL))
 
         # check to see if the open file procedure exists in the dll provided
-        if not hasattr(self.dll, 'IW_ZBudget_OpenFile'):
-            raise AttributeError('IWFM DLL does not have "{}" procedure. '
-                                 'Check for an updated version'.format('IW_ZBudget_OpenFile'))
+        if not hasattr(self.dll, "IW_ZBudget_OpenFile"):
+            raise AttributeError(
+                'IWFM DLL does not have "{}" procedure. '
+                "Check for an updated version".format("IW_ZBudget_OpenFile")
+            )
 
         # set input variables name and name length
-        zbudget_file = ctypes.create_string_buffer(self.zbudget_file_name.encode('utf-8'))
+        zbudget_file = ctypes.create_string_buffer(
+            self.zbudget_file_name.encode("utf-8")
+        )
         length_file_name = ctypes.c_int(ctypes.sizeof(zbudget_file))
-        
+
         # initialize output variable status
         status = ctypes.c_int(0)
 
-        self.dll.IW_ZBudget_OpenFile(zbudget_file,
-                                    ctypes.byref(length_file_name),
-                                    ctypes.byref(status))
+        self.dll.IW_ZBudget_OpenFile(
+            zbudget_file, ctypes.byref(length_file_name), ctypes.byref(status)
+        )
 
     def __enter__(self):
         return self
@@ -60,33 +63,35 @@ class IWFMZBudget(IWFMMiscellaneous):
         self.close_budget_file()
 
     def close_zbudget_file(self):
-        '''
+        """
         Close an open budget file for an IWFM model application.
-        '''
+        """
         # check to see if the procedure exists in the dll provided
-        if not hasattr(self.dll, 'IW_ZBudget_CloseFile'):
-            raise AttributeError('IWFM DLL does not have "{}" procedure. '
-                                 'Check for an updated version'.format('IW_ZBudget_CloseFile'))
-        
+        if not hasattr(self.dll, "IW_ZBudget_CloseFile"):
+            raise AttributeError(
+                'IWFM DLL does not have "{}" procedure. '
+                "Check for an updated version".format("IW_ZBudget_CloseFile")
+            )
+
         # initialize output variable status
         status = ctypes.c_int(0)
 
         self.dll.IW_ZBudget_CloseFile(ctypes.byref(status))
 
     def generate_zone_list_from_file(self, zone_definition_file):
-        '''
+        """
         Generate a list of zones and their neighboring zones based
-        on data provided in a text file. 
-        
-        This file must be in the same format as the Zone Definition 
-        File used by the Z-Budget post-processor. 
-        
+        on data provided in a text file.
+
+        This file must be in the same format as the Zone Definition
+        File used by the Z-Budget post-processor.
+
         Parameters
         ----------
         zone_definition_file : str
             File name for the zone definition file used to generate the
             list of zones.
-            
+
         Returns
         -------
         None
@@ -95,28 +100,32 @@ class IWFMZBudget(IWFMMiscellaneous):
         Note
         ----
         See IWFM Sample Model ZBudget folder for format examples.
-        '''
+        """
         # check to see if the open file procedure exists in the dll provided
-        if not hasattr(self.dll, 'IW_ZBudget_GenerateZoneList_FromFile'):
-            raise AttributeError('IWFM DLL does not have "{}" procedure. '
-                                 'Check for an updated version'.format('IW_ZBudget_GenerateZoneList_FromFile'))
+        if not hasattr(self.dll, "IW_ZBudget_GenerateZoneList_FromFile"):
+            raise AttributeError(
+                'IWFM DLL does not have "{}" procedure. '
+                "Check for an updated version".format(
+                    "IW_ZBudget_GenerateZoneList_FromFile"
+                )
+            )
 
         # set input variables name and name length
-        zone_file = ctypes.create_string_buffer(zone_definition_file.encode('utf-8'))
+        zone_file = ctypes.create_string_buffer(zone_definition_file.encode("utf-8"))
         length_file_name = ctypes.c_int(ctypes.sizeof(zone_file))
-        
+
         # initialize output variable status
         status = ctypes.c_int(0)
 
-        self.dll.IW_ZBudget_GenerateZoneList_FromFile(zone_file,
-                                                      ctypes.byref(length_file_name),
-                                                      ctypes.byref(status))
+        self.dll.IW_ZBudget_GenerateZoneList_FromFile(
+            zone_file, ctypes.byref(length_file_name), ctypes.byref(status)
+        )
 
     def _generate_zone_list(self, zone_extent_id, elements, layers, zones, zone_names):
-        '''
+        """
         Private method that generates a list of zones and their neighboring
         zones based on data provided directly by the client software.
-        
+
         Parameters
         ----------
         zone_extent_id : int
@@ -124,11 +133,11 @@ class IWFMZBudget(IWFMMiscellaneous):
             be obtained using the get_zone_extent_ids method.
 
         elements : list, np.ndarray
-            List of element identification numbers used to identify 
+            List of element identification numbers used to identify
             zone definitions.
 
         layers : list, np.ndarray
-            List of layer numbers used to identify zone definitions. 
+            List of layer numbers used to identify zone definitions.
             if using the zone extent id for horizontal, this is not used.
 
         zones : list, np.ndarray
@@ -142,25 +151,26 @@ class IWFMZBudget(IWFMMiscellaneous):
         -------
         None
             Generates the zone definitions.
-        '''
+        """
         # check to see if the open file procedure exists in the dll provided
-        if not hasattr(self.dll, 'IW_ZBudget_GenerateZoneList'):
-            raise AttributeError('IWFM DLL does not have "{}" procedure. '
-                                 'Check for an updated version'.format('IW_ZBudget_GenerateZoneList'))
+        if not hasattr(self.dll, "IW_ZBudget_GenerateZoneList"):
+            raise AttributeError(
+                'IWFM DLL does not have "{}" procedure. '
+                "Check for an updated version".format("IW_ZBudget_GenerateZoneList")
+            )
 
         # convert zone_extent_id to ctypes
         zone_extent_id = ctypes.c_int(zone_extent_id)
 
         # check that inputs are array-like
         if not isinstance(elements, (np.ndarray, list)):
-            raise TypeError('elements must be an array or list')
+            raise TypeError("elements must be an array or list")
 
         if not isinstance(layers, (np.ndarray, list)):
-            raise TypeError('layers must be an array or list')
+            raise TypeError("layers must be an array or list")
 
         if not isinstance(zones, (np.ndarray, list)):
-            raise TypeError('zones must be an array or list')
-
+            raise TypeError("zones must be an array or list")
 
         # check elements, layers, zones arrays are 1-D and same length
         if isinstance(elements, list):
@@ -172,23 +182,31 @@ class IWFMZBudget(IWFMMiscellaneous):
         if isinstance(zones, list):
             zones = np.array(zones)
 
-        if (elements.shape == layers.shape) & (elements.shape == zones.shape) & (len(elements.shape) == 1):
+        if (
+            (elements.shape == layers.shape)
+            & (elements.shape == zones.shape)
+            & (len(elements.shape) == 1)
+        ):
             n_elements = ctypes.c_int(elements.shape[0])
-            elements = (ctypes.c_int*n_elements.value)(*elements)
-            layers = (ctypes.c_int*n_elements.value)(*layers)
-            zones = (ctypes.c_int*n_elements.value)(*zones)
+            elements = (ctypes.c_int * n_elements.value)(*elements)
+            layers = (ctypes.c_int * n_elements.value)(*layers)
+            zones = (ctypes.c_int * n_elements.value)(*zones)
 
         else:
-            raise ValueError('elements, layers, and zones are 1-D '
-                             'arrays and must be the same length.')
-                            
+            raise ValueError(
+                "elements, layers, and zones are 1-D "
+                "arrays and must be the same length."
+            )
+
         # convert list of zone names to string with array of delimiter locations
         n_zones_with_names = ctypes.c_int(len(zone_names))
 
-        zones_with_names = (ctypes.c_int*n_zones_with_names.value)(*[val+1 for val in range(n_zones_with_names.value)])
+        zones_with_names = (ctypes.c_int * n_zones_with_names.value)(
+            *[val + 1 for val in range(n_zones_with_names.value)]
+        )
 
         # initialize zone_names_string, delimiter_position_array, and length_zone_names
-        zone_names_string = ''
+        zone_names_string = ""
         delimiter_position_array = []
         length_zone_names = 0
 
@@ -199,29 +217,35 @@ class IWFMZBudget(IWFMMiscellaneous):
                 length_zone_names += 1
             zone_names_string += name
 
-        # convert zone_names_string, delimiter_position_array, and 
+        # convert zone_names_string, delimiter_position_array, and
         # length_zone_names to ctypes
-        zone_names_string = ctypes.create_string_buffer(zone_names_string.encode('utf-8'))
-        delimiter_position_array = (ctypes.c_int*n_zones_with_names.value)(*delimiter_position_array)
+        zone_names_string = ctypes.create_string_buffer(
+            zone_names_string.encode("utf-8")
+        )
+        delimiter_position_array = (ctypes.c_int * n_zones_with_names.value)(
+            *delimiter_position_array
+        )
         length_zone_names = ctypes.c_int(length_zone_names)
 
         # initialize output variables
         status = ctypes.c_int(0)
 
-        self.dll.IW_ZBudget_GenerateZoneList(ctypes.byref(zone_extent_id),
-                                             ctypes.byref(n_elements),
-                                             elements,
-                                             layers,
-                                             zones,
-                                             ctypes.byref(n_zones_with_names),
-                                             zones_with_names,
-                                             ctypes.byref(length_zone_names),
-                                             zone_names_string,
-                                             delimiter_position_array,
-                                             ctypes.byref(status))
+        self.dll.IW_ZBudget_GenerateZoneList(
+            ctypes.byref(zone_extent_id),
+            ctypes.byref(n_elements),
+            elements,
+            layers,
+            zones,
+            ctypes.byref(n_zones_with_names),
+            zones_with_names,
+            ctypes.byref(length_zone_names),
+            zone_names_string,
+            delimiter_position_array,
+            ctypes.byref(status),
+        )
 
     def get_n_zones(self):
-        '''
+        """
         Return the number of zones specified in the zbudget.
 
         Returns
@@ -232,7 +256,7 @@ class IWFMZBudget(IWFMMiscellaneous):
         See Also
         --------
         IWFMZBudget.get_zone_list : Return the list of zone numbers.
-        IWFMZBudget.get_zone_names : Return the zone names specified 
+        IWFMZBudget.get_zone_names : Return the zone names specified
             by the user in the zone definitions.
 
         Example
@@ -246,11 +270,13 @@ class IWFMZBudget(IWFMMiscellaneous):
         >>> gw_zbud.get_n_zones()
         2
         >>> gw_zbud.close_zbudget_file()
-        '''
+        """
         # check to see if the open file procedure exists in the dll provided
-        if not hasattr(self.dll, 'IW_ZBudget_GetNZones'):
-            raise AttributeError('IWFM DLL does not have "{}" procedure. '
-                                 'Check for an updated version'.format('IW_ZBudget_GetNZones'))
+        if not hasattr(self.dll, "IW_ZBudget_GetNZones"):
+            raise AttributeError(
+                'IWFM DLL does not have "{}" procedure. '
+                "Check for an updated version".format("IW_ZBudget_GetNZones")
+            )
 
         # initialize output variables
         n_zones = ctypes.c_int(0)
@@ -258,13 +284,12 @@ class IWFMZBudget(IWFMMiscellaneous):
         # initialize output variable status
         status = ctypes.c_int(0)
 
-        self.dll.IW_ZBudget_GetNZones(ctypes.byref(n_zones),
-                                      ctypes.byref(status))
+        self.dll.IW_ZBudget_GetNZones(ctypes.byref(n_zones), ctypes.byref(status))
 
         return n_zones.value
 
     def get_zone_list(self):
-        '''
+        """
         Return the list of zone numbers.
 
         Returns
@@ -289,30 +314,32 @@ class IWFMZBudget(IWFMMiscellaneous):
         >>> gw_zbud.generate_zone_list_from_file(zone_defs)
         >>> gw_zbud.get_zone_list()
         array([1, 2])
-        >>> gw_zbud.close_zbudget_file()  
-        '''
+        >>> gw_zbud.close_zbudget_file()
+        """
         # check to see if the open file procedure exists in the dll provided
-        if not hasattr(self.dll, 'IW_ZBudget_GetZoneList'):
-            raise AttributeError('IWFM DLL does not have "{}" procedure. '
-                                 'Check for an updated version'.format('IW_ZBudget_GetZoneList'))
+        if not hasattr(self.dll, "IW_ZBudget_GetZoneList"):
+            raise AttributeError(
+                'IWFM DLL does not have "{}" procedure. '
+                "Check for an updated version".format("IW_ZBudget_GetZoneList")
+            )
 
         # get number of zones
         n_zones = ctypes.c_int(self.get_n_zones())
 
         # initialize output variables
-        zone_list = (ctypes.c_int*n_zones.value)()
+        zone_list = (ctypes.c_int * n_zones.value)()
 
         # initialize output variable status
         status = ctypes.c_int(0)
 
-        self.dll.IW_ZBudget_GetZoneList(ctypes.byref(n_zones),
-                                        zone_list,
-                                        ctypes.byref(status))
+        self.dll.IW_ZBudget_GetZoneList(
+            ctypes.byref(n_zones), zone_list, ctypes.byref(status)
+        )
 
         return np.array(zone_list)
 
     def get_n_time_steps(self):
-        '''
+        """
         Return the number of time steps where zbudget data is available.
 
         Returns
@@ -336,33 +363,36 @@ class IWFMZBudget(IWFMMiscellaneous):
         >>> gw_zbud.get_n_time_steps()
         3653
         >>> gw_zbud.close_zbudget_file()
-        '''
+        """
         # check to see if the open file procedure exists in the dll provided
-        if not hasattr(self.dll, 'IW_ZBudget_GetNTimeSteps'):
-            raise AttributeError('IWFM DLL does not have "{}" procedure. '
-                                 'Check for an updated version'.format('IW_ZBudget_GetNTimeSteps'))
+        if not hasattr(self.dll, "IW_ZBudget_GetNTimeSteps"):
+            raise AttributeError(
+                'IWFM DLL does not have "{}" procedure. '
+                "Check for an updated version".format("IW_ZBudget_GetNTimeSteps")
+            )
 
         # initialize output variables
         n_time_steps = ctypes.c_int(0)
 
         # initialize output variable status
         status = ctypes.c_int(0)
-        
-        self.dll.IW_ZBudget_GetNTimeSteps(ctypes.byref(n_time_steps),
-                                          ctypes.byref(status))
+
+        self.dll.IW_ZBudget_GetNTimeSteps(
+            ctypes.byref(n_time_steps), ctypes.byref(status)
+        )
 
         return n_time_steps.value
-    
+
     def get_time_specs(self):
-        ''' 
+        """
         Return a list of all the time stamps and the time interval
-        for the zbudget 
-        
+        for the zbudget
+
         Returns
         -------
         dates_list : list
             Dates and times for zbudget results.
-        
+
         interval: str
             Time interval for dates.
 
@@ -390,11 +420,13 @@ class IWFMZBudget(IWFMMiscellaneous):
         >>> interval
         '1DAY'
         >>> gw_zbud.close_zbudget_file()
-        '''
+        """
         # check to see if the procedure exists in the dll provided
-        if not hasattr(self.dll, 'IW_ZBudget_GetTimeSpecs'):
-            raise AttributeError('IWFM DLL does not have "{}" procedure. '
-                                 'Check for an updated version'.format('IW_ZBudget_GetTimeSpecs'))
+        if not hasattr(self.dll, "IW_ZBudget_GetTimeSpecs"):
+            raise AttributeError(
+                'IWFM DLL does not have "{}" procedure. '
+                "Check for an updated version".format("IW_ZBudget_GetTimeSpecs")
+            )
 
         # get number of time steps
         n_time_steps = ctypes.c_int(self.get_n_time_steps())
@@ -408,34 +440,38 @@ class IWFMZBudget(IWFMMiscellaneous):
         # initialize output variables
         raw_dates_string = ctypes.create_string_buffer(length_date_string.value)
         time_interval = ctypes.create_string_buffer(length_time_interval.value)
-        delimiter_position_array = (ctypes.c_int*n_time_steps.value)()
+        delimiter_position_array = (ctypes.c_int * n_time_steps.value)()
         status = ctypes.c_int(0)
 
         # IW_ZBudget_GetTimeSpecs(cDataDatesAndTimes,iLenDates,cInterval,iLenInterval,NData,iLocArray,iStat)
-        self.dll.IW_ZBudget_GetTimeSpecs(raw_dates_string,
-                                         ctypes.byref(length_date_string),
-                                         time_interval,
-                                         ctypes.byref(length_time_interval),
-                                         ctypes.byref(n_time_steps),
-                                         delimiter_position_array,
-                                         ctypes.byref(status))
+        self.dll.IW_ZBudget_GetTimeSpecs(
+            raw_dates_string,
+            ctypes.byref(length_date_string),
+            time_interval,
+            ctypes.byref(length_time_interval),
+            ctypes.byref(n_time_steps),
+            delimiter_position_array,
+            ctypes.byref(status),
+        )
 
-        dates_list = self._string_to_list_by_array(raw_dates_string, delimiter_position_array, n_time_steps)
+        dates_list = self._string_to_list_by_array(
+            raw_dates_string, delimiter_position_array, n_time_steps
+        )
 
-        interval = time_interval.value.decode('utf-8')
+        interval = time_interval.value.decode("utf-8")
 
         return dates_list, interval
 
-    def _get_column_headers_general(self, area_unit='SQ FT', volume_unit='CU FT'):
-        '''
-        Private method returning the Z-Budget column headers (i.e. titles). 
-        
-        For flow processes that simulate flow exchange between neighboring 
+    def _get_column_headers_general(self, area_unit="SQ FT", volume_unit="CU FT"):
+        """
+        Private method returning the Z-Budget column headers (i.e. titles).
+
+        For flow processes that simulate flow exchange between neighboring
         zones (e.g. groundwater process) the inflow and outflow columns
-        are lumped into two columns (e.g. “Inflows from Adjacent Zones” 
-        and “Outflows to Adjacent Zones”) instead of identifying inflows 
-        from and outflows to individual neighboring zones. These column 
-        headers apply to any zone regardless of the number of neighboring 
+        are lumped into two columns (e.g. “Inflows from Adjacent Zones”
+        and “Outflows to Adjacent Zones”) instead of identifying inflows
+        from and outflows to individual neighboring zones. These column
+        headers apply to any zone regardless of the number of neighboring
         zones.
 
         Parameters
@@ -450,11 +486,15 @@ class IWFMZBudget(IWFMMiscellaneous):
         -------
         list
             List of column names.
-        '''
+        """
         # check to see if the procedure exists in the dll provided
-        if not hasattr(self.dll, 'IW_ZBudget_GetColumnHeaders_General'):
-            raise AttributeError('IWFM DLL does not have "{}" procedure. '
-                                 'Check for an updated version'.format('IW_ZBudget_GetColumnHeaders_General'))
+        if not hasattr(self.dll, "IW_ZBudget_GetColumnHeaders_General"):
+            raise AttributeError(
+                'IWFM DLL does not have "{}" procedure. '
+                "Check for an updated version".format(
+                    "IW_ZBudget_GetColumnHeaders_General"
+                )
+            )
 
         # set the maximum number of columns
         max_n_column_headers = ctypes.c_int(200)
@@ -463,42 +503,51 @@ class IWFMZBudget(IWFMMiscellaneous):
         unit_length = ctypes.c_int(max(len(area_unit), len(volume_unit)))
 
         # set total length of column headers
-        length_column_headers = ctypes.c_int(max_n_column_headers.value*30)
+        length_column_headers = ctypes.c_int(max_n_column_headers.value * 30)
 
         # convert area_unit and volume_unit to ctypes
-        area_unit = ctypes.create_string_buffer(area_unit.encode('utf-8'))
-        volume_unit = ctypes.create_string_buffer(volume_unit.encode('utf-8'))
+        area_unit = ctypes.create_string_buffer(area_unit.encode("utf-8"))
+        volume_unit = ctypes.create_string_buffer(volume_unit.encode("utf-8"))
 
         # initialize output variables
-        raw_column_header_string = ctypes.create_string_buffer(length_column_headers.value)
+        raw_column_header_string = ctypes.create_string_buffer(
+            length_column_headers.value
+        )
         n_columns = ctypes.c_int(0)
-        delimiter_position_array = (ctypes.c_int*max_n_column_headers.value)()
+        delimiter_position_array = (ctypes.c_int * max_n_column_headers.value)()
         status = ctypes.c_int(0)
 
-        self.dll.IW_ZBudget_GetColumnHeaders_General(ctypes.byref(max_n_column_headers),
-                                                     area_unit,
-                                                     volume_unit,
-                                                     ctypes.byref(unit_length),
-                                                     ctypes.byref(length_column_headers),
-                                                     raw_column_header_string,
-                                                     ctypes.byref(n_columns),
-                                                     delimiter_position_array,
-                                                     ctypes.byref(status))
+        self.dll.IW_ZBudget_GetColumnHeaders_General(
+            ctypes.byref(max_n_column_headers),
+            area_unit,
+            volume_unit,
+            ctypes.byref(unit_length),
+            ctypes.byref(length_column_headers),
+            raw_column_header_string,
+            ctypes.byref(n_columns),
+            delimiter_position_array,
+            ctypes.byref(status),
+        )
 
-        return self._string_to_list_by_array(raw_column_header_string, 
-                                             delimiter_position_array, 
-                                             n_columns)
+        return self._string_to_list_by_array(
+            raw_column_header_string, delimiter_position_array, n_columns
+        )
 
-    def get_column_headers_for_a_zone(self, zone_id, column_list='all',
-                                      area_unit='SQ FT', volume_unit='CU FT',
-                                      include_time=True):
-        '''
-        Return the Z-Budget column headers (i.e. titles) for a 
-        specified zone for selected data columns. 
-        
+    def get_column_headers_for_a_zone(
+        self,
+        zone_id,
+        column_list="all",
+        area_unit="SQ FT",
+        volume_unit="CU FT",
+        include_time=True,
+    ):
+        """
+        Return the Z-Budget column headers (i.e. titles) for a
+        specified zone for selected data columns.
+
         For flow processes that simulate flow exchange between neighboring
         zones (e.g. groundwater process), the column headers for inflows
-        from and outflows to neighboring zones are listed separately 
+        from and outflows to neighboring zones are listed separately
         for each neighboring zone.
 
         Parameters
@@ -507,8 +556,8 @@ class IWFMZBudget(IWFMMiscellaneous):
             Zone identification number used to return the column headers.
 
         column_list : int, list, np.ndarray, or str='all', default 'all'
-            List of header column indices. 
-            
+            List of header column indices.
+
             Note
             ----
             This is based on the results from the get_column_headers_general
@@ -527,14 +576,14 @@ class IWFMZBudget(IWFMMiscellaneous):
         -------
         column_headers : list
             Column names.
-        
-        column_indices : np.ndarray 
+
+        column_indices : np.ndarray
             Indices for column names.
 
         Note
         ----
-        These columns are referred to as “diversified columns” since 
-        the inflows from and outflows to each neighboring zone are 
+        These columns are referred to as “diversified columns” since
+        the inflows from and outflows to each neighboring zone are
         treated as separate columns.
 
         Example
@@ -592,11 +641,15 @@ class IWFMZBudget(IWFMMiscellaneous):
                 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
                 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0])
         >>> gw_zbud.close_zbudget_file()
-        '''
+        """
         # check to see if the procedure exists in the dll provided
-        if not hasattr(self.dll, 'IW_ZBudget_GetColumnHeaders_ForAZone'):
-            raise AttributeError('IWFM DLL does not have "{}" procedure. '
-                                 'Check for an updated version'.format('IW_ZBudget_GetColumnHeaders_ForAZone'))
+        if not hasattr(self.dll, "IW_ZBudget_GetColumnHeaders_ForAZone"):
+            raise AttributeError(
+                'IWFM DLL does not have "{}" procedure. '
+                "Check for an updated version".format(
+                    "IW_ZBudget_GetColumnHeaders_ForAZone"
+                )
+            )
 
         # convert zone_id to ctypes
         zone_id = ctypes.c_int(zone_id)
@@ -611,31 +664,33 @@ class IWFMZBudget(IWFMMiscellaneous):
         general_column_indices = np.arange(1, n_general_columns + 1)
 
         # validate column_list
-        if isinstance(column_list, str) and column_list == 'all':
+        if isinstance(column_list, str) and column_list == "all":
             column_list = general_column_indices
-        
+
         if isinstance(column_list, int):
             column_list = np.array([column_list])
-        
+
         if isinstance(column_list, list):
             column_list = np.array(column_list)
-            
+
         # now column_list should be np.ndarray, so validate type
         if not isinstance(column_list, np.ndarray):
             raise TypeError("column_list must be an int, list, np.ndarray, or 'all'")
 
         # check values in column list are in general_column_indices
         if not np.all(np.isin(column_list, general_column_indices)):
-            raise ValueError('one or more indices provided in column_list are invalid')
+            raise ValueError("one or more indices provided in column_list are invalid")
 
         # convert column_list to ctypes
         if include_time:
             n_column_list = ctypes.c_int(len(column_list))
-            column_list = (ctypes.c_int*n_column_list.value)(*column_list)
+            column_list = (ctypes.c_int * n_column_list.value)(*column_list)
         else:
             n_column_list = ctypes.c_int(len(column_list) - 1)
-            column_list = (ctypes.c_int*n_column_list.value)(*column_list[column_list != 1])
-        
+            column_list = (ctypes.c_int * n_column_list.value)(
+                *column_list[column_list != 1]
+            )
+
         # set the maximum number of columns
         max_n_column_headers = ctypes.c_int(200)
 
@@ -643,45 +698,49 @@ class IWFMZBudget(IWFMMiscellaneous):
         unit_length = ctypes.c_int(max(len(area_unit), len(volume_unit)))
 
         # set total length of column headers
-        length_column_headers = ctypes.c_int(max_n_column_headers.value*30)
+        length_column_headers = ctypes.c_int(max_n_column_headers.value * 30)
 
         # convert area_unit and volume_unit to ctypes
-        area_unit = ctypes.create_string_buffer(area_unit.encode('utf-8'))
-        volume_unit = ctypes.create_string_buffer(volume_unit.encode('utf-8'))
+        area_unit = ctypes.create_string_buffer(area_unit.encode("utf-8"))
+        volume_unit = ctypes.create_string_buffer(volume_unit.encode("utf-8"))
 
         # initialize output variables
-        raw_column_header_string = ctypes.create_string_buffer(length_column_headers.value)
+        raw_column_header_string = ctypes.create_string_buffer(
+            length_column_headers.value
+        )
         n_columns = ctypes.c_int(0)
-        delimiter_position_array = (ctypes.c_int*max_n_column_headers.value)()
-        diversified_columns_list= (ctypes.c_int*max_n_column_headers.value)()
+        delimiter_position_array = (ctypes.c_int * max_n_column_headers.value)()
+        diversified_columns_list = (ctypes.c_int * max_n_column_headers.value)()
         status = ctypes.c_int(0)
 
-        self.dll.IW_ZBudget_GetColumnHeaders_ForAZone(ctypes.byref(zone_id),
-                                                      ctypes.byref(n_column_list),
-                                                      column_list,
-                                                      ctypes.byref(max_n_column_headers),
-                                                      area_unit,
-                                                      volume_unit,
-                                                      ctypes.byref(unit_length),
-                                                      ctypes.byref(length_column_headers),
-                                                      raw_column_header_string,
-                                                      ctypes.byref(n_columns),
-                                                      delimiter_position_array,
-                                                      diversified_columns_list,
-                                                      ctypes.byref(status))
+        self.dll.IW_ZBudget_GetColumnHeaders_ForAZone(
+            ctypes.byref(zone_id),
+            ctypes.byref(n_column_list),
+            column_list,
+            ctypes.byref(max_n_column_headers),
+            area_unit,
+            volume_unit,
+            ctypes.byref(unit_length),
+            ctypes.byref(length_column_headers),
+            raw_column_header_string,
+            ctypes.byref(n_columns),
+            delimiter_position_array,
+            diversified_columns_list,
+            ctypes.byref(status),
+        )
 
-        column_headers =  self._string_to_list_by_array(raw_column_header_string, 
-                                                        delimiter_position_array, 
-                                                        n_columns)
+        column_headers = self._string_to_list_by_array(
+            raw_column_header_string, delimiter_position_array, n_columns
+        )
 
         column_indices = np.array(diversified_columns_list)
 
         return column_headers, column_indices
 
     def get_zone_names(self):
-        '''
+        """
         Return the zone names specified by the user in the zone definitions.
-        
+
         Returns
         -------
         list
@@ -704,37 +763,41 @@ class IWFMZBudget(IWFMMiscellaneous):
         >>> gw_zbud.get_zone_names()
         ['Region1', 'Region2']
         >>> gw_zbud.close_zbudget_file()
-        '''
+        """
         # check to see if the procedure exists in the dll provided
-        if not hasattr(self.dll, 'IW_ZBudget_GetZoneNames'):
-            raise AttributeError('IWFM DLL does not have "{}" procedure. '
-                                 'Check for an updated version'.format('IW_ZBudget_GetZoneNames'))
+        if not hasattr(self.dll, "IW_ZBudget_GetZoneNames"):
+            raise AttributeError(
+                'IWFM DLL does not have "{}" procedure. '
+                "Check for an updated version".format("IW_ZBudget_GetZoneNames")
+            )
 
         # get number of zones
         n_zones = ctypes.c_int(self.get_n_zones())
 
         # set size of string used to retrieve the names
-        length_zone_names_string = ctypes.c_int(n_zones.value*30)
+        length_zone_names_string = ctypes.c_int(n_zones.value * 30)
 
         # initialize output variables
         raw_zone_names = ctypes.create_string_buffer(length_zone_names_string.value)
-        delimiter_location_array = (ctypes.c_int*n_zones.value)()
+        delimiter_location_array = (ctypes.c_int * n_zones.value)()
         status = ctypes.c_int(0)
 
-        self.dll.IW_ZBudget_GetZoneNames(ctypes.byref(n_zones),
-                                         ctypes.byref(length_zone_names_string),
-                                         raw_zone_names,
-                                         delimiter_location_array,
-                                         ctypes.byref(status))
+        self.dll.IW_ZBudget_GetZoneNames(
+            ctypes.byref(n_zones),
+            ctypes.byref(length_zone_names_string),
+            raw_zone_names,
+            delimiter_location_array,
+            ctypes.byref(status),
+        )
 
-        return self._string_to_list_by_array(raw_zone_names, 
-                                             delimiter_location_array, 
-                                             n_zones)
+        return self._string_to_list_by_array(
+            raw_zone_names, delimiter_location_array, n_zones
+        )
 
     def get_n_title_lines(self):
-        '''
+        """
         Return the number of title lines in a ZBudget.
-        
+
         Returns
         -------
         int
@@ -756,43 +819,51 @@ class IWFMZBudget(IWFMMiscellaneous):
         >>> gw_zbud.get_n_title_lines()
         3
         >>> gw_zbud.close_zbudget_file()
-        '''
+        """
         # check to see if the procedure exists in the dll provided
-        if not hasattr(self.dll, 'IW_ZBudget_GetNTitleLines'):
-            raise AttributeError('IWFM DLL does not have "{}" procedure. '
-                                 'Check for an updated version'.format('IW_ZBudget_GetNTitleLines'))
+        if not hasattr(self.dll, "IW_ZBudget_GetNTitleLines"):
+            raise AttributeError(
+                'IWFM DLL does not have "{}" procedure. '
+                "Check for an updated version".format("IW_ZBudget_GetNTitleLines")
+            )
 
         # initialize output variables
         n_title_lines = ctypes.c_int(0)
         status = ctypes.c_int(0)
 
         # IW_Budget_GetNTitleLines(NTitles,iStat)
-        self.dll.IW_ZBudget_GetNTitleLines(ctypes.byref(n_title_lines),
-                                          ctypes.byref(status))
+        self.dll.IW_ZBudget_GetNTitleLines(
+            ctypes.byref(n_title_lines), ctypes.byref(status)
+        )
 
         return n_title_lines.value
 
-    def get_title_lines(self, zone_id, area_conversion_factor=1.0, area_unit='SQ FT',
-                        volume_unit='CU FT'):
-        '''
+    def get_title_lines(
+        self,
+        zone_id,
+        area_conversion_factor=1.0,
+        area_unit="SQ FT",
+        volume_unit="CU FT",
+    ):
+        """
         Return the title lines for the ZBudget data for a zone.
-        
+
         Parameters
         ----------
         zone_id : int
             Zone identification number used to retrieve the title lines.
-            
+
         area_conversion_factor : int, float, default 1.0
             Factor used to convert area units between the default model
             unit and the desired output unit.
-            e.g. ft^2 --> Acre = 2.29568E-05 
-            
+            e.g. ft^2 --> Acre = 2.29568E-05
+
         area_unit : str, default 'SQ FT'
             Desired output unit for area.
-                      
+
         volume_unit : str, default 'CU FT'
             Desired output unit for volume.
-            
+
         Returns
         -------
         list
@@ -800,7 +871,7 @@ class IWFMZBudget(IWFMMiscellaneous):
 
         Note
         ----
-        Title lines are useful for display when ZBudget data is 
+        Title lines are useful for display when ZBudget data is
         imported into files (text, spreadsheet, etc.).
 
         See Also
@@ -821,11 +892,13 @@ class IWFMZBudget(IWFMMiscellaneous):
          'GROUNDWATER ZONE BUDGET IN CU FT FOR ZONE 1 (Region1)',
          'ZONE AREA: 8610918912.00 SQ FT']
         >>> gw_zbud.close_zbudget_file()
-        '''
+        """
         # check to see if the procedure exists in the dll provided
-        if not hasattr(self.dll, 'IW_ZBudget_GetTitleLines'):
-            raise AttributeError('IWFM DLL does not have "{}" procedure. '
-                                 'Check for an updated version'.format('IW_ZBudget_GetTitleLines'))
+        if not hasattr(self.dll, "IW_ZBudget_GetTitleLines"):
+            raise AttributeError(
+                'IWFM DLL does not have "{}" procedure. '
+                "Check for an updated version".format("IW_ZBudget_GetTitleLines")
+            )
 
         # get number of title lines
         n_title_lines = ctypes.c_int(self.get_n_title_lines())
@@ -835,51 +908,54 @@ class IWFMZBudget(IWFMMiscellaneous):
 
         # convert area conversion factor and units to ctypes
         area_conversion_factor = ctypes.c_double(area_conversion_factor)
-        area_unit = ctypes.create_string_buffer(area_unit.encode('utf-8'))
+        area_unit = ctypes.create_string_buffer(area_unit.encode("utf-8"))
 
         # convert volume units to ctypes
-        volume_unit = ctypes.create_string_buffer(volume_unit.encode('utf-8'))
+        volume_unit = ctypes.create_string_buffer(volume_unit.encode("utf-8"))
 
         # get character length of units
-        length_unit_string = ctypes.c_int(max(ctypes.sizeof(area_unit), 
-                                              ctypes.sizeof(volume_unit)))
+        length_unit_string = ctypes.c_int(
+            max(ctypes.sizeof(area_unit), ctypes.sizeof(volume_unit))
+        )
 
         # set length of title string
-        length_title_string = ctypes.c_int(n_title_lines.value*200)
+        length_title_string = ctypes.c_int(n_title_lines.value * 200)
 
         # initialize output variables
         raw_title_string = ctypes.create_string_buffer(length_title_string.value)
-        delimiter_position_array = (ctypes.c_int*n_title_lines.value)()
+        delimiter_position_array = (ctypes.c_int * n_title_lines.value)()
         status = ctypes.c_int(0)
-        
-        self.dll.IW_ZBudget_GetTitleLines(ctypes.byref(n_title_lines),
-                                          ctypes.byref(zone_id),
-                                          ctypes.byref(area_conversion_factor),
-                                          area_unit,
-                                          volume_unit,
-                                          ctypes.byref(length_unit_string),
-                                          raw_title_string,
-                                          ctypes.byref(length_title_string),
-                                          delimiter_position_array,
-                                          ctypes.byref(status))
 
-        return self._string_to_list_by_array(raw_title_string, 
-                                             delimiter_position_array, 
-                                             n_title_lines)
+        self.dll.IW_ZBudget_GetTitleLines(
+            ctypes.byref(n_title_lines),
+            ctypes.byref(zone_id),
+            ctypes.byref(area_conversion_factor),
+            area_unit,
+            volume_unit,
+            ctypes.byref(length_unit_string),
+            raw_title_string,
+            ctypes.byref(length_title_string),
+            delimiter_position_array,
+            ctypes.byref(status),
+        )
+
+        return self._string_to_list_by_array(
+            raw_title_string, delimiter_position_array, n_title_lines
+        )
 
     def get_values_for_some_zones_for_an_interval(
-        self, 
-        zone_ids='all', 
-        column_ids='all', 
-        current_date=None, 
-        output_interval=None, 
+        self,
+        zone_ids="all",
+        column_ids="all",
+        current_date=None,
+        output_interval=None,
         area_conversion_factor=1.0,
-        area_units='SQ FT', 
+        area_units="SQ FT",
         volume_conversion_factor=1.0,
-        volume_units='CU FT'
+        volume_units="CU FT",
     ):
-        '''
-        Return specified zone flow values for one or more zones at a given 
+        """
+        Return specified zone flow values for one or more zones at a given
         date and time interval.
 
         Parameters
@@ -893,17 +969,17 @@ class IWFMZBudget(IWFMMiscellaneous):
 
         current_date : str or None, default None
             Valid IWFM date used to return ZBudget data.
-            
+
             Important
             ---------
             If None (default), uses the first date.
 
         output_interval : str or None, default None
             Valid IWFM output time interval for returning ZBudget data.
-            
+
             Note
             ----
-            This must be greater than or equal to the simulation time 
+            This must be greater than or equal to the simulation time
             step.
 
         area_conversion_factor : float or int, default 1.0
@@ -973,17 +1049,21 @@ class IWFMZBudget(IWFMMiscellaneous):
          'Region2':         Time  Inflow from zone 1 (+)  Outflow to zone 1 (-)  Discrepancy (=) Absolute Storage
                     0 1990-10-01           499542.470953            9448.000542        -0.151709     2.492766e+11}
         >>> gw_zbud.close_zbudget_file()
-        '''
+        """
         # check to see if the procedure exists in the dll provided
-        if not hasattr(self.dll, 'IW_ZBudget_GetValues_ForSomeZones_ForAnInterval'):
-            raise AttributeError('IWFM DLL does not have "{}" procedure. '
-                                 'Check for an updated version'.format('IW_ZBudget_GetValues_ForSomeZones_ForAnInterval'))
+        if not hasattr(self.dll, "IW_ZBudget_GetValues_ForSomeZones_ForAnInterval"):
+            raise AttributeError(
+                'IWFM DLL does not have "{}" procedure. '
+                "Check for an updated version".format(
+                    "IW_ZBudget_GetValues_ForSomeZones_ForAnInterval"
+                )
+            )
 
         # get all zone ids
         zones = self.get_zone_list()
-        
+
         # check that zone_ids are valid
-        if isinstance(zone_ids, str) and zone_ids == 'all':
+        if isinstance(zone_ids, str) and zone_ids == "all":
             zone_ids = zones
 
         if isinstance(zone_ids, int):
@@ -991,59 +1071,60 @@ class IWFMZBudget(IWFMMiscellaneous):
 
         if isinstance(zone_ids, list):
             zone_ids = np.array(zone_ids)
-        
+
         # now zone_ids should all be np.ndarray, so check if np.ndarray
         if not isinstance(zone_ids, np.ndarray):
             raise TypeError('zone_ids must be an int, list, np.ndarray, or str="all"')
 
         # make sure all zone_ids are valid zones
         if not np.all(np.isin(zone_ids, zones)):
-            raise ValueError('one or more zone_ids were not found in zone definitions provided')
+            raise ValueError(
+                "one or more zone_ids were not found in zone definitions provided"
+            )
 
         # convert zone_ids to ctypes
         n_zones = ctypes.c_int(len(zone_ids))
-        zone_ids = (ctypes.c_int*n_zones.value)(*zone_ids)
+        zone_ids = (ctypes.c_int * n_zones.value)(*zone_ids)
 
         # get all possible column ids for each zone and place in zone_header_array
         zone_header_array = []
         column_name_array = []
         n_columns_max = 0
-        
+
         for zone_id in zone_ids:
-            
+
             column_names, column_header_ids = self.get_column_headers_for_a_zone(
-                zone_id, 
-                area_units,
-                volume_units,
-                include_time=True
+                zone_id, area_units, volume_units, include_time=True
             )
-            
+
             n_columns = len(column_header_ids[column_header_ids > 0])
-            
+
             if n_columns > n_columns_max:
                 n_columns_max = n_columns
-            
+
             zone_header_array.append(column_header_ids)
             column_name_array.append(column_names)
 
-        zone_header_array = np.array(zone_header_array)[:,:n_columns_max]
+        zone_header_array = np.array(zone_header_array)[:, :n_columns_max]
 
         # handle different options for providing column_ids
         # all must be converted to 2D arrays with each row having same length
-        if isinstance(column_ids, str) and column_ids == 'all':
-            column_ids= zone_header_array
+        if isinstance(column_ids, str) and column_ids == "all":
+            column_ids = zone_header_array
 
         if isinstance(column_ids, int):
             # add the 'Time' column if user did not include it
             if column_ids != 1:
                 column_ids = np.array([[1, column_ids]])
-            
+
             else:
-                print('Note: only the time column will be returned for the zone requested')
+                print(
+                    "Note: only the time column will be returned for the zone requested"
+                )
                 column_ids = np.array([[column_ids]])
 
         if isinstance(column_ids, list):
-                
+
             # first sort each row
             if all([isinstance(val, int) for val in column_ids]):
                 if len(column_ids) > 1:
@@ -1063,15 +1144,15 @@ class IWFMZBudget(IWFMMiscellaneous):
 
                 # if column id 1 i.e. Time is not included add it as the first column
                 column_ids = [[1] + val if 1 not in val else val for val in column_ids]
-                
+
                 # get the number of columns in each zone
                 max_row_list = [len(val) for val in column_ids]
 
                 # get the maximum number of columns in any of the zones
                 max_row_length = max(max_row_list)
 
-                # if list does not have same number of elements in each 
-                # row, then need to pad the end with zeros before 
+                # if list does not have same number of elements in each
+                # row, then need to pad the end with zeros before
                 # converting to a numpy array
                 if len(max_row_list) > 1:
                     for i, row in enumerate(column_ids):
@@ -1079,7 +1160,7 @@ class IWFMZBudget(IWFMMiscellaneous):
                         while len_row < max_row_length:
                             row.append(0)
                             len_row = len(row)
-                
+
                 column_ids = np.array(column_ids)
 
         # valid inputs should all now be np.ndarray so validate type
@@ -1088,54 +1169,65 @@ class IWFMZBudget(IWFMMiscellaneous):
 
         # check: number of rows in column_ids must match number of zones
         if (column_ids.ndim == 2) and (column_ids.shape[0] != n_zones.value):
-            raise ValueError('Each number of rows in column_ids '
-                             'must match number of zones\nThe number '
-                             'of zones provided is {}.\nThe number '
-                             'of zones implied by column_ids is {}'.format(n_zones.value, column_ids.shape[0]))
+            raise ValueError(
+                "Each number of rows in column_ids "
+                "must match number of zones\nThe number "
+                "of zones provided is {}.\nThe number "
+                "of zones implied by column_ids is {}".format(
+                    n_zones.value, column_ids.shape[0]
+                )
+            )
 
         # check row by row if the column_ids are valid for a particular zone
         # this will only catch the first error it finds
         # only check the non-zero values
         for i, row in enumerate(column_ids):
             if not np.all(np.isin(row[row > 0], zone_header_array[i])):
-                raise ValueError('column_ids for zone {} are invalid'.format(np.array(zone_ids)[i]))
-        
+                raise ValueError(
+                    "column_ids for zone {} are invalid".format(np.array(zone_ids)[i])
+                )
+
         max_n_columns = ctypes.c_int(column_ids.shape[-1])
-        
+
         # convert column_ids to 2D ctypes array
-        column_id_array = ((ctypes.c_int*max_n_columns.value)*n_zones.value)()
+        column_id_array = ((ctypes.c_int * max_n_columns.value) * n_zones.value)()
         for i, row in enumerate(column_ids):
             column_id_array[i][:] = row
 
-        
         # handle current date
         # get time specs
         dates_list, sim_output_interval = self.get_time_specs()
-        
+
         if current_date is None:
             current_date = dates_list[0]
         else:
             self._validate_iwfm_date(current_date)
 
             if current_date not in dates_list:
-                raise ValueError('current_date was not found in the ZBudget '
-                                 'file. use get_time_specs() method to check.')
+                raise ValueError(
+                    "current_date was not found in the ZBudget "
+                    "file. use get_time_specs() method to check."
+                )
 
         # convert current_date to ctypes
-        current_date = ctypes.create_string_buffer(current_date.encode('utf-8'))
+        current_date = ctypes.create_string_buffer(current_date.encode("utf-8"))
         length_date_string = ctypes.c_int(ctypes.sizeof(current_date))
 
         # handle output interval
         if output_interval is None:
             output_interval = sim_output_interval
-                
+
         # check output interval is greater than or equal to simulation
-        if not self._is_time_interval_greater_or_equal(output_interval, sim_output_interval):
-            raise ValueError('output_interval must be greater than or '
-                             'equal to the simulation time step')
-        
+        if not self._is_time_interval_greater_or_equal(
+            output_interval, sim_output_interval
+        ):
+            raise ValueError(
+                "output_interval must be greater than or "
+                "equal to the simulation time step"
+            )
+
         # convert output_interval to ctypes
-        output_interval = ctypes.create_string_buffer(output_interval.encode('utf-8'))
+        output_interval = ctypes.create_string_buffer(output_interval.encode("utf-8"))
         length_output_interval = ctypes.c_int(ctypes.sizeof(output_interval))
 
         # convert unit conversion factors to ctypes
@@ -1143,21 +1235,23 @@ class IWFMZBudget(IWFMMiscellaneous):
         volume_conversion_factor = ctypes.c_double(volume_conversion_factor)
 
         # initialize output variables
-        zbudget_values = ((ctypes.c_double*max_n_columns.value)*n_zones.value)()
+        zbudget_values = ((ctypes.c_double * max_n_columns.value) * n_zones.value)()
         status = ctypes.c_int(0)
 
-        self.dll.IW_ZBudget_GetValues_ForSomeZones_ForAnInterval(ctypes.byref(n_zones),
-                                                                 zone_ids,
-                                                                 ctypes.byref(max_n_columns),
-                                                                 column_id_array,
-                                                                 current_date,
-                                                                 ctypes.byref(length_date_string),
-                                                                 output_interval,
-                                                                 ctypes.byref(length_output_interval),
-                                                                 ctypes.byref(area_conversion_factor),
-                                                                 ctypes.byref(volume_conversion_factor),
-                                                                 zbudget_values,
-                                                                 ctypes.byref(status))
+        self.dll.IW_ZBudget_GetValues_ForSomeZones_ForAnInterval(
+            ctypes.byref(n_zones),
+            zone_ids,
+            ctypes.byref(max_n_columns),
+            column_id_array,
+            current_date,
+            ctypes.byref(length_date_string),
+            output_interval,
+            ctypes.byref(length_output_interval),
+            ctypes.byref(area_conversion_factor),
+            ctypes.byref(volume_conversion_factor),
+            zbudget_values,
+            ctypes.byref(status),
+        )
 
         values = np.array(zbudget_values)
 
@@ -1176,27 +1270,31 @@ class IWFMZBudget(IWFMMiscellaneous):
             zone_columns = column_id_array[i] > 0
             col_ids = column_id_array[i, zone_columns]
             col_names = np.array(column_name_array[i])[col_ids - 1]
-            
-            df = pd.DataFrame(data=np.atleast_2d(values[i, zone_columns]), columns=col_names)
-            df['Time'] = df['Time'].astype('timedelta64[D]') + np.array('1899-12-30', dtype='datetime64')
-            
+
+            df = pd.DataFrame(
+                data=np.atleast_2d(values[i, zone_columns]), columns=col_names
+            )
+            df["Time"] = df["Time"].astype("timedelta64[D]") + np.array(
+                "1899-12-30", dtype="datetime64"
+            )
+
             value_dict[z] = df
 
         return value_dict
 
     def get_values_for_a_zone(
-        self, 
-        zone_id, 
-        column_ids='all', 
-        begin_date=None, 
-        end_date=None, 
-        output_interval=None, 
-        area_conversion_factor=1.0, 
-        area_units='SQ FT',
+        self,
+        zone_id,
+        column_ids="all",
+        begin_date=None,
+        end_date=None,
+        output_interval=None,
+        area_conversion_factor=1.0,
+        area_units="SQ FT",
         volume_conversion_factor=1.0,
-        volume_units='CU FT'
+        volume_units="CU FT",
     ):
-        ''' 
+        """
         Return specified Z-Budget data columns for a specified zone for
         a time period.
 
@@ -1206,7 +1304,7 @@ class IWFMZBudget(IWFMMiscellaneous):
             Zone identification number used to return zbudget results.
 
         column_ids : int, list, np.ndarray, or str='all', default 'all'
-            One or more column identification numbers for returning 
+            One or more column identification numbers for returning
             ZBudget results.
 
         begin_date : str
@@ -1246,7 +1344,7 @@ class IWFMZBudget(IWFMMiscellaneous):
 
         See Also
         --------
-        IWFMZBudget.get_values_for_some_zones_for_an_interval : Return 
+        IWFMZBudget.get_values_for_some_zones_for_an_interval : Return
             specified zone flow values for one or more zones at a given
             date and time interval.
 
@@ -1290,49 +1388,49 @@ class IWFMZBudget(IWFMMiscellaneous):
         27  1997-10-28              0.049131               2.927025           0.927415                 0.0                    0.0                     0.0              0.000014               0.000766                    1.350433 ...         0.131227          0.004973                           0.0                       0.000000                          0.0                           0.0               0.043030              0.023338   -9.135705e-09     12760.927854
         28  1997-10-29              0.048360               2.913890           0.916573                 0.0                    0.0                     0.0              0.000013               0.000762                    1.349457 ...         0.131094          0.005276                           0.0                       0.000000                          0.0                           0.0               0.042940              0.023457   -6.602659e-09     12763.793384
         29  1997-10-30              0.048777               2.892041           0.899888                 0.0                    0.0                     0.0              0.000013               0.000756                    1.344420 ...         0.130960          0.005580                           0.0                       0.000000                          0.0                           0.0               0.042849              0.023576   -1.509239e-08     12766.636648
-        30  1997-10-31              0.049344               2.846310           0.866150                 0.0                    0.0                     0.0              0.000014               0.000742                    1.332396 ...         0.130828          0.005885                           0.0                       0.000000                          0.0                           0.0               0.042759              0.023694   -6.460522e-09     12769.433613        
+        30  1997-10-31              0.049344               2.846310           0.866150                 0.0                    0.0                     0.0              0.000014               0.000742                    1.332396 ...         0.130828          0.005885                           0.0                       0.000000                          0.0                           0.0               0.042759              0.023694   -6.460522e-09     12769.433613
         >>> gw_zbud.close_zbudget_file()
-        '''
+        """
         # check to see if the procedure exists in the dll provided
-        if not hasattr(self.dll, 'IW_ZBudget_GetValues_ForAZone'):
-            raise AttributeError('IWFM DLL does not have "{}" procedure. '
-                                 'Check for an updated version'.format('IW_ZBudget_GetValues_ForAZone'))
+        if not hasattr(self.dll, "IW_ZBudget_GetValues_ForAZone"):
+            raise AttributeError(
+                'IWFM DLL does not have "{}" procedure. '
+                "Check for an updated version".format("IW_ZBudget_GetValues_ForAZone")
+            )
 
         # check zone_id is an integer
         if not isinstance(zone_id, int):
-            raise TypeError('zone_id must be an integer')
+            raise TypeError("zone_id must be an integer")
 
         # get possible zones numbers
         zones = self.get_zone_list()
 
         # check that zone_id is a valid zone ID
         if zone_id not in zones:
-            raise ValueError('zone_id was not found in zone definitions provided')
+            raise ValueError("zone_id was not found in zone definitions provided")
 
         # get all column headers and column IDs
         column_headers, column_header_ids = self.get_column_headers_for_a_zone(
-            zone_id, 
-            area_units,
-            volume_units,
-            include_time=True)
+            zone_id, area_units, volume_units, include_time=True
+        )
 
-        if isinstance(column_ids, str) and column_ids == 'all':
+        if isinstance(column_ids, str) and column_ids == "all":
             column_ids = column_header_ids[column_header_ids > 0]
 
         if isinstance(column_ids, int):
             column_ids = np.array([column_ids])
-        
+
         if isinstance(column_ids, list):
             column_ids = np.array(column_ids)
-                
+
         # valid column_ids should now all be np.ndarray, so validate column_ids
         if not isinstance(column_ids, np.ndarray):
             raise TypeError('column_ids must be an int, list, np.ndarray or str="all"')
-            
-        # check that all column_ids are in the list of possible 
+
+        # check that all column_ids are in the list of possible
         # column header ids for the given zone
         if not np.all(np.isin(column_ids, column_header_ids)):
-            raise ValueError('one or more column_ids provided are not valid')
+            raise ValueError("one or more column_ids provided are not valid")
 
         # if column_id 1 i.e. Time is not included, add it.
         if 1 not in column_ids:
@@ -1347,53 +1445,64 @@ class IWFMZBudget(IWFMMiscellaneous):
 
         # convert column_ids to ctypes
         n_column_ids = ctypes.c_int(len(column_ids))
-        column_ids = (ctypes.c_int*n_column_ids.value)(*column_ids)
+        column_ids = (ctypes.c_int * n_column_ids.value)(*column_ids)
 
         # handle start and end dates
         # get time specs
         dates_list, sim_output_interval = self.get_time_specs()
-        
+
         if begin_date is None:
             begin_date = dates_list[0]
         else:
             self._validate_iwfm_date(begin_date)
 
             if begin_date not in dates_list:
-                raise ValueError('begin_date was not found in the ZBudget '
-                                 'file. use get_time_specs() method to check.')
-        
+                raise ValueError(
+                    "begin_date was not found in the ZBudget "
+                    "file. use get_time_specs() method to check."
+                )
+
         if end_date is None:
             end_date = dates_list[-1]
         else:
             self._validate_iwfm_date(end_date)
 
             if end_date not in dates_list:
-                raise ValueError('end_date was not found in the ZBudget '
-                                 'file. use get_time_specs() method to check.')
+                raise ValueError(
+                    "end_date was not found in the ZBudget "
+                    "file. use get_time_specs() method to check."
+                )
 
         if self.is_date_greater(begin_date, end_date):
-            raise ValueError('end_date must occur after begin_date')
+            raise ValueError("end_date must occur after begin_date")
 
         if output_interval is None:
             output_interval = sim_output_interval
-        
+
         # get number of timestep intervals
-        n_timestep_intervals = ctypes.c_int(self.get_n_intervals(begin_date, end_date, 
-                                                                 output_interval, includes_end_date=True))
+        n_timestep_intervals = ctypes.c_int(
+            self.get_n_intervals(
+                begin_date, end_date, output_interval, includes_end_date=True
+            )
+        )
 
         # convert beginning and end dates to ctypes
-        begin_date = ctypes.create_string_buffer(begin_date.encode('utf-8'))
-        end_date = ctypes.create_string_buffer(end_date.encode('utf-8'))
+        begin_date = ctypes.create_string_buffer(begin_date.encode("utf-8"))
+        end_date = ctypes.create_string_buffer(end_date.encode("utf-8"))
 
         length_date_string = ctypes.c_int(ctypes.sizeof(begin_date))
 
         # check output interval is greater than or equal to simulation
-        if not self._is_time_interval_greater_or_equal(output_interval, sim_output_interval):
-            raise ValueError('output_interval must be greater than or '
-                             'equal to the simulation time step')
-        
+        if not self._is_time_interval_greater_or_equal(
+            output_interval, sim_output_interval
+        ):
+            raise ValueError(
+                "output_interval must be greater than or "
+                "equal to the simulation time step"
+            )
+
         # convert output_interval to ctypes
-        output_interval = ctypes.create_string_buffer(output_interval.encode('utf-8'))
+        output_interval = ctypes.create_string_buffer(output_interval.encode("utf-8"))
         length_output_interval = ctypes.c_int(ctypes.sizeof(output_interval))
 
         # convert unit conversion factors to ctypes
@@ -1401,30 +1510,34 @@ class IWFMZBudget(IWFMMiscellaneous):
         volume_conversion_factor = ctypes.c_double(volume_conversion_factor)
 
         # initialize output variables
-        zbudget_values = ((ctypes.c_double*n_column_ids.value)*n_timestep_intervals.value)()
+        zbudget_values = (
+            (ctypes.c_double * n_column_ids.value) * n_timestep_intervals.value
+        )()
         n_times_out = ctypes.c_int(0)
         status = ctypes.c_int(0)
 
-        
-        self.dll.IW_ZBudget_GetValues_ForAZone(ctypes.byref(zone_id),
-                                               ctypes.byref(n_column_ids),
-                                               column_ids,
-                                               begin_date,
-                                               end_date,
-                                               ctypes.byref(length_date_string),
-                                               output_interval,
-                                               ctypes.byref(length_output_interval),
-                                               ctypes.byref(area_conversion_factor),
-                                               ctypes.byref(volume_conversion_factor),
-                                               ctypes.byref(n_timestep_intervals),
-                                               zbudget_values,
-                                               ctypes.byref(n_times_out),
-                                               ctypes.byref(status))
+        self.dll.IW_ZBudget_GetValues_ForAZone(
+            ctypes.byref(zone_id),
+            ctypes.byref(n_column_ids),
+            column_ids,
+            begin_date,
+            end_date,
+            ctypes.byref(length_date_string),
+            output_interval,
+            ctypes.byref(length_output_interval),
+            ctypes.byref(area_conversion_factor),
+            ctypes.byref(volume_conversion_factor),
+            ctypes.byref(n_timestep_intervals),
+            zbudget_values,
+            ctypes.byref(n_times_out),
+            ctypes.byref(status),
+        )
 
         values = np.array(zbudget_values)
 
         zbudget = pd.DataFrame(data=values, columns=columns)
-        zbudget['Time'] = zbudget['Time'].astype('timedelta64[D]') \
-                        + np.array('1899-12-30', dtype='datetime64')
-        
+        zbudget["Time"] = zbudget["Time"].astype("timedelta64[D]") + np.array(
+            "1899-12-30", dtype="datetime64"
+        )
+
         return zbudget
