@@ -228,6 +228,7 @@ class IWFMModel(IWFMMiscellaneous):
         >>> model.get_current_date_and_time()
         '09/30/1990_24:00'
         >>> model.kill()
+        >>> model.close_log_file()
 
         >>> from pywfm import IWFMModel
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
@@ -237,6 +238,7 @@ class IWFMModel(IWFMMiscellaneous):
         >>> model.get_current_date_and_time()
         '10/01/1990_24:00'
         >>> model.kill()
+        >>> model.close_log_file()
 
         Note
         ----
@@ -297,6 +299,7 @@ class IWFMModel(IWFMMiscellaneous):
         >>> model.get_n_time_steps()
         3653
         >>> model.kill()
+        >>> model.close_log_file()
         """
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetNTimeSteps"):
@@ -357,6 +360,7 @@ class IWFMModel(IWFMMiscellaneous):
         >>> time_interval
         '1DAY'
         >>> model.kill()
+        >>> model.close_log_file()
         """
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetTimeSpecs"):
@@ -424,6 +428,7 @@ class IWFMModel(IWFMMiscellaneous):
         >>> model.get_output_interval()
         ['1DAY', '1WEEK', '1MON', '1YEAR']
         >>> model.kill()
+        >>> model.close_log_file()
         """
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetOutputIntervals"):
@@ -487,6 +492,7 @@ class IWFMModel(IWFMMiscellaneous):
         >>> model.get_n_nodes()
         441
         >>> model.kill()
+        >>> model.close_log_file()
         """
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetNNodes"):
@@ -536,6 +542,7 @@ class IWFMModel(IWFMMiscellaneous):
         >>> y
         array([14435520. , 14435520. , 14435520. , 14435520. , 14435520. , ..., 14566752. , 14566752. , 14566752. , 14566752. , 14566752. ])
         >>> model.kill()
+        >>> model.close_log_file()
         """
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetNodeXY"):
@@ -584,6 +591,7 @@ class IWFMModel(IWFMMiscellaneous):
         >>> model.get_node_ids()
         array([  1,   2,   3,   4,   5, ..., 437, 438, 439, 440, 441])
         >>> model.kill()
+        >>> model.close_log_file()
         """
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetNodeIDs"):
@@ -637,6 +645,7 @@ class IWFMModel(IWFMMiscellaneous):
         >>> model.get_n_elements()
         400
         >>> model.kill()
+        >>> model.close_log_file()
         """
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetNElements"):
@@ -682,6 +691,7 @@ class IWFMModel(IWFMMiscellaneous):
         >>> model.get_element_ids()
         array([ 1, 2, 3, ..., 398, 399, 400])
         >>> model.kill()
+        >>> model.close_log_file()
         """
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetElementIDs"):
@@ -742,6 +752,7 @@ class IWFMModel(IWFMMiscellaneous):
         >>> model.get_element_config(1)
         array([ 1, 2, 23, 22])
         >>> model.kill()
+        >>> model.close_log_file()
         """
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetElementConfigData"):
@@ -810,6 +821,7 @@ class IWFMModel(IWFMMiscellaneous):
         >>> model.get_n_subregions()
         2
         >>> model.kill()
+        >>> model.close_log_file()
         """
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetNSubregions"):
@@ -862,6 +874,7 @@ class IWFMModel(IWFMMiscellaneous):
         >>> model.get_subregion_ids()
         array([1, 2])
         >>> model.kill()
+        >>> model.close_log_file()
         """
 
         # check to see if IWFM procedure is available in user version of IWFM DLL
@@ -916,6 +929,7 @@ class IWFMModel(IWFMMiscellaneous):
         >>> model.get_subregion_name(1)
         'Region1 (SR1)'
         >>> model.kill()
+        >>> model.close_log_file()
         """
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetSubregionName"):
@@ -1009,6 +1023,7 @@ class IWFMModel(IWFMMiscellaneous):
                2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
                2, 2, 2, 2])
         >>> model.kill()
+        >>> model.close_log_file()
         """
         if not hasattr(self.dll, "IW_Model_GetElemSubregions"):
             raise AttributeError(
@@ -1063,6 +1078,7 @@ class IWFMModel(IWFMMiscellaneous):
         >>> model.get_n_stream_nodes()
         23
         >>> model.kill()
+        >>> model.close_log_file()
         """
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetNStrmNodes"):
@@ -1116,6 +1132,7 @@ class IWFMModel(IWFMMiscellaneous):
         array([ 1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16, 17,
                18, 19, 20, 21, 22, 23])
         >>> model.kill()
+        >>> model.close_log_file()
         """
         if not hasattr(self.dll, "IW_Model_GetStrmNodeIDs"):
             raise AttributeError(
@@ -1175,6 +1192,7 @@ class IWFMModel(IWFMMiscellaneous):
         >>> model.get_n_stream_nodes_upstream_of_stream_node(11)
         0
         >>> model.kill()
+        >>> model.close_log_file()
         """
         if not hasattr(self.dll, "IW_Model_GetStrmNUpstrmNodes"):
             raise AttributeError(
@@ -1251,6 +1269,7 @@ class IWFMModel(IWFMMiscellaneous):
         >>> print(model.get_stream_nodes_upstream_of_stream_node(11))
         None
         >>> model.kill()
+        >>> model.close_log_file()
 
         >>> from pywfm import IWFMModel
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
@@ -1259,6 +1278,7 @@ class IWFMModel(IWFMMiscellaneous):
         >>> model.get_stream_nodes_upstream_of_stream_node(2)
         array([1])
         >>> model.kill()
+        >>> model.close_log_file()
         """
         if not hasattr(self.dll, "IW_Model_GetStrmUpstrmNodes"):
             raise AttributeError(
@@ -1335,6 +1355,7 @@ class IWFMModel(IWFMMiscellaneous):
                280., 278., 276., 274., 272., 272., 270., 268., 266., 264., 262.,
                260.])
         >>> model.kill()
+        >>> model.close_log_file()
         """
         if not hasattr(self.dll, "IW_Model_GetStrmBottomElevs"):
             raise AttributeError(
@@ -1389,6 +1410,7 @@ class IWFMModel(IWFMMiscellaneous):
         >>> model.get_n_rating_table_points(1)
         5
         >>> model.kill()
+        >>> model.close_log_file()
         """
         if not hasattr(self.dll, "IW_Model_GetNStrmRatingTablePoints"):
             raise AttributeError(
@@ -1462,6 +1484,7 @@ class IWFMModel(IWFMMiscellaneous):
         array([0.00000000e+00, 6.34988160e+07, 2.85058656e+08, 1.64450304e+09,
         3.59151408e+09])
         >>> model.kill()
+        >>> model.close_log_file()
         """
         if not hasattr(self.dll, "IW_Model_GetStrmRatingTable"):
             raise AttributeError(
@@ -1529,6 +1552,7 @@ class IWFMModel(IWFMMiscellaneous):
         >>> model.get_n_stream_inflows()
         1
         >>> model.kill()
+        >>> model.close_log_file()
         """
         if not hasattr(self.dll, "IW_Model_GetStrmNInflows"):
             raise AttributeError(
@@ -1572,6 +1596,7 @@ class IWFMModel(IWFMMiscellaneous):
         >>> model.get_stream_inflow_nodes()
         array([1])
         >>> model.kill()
+        >>> model.close_log_file()
         """
         if not hasattr(self.dll, "IW_Model_GetStrmInflowNodes"):
             raise AttributeError(
@@ -1622,6 +1647,7 @@ class IWFMModel(IWFMMiscellaneous):
         >>> model.get_stream_inflow_ids()
         array([1])
         >>> model.kill()
+        >>> model.close_log_file()
         """
         if not hasattr(self.dll, "IW_Model_GetStrmInflowIDs"):
             raise AttributeError(
@@ -1719,6 +1745,7 @@ class IWFMModel(IWFMMiscellaneous):
         *   TIME STEP 3653 AT 09/30/2000_24:00
         86400000.
         >>> model.kill()
+        >>> model.close_log_file()
         """
         if not hasattr(self.dll, "IW_Model_GetStrmInflows_AtSomeInflows"):
             raise AttributeError(
@@ -1863,6 +1890,7 @@ class IWFMModel(IWFMMiscellaneous):
         *   TIME STEP 3653 AT 09/30/2000_24:00
         85301292.67626143
         >>> model.kill()
+        >>> model.close_log_file()
         """
         if not hasattr(self.dll, "IW_Model_GetStrmFlow"):
             raise AttributeError(
@@ -1976,6 +2004,7 @@ class IWFMModel(IWFMMiscellaneous):
         22 1599258.8286072314
         23 2495579.2758224607
         >>> model.kill()
+        >>> model.close_log_file()
         """
         if not hasattr(self.dll, "IW_Model_GetStrmFlows"):
             raise AttributeError(
@@ -2082,6 +2111,7 @@ class IWFMModel(IWFMMiscellaneous):
         22 0.050371296013054234
         23 0.07860238766727434
         >>> model.kill()
+        >>> model.close_log_file()
         """
         if not hasattr(self.dll, "IW_Model_GetStrmStages"):
             raise AttributeError(
@@ -2747,6 +2777,7 @@ class IWFMModel(IWFMMiscellaneous):
         >>> model.get_stream_diversion_locations()
         array([ 9, 12, 12, 22, 23])
         >>> model.kill()
+        >>> model.close_log_file()
         """
         if not hasattr(self.dll, "IW_Model_GetStrmDiversionsExportNodes"):
             raise AttributeError(
@@ -2846,6 +2877,7 @@ class IWFMModel(IWFMMiscellaneous):
         >>> model.get_n_stream_reaches()
         3
         >>> model.kill()
+        >>> model.close_log_file()
         """
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetNReaches"):
@@ -2900,6 +2932,7 @@ class IWFMModel(IWFMMiscellaneous):
         >>> model.get_stream_ids()
         array([2, 1, 3])
         >>> model.kill()
+        >>> model.close_log_file()
         """
         if not hasattr(self.dll, "IW_Model_GetReachIDs"):
             raise AttributeError(
@@ -2959,6 +2992,7 @@ class IWFMModel(IWFMMiscellaneous):
         >>> model.get_n_nodes_in_stream_reach(1)
         10
         >>> model.kill()
+        >>> model.close_log_file()
         """
         if not hasattr(self.dll, "IW_Model_GetReachNNodes"):
             raise AttributeError(
@@ -3042,6 +3076,7 @@ class IWFMModel(IWFMMiscellaneous):
         >>> model.get_stream_reach_groundwater_nodes(1)
         array([433, 412, 391, 370, 349, 328, 307, 286, 265, 264])
         >>> model.kill()
+        >>> model.close_log_file()
         """
         if not hasattr(self.dll, "IW_Model_GetReachGWNodes"):
             raise AttributeError(
@@ -3127,6 +3162,7 @@ class IWFMModel(IWFMMiscellaneous):
         >>> model.get_stream_reach_stream_nodes(1)
         array([ 1,  2,  3,  4,  5,  6,  7,  8,  9, 10])
         >>> model.kill()
+        >>> model.close_log_file()
         """
         if not hasattr(self.dll, "IW_Model_GetReachStrmNodes"):
             raise AttributeError(
@@ -3211,6 +3247,7 @@ class IWFMModel(IWFMMiscellaneous):
         >>> model.get_stream_reaches_for_stream_nodes()
         array([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3])
         >>> model.kill()
+        >>> model.close_log_file()
         """
         if not hasattr(self.dll, "IW_Model_GetReaches_ForStrmNodes"):
             raise AttributeError(
@@ -3316,6 +3353,7 @@ class IWFMModel(IWFMMiscellaneous):
         >>> model.get_upstream_nodes_in_stream_reaches()
         array([11,  1, 17])
         >>> model.kill()
+        >>> model.close_log_file()
         """
         if not hasattr(self.dll, "IW_Model_GetReachUpstrmNodes"):
             raise AttributeError(
@@ -3387,6 +3425,7 @@ class IWFMModel(IWFMMiscellaneous):
         >>> model.get_n_reaches_upstream_of_reach(1)
         0
         >>> model.kill()
+        >>> model.close_log_file()
 
         >>> from pywfm import IWFMModel
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
@@ -3395,6 +3434,7 @@ class IWFMModel(IWFMMiscellaneous):
         >>> model.get_n_reaches_upstream_of_reach(3)
         1
         >>> model.kill()
+        >>> model.close_log_file()
         """
         if not hasattr(self.dll, "IW_Model_GetReachNUpstrmReaches"):
             raise AttributeError(
@@ -3472,6 +3512,7 @@ class IWFMModel(IWFMMiscellaneous):
         >>> print(model.get_n_reaches_upstream_of_reach(1))
         None
         >>> model.kill()
+        >>> model.close_log_file()
 
         >>> from pywfm import IWFMModel
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
@@ -3480,6 +3521,7 @@ class IWFMModel(IWFMMiscellaneous):
         >>> model.get_n_reaches_upstream_of_reach(3)
         array([2])
         >>> model.kill()
+        >>> model.close_log_file()
         """
         if not hasattr(self.dll, "IW_Model_GetReachUpstrmReaches"):
             raise AttributeError(
@@ -3567,6 +3609,7 @@ class IWFMModel(IWFMMiscellaneous):
         >>> model.get_downstream_node_in_stream_reaches()
         array([16, 10, 23])
         >>> model.kill()
+        >>> model.close_log_file()
         """
         if not hasattr(self.dll, "IW_Model_GetReachDownstrmNodes"):
             raise AttributeError(
@@ -3634,6 +3677,7 @@ class IWFMModel(IWFMMiscellaneous):
         >>> model.get_reach_outflow_destination()
         array([17, 1, 0])
         >>> model.kill()
+        >>> model.close_log_file()
         """
         if not hasattr(self.dll, "IW_Model_GetReachOutflowDest"):
             raise AttributeError(
@@ -3695,6 +3739,7 @@ class IWFMModel(IWFMMiscellaneous):
         >>> model.get_reach_outflow_destination_types()
         array([1, 3, 0])
         >>> model.kill()
+        >>> model.close_log_file()
         """
         if not hasattr(self.dll, "IW_Model_GetReachOutflowDestTypes"):
             raise AttributeError(
@@ -3744,6 +3789,7 @@ class IWFMModel(IWFMMiscellaneous):
         >>> model.get_n_diversions()
         5
         >>> model.kill()
+        >>> model.close_log_file()
         """
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetNDiversions"):
@@ -3788,6 +3834,7 @@ class IWFMModel(IWFMMiscellaneous):
         >>> model.get_diversion_ids()
         array([1, 2, 3, 4, 5])
         >>> model.kill()
+        >>> model.close_log_file()
         """
         if not hasattr(self.dll, "IW_Model_GetDiversionIDs"):
             raise AttributeError(
@@ -3834,6 +3881,7 @@ class IWFMModel(IWFMMiscellaneous):
         >>> model.get_n_lakes()
         1
         >>> model.kill()
+        >>> model.close_log_file()
         """
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetNLakes"):
@@ -3876,6 +3924,7 @@ class IWFMModel(IWFMMiscellaneous):
         >>> model.get_lake_ids()
         array([1])
         >>> model.kill()
+        >>> model.close_log_file()
         """
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetLakeIDs"):
@@ -3935,6 +3984,7 @@ class IWFMModel(IWFMMiscellaneous):
         >>> model.get_n_elements_in_lake()
         10
         >>> model.kill()
+        >>> model.close_log_file()
         """
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetLakeIDs"):
@@ -4012,6 +4062,7 @@ class IWFMModel(IWFMMiscellaneous):
         >>> model.get_elements_in_lake(1)
         array([169, 170, 171, 188, 189, 190, 207, 208, 209, 210])
         >>> model.kill()
+        >>> model.close_log_file()
         """
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetLakeIDs"):
@@ -4091,6 +4142,7 @@ class IWFMModel(IWFMMiscellaneous):
         >>> model.get_n_tile_drains()
         21
         >>> model.kill()
+        >>> model.close_log_file()
         """
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetNTileDrainNodes"):
@@ -4135,6 +4187,7 @@ class IWFMModel(IWFMMiscellaneous):
         array([ 1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16, 17,
                18, 19, 20, 21])
         >>> model.kill()
+        >>> model.close_log_file()
         """
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetTileDrainIDs"):
@@ -4186,6 +4239,7 @@ class IWFMModel(IWFMMiscellaneous):
         array([  6,  27,  48,  69,  90, 111, 132, 153, 174, 195, 216, 237, 258,
                279, 300, 321, 342, 363, 384, 405, 426])
         >>> model.kill()
+        >>> model.close_log_file()
         """
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetTileDrainNodes"):
@@ -4243,6 +4297,7 @@ class IWFMModel(IWFMMiscellaneous):
         >>> model.get_n_layers()
         2
         >>> model.kill()
+        >>> model.close_log_file()
         """
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetNLayers"):
@@ -4327,6 +4382,7 @@ class IWFMModel(IWFMMiscellaneous):
                500., 500., 500., 500., 500., 500., 500., 500., 500., 500., 500.,
                500.])
         >>> model.kill()
+        >>> model.close_log_file()
         """
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetGSElev"):
@@ -4458,6 +4514,7 @@ class IWFMModel(IWFMMiscellaneous):
                   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,
                   0.]])
         >>> model.kill()
+        >>> model.close_log_file()
         """
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetAquiferTopElev"):
@@ -4613,6 +4670,7 @@ class IWFMModel(IWFMMiscellaneous):
                 -100., -100., -100., -100., -100., -100., -100., -100., -100.,
                 -100., -100., -100., -100., -100., -100., -100., -100., -100.]])
         >>> model.kill()
+        >>> model.close_log_file()
         """
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetAquiferBottomElev"):
@@ -4702,6 +4760,7 @@ class IWFMModel(IWFMMiscellaneous):
         >>> model.get_stratigraphy_atXYcoordinate(590000.0, 4440000.0, 3.2808, 5)
         (500.0, array([500.,   0.]), array([   0., -100.]))
         >>> model.kill()
+        >>> model.close_log_file()
 
         >>> from pywfm import IWFMModel
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
@@ -4710,6 +4769,7 @@ class IWFMModel(IWFMMiscellaneous):
         >>> model.get_stratigraphy_atXYcoordinate(590000.0, 4440000.0, 3.2808, 1)
         array([ 500.,    0., -100.])
         >>> model.kill()
+        >>> model.close_log_file()
 
         >>> from pywfm import IWFMModel
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
@@ -4718,6 +4778,7 @@ class IWFMModel(IWFMMiscellaneous):
         >>> model.get_stratigraphy_atXYcoordinate(590000.0, 4440000.0, 3.2808, ''gse')
         500.0
         >>> model.kill()
+        >>> model.close_log_file()
         """
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetStratigraphy_AtXYCoordinate"):
@@ -4873,6 +4934,7 @@ class IWFMModel(IWFMMiscellaneous):
                 50., 50., 50., 50., 50., 50., 50., 50., 50., 50., 50., 50., 50.,
                 50., 50., 50., 50., 50., 50., 50., 50., 50., 50., 50., 50.]])
         >>> model.kill()
+        >>> model.close_log_file()
         """
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetAquiferHorizontalK"):
@@ -4984,6 +5046,7 @@ class IWFMModel(IWFMMiscellaneous):
                 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.,
                 1., 1., 1., 1., 1., 1., 1., 1., 1.]])
         >>> model.kill()
+        >>> model.close_log_file()
         """
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetAquiferVerticalK"):
@@ -5107,6 +5170,7 @@ class IWFMModel(IWFMMiscellaneous):
                 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2,
                 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2]])
         >>> model.kill()
+        >>> model.close_log_file()
         """
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetAquitardVerticalK"):
@@ -5244,6 +5308,7 @@ class IWFMModel(IWFMMiscellaneous):
                 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25,
                 0.25]])
         >>> model.kill()
+        >>> model.close_log_file()
         """
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetAquiferSy"):
@@ -5425,6 +5490,7 @@ class IWFMModel(IWFMMiscellaneous):
                 9.0e-05, 9.0e-05, 9.0e-05, 9.0e-05, 9.0e-05, 9.0e-05, 9.0e-05,
                 9.0e-05, 9.0e-05, 9.0e-05, 9.0e-05, 9.0e-05, 9.0e-05, 9.0e-05]])
         >>> model.kill()
+        >>> model.close_log_file()
         """
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetAquiferSs"):
@@ -5485,6 +5551,7 @@ class IWFMModel(IWFMMiscellaneous):
         >>> model = IWFMModel(pp_file, sim_file)
         >>> hk, vk, avk, sy, ss = model.get_aquifer_parameters()
         >>> model.kill()
+        >>> model.close_log_file()
         """
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetAquiferParameters"):
@@ -5549,6 +5616,7 @@ class IWFMModel(IWFMMiscellaneous):
         >>> model.get_n_ag_crops()
         7
         >>> model.kill()
+        >>> model.close_log_file()
         """
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetNAgCrops"):
@@ -5596,6 +5664,7 @@ class IWFMModel(IWFMMiscellaneous):
         >>> model.get_n_wells()
         0
         >>> model.kill()
+        >>> model.close_log_file()
         """
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetNWells"):
@@ -5642,6 +5711,7 @@ class IWFMModel(IWFMMiscellaneous):
         >>> model.get_well_ids()
 
         >>> model.kill()
+        >>> model.close_log_file()
         """
         if not hasattr(self.dll, "IW_Model_GetWellIDs"):
             raise AttributeError(
@@ -5693,6 +5763,7 @@ class IWFMModel(IWFMMiscellaneous):
         >>> model.get_n_element_pumps()
         5
         >>> model.kill()
+        >>> model.close_log_file()
         """
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetNElemPumps"):
@@ -5741,6 +5812,7 @@ class IWFMModel(IWFMMiscellaneous):
         >>> model.get_element_pump_ids()
 
         >>> model.kill()
+        >>> model.close_log_file()
         """
         if not hasattr(self.dll, "IW_Model_GetElemPumpIDs"):
             raise AttributeError(
@@ -5906,6 +5978,7 @@ class IWFMModel(IWFMMiscellaneous):
         *   TIME STEP 3653 AT 09/30/2000_24:00
         [ 1  1 10 10 10]
         >>> model.kill()
+        >>> model.close_log_file()
 
         >>> from pywfm import IWFMModel
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
@@ -5914,6 +5987,7 @@ class IWFMModel(IWFMMiscellaneous):
         >>> model.get_diversion_purpose()
         array([1, 1, 1, 1, 1])
         >>> model.kill()
+        >>> model.close_log_file()
         """
         supply_type_id = self.get_supply_type_id_diversion()
 
@@ -6028,6 +6102,7 @@ class IWFMModel(IWFMMiscellaneous):
         *   TIME STEP 3653 AT 09/30/2000_24:00
         [ 1  1 10 10 10]
         >>> model.kill()
+        >>> model.close_log_file()
 
         >>> from pywfm import IWFMModel
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
@@ -6035,7 +6110,8 @@ class IWFMModel(IWFMMiscellaneous):
         >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_well_pumping_purpose()
         array([1, 1, 1, 1, 1])
-        >>> model.kill()"""
+        >>> model.kill()
+        >>> model.close_log_file()"""
         supply_type_id = self.get_supply_type_id_well()
 
         # get all well IDs
@@ -6136,6 +6212,7 @@ class IWFMModel(IWFMMiscellaneous):
         .
 
         >>> model.kill()
+        >>> model.close_log_file()
 
         >>> from pywfm import IWFMModel
         >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
@@ -6143,7 +6220,8 @@ class IWFMModel(IWFMMiscellaneous):
         >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_element_pumping_purpose()
 
-        >>> model.kill()"""
+        >>> model.kill()
+        >>> model.close_log_file()"""
         supply_type_id = self.get_supply_type_id_well()
 
         # get all element pump IDs
@@ -7275,6 +7353,7 @@ class IWFMModel(IWFMMiscellaneous):
         >>> model.get_subregion_names()
         ['Region1 (SR1)', 'Region2 (SR2)']
         >>> model.kill()
+        >>> model.close_log_file()
         """
         location_type_id = self.get_location_type_id_subregion()
 
@@ -7305,6 +7384,7 @@ class IWFMModel(IWFMMiscellaneous):
         >>> model.get_stream_reach_names()
         ['Reach2', 'Reach1', 'Reach3']
         >>> model.kill()
+        >>> model.close_log_file()
         """
         location_type_id = self.get_location_type_id_streamreach()
 
@@ -7377,6 +7457,7 @@ class IWFMModel(IWFMMiscellaneous):
          'GWHyd41',
          'GWHyd42']
         >>> model.kill()
+        >>> model.close_log_file()
         """
         location_type_id = self.get_location_type_id_gwheadobs()
 
@@ -7430,6 +7511,7 @@ class IWFMModel(IWFMMiscellaneous):
          'StrmHyd_22',
          'StrmHyd_23']
         >>> model.kill()
+        >>> model.close_log_file()
         """
         location_type_id = self.get_location_type_id_streamhydobs()
 
@@ -7461,6 +7543,7 @@ class IWFMModel(IWFMMiscellaneous):
         >>> model.get_subsidence_hydrograph_names()
         ['SubsHyd1', 'SubsHyd2', 'SubsHyd3', 'SubsHyd4', 'SubsHyd5']
         >>> model.kill()
+        >>> model.close_log_file()
         """
         location_type_id = self.get_location_type_id_subsidenceobs()
 
@@ -7506,6 +7589,7 @@ class IWFMModel(IWFMMiscellaneous):
         >>> model.get_n_hydrograph_types()
         5
         >>> model.kill()
+        >>> model.close_log_file()
         """
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetNHydrographTypes"):
@@ -7571,6 +7655,7 @@ class IWFMModel(IWFMMiscellaneous):
          'Tile drain hydrograph': 13,
          'Stream hydrograph (flow)': 12}
         >>> model.kill()
+        >>> model.close_log_file()
         """
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetHydrographTypeList"):
@@ -7698,6 +7783,7 @@ class IWFMModel(IWFMMiscellaneous):
         >>> model.get_n_groundwater_hydrographs()
         42
         >>> model.kill()
+        >>> model.close_log_file()
         """
         location_type_id = self.get_location_type_id_gwheadobs()
 
@@ -7743,6 +7829,7 @@ class IWFMModel(IWFMMiscellaneous):
         >>> model.get_n_subsidence_hydrographs()
         5
         >>> model.kill()
+        >>> model.close_log_file()
         """
         location_type_id = self.get_location_type_id_subsidenceobs()
 
@@ -7788,6 +7875,7 @@ class IWFMModel(IWFMMiscellaneous):
         >>> model.get_n_stream_hydrographs()
         23
         >>> model.kill()
+        >>> model.close_log_file()
         """
         location_type_id = self.get_location_type_id_streamhydobs()
 
@@ -7833,6 +7921,7 @@ class IWFMModel(IWFMMiscellaneous):
         >>> model.get_n_tile_drain_hydrographs()
         6
         >>> model.kill()
+        >>> model.close_log_file()
         """
         location_type_id = self.get_location_type_id_tiledrainobs()
 
@@ -7934,6 +8023,7 @@ class IWFMModel(IWFMMiscellaneous):
                18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34,
                35, 36, 37, 38, 39, 40, 41, 42])
         >>> model.kill()
+        >>> model.close_log_file()
         """
         # get the location type id for groundwater head observations
         location_type_id = self.get_location_type_id_gwheadobs()
@@ -7980,6 +8070,7 @@ class IWFMModel(IWFMMiscellaneous):
         >>> model.get_subsidence_hydrograph_ids()
         array([1, 2, 3, 4, 5])
         >>> model.kill()
+        >>> model.close_log_file()
         """
         # get the location type id for groundwater head observations
         location_type_id = self.get_location_type_id_subsidenceobs()
@@ -8027,6 +8118,7 @@ class IWFMModel(IWFMMiscellaneous):
         array([ 1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16, 17,
                18, 19, 20, 21, 22, 23])
         >>> model.kill()
+        >>> model.close_log_file()
         """
         # get the location type id for stream flow observations
         location_type_id = self.get_location_type_id_streamhydobs()
@@ -8073,6 +8165,7 @@ class IWFMModel(IWFMMiscellaneous):
         >>> model.get_tile_drain_hydrograph_ids()
         array([ 1,  4,  7, 10, 13, 16])
         >>> model.kill()
+        >>> model.close_log_file()
         """
         # get the location type id for tile drain observations
         location_type_id = self.get_location_type_id_tiledrainobs()
@@ -8193,6 +8286,7 @@ class IWFMModel(IWFMMiscellaneous):
                14474889.6, 14468328. , 14461766.4, 14455204.8, 14448643.2,
                14442081.6, 14435520. ])
         >>> model.kill()
+        >>> model.close_log_file()
         """
         location_type_id = self.get_location_type_id_gwheadobs()
 
@@ -8242,6 +8336,7 @@ class IWFMModel(IWFMMiscellaneous):
         >>> y
         array([14481451.2, 14488012.8, 14488012.8, 14488012.8, 14488012.8])
         >>> model.kill()
+        >>> model.close_log_file()
         """
         location_type_id = self.get_location_type_id_subsidenceobs()
 
@@ -8298,6 +8393,7 @@ class IWFMModel(IWFMMiscellaneous):
                14474889.6, 14474889.6, 14468328. , 14461766.4, 14455204.8,
                14448643.2, 14442081.6, 14435520. ])
         >>> model.kill()
+        >>> model.close_log_file()
         """
         location_type_id = self.get_location_type_id_streamhydobs()
 
@@ -8348,6 +8444,7 @@ class IWFMModel(IWFMMiscellaneous):
         array([14435520. , 14455204.8, 14474889.6, 14494574.4, 14514259.2,
                14533944. ])
         >>> model.kill()
+        >>> model.close_log_file()
         """
         location_type_id = self.get_location_type_id_tiledrainobs()
 
@@ -8605,6 +8702,7 @@ class IWFMModel(IWFMMiscellaneous):
         >>> values
         array([  1.9855,   3.9691,   5.9509, ..., 302.0719, 302.0719, 302.072 ])
         >>> model.kill()
+        >>> model.close_log_file()
         """
         hydrograph_type = self.get_location_type_id_gwheadobs()
 
@@ -8715,6 +8813,7 @@ class IWFMModel(IWFMMiscellaneous):
         >>> values
         array([  0.    ,   0.    ,   0.    , ..., 180.9377, 181.0441, 181.1501])
         >>> model.kill()
+        >>> model.close_log_file()
         """
         hydrograph_type = self.get_location_type_id_node()
 
@@ -8815,6 +8914,7 @@ class IWFMModel(IWFMMiscellaneous):
         >>> values
         array([-0.0152, -0.0153, -0.0153, ..., -0.0189, -0.0189, -0.0189])
         >>> model.kill()
+        >>> model.close_log_file()
         """
         hydrograph_type = self.get_location_type_id_subsidenceobs()
 
@@ -8922,6 +9022,7 @@ class IWFMModel(IWFMMiscellaneous):
         array([75741603.86810122, 75741603.86810122, 75741603.86810122, ...,
                85301215.31559001, 85301215.31559001, 85301215.31559001])
         >>> model.kill()
+        >>> model.close_log_file()
         """
         hydrograph_type = self.get_location_type_id_streamhydobs()
 
@@ -9193,6 +9294,7 @@ class IWFMModel(IWFMMiscellaneous):
           136.05482407 115.70455947 149.58589408 213.48004259 283.3592372
           345.65879897]]
         >>> model.kill()
+        >>> model.close_log_file()
         """
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetGWHeads_All"):
@@ -9300,6 +9402,7 @@ class IWFMModel(IWFMMiscellaneous):
           -2.89134140e-06 -2.49219032e-06 -1.60718472e-06 -7.37134674e-07
           -4.80396324e-08]]
         >>> model.kill()
+        >>> model.close_log_file()
         """
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetSubsidence_All"):
@@ -9395,6 +9498,7 @@ class IWFMModel(IWFMMiscellaneous):
         *   TIME STEP 3653 AT 09/30/2000_24:00
         [ 266.34883635 -999.        ]
         >>> model.kill()
+        >>> model.close_log_file()
         """
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetSubregionAgPumpingAverageDepthToGW"):
@@ -9494,6 +9598,7 @@ class IWFMModel(IWFMMiscellaneous):
         *   TIME STEP 3653 AT 09/30/2000_24:00
         [ 266.34883635 0.        ]
         >>> model.kill()
+        >>> model.close_log_file()
         """
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetZoneAgPumpingAverageDepthToGW"):
@@ -10498,6 +10603,7 @@ class IWFMModel(IWFMMiscellaneous):
         40  41    GWHyd41      1883179.2   14442081.6  500.0        0.0   -110.0
         41  42    GWHyd42      1883179.2   14435520.0  500.0        0.0   -110.0
         >>> model.kill()
+        >>> model.close_log_file()
         """
         hydrograph_ids = self.get_groundwater_hydrograph_ids()
         (
@@ -10558,6 +10664,7 @@ class IWFMModel(IWFMMiscellaneous):
         439     440  1929110.4   14566752.0
         440     441  1935672.0   14566752.0
         >>> model.kill()
+        >>> model.close_log_file()
         """
         # get array of node ids
         node_ids = self.get_node_ids()
@@ -10607,6 +10714,7 @@ class IWFMModel(IWFMMiscellaneous):
         1598  400    2    Node3     441
         1599  400    2    Node4     440
         >>> model.kill()
+        >>> model.close_log_file()
         """
         df = pd.DataFrame({"IE": self.get_element_ids()})
 
@@ -10760,6 +10868,7 @@ class IWFMModel(IWFMMiscellaneous):
         1598  400    2    Node3    441 1935672.0 14566752.0
         1599  400    2    Node4    440 1929110.4 14566752.0
         >>> model.kill()
+        >>> model.close_log_file()
         """
         node_info = self.get_node_info()
         element_info = self.get_element_info()
@@ -10817,6 +10926,7 @@ class IWFMModel(IWFMMiscellaneous):
         13228   2000-09-29    441 150.0 1935672.0 14566752.0
         13229   2000-09-30    441 150.0 1935672.0 14566752.0
         >>> model.kill()
+        >>> model.close_log_file()
         """
         # get ground surface elevations
         gs_elevs = self.get_ground_surface_elevation()
@@ -10894,6 +11004,7 @@ class IWFMModel(IWFMMiscellaneous):
         21           3          22               34    Reach3
         22           3          23               13    Reach3
         >>> model.kill()
+        >>> model.close_log_file()
         """
         # get stream reach IDs
         stream_reach_ids = self.get_stream_reach_ids()
