@@ -1,7 +1,7 @@
 # Tutorial 1
 # Created by: Tyler Hatch/DWR
 # Date: October 5, 2021
-# Description: This tutorial walks a user of the iwfmdll python package
+# Description: This tutorial walks a user of the pywfm python package
 # through how to run the IWFM Sample Model from python
 
 # Set-Up: 
@@ -31,12 +31,9 @@ def run_model(model):
 
 if __name__ == "__main__":
     
-    # specify path to IWFM DLL
-    dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
-    
     # specify paths to preprocessor and simulation main files
     pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
     sim_file = 'Simulation_MAIN.IN'
 
-    with IWFMModel(dll, pp_file, sim_file, is_for_inquiry=0) as sm:
+    with IWFMModel(pp_file, sim_file, is_for_inquiry=0) as sm:
         run_model(sm)
