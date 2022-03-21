@@ -51,9 +51,6 @@ Set Paths to the IWFM DLL, Preprocessor Input File, and Simulation Input File
 
 .. code-block:: py
 
-   # specify path to IWFM DLL
-   dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
-    
    # specify paths to preprocessor and simulation main files
    pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
    sim_file = 'Simulation_MAIN.IN'
@@ -69,7 +66,7 @@ Create the Model Object and Run the Simulation
 
 .. code-block:: py
 
-   with IWFMModel(dll, pp_file, sim_file, is_for_inquiry=0) as sm:
+   with IWFMModel(pp_file, sim_file, is_for_inquiry=0) as sm:
        run_model(sm)
 	   
 	   
@@ -79,6 +76,7 @@ Create the Model Object and Run the Simulation
    
    .. code-block:: py
    
-      sm = IWFMModel(dll, pp_file, sim_file, is_for_inquiry=0)
+      sm = IWFMModel(pp_file, sim_file, is_for_inquiry=0)
       run_model(sm)
       sm.kill()
+      sm.close_log_file()

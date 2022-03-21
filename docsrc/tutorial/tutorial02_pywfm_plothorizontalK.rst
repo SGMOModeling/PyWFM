@@ -27,9 +27,6 @@ Set Paths to the IWFM DLL, Preprocessor Input File, and Simulation Input File
 
 .. code-block:: py
 
-   # specify path to IWFM DLL
-   dll = '../../DLL/Bin/IWFM2015_C_x64.dll'
-    
    # specify paths to preprocessor and simulation main files
    pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
    sim_file = 'Simulation_MAIN.IN'
@@ -45,7 +42,7 @@ Create the Model Object
 
 .. code-block:: py
 
-   sm = IWFMModel(dll, pp_file, sim_file)
+   sm = IWFMModel(pp_file, sim_file)
    
 
 Retrieve Node IDs and Node Coordinates
@@ -98,11 +95,4 @@ Terminate the Model Object
 .. code-block:: py
 
    sm.kill()
-   
-.. note::
-
-   It may also be useful to call:
-   
-   .. code-block:: py
-      
-	  sm.delete_inquiry_data_file()
+   sm.close_log_file()
