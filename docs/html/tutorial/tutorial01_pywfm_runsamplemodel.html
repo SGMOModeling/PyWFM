@@ -246,10 +246,7 @@ by timestep basis. If the user only wants to run the entire simulation from pyth
 </div>
 <div class="section" id="set-paths-to-the-iwfm-dll-preprocessor-input-file-and-simulation-input-file">
 <h2>Set Paths to the IWFM DLL, Preprocessor Input File, and Simulation Input File<a class="headerlink" href="#set-paths-to-the-iwfm-dll-preprocessor-input-file-and-simulation-input-file" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="c1"># specify path to IWFM DLL</span>
-<span class="n">dll</span> <span class="o">=</span> <span class="s1">&#39;../../DLL/Bin/IWFM2015_C_x64.dll&#39;</span>
-
-<span class="c1"># specify paths to preprocessor and simulation main files</span>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="c1"># specify paths to preprocessor and simulation main files</span>
 <span class="n">pp_file</span> <span class="o">=</span> <span class="s1">&#39;../Preprocessor/PreProcessor_MAIN.IN&#39;</span>
 <span class="n">sim_file</span> <span class="o">=</span> <span class="s1">&#39;Simulation_MAIN.IN&#39;</span>
 </pre></div>
@@ -262,16 +259,17 @@ relative to the simulation folder</p>
 </div>
 <div class="section" id="create-the-model-object-and-run-the-simulation">
 <h2>Create the Model Object and Run the Simulation<a class="headerlink" href="#create-the-model-object-and-run-the-simulation" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">IWFMModel</span><span class="p">(</span><span class="n">dll</span><span class="p">,</span> <span class="n">pp_file</span><span class="p">,</span> <span class="n">sim_file</span><span class="p">,</span> <span class="n">is_for_inquiry</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="k">as</span> <span class="n">sm</span><span class="p">:</span>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">IWFMModel</span><span class="p">(</span><span class="n">pp_file</span><span class="p">,</span> <span class="n">sim_file</span><span class="p">,</span> <span class="n">is_for_inquiry</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="k">as</span> <span class="n">sm</span><span class="p">:</span>
     <span class="n">run_model</span><span class="p">(</span><span class="n">sm</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>the context manager ‘with’ is equivalent to calling:</p>
-<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="n">sm</span> <span class="o">=</span> <span class="n">IWFMModel</span><span class="p">(</span><span class="n">dll</span><span class="p">,</span> <span class="n">pp_file</span><span class="p">,</span> <span class="n">sim_file</span><span class="p">,</span> <span class="n">is_for_inquiry</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="n">sm</span> <span class="o">=</span> <span class="n">IWFMModel</span><span class="p">(</span><span class="n">pp_file</span><span class="p">,</span> <span class="n">sim_file</span><span class="p">,</span> <span class="n">is_for_inquiry</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 <span class="n">run_model</span><span class="p">(</span><span class="n">sm</span><span class="p">)</span>
 <span class="n">sm</span><span class="o">.</span><span class="n">kill</span><span class="p">()</span>
+<span class="n">sm</span><span class="o">.</span><span class="n">close_log_file</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>

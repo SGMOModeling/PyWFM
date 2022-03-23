@@ -247,10 +247,7 @@ and plot them.</p>
 </div>
 <div class="section" id="set-paths-to-the-iwfm-dll-preprocessor-input-file-and-simulation-input-file">
 <h2>Set Paths to the IWFM DLL, Preprocessor Input File, and Simulation Input File<a class="headerlink" href="#set-paths-to-the-iwfm-dll-preprocessor-input-file-and-simulation-input-file" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="c1"># specify path to IWFM DLL</span>
-<span class="n">dll</span> <span class="o">=</span> <span class="s1">&#39;../../DLL/Bin/IWFM2015_C_x64.dll&#39;</span>
-
-<span class="c1"># specify paths to preprocessor and simulation main files</span>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="c1"># specify paths to preprocessor and simulation main files</span>
 <span class="n">pp_file</span> <span class="o">=</span> <span class="s1">&#39;../Preprocessor/PreProcessor_MAIN.IN&#39;</span>
 <span class="n">sim_file</span> <span class="o">=</span> <span class="s1">&#39;Simulation_MAIN.IN&#39;</span>
 </pre></div>
@@ -263,7 +260,7 @@ relative to the simulation folder</p>
 </div>
 <div class="section" id="create-the-model-object">
 <h2>Create the Model Object<a class="headerlink" href="#create-the-model-object" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="n">sm</span> <span class="o">=</span> <span class="n">IWFMModel</span><span class="p">(</span><span class="n">dll</span><span class="p">,</span> <span class="n">pp_file</span><span class="p">,</span> <span class="n">sim_file</span><span class="p">)</span>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="n">sm</span> <span class="o">=</span> <span class="n">IWFMModel</span><span class="p">(</span><span class="n">pp_file</span><span class="p">,</span> <span class="n">sim_file</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -304,14 +301,8 @@ relative to the simulation folder</p>
 <div class="section" id="terminate-the-model-object">
 <h2>Terminate the Model Object<a class="headerlink" href="#terminate-the-model-object" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="n">sm</span><span class="o">.</span><span class="n">kill</span><span class="p">()</span>
+<span class="n">sm</span><span class="o">.</span><span class="n">close_log_file</span><span class="p">()</span>
 </pre></div>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>It may also be useful to call:</p>
-<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="n">sm</span><span class="o">.</span><span class="n">delete_inquiry_data_file</span><span class="p">()</span>
-</pre></div>
-</div>
 </div>
 </div>
 </div>
