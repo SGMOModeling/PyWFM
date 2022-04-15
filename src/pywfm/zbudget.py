@@ -10,7 +10,7 @@ from pywfm.misc import IWFMMiscellaneous
 
 class IWFMZBudget(IWFMMiscellaneous):
     """
-    IWFM ZBudget Class for interacting with the IWFM DLL.
+    IWFM ZBudget Class for interacting with the IWFM API.
 
     Parameters
     ----------
@@ -39,7 +39,7 @@ class IWFMZBudget(IWFMMiscellaneous):
         # check to see if the open file procedure exists in the dll provided
         if not hasattr(self.dll, "IW_ZBudget_OpenFile"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_ZBudget_OpenFile")
             )
 
@@ -69,7 +69,7 @@ class IWFMZBudget(IWFMMiscellaneous):
         # check to see if the procedure exists in the dll provided
         if not hasattr(self.dll, "IW_ZBudget_CloseFile"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_ZBudget_CloseFile")
             )
 
@@ -104,7 +104,7 @@ class IWFMZBudget(IWFMMiscellaneous):
         # check to see if the open file procedure exists in the dll provided
         if not hasattr(self.dll, "IW_ZBudget_GenerateZoneList_FromFile"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format(
                     "IW_ZBudget_GenerateZoneList_FromFile"
                 )
@@ -155,7 +155,7 @@ class IWFMZBudget(IWFMMiscellaneous):
         # check to see if the open file procedure exists in the dll provided
         if not hasattr(self.dll, "IW_ZBudget_GenerateZoneList"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_ZBudget_GenerateZoneList")
             )
 
@@ -273,7 +273,7 @@ class IWFMZBudget(IWFMMiscellaneous):
         # check to see if the open file procedure exists in the dll provided
         if not hasattr(self.dll, "IW_ZBudget_GetNZones"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_ZBudget_GetNZones")
             )
 
@@ -317,7 +317,7 @@ class IWFMZBudget(IWFMMiscellaneous):
         # check to see if the open file procedure exists in the dll provided
         if not hasattr(self.dll, "IW_ZBudget_GetZoneList"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_ZBudget_GetZoneList")
             )
 
@@ -364,7 +364,7 @@ class IWFMZBudget(IWFMMiscellaneous):
         # check to see if the open file procedure exists in the dll provided
         if not hasattr(self.dll, "IW_ZBudget_GetNTimeSteps"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_ZBudget_GetNTimeSteps")
             )
 
@@ -420,7 +420,7 @@ class IWFMZBudget(IWFMMiscellaneous):
         # check to see if the procedure exists in the dll provided
         if not hasattr(self.dll, "IW_ZBudget_GetTimeSpecs"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_ZBudget_GetTimeSpecs")
             )
 
@@ -486,7 +486,7 @@ class IWFMZBudget(IWFMMiscellaneous):
         # check to see if the procedure exists in the dll provided
         if not hasattr(self.dll, "IW_ZBudget_GetColumnHeaders_General"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format(
                     "IW_ZBudget_GetColumnHeaders_General"
                 )
@@ -640,7 +640,7 @@ class IWFMZBudget(IWFMMiscellaneous):
         # check to see if the procedure exists in the dll provided
         if not hasattr(self.dll, "IW_ZBudget_GetColumnHeaders_ForAZone"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format(
                     "IW_ZBudget_GetColumnHeaders_ForAZone"
                 )
@@ -761,7 +761,7 @@ class IWFMZBudget(IWFMMiscellaneous):
         # check to see if the procedure exists in the dll provided
         if not hasattr(self.dll, "IW_ZBudget_GetZoneNames"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_ZBudget_GetZoneNames")
             )
 
@@ -816,7 +816,7 @@ class IWFMZBudget(IWFMMiscellaneous):
         # check to see if the procedure exists in the dll provided
         if not hasattr(self.dll, "IW_ZBudget_GetNTitleLines"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_ZBudget_GetNTitleLines")
             )
 
@@ -888,7 +888,7 @@ class IWFMZBudget(IWFMMiscellaneous):
         # check to see if the procedure exists in the dll provided
         if not hasattr(self.dll, "IW_ZBudget_GetTitleLines"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_ZBudget_GetTitleLines")
             )
 
@@ -1042,7 +1042,7 @@ class IWFMZBudget(IWFMMiscellaneous):
         # check to see if the procedure exists in the dll provided
         if not hasattr(self.dll, "IW_ZBudget_GetValues_ForSomeZones_ForAnInterval"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format(
                     "IW_ZBudget_GetValues_ForSomeZones_ForAnInterval"
                 )
@@ -1382,7 +1382,7 @@ class IWFMZBudget(IWFMMiscellaneous):
         # check to see if the procedure exists in the dll provided
         if not hasattr(self.dll, "IW_ZBudget_GetValues_ForAZone"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_ZBudget_GetValues_ForAZone")
             )
 
