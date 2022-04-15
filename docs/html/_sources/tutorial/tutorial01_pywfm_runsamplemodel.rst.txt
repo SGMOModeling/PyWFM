@@ -46,7 +46,7 @@ Create a Function to Perform the Simulation
    Otherwise, certain time series data can be updated during a simulation using IWFMModel.read_timeseries_data_overwrite()
 		   
 
-Set Paths to the IWFM DLL, Preprocessor Input File, and Simulation Input File
+Set Paths to the Preprocessor Input File and Simulation Input File
 =============================================================================
 
 .. code-block:: py

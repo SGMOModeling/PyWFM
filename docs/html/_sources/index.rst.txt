@@ -22,9 +22,12 @@ Each of these inherits from the IWFMMiscellaneous base class. Many of the method
 Design
 ------
 
-The pywfm library wraps each of the IWFM DLL functions so that the user does not have to deal with the IWFM DLL syntax directly. Instead, users familiar with python can work with standard python objects such as strings, ints, floats, lists, and numpy arrays.
+The pywfm library wraps each of the IWFM API procedures so that the user does not have to deal with the IWFM API syntax directly. Instead, users familiar with python can work with standard python objects such as strings, ints, floats, lists, and numpy arrays.
 
-Many parts of the IWFM DLL procedures are handled internally allowing the user to provide only a few pieces of required information to obtain results.
+Many parts of the IWFM API are handled internally allowing the user to provide only a few pieces of required information to obtain results.
+
+.. note::
+   The IWFM API is contained within a dynamic link library (DLL) and may be referred to as the IWFM DLL
 
 .. toctree::
    :maxdepth: 1
