@@ -4,7 +4,7 @@
 PyWFM Documentation
 #####################
 
-pywfm is a python package that exposes the functionality of the IWFM DLL
+pywfm is a python package that exposes the functionality of the IWFM API
 
 --------
 Overview
