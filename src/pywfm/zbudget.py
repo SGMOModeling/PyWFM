@@ -1083,7 +1083,7 @@ class IWFMZBudget(IWFMMiscellaneous):
         for zone_id in zone_ids:
 
             column_names, column_header_ids = self.get_column_headers_for_a_zone(
-                zone_id, area_units, volume_units, include_time=True
+                zone_id, area_unit=area_units, volume_unit=volume_units, include_time=True
             )
 
             n_columns = len(column_header_ids[column_header_ids > 0])
@@ -1399,7 +1399,7 @@ class IWFMZBudget(IWFMMiscellaneous):
 
         # get all column headers and column IDs
         column_headers, column_header_ids = self.get_column_headers_for_a_zone(
-            zone_id, area_units, volume_units, include_time=True
+            zone_id, area_unit=area_units, volume_unit=volume_units, include_time=True
         )
 
         if isinstance(column_ids, str) and column_ids == "all":
