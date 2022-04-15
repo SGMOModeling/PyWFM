@@ -4,7 +4,7 @@ import numpy as np
 
 
 class IWFMMiscellaneous:
-    """IWFM Miscellaneous Class for interacting with the IWFM DLL
+    """IWFM Miscellaneous Class for interacting with the IWFM API
 
     Returns
     -------
@@ -22,7 +22,7 @@ class IWFMMiscellaneous:
     def get_data_unit_type_id_length(self):
         if not hasattr(self.dll, "IW_GetDataUnitTypeID_Length"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_GetDataUnitTypeID_Length")
             )
 
@@ -39,7 +39,7 @@ class IWFMMiscellaneous:
     def get_data_unit_type_id_area(self):
         if not hasattr(self.dll, "IW_GetDataUnitTypeID_Area"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_GetDataUnitTypeID_Area")
             )
 
@@ -56,7 +56,7 @@ class IWFMMiscellaneous:
     def get_data_unit_type_volume(self):
         if not hasattr(self.dll, "IW_GetDataUnitTypeID_Volume"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_GetDataUnitTypeID_Volume")
             )
 
@@ -73,7 +73,7 @@ class IWFMMiscellaneous:
     def get_data_unit_type_ids(self):
         if not hasattr(self.dll, "IW_GetDataUnitTypeIDs"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_GetDataUnitTypeIDs")
             )
 
@@ -99,7 +99,7 @@ class IWFMMiscellaneous:
     def get_land_use_type_id_gen_ag(self):
         if not hasattr(self.dll, "IW_GetLandUseTypeID_GenAg"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_GetLandUseTypeID_GenAg")
             )
 
@@ -116,7 +116,7 @@ class IWFMMiscellaneous:
     def get_land_use_type_id_urban(self):
         if not hasattr(self.dll, "IW_GetLandUseTypeID_Urban"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_GetLandUseTypeID_Urban")
             )
 
@@ -133,7 +133,7 @@ class IWFMMiscellaneous:
     def get_land_use_type_id_nonponded_ag(self):
         if not hasattr(self.dll, "IW_GetLandUseTypeID_NonPondedAg"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_GetLandUseTypeID_NonPondedAg")
             )
 
@@ -150,7 +150,7 @@ class IWFMMiscellaneous:
     def get_land_use_type_id_rice(self):
         if not hasattr(self.dll, "IW_GetLandUseTypeID_Rice"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_GetLandUseTypeID_Rice")
             )
 
@@ -167,7 +167,7 @@ class IWFMMiscellaneous:
     def get_land_use_type_id_refuge(self):
         if not hasattr(self.dll, "IW_GetLandUseTypeID_Refuge"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_GetLandUseTypeID_Refuge")
             )
 
@@ -184,7 +184,7 @@ class IWFMMiscellaneous:
     def get_land_use_type_id_native_riparian(self):
         if not hasattr(self.dll, "IW_GetLandUseTypeID_NVRV"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_GetLandUseTypeID_NVRV")
             )
 
@@ -201,7 +201,7 @@ class IWFMMiscellaneous:
     def get_land_use_ids(self):
         if not hasattr(self.dll, "IW_GetLandUseTypeIDs"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_GetLandUseTypeIDs")
             )
 
@@ -236,7 +236,7 @@ class IWFMMiscellaneous:
     def get_location_type_id_node(self):
         if not hasattr(self.dll, "IW_GetLocationTypeID_Node"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_GetLocationTypeID_Node")
             )
 
@@ -253,7 +253,7 @@ class IWFMMiscellaneous:
     def get_location_type_id_element(self):
         if not hasattr(self.dll, "IW_GetLocationTypeID_Element"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_GetLocationTypeID_Element")
             )
 
@@ -270,7 +270,7 @@ class IWFMMiscellaneous:
     def get_location_type_id_subregion(self):
         if not hasattr(self.dll, "IW_GetLocationTypeID_Subregion"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_GetLocationTypeID_Subregion")
             )
 
@@ -287,7 +287,7 @@ class IWFMMiscellaneous:
     def get_location_type_id_zone(self):
         if not hasattr(self.dll, "IW_GetLocationTypeID_Zone"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_GetLocationTypeID_Zone")
             )
 
@@ -304,7 +304,7 @@ class IWFMMiscellaneous:
     def get_location_type_id_streamnode(self):
         if not hasattr(self.dll, "IW_GetLocationTypeID_StrmNode"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_GetLocationTypeID_StrmNode")
             )
 
@@ -321,7 +321,7 @@ class IWFMMiscellaneous:
     def get_location_type_id_streamreach(self):
         if not hasattr(self.dll, "IW_GetLocationTypeID_StrmReach"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_GetLocationTypeID_StrmReach")
             )
 
@@ -338,7 +338,7 @@ class IWFMMiscellaneous:
     def get_location_type_id_lake(self):
         if not hasattr(self.dll, "IW_GetLocationTypeID_Lake"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_GetLocationTypeID_Lake")
             )
 
@@ -355,7 +355,7 @@ class IWFMMiscellaneous:
     def get_location_type_id_smallwatershed(self):
         if not hasattr(self.dll, "IW_GetLocationTypeID_SmallWatershed"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format(
                     "IW_GetLocationTypeID_SmallWatershed"
                 )
@@ -374,7 +374,7 @@ class IWFMMiscellaneous:
     def get_location_type_id_gwheadobs(self):
         if not hasattr(self.dll, "IW_GetLocationTypeID_GWHeadObs"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_GetLocationTypeID_GWHeadObs")
             )
 
@@ -391,7 +391,7 @@ class IWFMMiscellaneous:
     def get_location_type_id_streamhydobs(self):
         if not hasattr(self.dll, "IW_GetLocationTypeID_StrmHydObs"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_GetLocationTypeID_StrmHydObs")
             )
 
@@ -408,7 +408,7 @@ class IWFMMiscellaneous:
     def get_location_type_id_subsidenceobs(self):
         if not hasattr(self.dll, "IW_GetLocationTypeID_SubsidenceObs"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format(
                     "IW_GetLocationTypeID_SubsidenceObs"
                 )
@@ -427,7 +427,7 @@ class IWFMMiscellaneous:
     def get_location_type_id_tiledrainobs(self):
         if not hasattr(self.dll, "IW_GetLocationTypeID_TileDrainObs"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format(
                     "IW_GetLocationTypeID_TileDrainObs"
                 )
@@ -446,7 +446,7 @@ class IWFMMiscellaneous:
     def get_location_type_id_streamnodebud(self):
         if not hasattr(self.dll, "IW_GetLocationTypeID_StrmNodeBud"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format(
                     "IW_GetLocationTypeID_StrmNodeBud"
                 )
@@ -465,7 +465,7 @@ class IWFMMiscellaneous:
     def get_location_type_ids(self):
         if not hasattr(self.dll, "IW_GetLocationTypeIDs"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_GetLocationTypeIDs")
             )
 
@@ -521,7 +521,7 @@ class IWFMMiscellaneous:
     def get_flow_destination_type_id_outside(self):
         if not hasattr(self.dll, "IW_GetFlowDestTypeID_Outside"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_GetFlowDestTypeID_Outside")
             )
 
@@ -538,7 +538,7 @@ class IWFMMiscellaneous:
     def get_flow_destination_type_id_element(self):
         if not hasattr(self.dll, "IW_GetFlowDestTypeID_Element"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_GetFlowDestTypeID_Element")
             )
 
@@ -555,7 +555,7 @@ class IWFMMiscellaneous:
     def get_flow_destination_type_id_elementset(self):
         if not hasattr(self.dll, "IW_GetFlowDestTypeID_ElementSet"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_GetFlowDestTypeID_ElementSet")
             )
 
@@ -572,7 +572,7 @@ class IWFMMiscellaneous:
     def get_flow_destination_type_id_gwelement(self):
         if not hasattr(self.dll, "IW_GetFlowDestTypeID_GWElement"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_GetFlowDestTypeID_GWElement")
             )
 
@@ -589,7 +589,7 @@ class IWFMMiscellaneous:
     def get_flow_destination_type_id_streamnode(self):
         if not hasattr(self.dll, "IW_GetFlowDestTypeID_StrmNode"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_GetFlowDestTypeID_StrmNode")
             )
 
@@ -606,7 +606,7 @@ class IWFMMiscellaneous:
     def get_flow_destination_type_id_lake(self):
         if not hasattr(self.dll, "IW_GetFlowDestTypeID_Lake"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_GetFlowDestTypeID_Lake")
             )
 
@@ -623,7 +623,7 @@ class IWFMMiscellaneous:
     def get_flow_destination_type_id_subregion(self):
         if not hasattr(self.dll, "IW_GetFlowDestTypeID_Subregion"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_GetFlowDestTypeID_Subregion")
             )
 
@@ -640,7 +640,7 @@ class IWFMMiscellaneous:
     def get_flow_destination_type_id(self):
         if not hasattr(self.dll, "IW_GetFlowDestTypeIDs"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_GetFlowDestTypeIDs")
             )
 
@@ -678,7 +678,7 @@ class IWFMMiscellaneous:
     def get_supply_type_id_diversion(self):
         if not hasattr(self.dll, "IW_GetSupplyTypeID_Diversion"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_GetSupplyTypeID_Diversion")
             )
 
@@ -695,7 +695,7 @@ class IWFMMiscellaneous:
     def get_supply_type_id_well(self):
         if not hasattr(self.dll, "IW_GetSupplyTypeID_Well"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_GetSupplyTypeID_Well")
             )
 
@@ -712,7 +712,7 @@ class IWFMMiscellaneous:
     def get_supply_type_id_elempump(self):
         if not hasattr(self.dll, "IW_GetSupplyTypeID_ElemPump"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_GetSupplyTypeID_ElemPump")
             )
 
@@ -729,7 +729,7 @@ class IWFMMiscellaneous:
     def get_zone_extent_id_horizontal(self):
         if not hasattr(self.dll, "IW_GetZoneExtentID_Horizontal"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_GetZoneExtentID_Horizontal")
             )
 
@@ -746,7 +746,7 @@ class IWFMMiscellaneous:
     def get_zone_extent_id_vertical(self):
         if not hasattr(self.dll, "IW_GetZoneExtentID_Vertical"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_GetZoneExtentID_Vertical")
             )
 
@@ -763,7 +763,7 @@ class IWFMMiscellaneous:
     def get_zone_extent_ids(self):
         if not hasattr(self.dll, "IW_GetZoneExtentID_Horizontal"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_GetZoneExtentID_Horizontal")
             )
 
@@ -786,7 +786,7 @@ class IWFMMiscellaneous:
     def get_budget_type_ids(self):
         if not hasattr(self.dll, "IW_GetBudgetTypeIDs"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_GetBudgetTypeIDs")
             )
 
@@ -842,7 +842,7 @@ class IWFMMiscellaneous:
     def get_zbudget_type_ids(self):
         if not hasattr(self.dll, "IW_GetZBudgetTypeIDs"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_GetZBudgetTypeIDs")
             )
 
@@ -873,7 +873,7 @@ class IWFMMiscellaneous:
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_GetVersion"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_GetVersion")
             )
 
@@ -958,7 +958,7 @@ class IWFMMiscellaneous:
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_GetNIntervals"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_GetNIntervals")
             )
 
@@ -1068,7 +1068,7 @@ class IWFMMiscellaneous:
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_IncrementTime"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_IncrementTime")
             )
 
@@ -1156,7 +1156,7 @@ class IWFMMiscellaneous:
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_IsTimeGreaterThan"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_IsTimeGreaterThan")
             )
 
@@ -1208,7 +1208,7 @@ class IWFMMiscellaneous:
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_SetLogFile"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_SetLogFile")
             )
 
@@ -1229,7 +1229,7 @@ class IWFMMiscellaneous:
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_CloseLogFile"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_CloseLogFile")
             )
 
@@ -1250,7 +1250,7 @@ class IWFMMiscellaneous:
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_GetLastMessage"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_GetLastMessage")
             )
 
@@ -1277,7 +1277,7 @@ class IWFMMiscellaneous:
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_GetLastMessage"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_GetLastMessage")
             )
 
