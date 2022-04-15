@@ -16,7 +16,7 @@ The pywfm library includes 3 main classes:
    * :doc:`IWFMBudget <reference/budget>`
    * :doc:`IWFMZBudget <reference/zbudget>`
 
-Each of these inherits from the IWFMMiscellaneous base class. Many of the methods in the IWFMMiscellaneous base class cannot be used on their own because the IWFMMiscellaneous class was designed without direct access to the IWFM DLL. Users can access all of this functionality from within the IWFMModel, IWFMBudget, and IWFMZBudget classes.
+Each of these inherits from the IWFMMiscellaneous base class. Many of the methods in the IWFMMiscellaneous base class cannot be used on their own because the IWFMMiscellaneous class was designed without direct access to the IWFM API. Users can access all of this functionality from within the IWFMModel, IWFMBudget, and IWFMZBudget classes.
 
 ------
 Design
