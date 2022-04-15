@@ -18,7 +18,7 @@ from pywfm.misc import IWFMMiscellaneous
 
 class IWFMModel(IWFMMiscellaneous):
     """
-    IWFM Model Class for interacting with the IWFM DLL.
+    IWFM Model Class for interacting with the IWFM API.
 
     Parameters
     ----------
@@ -140,7 +140,7 @@ class IWFMModel(IWFMMiscellaneous):
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_New"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. Check for an updated version'.format(
+                'IWFM API does not have "{}" procedure. Check for an updated version'.format(
                     "IW_Model_New"
                 )
             )
@@ -192,7 +192,7 @@ class IWFMModel(IWFMMiscellaneous):
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_Kill"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_Model_Kill")
             )
 
@@ -253,7 +253,7 @@ class IWFMModel(IWFMMiscellaneous):
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetCurrentDateAndTime"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_Model_GetCurrentDateAndTime")
             )
 
@@ -304,7 +304,7 @@ class IWFMModel(IWFMMiscellaneous):
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetNTimeSteps"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_Model_GetNTimeSteps")
             )
 
@@ -365,7 +365,7 @@ class IWFMModel(IWFMMiscellaneous):
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetTimeSpecs"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_Model_GetTimeSpecs")
             )
 
@@ -433,7 +433,7 @@ class IWFMModel(IWFMMiscellaneous):
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetOutputIntervals"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_Model_GetOutputIntervals")
             )
 
@@ -497,7 +497,7 @@ class IWFMModel(IWFMMiscellaneous):
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetNNodes"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. Check for an updated version'.format(
+                'IWFM API does not have "{}" procedure. Check for an updated version'.format(
                     "IW_Model_GetNNodes"
                 )
             )
@@ -547,7 +547,7 @@ class IWFMModel(IWFMMiscellaneous):
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetNodeXY"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. Check for an updated version'.format(
+                'IWFM API does not have "{}" procedure. Check for an updated version'.format(
                     "IW_Model_GetNodeXY"
                 )
             )
@@ -596,7 +596,7 @@ class IWFMModel(IWFMMiscellaneous):
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetNodeIDs"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. Check for an updated version'.format(
+                'IWFM API does not have "{}" procedure. Check for an updated version'.format(
                     "IW_Model_GetNodeIDs"
                 )
             )
@@ -650,7 +650,7 @@ class IWFMModel(IWFMMiscellaneous):
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetNElements"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. Check for an updated version'.format(
+                'IWFM API does not have "{}" procedure. Check for an updated version'.format(
                     "IW_Model_GetNElements"
                 )
             )
@@ -696,7 +696,7 @@ class IWFMModel(IWFMMiscellaneous):
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetElementIDs"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. Check for an updated version'.format(
+                'IWFM API does not have "{}" procedure. Check for an updated version'.format(
                     "IW_Model_GetElementIDs"
                 )
             )
@@ -757,7 +757,7 @@ class IWFMModel(IWFMMiscellaneous):
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetElementConfigData"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. Check for an updated version'.format(
+                'IWFM API does not have "{}" procedure. Check for an updated version'.format(
                     "IW_Model_GetElementConfigData"
                 )
             )
@@ -826,7 +826,7 @@ class IWFMModel(IWFMMiscellaneous):
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetNSubregions"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. Check for an updated version'.format(
+                'IWFM API does not have "{}" procedure. Check for an updated version'.format(
                     "IW_Model_GetNSubregions"
                 )
             )
@@ -880,7 +880,7 @@ class IWFMModel(IWFMMiscellaneous):
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetSubregionIDs"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. Check for an updated version'.format(
+                'IWFM API does not have "{}" procedure. Check for an updated version'.format(
                     "IW_Model_GetSubregionIDs"
                 )
             )
@@ -934,7 +934,7 @@ class IWFMModel(IWFMMiscellaneous):
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetSubregionName"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. Check for an updated version'.format(
+                'IWFM API does not have "{}" procedure. Check for an updated version'.format(
                     "IW_Model_GetSubregionName"
                 )
             )
@@ -1027,7 +1027,7 @@ class IWFMModel(IWFMMiscellaneous):
         """
         if not hasattr(self.dll, "IW_Model_GetElemSubregions"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. Check for an updated version'.format(
+                'IWFM API does not have "{}" procedure. Check for an updated version'.format(
                     "IW_Model_GetElemSubregions"
                 )
             )
@@ -1083,7 +1083,7 @@ class IWFMModel(IWFMMiscellaneous):
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetNStrmNodes"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. Check for an updated version'.format(
+                'IWFM API does not have "{}" procedure. Check for an updated version'.format(
                     "IW_Model_GetNStrmNodes"
                 )
             )
@@ -1136,7 +1136,7 @@ class IWFMModel(IWFMMiscellaneous):
         """
         if not hasattr(self.dll, "IW_Model_GetStrmNodeIDs"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. Check for an updated version'.format(
+                'IWFM API does not have "{}" procedure. Check for an updated version'.format(
                     "IW_Model_GetStrmNodeIDs"
                 )
             )
@@ -1196,7 +1196,7 @@ class IWFMModel(IWFMMiscellaneous):
         """
         if not hasattr(self.dll, "IW_Model_GetStrmNUpstrmNodes"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_Model_GetStrmNUpstrmNodes")
             )
 
@@ -1282,7 +1282,7 @@ class IWFMModel(IWFMMiscellaneous):
         """
         if not hasattr(self.dll, "IW_Model_GetStrmUpstrmNodes"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_Model_GetStrmUpstrmNodes")
             )
 
@@ -1359,7 +1359,7 @@ class IWFMModel(IWFMMiscellaneous):
         """
         if not hasattr(self.dll, "IW_Model_GetStrmBottomElevs"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_Model_GetStrmBottomElevs")
             )
 
@@ -1414,7 +1414,7 @@ class IWFMModel(IWFMMiscellaneous):
         """
         if not hasattr(self.dll, "IW_Model_GetNStrmRatingTablePoints"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format(
                     "IW_Model_GetNStrmRatingTablePoints"
                 )
@@ -1488,7 +1488,7 @@ class IWFMModel(IWFMMiscellaneous):
         """
         if not hasattr(self.dll, "IW_Model_GetStrmRatingTable"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_Model_GetStrmRatingTable")
             )
 
@@ -1556,7 +1556,7 @@ class IWFMModel(IWFMMiscellaneous):
         """
         if not hasattr(self.dll, "IW_Model_GetStrmNInflows"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_Model_GetStrmNInflows")
             )
 
@@ -1600,7 +1600,7 @@ class IWFMModel(IWFMMiscellaneous):
         """
         if not hasattr(self.dll, "IW_Model_GetStrmInflowNodes"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_Model_GetStrmInflowNodes")
             )
 
@@ -1651,7 +1651,7 @@ class IWFMModel(IWFMMiscellaneous):
         """
         if not hasattr(self.dll, "IW_Model_GetStrmInflowIDs"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_Model_GetStrmInflowIDs")
             )
 
@@ -1749,7 +1749,7 @@ class IWFMModel(IWFMMiscellaneous):
         """
         if not hasattr(self.dll, "IW_Model_GetStrmInflows_AtSomeInflows"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format(
                     "IW_Model_GetStrmInflows_AtSomeInflows"
                 )
@@ -1894,7 +1894,7 @@ class IWFMModel(IWFMMiscellaneous):
         """
         if not hasattr(self.dll, "IW_Model_GetStrmFlow"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_Model_GetStrmFlow")
             )
 
@@ -2008,7 +2008,7 @@ class IWFMModel(IWFMMiscellaneous):
         """
         if not hasattr(self.dll, "IW_Model_GetStrmFlows"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_Model_GetStrmFlows")
             )
 
@@ -2115,7 +2115,7 @@ class IWFMModel(IWFMMiscellaneous):
         """
         if not hasattr(self.dll, "IW_Model_GetStrmStages"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_Model_GetStrmStages")
             )
 
@@ -2176,7 +2176,7 @@ class IWFMModel(IWFMMiscellaneous):
         """
         if not hasattr(self.dll, "IW_Model_GetStrmTributaryInflows"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format(
                     "IW_Model_GetStrmTributaryInflows"
                 )
@@ -2239,7 +2239,7 @@ class IWFMModel(IWFMMiscellaneous):
         """
         if not hasattr(self.dll, "IW_Model_GetStrmRainfallRunoff"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_Model_GetStrmRainfallRunoff")
             )
 
@@ -2301,7 +2301,7 @@ class IWFMModel(IWFMMiscellaneous):
         """
         if not hasattr(self.dll, "IW_Model_GetStrmReturnFlows"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_Model_GetStrmReturnFlows")
             )
 
@@ -2362,7 +2362,7 @@ class IWFMModel(IWFMMiscellaneous):
         """
         if not hasattr(self.dll, "IW_Model_GetStrmTileDrains"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_Model_GetStrmTileDrains")
             )
 
@@ -2426,7 +2426,7 @@ class IWFMModel(IWFMMiscellaneous):
         """
         if not hasattr(self.dll, "IW_Model_GetStrmRiparianETs"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_Model_GetStrmRiparianETs")
             )
 
@@ -2491,7 +2491,7 @@ class IWFMModel(IWFMMiscellaneous):
         """
         if not hasattr(self.dll, "IW_Model_GetStrmGainFromGW"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_Model_GetStrmGainFromGW")
             )
 
@@ -2553,7 +2553,7 @@ class IWFMModel(IWFMMiscellaneous):
         """
         if not hasattr(self.dll, "IW_Model_GetStrmGainFromLakes"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_Model_GetStrmGainFromLakes")
             )
 
@@ -2615,7 +2615,7 @@ class IWFMModel(IWFMMiscellaneous):
         """
         if not hasattr(self.dll, "IW_Model_GetStrmGainFromLakes"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_Model_GetStrmGainFromLakes")
             )
 
@@ -2686,7 +2686,7 @@ class IWFMModel(IWFMMiscellaneous):
         """
         if not hasattr(self.dll, "IW_Model_GetStrmActualDiversions_AtSomeDiversions"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format(
                     "IW_Model_GetStrmActualDiversions_AtSomeDiversions"
                 )
@@ -2781,7 +2781,7 @@ class IWFMModel(IWFMMiscellaneous):
         """
         if not hasattr(self.dll, "IW_Model_GetStrmDiversionsExportNodes"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. Check for an updated version'.format(
+                'IWFM API does not have "{}" procedure. Check for an updated version'.format(
                     "IW_Model_GetStrmDiversionsExportNodes"
                 )
             )
@@ -2882,7 +2882,7 @@ class IWFMModel(IWFMMiscellaneous):
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetNReaches"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. Check for an updated version'.format(
+                'IWFM API does not have "{}" procedure. Check for an updated version'.format(
                     "IW_ModelGetNReaches"
                 )
             )
@@ -2936,7 +2936,7 @@ class IWFMModel(IWFMMiscellaneous):
         """
         if not hasattr(self.dll, "IW_Model_GetReachIDs"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_Model_GetReachIDs")
             )
 
@@ -2996,7 +2996,7 @@ class IWFMModel(IWFMMiscellaneous):
         """
         if not hasattr(self.dll, "IW_Model_GetReachNNodes"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_Model_GetReachNNodes")
             )
 
@@ -3080,7 +3080,7 @@ class IWFMModel(IWFMMiscellaneous):
         """
         if not hasattr(self.dll, "IW_Model_GetReachGWNodes"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_Model_GetReachGWNodes")
             )
 
@@ -3166,7 +3166,7 @@ class IWFMModel(IWFMMiscellaneous):
         """
         if not hasattr(self.dll, "IW_Model_GetReachStrmNodes"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_Model_GetReachStrmNodes")
             )
 
@@ -3251,7 +3251,7 @@ class IWFMModel(IWFMMiscellaneous):
         """
         if not hasattr(self.dll, "IW_Model_GetReaches_ForStrmNodes"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format(
                     "IW_Model_GetReaches_ForStrmNodes"
                 )
@@ -3357,7 +3357,7 @@ class IWFMModel(IWFMMiscellaneous):
         """
         if not hasattr(self.dll, "IW_Model_GetReachUpstrmNodes"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_Model_GetReachUpstrmNodes")
             )
 
@@ -3438,7 +3438,7 @@ class IWFMModel(IWFMMiscellaneous):
         """
         if not hasattr(self.dll, "IW_Model_GetReachNUpstrmReaches"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_Model_GetReachNUpstrmReaches")
             )
 
@@ -3525,7 +3525,7 @@ class IWFMModel(IWFMMiscellaneous):
         """
         if not hasattr(self.dll, "IW_Model_GetReachUpstrmReaches"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_Model_GetReachUpstrmReaches")
             )
 
@@ -3613,7 +3613,7 @@ class IWFMModel(IWFMMiscellaneous):
         """
         if not hasattr(self.dll, "IW_Model_GetReachDownstrmNodes"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_Model_GetReachDownstrmNodes")
             )
 
@@ -3681,7 +3681,7 @@ class IWFMModel(IWFMMiscellaneous):
         """
         if not hasattr(self.dll, "IW_Model_GetReachOutflowDest"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_Model_GetReachOutflowDest")
             )
 
@@ -3743,7 +3743,7 @@ class IWFMModel(IWFMMiscellaneous):
         """
         if not hasattr(self.dll, "IW_Model_GetReachOutflowDestTypes"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format(
                     "IW_Model_GetReachOutflowDestTypes"
                 )
@@ -3794,7 +3794,7 @@ class IWFMModel(IWFMMiscellaneous):
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetNDiversions"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_Model_GetNDiversions")
             )
 
@@ -3838,7 +3838,7 @@ class IWFMModel(IWFMMiscellaneous):
         """
         if not hasattr(self.dll, "IW_Model_GetDiversionIDs"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_Model_GetDiversionIDs")
             )
 
@@ -3886,7 +3886,7 @@ class IWFMModel(IWFMMiscellaneous):
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetNLakes"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_Model_GetNLakes")
             )
 
@@ -3929,7 +3929,7 @@ class IWFMModel(IWFMMiscellaneous):
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetLakeIDs"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_Model_GetLakeIDs")
             )
 
@@ -3989,7 +3989,7 @@ class IWFMModel(IWFMMiscellaneous):
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetLakeIDs"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_Model_GetLakeIDs")
             )
 
@@ -4067,7 +4067,7 @@ class IWFMModel(IWFMMiscellaneous):
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetLakeIDs"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_Model_GetLakeIDs")
             )
 
@@ -4147,7 +4147,7 @@ class IWFMModel(IWFMMiscellaneous):
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetNTileDrainNodes"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_Model_GetNTileDrainNodes")
             )
 
@@ -4192,7 +4192,7 @@ class IWFMModel(IWFMMiscellaneous):
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetTileDrainIDs"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_Model_GetTileDrainIDs")
             )
 
@@ -4244,7 +4244,7 @@ class IWFMModel(IWFMMiscellaneous):
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetTileDrainNodes"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_Model_GetTileDrainNodes")
             )
 
@@ -4302,7 +4302,7 @@ class IWFMModel(IWFMMiscellaneous):
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetNLayers"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_Model_GetNLayers")
             )
 
@@ -4387,7 +4387,7 @@ class IWFMModel(IWFMMiscellaneous):
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetGSElev"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_Model_GetGSElev")
             )
 
@@ -4519,7 +4519,7 @@ class IWFMModel(IWFMMiscellaneous):
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetAquiferTopElev"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_Model_GetAquiferTopElev")
             )
 
@@ -4675,7 +4675,7 @@ class IWFMModel(IWFMMiscellaneous):
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetAquiferBottomElev"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_Model_GetAquiferBottomElev")
             )
 
@@ -4783,7 +4783,7 @@ class IWFMModel(IWFMMiscellaneous):
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetStratigraphy_AtXYCoordinate"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format(
                     "IW_Model_GetStratigraphy_AtXYCoordinate"
                 )
@@ -4939,7 +4939,7 @@ class IWFMModel(IWFMMiscellaneous):
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetAquiferHorizontalK"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_Model_GetAquiferHorizontalK")
             )
 
@@ -5051,7 +5051,7 @@ class IWFMModel(IWFMMiscellaneous):
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetAquiferVerticalK"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_Model_GetAquiferVerticalK")
             )
 
@@ -5175,7 +5175,7 @@ class IWFMModel(IWFMMiscellaneous):
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetAquitardVerticalK"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_Model_GetAquitardVerticalK")
             )
 
@@ -5313,7 +5313,7 @@ class IWFMModel(IWFMMiscellaneous):
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetAquiferSy"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_Model_GetAquiferSy")
             )
 
@@ -5495,7 +5495,7 @@ class IWFMModel(IWFMMiscellaneous):
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetAquiferSs"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_Model_GetAquiferSs")
             )
 
@@ -5556,7 +5556,7 @@ class IWFMModel(IWFMMiscellaneous):
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetAquiferParameters"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_Model_GetAquiferParameters")
             )
 
@@ -5621,7 +5621,7 @@ class IWFMModel(IWFMMiscellaneous):
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetNAgCrops"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_Model_GetNAgCrops")
             )
 
@@ -5669,7 +5669,7 @@ class IWFMModel(IWFMMiscellaneous):
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetNWells"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_Model_GetNWells")
             )
 
@@ -5715,7 +5715,7 @@ class IWFMModel(IWFMMiscellaneous):
         """
         if not hasattr(self.dll, "IW_Model_GetWellIDs"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_Model_GetWellIDs")
             )
 
@@ -5768,7 +5768,7 @@ class IWFMModel(IWFMMiscellaneous):
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetNElemPumps"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_Model_GetNElemPumps")
             )
 
@@ -5816,7 +5816,7 @@ class IWFMModel(IWFMMiscellaneous):
         """
         if not hasattr(self.dll, "IW_Model_GetElemPumpIDs"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_Model_GetElemPumpIDs")
             )
 
@@ -5874,7 +5874,7 @@ class IWFMModel(IWFMMiscellaneous):
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetSupplyPurpose"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_Model_GetSupplyPurpose")
             )
 
@@ -6291,7 +6291,7 @@ class IWFMModel(IWFMMiscellaneous):
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetSupplyRequirement_Ag"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format(
                     "IW_Model_GetSupplyRequirement_Ag"
                 )
@@ -6494,7 +6494,7 @@ class IWFMModel(IWFMMiscellaneous):
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetSupplyRequirement_Urb"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format(
                     "IW_Model_GetSupplyRequirement_Urb"
                 )
@@ -6699,7 +6699,7 @@ class IWFMModel(IWFMMiscellaneous):
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetSupplyShortAtOrigin_Ag"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format(
                     "IW_Model_GetSupplyShortAtOrigin_Ag"
                 )
@@ -6983,7 +6983,7 @@ class IWFMModel(IWFMMiscellaneous):
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetSupplyShortAtOrigin_Urb"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format(
                     "IW_Model_GetSupplyShortAtOrigin_Urb"
                 )
@@ -7260,7 +7260,7 @@ class IWFMModel(IWFMMiscellaneous):
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetNames"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_Model_GetNames")
             )
 
@@ -7594,7 +7594,7 @@ class IWFMModel(IWFMMiscellaneous):
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetNHydrographTypes"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_Model_GetNHydrographTypes")
             )
 
@@ -7660,7 +7660,7 @@ class IWFMModel(IWFMMiscellaneous):
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetHydrographTypeList"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. Check for an updated version'.format(
+                'IWFM API does not have "{}" procedure. Check for an updated version'.format(
                     "IW_Model_GetHydrographTypeList"
                 )
             )
@@ -7721,7 +7721,7 @@ class IWFMModel(IWFMMiscellaneous):
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetNHydrographs"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. Check for an updated version'.format(
+                'IWFM API does not have "{}" procedure. Check for an updated version'.format(
                     "IW_Model_GetNHydrographs"
                 )
             )
@@ -7953,7 +7953,7 @@ class IWFMModel(IWFMMiscellaneous):
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetHydrographIDs"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. Check for an updated version'.format(
+                'IWFM API does not have "{}" procedure. Check for an updated version'.format(
                     "IW_Model_GetHydrographIDs"
                 )
             )
@@ -8198,7 +8198,7 @@ class IWFMModel(IWFMMiscellaneous):
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetHydrographCoordinates"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. Check for an updated version'.format(
+                'IWFM API does not have "{}" procedure. Check for an updated version'.format(
                     "IW_Model_GetHydrographCoordinates"
                 )
             )
@@ -8499,7 +8499,7 @@ class IWFMModel(IWFMMiscellaneous):
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetHydrograph"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_Model_GetHydrograph")
             )
 
@@ -9117,7 +9117,7 @@ class IWFMModel(IWFMMiscellaneous):
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetGWHeads_ForALayer"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_Model_GetGWHeads_ForALayer")
             )
 
@@ -9299,7 +9299,7 @@ class IWFMModel(IWFMMiscellaneous):
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetGWHeads_All"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_Model_GetGWHeads_All")
             )
 
@@ -9407,7 +9407,7 @@ class IWFMModel(IWFMMiscellaneous):
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetSubsidence_All"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_Model_GetSubsidence_All")
             )
 
@@ -9503,7 +9503,7 @@ class IWFMModel(IWFMMiscellaneous):
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetSubregionAgPumpingAverageDepthToGW"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format(
                     "IW_Model_GetSubregionAgPumpingAverageDepthToGW"
                 )
@@ -9603,7 +9603,7 @@ class IWFMModel(IWFMMiscellaneous):
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetZoneAgPumpingAverageDepthToGW"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format(
                     "IW_Model_GetZoneAgPumpingAverageDepthToGW"
                 )
@@ -9675,7 +9675,7 @@ class IWFMModel(IWFMMiscellaneous):
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetNLocations"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_Model_GetNLocations")
             )
 
@@ -9743,7 +9743,7 @@ class IWFMModel(IWFMMiscellaneous):
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_GetLocationIDs"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_Model_GetLocationIDs")
             )
 
@@ -9809,7 +9809,7 @@ class IWFMModel(IWFMMiscellaneous):
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_SetPreProcessorPath"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_Model_SetPreProcessorPath")
             )
 
@@ -9846,7 +9846,7 @@ class IWFMModel(IWFMMiscellaneous):
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_SetSimulationPath"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_Model_SetSimulationPath")
             )
 
@@ -9876,7 +9876,7 @@ class IWFMModel(IWFMMiscellaneous):
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_SetSupplyAdjustmentMaxIters"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format(
                     "IW_Model_SetSupplyAdjustmentMaxIters"
                 )
@@ -9918,7 +9918,7 @@ class IWFMModel(IWFMMiscellaneous):
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_SetSupplyAdjustmentTolerance"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format(
                     "IW_Model_SetSupplyAdjustmentTolerance"
                 )
@@ -9947,7 +9947,7 @@ class IWFMModel(IWFMMiscellaneous):
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_DeleteInquiryDataFile"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_Model_DeleteInquiryDataFile")
             )
 
@@ -9977,7 +9977,7 @@ class IWFMModel(IWFMMiscellaneous):
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_SimulateForOneTimeStep"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_Model_SimulateForOneTimeStep")
             )
 
@@ -10005,7 +10005,7 @@ class IWFMModel(IWFMMiscellaneous):
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_SimulateForAnInterval"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_Model_SimulateForAnInterval")
             )
 
@@ -10048,7 +10048,7 @@ class IWFMModel(IWFMMiscellaneous):
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_SimulateAll"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_Model_SimulateAll")
             )
 
@@ -10069,7 +10069,7 @@ class IWFMModel(IWFMMiscellaneous):
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_AdvanceTime"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_Model_AdvanceTime")
             )
 
@@ -10095,7 +10095,7 @@ class IWFMModel(IWFMMiscellaneous):
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_ReadTSData"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_Model_ReadTSData")
             )
 
@@ -10155,7 +10155,7 @@ class IWFMModel(IWFMMiscellaneous):
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_ReadTSData_Overwrite"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_Model_ReadTSData_Overwrite")
             )
 
@@ -10304,7 +10304,7 @@ class IWFMModel(IWFMMiscellaneous):
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_PrintResults"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_Model_PrintResults")
             )
 
@@ -10322,7 +10322,7 @@ class IWFMModel(IWFMMiscellaneous):
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_AdvanceState"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_Model_AdvanceState")
             )
 
@@ -10353,7 +10353,7 @@ class IWFMModel(IWFMMiscellaneous):
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_IsStrmUpstreamNode"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_Model_IsStrmUpstreamNode")
             )
 
@@ -10391,7 +10391,7 @@ class IWFMModel(IWFMMiscellaneous):
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_IsEndOfSimulation"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_Model_IsEndOfSimulation")
             )
 
@@ -10422,7 +10422,7 @@ class IWFMModel(IWFMMiscellaneous):
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_IsModelInstantiated"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_Model_IsModelInstantiated")
             )
 
@@ -10468,7 +10468,7 @@ class IWFMModel(IWFMMiscellaneous):
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_TurnSupplyAdjustOnOff"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format("IW_Model_TurnSupplyAdjustOnOff")
             )
 
@@ -10522,7 +10522,7 @@ class IWFMModel(IWFMMiscellaneous):
         # check to see if IWFM procedure is available in user version of IWFM DLL
         if not hasattr(self.dll, "IW_Model_RestorePumpingToReadValues"):
             raise AttributeError(
-                'IWFM DLL does not have "{}" procedure. '
+                'IWFM API does not have "{}" procedure. '
                 "Check for an updated version".format(
                     "IW_Model_RestorePumpingToReadValues"
                 )
