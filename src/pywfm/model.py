@@ -11,7 +11,7 @@ import matplotlib.patches as patches
 from matplotlib.collections import PolyCollection
 import matplotlib.colors as colors
 
-from pywfm import DLL_PATH, DLL
+from pywfm import LIB
 
 from pywfm.misc import IWFMMiscellaneous
 
@@ -101,7 +101,7 @@ class IWFMModel(IWFMMiscellaneous):
 
         self.is_for_inquiry = is_for_inquiry
 
-        self.dll = ctypes.windll.LoadLibrary(os.path.join(DLL_PATH, DLL))
+        self.dll = LIB
 
         if delete_inquiry_data_file:
             self.delete_inquiry_data_file()
