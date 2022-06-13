@@ -793,9 +793,21 @@ class IWFMModel(IWFMMiscellaneous):
 
         # convert node indices to node IDs
         node_indices = np.array(nodes_in_element)
+
+        # if an index is 0, slice by non-zero values
+        if np.any(node_indices == 0):
+            node_indices = node_indices[node_indices > 0]
+        
+        # get all node IDs in model
         node_ids = self.get_node_ids()
 
-        return node_ids[node_indices - 1]
+        # convert node indices to node IDs
+        elem_config = node_ids[node_indices - 1]
+
+        if len(elem_config) == 3:
+            elem_config = np.append(elem_config, 0)
+
+        return elem_config
 
     def get_n_subregions(self):
         """
