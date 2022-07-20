@@ -631,6 +631,68 @@ class IWFMMiscellaneous:
             streamnodebud=location_type_id_streamnodebud.value,
         )
 
+    def get_location_type_ids_1(self):
+        if not hasattr(self.dll, "IW_GetLocationTypeIDs_1"):
+            raise AttributeError(
+                'IWFM API does not have "{}" procedure. '
+                "Check for an updated version".format("IW_GetLocationTypeIDs_1")
+            )
+
+        # initialize output variables
+        location_type_id_nodes = ctypes.c_int(0)
+        location_type_id_element = ctypes.c_int(0)
+        location_type_id_subregion = ctypes.c_int(0)
+        location_type_id_zone = ctypes.c_int(0)
+        location_type_id_streamnode = ctypes.c_int(0)
+        location_type_id_streamreach = ctypes.c_int(0)
+        location_type_id_lake = ctypes.c_int(0)
+        location_type_id_smallwatershed = ctypes.c_int(0)
+        location_type_id_gwheadobs = ctypes.c_int(0)
+        location_type_id_streamhydobs = ctypes.c_int(0)
+        location_type_id_subsidenceobs = ctypes.c_int(0)
+        location_type_id_tile_drain = ctypes.c_int(0)
+        location_type_id_streamnodebud = ctypes.c_int(0)
+        location_type_id_diversion = ctypes.c_int(0)
+        location_type_id_bypass = ctypes.c_int(0)
+        status = ctypes.c_int(0)
+
+        self.dll.IW_GetLocationTypeIDs_1(
+            ctypes.byref(location_type_id_nodes),
+            ctypes.byref(location_type_id_element),
+            ctypes.byref(location_type_id_subregion),
+            ctypes.byref(location_type_id_zone),
+            ctypes.byref(location_type_id_lake),
+            ctypes.byref(location_type_id_streamnode),
+            ctypes.byref(location_type_id_streamreach),
+            ctypes.byref(location_type_id_tile_drain),
+            ctypes.byref(location_type_id_smallwatershed),
+            ctypes.byref(location_type_id_gwheadobs),
+            ctypes.byref(location_type_id_streamhydobs),
+            ctypes.byref(location_type_id_subsidenceobs),
+            ctypes.byref(location_type_id_streamnodebud),
+            ctypes.byref(location_type_id_diversion),
+            ctypes.byref(location_type_id_bypass),
+            ctypes.byref(status),
+        )
+
+        return dict(
+            nodes=location_type_id_nodes.value,
+            elements=location_type_id_element.value,
+            subregion=location_type_id_subregion.value,
+            zone=location_type_id_zone.value,
+            lake=location_type_id_lake.value,
+            streamnode=location_type_id_streamnode.value,
+            streamreach=location_type_id_streamreach.value,
+            tiledrain=location_type_id_tile_drain.value,
+            smallwatershed=location_type_id_smallwatershed.value,
+            gwheadobs=location_type_id_gwheadobs.value,
+            streamhydobs=location_type_id_streamhydobs.value,
+            subsidenceobs=location_type_id_subsidenceobs.value,
+            streamnodebud=location_type_id_streamnodebud.value,
+            diversions=location_type_id_diversion.value,
+            bypass=location_type_id_bypass.value
+        )
+
     def get_flow_destination_type_id_outside(self):
         if not hasattr(self.dll, "IW_GetFlowDestTypeID_Outside"):
             raise AttributeError(
