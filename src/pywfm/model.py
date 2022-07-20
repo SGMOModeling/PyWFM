@@ -2179,6 +2179,7 @@ class IWFMModel(IWFMMiscellaneous):
         --------
         IWFMModel.get_stream_rainfall_runoff : Return rainfall runoff at every stream node for the current timestep
         IWFMModel.get_stream_return_flows : Return agricultural and urban return flows at every stream node for the current timestep
+        IWFMModel.get_stream_pond_drains : Return drainage from rice and refuge ponds into every stream node for the current timestep
         IWFMModel.get_stream_tile_drain_flows : Return tile drain flows into every stream node for the current timestep
         IWFMModel.get_stream_riparian_evapotranspiration : Return riparian evapotranspiration from every stream node for the current timestep
         IWFMModel.get_stream_gain_from_groundwater : Return gain from groundwater for every stream node for the current timestep
@@ -2242,6 +2243,7 @@ class IWFMModel(IWFMMiscellaneous):
         --------
         IWFMModel.get_stream_tributary_inflows : Return small watershed inflows at every stream node for the current timestep
         IWFMModel.get_stream_return_flows : Return agricultural and urban return flows at every stream node for the current timestep
+        IWFMModel.get_stream_pond_drains : Return drainage from rice and refuge ponds into every stream node for the current timestep
         IWFMModel.get_stream_tile_drain_flows : Return tile drain flows into every stream node for the current timestep
         IWFMModel.get_stream_riparian_evapotranspiration : Return riparian evapotranspiration from every stream node for the current timestep
         IWFMModel.get_stream_gain_from_groundwater : Return gain from groundwater for every stream node for the current timestep
@@ -2304,6 +2306,7 @@ class IWFMModel(IWFMMiscellaneous):
         --------
         IWFMModel.get_stream_tributary_inflows : Return small watershed inflows at every stream node for the current timestep
         IWFMModel.get_stream_rainfall_runoff : Return rainfall runoff at every stream node for the current timestep
+        IWFMModel.get_stream_pond_drains : Return drainage from rice and refuge ponds into every stream node for the current timestep
         IWFMModel.get_stream_tile_drain_flows : Return tile drain flows into every stream node for the current timestep
         IWFMModel.get_stream_riparian_evapotranspiration : Return riparian evapotranspiration from every stream node for the current timestep
         IWFMModel.get_stream_gain_from_groundwater : Return gain from groundwater for every stream node for the current timestep
@@ -2338,6 +2341,66 @@ class IWFMModel(IWFMMiscellaneous):
 
         return np.array(return_flows)
 
+    def get_stream_pond_drains(self, pond_drain_conversion_factor=1.0):
+        """
+        Return drainage from rice and refuge ponds into every stream node for the current timestep
+
+        Parameters
+        ----------
+        pond_drain_conversion_factor : float
+            conversion factor for pond drain flows from
+            the simulation units of volume to a desired unit of volume
+
+        Returns
+        -------
+        np.ndarray
+            inflows from pond drainage for all stream nodes for the current
+            simulation timestep
+
+        Note
+        ----
+        This method is designed for use when is_for_inquiry=0 to return
+        pond drain flows at the current timestep during a simulation.
+
+        See Also
+        --------
+        IWFMModel.get_stream_tributary_inflows : Return small watershed inflows at every stream node for the current timestep
+        IWFMModel.get_stream_rainfall_runoff : Return rainfall runoff at every stream node for the current timestep
+        IWFMModel.get_stream_return_flows : Return agricultural and urban return flows at every stream node for the current timestep
+        IWFMModel.get_stream_tile_drains : Return tile drain flows into every stream node for the current timestep
+        IWFMModel.get_stream_riparian_evapotranspiration : Return riparian evapotranspiration from every stream node for the current timestep
+        IWFMModel.get_stream_gain_from_groundwater : Return gain from groundwater for every stream node for the current timestep
+        IWFMModel.get_stream_gain_from_lakes : Return gain from lakes for every stream node for the current timestep
+        IWFMModel.get_net_bypass_inflows : Return net bypass inflows for every stream node for the current timestep
+        IWFMModel.get_actual_stream_diversions_at_some_locations : Return actual diversion amounts for a list of diversions during a model simulation
+        """
+        if not hasattr(self.dll, "IW_Model_GetStrmPondDrains"):
+            raise AttributeError(
+                'IWFM API does not have "{}" procedure. '
+                "Check for an updated version".format("IW_Model_GetStrmPondDrains")
+            )
+
+        # get number of stream nodes in the model
+        n_stream_nodes = ctypes.c_int(self.get_n_stream_nodes())
+
+        # convert unit conversion factor to ctypes
+        pond_drain_conversion_factor = ctypes.c_double(pond_drain_conversion_factor)
+
+        # initialize output variables
+        pond_drain_flows = (ctypes.c_double * n_stream_nodes.value)()
+
+        # set instance variable status to 0
+        status = ctypes.c_int(0)
+
+        self.dll.IW_Model_GetStrmPondDrains(
+            ctypes.byref(n_stream_nodes),
+            ctypes.byref(pond_drain_conversion_factor),
+            pond_drain_flows,
+            ctypes.byref(status),
+        )
+
+        return np.array(pond_drain_flows)
+
     def get_stream_tile_drain_flows(self, tile_drain_conversion_factor=1.0):
         """
         Return tile drain flows into every stream node for the current timestep
@@ -2366,6 +2429,7 @@ class IWFMModel(IWFMMiscellaneous):
         IWFMModel.get_stream_tributary_inflows : Return small watershed inflows at every stream node for the current timestep
         IWFMModel.get_stream_rainfall_runoff : Return rainfall runoff at every stream node for the current timestep
         IWFMModel.get_stream_return_flows : Return agricultural and urban return flows at every stream node for the current timestep
+        IWFMModel.get_stream_pond_drains : Return drainage from rice and refuge ponds into every stream node for the current timestep
         IWFMModel.get_stream_riparian_evapotranspiration : Return riparian evapotranspiration from every stream node for the current timestep
         IWFMModel.get_stream_gain_from_groundwater : Return gain from groundwater for every stream node for the current timestep
         IWFMModel.get_stream_gain_from_lakes : Return gain from lakes for every stream node for the current timestep
@@ -2430,6 +2494,7 @@ class IWFMModel(IWFMMiscellaneous):
         IWFMModel.get_stream_tributary_inflows : Return small watershed inflows at every stream node for the current timestep
         IWFMModel.get_stream_rainfall_runoff : Return rainfall runoff at every stream node for the current timestep
         IWFMModel.get_stream_return_flows : Return agricultural and urban return flows at every stream node for the current timestep
+        IWFMModel.get_stream_pond_drains : Return drainage from rice and refuge ponds into every stream node for the current timestep
         IWFMModel.get_stream_tile_drain_flows : Return tile drain flows into every stream node for the current timestep
         IWFMModel.get_stream_gain_from_groundwater : Return gain from groundwater for every stream node for the current timestep
         IWFMModel.get_stream_gain_from_lakes : Return gain from lakes for every stream node for the current timestep
@@ -2495,6 +2560,7 @@ class IWFMModel(IWFMMiscellaneous):
         IWFMModel.get_stream_tributary_inflows : Return small watershed inflows at every stream node for the current timestep
         IWFMModel.get_stream_rainfall_runoff : Return rainfall runoff at every stream node for the current timestep
         IWFMModel.get_stream_return_flows : Return agricultural and urban return flows at every stream node for the current timestep
+        IWFMModel.get_stream_pond_drains : Return drainage from rice and refuge ponds into every stream node for the current timestep
         IWFMModel.get_stream_tile_drain_flows : Return tile drain flows into every stream node for the current timestep
         IWFMModel.get_stream_riparian_evapotranspiration : Return riparian evapotranspiration from every stream node for the current timestep
         IWFMModel.get_stream_gain_from_lakes : Return gain from lakes for every stream node for the current timestep
@@ -2557,6 +2623,7 @@ class IWFMModel(IWFMMiscellaneous):
         IWFMModel.get_stream_tributary_inflows : Return small watershed inflows at every stream node for the current timestep
         IWFMModel.get_stream_rainfall_runoff : Return rainfall runoff at every stream node for the current timestep
         IWFMModel.get_stream_return_flows : Return agricultural and urban return flows at every stream node for the current timestep
+        IWFMModel.get_stream_pond_drains : Return drainage from rice and refuge ponds into every stream node for the current timestep
         IWFMModel.get_stream_tile_drain_flows : Return tile drain flows into every stream node for the current timestep
         IWFMModel.get_stream_riparian_evapotranspiration : Return riparian evapotranspiration from every stream node for the current timestep
         IWFMModel.get_stream_gain_from_groundwater : Return gain from groundwater for every stream node for the current timestep
@@ -2619,6 +2686,7 @@ class IWFMModel(IWFMMiscellaneous):
         IWFMModel.get_stream_tributary_inflows : Return small watershed inflows at every stream node for the current timestep
         IWFMModel.get_stream_rainfall_runoff : Return rainfall runoff at every stream node for the current timestep
         IWFMModel.get_stream_return_flows : Return agricultural and urban return flows at every stream node for the current timestep
+        IWFMModel.get_stream_pond_drains : Return drainage from rice and refuge ponds into every stream node for the current timestep
         IWFMModel.get_stream_tile_drain_flows : Return tile drain flows into every stream node for the current timestep
         IWFMModel.get_stream_riparian_evapotranspiration : Return riparian evapotranspiration from every stream node for the current timestep
         IWFMModel.get_stream_gain_from_groundwater : Return gain from groundwater for every stream node for the current timestep
@@ -2690,6 +2758,7 @@ class IWFMModel(IWFMMiscellaneous):
         IWFMModel.get_stream_tributary_inflows : Return small watershed inflows at every stream node for the current timestep
         IWFMModel.get_stream_rainfall_runoff : Return rainfall runoff at every stream node for the current timestep
         IWFMModel.get_stream_return_flows : Return agricultural and urban return flows at every stream node for the current timestep
+        IWFMModel.get_stream_pond_drains : Return drainage from rice and refuge ponds into every stream node for the current timestep
         IWFMModel.get_stream_tile_drain_flows : Return tile drain flows into every stream node for the current timestep
         IWFMModel.get_stream_riparian_evapotranspiration : Return riparian evapotranspiration from every stream node for the current timestep
         IWFMModel.get_stream_gain_from_groundwater : Return gain from groundwater for every stream node for the current timestep
