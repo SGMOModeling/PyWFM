@@ -2988,6 +2988,75 @@ class IWFMModel(IWFMMiscellaneous):
 
         return n_elements.value
 
+    def get_stream_diversion_elements(self, diversion_id):
+        """
+        Return the element IDs where water is provided by diversion
+
+        Parameters
+        ----------
+        diversion_id : int
+            diversion identification number for diversion
+
+        Returns
+        -------
+        np.ndarray
+            element IDs for elements receiving water from diversion
+
+        See Also
+        --------
+        IWFMModel.get_n_diversions : Return the number of surface water diversions in an IWFM model
+        IWFMModel.get_diversion_ids : Return the surface water diversion identification numbers specified in an IWFM model
+
+        Example
+        -------
+        >>> from pywfm import IWFMModel
+        >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
+        >>> sim_file = 'Simulation_MAIN.IN'
+        >>> model = IWFMModel(pp_file, sim_file)
+        >>> model.get_stream_diversion_elements(1)
+        
+        >>> model.kill()
+        >>> model.close_log_file()
+        """
+        if not hasattr(self.dll, "IW_Model_GetStrmDiversionElems"):
+            raise AttributeError(
+                'IWFM API does not have "{}" procedure. Check for an updated version'.format(
+                    "IW_Model_GetStrmDiversionElems"
+                )
+            )
+
+        # Check diversion_id is a integer
+        if not isinstance(diversion_id, int):
+            raise TypeError("diversion_id must be an integer")
+
+        # Check diversion_id provided is valid
+        diversion_ids = self.get_diversion_ids()
+
+        if diversion_id not in diversion_ids:
+            raise ValueError("diversion_id is not valid")
+
+        # convert diversion_id to diversion_index
+        diversion_index = ctypes.c_int(np.where(diversion_ids == diversion_id)[0][0] + 1)
+
+        # get number of elements
+        n_delivery_elements = ctypes.c_int(self.get_stream_diversion_n_elements(diversion_index.value))
+
+        # initialize output variables
+        element_indices = (ctypes.c_int * n_delivery_elements.value)()
+        status = ctypes.c_int(0)
+        
+        self.dll.IW_Model_GetStrmDiversionElems(
+            ctypes.byref(diversion_index),
+            ctypes.byref(n_delivery_elements),
+            element_indices,
+            ctypes.byref(status)
+        )
+
+        element_ids = self.get_element_ids()
+        element_indices = np.array(element_indices)
+
+        return element_ids[element_indices - 1]
+
     def get_n_stream_reaches(self):
         """
         Return the number of stream reaches in an IWFM model
