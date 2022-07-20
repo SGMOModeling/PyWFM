@@ -4069,6 +4069,68 @@ class IWFMModel(IWFMMiscellaneous):
 
         return np.array(diversion_ids)
 
+    def get_n_bypasses(self):
+        """
+        Return the number of bypasses in an IWFM model
+
+        Returns
+        -------
+        int
+            number of bypasses in the IWFM Model
+
+        See Also
+        --------
+        IWFMModel.get_bypass_ids : Return the bypass identification numbers specified in an IWFM model
+        IWFMModel.get_bypass_export_nodes : Return the stream node IDs corresponding to bypass locations
+
+        Example
+        -------
+        >>> from pywfm import IWFMModel
+        >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
+        >>> sim_file = 'Simulation_MAIN.IN'
+        >>> model = IWFMModel(pp_file, sim_file)
+        >>> model.get_n_bypasses()
+        
+        >>> model.kill()
+        >>> model.close_log_file()
+        """
+        # check to see if IWFM procedure is available in user version of IWFM DLL
+        if not hasattr(self.dll, "IW_Model_GetNBypasses"):
+            raise AttributeError(
+                'IWFM API does not have "{}" procedure. '
+                "Check for an updated version".format("IW_Model_GetNBypasses")
+            )
+
+        # set instance variable status to 0
+        status = ctypes.c_int(0)
+
+        # initialize n_stream_reaches variable
+        n_bypasses = ctypes.c_int(0)
+
+        self.dll.IW_Model_GetNBypasses(
+            ctypes.byref(n_bypasses), ctypes.byref(status)
+        )
+
+        return n_bypasses.value
+
+    def get_bypass_ids(self):
+        pass
+
+    def get_bypass_export_nodes(self):
+        pass
+
+    def get_bypass_exports_destinations(self):
+        pass
+
+    def get_bypass_outflows(self):
+        pass
+
+    def get_bypass_recoverable_loss_factor(self):
+        pass
+
+    def get_bypass_nonrecoverable_loss_factor(self):
+        pass
+
     def get_n_lakes(self):
         """
         Return the number of lakes in an IWFM model
