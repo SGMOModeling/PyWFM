@@ -198,7 +198,7 @@ class IWFMMiscellaneous:
 
         return nvrv_landuse_id.value
 
-    def get_land_use_ids(self):
+    def get_land_use_type_ids(self):
         if not hasattr(self.dll, "IW_GetLandUseTypeIDs"):
             raise AttributeError(
                 'IWFM API does not have "{}" procedure. '
