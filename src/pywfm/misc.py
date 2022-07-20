@@ -537,6 +537,44 @@ class IWFMMiscellaneous:
 
         return location_type_id_streamnodebud.value
 
+    def get_location_type_id_diversion(self):
+        if not hasattr(self.dll, "IW_GetLocationTypeID_Diversion"):
+            raise AttributeError(
+                'IWFM API does not have "{}" procedure. '
+                "Check for an updated version.".format(
+                    "IW_GetLocationTypeID_Diversion"
+                )
+            )
+
+        # initialize output variables
+        location_type_id_diversion = ctypes.c_int(0)
+        status = ctypes.c_int(0)
+
+        self.dll.IW_GetLocationTypeID_Diversion(
+            ctypes.byref(location_type_id_diversion), ctypes.byref(status)
+        )
+
+        return location_type_id_diversion.value
+
+    def get_location_type_id_bypass(self):
+        if not hasattr(self.dll, "IW_GetLocationTypeID_Bypass"):
+            raise AttributeError(
+                'IWFM API does not have "{}" procedure. '
+                "Check for an updated version.".format(
+                    "IW_GetLocationTypeID_Bypass"
+                )
+            )
+
+        # initialize output variables
+        location_type_id_bypass = ctypes.c_int(0)
+        status = ctypes.c_int(0)
+
+        self.dll.IW_GetLocationTypeID_Bypass(
+            ctypes.byref(location_type_id_bypass), ctypes.byref(status)
+        )
+
+        return location_type_id_bypass.value
+
     def get_location_type_ids(self):
         if not hasattr(self.dll, "IW_GetLocationTypeIDs"):
             raise AttributeError(
