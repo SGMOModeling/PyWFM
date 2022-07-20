@@ -181,6 +181,23 @@ class IWFMMiscellaneous:
 
         return refuge_landuse_id.value
 
+    def get_land_use_type_id_urban_indoor(self):
+        if not hasattr(self.dll, "IW_GetLandUseTypeID_UrbIndoors"):
+            raise AttributeError(
+                'IWFM API does not have "{}" procedure. '
+                "Check for an updated version".format("IW_GetLandUseTypeID_UrbIndoors")
+            )
+
+        # initialize output variables
+        urban_indoor_landuse_id = ctypes.c_int(0)
+        status = ctypes.c_int(0)
+
+        self.dll.IW_GetLandUseTypeID_UrbIndoors(
+            ctypes.byref(urban_indoor_landuse_id), ctypes.byref(status)
+        )
+
+        return urban_indoor_landuse_id.value
+
     def get_land_use_type_id_native_riparian(self):
         if not hasattr(self.dll, "IW_GetLandUseTypeID_NVRV"):
             raise AttributeError(
@@ -251,7 +268,7 @@ class IWFMMiscellaneous:
         nvrv_landuse_id = ctypes.c_int(0)
         status = ctypes.c_int(0)
 
-        self.dll.IW_GetLandUseTypeIDs(
+        self.dll.IW_GetLandUseTypeIDs_1(
             ctypes.byref(gen_ag_landuse_id),
             ctypes.byref(gen_urban_landuse_id),
             ctypes.byref(nonponded_ag_landuse_id),
