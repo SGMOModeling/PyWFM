@@ -225,12 +225,53 @@ class IWFMMiscellaneous:
         )
 
         return dict(
-            genag=gen_ag_landuse_id.value,
+            general_ag=gen_ag_landuse_id.value,
             urban=urban_landuse_id.value,
-            nonpondedag=nonponded_ag_landuse_id.value,
-            rice=rice_landuse_id,
-            refuge=refuge_landuse_id,
-            nativeriparian=nvrv_landuse_id,
+            nonponded_ag=nonponded_ag_landuse_id.value,
+            rice=rice_landuse_id.value,
+            refuge=refuge_landuse_id.value,
+            native_riparian=nvrv_landuse_id.value,
+        )
+
+    def get_land_use_type_ids_1(self):
+        if not hasattr(self.dll, "IW_GetLandUseTypeIDs_1"):
+            raise AttributeError(
+                'IWFM API does not have "{}" procedure. '
+                "Check for an updated version".format("IW_GetLandUseTypeIDs_1")
+            )
+
+        # initialize output variables
+        gen_ag_landuse_id = ctypes.c_int(0)
+        gen_urban_landuse_id = ctypes.c_int(0)
+        nonponded_ag_landuse_id = ctypes.c_int(0)
+        rice_landuse_id = ctypes.c_int(0)
+        refuge_landuse_id = ctypes.c_int(0)
+        urban_indoor_landuse_id = ctypes.c_int(0)
+        urban_outdoor_landuse_id = ctypes.c_int(0)
+        nvrv_landuse_id = ctypes.c_int(0)
+        status = ctypes.c_int(0)
+
+        self.dll.IW_GetLandUseTypeIDs(
+            ctypes.byref(gen_ag_landuse_id),
+            ctypes.byref(gen_urban_landuse_id),
+            ctypes.byref(nonponded_ag_landuse_id),
+            ctypes.byref(rice_landuse_id),
+            ctypes.byref(refuge_landuse_id),
+            ctypes.byref(urban_indoor_landuse_id),
+            ctypes.byref(urban_outdoor_landuse_id),
+            ctypes.byref(nvrv_landuse_id),
+            ctypes.byref(status),
+        )
+
+        return dict(
+            general_ag=gen_ag_landuse_id.value,
+            general_urban=gen_urban_landuse_id.value,
+            nonponded_ag=nonponded_ag_landuse_id.value,
+            rice=rice_landuse_id.value,
+            refuge=refuge_landuse_id.value,
+            urban_indoor=urban_indoor_landuse_id.value,
+            urban_outoor=urban_outdoor_landuse_id.value,
+            native_riparian=nvrv_landuse_id.value,
         )
 
     def get_location_type_id_node(self):
