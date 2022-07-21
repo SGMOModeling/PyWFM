@@ -4160,8 +4160,64 @@ class IWFMModel(IWFMMiscellaneous):
 
         return np.array(bypass_ids)
 
-    def get_bypass_export_nodes(self):
-        pass
+    def get_bypass_export_nodes(self, bypass_list):
+        """
+        Return the stream node IDs corresponding to bypass locations
+
+        Parameters
+        ----------
+        bypass_list : int, list, or np.ndarray
+            one or more bypass IDs
+
+        Returns
+        -------
+        np.ndarray
+            stream node IDs for each bypass
+        """
+        if not hasattr(self.dll, "IW_Model_GetBypassExportNodes"):
+            raise AttributeError(
+                'IWFM API does not have "{}" procedure. '
+                "Check for an updated version".format("IW_Model_GetBypassExportNodes")
+            )
+
+        if isinstance(bypass_list, int):
+            bypass_list = np.array([bypass_list])
+
+        if isinstance(bypass_list, list):
+            bypass_list = np.array(bypass_list)
+
+        if not isinstance(bypass_list, np.ndarray):
+            raise TypeError("bypass list must be an int, list, or np.ndarray")
+
+        # get all bypass IDs
+        bypass_ids = self.get_bypass_ids()
+
+        # check all provided bypass IDs are valid
+        if not np.all(np.isin(bypass_list, bypass_ids)):
+            raise ValueError("one or more bypass IDs are invalid")
+
+        # get number of bypasses
+        n_bypasses = ctypes.c_int(len(bypass_list))
+
+        # convert bypass IDs to bypass indices
+        bypass_indices = ctypes.c_int(np.array([np.where(bypass_ids == item)[0][0] for item in bypass_list]) + 1)
+
+        # initialize output variables
+        stream_node_indices = (ctypes.c_int * n_bypasses.value)()
+        status = ctypes.c_int(0)
+
+        self.dll.IW_Model_GetBypassExportNodes(
+            ctypes.byref(n_bypasses),
+            bypass_indices,
+            stream_node_indices,
+            ctypes.byref(status)
+        )
+
+        # convert stream node indices to stream node IDs
+        stream_node_indices = np.array(stream_node_indices)
+        stream_node_ids = self.get_stream_node_ids()
+
+        return stream_node_ids[stream_node_indices - 1]
 
     def get_bypass_exports_destinations(self):
         pass
