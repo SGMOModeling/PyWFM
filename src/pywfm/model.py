@@ -4244,6 +4244,9 @@ class IWFMModel(IWFMMiscellaneous):
         IWFMModel.get_n_bypasses : Return the number of bypasses in an IWFM model
         IWFMModel.get_bypass_ids : Return the bypass identification numbers specified in an IWFM model
         IWFMModel.get_bypass_export_nodes : Return the stream node IDs corresponding to bypass locations
+        IWFMModel.get_bypass_exports_destinations : 
+        IWFMModel.get_bypass_recoverable_loss_factor : Return the recoverable loss factor for a bypass
+        IWFMModel.get_bypass_nonrecoverable_loss_factor : Return the nonrecoverable loss factor for a bypass
         """
         if not hasattr(self.dll, "IW_Model_GetBypassOutflows"):
             raise AttributeError(
@@ -4270,10 +4273,63 @@ class IWFMModel(IWFMMiscellaneous):
 
         return np.array(bypass_outflows)
 
-    def get_bypass_recoverable_loss_factor(self):
-        pass
+    def get_bypass_recoverable_loss_factor(self, bypass_id):
+        """
+        Return the recoverable loss factor for a bypass
 
-    def get_bypass_nonrecoverable_loss_factor(self):
+        Parameters
+        ----------
+        bypass_id : int
+            bypass identification number
+
+        Returns
+        -------
+        float
+            recoverable loss factor for bypass
+
+        Note
+        ----
+        This method is intended to be used when is_for_inquiry=0 when performing a model simulation
+
+        See Also
+        --------
+        IWFMModel.get_n_bypasses : Return the number of bypasses in an IWFM model
+        IWFMModel.get_bypass_ids : Return the bypass identification numbers specified in an IWFM model
+        IWFMModel.get_bypass_export_nodes : Return the stream node IDs corresponding to bypass locations
+        IWFMModel.get_bypass_exports_destinations : 
+        IWFMModel.get_bypass_nonrecoverable_loss_factor : Return the nonrecoverable loss factor for a bypass
+        """
+        if not hasattr(self.dll, "IW_Model_GetBypassRecoverableLossFactor"):
+            raise AttributeError(
+                'IWFM API does not have "{}" procedure. '
+                "Check for an updated version".format("IW_Model_GetBypassRecoverableLossFactor")
+            )
+
+        if not isinstance(bypass_id, int):
+            raise TypeError("bypass_id must be an integer")
+
+        # check that bypass_id is a valid id
+        bypass_ids = self.get_bypass_ids()
+
+        if bypass_id not in bypass_ids:
+            raise ValueError("bypass_id is not a valid bypass_id")
+
+        # convert bypass ID to index
+        bypass_index = ctypes.c_int(np.where(bypass_ids == bypass_id)[0][0] + 1)
+
+        # initialize output variables
+        recoverable_loss_factor = ctypes.c_double(0)
+        status = ctypes.c_int(0)
+
+        self.dll.IW_Model_GetBypassRecoverableLossFactor(
+            ctypes.byref(bypass_index),
+            ctypes.byref(recoverable_loss_factor),
+            ctypes.byref(status)
+        )
+
+        return recoverable_loss_factor.value
+
+    def get_bypass_nonrecoverable_loss_factor(self, bypass_id):
         pass
 
     def get_n_lakes(self):
