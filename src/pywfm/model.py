@@ -4082,6 +4082,10 @@ class IWFMModel(IWFMMiscellaneous):
         --------
         IWFMModel.get_bypass_ids : Return the bypass identification numbers specified in an IWFM model
         IWFMModel.get_bypass_export_nodes : Return the stream node IDs corresponding to bypass locations
+        IWFMModel.get_bypass_exports_destinations : 
+        IWFMModel.get_bypass_outflows : Return the bypass outflows for the current simulation timestep
+        IWFMModel.get_bypass_recoverable_loss_factor : Return the recoverable loss factor for a bypass
+        IWFMModel.get_bypass_recoverable_loss_factor : Return the nonrecoverable loss factor for a bypass
 
         Example
         -------
@@ -4127,6 +4131,10 @@ class IWFMModel(IWFMMiscellaneous):
         --------
         IWFMModel.get_n_bypasses : Return the number of bypasses in an IWFM model
         IWFMModel.get_bypass_export_nodes : Return the stream node IDs corresponding to bypass locations
+        IWFMModel.get_bypass_exports_destinations : 
+        IWFMModel.get_bypass_outflows : Return the bypass outflows for the current simulation timestep
+        IWFMModel.get_bypass_recoverable_loss_factor : Return the recoverable loss factor for a bypass
+        IWFMModel.get_bypass_recoverable_loss_factor : Return the nonrecoverable loss factor for a bypass
 
         Example
         -------
@@ -4173,6 +4181,16 @@ class IWFMModel(IWFMMiscellaneous):
         -------
         np.ndarray
             stream node IDs for each bypass
+
+        See Also
+        --------
+        IWFMModel.get_n_bypasses : Return the number of bypasses in an IWFM model
+        IWFMModel.get_bypass_ids : Return the bypass identification numbers specified in an IWFM model
+        IWFMModel.get_bypass_export_nodes : Return the stream node IDs corresponding to bypass locations
+        IWFMModel.get_bypass_exports_destinations : 
+        IWFMModel.get_bypass_outflows : Return the bypass outflows for the current simulation timestep
+        IWFMModel.get_bypass_recoverable_loss_factor : Return the recoverable loss factor for a bypass
+        IWFMModel.get_bypass_recoverable_loss_factor : Return the nonrecoverable loss factor for a bypass
         """
         if not hasattr(self.dll, "IW_Model_GetBypassExportNodes"):
             raise AttributeError(
@@ -4297,6 +4315,7 @@ class IWFMModel(IWFMMiscellaneous):
         IWFMModel.get_bypass_ids : Return the bypass identification numbers specified in an IWFM model
         IWFMModel.get_bypass_export_nodes : Return the stream node IDs corresponding to bypass locations
         IWFMModel.get_bypass_exports_destinations : 
+        IWFMModel.get_bypass_outflows : Return the bypass outflows for the current simulation timestep
         IWFMModel.get_bypass_nonrecoverable_loss_factor : Return the nonrecoverable loss factor for a bypass
         """
         if not hasattr(self.dll, "IW_Model_GetBypassRecoverableLossFactor"):
@@ -4353,6 +4372,7 @@ class IWFMModel(IWFMMiscellaneous):
         IWFMModel.get_bypass_ids : Return the bypass identification numbers specified in an IWFM model
         IWFMModel.get_bypass_export_nodes : Return the stream node IDs corresponding to bypass locations
         IWFMModel.get_bypass_exports_destinations : 
+        IWFMModel.get_bypass_outflows : Return the bypass outflows for the current simulation timestep
         IWFMModel.get_bypass_recoverable_loss_factor : Return the recoverable loss factor for a bypass
         """
         if not hasattr(self.dll, "IW_Model_GetNonBypassRecoverableLossFactor"):
