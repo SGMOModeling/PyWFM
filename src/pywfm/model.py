@@ -4222,8 +4222,53 @@ class IWFMModel(IWFMMiscellaneous):
     def get_bypass_exports_destinations(self):
         pass
 
-    def get_bypass_outflows(self):
-        pass
+    def get_bypass_outflows(self, bypass_conversion_factor=1.0):
+        """
+        Return the bypass outflows for the current simulation timestep
+
+        Parameters
+        ----------
+        bypass_conversion_factor : float, default=1.0
+
+        Returns
+        -------
+        np.ndarray
+            bypass outflows for the current simulation timestep
+
+        Note
+        ----
+        This method is intended to be used when is_for_inquiry=0 when performing a model simulation
+
+        See Also
+        --------
+        IWFMModel.get_n_bypasses : Return the number of bypasses in an IWFM model
+        IWFMModel.get_bypass_ids : Return the bypass identification numbers specified in an IWFM model
+        IWFMModel.get_bypass_export_nodes : Return the stream node IDs corresponding to bypass locations
+        """
+        if not hasattr(self.dll, "IW_Model_GetBypassOutflows"):
+            raise AttributeError(
+                'IWFM API does not have "{}" procedure. '
+                "Check for an updated version".format("IW_Model_GetBypassOutflows")
+            )
+
+        # get number of bypasses
+        n_bypasses = ctypes.c_int(self.get_n_bypasses)
+
+        # convert bypass conversion factor to ctypes        
+        bypass_conversion_factor = ctypes.c_double(bypass_conversion_factor)
+
+        # initialize output variables
+        bypass_outflows = (ctypes.c_double * n_bypasses.value)()
+        status = ctypes.c_int(0)
+
+        self.dll.IW_Model_GetBypassOutflows(
+            ctypes.byref(n_bypasses),
+            ctypes.byref(bypass_conversion_factor),
+            bypass_outflows,
+            ctypes.byref(status)
+        )
+
+        return np.array(bypass_outflows)
 
     def get_bypass_recoverable_loss_factor(self):
         pass
