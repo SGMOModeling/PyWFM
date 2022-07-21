@@ -702,7 +702,7 @@ class IWFMMiscellaneous:
 
         # initialize output variables
         flow_destination_type_id = ctypes.c_int(0)
-        status = ctypes.c_int(-1)
+        status = ctypes.c_int(0)
 
         self.dll.IW_GetFlowDestTypeID_Outside(
             ctypes.byref(flow_destination_type_id), ctypes.byref(status)
@@ -719,7 +719,7 @@ class IWFMMiscellaneous:
 
         # initialize output variables
         flow_destination_type_id = ctypes.c_int(0)
-        status = ctypes.c_int(-1)
+        status = ctypes.c_int(0)
 
         self.dll.IW_GetFlowDestTypeID_Element(
             ctypes.byref(flow_destination_type_id), ctypes.byref(status)
@@ -736,7 +736,7 @@ class IWFMMiscellaneous:
 
         # initialize output variables
         flow_destination_type_id = ctypes.c_int(0)
-        status = ctypes.c_int(-1)
+        status = ctypes.c_int(0)
 
         self.dll.IW_GetFlowDestTypeID_ElementSet(
             ctypes.byref(flow_destination_type_id), ctypes.byref(status)
@@ -753,7 +753,7 @@ class IWFMMiscellaneous:
 
         # initialize output variables
         flow_destination_type_id = ctypes.c_int(0)
-        status = ctypes.c_int(-1)
+        status = ctypes.c_int(0)
 
         self.dll.IW_GetFlowDestTypeID_GWElement(
             ctypes.byref(flow_destination_type_id), ctypes.byref(status)
@@ -770,7 +770,7 @@ class IWFMMiscellaneous:
 
         # initialize output variables
         flow_destination_type_id = ctypes.c_int(0)
-        status = ctypes.c_int(-1)
+        status = ctypes.c_int(0)
 
         self.dll.IW_GetFlowDestTypeID_StrmNode(
             ctypes.byref(flow_destination_type_id), ctypes.byref(status)
@@ -787,7 +787,7 @@ class IWFMMiscellaneous:
 
         # initialize output variables
         flow_destination_type_id = ctypes.c_int(0)
-        status = ctypes.c_int(-1)
+        status = ctypes.c_int(0)
 
         self.dll.IW_GetFlowDestTypeID_Lake(
             ctypes.byref(flow_destination_type_id), ctypes.byref(status)
@@ -804,7 +804,7 @@ class IWFMMiscellaneous:
 
         # initialize output variables
         flow_destination_type_id = ctypes.c_int(0)
-        status = ctypes.c_int(-1)
+        status = ctypes.c_int(0)
 
         self.dll.IW_GetFlowDestTypeID_Subregion(
             ctypes.byref(flow_destination_type_id), ctypes.byref(status)
@@ -827,7 +827,7 @@ class IWFMMiscellaneous:
         flow_destination_type_id_stream_node = ctypes.c_int(0)
         flow_destination_type_id_lake = ctypes.c_int(0)
         flow_destination_type_id_subregion = ctypes.c_int(0)
-        status = ctypes.c_int(-1)
+        status = ctypes.c_int(0)
 
         self.dll.IW_GetFlowDestTypeIDs(
             ctypes.byref(flow_destination_type_id_outside),
@@ -859,7 +859,7 @@ class IWFMMiscellaneous:
 
         # initialize output variables
         supply_type_id = ctypes.c_int(0)
-        status = ctypes.c_int(-1)
+        status = ctypes.c_int(0)
 
         self.dll.IW_GetSupplyTypeID_Diversion(
             ctypes.byref(supply_type_id), ctypes.byref(status)
@@ -876,7 +876,7 @@ class IWFMMiscellaneous:
 
         # initialize output variables
         supply_type_id = ctypes.c_int(0)
-        status = ctypes.c_int(-1)
+        status = ctypes.c_int(0)
 
         self.dll.IW_GetSupplyTypeID_Well(
             ctypes.byref(supply_type_id), ctypes.byref(status)
@@ -893,7 +893,7 @@ class IWFMMiscellaneous:
 
         # initialize output variables
         supply_type_id = ctypes.c_int(0)
-        status = ctypes.c_int(-1)
+        status = ctypes.c_int(0)
 
         self.dll.IW_GetSupplyTypeID_ElemPump(
             ctypes.byref(supply_type_id), ctypes.byref(status)
@@ -910,7 +910,7 @@ class IWFMMiscellaneous:
 
         # initialize output variables
         zone_extent_id = ctypes.c_int(0)
-        status = ctypes.c_int(-1)
+        status = ctypes.c_int(0)
 
         self.dll.IW_GetZoneExtentID_Horizontal(
             ctypes.byref(zone_extent_id), ctypes.byref(status)
@@ -927,7 +927,7 @@ class IWFMMiscellaneous:
 
         # initialize output variables
         zone_extent_id = ctypes.c_int(0)
-        status = ctypes.c_int(-1)
+        status = ctypes.c_int(0)
 
         self.dll.IW_GetZoneExtentID_Vertical(
             ctypes.byref(zone_extent_id), ctypes.byref(status)
@@ -945,7 +945,7 @@ class IWFMMiscellaneous:
         # initialize output variables
         zone_extent_id_horizontal = ctypes.c_int(0)
         zone_extent_id_vertical = ctypes.c_int(0)
-        status = ctypes.c_int(-1)
+        status = ctypes.c_int(0)
 
         self.dll.IW_GetZoneExtentIDs(
             ctypes.byref(zone_extent_id_horizontal),
@@ -979,7 +979,7 @@ class IWFMMiscellaneous:
         budget_type_id_div_detail = ctypes.c_int(0)
         budget_type_id_smallwatershed = ctypes.c_int(0)
         budget_type_id_lake = ctypes.c_int(0)
-        status = ctypes.c_int(-1)
+        status = ctypes.c_int(0)
 
         self.dll.IW_GetBudgetTypeIDs(
             ctypes.byref(budget_type_id_gw),
@@ -1026,7 +1026,7 @@ class IWFMMiscellaneous:
         zbudget_type_id_rootzone = ctypes.c_int(0)
         zbudget_type_id_lwu = ctypes.c_int(0)
         zbudget_type_id_unsatzone = ctypes.c_int(0)
-        status = ctypes.c_int(-1)
+        status = ctypes.c_int(0)
 
         self.dll.IW_GetZBudgetTypeIDs(
             ctypes.byref(zbudget_type_id_gw),
@@ -1053,7 +1053,7 @@ class IWFMMiscellaneous:
             )
 
         # reset instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        self.status = ctypes.c_int(0)
 
         # set version character array length to 500
         version_length = ctypes.c_int(600)
@@ -1151,7 +1151,7 @@ class IWFMMiscellaneous:
             raise ValueError("begin_date must occur before end_date")
 
         # reset instance variable status to -1
-        self.status = ctypes.c_int(-1)
+        self.status = ctypes.c_int(0)
 
         # convert IWFM dates to ctypes character arrays
         begin_date = ctypes.create_string_buffer(begin_date.encode("utf-8"))
@@ -1269,7 +1269,7 @@ class IWFMMiscellaneous:
         n_intervals = ctypes.c_int(n_intervals)
 
         # initialize output variables
-        status = ctypes.c_int(-1)
+        status = ctypes.c_int(0)
 
         self.dll.IW_IncrementTime(
             ctypes.byref(len_date_string),
@@ -1350,7 +1350,7 @@ class IWFMMiscellaneous:
 
         # initialize output variables
         compare_result = ctypes.c_int(0)
-        status = ctypes.c_int(-1)
+        status = ctypes.c_int(0)
 
         self.dll.IW_IsTimeGreaterThan(
             ctypes.byref(length_dates),
@@ -1394,7 +1394,7 @@ class IWFMMiscellaneous:
         len_file_name = ctypes.c_int(ctypes.sizeof(file_name))
 
         # initialize output variables
-        status = ctypes.c_int(-1)
+        status = ctypes.c_int(0)
 
         self.dll.IW_SetLogFile(
             ctypes.byref(len_file_name), file_name, ctypes.byref(status)
@@ -1409,7 +1409,7 @@ class IWFMMiscellaneous:
             )
 
         # initialize output variables
-        status = ctypes.c_int(-1)
+        status = ctypes.c_int(0)
 
         self.dll.IW_CloseLogFile(ctypes.byref(status))
 
@@ -1436,7 +1436,7 @@ class IWFMMiscellaneous:
         last_message = ctypes.create_string_buffer(length_message.value)
 
         # initialize output variables
-        status = ctypes.c_int(-1)
+        status = ctypes.c_int(0)
 
         self.dll.IW_GetLastMessage(
             ctypes.byref(length_message), last_message, ctypes.byref(status)
@@ -1457,7 +1457,7 @@ class IWFMMiscellaneous:
             )
 
         # initialize output variables
-        status = ctypes.c_int(-1)
+        status = ctypes.c_int(0)
 
         self.dll.IW_LogLastMessage(ctypes.byref(status))
 
