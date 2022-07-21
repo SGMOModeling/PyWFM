@@ -4114,7 +4114,51 @@ class IWFMModel(IWFMMiscellaneous):
         return n_bypasses.value
 
     def get_bypass_ids(self):
-        pass
+        """
+        Return the bypass identification numbers
+        specified in an IWFM model
+
+        Returns
+        -------
+        np.ndarray
+            array of bypass IDs
+
+        See Also
+        --------
+        IWFMModel.get_n_bypasses : Return the number of bypasses in an IWFM model
+        IWFMModel.get_bypass_export_nodes : Return the stream node IDs corresponding to bypass locations
+
+        Example
+        -------
+        >>> from pywfm import IWFMModel
+        >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
+        >>> sim_file = 'Simulation_MAIN.IN'
+        >>> model = IWFMModel(pp_file, sim_file)
+        >>> model.get_bypass_ids()
+        array([1, 2, 3, 4, 5])
+        >>> model.kill()
+        >>> model.close_log_file()
+        """
+        if not hasattr(self.dll, "IW_Model_GetBypassIDs"):
+            raise AttributeError(
+                'IWFM API does not have "{}" procedure. '
+                "Check for an updated version".format("IW_Model_GetBypassIDs")
+            )
+
+        # set input variables
+        n_bypasses = ctypes.c_int(self.get_n_bypasses())
+
+        # set instance variable status to 0
+        status = ctypes.c_int(0)
+
+        # initialize output variables
+        bypass_ids = (ctypes.c_int * n_bypasses.value)()
+
+        self.dll.IW_Model_GetBypassIDs(
+            ctypes.byref(n_bypasses), bypass_ids, ctypes.byref(status)
+        )
+
+        return np.array(bypass_ids)
 
     def get_bypass_export_nodes(self):
         pass
