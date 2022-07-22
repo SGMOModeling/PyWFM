@@ -4100,7 +4100,7 @@ class IWFMModel(IWFMMiscellaneous):
         >>> sim_file = 'Simulation_MAIN.IN'
         >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_n_bypasses()
-        
+        2
         >>> model.kill()
         >>> model.close_log_file()
         """
@@ -4149,7 +4149,7 @@ class IWFMModel(IWFMMiscellaneous):
         >>> sim_file = 'Simulation_MAIN.IN'
         >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_bypass_ids()
-        array([1, 2, 3, 4, 5])
+        array([1, 2])
         >>> model.kill()
         >>> model.close_log_file()
         """
@@ -4192,11 +4192,21 @@ class IWFMModel(IWFMMiscellaneous):
         --------
         IWFMModel.get_n_bypasses : Return the number of bypasses in an IWFM model
         IWFMModel.get_bypass_ids : Return the bypass identification numbers specified in an IWFM model
-        IWFMModel.get_bypass_export_nodes : Return the stream node IDs corresponding to bypass locations
         IWFMModel.get_bypass_exports_destinations : Return stream node IDs and destination types and IDS where bypass flows are delivered
         IWFMModel.get_bypass_outflows : Return the bypass outflows for the current simulation timestep
         IWFMModel.get_bypass_recoverable_loss_factor : Return the recoverable loss factor for a bypass
         IWFMModel.get_bypass_recoverable_loss_factor : Return the nonrecoverable loss factor for a bypass
+
+        Example
+        -------
+        >>> from pywfm import IWFMModel
+        >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
+        >>> sim_file = 'Simulation_MAIN.IN'
+        >>> model = IWFMModel(pp_file, sim_file)
+        >>> model.get_bypass_export_nodes()
+        array([13, 17])
+        >>> model.kill()
+        >>> model.close_log_file()
         """
         if not hasattr(self.dll, "IW_Model_GetBypassExportNodes"):
             raise AttributeError(
@@ -4262,10 +4272,6 @@ class IWFMModel(IWFMMiscellaneous):
         destination_ids : np.ndarray
             destination ID for each bypass
 
-        Note
-        ----
-        This method is intended to be used when is_for_inquiry=0 when performing a model simulation
-
         See Also
         --------
         IWFMModel.get_n_bypasses : Return the number of bypasses in an IWFM model
@@ -4274,6 +4280,17 @@ class IWFMModel(IWFMMiscellaneous):
         IWFMModel.get_bypass_outflows : Return the bypass outflows for the current simulation timestep
         IWFMModel.get_bypass_recoverable_loss_factor : Return the recoverable loss factor for a bypass
         IWFMModel.get_bypass_recoverable_loss_factor : Return the nonrecoverable loss factor for a bypass
+        
+        Example
+        -------
+        >>> from pywfm import IWFMModel
+        >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
+        >>> sim_file = 'Simulation_MAIN.IN'
+        >>> model = IWFMModel(pp_file, sim_file)
+        >>> model.get_bypass_exports_destinations(1)
+        (array([13, 17]), array([0, 1]), array([ 0, 22]))
+        >>> model.kill()
+        >>> model.close_log_file()
         """
         # check procedure exists in IWFM API
         if not hasattr(self.dll, "IW_Model_GetBypassExportDestinationData"):
@@ -4420,10 +4437,6 @@ class IWFMModel(IWFMMiscellaneous):
         float
             recoverable loss factor for bypass
 
-        Note
-        ----
-        This method is intended to be used when is_for_inquiry=0 when performing a model simulation
-
         See Also
         --------
         IWFMModel.get_n_bypasses : Return the number of bypasses in an IWFM model
@@ -4432,6 +4445,17 @@ class IWFMModel(IWFMMiscellaneous):
         IWFMModel.get_bypass_exports_destinations : Return stream node IDs and destination types and IDS where bypass flows are delivered
         IWFMModel.get_bypass_outflows : Return the bypass outflows for the current simulation timestep
         IWFMModel.get_bypass_nonrecoverable_loss_factor : Return the nonrecoverable loss factor for a bypass
+
+        Example
+        -------
+        >>> from pywfm import IWFMModel
+        >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
+        >>> sim_file = 'Simulation_MAIN.IN'
+        >>> model = IWFMModel(pp_file, sim_file)
+        >>> model.get_bypass_recoverable_loss_factor(2)
+        0.0
+        >>> model.kill()
+        >>> model.close_log_file()
         """
         if not hasattr(self.dll, "IW_Model_GetBypassRecoverableLossFactor"):
             raise AttributeError(
@@ -4477,10 +4501,6 @@ class IWFMModel(IWFMMiscellaneous):
         float
             nonrecoverable loss factor for bypass
 
-        Note
-        ----
-        This method is intended to be used when is_for_inquiry=0 when performing a model simulation
-
         See Also
         --------
         IWFMModel.get_n_bypasses : Return the number of bypasses in an IWFM model
@@ -4489,6 +4509,17 @@ class IWFMModel(IWFMMiscellaneous):
         IWFMModel.get_bypass_exports_destinations : 
         IWFMModel.get_bypass_outflows : Return the bypass outflows for the current simulation timestep
         IWFMModel.get_bypass_recoverable_loss_factor : Return the recoverable loss factor for a bypass
+
+        Example
+        -------
+        >>> from pywfm import IWFMModel
+        >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
+        >>> sim_file = 'Simulation_MAIN.IN'
+        >>> model = IWFMModel(pp_file, sim_file)
+        >>> model.get_bypass_nonrecoverable_loss_factor(2)
+        0.1
+        >>> model.kill()
+        >>> model.close_log_file()
         """
         if not hasattr(self.dll, "IW_Model_GetBypassNonRecoverableLossFactor"):
             raise AttributeError(
