@@ -2856,7 +2856,7 @@ class IWFMModel(IWFMMiscellaneous):
         >>> sim_file = 'Simulation_MAIN.IN'
         >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_stream_diversion_locations()
-        array([ 9, 12, 12, 22, 23])
+        array([ 9, 12, 12, 22, 0])
         >>> model.kill()
         >>> model.close_log_file()
         """
@@ -2924,7 +2924,14 @@ class IWFMModel(IWFMMiscellaneous):
         stream_node_ids = self.get_stream_node_ids()
         stream_diversion_indices = np.array(diversion_stream_nodes)
 
-        return stream_node_ids[stream_diversion_indices - 1]
+        stream_diversion_locations = []
+        for stream_diversion_index in stream_diversion_indices:
+            if stream_diversion_index == 0:
+                stream_diversion_locations.append(0)
+            else:
+                stream_diversion_locations.append(stream_node_ids[stream_diversion_index - 1])
+
+        return np.array(stream_diversion_locations)
 
     def get_stream_diversion_n_elements(self, diversion_id):
         """
@@ -4082,7 +4089,7 @@ class IWFMModel(IWFMMiscellaneous):
         --------
         IWFMModel.get_bypass_ids : Return the bypass identification numbers specified in an IWFM model
         IWFMModel.get_bypass_export_nodes : Return the stream node IDs corresponding to bypass locations
-        IWFMModel.get_bypass_exports_destinations : 
+        IWFMModel.get_bypass_exports_destinations : Return stream node IDs and destination types and IDS where bypass flows are delivered
         IWFMModel.get_bypass_outflows : Return the bypass outflows for the current simulation timestep
         IWFMModel.get_bypass_recoverable_loss_factor : Return the recoverable loss factor for a bypass
         IWFMModel.get_bypass_recoverable_loss_factor : Return the nonrecoverable loss factor for a bypass
@@ -4131,7 +4138,7 @@ class IWFMModel(IWFMMiscellaneous):
         --------
         IWFMModel.get_n_bypasses : Return the number of bypasses in an IWFM model
         IWFMModel.get_bypass_export_nodes : Return the stream node IDs corresponding to bypass locations
-        IWFMModel.get_bypass_exports_destinations : 
+        IWFMModel.get_bypass_exports_destinations : Return stream node IDs and destination types and IDS where bypass flows are delivered
         IWFMModel.get_bypass_outflows : Return the bypass outflows for the current simulation timestep
         IWFMModel.get_bypass_recoverable_loss_factor : Return the recoverable loss factor for a bypass
         IWFMModel.get_bypass_recoverable_loss_factor : Return the nonrecoverable loss factor for a bypass
@@ -4187,7 +4194,7 @@ class IWFMModel(IWFMMiscellaneous):
         IWFMModel.get_n_bypasses : Return the number of bypasses in an IWFM model
         IWFMModel.get_bypass_ids : Return the bypass identification numbers specified in an IWFM model
         IWFMModel.get_bypass_export_nodes : Return the stream node IDs corresponding to bypass locations
-        IWFMModel.get_bypass_exports_destinations : 
+        IWFMModel.get_bypass_exports_destinations : Return stream node IDs and destination types and IDS where bypass flows are delivered
         IWFMModel.get_bypass_outflows : Return the bypass outflows for the current simulation timestep
         IWFMModel.get_bypass_recoverable_loss_factor : Return the recoverable loss factor for a bypass
         IWFMModel.get_bypass_recoverable_loss_factor : Return the nonrecoverable loss factor for a bypass
@@ -4218,7 +4225,8 @@ class IWFMModel(IWFMMiscellaneous):
         n_bypasses = ctypes.c_int(len(bypass_list))
 
         # convert bypass IDs to bypass indices
-        bypass_indices = ctypes.c_int(np.array([np.where(bypass_ids == item)[0][0] for item in bypass_list]) + 1)
+        bypass_indices = np.array([np.where(bypass_ids == item)[0][0] for item in bypass_list]) + 1
+        bypass_indices = (ctypes.c_int * n_bypasses.value)(*bypass_indices)
 
         # initialize output variables
         stream_node_indices = (ctypes.c_int * n_bypasses.value)()
@@ -4237,8 +4245,116 @@ class IWFMModel(IWFMMiscellaneous):
 
         return stream_node_ids[stream_node_indices - 1]
 
-    def get_bypass_exports_destinations(self):
-        pass
+    def get_bypass_exports_destinations(self, bypass_list):
+        """
+        Return stream node IDs and destination types and IDS where bypass flows are delivered.
+
+        Parameters
+        ----------
+        bypass_list : int, list, or np.ndarray
+            one or more bypass IDs
+
+        Returns
+        -------
+        export_stream_nodes : np.ndarray
+            stream node IDs where bypasses occur
+        destination_types : np.ndarray
+            destination type flags used by IWFM
+        destination_ids : np.ndarray
+            destination ID for each bypass
+
+        Note
+        ----
+        This method is intended to be used when is_for_inquiry=0 when performing a model simulation
+
+        See Also
+        --------
+        IWFMModel.get_n_bypasses : Return the number of bypasses in an IWFM model
+        IWFMModel.get_bypass_ids : Return the bypass identification numbers specified in an IWFM model
+        IWFMModel.get_bypass_export_nodes : Return the stream node IDs corresponding to bypass locations
+        IWFMModel.get_bypass_outflows : Return the bypass outflows for the current simulation timestep
+        IWFMModel.get_bypass_recoverable_loss_factor : Return the recoverable loss factor for a bypass
+        IWFMModel.get_bypass_recoverable_loss_factor : Return the nonrecoverable loss factor for a bypass
+        """
+        # check procedure exists in IWFM API
+        if not hasattr(self.dll, "IW_Model_GetBypassExportDestinationData"):
+            raise AttributeError(
+                'IWFM API does not have "{}" procedure. '
+                "Check for an updated version".format("IW_Model_GetBypassExportDestinationData")
+            )
+
+        # handle case where bypass_list is provided as an int
+        if isinstance(bypass_list, int):
+            bypass_list = np.array([bypass_list])
+
+        # handle case where bypass_list is provided as a list
+        if isinstance(bypass_list, list):
+            bypass_list = np.array(bypass_list)
+
+        # check type now that all valid bypass_lists will be np.ndarrays
+        if not isinstance(bypass_list, np.ndarray):
+            raise TypeError("bypass_list must be an int, list, or np.ndarray")
+
+        # get all valid bypass IDs
+        bypass_ids = self.get_bypass_ids()
+
+        # check provided bypass IDs are valid
+        if not np.all(np.isin(bypass_list, bypass_ids)):
+            raise ValueError("one or more bypass IDs provided are invalid")
+
+        # count number of provided bypass IDs
+        n_bypasses = ctypes.c_int(len(bypass_list))
+
+        # convert bypass IDs to bypass indices
+        bypass_indices = np.array([np.where(bypass_ids == item)[0][0] for item in bypass_list]) + 1
+        bypass_indices = (ctypes.c_int * n_bypasses.value)(*bypass_indices)
+
+        # initialize output variables
+        export_stream_node_indices = (ctypes.c_int * n_bypasses.value)()
+        destination_types = (ctypes.c_int * n_bypasses.value)()
+        destination_indices = (ctypes.c_int * n_bypasses.value)()
+        status = ctypes.c_int(0)
+
+        self.dll.IW_Model_GetBypassExportDestinationData(
+            ctypes.byref(n_bypasses),
+            bypass_indices,
+            export_stream_node_indices,
+            destination_types,
+            destination_indices,
+            ctypes.byref(status)
+        )
+
+        # get destination IDs
+        stream_node_ids = self.get_stream_node_ids()
+        element_ids = self.get_element_ids()
+        lake_ids = self.get_lake_ids()
+        subregion_ids = self.get_subregion_ids()
+
+        # convert results to numpy arrays
+        export_stream_node_indices = np.array(export_stream_node_indices)
+        destination_types = np.array(destination_types)
+        destination_indices = np.array(destination_indices)
+
+        # convert stream node indices to stream node IDs
+        export_stream_nodes = stream_node_ids[export_stream_node_indices - 1]
+
+        # convert destination indices to destination IDs for each destination type
+        destination_ids = []
+        for i, dest_type in enumerate(destination_types):
+            if dest_type == 0:
+                destination_ids.append(0)
+            elif dest_type == 1:
+                destination_ids.append(stream_node_ids[destination_indices[i] - 1])
+            elif dest_type == 2:
+                destination_ids.append(element_ids[destination_indices[i] - 1])
+            elif dest_type == 3:
+                destination_ids.append(lake_ids[destination_types[i] - 1])
+            elif dest_type == 4:
+                destination_ids.append(subregion_ids[destination_types[i] - 1])
+
+        destination_ids = np.array(destination_ids)
+
+        return export_stream_nodes, destination_types, destination_ids
 
     def get_bypass_outflows(self, bypass_conversion_factor=1.0):
         """
@@ -4262,7 +4378,7 @@ class IWFMModel(IWFMMiscellaneous):
         IWFMModel.get_n_bypasses : Return the number of bypasses in an IWFM model
         IWFMModel.get_bypass_ids : Return the bypass identification numbers specified in an IWFM model
         IWFMModel.get_bypass_export_nodes : Return the stream node IDs corresponding to bypass locations
-        IWFMModel.get_bypass_exports_destinations : 
+        IWFMModel.get_bypass_exports_destinations : Return stream node IDs and destination types and IDS where bypass flows are delivered
         IWFMModel.get_bypass_recoverable_loss_factor : Return the recoverable loss factor for a bypass
         IWFMModel.get_bypass_nonrecoverable_loss_factor : Return the nonrecoverable loss factor for a bypass
         """
@@ -4273,7 +4389,7 @@ class IWFMModel(IWFMMiscellaneous):
             )
 
         # get number of bypasses
-        n_bypasses = ctypes.c_int(self.get_n_bypasses)
+        n_bypasses = ctypes.c_int(self.get_n_bypasses())
 
         # convert bypass conversion factor to ctypes        
         bypass_conversion_factor = ctypes.c_double(bypass_conversion_factor)
@@ -4314,7 +4430,7 @@ class IWFMModel(IWFMMiscellaneous):
         IWFMModel.get_n_bypasses : Return the number of bypasses in an IWFM model
         IWFMModel.get_bypass_ids : Return the bypass identification numbers specified in an IWFM model
         IWFMModel.get_bypass_export_nodes : Return the stream node IDs corresponding to bypass locations
-        IWFMModel.get_bypass_exports_destinations : 
+        IWFMModel.get_bypass_exports_destinations : Return stream node IDs and destination types and IDS where bypass flows are delivered
         IWFMModel.get_bypass_outflows : Return the bypass outflows for the current simulation timestep
         IWFMModel.get_bypass_nonrecoverable_loss_factor : Return the nonrecoverable loss factor for a bypass
         """
@@ -4375,10 +4491,10 @@ class IWFMModel(IWFMMiscellaneous):
         IWFMModel.get_bypass_outflows : Return the bypass outflows for the current simulation timestep
         IWFMModel.get_bypass_recoverable_loss_factor : Return the recoverable loss factor for a bypass
         """
-        if not hasattr(self.dll, "IW_Model_GetNonBypassRecoverableLossFactor"):
+        if not hasattr(self.dll, "IW_Model_GetBypassNonRecoverableLossFactor"):
             raise AttributeError(
                 'IWFM API does not have "{}" procedure. '
-                "Check for an updated version".format("IW_Model_GetNonBypassRecoverableLossFactor")
+                "Check for an updated version".format("IW_Model_GetBypassNonRecoverableLossFactor")
             )
 
         if not isinstance(bypass_id, int):
@@ -4397,7 +4513,7 @@ class IWFMModel(IWFMMiscellaneous):
         nonrecoverable_loss_factor = ctypes.c_double(0)
         status = ctypes.c_int(0)
 
-        self.dll.IW_Model_GetNonBypassRecoverableLossFactor(
+        self.dll.IW_Model_GetBypassNonRecoverableLossFactor(
             ctypes.byref(bypass_index),
             ctypes.byref(nonrecoverable_loss_factor),
             ctypes.byref(status)
