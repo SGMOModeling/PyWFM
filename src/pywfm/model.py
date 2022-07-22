@@ -995,6 +995,7 @@ class IWFMModel(IWFMMiscellaneous):
         -------
         np.ndarray
             array identifying the subregion where each model element is assigned
+        
         Note
         ----
         The resulting integer array will have a length equal to the value returned by get_n_elements method
@@ -1584,7 +1585,7 @@ class IWFMModel(IWFMMiscellaneous):
 
     def get_stream_inflow_nodes(self):
         """
-        Return the stream node indices that receive boundary
+        Return the stream node IDs that receive boundary
         inflows specified by the user as timeseries input data
 
         Returns
