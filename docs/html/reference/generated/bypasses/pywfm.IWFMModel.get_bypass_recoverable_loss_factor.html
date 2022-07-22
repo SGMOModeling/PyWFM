@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>pywfm.IWFMModel.get_land_use_ids &#8212; PyWFM 0.1.0 documentation</title>
+    <title>pywfm.IWFMModel.get_bypass_recoverable_loss_factor &#8212; PyWFM 0.1.0 documentation</title>
     
     <link href="../../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
 <link href="../../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -36,8 +36,8 @@
     <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
-    <link rel="next" title="pywfm.IWFMModel.get_land_use_type_id_gen_ag" href="pywfm.IWFMModel.get_land_use_type_id_gen_ag.html" />
-    <link rel="prev" title="pywfm.IWFMModel.get_flow_destination_type_id_subregion" href="pywfm.IWFMModel.get_flow_destination_type_id_subregion.html" />
+    <link rel="next" title="pywfm.IWFMModel.get_bypass_nonrecoverable_loss_factor" href="pywfm.IWFMModel.get_bypass_nonrecoverable_loss_factor.html" />
+    <link rel="prev" title="pywfm.IWFMModel.get_bypass_outflows" href="pywfm.IWFMModel.get_bypass_outflows.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -417,6 +417,41 @@
    <li class="toctree-l2">
     <a class="reference internal" href="../geometry/streams/pywfm.IWFMModel.get_stream_network.html">
      pywfm.IWFMModel.get_stream_network
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="pywfm.IWFMModel.get_n_bypasses.html">
+     pywfm.IWFMModel.get_n_bypasses
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="pywfm.IWFMModel.get_bypass_ids.html">
+     pywfm.IWFMModel.get_bypass_ids
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="pywfm.IWFMModel.get_bypass_export_nodes.html">
+     pywfm.IWFMModel.get_bypass_export_nodes
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="pywfm.IWFMModel.get_bypass_exports_destinations.html">
+     pywfm.IWFMModel.get_bypass_exports_destinations
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="pywfm.IWFMModel.get_bypass_outflows.html">
+     pywfm.IWFMModel.get_bypass_outflows
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     pywfm.IWFMModel.get_bypass_recoverable_loss_factor
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="pywfm.IWFMModel.get_bypass_nonrecoverable_loss_factor.html">
+     pywfm.IWFMModel.get_bypass_nonrecoverable_loss_factor
     </a>
    </li>
    <li class="toctree-l2">
@@ -1015,207 +1050,207 @@
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="pywfm.IWFMModel.get_data_unit_type_id_area.html">
+    <a class="reference internal" href="../internal/pywfm.IWFMModel.get_data_unit_type_id_area.html">
      pywfm.IWFMModel.get_data_unit_type_id_area
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="pywfm.IWFMModel.get_data_unit_type_id_length.html">
+    <a class="reference internal" href="../internal/pywfm.IWFMModel.get_data_unit_type_id_length.html">
      pywfm.IWFMModel.get_data_unit_type_id_length
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="pywfm.IWFMModel.get_data_unit_type_ids.html">
+    <a class="reference internal" href="../internal/pywfm.IWFMModel.get_data_unit_type_ids.html">
      pywfm.IWFMModel.get_data_unit_type_ids
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="pywfm.IWFMModel.get_data_unit_type_volume.html">
+    <a class="reference internal" href="../internal/pywfm.IWFMModel.get_data_unit_type_volume.html">
      pywfm.IWFMModel.get_data_unit_type_volume
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="pywfm.IWFMModel.get_flow_destination_type_id.html">
+    <a class="reference internal" href="../internal/pywfm.IWFMModel.get_flow_destination_type_id.html">
      pywfm.IWFMModel.get_flow_destination_type_id
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="pywfm.IWFMModel.get_flow_destination_type_id_element.html">
+    <a class="reference internal" href="../internal/pywfm.IWFMModel.get_flow_destination_type_id_element.html">
      pywfm.IWFMModel.get_flow_destination_type_id_element
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="pywfm.IWFMModel.get_flow_destination_type_id_elementset.html">
+    <a class="reference internal" href="../internal/pywfm.IWFMModel.get_flow_destination_type_id_elementset.html">
      pywfm.IWFMModel.get_flow_destination_type_id_elementset
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="pywfm.IWFMModel.get_flow_destination_type_id_gwelement.html">
+    <a class="reference internal" href="../internal/pywfm.IWFMModel.get_flow_destination_type_id_gwelement.html">
      pywfm.IWFMModel.get_flow_destination_type_id_gwelement
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="pywfm.IWFMModel.get_flow_destination_type_id_lake.html">
+    <a class="reference internal" href="../internal/pywfm.IWFMModel.get_flow_destination_type_id_lake.html">
      pywfm.IWFMModel.get_flow_destination_type_id_lake
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="pywfm.IWFMModel.get_flow_destination_type_id_outside.html">
+    <a class="reference internal" href="../internal/pywfm.IWFMModel.get_flow_destination_type_id_outside.html">
      pywfm.IWFMModel.get_flow_destination_type_id_outside
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="pywfm.IWFMModel.get_flow_destination_type_id_streamnode.html">
+    <a class="reference internal" href="../internal/pywfm.IWFMModel.get_flow_destination_type_id_streamnode.html">
      pywfm.IWFMModel.get_flow_destination_type_id_streamnode
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="pywfm.IWFMModel.get_flow_destination_type_id_subregion.html">
+    <a class="reference internal" href="../internal/pywfm.IWFMModel.get_flow_destination_type_id_subregion.html">
      pywfm.IWFMModel.get_flow_destination_type_id_subregion
     </a>
    </li>
-   <li class="toctree-l2 current active">
-    <a class="current reference internal" href="#">
-     pywfm.IWFMModel.get_land_use_ids
+   <li class="toctree-l2">
+    <a class="reference internal" href="../internal/pywfm.IWFMModel.get_land_use_type_ids.html">
+     pywfm.IWFMModel.get_land_use_type_ids
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="pywfm.IWFMModel.get_land_use_type_id_gen_ag.html">
+    <a class="reference internal" href="../internal/pywfm.IWFMModel.get_land_use_type_id_gen_ag.html">
      pywfm.IWFMModel.get_land_use_type_id_gen_ag
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="pywfm.IWFMModel.get_land_use_type_id_native_riparian.html">
+    <a class="reference internal" href="../internal/pywfm.IWFMModel.get_land_use_type_id_native_riparian.html">
      pywfm.IWFMModel.get_land_use_type_id_native_riparian
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="pywfm.IWFMModel.get_land_use_type_id_nonponded_ag.html">
+    <a class="reference internal" href="../internal/pywfm.IWFMModel.get_land_use_type_id_nonponded_ag.html">
      pywfm.IWFMModel.get_land_use_type_id_nonponded_ag
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="pywfm.IWFMModel.get_land_use_type_id_refuge.html">
+    <a class="reference internal" href="../internal/pywfm.IWFMModel.get_land_use_type_id_refuge.html">
      pywfm.IWFMModel.get_land_use_type_id_refuge
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="pywfm.IWFMModel.get_land_use_type_id_rice.html">
+    <a class="reference internal" href="../internal/pywfm.IWFMModel.get_land_use_type_id_rice.html">
      pywfm.IWFMModel.get_land_use_type_id_rice
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="pywfm.IWFMModel.get_land_use_type_id_urban.html">
+    <a class="reference internal" href="../internal/pywfm.IWFMModel.get_land_use_type_id_urban.html">
      pywfm.IWFMModel.get_land_use_type_id_urban
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="pywfm.IWFMModel.get_location_type_id_element.html">
+    <a class="reference internal" href="../internal/pywfm.IWFMModel.get_location_type_id_element.html">
      pywfm.IWFMModel.get_location_type_id_element
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="pywfm.IWFMModel.get_location_type_id_gwheadobs.html">
+    <a class="reference internal" href="../internal/pywfm.IWFMModel.get_location_type_id_gwheadobs.html">
      pywfm.IWFMModel.get_location_type_id_gwheadobs
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="pywfm.IWFMModel.get_location_type_id_lake.html">
+    <a class="reference internal" href="../internal/pywfm.IWFMModel.get_location_type_id_lake.html">
      pywfm.IWFMModel.get_location_type_id_lake
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="pywfm.IWFMModel.get_location_type_id_node.html">
+    <a class="reference internal" href="../internal/pywfm.IWFMModel.get_location_type_id_node.html">
      pywfm.IWFMModel.get_location_type_id_node
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="pywfm.IWFMModel.get_location_type_id_smallwatershed.html">
+    <a class="reference internal" href="../internal/pywfm.IWFMModel.get_location_type_id_smallwatershed.html">
      pywfm.IWFMModel.get_location_type_id_smallwatershed
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="pywfm.IWFMModel.get_location_type_id_streamhydobs.html">
+    <a class="reference internal" href="../internal/pywfm.IWFMModel.get_location_type_id_streamhydobs.html">
      pywfm.IWFMModel.get_location_type_id_streamhydobs
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="pywfm.IWFMModel.get_location_type_id_streamnode.html">
+    <a class="reference internal" href="../internal/pywfm.IWFMModel.get_location_type_id_streamnode.html">
      pywfm.IWFMModel.get_location_type_id_streamnode
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="pywfm.IWFMModel.get_location_type_id_streamnodebud.html">
+    <a class="reference internal" href="../internal/pywfm.IWFMModel.get_location_type_id_streamnodebud.html">
      pywfm.IWFMModel.get_location_type_id_streamnodebud
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="pywfm.IWFMModel.get_location_type_id_streamreach.html">
+    <a class="reference internal" href="../internal/pywfm.IWFMModel.get_location_type_id_streamreach.html">
      pywfm.IWFMModel.get_location_type_id_streamreach
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="pywfm.IWFMModel.get_location_type_id_subregion.html">
+    <a class="reference internal" href="../internal/pywfm.IWFMModel.get_location_type_id_subregion.html">
      pywfm.IWFMModel.get_location_type_id_subregion
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="pywfm.IWFMModel.get_location_type_id_subsidenceobs.html">
+    <a class="reference internal" href="../internal/pywfm.IWFMModel.get_location_type_id_subsidenceobs.html">
      pywfm.IWFMModel.get_location_type_id_subsidenceobs
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="pywfm.IWFMModel.get_location_type_id_tiledrainobs.html">
+    <a class="reference internal" href="../internal/pywfm.IWFMModel.get_location_type_id_tiledrainobs.html">
      pywfm.IWFMModel.get_location_type_id_tiledrainobs
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="pywfm.IWFMModel.get_location_type_id_zone.html">
+    <a class="reference internal" href="../internal/pywfm.IWFMModel.get_location_type_id_zone.html">
      pywfm.IWFMModel.get_location_type_id_zone
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="pywfm.IWFMModel.get_location_type_ids.html">
+    <a class="reference internal" href="../internal/pywfm.IWFMModel.get_location_type_ids.html">
      pywfm.IWFMModel.get_location_type_ids
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="pywfm.IWFMModel.get_supply_type_id_diversion.html">
+    <a class="reference internal" href="../internal/pywfm.IWFMModel.get_supply_type_id_diversion.html">
      pywfm.IWFMModel.get_supply_type_id_diversion
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="pywfm.IWFMModel.get_supply_type_id_elempump.html">
+    <a class="reference internal" href="../internal/pywfm.IWFMModel.get_supply_type_id_elempump.html">
      pywfm.IWFMModel.get_supply_type_id_elempump
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="pywfm.IWFMModel.get_supply_type_id_well.html">
+    <a class="reference internal" href="../internal/pywfm.IWFMModel.get_supply_type_id_well.html">
      pywfm.IWFMModel.get_supply_type_id_well
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="pywfm.IWFMModel.get_zone_extent_id_horizontal.html">
+    <a class="reference internal" href="../internal/pywfm.IWFMModel.get_zone_extent_id_horizontal.html">
      pywfm.IWFMModel.get_zone_extent_id_horizontal
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="pywfm.IWFMModel.get_zone_extent_id_vertical.html">
+    <a class="reference internal" href="../internal/pywfm.IWFMModel.get_zone_extent_id_vertical.html">
      pywfm.IWFMModel.get_zone_extent_id_vertical
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="pywfm.IWFMModel.get_zone_extent_ids.html">
+    <a class="reference internal" href="../internal/pywfm.IWFMModel.get_zone_extent_ids.html">
      pywfm.IWFMModel.get_zone_extent_ids
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="pywfm.IWFMModel.get_budget_type_ids.html">
+    <a class="reference internal" href="../internal/pywfm.IWFMModel.get_budget_type_ids.html">
      pywfm.IWFMModel.get_budget_type_ids
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="pywfm.IWFMModel.get_zbudget_type_ids.html">
+    <a class="reference internal" href="../internal/pywfm.IWFMModel.get_zbudget_type_ids.html">
      pywfm.IWFMModel.get_zbudget_type_ids
     </a>
    </li>
@@ -1404,12 +1439,52 @@
               
               <div>
                 
-  <div class="section" id="pywfm-iwfmmodel-get-land-use-ids">
-<h1>pywfm.IWFMModel.get_land_use_ids<a class="headerlink" href="#pywfm-iwfmmodel-get-land-use-ids" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="pywfm-iwfmmodel-get-bypass-recoverable-loss-factor">
+<h1>pywfm.IWFMModel.get_bypass_recoverable_loss_factor<a class="headerlink" href="#pywfm-iwfmmodel-get-bypass-recoverable-loss-factor" title="Permalink to this headline">¶</a></h1>
 <dl class="py method">
-<dt class="sig sig-object py" id="pywfm.IWFMModel.get_land_use_ids">
-<span class="sig-prename descclassname"><span class="pre">IWFMModel.</span></span><span class="sig-name descname"><span class="pre">get_land_use_ids</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pywfm.IWFMModel.get_land_use_ids" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dt class="sig sig-object py" id="pywfm.IWFMModel.get_bypass_recoverable_loss_factor">
+<span class="sig-prename descclassname"><span class="pre">IWFMModel.</span></span><span class="sig-name descname"><span class="pre">get_bypass_recoverable_loss_factor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bypass_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pywfm.IWFMModel.get_bypass_recoverable_loss_factor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the recoverable loss factor for a bypass</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>bypass_id</strong> (<em>int</em>) – bypass identification number</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>recoverable loss factor for bypass</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><a class="reference internal" href="pywfm.IWFMModel.get_n_bypasses.html#pywfm.IWFMModel.get_n_bypasses" title="pywfm.IWFMModel.get_n_bypasses"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IWFMModel.get_n_bypasses</span></code></a></dt><dd><p>Return the number of bypasses in an IWFM model</p>
+</dd>
+<dt><a class="reference internal" href="pywfm.IWFMModel.get_bypass_ids.html#pywfm.IWFMModel.get_bypass_ids" title="pywfm.IWFMModel.get_bypass_ids"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IWFMModel.get_bypass_ids</span></code></a></dt><dd><p>Return the bypass identification numbers specified in an IWFM model</p>
+</dd>
+<dt><a class="reference internal" href="pywfm.IWFMModel.get_bypass_export_nodes.html#pywfm.IWFMModel.get_bypass_export_nodes" title="pywfm.IWFMModel.get_bypass_export_nodes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IWFMModel.get_bypass_export_nodes</span></code></a></dt><dd><p>Return the stream node IDs corresponding to bypass locations</p>
+</dd>
+<dt><a class="reference internal" href="pywfm.IWFMModel.get_bypass_exports_destinations.html#pywfm.IWFMModel.get_bypass_exports_destinations" title="pywfm.IWFMModel.get_bypass_exports_destinations"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IWFMModel.get_bypass_exports_destinations</span></code></a></dt><dd><p>Return stream node IDs and destination types and IDS where bypass flows are delivered</p>
+</dd>
+<dt><a class="reference internal" href="pywfm.IWFMModel.get_bypass_outflows.html#pywfm.IWFMModel.get_bypass_outflows" title="pywfm.IWFMModel.get_bypass_outflows"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IWFMModel.get_bypass_outflows</span></code></a></dt><dd><p>Return the bypass outflows for the current simulation timestep</p>
+</dd>
+<dt><a class="reference internal" href="pywfm.IWFMModel.get_bypass_nonrecoverable_loss_factor.html#pywfm.IWFMModel.get_bypass_nonrecoverable_loss_factor" title="pywfm.IWFMModel.get_bypass_nonrecoverable_loss_factor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IWFMModel.get_bypass_nonrecoverable_loss_factor</span></code></a></dt><dd><p>Return the nonrecoverable loss factor for a bypass</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pywfm</span> <span class="kn">import</span> <span class="n">IWFMModel</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pp_file</span> <span class="o">=</span> <span class="s1">&#39;../Preprocessor/PreProcessor_MAIN.IN&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sim_file</span> <span class="o">=</span> <span class="s1">&#39;Simulation_MAIN.IN&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">IWFMModel</span><span class="p">(</span><span class="n">pp_file</span><span class="p">,</span> <span class="n">sim_file</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">get_bypass_recoverable_loss_factor</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="go">0.0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">kill</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">close_log_file</span><span class="p">()</span>
+</pre></div>
+</div>
+</dd></dl>
 
 </div>
 
@@ -1419,17 +1494,17 @@
               
               <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="pywfm.IWFMModel.get_flow_destination_type_id_subregion.html" title="previous page">
+    <a class='left-prev' id="prev-link" href="pywfm.IWFMModel.get_bypass_outflows.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">pywfm.IWFMModel.get_flow_destination_type_id_subregion</p>
+            <p class="prev-next-title">pywfm.IWFMModel.get_bypass_outflows</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="pywfm.IWFMModel.get_land_use_type_id_gen_ag.html" title="next page">
+    <a class='right-next' id="next-link" href="pywfm.IWFMModel.get_bypass_nonrecoverable_loss_factor.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">pywfm.IWFMModel.get_land_use_type_id_gen_ag</p>
+        <p class="prev-next-title">pywfm.IWFMModel.get_bypass_nonrecoverable_loss_factor</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>

@@ -32,6 +32,12 @@
       ~IWFMModel.get_aquitard_vertical_k
       ~IWFMModel.get_boundary_nodes
       ~IWFMModel.get_budget_type_ids
+      ~IWFMModel.get_bypass_export_nodes
+      ~IWFMModel.get_bypass_exports_destinations
+      ~IWFMModel.get_bypass_ids
+      ~IWFMModel.get_bypass_nonrecoverable_loss_factor
+      ~IWFMModel.get_bypass_outflows
+      ~IWFMModel.get_bypass_recoverable_loss_factor
       ~IWFMModel.get_current_date_and_time
       ~IWFMModel.get_data_unit_type_id_area
       ~IWFMModel.get_data_unit_type_id_length
@@ -67,14 +73,19 @@
       ~IWFMModel.get_gwheads_foralayer
       ~IWFMModel.get_hydrograph_type_list
       ~IWFMModel.get_lake_ids
-      ~IWFMModel.get_land_use_ids
       ~IWFMModel.get_land_use_type_id_gen_ag
       ~IWFMModel.get_land_use_type_id_native_riparian
       ~IWFMModel.get_land_use_type_id_nonponded_ag
       ~IWFMModel.get_land_use_type_id_refuge
       ~IWFMModel.get_land_use_type_id_rice
       ~IWFMModel.get_land_use_type_id_urban
+      ~IWFMModel.get_land_use_type_id_urban_indoor
+      ~IWFMModel.get_land_use_type_id_urban_outdoor
+      ~IWFMModel.get_land_use_type_ids
+      ~IWFMModel.get_land_use_type_ids_1
       ~IWFMModel.get_last_message
+      ~IWFMModel.get_location_type_id_bypass
+      ~IWFMModel.get_location_type_id_diversion
       ~IWFMModel.get_location_type_id_element
       ~IWFMModel.get_location_type_id_gwheadobs
       ~IWFMModel.get_location_type_id_lake
@@ -89,7 +100,9 @@
       ~IWFMModel.get_location_type_id_tiledrainobs
       ~IWFMModel.get_location_type_id_zone
       ~IWFMModel.get_location_type_ids
+      ~IWFMModel.get_location_type_ids_1
       ~IWFMModel.get_n_ag_crops
+      ~IWFMModel.get_n_bypasses
       ~IWFMModel.get_n_diversions
       ~IWFMModel.get_n_element_pumps
       ~IWFMModel.get_n_elements
@@ -126,7 +139,9 @@
       ~IWFMModel.get_small_watershed_ids
       ~IWFMModel.get_stratigraphy_atXYcoordinate
       ~IWFMModel.get_stream_bottom_elevations
+      ~IWFMModel.get_stream_diversion_elements
       ~IWFMModel.get_stream_diversion_locations
+      ~IWFMModel.get_stream_diversion_n_elements
       ~IWFMModel.get_stream_flow_at_location
       ~IWFMModel.get_stream_flows
       ~IWFMModel.get_stream_gain_from_groundwater
@@ -141,6 +156,7 @@
       ~IWFMModel.get_stream_network
       ~IWFMModel.get_stream_node_ids
       ~IWFMModel.get_stream_nodes_upstream_of_stream_node
+      ~IWFMModel.get_stream_pond_drains
       ~IWFMModel.get_stream_rainfall_runoff
       ~IWFMModel.get_stream_rating_table
       ~IWFMModel.get_stream_reach_groundwater_nodes

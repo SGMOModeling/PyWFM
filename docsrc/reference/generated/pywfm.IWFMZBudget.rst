@@ -31,14 +31,19 @@
       ~IWFMZBudget.get_flow_destination_type_id_outside
       ~IWFMZBudget.get_flow_destination_type_id_streamnode
       ~IWFMZBudget.get_flow_destination_type_id_subregion
-      ~IWFMZBudget.get_land_use_ids
       ~IWFMZBudget.get_land_use_type_id_gen_ag
       ~IWFMZBudget.get_land_use_type_id_native_riparian
       ~IWFMZBudget.get_land_use_type_id_nonponded_ag
       ~IWFMZBudget.get_land_use_type_id_refuge
       ~IWFMZBudget.get_land_use_type_id_rice
       ~IWFMZBudget.get_land_use_type_id_urban
+      ~IWFMZBudget.get_land_use_type_id_urban_indoor
+      ~IWFMZBudget.get_land_use_type_id_urban_outdoor
+      ~IWFMZBudget.get_land_use_type_ids
+      ~IWFMZBudget.get_land_use_type_ids_1
       ~IWFMZBudget.get_last_message
+      ~IWFMZBudget.get_location_type_id_bypass
+      ~IWFMZBudget.get_location_type_id_diversion
       ~IWFMZBudget.get_location_type_id_element
       ~IWFMZBudget.get_location_type_id_gwheadobs
       ~IWFMZBudget.get_location_type_id_lake
@@ -53,6 +58,7 @@
       ~IWFMZBudget.get_location_type_id_tiledrainobs
       ~IWFMZBudget.get_location_type_id_zone
       ~IWFMZBudget.get_location_type_ids
+      ~IWFMZBudget.get_location_type_ids_1
       ~IWFMZBudget.get_n_intervals
       ~IWFMZBudget.get_n_time_steps
       ~IWFMZBudget.get_n_title_lines

@@ -111,6 +111,20 @@ Streams
    is_stream_upstream_node
    get_stream_network
 
+Bypasses
+--------
+
+.. autosummary::
+   :toctree: generated/bypasses/
+
+   get_n_bypasses
+   get_bypass_ids
+   get_bypass_export_nodes
+   get_bypass_exports_destinations
+   get_bypass_outflows
+   get_bypass_recoverable_loss_factor
+   get_bypass_nonrecoverable_loss_factor
+
 Inflows and Small Watersheds
 ============================
 
@@ -142,8 +156,8 @@ Land Use
    get_n_ag_crops
 
    
-Streams and Bypasses
-====================
+Stream and Bypass Flows
+=======================
 
 .. autosummary::
    :toctree: generated/streams/
@@ -338,7 +352,7 @@ IWFM-Internal
    get_flow_destination_type_id_outside
    get_flow_destination_type_id_streamnode
    get_flow_destination_type_id_subregion
-   get_land_use_ids
+   get_land_use_type_ids
    get_land_use_type_id_gen_ag
    get_land_use_type_id_native_riparian
    get_land_use_type_id_nonponded_ag

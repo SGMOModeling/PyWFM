@@ -420,6 +420,41 @@
     </a>
    </li>
    <li class="toctree-l2">
+    <a class="reference internal" href="../bypasses/pywfm.IWFMModel.get_n_bypasses.html">
+     pywfm.IWFMModel.get_n_bypasses
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../bypasses/pywfm.IWFMModel.get_bypass_ids.html">
+     pywfm.IWFMModel.get_bypass_ids
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../bypasses/pywfm.IWFMModel.get_bypass_export_nodes.html">
+     pywfm.IWFMModel.get_bypass_export_nodes
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../bypasses/pywfm.IWFMModel.get_bypass_exports_destinations.html">
+     pywfm.IWFMModel.get_bypass_exports_destinations
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../bypasses/pywfm.IWFMModel.get_bypass_outflows.html">
+     pywfm.IWFMModel.get_bypass_outflows
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../bypasses/pywfm.IWFMModel.get_bypass_recoverable_loss_factor.html">
+     pywfm.IWFMModel.get_bypass_recoverable_loss_factor
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../bypasses/pywfm.IWFMModel.get_bypass_nonrecoverable_loss_factor.html">
+     pywfm.IWFMModel.get_bypass_nonrecoverable_loss_factor
+    </a>
+   </li>
+   <li class="toctree-l2">
     <a class="reference internal" href="../inflows/pywfm.IWFMModel.get_n_stream_inflows.html">
      pywfm.IWFMModel.get_n_stream_inflows
     </a>
@@ -1075,8 +1110,8 @@
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="../internal/pywfm.IWFMModel.get_land_use_ids.html">
-     pywfm.IWFMModel.get_land_use_ids
+    <a class="reference internal" href="../internal/pywfm.IWFMModel.get_land_use_type_ids.html">
+     pywfm.IWFMModel.get_land_use_type_ids
     </a>
    </li>
    <li class="toctree-l2">
@@ -1436,7 +1471,7 @@
 <span class="gp">&gt;&gt;&gt; </span><span class="n">sim_file</span> <span class="o">=</span> <span class="s1">&#39;Simulation_MAIN.IN&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">IWFMModel</span><span class="p">(</span><span class="n">pp_file</span><span class="p">,</span> <span class="n">sim_file</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">get_stream_diversion_locations</span><span class="p">()</span>
-<span class="go">array([ 9, 12, 12, 22, 23])</span>
+<span class="go">array([ 9, 12, 12, 22, 0])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">kill</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">close_log_file</span><span class="p">()</span>
 </pre></div>

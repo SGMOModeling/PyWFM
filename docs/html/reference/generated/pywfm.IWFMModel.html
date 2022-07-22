@@ -420,6 +420,41 @@
     </a>
    </li>
    <li class="toctree-l2">
+    <a class="reference internal" href="bypasses/pywfm.IWFMModel.get_n_bypasses.html">
+     pywfm.IWFMModel.get_n_bypasses
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="bypasses/pywfm.IWFMModel.get_bypass_ids.html">
+     pywfm.IWFMModel.get_bypass_ids
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="bypasses/pywfm.IWFMModel.get_bypass_export_nodes.html">
+     pywfm.IWFMModel.get_bypass_export_nodes
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="bypasses/pywfm.IWFMModel.get_bypass_exports_destinations.html">
+     pywfm.IWFMModel.get_bypass_exports_destinations
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="bypasses/pywfm.IWFMModel.get_bypass_outflows.html">
+     pywfm.IWFMModel.get_bypass_outflows
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="bypasses/pywfm.IWFMModel.get_bypass_recoverable_loss_factor.html">
+     pywfm.IWFMModel.get_bypass_recoverable_loss_factor
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="bypasses/pywfm.IWFMModel.get_bypass_nonrecoverable_loss_factor.html">
+     pywfm.IWFMModel.get_bypass_nonrecoverable_loss_factor
+    </a>
+   </li>
+   <li class="toctree-l2">
     <a class="reference internal" href="inflows/pywfm.IWFMModel.get_n_stream_inflows.html">
      pywfm.IWFMModel.get_n_stream_inflows
     </a>
@@ -1075,8 +1110,8 @@
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="internal/pywfm.IWFMModel.get_land_use_ids.html">
-     pywfm.IWFMModel.get_land_use_ids
+    <a class="reference internal" href="internal/pywfm.IWFMModel.get_land_use_type_ids.html">
+     pywfm.IWFMModel.get_land_use_type_ids
     </a>
    </li>
    <li class="toctree-l2">
@@ -1505,6 +1540,24 @@ fortran procedures.</p>
 <tr class="row-odd"><td><p><a class="reference internal" href="internal/pywfm.IWFMModel.get_budget_type_ids.html#pywfm.IWFMModel.get_budget_type_ids" title="pywfm.IWFMModel.get_budget_type_ids"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_budget_type_ids</span></code></a>()</p></td>
 <td><p></p></td>
 </tr>
+<tr class="row-even"><td><p><a class="reference internal" href="bypasses/pywfm.IWFMModel.get_bypass_export_nodes.html#pywfm.IWFMModel.get_bypass_export_nodes" title="pywfm.IWFMModel.get_bypass_export_nodes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_bypass_export_nodes</span></code></a>(bypass_list)</p></td>
+<td><p>Return the stream node IDs corresponding to bypass locations</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="bypasses/pywfm.IWFMModel.get_bypass_exports_destinations.html#pywfm.IWFMModel.get_bypass_exports_destinations" title="pywfm.IWFMModel.get_bypass_exports_destinations"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_bypass_exports_destinations</span></code></a>(bypass_list)</p></td>
+<td><p>Return stream node IDs and destination types and IDS where bypass flows are delivered.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="bypasses/pywfm.IWFMModel.get_bypass_ids.html#pywfm.IWFMModel.get_bypass_ids" title="pywfm.IWFMModel.get_bypass_ids"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_bypass_ids</span></code></a>()</p></td>
+<td><p>Return the bypass identification numbers specified in an IWFM model</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="bypasses/pywfm.IWFMModel.get_bypass_nonrecoverable_loss_factor.html#pywfm.IWFMModel.get_bypass_nonrecoverable_loss_factor" title="pywfm.IWFMModel.get_bypass_nonrecoverable_loss_factor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_bypass_nonrecoverable_loss_factor</span></code></a>(bypass_id)</p></td>
+<td><p>Return the nonrecoverable loss factor for a bypass</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="bypasses/pywfm.IWFMModel.get_bypass_outflows.html#pywfm.IWFMModel.get_bypass_outflows" title="pywfm.IWFMModel.get_bypass_outflows"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_bypass_outflows</span></code></a>([bypass_conversion_factor])</p></td>
+<td><p>Return the bypass outflows for the current simulation timestep</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="bypasses/pywfm.IWFMModel.get_bypass_recoverable_loss_factor.html#pywfm.IWFMModel.get_bypass_recoverable_loss_factor" title="pywfm.IWFMModel.get_bypass_recoverable_loss_factor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_bypass_recoverable_loss_factor</span></code></a>(bypass_id)</p></td>
+<td><p>Return the recoverable loss factor for a bypass</p></td>
+</tr>
 <tr class="row-even"><td><p><a class="reference internal" href="time/pywfm.IWFMModel.get_current_date_and_time.html#pywfm.IWFMModel.get_current_date_and_time" title="pywfm.IWFMModel.get_current_date_and_time"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_current_date_and_time</span></code></a>()</p></td>
 <td><p>Return the current simulation date and time.</p></td>
 </tr>
@@ -1610,227 +1663,257 @@ fortran procedures.</p>
 <tr class="row-even"><td><p><a class="reference internal" href="geometry/lakes/pywfm.IWFMModel.get_lake_ids.html#pywfm.IWFMModel.get_lake_ids" title="pywfm.IWFMModel.get_lake_ids"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_lake_ids</span></code></a>()</p></td>
 <td><p>Return an array of lake IDs in an IWFM model</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="internal/pywfm.IWFMModel.get_land_use_ids.html#pywfm.IWFMModel.get_land_use_ids" title="pywfm.IWFMModel.get_land_use_ids"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_land_use_ids</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="internal/pywfm.IWFMModel.get_land_use_type_id_gen_ag.html#pywfm.IWFMModel.get_land_use_type_id_gen_ag" title="pywfm.IWFMModel.get_land_use_type_id_gen_ag"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_land_use_type_id_gen_ag</span></code></a>()</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="internal/pywfm.IWFMModel.get_land_use_type_id_gen_ag.html#pywfm.IWFMModel.get_land_use_type_id_gen_ag" title="pywfm.IWFMModel.get_land_use_type_id_gen_ag"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_land_use_type_id_gen_ag</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="internal/pywfm.IWFMModel.get_land_use_type_id_native_riparian.html#pywfm.IWFMModel.get_land_use_type_id_native_riparian" title="pywfm.IWFMModel.get_land_use_type_id_native_riparian"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_land_use_type_id_native_riparian</span></code></a>()</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="internal/pywfm.IWFMModel.get_land_use_type_id_native_riparian.html#pywfm.IWFMModel.get_land_use_type_id_native_riparian" title="pywfm.IWFMModel.get_land_use_type_id_native_riparian"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_land_use_type_id_native_riparian</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="internal/pywfm.IWFMModel.get_land_use_type_id_nonponded_ag.html#pywfm.IWFMModel.get_land_use_type_id_nonponded_ag" title="pywfm.IWFMModel.get_land_use_type_id_nonponded_ag"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_land_use_type_id_nonponded_ag</span></code></a>()</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="internal/pywfm.IWFMModel.get_land_use_type_id_nonponded_ag.html#pywfm.IWFMModel.get_land_use_type_id_nonponded_ag" title="pywfm.IWFMModel.get_land_use_type_id_nonponded_ag"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_land_use_type_id_nonponded_ag</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="internal/pywfm.IWFMModel.get_land_use_type_id_refuge.html#pywfm.IWFMModel.get_land_use_type_id_refuge" title="pywfm.IWFMModel.get_land_use_type_id_refuge"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_land_use_type_id_refuge</span></code></a>()</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="internal/pywfm.IWFMModel.get_land_use_type_id_refuge.html#pywfm.IWFMModel.get_land_use_type_id_refuge" title="pywfm.IWFMModel.get_land_use_type_id_refuge"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_land_use_type_id_refuge</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="internal/pywfm.IWFMModel.get_land_use_type_id_rice.html#pywfm.IWFMModel.get_land_use_type_id_rice" title="pywfm.IWFMModel.get_land_use_type_id_rice"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_land_use_type_id_rice</span></code></a>()</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="internal/pywfm.IWFMModel.get_land_use_type_id_rice.html#pywfm.IWFMModel.get_land_use_type_id_rice" title="pywfm.IWFMModel.get_land_use_type_id_rice"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_land_use_type_id_rice</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="internal/pywfm.IWFMModel.get_land_use_type_id_urban.html#pywfm.IWFMModel.get_land_use_type_id_urban" title="pywfm.IWFMModel.get_land_use_type_id_urban"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_land_use_type_id_urban</span></code></a>()</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="internal/pywfm.IWFMModel.get_land_use_type_id_urban.html#pywfm.IWFMModel.get_land_use_type_id_urban" title="pywfm.IWFMModel.get_land_use_type_id_urban"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_land_use_type_id_urban</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_land_use_type_id_urban_indoor</span></code>()</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="simulation/pywfm.IWFMModel.get_last_message.html#pywfm.IWFMModel.get_last_message" title="pywfm.IWFMModel.get_last_message"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_last_message</span></code></a>()</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_land_use_type_id_urban_outdoor</span></code>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="internal/pywfm.IWFMModel.get_land_use_type_ids.html#pywfm.IWFMModel.get_land_use_type_ids" title="pywfm.IWFMModel.get_land_use_type_ids"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_land_use_type_ids</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_land_use_type_ids_1</span></code>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="simulation/pywfm.IWFMModel.get_last_message.html#pywfm.IWFMModel.get_last_message" title="pywfm.IWFMModel.get_last_message"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_last_message</span></code></a>()</p></td>
 <td><p>the error message in case a procedure call from IWFM API returns an error code (status) other than 0</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="internal/pywfm.IWFMModel.get_location_type_id_element.html#pywfm.IWFMModel.get_location_type_id_element" title="pywfm.IWFMModel.get_location_type_id_element"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_location_type_id_element</span></code></a>()</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_location_type_id_bypass</span></code>()</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="internal/pywfm.IWFMModel.get_location_type_id_gwheadobs.html#pywfm.IWFMModel.get_location_type_id_gwheadobs" title="pywfm.IWFMModel.get_location_type_id_gwheadobs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_location_type_id_gwheadobs</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_location_type_id_diversion</span></code>()</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="internal/pywfm.IWFMModel.get_location_type_id_lake.html#pywfm.IWFMModel.get_location_type_id_lake" title="pywfm.IWFMModel.get_location_type_id_lake"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_location_type_id_lake</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="internal/pywfm.IWFMModel.get_location_type_id_element.html#pywfm.IWFMModel.get_location_type_id_element" title="pywfm.IWFMModel.get_location_type_id_element"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_location_type_id_element</span></code></a>()</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="internal/pywfm.IWFMModel.get_location_type_id_node.html#pywfm.IWFMModel.get_location_type_id_node" title="pywfm.IWFMModel.get_location_type_id_node"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_location_type_id_node</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="internal/pywfm.IWFMModel.get_location_type_id_gwheadobs.html#pywfm.IWFMModel.get_location_type_id_gwheadobs" title="pywfm.IWFMModel.get_location_type_id_gwheadobs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_location_type_id_gwheadobs</span></code></a>()</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="internal/pywfm.IWFMModel.get_location_type_id_smallwatershed.html#pywfm.IWFMModel.get_location_type_id_smallwatershed" title="pywfm.IWFMModel.get_location_type_id_smallwatershed"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_location_type_id_smallwatershed</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="internal/pywfm.IWFMModel.get_location_type_id_lake.html#pywfm.IWFMModel.get_location_type_id_lake" title="pywfm.IWFMModel.get_location_type_id_lake"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_location_type_id_lake</span></code></a>()</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="internal/pywfm.IWFMModel.get_location_type_id_streamhydobs.html#pywfm.IWFMModel.get_location_type_id_streamhydobs" title="pywfm.IWFMModel.get_location_type_id_streamhydobs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_location_type_id_streamhydobs</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="internal/pywfm.IWFMModel.get_location_type_id_node.html#pywfm.IWFMModel.get_location_type_id_node" title="pywfm.IWFMModel.get_location_type_id_node"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_location_type_id_node</span></code></a>()</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="internal/pywfm.IWFMModel.get_location_type_id_streamnode.html#pywfm.IWFMModel.get_location_type_id_streamnode" title="pywfm.IWFMModel.get_location_type_id_streamnode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_location_type_id_streamnode</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="internal/pywfm.IWFMModel.get_location_type_id_smallwatershed.html#pywfm.IWFMModel.get_location_type_id_smallwatershed" title="pywfm.IWFMModel.get_location_type_id_smallwatershed"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_location_type_id_smallwatershed</span></code></a>()</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="internal/pywfm.IWFMModel.get_location_type_id_streamnodebud.html#pywfm.IWFMModel.get_location_type_id_streamnodebud" title="pywfm.IWFMModel.get_location_type_id_streamnodebud"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_location_type_id_streamnodebud</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="internal/pywfm.IWFMModel.get_location_type_id_streamhydobs.html#pywfm.IWFMModel.get_location_type_id_streamhydobs" title="pywfm.IWFMModel.get_location_type_id_streamhydobs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_location_type_id_streamhydobs</span></code></a>()</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="internal/pywfm.IWFMModel.get_location_type_id_streamreach.html#pywfm.IWFMModel.get_location_type_id_streamreach" title="pywfm.IWFMModel.get_location_type_id_streamreach"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_location_type_id_streamreach</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="internal/pywfm.IWFMModel.get_location_type_id_streamnode.html#pywfm.IWFMModel.get_location_type_id_streamnode" title="pywfm.IWFMModel.get_location_type_id_streamnode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_location_type_id_streamnode</span></code></a>()</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="internal/pywfm.IWFMModel.get_location_type_id_subregion.html#pywfm.IWFMModel.get_location_type_id_subregion" title="pywfm.IWFMModel.get_location_type_id_subregion"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_location_type_id_subregion</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="internal/pywfm.IWFMModel.get_location_type_id_streamnodebud.html#pywfm.IWFMModel.get_location_type_id_streamnodebud" title="pywfm.IWFMModel.get_location_type_id_streamnodebud"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_location_type_id_streamnodebud</span></code></a>()</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="internal/pywfm.IWFMModel.get_location_type_id_subsidenceobs.html#pywfm.IWFMModel.get_location_type_id_subsidenceobs" title="pywfm.IWFMModel.get_location_type_id_subsidenceobs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_location_type_id_subsidenceobs</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="internal/pywfm.IWFMModel.get_location_type_id_streamreach.html#pywfm.IWFMModel.get_location_type_id_streamreach" title="pywfm.IWFMModel.get_location_type_id_streamreach"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_location_type_id_streamreach</span></code></a>()</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="internal/pywfm.IWFMModel.get_location_type_id_tiledrainobs.html#pywfm.IWFMModel.get_location_type_id_tiledrainobs" title="pywfm.IWFMModel.get_location_type_id_tiledrainobs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_location_type_id_tiledrainobs</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="internal/pywfm.IWFMModel.get_location_type_id_subregion.html#pywfm.IWFMModel.get_location_type_id_subregion" title="pywfm.IWFMModel.get_location_type_id_subregion"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_location_type_id_subregion</span></code></a>()</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="internal/pywfm.IWFMModel.get_location_type_id_zone.html#pywfm.IWFMModel.get_location_type_id_zone" title="pywfm.IWFMModel.get_location_type_id_zone"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_location_type_id_zone</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="internal/pywfm.IWFMModel.get_location_type_id_subsidenceobs.html#pywfm.IWFMModel.get_location_type_id_subsidenceobs" title="pywfm.IWFMModel.get_location_type_id_subsidenceobs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_location_type_id_subsidenceobs</span></code></a>()</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="internal/pywfm.IWFMModel.get_location_type_ids.html#pywfm.IWFMModel.get_location_type_ids" title="pywfm.IWFMModel.get_location_type_ids"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_location_type_ids</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="internal/pywfm.IWFMModel.get_location_type_id_tiledrainobs.html#pywfm.IWFMModel.get_location_type_id_tiledrainobs" title="pywfm.IWFMModel.get_location_type_id_tiledrainobs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_location_type_id_tiledrainobs</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="internal/pywfm.IWFMModel.get_location_type_id_zone.html#pywfm.IWFMModel.get_location_type_id_zone" title="pywfm.IWFMModel.get_location_type_id_zone"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_location_type_id_zone</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="internal/pywfm.IWFMModel.get_location_type_ids.html#pywfm.IWFMModel.get_location_type_ids" title="pywfm.IWFMModel.get_location_type_ids"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_location_type_ids</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_location_type_ids_1</span></code>()</p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="landuse/pywfm.IWFMModel.get_n_ag_crops.html#pywfm.IWFMModel.get_n_ag_crops" title="pywfm.IWFMModel.get_n_ag_crops"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_n_ag_crops</span></code></a>()</p></td>
 <td><p>Return the number of agricultural crops simulated in an IWFM model</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="diversions/pywfm.IWFMModel.get_n_diversions.html#pywfm.IWFMModel.get_n_diversions" title="pywfm.IWFMModel.get_n_diversions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_n_diversions</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="bypasses/pywfm.IWFMModel.get_n_bypasses.html#pywfm.IWFMModel.get_n_bypasses" title="pywfm.IWFMModel.get_n_bypasses"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_n_bypasses</span></code></a>()</p></td>
+<td><p>Return the number of bypasses in an IWFM model</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="diversions/pywfm.IWFMModel.get_n_diversions.html#pywfm.IWFMModel.get_n_diversions" title="pywfm.IWFMModel.get_n_diversions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_n_diversions</span></code></a>()</p></td>
 <td><p>Return the number of surface water diversions in an IWFM model</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="diversions/pywfm.IWFMModel.get_n_element_pumps.html#pywfm.IWFMModel.get_n_element_pumps" title="pywfm.IWFMModel.get_n_element_pumps"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_n_element_pumps</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="diversions/pywfm.IWFMModel.get_n_element_pumps.html#pywfm.IWFMModel.get_n_element_pumps" title="pywfm.IWFMModel.get_n_element_pumps"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_n_element_pumps</span></code></a>()</p></td>
 <td><p>Return the number of element pumps simulated in an IWFM model</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="geometry/elements/pywfm.IWFMModel.get_n_elements.html#pywfm.IWFMModel.get_n_elements" title="pywfm.IWFMModel.get_n_elements"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_n_elements</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="geometry/elements/pywfm.IWFMModel.get_n_elements.html#pywfm.IWFMModel.get_n_elements" title="pywfm.IWFMModel.get_n_elements"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_n_elements</span></code></a>()</p></td>
 <td><p>Return the number of elements in an IWFM model</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="geometry/lakes/pywfm.IWFMModel.get_n_elements_in_lake.html#pywfm.IWFMModel.get_n_elements_in_lake" title="pywfm.IWFMModel.get_n_elements_in_lake"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_n_elements_in_lake</span></code></a>(lake_id)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="geometry/lakes/pywfm.IWFMModel.get_n_elements_in_lake.html#pywfm.IWFMModel.get_n_elements_in_lake" title="pywfm.IWFMModel.get_n_elements_in_lake"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_n_elements_in_lake</span></code></a>(lake_id)</p></td>
 <td><p>Return the number of finite element grid cells that make up a lake</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="hydrographs/pywfm.IWFMModel.get_n_groundwater_hydrographs.html#pywfm.IWFMModel.get_n_groundwater_hydrographs" title="pywfm.IWFMModel.get_n_groundwater_hydrographs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_n_groundwater_hydrographs</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="hydrographs/pywfm.IWFMModel.get_n_groundwater_hydrographs.html#pywfm.IWFMModel.get_n_groundwater_hydrographs" title="pywfm.IWFMModel.get_n_groundwater_hydrographs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_n_groundwater_hydrographs</span></code></a>()</p></td>
 <td><p>Return the number of groundwater hydrographs specified in an IWFM model</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="hydrographs/pywfm.IWFMModel.get_n_hydrograph_types.html#pywfm.IWFMModel.get_n_hydrograph_types" title="pywfm.IWFMModel.get_n_hydrograph_types"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_n_hydrograph_types</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="hydrographs/pywfm.IWFMModel.get_n_hydrograph_types.html#pywfm.IWFMModel.get_n_hydrograph_types" title="pywfm.IWFMModel.get_n_hydrograph_types"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_n_hydrograph_types</span></code></a>()</p></td>
 <td><p>Return the number of different hydrograph types being printed by the IWFM model</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="time/pywfm.IWFMModel.get_n_intervals.html#pywfm.IWFMModel.get_n_intervals" title="pywfm.IWFMModel.get_n_intervals"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_n_intervals</span></code></a>(begin_date, end_date, ...[, ...])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="time/pywfm.IWFMModel.get_n_intervals.html#pywfm.IWFMModel.get_n_intervals" title="pywfm.IWFMModel.get_n_intervals"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_n_intervals</span></code></a>(begin_date, end_date, ...[, ...])</p></td>
 <td><p>returns the number of time intervals between a provided start date and end date</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="geometry/lakes/pywfm.IWFMModel.get_n_lakes.html#pywfm.IWFMModel.get_n_lakes" title="pywfm.IWFMModel.get_n_lakes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_n_lakes</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="geometry/lakes/pywfm.IWFMModel.get_n_lakes.html#pywfm.IWFMModel.get_n_lakes" title="pywfm.IWFMModel.get_n_lakes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_n_lakes</span></code></a>()</p></td>
 <td><p>Return the number of lakes in an IWFM model</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="geometry/stratigraphy/pywfm.IWFMModel.get_n_layers.html#pywfm.IWFMModel.get_n_layers" title="pywfm.IWFMModel.get_n_layers"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_n_layers</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="geometry/stratigraphy/pywfm.IWFMModel.get_n_layers.html#pywfm.IWFMModel.get_n_layers" title="pywfm.IWFMModel.get_n_layers"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_n_layers</span></code></a>()</p></td>
 <td><p>Return the number of layers in an IWFM model</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="geometry/nodes/pywfm.IWFMModel.get_n_nodes.html#pywfm.IWFMModel.get_n_nodes" title="pywfm.IWFMModel.get_n_nodes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_n_nodes</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="geometry/nodes/pywfm.IWFMModel.get_n_nodes.html#pywfm.IWFMModel.get_n_nodes" title="pywfm.IWFMModel.get_n_nodes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_n_nodes</span></code></a>()</p></td>
 <td><p>Return the number of nodes in an IWFM model</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="geometry/streams/pywfm.IWFMModel.get_n_nodes_in_stream_reach.html#pywfm.IWFMModel.get_n_nodes_in_stream_reach" title="pywfm.IWFMModel.get_n_nodes_in_stream_reach"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_n_nodes_in_stream_reach</span></code></a>(reach_id)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="geometry/streams/pywfm.IWFMModel.get_n_nodes_in_stream_reach.html#pywfm.IWFMModel.get_n_nodes_in_stream_reach" title="pywfm.IWFMModel.get_n_nodes_in_stream_reach"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_n_nodes_in_stream_reach</span></code></a>(reach_id)</p></td>
 <td><p>Return the number of stream nodes in a stream reach</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="geometry/streams/pywfm.IWFMModel.get_n_rating_table_points.html#pywfm.IWFMModel.get_n_rating_table_points" title="pywfm.IWFMModel.get_n_rating_table_points"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_n_rating_table_points</span></code></a>(stream_node_id)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="geometry/streams/pywfm.IWFMModel.get_n_rating_table_points.html#pywfm.IWFMModel.get_n_rating_table_points" title="pywfm.IWFMModel.get_n_rating_table_points"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_n_rating_table_points</span></code></a>(stream_node_id)</p></td>
 <td><p>Return the number of data points in the stream flow rating table for a stream node</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="geometry/streams/pywfm.IWFMModel.get_n_reaches_upstream_of_reach.html#pywfm.IWFMModel.get_n_reaches_upstream_of_reach" title="pywfm.IWFMModel.get_n_reaches_upstream_of_reach"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_n_reaches_upstream_of_reach</span></code></a>(reach_id)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="geometry/streams/pywfm.IWFMModel.get_n_reaches_upstream_of_reach.html#pywfm.IWFMModel.get_n_reaches_upstream_of_reach" title="pywfm.IWFMModel.get_n_reaches_upstream_of_reach"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_n_reaches_upstream_of_reach</span></code></a>(reach_id)</p></td>
 <td><p>Return the number of stream reaches immediately upstream of the specified reach</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="inflows/pywfm.IWFMModel.get_n_small_watersheds.html#pywfm.IWFMModel.get_n_small_watersheds" title="pywfm.IWFMModel.get_n_small_watersheds"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_n_small_watersheds</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="inflows/pywfm.IWFMModel.get_n_small_watersheds.html#pywfm.IWFMModel.get_n_small_watersheds" title="pywfm.IWFMModel.get_n_small_watersheds"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_n_small_watersheds</span></code></a>()</p></td>
 <td><p>Return the number of small watersheds specified in an IWFM model</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="hydrographs/pywfm.IWFMModel.get_n_stream_hydrographs.html#pywfm.IWFMModel.get_n_stream_hydrographs" title="pywfm.IWFMModel.get_n_stream_hydrographs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_n_stream_hydrographs</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="hydrographs/pywfm.IWFMModel.get_n_stream_hydrographs.html#pywfm.IWFMModel.get_n_stream_hydrographs" title="pywfm.IWFMModel.get_n_stream_hydrographs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_n_stream_hydrographs</span></code></a>()</p></td>
 <td><p>Return the number of stream flow hydrographs specified in an IWFM model</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="inflows/pywfm.IWFMModel.get_n_stream_inflows.html#pywfm.IWFMModel.get_n_stream_inflows" title="pywfm.IWFMModel.get_n_stream_inflows"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_n_stream_inflows</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="inflows/pywfm.IWFMModel.get_n_stream_inflows.html#pywfm.IWFMModel.get_n_stream_inflows" title="pywfm.IWFMModel.get_n_stream_inflows"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_n_stream_inflows</span></code></a>()</p></td>
 <td><p>Return the number of stream boundary inflows specified by the user as timeseries input data</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="geometry/streams/pywfm.IWFMModel.get_n_stream_nodes.html#pywfm.IWFMModel.get_n_stream_nodes" title="pywfm.IWFMModel.get_n_stream_nodes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_n_stream_nodes</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="geometry/streams/pywfm.IWFMModel.get_n_stream_nodes.html#pywfm.IWFMModel.get_n_stream_nodes" title="pywfm.IWFMModel.get_n_stream_nodes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_n_stream_nodes</span></code></a>()</p></td>
 <td><p>Return the number of stream nodes in an IWFM model</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="geometry/streams/pywfm.IWFMModel.get_n_stream_nodes_upstream_of_stream_node.html#pywfm.IWFMModel.get_n_stream_nodes_upstream_of_stream_node" title="pywfm.IWFMModel.get_n_stream_nodes_upstream_of_stream_node"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_n_stream_nodes_upstream_of_stream_node</span></code></a>(...)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="geometry/streams/pywfm.IWFMModel.get_n_stream_nodes_upstream_of_stream_node.html#pywfm.IWFMModel.get_n_stream_nodes_upstream_of_stream_node" title="pywfm.IWFMModel.get_n_stream_nodes_upstream_of_stream_node"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_n_stream_nodes_upstream_of_stream_node</span></code></a>(...)</p></td>
 <td><p>Return the number of stream nodes immediately upstream of the provided stream node id</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="geometry/streams/pywfm.IWFMModel.get_n_stream_reaches.html#pywfm.IWFMModel.get_n_stream_reaches" title="pywfm.IWFMModel.get_n_stream_reaches"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_n_stream_reaches</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="geometry/streams/pywfm.IWFMModel.get_n_stream_reaches.html#pywfm.IWFMModel.get_n_stream_reaches" title="pywfm.IWFMModel.get_n_stream_reaches"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_n_stream_reaches</span></code></a>()</p></td>
 <td><p>Return the number of stream reaches in an IWFM model</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="geometry/subregions/pywfm.IWFMModel.get_n_subregions.html#pywfm.IWFMModel.get_n_subregions" title="pywfm.IWFMModel.get_n_subregions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_n_subregions</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="geometry/subregions/pywfm.IWFMModel.get_n_subregions.html#pywfm.IWFMModel.get_n_subregions" title="pywfm.IWFMModel.get_n_subregions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_n_subregions</span></code></a>()</p></td>
 <td><p>Return the number of subregions in an IWFM model</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="hydrographs/pywfm.IWFMModel.get_n_subsidence_hydrographs.html#pywfm.IWFMModel.get_n_subsidence_hydrographs" title="pywfm.IWFMModel.get_n_subsidence_hydrographs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_n_subsidence_hydrographs</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="hydrographs/pywfm.IWFMModel.get_n_subsidence_hydrographs.html#pywfm.IWFMModel.get_n_subsidence_hydrographs" title="pywfm.IWFMModel.get_n_subsidence_hydrographs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_n_subsidence_hydrographs</span></code></a>()</p></td>
 <td><p>Return the number of subsidence hydrographs specified in an IWFM model</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="hydrographs/pywfm.IWFMModel.get_n_tile_drain_hydrographs.html#pywfm.IWFMModel.get_n_tile_drain_hydrographs" title="pywfm.IWFMModel.get_n_tile_drain_hydrographs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_n_tile_drain_hydrographs</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="hydrographs/pywfm.IWFMModel.get_n_tile_drain_hydrographs.html#pywfm.IWFMModel.get_n_tile_drain_hydrographs" title="pywfm.IWFMModel.get_n_tile_drain_hydrographs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_n_tile_drain_hydrographs</span></code></a>()</p></td>
 <td><p>Return the number of tile drain hydrographs specified in an IWFM model</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="drains/pywfm.IWFMModel.get_n_tile_drains.html#pywfm.IWFMModel.get_n_tile_drains" title="pywfm.IWFMModel.get_n_tile_drains"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_n_tile_drains</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="drains/pywfm.IWFMModel.get_n_tile_drains.html#pywfm.IWFMModel.get_n_tile_drains" title="pywfm.IWFMModel.get_n_tile_drains"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_n_tile_drains</span></code></a>()</p></td>
 <td><p>Return the number of tile drain nodes in an IWFM model</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="time/pywfm.IWFMModel.get_n_time_steps.html#pywfm.IWFMModel.get_n_time_steps" title="pywfm.IWFMModel.get_n_time_steps"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_n_time_steps</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="time/pywfm.IWFMModel.get_n_time_steps.html#pywfm.IWFMModel.get_n_time_steps" title="pywfm.IWFMModel.get_n_time_steps"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_n_time_steps</span></code></a>()</p></td>
 <td><p>Return the number of timesteps in an IWFM simulation</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="diversions/pywfm.IWFMModel.get_n_wells.html#pywfm.IWFMModel.get_n_wells" title="pywfm.IWFMModel.get_n_wells"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_n_wells</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="diversions/pywfm.IWFMModel.get_n_wells.html#pywfm.IWFMModel.get_n_wells" title="pywfm.IWFMModel.get_n_wells"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_n_wells</span></code></a>()</p></td>
 <td><p>Return the number of wells simulated in an IWFM model</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="streams/pywfm.IWFMModel.get_net_bypass_inflows.html#pywfm.IWFMModel.get_net_bypass_inflows" title="pywfm.IWFMModel.get_net_bypass_inflows"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_net_bypass_inflows</span></code></a>([...])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="streams/pywfm.IWFMModel.get_net_bypass_inflows.html#pywfm.IWFMModel.get_net_bypass_inflows" title="pywfm.IWFMModel.get_net_bypass_inflows"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_net_bypass_inflows</span></code></a>([...])</p></td>
 <td><p>Return net bypass inflows for every stream node for the current timestep</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="geometry/nodes/pywfm.IWFMModel.get_node_coordinates.html#pywfm.IWFMModel.get_node_coordinates" title="pywfm.IWFMModel.get_node_coordinates"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_node_coordinates</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="geometry/nodes/pywfm.IWFMModel.get_node_coordinates.html#pywfm.IWFMModel.get_node_coordinates" title="pywfm.IWFMModel.get_node_coordinates"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_node_coordinates</span></code></a>()</p></td>
 <td><p>Return the x,y coordinates of the nodes in an IWFM model</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="geometry/nodes/pywfm.IWFMModel.get_node_ids.html#pywfm.IWFMModel.get_node_ids" title="pywfm.IWFMModel.get_node_ids"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_node_ids</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="geometry/nodes/pywfm.IWFMModel.get_node_ids.html#pywfm.IWFMModel.get_node_ids" title="pywfm.IWFMModel.get_node_ids"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_node_ids</span></code></a>()</p></td>
 <td><p>Return an array of node ids in an IWFM model</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="geometry/nodes/pywfm.IWFMModel.get_node_info.html#pywfm.IWFMModel.get_node_info" title="pywfm.IWFMModel.get_node_info"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_node_info</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="geometry/nodes/pywfm.IWFMModel.get_node_info.html#pywfm.IWFMModel.get_node_info" title="pywfm.IWFMModel.get_node_info"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_node_info</span></code></a>()</p></td>
 <td><p>Return node id, x-, and y-coordinates for each node in an IWFM model</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="time/pywfm.IWFMModel.get_output_interval.html#pywfm.IWFMModel.get_output_interval" title="pywfm.IWFMModel.get_output_interval"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_output_interval</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="time/pywfm.IWFMModel.get_output_interval.html#pywfm.IWFMModel.get_output_interval" title="pywfm.IWFMModel.get_output_interval"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_output_interval</span></code></a>()</p></td>
 <td><p>Return a list of the possible time intervals a selected time-series data can be retrieved at.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="geometry/streams/pywfm.IWFMModel.get_reach_outflow_destination.html#pywfm.IWFMModel.get_reach_outflow_destination" title="pywfm.IWFMModel.get_reach_outflow_destination"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_reach_outflow_destination</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="geometry/streams/pywfm.IWFMModel.get_reach_outflow_destination.html#pywfm.IWFMModel.get_reach_outflow_destination" title="pywfm.IWFMModel.get_reach_outflow_destination"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_reach_outflow_destination</span></code></a>()</p></td>
 <td><p>Return the destination index that each stream reach flows into.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="geometry/streams/pywfm.IWFMModel.get_reach_outflow_destination_types.html#pywfm.IWFMModel.get_reach_outflow_destination_types" title="pywfm.IWFMModel.get_reach_outflow_destination_types"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_reach_outflow_destination_types</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="geometry/streams/pywfm.IWFMModel.get_reach_outflow_destination_types.html#pywfm.IWFMModel.get_reach_outflow_destination_types" title="pywfm.IWFMModel.get_reach_outflow_destination_types"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_reach_outflow_destination_types</span></code></a>()</p></td>
 <td><p>Return the outflow destination types that each stream reach flows into.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="geometry/streams/pywfm.IWFMModel.get_reaches_upstream_of_reach.html#pywfm.IWFMModel.get_reaches_upstream_of_reach" title="pywfm.IWFMModel.get_reaches_upstream_of_reach"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_reaches_upstream_of_reach</span></code></a>(reach_id)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="geometry/streams/pywfm.IWFMModel.get_reaches_upstream_of_reach.html#pywfm.IWFMModel.get_reaches_upstream_of_reach" title="pywfm.IWFMModel.get_reaches_upstream_of_reach"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_reaches_upstream_of_reach</span></code></a>(reach_id)</p></td>
 <td><p>Return the IDs of the reaches that are immediately upstream of the specified reach</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="inflows/pywfm.IWFMModel.get_small_watershed_ids.html#pywfm.IWFMModel.get_small_watershed_ids" title="pywfm.IWFMModel.get_small_watershed_ids"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_small_watershed_ids</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="inflows/pywfm.IWFMModel.get_small_watershed_ids.html#pywfm.IWFMModel.get_small_watershed_ids" title="pywfm.IWFMModel.get_small_watershed_ids"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_small_watershed_ids</span></code></a>()</p></td>
 <td><p>Return the small watershed identification numbers specified in the IWFM model</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="geometry/stratigraphy/pywfm.IWFMModel.get_stratigraphy_atXYcoordinate.html#pywfm.IWFMModel.get_stratigraphy_atXYcoordinate" title="pywfm.IWFMModel.get_stratigraphy_atXYcoordinate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_stratigraphy_atXYcoordinate</span></code></a>(x, y[, ...])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="geometry/stratigraphy/pywfm.IWFMModel.get_stratigraphy_atXYcoordinate.html#pywfm.IWFMModel.get_stratigraphy_atXYcoordinate" title="pywfm.IWFMModel.get_stratigraphy_atXYcoordinate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_stratigraphy_atXYcoordinate</span></code></a>(x, y[, ...])</p></td>
 <td><p>Return the stratigraphy at given X,Y coordinates</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="geometry/streams/pywfm.IWFMModel.get_stream_bottom_elevations.html#pywfm.IWFMModel.get_stream_bottom_elevations" title="pywfm.IWFMModel.get_stream_bottom_elevations"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_stream_bottom_elevations</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="geometry/streams/pywfm.IWFMModel.get_stream_bottom_elevations.html#pywfm.IWFMModel.get_stream_bottom_elevations" title="pywfm.IWFMModel.get_stream_bottom_elevations"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_stream_bottom_elevations</span></code></a>()</p></td>
 <td><p>Return the stream channel bottom elevation at each stream node</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_stream_diversion_elements</span></code>(diversion_id)</p></td>
+<td><p>Return the element IDs where water is provided by diversion</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="diversions/pywfm.IWFMModel.get_stream_diversion_locations.html#pywfm.IWFMModel.get_stream_diversion_locations" title="pywfm.IWFMModel.get_stream_diversion_locations"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_stream_diversion_locations</span></code></a>([...])</p></td>
 <td><p>Return the stream node IDs corresponding to diversion locations</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="streams/pywfm.IWFMModel.get_stream_flow_at_location.html#pywfm.IWFMModel.get_stream_flow_at_location" title="pywfm.IWFMModel.get_stream_flow_at_location"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_stream_flow_at_location</span></code></a>(stream_node_id)</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_stream_diversion_n_elements</span></code>(diversion_id)</p></td>
+<td><p>Return number of elements that are provided water by the specified diversion</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="streams/pywfm.IWFMModel.get_stream_flow_at_location.html#pywfm.IWFMModel.get_stream_flow_at_location" title="pywfm.IWFMModel.get_stream_flow_at_location"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_stream_flow_at_location</span></code></a>(stream_node_id)</p></td>
 <td><p>Return stream flow at a stream node for the current time step in a simulation</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="streams/pywfm.IWFMModel.get_stream_flows.html#pywfm.IWFMModel.get_stream_flows" title="pywfm.IWFMModel.get_stream_flows"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_stream_flows</span></code></a>([flow_conversion_factor])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="streams/pywfm.IWFMModel.get_stream_flows.html#pywfm.IWFMModel.get_stream_flows" title="pywfm.IWFMModel.get_stream_flows"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_stream_flows</span></code></a>([flow_conversion_factor])</p></td>
 <td><p>Return stream flows at every stream node for the current timestep</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="streams/pywfm.IWFMModel.get_stream_gain_from_groundwater.html#pywfm.IWFMModel.get_stream_gain_from_groundwater" title="pywfm.IWFMModel.get_stream_gain_from_groundwater"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_stream_gain_from_groundwater</span></code></a>([...])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="streams/pywfm.IWFMModel.get_stream_gain_from_groundwater.html#pywfm.IWFMModel.get_stream_gain_from_groundwater" title="pywfm.IWFMModel.get_stream_gain_from_groundwater"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_stream_gain_from_groundwater</span></code></a>([...])</p></td>
 <td><p>Return gain from groundwater for every stream node for the current timestep</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="streams/pywfm.IWFMModel.get_stream_gain_from_lakes.html#pywfm.IWFMModel.get_stream_gain_from_lakes" title="pywfm.IWFMModel.get_stream_gain_from_lakes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_stream_gain_from_lakes</span></code></a>([...])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="streams/pywfm.IWFMModel.get_stream_gain_from_lakes.html#pywfm.IWFMModel.get_stream_gain_from_lakes" title="pywfm.IWFMModel.get_stream_gain_from_lakes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_stream_gain_from_lakes</span></code></a>([...])</p></td>
 <td><p>Return gain from lakes for every stream node for the current timestep</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="hydrographs/pywfm.IWFMModel.get_stream_hydrograph.html#pywfm.IWFMModel.get_stream_hydrograph" title="pywfm.IWFMModel.get_stream_hydrograph"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_stream_hydrograph</span></code></a>(stream_hydrograph_id)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="hydrographs/pywfm.IWFMModel.get_stream_hydrograph.html#pywfm.IWFMModel.get_stream_hydrograph" title="pywfm.IWFMModel.get_stream_hydrograph"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_stream_hydrograph</span></code></a>(stream_hydrograph_id)</p></td>
 <td><p>Return the simulated stream hydrograph for the provided stream hydrograph id</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="hydrographs/pywfm.IWFMModel.get_stream_hydrograph_coordinates.html#pywfm.IWFMModel.get_stream_hydrograph_coordinates" title="pywfm.IWFMModel.get_stream_hydrograph_coordinates"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_stream_hydrograph_coordinates</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="hydrographs/pywfm.IWFMModel.get_stream_hydrograph_coordinates.html#pywfm.IWFMModel.get_stream_hydrograph_coordinates" title="pywfm.IWFMModel.get_stream_hydrograph_coordinates"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_stream_hydrograph_coordinates</span></code></a>()</p></td>
 <td><p>Return the x,y-coordinates for the stream flow observation locations specified in an IWFM model</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="hydrographs/pywfm.IWFMModel.get_stream_hydrograph_ids.html#pywfm.IWFMModel.get_stream_hydrograph_ids" title="pywfm.IWFMModel.get_stream_hydrograph_ids"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_stream_hydrograph_ids</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="hydrographs/pywfm.IWFMModel.get_stream_hydrograph_ids.html#pywfm.IWFMModel.get_stream_hydrograph_ids" title="pywfm.IWFMModel.get_stream_hydrograph_ids"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_stream_hydrograph_ids</span></code></a>()</p></td>
 <td><p>Return the ids for the stream hydrographs specified in an IWFM model</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="hydrographs/pywfm.IWFMModel.get_stream_hydrograph_names.html#pywfm.IWFMModel.get_stream_hydrograph_names" title="pywfm.IWFMModel.get_stream_hydrograph_names"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_stream_hydrograph_names</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="hydrographs/pywfm.IWFMModel.get_stream_hydrograph_names.html#pywfm.IWFMModel.get_stream_hydrograph_names" title="pywfm.IWFMModel.get_stream_hydrograph_names"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_stream_hydrograph_names</span></code></a>()</p></td>
 <td><p>Return the stream flow hydrograph location names specified in an IWFM model</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="inflows/pywfm.IWFMModel.get_stream_inflow_ids.html#pywfm.IWFMModel.get_stream_inflow_ids" title="pywfm.IWFMModel.get_stream_inflow_ids"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_stream_inflow_ids</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="inflows/pywfm.IWFMModel.get_stream_inflow_ids.html#pywfm.IWFMModel.get_stream_inflow_ids" title="pywfm.IWFMModel.get_stream_inflow_ids"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_stream_inflow_ids</span></code></a>()</p></td>
 <td><p>Return the identification numbers for the stream boundary inflows specified by the user as timeseries input data</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="inflows/pywfm.IWFMModel.get_stream_inflow_nodes.html#pywfm.IWFMModel.get_stream_inflow_nodes" title="pywfm.IWFMModel.get_stream_inflow_nodes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_stream_inflow_nodes</span></code></a>()</p></td>
-<td><p>Return the stream node indices that receive boundary inflows specified by the user as timeseries input data</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="inflows/pywfm.IWFMModel.get_stream_inflow_nodes.html#pywfm.IWFMModel.get_stream_inflow_nodes" title="pywfm.IWFMModel.get_stream_inflow_nodes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_stream_inflow_nodes</span></code></a>()</p></td>
+<td><p>Return the stream node IDs that receive boundary inflows specified by the user as timeseries input data</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="streams/pywfm.IWFMModel.get_stream_inflows_at_some_locations.html#pywfm.IWFMModel.get_stream_inflows_at_some_locations" title="pywfm.IWFMModel.get_stream_inflows_at_some_locations"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_stream_inflows_at_some_locations</span></code></a>([...])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="streams/pywfm.IWFMModel.get_stream_inflows_at_some_locations.html#pywfm.IWFMModel.get_stream_inflows_at_some_locations" title="pywfm.IWFMModel.get_stream_inflows_at_some_locations"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_stream_inflows_at_some_locations</span></code></a>([...])</p></td>
 <td><p>Return stream boundary inflows at a specified set of inflow locations listed by their indices for the current simulation timestep</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="geometry/streams/pywfm.IWFMModel.get_stream_network.html#pywfm.IWFMModel.get_stream_network" title="pywfm.IWFMModel.get_stream_network"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_stream_network</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="geometry/streams/pywfm.IWFMModel.get_stream_network.html#pywfm.IWFMModel.get_stream_network" title="pywfm.IWFMModel.get_stream_network"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_stream_network</span></code></a>()</p></td>
 <td><p>Return the stream nodes and groundwater nodes for every reach in an IWFM model</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="geometry/streams/pywfm.IWFMModel.get_stream_node_ids.html#pywfm.IWFMModel.get_stream_node_ids" title="pywfm.IWFMModel.get_stream_node_ids"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_stream_node_ids</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="geometry/streams/pywfm.IWFMModel.get_stream_node_ids.html#pywfm.IWFMModel.get_stream_node_ids" title="pywfm.IWFMModel.get_stream_node_ids"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_stream_node_ids</span></code></a>()</p></td>
 <td><p>Return an array of stream node IDs in the IWFM model</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="geometry/streams/pywfm.IWFMModel.get_stream_nodes_upstream_of_stream_node.html#pywfm.IWFMModel.get_stream_nodes_upstream_of_stream_node" title="pywfm.IWFMModel.get_stream_nodes_upstream_of_stream_node"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_stream_nodes_upstream_of_stream_node</span></code></a>(...)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="geometry/streams/pywfm.IWFMModel.get_stream_nodes_upstream_of_stream_node.html#pywfm.IWFMModel.get_stream_nodes_upstream_of_stream_node" title="pywfm.IWFMModel.get_stream_nodes_upstream_of_stream_node"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_stream_nodes_upstream_of_stream_node</span></code></a>(...)</p></td>
 <td><p>Return an array of the stream node ids immediately upstream of the provided stream node id</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_stream_pond_drains</span></code>([...])</p></td>
+<td><p>Return drainage from rice and refuge ponds into every stream node for the current timestep</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="streams/pywfm.IWFMModel.get_stream_rainfall_runoff.html#pywfm.IWFMModel.get_stream_rainfall_runoff" title="pywfm.IWFMModel.get_stream_rainfall_runoff"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_stream_rainfall_runoff</span></code></a>([...])</p></td>
 <td><p>Return rainfall runoff at every stream node for the current timestep</p></td>

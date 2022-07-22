@@ -420,6 +420,41 @@
     </a>
    </li>
    <li class="toctree-l2">
+    <a class="reference internal" href="generated/bypasses/pywfm.IWFMModel.get_n_bypasses.html">
+     pywfm.IWFMModel.get_n_bypasses
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/bypasses/pywfm.IWFMModel.get_bypass_ids.html">
+     pywfm.IWFMModel.get_bypass_ids
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/bypasses/pywfm.IWFMModel.get_bypass_export_nodes.html">
+     pywfm.IWFMModel.get_bypass_export_nodes
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/bypasses/pywfm.IWFMModel.get_bypass_exports_destinations.html">
+     pywfm.IWFMModel.get_bypass_exports_destinations
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/bypasses/pywfm.IWFMModel.get_bypass_outflows.html">
+     pywfm.IWFMModel.get_bypass_outflows
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/bypasses/pywfm.IWFMModel.get_bypass_recoverable_loss_factor.html">
+     pywfm.IWFMModel.get_bypass_recoverable_loss_factor
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generated/bypasses/pywfm.IWFMModel.get_bypass_nonrecoverable_loss_factor.html">
+     pywfm.IWFMModel.get_bypass_nonrecoverable_loss_factor
+    </a>
+   </li>
+   <li class="toctree-l2">
     <a class="reference internal" href="generated/inflows/pywfm.IWFMModel.get_n_stream_inflows.html">
      pywfm.IWFMModel.get_n_stream_inflows
     </a>
@@ -1075,8 +1110,8 @@
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="generated/internal/pywfm.IWFMModel.get_land_use_ids.html">
-     pywfm.IWFMModel.get_land_use_ids
+    <a class="reference internal" href="generated/internal/pywfm.IWFMModel.get_land_use_type_ids.html">
+     pywfm.IWFMModel.get_land_use_type_ids
     </a>
    </li>
    <li class="toctree-l2">
@@ -1428,6 +1463,11 @@
      Streams
     </a>
    </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#bypasses">
+     Bypasses
+    </a>
+   </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -1446,8 +1486,8 @@
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#streams-and-bypasses">
-   Streams and Bypasses
+  <a class="reference internal nav-link" href="#stream-and-bypass-flows">
+   Stream and Bypass Flows
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -1756,6 +1796,38 @@
 </tbody>
 </table>
 </div>
+<div class="section" id="bypasses">
+<h3>Bypasses<a class="headerlink" href="#bypasses" title="Permalink to this headline">¶</a></h3>
+<table class="longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/bypasses/pywfm.IWFMModel.get_n_bypasses.html#pywfm.IWFMModel.get_n_bypasses" title="pywfm.IWFMModel.get_n_bypasses"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_n_bypasses</span></code></a>()</p></td>
+<td><p>Return the number of bypasses in an IWFM model</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/bypasses/pywfm.IWFMModel.get_bypass_ids.html#pywfm.IWFMModel.get_bypass_ids" title="pywfm.IWFMModel.get_bypass_ids"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_bypass_ids</span></code></a>()</p></td>
+<td><p>Return the bypass identification numbers specified in an IWFM model</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/bypasses/pywfm.IWFMModel.get_bypass_export_nodes.html#pywfm.IWFMModel.get_bypass_export_nodes" title="pywfm.IWFMModel.get_bypass_export_nodes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_bypass_export_nodes</span></code></a>(bypass_list)</p></td>
+<td><p>Return the stream node IDs corresponding to bypass locations</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/bypasses/pywfm.IWFMModel.get_bypass_exports_destinations.html#pywfm.IWFMModel.get_bypass_exports_destinations" title="pywfm.IWFMModel.get_bypass_exports_destinations"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_bypass_exports_destinations</span></code></a>(bypass_list)</p></td>
+<td><p>Return stream node IDs and destination types and IDS where bypass flows are delivered.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/bypasses/pywfm.IWFMModel.get_bypass_outflows.html#pywfm.IWFMModel.get_bypass_outflows" title="pywfm.IWFMModel.get_bypass_outflows"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_bypass_outflows</span></code></a>([bypass_conversion_factor])</p></td>
+<td><p>Return the bypass outflows for the current simulation timestep</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/bypasses/pywfm.IWFMModel.get_bypass_recoverable_loss_factor.html#pywfm.IWFMModel.get_bypass_recoverable_loss_factor" title="pywfm.IWFMModel.get_bypass_recoverable_loss_factor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_bypass_recoverable_loss_factor</span></code></a>(bypass_id)</p></td>
+<td><p>Return the recoverable loss factor for a bypass</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/bypasses/pywfm.IWFMModel.get_bypass_nonrecoverable_loss_factor.html#pywfm.IWFMModel.get_bypass_nonrecoverable_loss_factor" title="pywfm.IWFMModel.get_bypass_nonrecoverable_loss_factor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_bypass_nonrecoverable_loss_factor</span></code></a>(bypass_id)</p></td>
+<td><p>Return the nonrecoverable loss factor for a bypass</p></td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 <div class="section" id="inflows-and-small-watersheds">
 <h2>Inflows and Small Watersheds<a class="headerlink" href="#inflows-and-small-watersheds" title="Permalink to this headline">¶</a></h2>
@@ -1772,7 +1844,7 @@
 <td><p>Return the identification numbers for the stream boundary inflows specified by the user as timeseries input data</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="generated/inflows/pywfm.IWFMModel.get_stream_inflow_nodes.html#pywfm.IWFMModel.get_stream_inflow_nodes" title="pywfm.IWFMModel.get_stream_inflow_nodes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_stream_inflow_nodes</span></code></a>()</p></td>
-<td><p>Return the stream node indices that receive boundary inflows specified by the user as timeseries input data</p></td>
+<td><p>Return the stream node IDs that receive boundary inflows specified by the user as timeseries input data</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="generated/inflows/pywfm.IWFMModel.get_n_small_watersheds.html#pywfm.IWFMModel.get_n_small_watersheds" title="pywfm.IWFMModel.get_n_small_watersheds"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_n_small_watersheds</span></code></a>()</p></td>
 <td><p>Return the number of small watersheds specified in an IWFM model</p></td>
@@ -1817,8 +1889,8 @@
 </tbody>
 </table>
 </div>
-<div class="section" id="streams-and-bypasses">
-<h2>Streams and Bypasses<a class="headerlink" href="#streams-and-bypasses" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="stream-and-bypass-flows">
+<h2>Stream and Bypass Flows<a class="headerlink" href="#stream-and-bypass-flows" title="Permalink to this headline">¶</a></h2>
 <table class="longtable table autosummary">
 <colgroup>
 <col style="width: 10%" />
@@ -2290,7 +2362,7 @@
 <tr class="row-even"><td><p><a class="reference internal" href="generated/internal/pywfm.IWFMModel.get_flow_destination_type_id_subregion.html#pywfm.IWFMModel.get_flow_destination_type_id_subregion" title="pywfm.IWFMModel.get_flow_destination_type_id_subregion"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_flow_destination_type_id_subregion</span></code></a>()</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="generated/internal/pywfm.IWFMModel.get_land_use_ids.html#pywfm.IWFMModel.get_land_use_ids" title="pywfm.IWFMModel.get_land_use_ids"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_land_use_ids</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/internal/pywfm.IWFMModel.get_land_use_type_ids.html#pywfm.IWFMModel.get_land_use_type_ids" title="pywfm.IWFMModel.get_land_use_type_ids"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_land_use_type_ids</span></code></a>()</p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="generated/internal/pywfm.IWFMModel.get_land_use_type_id_gen_ag.html#pywfm.IWFMModel.get_land_use_type_id_gen_ag" title="pywfm.IWFMModel.get_land_use_type_id_gen_ag"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_land_use_type_id_gen_ag</span></code></a>()</p></td>

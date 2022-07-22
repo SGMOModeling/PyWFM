@@ -30,15 +30,20 @@
       ~IWFMBudget.get_flow_destination_type_id_outside
       ~IWFMBudget.get_flow_destination_type_id_streamnode
       ~IWFMBudget.get_flow_destination_type_id_subregion
-      ~IWFMBudget.get_land_use_ids
       ~IWFMBudget.get_land_use_type_id_gen_ag
       ~IWFMBudget.get_land_use_type_id_native_riparian
       ~IWFMBudget.get_land_use_type_id_nonponded_ag
       ~IWFMBudget.get_land_use_type_id_refuge
       ~IWFMBudget.get_land_use_type_id_rice
       ~IWFMBudget.get_land_use_type_id_urban
+      ~IWFMBudget.get_land_use_type_id_urban_indoor
+      ~IWFMBudget.get_land_use_type_id_urban_outdoor
+      ~IWFMBudget.get_land_use_type_ids
+      ~IWFMBudget.get_land_use_type_ids_1
       ~IWFMBudget.get_last_message
       ~IWFMBudget.get_location_names
+      ~IWFMBudget.get_location_type_id_bypass
+      ~IWFMBudget.get_location_type_id_diversion
       ~IWFMBudget.get_location_type_id_element
       ~IWFMBudget.get_location_type_id_gwheadobs
       ~IWFMBudget.get_location_type_id_lake
@@ -53,6 +58,7 @@
       ~IWFMBudget.get_location_type_id_tiledrainobs
       ~IWFMBudget.get_location_type_id_zone
       ~IWFMBudget.get_location_type_ids
+      ~IWFMBudget.get_location_type_ids_1
       ~IWFMBudget.get_n_columns
       ~IWFMBudget.get_n_intervals
       ~IWFMBudget.get_n_locations
