@@ -1053,7 +1053,7 @@ class IWFMMiscellaneous:
             )
 
         # reset instance variable status to 0
-        self.status = ctypes.c_int(0)
+        status = ctypes.c_int(0)
 
         # set version character array length to 1000
         version_length = ctypes.c_int(1000)
@@ -1062,7 +1062,7 @@ class IWFMMiscellaneous:
         iwfm_version = ctypes.create_string_buffer(version_length.value)
 
         self.dll.IW_GetVersion(
-            ctypes.byref(version_length), iwfm_version, ctypes.byref(self.status)
+            ctypes.byref(version_length), iwfm_version, ctypes.byref(status)
         )
 
         iwfm_version_string = iwfm_version.value.decode("utf-8")
@@ -1151,7 +1151,7 @@ class IWFMMiscellaneous:
             raise ValueError("begin_date must occur before end_date")
 
         # reset instance variable status to -1
-        self.status = ctypes.c_int(0)
+        status = ctypes.c_int(0)
 
         # convert IWFM dates to ctypes character arrays
         begin_date = ctypes.create_string_buffer(begin_date.encode("utf-8"))
@@ -1174,7 +1174,7 @@ class IWFMMiscellaneous:
             time_interval,
             ctypes.byref(length_time_interval),
             ctypes.byref(n_intervals),
-            ctypes.byref(self.status),
+            ctypes.byref(status),
         )
 
         if includes_end_date:
