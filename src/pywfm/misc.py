@@ -1052,11 +1052,11 @@ class IWFMMiscellaneous:
                 "Check for an updated version".format("IW_GetVersion")
             )
 
-        # reset instance variable status to -1
+        # reset instance variable status to 0
         self.status = ctypes.c_int(0)
 
-        # set version character array length to 500
-        version_length = ctypes.c_int(600)
+        # set version character array length to 1000
+        version_length = ctypes.c_int(1000)
 
         # initialize output variables
         iwfm_version = ctypes.create_string_buffer(version_length.value)
