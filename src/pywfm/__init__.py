@@ -2,6 +2,8 @@ import os
 import platform
 import ctypes
 
+__version__ = "0.2.2"
+
 if platform.uname()[0] == "Windows":
     DLL_PATH = os.path.normpath(os.path.join(__file__, "../../../../Library/bin"))
     DLL = "IWFM2015_C_x64.dll"
