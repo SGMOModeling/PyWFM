@@ -1,4 +1,8 @@
-{% set version = "0.2.1" %}
+{% set version_match = load_file_regex(
+  load_file="../src/pywfm/__init__.py",
+  from_recipe_dir=True, 
+  regex_pattern='__version__ = "(.+)"') %}
+{% set version = version_match[1] %}
 
 package:
   name: pywfm
