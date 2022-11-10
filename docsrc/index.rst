@@ -4,7 +4,7 @@
 PyWFM Documentation
 #####################
 
-Current Version: |release|
+**Current Version**: |release|
 
 pywfm is a python package that exposes the functionality of the IWFM API
 
