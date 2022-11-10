@@ -6,6 +6,10 @@ PyWFM Documentation
 
 pywfm |release| is a python package that exposes the functionality of the IWFM API
 
+.. warning::
+   IWFM Applications simulated with a different version of IWFM than used with pywfm may fail silently.
+   If you do not plan to rerun the model, use the version of pywfm with the same IWFM API, if available.
+
 .. versionadded:: 0.2.2
    pywfm now includes an indicator for the version of the IWFM API in the version
    
