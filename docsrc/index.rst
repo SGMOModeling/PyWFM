@@ -8,7 +8,8 @@ pywfm |release| is a python package that exposes the functionality of the IWFM A
 
 .. warning::
    IWFM Applications simulated with a different version of IWFM than used with pywfm may fail silently.
-   If you do not plan to rerun the model, use the version of pywfm with the same IWFM API, if available.
+   In these cases, users should be able to rerun the model with the same version of IWFM as the IWFM API included with pywfm.
+   If you do not plan to rerun the model, install the version of pywfm with the same IWFM API, if available.
 
 .. versionadded:: 0.2.2
    pywfm now includes an indicator for the version of the IWFM API in the version
