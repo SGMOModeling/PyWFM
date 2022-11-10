@@ -35,5 +35,14 @@ Installation using Anaconda
    .. code:: bash
       
       conda install -c cadwr-sgmo pywfm
+
+   .. note::
+      This will install the latest version of the iwfm dll (IWFM 2015.0.1403)
+      
+   If you want to install pywfm with version 2015.0.1273 of the dll, use:
+
+   .. code:: bash
+      
+      conda install -c cadwr-sgmo pywfm=0.2.2.1273
    
    
