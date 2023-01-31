@@ -21,6 +21,8 @@ pywfm is a python package that exposes the functionality of the IWFM API
    +----------------------+------------------+
    | pywfm |release|.1403 | IWFM 2015.0.1403 |
    +----------------------+------------------+
+   | pywfm |release|.1443 | IWFM 2015.1.1443 |
+   +----------------------+------------------+
 
 
 --------
