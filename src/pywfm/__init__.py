@@ -2,7 +2,7 @@ import os
 import platform
 import ctypes
 
-__version__ = "0.2.2"
+__version__ = "0.2.3"
 
 if platform.uname()[0] == "Windows":
     DLL_PATH = os.path.normpath(os.path.join(__file__, "../../../../Library/bin"))
