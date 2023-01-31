@@ -1679,7 +1679,7 @@ class IWFMMiscellaneous:
             starting_position_array = np.array(starting_position_array)
 
         # check that all values are integers
-        if starting_position_array.dtype not in (np.int, np.int32, np.dtype("<i4")):
+        if starting_position_array.dtype not in (np.int32, np.dtype("<i4")):
             raise TypeError("All values in starting_position_array must be type: int.")
 
         # check that length_output_list is an integer
