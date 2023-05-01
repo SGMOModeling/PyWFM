@@ -6346,6 +6346,7 @@ class IWFMModel(IWFMMiscellaneous):
         See Also
         --------
         IWFMModel.get_well_ids : Return the well IDs specified in an IWFM model
+        IWFMModel.get_well_coordinates : Return the x- and y-coordinates of pumping wells in an IWFM model
         IWFMModel.get_n_element_pumps : Return the number of element pumping wells in an IWFM model
         IWFMModel.get_element_pump_ids : Return the element pump IDs specified in an IWFM model
 
@@ -6393,6 +6394,7 @@ class IWFMModel(IWFMMiscellaneous):
         See Also
         --------
         IWFMModel.get_n_wells : Return the number of pumping wells in an IWFM model
+        IWFMModel.get_well_coordinates : Return the x- and y-coordinates of pumping wells in an IWFM model
         IWFMModel.get_n_element_pumps : Return the number of element pumping wells in an IWFM model
         IWFMModel.get_element_pump_ids : Return the element pump IDs specified in an IWFM model
 
@@ -6427,6 +6429,57 @@ class IWFMModel(IWFMMiscellaneous):
         )
 
         return np.array(well_ids)
+    
+    def get_well_coordinates(self):
+        """
+        Return the pumping well x- and y-coordinates
+
+        Returns
+        -------
+        tuple of np.ndarrays
+            x-coordinates for wells
+            y-coordinates for wells
+        
+        See Also
+        --------
+        IWFMModel.get_n_wells : Return the number of wells simulated in an IWFM model
+        IWFMModel.get_well_ids : Return the well IDs specified in an IWFM model
+        IWFMModel.get_n_element_pumps : Return the number of element pumping wells in an IWFM model
+        IWFMModel.get_element_pump_ids : Return the element pump IDs specified in an IWFM model
+
+        Example
+        -------
+        >>> from pywfm import IWFMModel
+        >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
+        >>> sim_file = 'Simulation_MAIN.IN'
+        >>> model = IWFMModel(pp_file, sim_file)
+        >>> model.get_well_coordinates()
+        
+        >>> model.kill()
+        >>> model.close_log_file()
+        """
+        if not hasattr(self.dll, "IW_Model_GetWellXY"):
+            raise AttributeError(
+                'IWFM API does not have "{}" procedure. '
+                "Check for an updated version".format("IW_Model_GetWellXY")
+            )
+
+        # set input variables
+        n_wells = ctypes.c_int(self.get_n_wells())
+
+        # set instance variable status to 0
+        status = ctypes.c_int(0)
+
+        # initialize output variables
+        x = (ctypes.c_double * n_wells.value)()
+        y = (ctypes.c_double * n_wells.value)()
+
+        self.dll.IW_Model_GetWellXY(
+            ctypes.byref(n_wells), x, y, ctypes.byref(status)
+        )
+
+        return np.array(x), np.array(y)
+
 
     def get_n_element_pumps(self):
         """
