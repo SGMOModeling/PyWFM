@@ -64,7 +64,6 @@ class IWFMModel(IWFMMiscellaneous):
         delete_inquiry_data_file=True,
         log_file="message.log",
     ):
-
         if not isinstance(preprocessor_file_name, str):
             raise TypeError("preprocessor_file_name must be a str")
 
@@ -793,7 +792,7 @@ class IWFMModel(IWFMMiscellaneous):
 
         # convert node indices to node IDs
         nodes_in_element = np.array(nodes_in_element)
-      
+
         # get all node IDs in model
         node_ids = self.get_node_ids()
 
@@ -806,6 +805,60 @@ class IWFMModel(IWFMMiscellaneous):
                 elem_config.append(node_ids[node - 1])
 
         return np.array(elem_config)
+
+    def get_element_areas(self):
+        """
+        Return the area of each element in an IWFM model
+
+        Returns
+        -------
+        np.ndarray of float
+            array of element areas
+
+        Note
+        ----
+        Areas are returned in the basic model unit of length e.g. feet or meters
+
+        See Also
+        --------
+        IWFMModel.get_n_elements : Return the number of elements in an IWFM model
+        IWFMModel.get_element_ids : Return an array of element IDs in an IWFM model
+        IWFMModel.get_element_config : Return an array of node ids for an IWFM element
+
+        Example
+        -------
+        >>> from pywfm import IWFMModel
+        >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
+        >>> sim_file = 'Simulation_MAIN.IN'
+        >>> model = IWFMModel(pp_file, sim_file)
+        >>> model.get_element_areas()
+        array([40202957.63300251, 41028736.91115934, 56276024.67195904, ...,
+               54247279.94228962, 63481519.80703662, 22859442.03660104])
+        >>> model.kill()
+        >>> model.close_log_file()
+        """
+        # check to see if IWFM procedure is available in user version of IWFM DLL
+        if not hasattr(self.dll, "IW_Model_GetElementAreas"):
+            raise AttributeError(
+                'IWFM API does not have "{}" procedure. Check for an updated version'.format(
+                    "IW_Model_GetElementAreas"
+                )
+            )
+
+        # set instance variable status to 0
+        status = ctypes.c_int(0)
+
+        # get number of elements
+        n_elements = ctypes.c_int(self.get_n_elements())
+
+        # initialize element areas array
+        element_areas = (ctypes.c_double * n_elements.value)()
+
+        self.dll.IW_Model_GetElementAreas(
+            ctypes.byref(n_elements), element_areas, ctypes.byref(status)
+        )
+
+        return np.array(element_areas)
 
     def get_n_subregions(self):
         """
@@ -995,7 +1048,7 @@ class IWFMModel(IWFMMiscellaneous):
         -------
         np.ndarray
             array identifying the subregion where each model element is assigned
-        
+
         Note
         ----
         The resulting integer array will have a length equal to the value returned by get_n_elements method
@@ -2928,7 +2981,9 @@ class IWFMModel(IWFMMiscellaneous):
             if stream_diversion_index == 0:
                 stream_diversion_locations.append(0)
             else:
-                stream_diversion_locations.append(stream_node_ids[stream_diversion_index - 1])
+                stream_diversion_locations.append(
+                    stream_node_ids[stream_diversion_index - 1]
+                )
 
         return np.array(stream_diversion_locations)
 
@@ -2945,7 +3000,7 @@ class IWFMModel(IWFMMiscellaneous):
         -------
         int
             number of elements where the diversion provides water
-        
+
         See Also
         --------
         IWFMModel.get_n_diversions : Return the number of surface water diversions in an IWFM model
@@ -2958,7 +3013,7 @@ class IWFMModel(IWFMMiscellaneous):
         >>> sim_file = 'Simulation_MAIN.IN'
         >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_stream_diversion_n_elements(1)
-        
+
         >>> model.kill()
         >>> model.close_log_file()
         """
@@ -2980,7 +3035,9 @@ class IWFMModel(IWFMMiscellaneous):
             raise ValueError("diversion_id is not valid")
 
         # convert diversion_id to diversion_index
-        diversion_index = ctypes.c_int(np.where(diversion_ids == diversion_id)[0][0] + 1)
+        diversion_index = ctypes.c_int(
+            np.where(diversion_ids == diversion_id)[0][0] + 1
+        )
 
         # initialize output variables
         n_elements = ctypes.c_int(0)
@@ -2989,7 +3046,7 @@ class IWFMModel(IWFMMiscellaneous):
         self.dll.IW_Model_GetStrmDiversionNElems(
             ctypes.byref(diversion_index),
             ctypes.byref(n_elements),
-            ctypes.byref(status)
+            ctypes.byref(status),
         )
 
         return n_elements.value
@@ -3020,7 +3077,7 @@ class IWFMModel(IWFMMiscellaneous):
         >>> sim_file = 'Simulation_MAIN.IN'
         >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_stream_diversion_elements(1)
-        
+
         >>> model.kill()
         >>> model.close_log_file()
         """
@@ -3042,20 +3099,24 @@ class IWFMModel(IWFMMiscellaneous):
             raise ValueError("diversion_id is not valid")
 
         # convert diversion_id to diversion_index
-        diversion_index = ctypes.c_int(np.where(diversion_ids == diversion_id)[0][0] + 1)
+        diversion_index = ctypes.c_int(
+            np.where(diversion_ids == diversion_id)[0][0] + 1
+        )
 
         # get number of elements
-        n_delivery_elements = ctypes.c_int(self.get_stream_diversion_n_elements(diversion_index.value))
+        n_delivery_elements = ctypes.c_int(
+            self.get_stream_diversion_n_elements(diversion_index.value)
+        )
 
         # initialize output variables
         element_indices = (ctypes.c_int * n_delivery_elements.value)()
         status = ctypes.c_int(0)
-        
+
         self.dll.IW_Model_GetStrmDiversionElems(
             ctypes.byref(diversion_index),
             ctypes.byref(n_delivery_elements),
             element_indices,
-            ctypes.byref(status)
+            ctypes.byref(status),
         )
 
         element_ids = self.get_element_ids()
@@ -4117,9 +4178,7 @@ class IWFMModel(IWFMMiscellaneous):
         # initialize n_stream_reaches variable
         n_bypasses = ctypes.c_int(0)
 
-        self.dll.IW_Model_GetNBypasses(
-            ctypes.byref(n_bypasses), ctypes.byref(status)
-        )
+        self.dll.IW_Model_GetNBypasses(ctypes.byref(n_bypasses), ctypes.byref(status))
 
         return n_bypasses.value
 
@@ -4234,7 +4293,9 @@ class IWFMModel(IWFMMiscellaneous):
         n_bypasses = ctypes.c_int(len(bypass_list))
 
         # convert bypass IDs to bypass indices
-        bypass_indices = np.array([np.where(bypass_ids == item)[0][0] for item in bypass_list]) + 1
+        bypass_indices = (
+            np.array([np.where(bypass_ids == item)[0][0] for item in bypass_list]) + 1
+        )
         bypass_indices = (ctypes.c_int * n_bypasses.value)(*bypass_indices)
 
         # initialize output variables
@@ -4245,7 +4306,7 @@ class IWFMModel(IWFMMiscellaneous):
             ctypes.byref(n_bypasses),
             bypass_indices,
             stream_node_indices,
-            ctypes.byref(status)
+            ctypes.byref(status),
         )
 
         # convert stream node indices to stream node IDs
@@ -4280,7 +4341,7 @@ class IWFMModel(IWFMMiscellaneous):
         IWFMModel.get_bypass_outflows : Return the bypass outflows for the current simulation timestep
         IWFMModel.get_bypass_recoverable_loss_factor : Return the recoverable loss factor for a bypass
         IWFMModel.get_bypass_recoverable_loss_factor : Return the nonrecoverable loss factor for a bypass
-        
+
         Example
         -------
         >>> from pywfm import IWFMModel
@@ -4296,7 +4357,9 @@ class IWFMModel(IWFMMiscellaneous):
         if not hasattr(self.dll, "IW_Model_GetBypassExportDestinationData"):
             raise AttributeError(
                 'IWFM API does not have "{}" procedure. '
-                "Check for an updated version".format("IW_Model_GetBypassExportDestinationData")
+                "Check for an updated version".format(
+                    "IW_Model_GetBypassExportDestinationData"
+                )
             )
 
         # handle case where bypass_list is provided as an int
@@ -4322,7 +4385,9 @@ class IWFMModel(IWFMMiscellaneous):
         n_bypasses = ctypes.c_int(len(bypass_list))
 
         # convert bypass IDs to bypass indices
-        bypass_indices = np.array([np.where(bypass_ids == item)[0][0] for item in bypass_list]) + 1
+        bypass_indices = (
+            np.array([np.where(bypass_ids == item)[0][0] for item in bypass_list]) + 1
+        )
         bypass_indices = (ctypes.c_int * n_bypasses.value)(*bypass_indices)
 
         # initialize output variables
@@ -4337,7 +4402,7 @@ class IWFMModel(IWFMMiscellaneous):
             export_stream_node_indices,
             destination_types,
             destination_indices,
-            ctypes.byref(status)
+            ctypes.byref(status),
         )
 
         # get destination IDs
@@ -4407,7 +4472,7 @@ class IWFMModel(IWFMMiscellaneous):
         # get number of bypasses
         n_bypasses = ctypes.c_int(self.get_n_bypasses())
 
-        # convert bypass conversion factor to ctypes        
+        # convert bypass conversion factor to ctypes
         bypass_conversion_factor = ctypes.c_double(bypass_conversion_factor)
 
         # initialize output variables
@@ -4418,7 +4483,7 @@ class IWFMModel(IWFMMiscellaneous):
             ctypes.byref(n_bypasses),
             ctypes.byref(bypass_conversion_factor),
             bypass_outflows,
-            ctypes.byref(status)
+            ctypes.byref(status),
         )
 
         return np.array(bypass_outflows)
@@ -4460,7 +4525,9 @@ class IWFMModel(IWFMMiscellaneous):
         if not hasattr(self.dll, "IW_Model_GetBypassRecoverableLossFactor"):
             raise AttributeError(
                 'IWFM API does not have "{}" procedure. '
-                "Check for an updated version".format("IW_Model_GetBypassRecoverableLossFactor")
+                "Check for an updated version".format(
+                    "IW_Model_GetBypassRecoverableLossFactor"
+                )
             )
 
         if not isinstance(bypass_id, int):
@@ -4482,7 +4549,7 @@ class IWFMModel(IWFMMiscellaneous):
         self.dll.IW_Model_GetBypassRecoverableLossFactor(
             ctypes.byref(bypass_index),
             ctypes.byref(recoverable_loss_factor),
-            ctypes.byref(status)
+            ctypes.byref(status),
         )
 
         return recoverable_loss_factor.value
@@ -4506,7 +4573,7 @@ class IWFMModel(IWFMMiscellaneous):
         IWFMModel.get_n_bypasses : Return the number of bypasses in an IWFM model
         IWFMModel.get_bypass_ids : Return the bypass identification numbers specified in an IWFM model
         IWFMModel.get_bypass_export_nodes : Return the stream node IDs corresponding to bypass locations
-        IWFMModel.get_bypass_exports_destinations : 
+        IWFMModel.get_bypass_exports_destinations :
         IWFMModel.get_bypass_outflows : Return the bypass outflows for the current simulation timestep
         IWFMModel.get_bypass_recoverable_loss_factor : Return the recoverable loss factor for a bypass
 
@@ -4524,7 +4591,9 @@ class IWFMModel(IWFMMiscellaneous):
         if not hasattr(self.dll, "IW_Model_GetBypassNonRecoverableLossFactor"):
             raise AttributeError(
                 'IWFM API does not have "{}" procedure. '
-                "Check for an updated version".format("IW_Model_GetBypassNonRecoverableLossFactor")
+                "Check for an updated version".format(
+                    "IW_Model_GetBypassNonRecoverableLossFactor"
+                )
             )
 
         if not isinstance(bypass_id, int):
@@ -4546,7 +4615,7 @@ class IWFMModel(IWFMMiscellaneous):
         self.dll.IW_Model_GetBypassNonRecoverableLossFactor(
             ctypes.byref(bypass_index),
             ctypes.byref(nonrecoverable_loss_factor),
-            ctypes.byref(status)
+            ctypes.byref(status),
         )
 
         return nonrecoverable_loss_factor.value
@@ -6429,7 +6498,7 @@ class IWFMModel(IWFMMiscellaneous):
         )
 
         return np.array(well_ids)
-    
+
     def get_well_coordinates(self):
         """
         Return the pumping well x- and y-coordinates
@@ -6439,7 +6508,7 @@ class IWFMModel(IWFMMiscellaneous):
         tuple of np.ndarrays
             x-coordinates for wells
             y-coordinates for wells
-        
+
         See Also
         --------
         IWFMModel.get_n_wells : Return the number of wells simulated in an IWFM model
@@ -6454,7 +6523,7 @@ class IWFMModel(IWFMMiscellaneous):
         >>> sim_file = 'Simulation_MAIN.IN'
         >>> model = IWFMModel(pp_file, sim_file)
         >>> model.get_well_coordinates()
-        
+
         >>> model.kill()
         >>> model.close_log_file()
         """
@@ -6474,12 +6543,9 @@ class IWFMModel(IWFMMiscellaneous):
         x = (ctypes.c_double * n_wells.value)()
         y = (ctypes.c_double * n_wells.value)()
 
-        self.dll.IW_Model_GetWellXY(
-            ctypes.byref(n_wells), x, y, ctypes.byref(status)
-        )
+        self.dll.IW_Model_GetWellXY(ctypes.byref(n_wells), x, y, ctypes.byref(status))
 
         return np.array(x), np.array(y)
-
 
     def get_n_element_pumps(self):
         """
@@ -8715,7 +8781,6 @@ class IWFMModel(IWFMMiscellaneous):
         num_hydrographs = ctypes.c_int(self._get_n_hydrographs(location_type_id.value))
 
         if num_hydrographs.value != 0:
-
             # initialize output variables
             hydrograph_ids = (ctypes.c_int * num_hydrographs.value)()
 
@@ -8960,7 +9025,6 @@ class IWFMModel(IWFMMiscellaneous):
         num_hydrographs = ctypes.c_int(self._get_n_hydrographs(location_type_id.value))
 
         if num_hydrographs.value != 0:
-
             # initialize output variables
             x = (ctypes.c_double * num_hydrographs.value)()
             y = (ctypes.c_double * num_hydrographs.value)()
