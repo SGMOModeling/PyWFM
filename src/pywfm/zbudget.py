@@ -898,6 +898,18 @@ class IWFMZBudget(IWFMMiscellaneous):
         # get number of title lines
         n_title_lines = ctypes.c_int(self.get_n_title_lines())
 
+        if not isinstance(zone_id, int):
+            raise TypeError("zone_id must be an integer")
+
+        # get all valid zone_ids
+        zone_ids = self.get_zone_list()
+
+        # make sure provided zone_id is one of the valid zone ids
+        if zone_id not in zone_ids:
+            raise ValueError(
+                "The zone_id provided is invalid! Check the zone definitions for the valid zone IDs."
+            )
+
         # convert zone_id to ctypes
         zone_id = ctypes.c_int(zone_id)
 
