@@ -25,7 +25,6 @@ class IWFMZBudget(IWFMMiscellaneous):
     """
 
     def __init__(self, zbudget_file_name):
-
         if not isinstance(zbudget_file_name, str):
             raise TypeError("zbudget_file_name must be a string")
 
@@ -624,17 +623,7 @@ class IWFMZBudget(IWFMMiscellaneous):
          'Absolute Storage']
         >>> column_ids
         array([ 1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16, 17,
-               18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31,  0,  0,  0,
-                0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-                0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-                0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-                0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-                0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-                0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-                0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-                0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-                0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-                0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0])
+               18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31])
         >>> gw_zbud.close_zbudget_file()
         """
         # check to see if the procedure exists in the dll provided
@@ -728,7 +717,9 @@ class IWFMZBudget(IWFMMiscellaneous):
             raw_column_header_string, delimiter_position_array, n_columns
         )
 
-        column_indices = np.array(diversified_columns_list)
+        # since diversified columns list is set to 200 as a default it needs to be limited to n_columns
+        # n_columns corresponds to the number of valid data columns
+        column_indices = np.array(diversified_columns_list)[: n_columns.value]
 
         return column_headers, column_indices
 
@@ -1081,9 +1072,11 @@ class IWFMZBudget(IWFMMiscellaneous):
         n_columns_max = 0
 
         for zone_id in zone_ids:
-
             column_names, column_header_ids = self.get_column_headers_for_a_zone(
-                zone_id, area_unit=area_units, volume_unit=volume_units, include_time=True
+                zone_id,
+                area_unit=area_units,
+                volume_unit=volume_units,
+                include_time=True,
             )
 
             n_columns = len(column_header_ids[column_header_ids > 0])
@@ -1113,7 +1106,6 @@ class IWFMZBudget(IWFMMiscellaneous):
                 column_ids = np.array([[column_ids]])
 
         if isinstance(column_ids, list):
-
             # first sort each row
             if all([isinstance(val, int) for val in column_ids]):
                 if len(column_ids) > 1:
