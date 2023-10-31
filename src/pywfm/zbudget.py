@@ -635,6 +635,18 @@ class IWFMZBudget(IWFMMiscellaneous):
                 )
             )
 
+        if not isinstance(zone_id, int):
+            raise TypeError("zone_id must be an integer")
+
+        # get all valid zone_ids
+        zone_ids = self.get_zone_list()
+
+        # make sure provided zone_id is one of the valid zone ids
+        if zone_id not in zone_ids:
+            raise ValueError(
+                "The zone_id provided is invalid! Check the zone definitions for the valid zone IDs."
+            )
+
         # convert zone_id to ctypes
         zone_id = ctypes.c_int(zone_id)
 
@@ -1046,9 +1058,11 @@ class IWFMZBudget(IWFMMiscellaneous):
         if isinstance(zone_ids, str) and zone_ids == "all":
             zone_ids = zones
 
+        # if zone_ids is an integer convert to a numpy array
         if isinstance(zone_ids, int):
             zone_ids = np.array([zone_ids])
 
+        # if zone_ids is a list, convert to a numpy array
         if isinstance(zone_ids, list):
             zone_ids = np.array(zone_ids)
 
