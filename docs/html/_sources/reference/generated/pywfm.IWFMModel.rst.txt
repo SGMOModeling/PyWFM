@@ -47,6 +47,7 @@
       ~IWFMModel.get_diversion_ids
       ~IWFMModel.get_diversion_purpose
       ~IWFMModel.get_downstream_node_in_stream_reaches
+      ~IWFMModel.get_element_areas
       ~IWFMModel.get_element_config
       ~IWFMModel.get_element_ids
       ~IWFMModel.get_element_info
@@ -196,6 +197,7 @@
       ~IWFMModel.get_urban_elempump_supply_shortage_at_origin
       ~IWFMModel.get_urban_well_supply_shortage_at_origin
       ~IWFMModel.get_version
+      ~IWFMModel.get_well_coordinates
       ~IWFMModel.get_well_ids
       ~IWFMModel.get_well_pumping_purpose
       ~IWFMModel.get_zbudget_type_ids
