@@ -28,6 +28,7 @@
       ~IWFMModel.get_aquifer_specific_storage
       ~IWFMModel.get_aquifer_specific_yield
       ~IWFMModel.get_aquifer_top_elevation
+      ~IWFMModel.get_aquifer_transmissivity
       ~IWFMModel.get_aquifer_vertical_k
       ~IWFMModel.get_aquitard_vertical_k
       ~IWFMModel.get_boundary_nodes
@@ -102,6 +103,7 @@
       ~IWFMModel.get_location_type_id_zone
       ~IWFMModel.get_location_type_ids
       ~IWFMModel.get_location_type_ids_1
+      ~IWFMModel.get_model_stratigraphy
       ~IWFMModel.get_n_ag_crops
       ~IWFMModel.get_n_bypasses
       ~IWFMModel.get_n_diversions
