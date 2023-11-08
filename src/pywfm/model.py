@@ -5620,6 +5620,7 @@ class IWFMModel(IWFMMiscellaneous):
         IWFMModel.get_aquifer_specific_yield : Return the aquifer specific yield for each finite element node and each layer
         IWFMModel.get_aquifer_specific_storage : Return the aquifer specific storage for each finite element node and each layer
         IWFMModel.get_aquifer_parameters : Return all aquifer parameters at each model node and layer
+        IWFMModel,get_aquifer_transmissivity : Return the transmissivity of each model aquifer layer
 
         Example
         -------
@@ -5744,6 +5745,7 @@ class IWFMModel(IWFMMiscellaneous):
         IWFMModel.get_aquifer_specific_yield : Return the aquifer specific yield for each finite element node and each layer
         IWFMModel.get_aquifer_specific_storage : Return the aquifer specific storage for each finite element node and each layer
         IWFMModel.get_aquifer_parameters : Return all aquifer parameters at each model node and layer
+        IWFMModel,get_aquifer_transmissivity : Return the transmissivity of each model aquifer layer
 
         Example
         -------
@@ -5856,6 +5858,7 @@ class IWFMModel(IWFMMiscellaneous):
         IWFMModel.get_aquifer_specific_yield : Return the aquifer specific yield for each finite element node and each layer
         IWFMModel.get_aquifer_specific_storage : Return the aquifer specific storage for each finite element node and each layer
         IWFMModel.get_aquifer_parameters : Return all aquifer parameters at each model node and layer
+        IWFMModel,get_aquifer_transmissivity : Return the transmissivity of each model aquifer layer
 
         Example
         -------
@@ -5980,6 +5983,7 @@ class IWFMModel(IWFMMiscellaneous):
         IWFMModel.get_aquitard_vertical_k : Return the aquitard vertical hydraulic conductivity for each finite element node and each layer
         IWFMModel.get_aquifer_specific_storage : Return the aquifer specific storage for each finite element node and each layer
         IWFMModel.get_aquifer_parameters : Return all aquifer parameters at each model node and layer
+        IWFMModel,get_aquifer_transmissivity : Return the transmissivity of each model aquifer layer
 
         Example
         -------
@@ -6118,6 +6122,7 @@ class IWFMModel(IWFMMiscellaneous):
         IWFMModel.get_aquitard_vertical_k : Return the aquitard vertical hydraulic conductivity for each finite element node and each layer
         IWFMModel.get_aquifer_specific_yield : Return the aquifer specific yield for each finite element node and each layer
         IWFMModel.get_aquifer_parameters : Return all aquifer parameters at each model node and layer
+        IWFMModel,get_aquifer_transmissivity : Return the transmissivity of each model aquifer layer
 
         Example
         -------
@@ -6305,6 +6310,7 @@ class IWFMModel(IWFMMiscellaneous):
         IWFMModel.get_aquitard_vertical_k : Return the aquitard vertical hydraulic conductivity for each finite element node and each layer
         IWFMModel.get_aquifer_specific_yield : Return the aquifer specific yield for each finite element node and each layer
         IWFMModel.get_aquifer_specific_storage : Return the aquifer specific storage for each finite element node and each layer
+        IWFMModel,get_aquifer_transmissivity : Return the transmissivity of each model aquifer layer
 
         Example
         -------
@@ -11850,6 +11856,131 @@ class IWFMModel(IWFMMiscellaneous):
         return stream_network[
             ["StreamReach", "StreamNodes", "GroundwaterNodes", "ReachName"]
         ]
+
+    def get_model_stratigraphy(self):
+        """
+        Return the model stratigraphy as provided in stratigraphy input file
+
+        Returns
+        -------
+        pd.DataFrame
+            pandas DataFame object containing ground surface elevation, aquitard thicknesses, and aquifer thicknesses for each model node
+
+        See Also
+        --------
+        IWFMModel.get_ground_surface_elevation : Return the ground surface elevation for each node specified in the IWFM model
+        IWFMModel.get_aquifer_top_elevation : Return the aquifer top elevations for each finite element node and each layer
+        IWFMModel.get_aquifer_bottom_elevation : Return the aquifer bottom elevations for each finite element node and each layer
+
+        Example
+        -------
+        >>> from pywfm import IWFMModel
+        >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
+        >>> sim_file = 'Simulation_MAIN.IN'
+        >>> model = IWFMModel(pp_file, sim_file)
+        >>> model.get_model_stratigraphy()
+            NodeID    GSE   A1      L1     A2      L2
+        0        1  500.0  0.0	 500.0   10.0   100.0
+        1        2  500.0  0.0	 500.0   10.0   100.0
+        2        3  500.0  0.0	 500.0   10.0   100.0
+        3        4  500.0  0.0	 500.0   10.0   100.0
+        4        5  500.0  0.0	 500.0   10.0   100.0
+        ...	   ...    ...  ...     ...    ...     ...
+        436	   437	500.0  0.0	 500.0    0.0   100.0
+        437	   438	500.0  0.0	 500.0    0.0   100.0
+        438	   439	500.0  0.0	 500.0    0.0   100.0
+        439	   440	500.0  0.0	 500.0    0.0   100.0
+        440	   441	500.0  0.0	 500.0    0.0   100.0
+        441 rows × 6 columns
+        >>> model.kill()
+        >>> model.close_log_file()
+        """
+        # get the node ids
+        stratigraphy = dict(
+            NodeID=self.get_node_ids(), GSE=self.get_ground_surface_elevation()
+        )
+
+        # get aquifer top elevations
+        top_elevs = self.get_aquifer_top_elevation()
+
+        # get aquifer bottom elevations
+        bot_elevs = self.get_aquifer_bottom_elevation()
+
+        # calculate layer thicknesses
+        for l in range(self.get_n_layers()):
+            if l == 0:
+                stratigraphy[f"A{l+1}"] = stratigraphy["GSE"] - top_elevs[l]
+            else:
+                stratigraphy[f"A{l+1}"] = bot_elevs[l - 1] - top_elevs[l]
+
+            stratigraphy[f"L{l+1}"] = top_elevs[l] - bot_elevs[l]
+
+        return pd.DataFrame(stratigraphy)
+
+    def get_aquifer_transmissivity(self):
+        """
+        Return the transmissivity of each model aquifer layer
+
+        Returns
+        -------
+        pd.DataFrame
+            pandas DataFrame object containing aquifer transmissivity for each layer for each model node
+
+        See Also
+        --------
+        IWFMModel.get_aquifer_vertical_k : Return the aquifer vertical hydraulic conductivity for each finite element node and each layer
+        IWFMModel.get_aquitard_vertical_k : Return the aquitard vertical hydraulic conductivity for each finite element node and each layer
+        IWFMModel.get_aquifer_specific_yield : Return the aquifer specific yield for each finite element node and each layer
+        IWFMModel.get_aquifer_specific_storage : Return the aquifer specific storage for each finite element node and each layer
+        IWFMModel.get_aquifer_parameters : Return all aquifer parameters at each model node and layer
+
+        Example
+        -------
+        >>> from pywfm import IWFMModel
+        >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
+        >>> sim_file = 'Simulation_MAIN.IN'
+        >>> model = IWFMModel(pp_file, sim_file)
+        >>> model.get_aquifer_transmissivity()
+           NodeID       T1      T2
+        0       1  25000.0  5000.0
+        1       2  25000.0  5000.0
+        2       3  25000.0  5000.0
+        3       4  25000.0  5000.0
+        4       5  25000.0  5000.0
+        ...   ...      ...     ...
+        436	  437  25000.0  5000.0
+        437	  438  25000.0  5000.0
+        438	  439  25000.0  5000.0
+        439	  440  25000.0  5000.0
+        440	  441  25000.0  5000.0
+        441 rows × 3 columns
+        >>> model.kill()
+        >>> model.close_log_file()
+        """
+        # get node ids
+        nodes = self.get_node_ids()
+
+        # get aquifer top elevations
+        top_elevs = self.get_aquifer_top_elevation()
+
+        # get aquifer bottom elevations
+        bottom_elevs = self.get_aquifer_bottom_elevation()
+
+        # get layer thicknesses
+        layer_thicknesses = top_elevs - bottom_elevs
+
+        # get aquifer horizontal k
+        k = self.get_aquifer_horizontal_k()
+
+        # calculate layer transmissivity
+        transmissivity = k * layer_thicknesses
+
+        t = dict(NodeID=nodes)
+
+        for l in range(self.get_n_layers()):
+            t[f"T{l+1}"] = transmissivity[l]
+
+        return pd.DataFrame(t)
 
     ### plotting methods
     def plot_nodes(
