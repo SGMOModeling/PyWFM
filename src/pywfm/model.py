@@ -11350,6 +11350,83 @@ class IWFMModel(IWFMMiscellaneous):
 
         self.dll.IW_Model_RestorePumpingToReadValues(ctypes.byref(status))
 
+    def fe_interpolate(self, x, y):
+        """
+        Return interpolation coefficients for converting nodal properties to x,y-coordinates within an element
+
+        Parameters
+        ----------
+        x : float
+            x-coordinate of interpolation location
+
+        y : float
+            y-coordinate of interpolation location
+
+        Returns
+        -------
+        tuple
+            element_id where x- and y- coordinates are located
+            node_ids of nodes corresponding to element vertices
+            interpolation coefficients for each node
+
+        Note
+        ----
+        x and y coordinates need to be in model units which may be different from the units of the coordinates
+        provided in the IWFM nodal x-y coordinate input file.
+
+        Example
+        -------
+        >>> from pywfm import IWFMModel
+        >>> pp_file = '../Preprocessor/PreProcessor_MAIN.IN'
+        >>> sim_file = 'Simulation_MAIN.IN'
+        >>> model = IWFMModel(pp_file, sim_file)
+        >>> elem, nodes, coeff = model.fe_interpolate(1807720.8, 14438800.8)
+        >>> elem
+        1
+        >>> nodes
+        array([1, 2, 23, 22])
+        >>> coeff
+        array([0.25, 0.25, 0.25, 0.25])
+        >>> model.kill()
+        >>> model.close_log_file()
+        """
+        # check to see if IWFM procedure is available in user version of IWFM DLL
+        if not hasattr(self.dll, "IW_Model_FEInterpolate"):
+            raise AttributeError(
+                'IWFM API does not have "{}" procedure. '
+                "Check for an updated version".format("IW_Model_FEInterpolate")
+            )
+
+        # convert x and y to ctypes
+        x = ctypes.c_double(x)
+        y = ctypes.c_double(y)
+
+        # initialize output variables
+        element_idx = ctypes.c_int(0)
+        nodes_idx = (ctypes.c_int * 4)()
+        coeff = (ctypes.c_double * 4)()
+
+        self.dll.IW_Model_FEInterpolate(
+            ctypes.byref(x),
+            ctypes.byref(y),
+            ctypes.byref(element_idx),
+            nodes_idx,
+            coeff,
+        )
+
+        # get element ids
+        element_ids = self.get_element_ids()
+
+        # convert element index to element ID
+        element = element_ids[element_idx.value - 1]
+
+        # get node IDs
+        node_ids = self.get_node_ids()
+
+        nodes = node_ids[np.array(nodes_idx) - 1]
+
+        return element, nodes, np.array(coeff)
+
     ### methods that wrap two or more DLL calls
     def get_groundwater_hydrograph_info(self):
         """
