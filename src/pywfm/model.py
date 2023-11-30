@@ -11423,6 +11423,7 @@ class IWFMModel(IWFMMiscellaneous):
         # get node IDs
         node_ids = self.get_node_ids()
 
+        # convert node index to node ID
         nodes = node_ids[np.array(nodes_idx) - 1]
 
         return element, nodes, np.array(coeff)
