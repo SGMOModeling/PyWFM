@@ -18,6 +18,7 @@
       ~IWFMModel.advance_time
       ~IWFMModel.close_log_file
       ~IWFMModel.delete_inquiry_data_file
+      ~IWFMModel.fe_interpolate
       ~IWFMModel.get_actual_stream_diversions_at_some_locations
       ~IWFMModel.get_ag_diversion_supply_shortage_at_origin
       ~IWFMModel.get_ag_elempump_supply_shortage_at_origin
