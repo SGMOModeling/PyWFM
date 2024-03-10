@@ -33,7 +33,8 @@ class IWFMZBudget(IWFMMiscellaneous):
 
         self.zbudget_file_name = zbudget_file_name
 
-        self.dll = LIB
+        # initialize the IWFMMiscellaneous class
+        super().__init__()
 
         # check to see if the open file procedure exists in the dll provided
         if not hasattr(self.dll, "IW_ZBudget_OpenFile"):

@@ -3,8 +3,6 @@ import ctypes
 import numpy as np
 import pandas as pd
 
-from pywfm import LIB
-
 from pywfm.misc import IWFMMiscellaneous
 
 
@@ -34,7 +32,8 @@ class IWFMBudget(IWFMMiscellaneous):
 
         self.budget_file_name = budget_file_name
 
-        self.dll = LIB
+        # initialize the IWFMMiscellaneous class
+        super().__init__()
 
         # check to see if the open file procedure exists in the dll provided
         if not hasattr(self.dll, "IW_Budget_OpenFile"):

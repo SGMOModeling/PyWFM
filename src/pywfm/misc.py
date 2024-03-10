@@ -2,6 +2,8 @@ import ctypes
 import datetime
 import numpy as np
 
+from pywfm import LIB
+
 
 class IWFMMiscellaneous:
     """IWFM Miscellaneous Class for interacting with the IWFM API
@@ -18,6 +20,9 @@ class IWFMMiscellaneous:
     It is not provided with an __init__ method, so the self.dll used in
     each of the methods must be provided through the subclass.
     """
+
+    def __init__(self):
+        self.dll = ctypes.CDLL(LIB)
 
     def get_data_unit_type_id_length(self):
         if not hasattr(self.dll, "IW_GetDataUnitTypeID_Length"):
@@ -541,9 +546,7 @@ class IWFMMiscellaneous:
         if not hasattr(self.dll, "IW_GetLocationTypeID_Diversion"):
             raise AttributeError(
                 'IWFM API does not have "{}" procedure. '
-                "Check for an updated version.".format(
-                    "IW_GetLocationTypeID_Diversion"
-                )
+                "Check for an updated version.".format("IW_GetLocationTypeID_Diversion")
             )
 
         # initialize output variables
@@ -560,9 +563,7 @@ class IWFMMiscellaneous:
         if not hasattr(self.dll, "IW_GetLocationTypeID_Bypass"):
             raise AttributeError(
                 'IWFM API does not have "{}" procedure. '
-                "Check for an updated version.".format(
-                    "IW_GetLocationTypeID_Bypass"
-                )
+                "Check for an updated version.".format("IW_GetLocationTypeID_Bypass")
             )
 
         # initialize output variables
@@ -690,7 +691,7 @@ class IWFMMiscellaneous:
             subsidenceobs=location_type_id_subsidenceobs.value,
             streamnodebud=location_type_id_streamnodebud.value,
             diversions=location_type_id_diversion.value,
-            bypass=location_type_id_bypass.value
+            bypass=location_type_id_bypass.value,
         )
 
     def get_flow_destination_type_id_outside(self):

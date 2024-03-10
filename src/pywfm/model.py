@@ -11,8 +11,6 @@ import matplotlib.patches as patches
 from matplotlib.collections import PolyCollection
 import matplotlib.colors as colors
 
-from pywfm import LIB
-
 from pywfm.misc import IWFMMiscellaneous
 
 
@@ -100,7 +98,8 @@ class IWFMModel(IWFMMiscellaneous):
 
         self.is_for_inquiry = is_for_inquiry
 
-        self.dll = LIB
+        # initialize the IWFMMiscellaneous class
+        super().__init__()
 
         if delete_inquiry_data_file:
             self.delete_inquiry_data_file()
@@ -11657,9 +11656,9 @@ class IWFMModel(IWFMMiscellaneous):
             element_nodes = element_segments[element_segments["IE"] == element][
                 "NodeID"
             ].to_numpy()
-            element_segments.loc[
-                element_segments["IE"] == element, "end_node"
-            ] = np.roll(element_nodes, -1, axis=0)
+            element_segments.loc[element_segments["IE"] == element, "end_node"] = (
+                np.roll(element_nodes, -1, axis=0)
+            )
 
         # duplicate start_node and end_node
         element_segments["orig_start_node"] = element_segments["start_node"]
@@ -11667,9 +11666,9 @@ class IWFMModel(IWFMMiscellaneous):
 
         # order start_nodes and end_nodes low to high
         condition = element_segments["start_node"] > element_segments["end_node"]
-        element_segments.loc[
-            condition, ["start_node", "end_node"]
-        ] = element_segments.loc[condition, ["end_node", "start_node"]].values
+        element_segments.loc[condition, ["start_node", "end_node"]] = (
+            element_segments.loc[condition, ["end_node", "start_node"]].values
+        )
 
         if not subregions:
             # count segments interior segments should have count of 2 while edge segments have count of 1
