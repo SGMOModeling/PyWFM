@@ -1,6 +1,41 @@
 [build-system]
-requires = [
-    "setuptools>=42",
-    "wheel"
-]
+requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
+
+[project]
+name = "PyWFM"
+authors = [{name = "Tyler Hatch", email = "thatch@intera.com"}]
+description = "python library to interact with Integrated Water Flow Model (IWFM) applications"
+readme = "README.md"
+dynamic = ["version"]
+license = {file = "LICENSE"}
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: Microsoft :: Windows :: Windows 10",
+    "Operating System :: Microsoft :: Windows :: Windows 11"
+]
+dependencies = [
+    "numpy",
+    "matplotlib",
+    "pandas",
+    "Click",
+    "requests",
+]
+
+[project.urls]
+Documentation = "https://sgmomodeling.github.io/PyWFM"
+Repository = "https://github.com/SGMOModeling/PyWFM"
+Issues = "https://github.com/SGMOModeling/PyWFM/issues"
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.dynamic]
+version = {attr = "pywfm.__version__"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[project.scripts]
+pywfm = "pywfm.cli:cli"
