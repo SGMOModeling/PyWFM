@@ -37,3 +37,9 @@ This guide provides a description of how to build PyWFM and upload the built pac
    ```
    conda activate <env-name>
    ```
+
+5. Install [conda-build](https://docs.conda.io/projects/conda-build/en/stable/) and [anaconda-client](https://docs.anaconda.com/free/anacondaorg/user-guide/getting-started-with-anaconda-client/)
+
+   ```
+   conda install anaconda-client conda-build
+   ```
