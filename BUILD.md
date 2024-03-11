@@ -95,5 +95,5 @@ This guide provides a description of how to build PyWFM and upload the built pac
    > ```
    >
    > ```
-   > anaconda upload --user cadwr-sgmo C:\Users\hatch\.conda\envs\build_pkg\conda-bld\noarch\pywfm-0.1.3-pyh7b7c402_0.tar.bz2
+   > anaconda upload --user cadwr-sgmo C:\Users\hatch\.conda\envs\build_pkg\conda-bld\noarch\pywfm-0.2.5-pyh7b7c402_0.tar.bz2
    > ```
