@@ -75,7 +75,13 @@ This guide provides a description of how to build PyWFM and upload the built pac
 
    > **Note**
    >
-   > you need to provide the full path to the <package-name>.tar.bz2 file created by conda build.
+   > if you want to upload the conda package to a specific channel, you may need to add the channel via conda config
+   >
+   > ```
+   > conda config --env --add channels ORGANIZATION
+   > ```
+   >
+   > You also need to provide the full path to the <package-name>.tar.bz2 file created by conda build.
    > Upon completion of the build process, the path will be provided to you.
 
    ```
@@ -83,6 +89,10 @@ This guide provides a description of how to build PyWFM and upload the built pac
    ```
 
    > **Example**
+   >
+   > ```
+   > conda config --env --add channels cadwr-sgmo
+   > ```
    >
    > ```
    > anaconda upload --user cadwr-sgmo C:\Users\hatch\.conda\envs\build_pkg\conda-bld\noarch\pywfm-0.1.3-pyh7b7c402_0.tar.bz2
