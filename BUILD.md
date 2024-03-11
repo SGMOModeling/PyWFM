@@ -43,3 +43,28 @@ This guide provides a description of how to build PyWFM and upload the built pac
    ```
    conda install anaconda-client conda-build
    ```
+
+6. Log-in to your anaconda account from anaconda prompt
+
+   ```
+   anaconda login
+   ```
+
+7. To create a conda package, you need to develop a conda recipe. For PyWFM, conda recipes can be found in the conda.recipe directory
+
+   For more information about conda recipes, see the link to the docs:
+   https://docs.conda.io/projects/conda-build/en/stable/concepts/recipe.html
+
+   At a minimum, you will need a meta.yaml. For more complex builds, you may also need a build.bat and build.sh to support windows and linux/mac builds, respectively.
+
+   > **Note**
+   >
+   > At this time, pywfm only supports Windows due to the binary dependency with the Windows IWFM DLL. Initial stages of development for a Linux version of the IWFM API are being explored.
+
+8. Build the conda package
+
+   Navigate to the conda recipe (meta.yaml)
+
+   ```
+   conda build --no-anaconda-upload .
+   ```
