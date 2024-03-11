@@ -29,13 +29,19 @@ pywfm is a python package that exposes the functionality of the IWFM API
 Overview
 --------
 
-The pywfm library includes 3 main classes:
+The pywfm library includes 4 classes:
 
    * :doc:`IWFMModel <reference/model>`
    * :doc:`IWFMBudget <reference/budget>`
    * :doc:`IWFMZBudget <reference/zbudget>`
+   * :doc:`IWFMMiscellaneous <reference/misc>`
 
-Each of these inherits from the IWFMMiscellaneous base class. Many of the methods in the IWFMMiscellaneous base class cannot be used on their own because the IWFMMiscellaneous class was designed without direct access to the IWFM API. Users can access all of this functionality from within the IWFMModel, IWFMBudget, and IWFMZBudget classes.
+.. versionadded:: 0.2.5
+   pywfm now allows the IWFMMiscellaneous class to be instantiated directly. This was done to allow the addition of convenience scripts in a command line interface (CLI)
+   It also reduces duplication of code because each class was calling ctypes.CDLL when it can be called once in IWFMMiscellaneous and inherited by the other classes.
+   Users can still access all the functionality of IWFMMiscellaneous via IWFMModel, IWFMBudget, and IWFMZBudget classes.
+
+
 
 ------
 Design

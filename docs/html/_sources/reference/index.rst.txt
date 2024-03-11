@@ -13,7 +13,7 @@ functionality built into the pywfm python library
 Main PyWFM Classes
 ********************
 
-The pywfm module is separated into three main classes.
+The pywfm module is separated into three main classes and one base class.
 
 The IWFMModel class is designed around the IWFM Model Object 
 which allows for interacting with the model data
@@ -41,6 +41,15 @@ a user-customized area or extent
 
    IWFMZBudget
 
+The IWFMMiscellaneous class is designed around base functionality 
+provided by IWFM. It provides internal IDs for different built-in 
+types and utility functions for working with dates and string arrays.
+
+.. autosummary::
+   :toctree: generated/
+
+   misc.IWFMMiscellaneous
+
 ***************
 Class Reference
 ***************
@@ -51,3 +60,4 @@ Class Reference
    IWFMModel <model>
    IWFMBudget <budget>
    IWFMZBudget <zbudget>
+   IWFMMiscellaneous <misc>
