@@ -17,3 +17,21 @@ For example if you want the environment to be called build_pkg
 ```
 conda create -n build_pkg
 ```
+
+---
+
+**Note:**
+
+if you have an environment created to build conda packages, you can view existing environments by:
+
+```
+conda info --envs
+```
+
+or
+
+```
+conda env list
+```
+
+---
