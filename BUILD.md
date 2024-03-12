@@ -14,13 +14,13 @@ This guide provides a description of how to build PyWFM and upload the built pac
 
    For example if you want the environment to be called build_pkg
 
-   > [!TIP]
+   > **Example**
    >
    > ```
    > conda create -n build_pkg
    > ```
 
-   > [!NOTE]
+   > **Note:**
    >
    > if you have an environment created to build conda packages, you can view existing environments by:
    >
@@ -59,7 +59,7 @@ This guide provides a description of how to build PyWFM and upload the built pac
 
    At a minimum, you will need a meta.yaml. For more complex builds, you may also need a build.bat and build.sh to support windows and linux/mac builds, respectively.
 
-   > [!NOTE]
+   > **Note**
    >
    > At this time, pywfm only supports Windows due to the binary dependency with the Windows IWFM DLL. Initial stages of development for a Linux version of the IWFM API are being explored.
 
@@ -73,7 +73,7 @@ This guide provides a description of how to build PyWFM and upload the built pac
 
 9. Upload the built package to anaconda.org for distribution.
 
-   > [!NOTE]
+   > **Note**
    >
    > if you want to upload the conda package to a specific channel, you may need to add the channel via conda config
    >
@@ -88,7 +88,7 @@ This guide provides a description of how to build PyWFM and upload the built pac
    anaconda upload --user ORGANIZATION package.tar.bz2
    ```
 
-   > [!TIP]
+   > **Example**
    >
    > ```
    > conda config --env --add channels cadwr-sgmo
