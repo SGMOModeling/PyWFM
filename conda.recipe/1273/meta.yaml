@@ -24,14 +24,14 @@ requirements:
     - pandas
     - numpy
     - matplotlib
-    - iwfmdll=2015.0.1273
+    - cadwr-sgmo::iwfmdll=2015.0.1273
   
   run:
     - python>=3.6
     - pandas
     - numpy
     - matplotlib
-    - iwfmdll=2015.0.1273
+    - cadwr-sgmo::iwfmdll=2015.0.1273
 
 test:
   imports:
