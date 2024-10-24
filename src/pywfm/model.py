@@ -11226,9 +11226,18 @@ class IWFMModel(IWFMMiscellaneous):
         else:
             return False
 
-    def is_model_instantiated(self):
+    def is_model_instantiated(self, model_index=1):
         """
         check if a Model object is instantiated
+
+        Parameters
+        ==========
+        model_index : int, default 1
+            index of a model object
+
+            Note
+            ----
+            This can be a number between 1 and 10 since IWFM API can allow up to 10 models to be opened simultaneously
 
         Returns
         -------
@@ -11242,15 +11251,32 @@ class IWFMModel(IWFMMiscellaneous):
                 "Check for an updated version".format("IW_Model_IsModelInstantiated")
             )
 
+        # get the IWFM API version
+        api_version = self.get_version()
+        iwfm_core_version = api_version["IWFM Core"]
+        major_version, revision_number, build_number = [
+            int(v) for v in iwfm_core_version.split(".")
+        ]
+
         # initialize output variables
         is_instantiated = ctypes.c_int(0)
 
         # set instance variable status to 0
         status = ctypes.c_int(0)
 
-        self.dll.IW_Model_IsModelInstantiated(
-            ctypes.byref(is_instantiated), ctypes.byref(status)
-        )
+        if major_version > 2015:
+            model_index = ctypes.c_int(model_index)
+
+            self.dll.IW_Model_IsModelInstantiated(
+                ctypes.byref(model_index),
+                ctypes.byref(is_instantiated),
+                ctypes.byref(status),
+            )
+
+        else:
+            self.dll.IW_Model_IsModelInstantiated(
+                ctypes.byref(is_instantiated), ctypes.byref(status)
+            )
 
         if is_instantiated.value == 1:
             return True
