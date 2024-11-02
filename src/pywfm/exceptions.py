@@ -1,0 +1,2 @@
+class IWFMError(Exception):
+    pass
