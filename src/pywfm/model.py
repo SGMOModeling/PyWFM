@@ -12,6 +12,7 @@ from matplotlib.collections import PolyCollection
 import matplotlib.colors as colors
 
 from pywfm.misc import IWFMMiscellaneous
+from pywfm.exceptions import IWFMError
 
 
 class IWFMModel(IWFMMiscellaneous):
@@ -143,9 +144,12 @@ class IWFMModel(IWFMMiscellaneous):
                 )
             )
 
-        # check that model object isn't already instantiated
-        if self.is_model_instantiated():
-            return
+        # get the IWFM API version
+        api_version = self.get_version()
+        iwfm_core_version = api_version["IWFM Core"]
+        major_version, revision_number, build_number = [
+            int(v) for v in iwfm_core_version.split(".")
+        ]
 
         # convert preprocessor file name to ctypes
         preprocessor_file_name = ctypes.create_string_buffer(
@@ -170,15 +174,35 @@ class IWFMModel(IWFMMiscellaneous):
         # set instance variable status to 0
         status = ctypes.c_int(0)
 
-        self.dll.IW_Model_New(
-            ctypes.byref(length_preprocessor_file_name),
-            preprocessor_file_name,
-            ctypes.byref(length_simulation_file_name),
-            simulation_file_name,
-            ctypes.byref(has_routed_streams),
-            ctypes.byref(is_for_inquiry),
-            ctypes.byref(status),
-        )
+        if major_version > 2015:
+            # initialize model_id to 0
+            model_id = ctypes.c_int(0)
+
+            self.dll.IW_Model_New(
+                ctypes.byref(length_preprocessor_file_name),
+                preprocessor_file_name,
+                ctypes.byref(length_simulation_file_name),
+                simulation_file_name,
+                ctypes.byref(has_routed_streams),
+                ctypes.byref(is_for_inquiry),
+                ctypes.byref(model_id),
+                ctypes.byref(status),
+            )
+
+            return model_id.value, status.value
+
+        else:
+            self.dll.IW_Model_New(
+                ctypes.byref(length_preprocessor_file_name),
+                preprocessor_file_name,
+                ctypes.byref(length_simulation_file_name),
+                simulation_file_name,
+                ctypes.byref(has_routed_streams),
+                ctypes.byref(is_for_inquiry),
+                ctypes.byref(status),
+            )
+
+            return status.value
 
     def kill(self):
         """
@@ -194,10 +218,69 @@ class IWFMModel(IWFMMiscellaneous):
                 "Check for an updated version".format("IW_Model_Kill")
             )
 
-        # reset instance variable status to 0
+        # set status to 0
         status = ctypes.c_int(0)
 
         self.dll.IW_Model_Kill(ctypes.byref(status))
+
+    def get_current_model_id(self):
+        """
+        Return the ID for the current active model
+
+        Returns
+        -------
+        int
+            ID for the current active model
+        """
+        # check to see if IWFM procedure is available in user version of IWFM DLL
+        if not hasattr(self.dll, "IW_Model_GetCurrentModelID"):
+            raise AttributeError(
+                'IWFM API does not have "{}" procedure. '
+                "Check for an updated version".format("IW_Model_GetCurrentModelID")
+            )
+        # initialize model ID
+        model_id = ctypes.c_int(0)
+
+        # set status to 0
+        status = ctypes.c_int(0)
+
+        self.dll.IW_Model_GetCurrentModelID(
+            ctypes.byref(model_id), ctypes.byref(status)
+        )
+
+        return model_id.value
+
+    def switch_active_model(self, model_id):
+        """
+        Switch between active models
+
+        Parameters
+        ----------
+        model_id : int
+            ID of model to change to active
+
+        Returns
+        -------
+        None
+            switches active model
+        """
+        # check to see if IWFM procedure is available in user version of IWFM DLL
+        if not hasattr(self.dll, "IW_Model_Switch"):
+            raise AttributeError(
+                'IWFM API does not have "{}" procedure. '
+                "Check for an updated version".format("IW_Model_Switch")
+            )
+
+        # convert model_id to ctypes
+        model_id = ctypes.c_int(model_id)
+
+        # set status to 0
+        status = ctypes.c_int(0)
+
+        self.dll.IW_Model_Switch(ctypes.byref(model_id), ctypes.byref(status))
+
+        if status.value != 0:
+            raise IWFMError(f"{self.get_last_message()}")
 
     def get_current_date_and_time(self):
         """
@@ -306,7 +389,7 @@ class IWFMModel(IWFMMiscellaneous):
                 "Check for an updated version".format("IW_Model_GetNTimeSteps")
             )
 
-        # reset instance variable status to 0
+        # set status to 0
         status = ctypes.c_int(0)
 
         # initialize n_nodes variable
@@ -1499,7 +1582,7 @@ class IWFMModel(IWFMMiscellaneous):
         # set input variables convert to ctypes, if not already
         stream_node_index = ctypes.c_int(stream_node_index)
 
-        # reset instance variable status to 0
+        # set status to 0
         status = ctypes.c_int(0)
 
         # initialize output variables
