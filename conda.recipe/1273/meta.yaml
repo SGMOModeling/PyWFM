@@ -3,9 +3,10 @@
   from_recipe_dir=True, 
   regex_pattern='__version__ = "(.+)"') %}
 {% set version = version_match[1] %}
+{% set build_number = 0 %}
 
 package:
-  name: pywfm
+  name: iwfm-pywfm
   version: {{ version }}.1273
 
 source:
@@ -13,25 +14,23 @@ source:
   git_tag: master
 
 build:
-  noarch: python
-  number: 0
-  script: python -m pip install --ignore-installed .
+  skip: true [not win]
+  number: {{ build_number }}
+  script: {{ PYTHON }} -m pip install --no-deps --ignore-installed .
 
 requirements:
   host:
-    - python>=3.6
+    - python
     - pip
-    - pandas
-    - numpy
-    - matplotlib
-    - cadwr-sgmo::iwfmdll=2015.0.1273
   
   run:
-    - python>=3.6
+    - python
     - pandas
     - numpy
     - matplotlib
-    - cadwr-sgmo::iwfmdll=2015.0.1273
+    - click
+    - requests
+    - cadwr-sgmo::iwfmdll==2015.0.1273 # [win]
 
 test:
   imports:
