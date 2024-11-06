@@ -1,7 +1,7 @@
 import os
 import platform
 
-__version__ = "0.2.5"
+__version__ = "0.2.6"
 
 if platform.uname()[0] == "Windows":
     DLL_PATH = os.path.normpath(os.path.join(__file__, "../../../../Library/bin"))
