@@ -6,3 +6,4 @@ __pycache__/
 *.pyc
 src/pywfm.egg-info/*
 src/iwfm_pywfm.egg-info/*
+dist/
