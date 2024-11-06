@@ -1,0 +1,45 @@
+{% set version_match = load_file_regex(
+  load_file="../../src/pywfm/__init__.py",
+  from_recipe_dir=True, 
+  regex_pattern='__version__ = "(.+)"') %}
+{% set version = version_match[1] %}
+{% set build_number = 0 %}
+
+package:
+  name: iwfm-pywfm
+  version: {{ version }}.1594
+
+source:
+  git_url: https://github.com/SGMOModeling/PyWFM.git
+  git_tag: master
+
+build:
+  number: {{ build_number }}
+  script: {{ PYTHON }} -m pip install --no-deps --ignore-installed .
+
+requirements:
+  host:
+    - python
+    - pip
+  
+  run:
+    - python
+    - pandas
+    - numpy
+    - matplotlib
+    - Click
+    - requests
+    - cadwr-sgmo::iwfmdll==2024.2.1594 # [win]
+
+test:
+  imports:
+    - pywfm
+
+about:
+  home: https://github.com/SGMOModeling/PyWFM
+  license: MIT
+  summary: 'python library to interact with IWFM applications'
+  description: |
+    python library to expose the functionality of the IWFM API
+  dev_url:  https://github.com/SGMOModeling/PyWFM
+  doc_url: https://sgmomodeling.github.io/PyWFM/html/index.html
