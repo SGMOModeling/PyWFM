@@ -3,8 +3,8 @@ requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "PyWFM"
-authors = [{name = "Tyler Hatch", email = "thatch@intera.com"}]
+name = "iwfm-pywfm"
+authors = [{name = "Tyler Hatch", email = "hatch.tyler@gmail.com"}]
 description = "python library to interact with Integrated Water Flow Model (IWFM) applications"
 readme = "README.md"
 dynamic = ["version"]
