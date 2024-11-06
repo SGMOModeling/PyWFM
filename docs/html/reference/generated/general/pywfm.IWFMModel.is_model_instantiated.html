@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>pywfm.IWFMModel.is_model_instantiated &#8212; PyWFM 0.2.5 documentation</title>
+    <title>pywfm.IWFMModel.is_model_instantiated &#8212; PyWFM 0.2.6 documentation</title>
   
   
   
@@ -36,7 +36,7 @@
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
   <script src="../../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script src="../../../_static/documentation_options.js?v=cb850272"></script>
+    <script src="../../../_static/documentation_options.js?v=fc7d8818"></script>
     <script src="../../../_static/doctools.js?v=888ff710"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -122,8 +122,8 @@
       
     
     
-    <img src="../../../_static/sgmo_logo.png" class="logo__image only-light" alt="PyWFM 0.2.5 documentation - Home"/>
-    <script>document.write(`<img src="../../../_static/sgmo_logo.png" class="logo__image only-dark" alt="PyWFM 0.2.5 documentation - Home"/>`);</script>
+    <img src="../../../_static/sgmo_logo.png" class="logo__image only-light" alt="PyWFM 0.2.6 documentation - Home"/>
+    <script>document.write(`<img src="../../../_static/sgmo_logo.png" class="logo__image only-dark" alt="PyWFM 0.2.6 documentation - Home"/>`);</script>
   
   
 </a></div>
@@ -682,14 +682,22 @@ document.write(`
 <h1>pywfm.IWFMModel.is_model_instantiated<a class="headerlink" href="#pywfm-iwfmmodel-is-model-instantiated" title="Link to this heading">#</a></h1>
 <dl class="py method">
 <dt class="sig sig-object py" id="pywfm.IWFMModel.is_model_instantiated">
-<span class="sig-prename descclassname"><span class="pre">IWFMModel.</span></span><span class="sig-name descname"><span class="pre">is_model_instantiated</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pywfm.IWFMModel.is_model_instantiated" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">IWFMModel.</span></span><span class="sig-name descname"><span class="pre">is_model_instantiated</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pywfm.IWFMModel.is_model_instantiated" title="Link to this definition">#</a></dt>
 <dd><p>check if a Model object is instantiated</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>True if model object is instantiated otherwise False</p>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>model_index</strong> (<em>int</em><em>, </em><em>default 1</em>) – <p>index of a model object</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This can be a number between 1 and 10 since IWFM API can allow up to 10 models to be opened simultaneously</p>
+</div>
+</p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>bool</p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if model object is instantiated otherwise False</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
 </dd>
 </dl>
 </dd></dl>

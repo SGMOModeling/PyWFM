@@ -41,6 +41,7 @@
       ~IWFMModel.get_bypass_outflows
       ~IWFMModel.get_bypass_recoverable_loss_factor
       ~IWFMModel.get_current_date_and_time
+      ~IWFMModel.get_current_model_id
       ~IWFMModel.get_data_unit_type_id_area
       ~IWFMModel.get_data_unit_type_id_length
       ~IWFMModel.get_data_unit_type_ids
@@ -231,6 +232,7 @@
       ~IWFMModel.simulate_all
       ~IWFMModel.simulate_for_an_interval
       ~IWFMModel.simulate_for_one_timestep
+      ~IWFMModel.switch_active_model
       ~IWFMModel.turn_supply_adjustment_on_off
    
    
