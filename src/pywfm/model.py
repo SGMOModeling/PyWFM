@@ -235,6 +235,11 @@ class IWFMModel(IWFMMiscellaneous):
 
         self.dll.IW_Model_Kill(ctypes.byref(status))
 
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
+
     def get_current_model_id(self):
         """
         Return the ID for the current active model
@@ -259,6 +264,11 @@ class IWFMModel(IWFMMiscellaneous):
         self.dll.IW_Model_GetCurrentModelID(
             ctypes.byref(model_id), ctypes.byref(status)
         )
+
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
 
         return model_id.value
 
@@ -291,8 +301,10 @@ class IWFMModel(IWFMMiscellaneous):
 
         self.dll.IW_Model_Switch(ctypes.byref(model_id), ctypes.byref(status))
 
+        # check for errors in the IWFM API call
         if status.value != 0:
-            raise IWFMError(f"{self.get_last_message()}")
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
 
     def get_current_date_and_time(self):
         """
@@ -363,6 +375,11 @@ class IWFMModel(IWFMMiscellaneous):
             ctypes.byref(length_date_string), current_date_string, ctypes.byref(status)
         )
 
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
+
         return current_date_string.value.decode("utf-8")
 
     def get_n_time_steps(self):
@@ -410,6 +427,11 @@ class IWFMModel(IWFMMiscellaneous):
         self.dll.IW_Model_GetNTimeSteps(
             ctypes.byref(n_time_steps), ctypes.byref(status)
         )
+
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
 
         return n_time_steps.value
 
@@ -485,6 +507,11 @@ class IWFMModel(IWFMMiscellaneous):
             ctypes.byref(status),
         )
 
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
+
         dates_list = self._string_to_list_by_array(
             raw_dates_string, delimiter_position_array, n_data
         )
@@ -553,6 +580,11 @@ class IWFMModel(IWFMMiscellaneous):
             ctypes.byref(status),
         )
 
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
+
         return self._string_to_list_by_array(
             output_intervals, delimiter_position_array, actual_num_time_intervals
         )
@@ -602,6 +634,11 @@ class IWFMModel(IWFMMiscellaneous):
         n_nodes = ctypes.c_int(0)
 
         self.dll.IW_Model_GetNNodes(ctypes.byref(n_nodes), ctypes.byref(status))
+
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
 
         if not hasattr(self, "n_nodes"):
             self.n_nodes = n_nodes
@@ -659,6 +696,11 @@ class IWFMModel(IWFMMiscellaneous):
             ctypes.byref(num_nodes), x_coordinates, y_coordinates, ctypes.byref(status)
         )
 
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
+
         return np.array(x_coordinates), np.array(y_coordinates)
 
     def get_node_ids(self):
@@ -706,6 +748,11 @@ class IWFMModel(IWFMMiscellaneous):
         self.dll.IW_Model_GetNodeIDs(
             ctypes.byref(num_nodes), node_ids, ctypes.byref(status)
         )
+
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
 
         return np.array(node_ids)
 
@@ -755,6 +802,11 @@ class IWFMModel(IWFMMiscellaneous):
         n_elements = ctypes.c_int(0)
 
         self.dll.IW_Model_GetNElements(ctypes.byref(n_elements), ctypes.byref(status))
+
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
 
         if not hasattr(self, "n_elements"):
             self.n_elements = n_elements
@@ -806,6 +858,11 @@ class IWFMModel(IWFMMiscellaneous):
         self.dll.IW_Model_GetElementIDs(
             ctypes.byref(num_elements), element_ids, ctypes.byref(status)
         )
+
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
 
         return np.array(element_ids)
 
@@ -884,6 +941,11 @@ class IWFMModel(IWFMMiscellaneous):
             ctypes.byref(status),
         )
 
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
+
         # convert node indices to node IDs
         nodes_in_element = np.array(nodes_in_element)
 
@@ -952,6 +1014,11 @@ class IWFMModel(IWFMMiscellaneous):
             ctypes.byref(n_elements), element_areas, ctypes.byref(status)
         )
 
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
+
         return np.array(element_areas)
 
     def get_n_subregions(self):
@@ -997,6 +1064,11 @@ class IWFMModel(IWFMMiscellaneous):
         self.dll.IW_Model_GetNSubregions(
             ctypes.byref(n_subregions), ctypes.byref(status)
         )
+
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
 
         if not hasattr(self, "n_subregions"):
             self.n_subregions = n_subregions
@@ -1054,6 +1126,11 @@ class IWFMModel(IWFMMiscellaneous):
         self.dll.IW_Model_GetSubregionIDs(
             ctypes.byref(n_subregions), subregion_ids, ctypes.byref(status)
         )
+
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
 
         return np.array(subregion_ids)
 
@@ -1132,6 +1209,11 @@ class IWFMModel(IWFMMiscellaneous):
             ctypes.byref(status),
         )
 
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
+
         return subregion_name.value.decode("utf-8")
 
     def get_subregions_by_element(self):
@@ -1203,6 +1285,11 @@ class IWFMModel(IWFMMiscellaneous):
             ctypes.byref(n_elements), element_subregions, ctypes.byref(status)
         )
 
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
+
         # convert subregion indices to subregion IDs
         subregion_index_by_element = np.array(element_subregions)
         subregion_ids = self.get_subregion_ids()
@@ -1255,6 +1342,11 @@ class IWFMModel(IWFMMiscellaneous):
         self.dll.IW_Model_GetNStrmNodes(
             ctypes.byref(n_stream_nodes), ctypes.byref(status)
         )
+
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
 
         if not hasattr(self, "n_stream_nodes"):
             self.n_stream_nodes = n_stream_nodes
@@ -1311,6 +1403,11 @@ class IWFMModel(IWFMMiscellaneous):
         self.dll.IW_Model_GetStrmNodeIDs(
             ctypes.byref(n_stream_nodes), stream_node_ids, ctypes.byref(status)
         )
+
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
 
         return np.array(stream_node_ids, dtype=np.int32)
 
@@ -1389,6 +1486,11 @@ class IWFMModel(IWFMMiscellaneous):
             ctypes.byref(n_upstream_stream_nodes),
             ctypes.byref(status),
         )
+
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
 
         return n_upstream_stream_nodes.value
 
@@ -1481,6 +1583,11 @@ class IWFMModel(IWFMMiscellaneous):
             ctypes.byref(status),
         )
 
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
+
         # convert stream node indices to stream node ids
         upstream_node_indices = np.array(upstream_nodes)
 
@@ -1533,6 +1640,11 @@ class IWFMModel(IWFMMiscellaneous):
         self.dll.IW_Model_GetStrmBottomElevs(
             ctypes.byref(n_stream_nodes), stream_bottom_elevations, ctypes.byref(status)
         )
+
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
 
         return np.array(stream_bottom_elevations)
 
@@ -1605,6 +1717,11 @@ class IWFMModel(IWFMMiscellaneous):
             ctypes.byref(n_rating_table_points),
             ctypes.byref(status),
         )
+
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
 
         return n_rating_table_points.value
 
@@ -1684,6 +1801,11 @@ class IWFMModel(IWFMMiscellaneous):
             ctypes.byref(status),
         )
 
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
+
         return np.array(stage), np.array(flow)
 
     def get_n_stream_inflows(self):
@@ -1727,6 +1849,11 @@ class IWFMModel(IWFMMiscellaneous):
         self.dll.IW_Model_GetStrmNInflows(
             ctypes.byref(n_stream_inflows), ctypes.byref(status)
         )
+
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
 
         return n_stream_inflows.value
 
@@ -1774,6 +1901,11 @@ class IWFMModel(IWFMMiscellaneous):
         self.dll.IW_Model_GetStrmInflowNodes(
             ctypes.byref(n_stream_inflows), stream_inflow_nodes, ctypes.byref(status)
         )
+
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
 
         # convert stream node indices to stream node IDs
         stream_node_ids = self.get_stream_node_ids()
@@ -1825,6 +1957,11 @@ class IWFMModel(IWFMMiscellaneous):
         self.dll.IW_Model_GetStrmInflowIDs(
             ctypes.byref(n_stream_inflows), stream_inflow_ids, ctypes.byref(status)
         )
+
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
 
         return np.array(stream_inflow_ids)
 
@@ -1974,6 +2111,11 @@ class IWFMModel(IWFMMiscellaneous):
             ctypes.byref(status),
         )
 
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
+
         return np.array(inflows)
 
     def get_stream_flow_at_location(self, stream_node_id, flow_conversion_factor=1.0):
@@ -2082,6 +2224,11 @@ class IWFMModel(IWFMMiscellaneous):
             ctypes.byref(status),
         )
 
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
+
         return stream_flow.value
 
     def get_stream_flows(self, flow_conversion_factor=1.0):
@@ -2188,6 +2335,11 @@ class IWFMModel(IWFMMiscellaneous):
             stream_flows,
             ctypes.byref(status),
         )
+
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
 
         return np.array(stream_flows)
 
@@ -2296,6 +2448,11 @@ class IWFMModel(IWFMMiscellaneous):
             ctypes.byref(status),
         )
 
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
+
         return np.array(stream_stages)
 
     def get_stream_tributary_inflows(self, inflow_conversion_factor=1.0):
@@ -2360,6 +2517,11 @@ class IWFMModel(IWFMMiscellaneous):
             ctypes.byref(status),
         )
 
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
+
         return np.array(small_watershed_inflows)
 
     def get_stream_rainfall_runoff(self, runoff_conversion_factor=1.0):
@@ -2421,6 +2583,11 @@ class IWFMModel(IWFMMiscellaneous):
             rainfall_runoff_inflows,
             ctypes.byref(status),
         )
+
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
 
         return np.array(rainfall_runoff_inflows)
 
@@ -2485,6 +2652,11 @@ class IWFMModel(IWFMMiscellaneous):
             ctypes.byref(status),
         )
 
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
+
         return np.array(return_flows)
 
     def get_stream_pond_drains(self, pond_drain_conversion_factor=1.0):
@@ -2544,6 +2716,11 @@ class IWFMModel(IWFMMiscellaneous):
             pond_drain_flows,
             ctypes.byref(status),
         )
+
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
 
         return np.array(pond_drain_flows)
 
@@ -2606,6 +2783,11 @@ class IWFMModel(IWFMMiscellaneous):
             tile_drain_flows,
             ctypes.byref(status),
         )
+
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
 
         return np.array(tile_drain_flows)
 
@@ -2674,6 +2856,11 @@ class IWFMModel(IWFMMiscellaneous):
             ctypes.byref(status),
         )
 
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
+
         return np.array(riparian_evapotranspiration)
 
     def get_stream_gain_from_groundwater(self, stream_gain_conversion_factor=1.0):
@@ -2738,6 +2925,11 @@ class IWFMModel(IWFMMiscellaneous):
             ctypes.byref(status),
         )
 
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
+
         return np.array(gain_from_groundwater)
 
     def get_stream_gain_from_lakes(self, lake_inflow_conversion_factor=1.0):
@@ -2800,6 +2992,11 @@ class IWFMModel(IWFMMiscellaneous):
             gain_from_lakes,
             ctypes.byref(status),
         )
+
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
 
         return np.array(gain_from_lakes)
 
@@ -2865,6 +3062,11 @@ class IWFMModel(IWFMMiscellaneous):
             net_bypass_inflow,
             ctypes.byref(status),
         )
+
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
 
         return np.array(net_bypass_inflow)
 
@@ -2974,6 +3176,11 @@ class IWFMModel(IWFMMiscellaneous):
             ctypes.byref(status),
         )
 
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
+
         return np.array(actual_diversion_amounts)
 
     def get_stream_diversion_locations(self, diversion_locations="all"):
@@ -3066,6 +3273,11 @@ class IWFMModel(IWFMMiscellaneous):
             ctypes.byref(status),
         )
 
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
+
         # convert stream node indices to stream node ids
         stream_node_ids = self.get_stream_node_ids()
         stream_diversion_indices = np.array(diversion_stream_nodes)
@@ -3143,6 +3355,11 @@ class IWFMModel(IWFMMiscellaneous):
             ctypes.byref(status),
         )
 
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
+
         return n_elements.value
 
     def get_stream_diversion_elements(self, diversion_id):
@@ -3213,6 +3430,11 @@ class IWFMModel(IWFMMiscellaneous):
             ctypes.byref(status),
         )
 
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
+
         element_ids = self.get_element_ids()
         element_indices = np.array(element_indices)
 
@@ -3270,6 +3492,11 @@ class IWFMModel(IWFMMiscellaneous):
             ctypes.byref(n_stream_reaches), ctypes.byref(status)
         )
 
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
+
         return n_stream_reaches.value
 
     def get_stream_reach_ids(self):
@@ -3325,6 +3552,11 @@ class IWFMModel(IWFMMiscellaneous):
         self.dll.IW_Model_GetReachIDs(
             ctypes.byref(n_stream_reaches), stream_reach_ids, ctypes.byref(status)
         )
+
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
 
         return np.array(stream_reach_ids)
 
@@ -3402,6 +3634,11 @@ class IWFMModel(IWFMMiscellaneous):
             ctypes.byref(n_nodes_in_reach),
             ctypes.byref(status),
         )
+
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
 
         return n_nodes_in_reach.value
 
@@ -3491,6 +3728,11 @@ class IWFMModel(IWFMMiscellaneous):
             ctypes.byref(status),
         )
 
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
+
         # convert groundwater node indices to groundwater node IDs
         groundwater_node_ids = self.get_node_ids()
         reach_groundwater_node_indices = np.array(reach_groundwater_nodes)
@@ -3576,6 +3818,11 @@ class IWFMModel(IWFMMiscellaneous):
             reach_stream_nodes,
             ctypes.byref(status),
         )
+
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
 
         # convert stream node indices to IDs
         stream_node_ids = self.get_stream_node_ids()
@@ -3686,6 +3933,11 @@ class IWFMModel(IWFMMiscellaneous):
             ctypes.byref(status),
         )
 
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
+
         # convert stream reach indices to stream reach IDs
         stream_reach_ids = self.get_stream_reach_ids()
         stream_reach_indices = np.array(stream_reaches)
@@ -3746,6 +3998,11 @@ class IWFMModel(IWFMMiscellaneous):
         self.dll.IW_Model_GetReachUpstrmNodes(
             ctypes.byref(n_reaches), upstream_stream_nodes, ctypes.byref(status)
         )
+
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
 
         # convert upstream stream node indices to stream node IDs
         stream_node_ids = self.get_stream_node_ids()
@@ -3845,6 +4102,11 @@ class IWFMModel(IWFMMiscellaneous):
             ctypes.byref(status),
         )
 
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
+
         return n_upstream_reaches.value
 
     def get_reaches_upstream_of_reach(self, reach_id):
@@ -3942,6 +4204,11 @@ class IWFMModel(IWFMMiscellaneous):
             ctypes.byref(status),
         )
 
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
+
         # convert reach indices to reach IDs
         stream_reach_ids = self.get_stream_reach_ids()
         upstream_reach_indices = np.array(upstream_reaches)
@@ -4002,6 +4269,11 @@ class IWFMModel(IWFMMiscellaneous):
         self.dll.IW_Model_GetReachDownstrmNodes(
             ctypes.byref(n_reaches), downstream_stream_nodes, ctypes.byref(status)
         )
+
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
 
         # convert stream node indices to stream node IDs
         stream_node_ids = self.get_stream_node_ids()
@@ -4071,6 +4343,11 @@ class IWFMModel(IWFMMiscellaneous):
             ctypes.byref(n_reaches), reach_outflow_destinations, ctypes.byref(status)
         )
 
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
+
         return np.array(reach_outflow_destinations)
 
     def get_reach_outflow_destination_types(self):
@@ -4137,6 +4414,11 @@ class IWFMModel(IWFMMiscellaneous):
             ctypes.byref(status),
         )
 
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
+
         return np.array(reach_outflow_destination_types)
 
     def get_n_diversions(self):
@@ -4180,6 +4462,11 @@ class IWFMModel(IWFMMiscellaneous):
         self.dll.IW_Model_GetNDiversions(
             ctypes.byref(n_diversions), ctypes.byref(status)
         )
+
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
 
         return n_diversions.value
 
@@ -4228,6 +4515,11 @@ class IWFMModel(IWFMMiscellaneous):
             ctypes.byref(n_diversions), diversion_ids, ctypes.byref(status)
         )
 
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
+
         return np.array(diversion_ids)
 
     def get_n_bypasses(self):
@@ -4273,6 +4565,11 @@ class IWFMModel(IWFMMiscellaneous):
         n_bypasses = ctypes.c_int(0)
 
         self.dll.IW_Model_GetNBypasses(ctypes.byref(n_bypasses), ctypes.byref(status))
+
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
 
         return n_bypasses.value
 
@@ -4324,6 +4621,11 @@ class IWFMModel(IWFMMiscellaneous):
         self.dll.IW_Model_GetBypassIDs(
             ctypes.byref(n_bypasses), bypass_ids, ctypes.byref(status)
         )
+
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
 
         return np.array(bypass_ids)
 
@@ -4402,6 +4704,11 @@ class IWFMModel(IWFMMiscellaneous):
             stream_node_indices,
             ctypes.byref(status),
         )
+
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
 
         # convert stream node indices to stream node IDs
         stream_node_indices = np.array(stream_node_indices)
@@ -4499,6 +4806,11 @@ class IWFMModel(IWFMMiscellaneous):
             ctypes.byref(status),
         )
 
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
+
         # get destination IDs
         stream_node_ids = self.get_stream_node_ids()
         element_ids = self.get_element_ids()
@@ -4580,6 +4892,11 @@ class IWFMModel(IWFMMiscellaneous):
             ctypes.byref(status),
         )
 
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
+
         return np.array(bypass_outflows)
 
     def get_bypass_recoverable_loss_factor(self, bypass_id):
@@ -4645,6 +4962,11 @@ class IWFMModel(IWFMMiscellaneous):
             ctypes.byref(recoverable_loss_factor),
             ctypes.byref(status),
         )
+
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
 
         return recoverable_loss_factor.value
 
@@ -4712,6 +5034,11 @@ class IWFMModel(IWFMMiscellaneous):
             ctypes.byref(status),
         )
 
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
+
         return nonrecoverable_loss_factor.value
 
     def get_n_lakes(self):
@@ -4754,6 +5081,11 @@ class IWFMModel(IWFMMiscellaneous):
         status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetNLakes(ctypes.byref(n_lakes), ctypes.byref(status))
+
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
 
         return n_lakes.value
 
@@ -4806,6 +5138,11 @@ class IWFMModel(IWFMMiscellaneous):
         self.dll.IW_Model_GetLakeIDs(
             ctypes.byref(n_lakes), lake_ids, ctypes.byref(status)
         )
+
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
 
         return np.array(lake_ids)
 
@@ -4886,6 +5223,11 @@ class IWFMModel(IWFMMiscellaneous):
             ctypes.byref(n_elements_in_lake),
             ctypes.byref(status),
         )
+
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
 
         return n_elements_in_lake.value
 
@@ -4969,6 +5311,11 @@ class IWFMModel(IWFMMiscellaneous):
             ctypes.byref(status),
         )
 
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
+
         # convert element indices to element IDs
         element_ids = self.get_element_ids()
         lake_element_indices = np.array(elements_in_lake)
@@ -5017,6 +5364,11 @@ class IWFMModel(IWFMMiscellaneous):
         self.dll.IW_Model_GetNTileDrainNodes(
             ctypes.byref(n_tile_drains), ctypes.byref(status)
         )
+
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
 
         return n_tile_drains.value
 
@@ -5070,6 +5422,11 @@ class IWFMModel(IWFMMiscellaneous):
             ctypes.byref(n_tile_drains), tile_drain_ids, ctypes.byref(status)
         )
 
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
+
         return np.array(tile_drain_ids)
 
     def get_tile_drain_nodes(self):
@@ -5122,6 +5479,11 @@ class IWFMModel(IWFMMiscellaneous):
             ctypes.byref(n_tile_drains), tile_drain_nodes, ctypes.byref(status)
         )
 
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
+
         # convert tile drain node indices to node IDs
         node_ids = self.get_node_ids()
         tile_drain_node_indices = np.array(tile_drain_nodes)
@@ -5170,6 +5532,11 @@ class IWFMModel(IWFMMiscellaneous):
         status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetNLayers(ctypes.byref(n_layers), ctypes.byref(status))
+
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
 
         return n_layers.value
 
@@ -5258,6 +5625,11 @@ class IWFMModel(IWFMMiscellaneous):
         status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetGSElev(ctypes.byref(n_nodes), gselev, ctypes.byref(status))
+
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
 
         return np.array(gselev)
 
@@ -5398,6 +5770,11 @@ class IWFMModel(IWFMMiscellaneous):
             aquifer_top_elevations,
             ctypes.byref(status),
         )
+
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
 
         return np.array(aquifer_top_elevations)
 
@@ -5557,6 +5934,11 @@ class IWFMModel(IWFMMiscellaneous):
             ctypes.byref(status),
         )
 
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
+
         return np.array(aquifer_bottom_elevations)
 
     def get_stratigraphy_atXYcoordinate(self, x, y, fact=1.0, output_options=1):
@@ -5682,6 +6064,11 @@ class IWFMModel(IWFMMiscellaneous):
             bottom_elevs,
             ctypes.byref(status),
         )
+
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
 
         # user output options
         if output_options == 1 or output_options == "combined":
@@ -5820,6 +6207,11 @@ class IWFMModel(IWFMMiscellaneous):
             ctypes.byref(status),
         )
 
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
+
         return np.array(aquifer_horizontal_k)
 
     def get_aquifer_vertical_k(self):
@@ -5932,6 +6324,11 @@ class IWFMModel(IWFMMiscellaneous):
             aquifer_vertical_k,
             ctypes.byref(status),
         )
+
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
 
         return np.array(aquifer_vertical_k)
 
@@ -6057,6 +6454,11 @@ class IWFMModel(IWFMMiscellaneous):
             aquitard_vertical_k,
             ctypes.byref(status),
         )
+
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
 
         return np.array(aquitard_vertical_k)
 
@@ -6196,6 +6598,11 @@ class IWFMModel(IWFMMiscellaneous):
             aquifer_specific_yield,
             ctypes.byref(status),
         )
+
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
 
         return np.array(aquifer_specific_yield)
 
@@ -6382,6 +6789,11 @@ class IWFMModel(IWFMMiscellaneous):
             ctypes.byref(status),
         )
 
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
+
         return np.array(aquifer_specific_storage)
 
     def get_aquifer_parameters(self):
@@ -6452,6 +6864,11 @@ class IWFMModel(IWFMMiscellaneous):
             ctypes.byref(status),
         )
 
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
+
         return (
             np.array(aquifer_horizontal_k),
             np.array(aquifer_vertical_k),
@@ -6495,6 +6912,11 @@ class IWFMModel(IWFMMiscellaneous):
         status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetNAgCrops(ctypes.byref(n_ag_crops), ctypes.byref(status))
+
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
 
         return n_ag_crops.value
 
@@ -6544,6 +6966,11 @@ class IWFMModel(IWFMMiscellaneous):
         status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetNWells(ctypes.byref(n_wells), ctypes.byref(status))
+
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
 
         return n_wells.value
 
@@ -6597,6 +7024,11 @@ class IWFMModel(IWFMMiscellaneous):
             ctypes.byref(n_wells), well_ids, ctypes.byref(status)
         )
 
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
+
         return np.array(well_ids)
 
     def get_well_coordinates(self):
@@ -6644,6 +7076,11 @@ class IWFMModel(IWFMMiscellaneous):
         y = (ctypes.c_double * n_wells.value)()
 
         self.dll.IW_Model_GetWellXY(ctypes.byref(n_wells), x, y, ctypes.byref(status))
+
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
 
         return np.array(x), np.array(y)
 
@@ -6695,6 +7132,11 @@ class IWFMModel(IWFMMiscellaneous):
             ctypes.byref(n_elem_pumps), ctypes.byref(status)
         )
 
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
+
         return n_elem_pumps.value
 
     def get_element_pump_ids(self):
@@ -6745,6 +7187,11 @@ class IWFMModel(IWFMMiscellaneous):
         self.dll.IW_Model_GetWellIDs(
             ctypes.byref(n_element_pumps), element_pump_ids, ctypes.byref(status)
         )
+
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
 
         return np.array(element_pump_ids)
 
@@ -6813,6 +7260,11 @@ class IWFMModel(IWFMMiscellaneous):
             supply_purpose_flags,
             ctypes.byref(status),
         )
+
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
 
         return np.array(supply_purpose_flags)
 
@@ -7237,6 +7689,11 @@ class IWFMModel(IWFMMiscellaneous):
             ctypes.byref(status),
         )
 
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
+
         return np.array(ag_supply_requirement)
 
     def get_supply_requirement_ag_elements(self, elements="all", conversion_factor=1.0):
@@ -7439,6 +7896,11 @@ class IWFMModel(IWFMMiscellaneous):
             urban_supply_requirement,
             ctypes.byref(status),
         )
+
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
 
         return np.array(urban_supply_requirement)
 
@@ -7644,6 +8106,11 @@ class IWFMModel(IWFMMiscellaneous):
             ag_supply_shortage,
             ctypes.byref(status),
         )
+
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
 
         return np.array(ag_supply_shortage)
 
@@ -7928,6 +8395,11 @@ class IWFMModel(IWFMMiscellaneous):
             urban_supply_shortage,
             ctypes.byref(status),
         )
+
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
 
         return np.array(urban_supply_shortage)
 
@@ -8237,6 +8709,11 @@ class IWFMModel(IWFMMiscellaneous):
             ctypes.byref(status),
         )
 
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
+
         return self._string_to_list_by_array(
             raw_names_string, delimiter_position_array, num_names
         )
@@ -8521,6 +8998,11 @@ class IWFMModel(IWFMMiscellaneous):
             ctypes.byref(n_hydrograph_types), ctypes.byref(status)
         )
 
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
+
         return n_hydrograph_types.value
 
     def get_hydrograph_type_list(self):
@@ -8603,6 +9085,11 @@ class IWFMModel(IWFMMiscellaneous):
             ctypes.byref(status),
         )
 
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
+
         hydrograph_type_list = self._string_to_list_by_array(
             raw_hydrograph_type_string, delimiter_position_array, n_hydrograph_types
         )
@@ -8653,6 +9140,11 @@ class IWFMModel(IWFMMiscellaneous):
             ctypes.byref(n_hydrographs),
             ctypes.byref(status),
         )
+
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
 
         return n_hydrographs.value
 
@@ -8890,6 +9382,11 @@ class IWFMModel(IWFMMiscellaneous):
                 hydrograph_ids,
                 ctypes.byref(status),
             )
+
+            # check for errors in the IWFM API call
+            if status.value != 0:
+                error_message = self.get_last_message()
+                raise IWFMError(error_message)
 
             return np.array(hydrograph_ids)
 
@@ -9136,6 +9633,11 @@ class IWFMModel(IWFMMiscellaneous):
                 y,
                 ctypes.byref(status),
             )
+
+            # check for errors in the IWFM API call
+            if status.value != 0:
+                error_message = self.get_last_message()
+                raise IWFMError(error_message)
 
             return np.array(x), np.array(y)
 
@@ -9536,6 +10038,11 @@ class IWFMModel(IWFMMiscellaneous):
             ctypes.byref(num_time_steps),
             ctypes.byref(status),
         )
+
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
 
         return np.array("1899-12-30", dtype="datetime64") + np.array(
             output_dates, dtype="timedelta64[D]"
@@ -10127,6 +10634,11 @@ class IWFMModel(IWFMMiscellaneous):
             ctypes.byref(status),
         )
 
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
+
         return np.array("1899-12-30", dtype="datetime64") + np.array(
             output_dates, dtype="timedelta64[D]"
         ), np.array(output_gwheads)
@@ -10243,6 +10755,11 @@ class IWFMModel(IWFMMiscellaneous):
             ctypes.byref(status),
         )
 
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
+
         return np.array(heads)
 
     def get_subsidence_all(self, subsidence_conversion_factor=1.0):
@@ -10345,6 +10862,11 @@ class IWFMModel(IWFMMiscellaneous):
             ctypes.byref(status),
         )
 
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
+
         return np.array(subsidence)
 
     def get_subregion_ag_pumping_average_depth_to_water(self):
@@ -10434,6 +10956,11 @@ class IWFMModel(IWFMMiscellaneous):
             average_depth_to_groundwater,
             ctypes.byref(status),
         )
+
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
 
         return np.array(average_depth_to_groundwater)
 
@@ -10560,6 +11087,11 @@ class IWFMModel(IWFMMiscellaneous):
             ctypes.byref(status),
         )
 
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
+
         return np.array(average_depth_to_groundwater)
 
     def _get_n_locations(self, location_type_id):
@@ -10604,6 +11136,11 @@ class IWFMModel(IWFMMiscellaneous):
             ctypes.byref(n_locations),
             ctypes.byref(status),
         )
+
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
 
         return n_locations.value
 
@@ -10677,6 +11214,11 @@ class IWFMModel(IWFMMiscellaneous):
             ctypes.byref(status),
         )
 
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
+
         return np.array(location_ids)
 
     def get_small_watershed_ids(self):
@@ -10739,6 +11281,11 @@ class IWFMModel(IWFMMiscellaneous):
             ctypes.byref(len_pp_path), preprocessor_path, ctypes.byref(status)
         )
 
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
+
     def set_simulation_path(self, simulation_path):
         """
         sets the path to the directory where the simulation main
@@ -10774,6 +11321,11 @@ class IWFMModel(IWFMMiscellaneous):
             ctypes.byref(len_sim_path), simulation_path, ctypes.byref(status)
         )
 
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
+
     def set_supply_adjustment_max_iterations(self, max_iterations):
         """
         sets the maximum number of iterations that will be used in
@@ -10802,6 +11354,11 @@ class IWFMModel(IWFMMiscellaneous):
         self.dll.IW_Model_SetSupplyAdjustmentMaxIters(
             ctypes.byref(max_iterations), ctypes.byref(status)
         )
+
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
 
     def set_supply_adjustment_tolerance(self, tolerance):
         """
@@ -10845,6 +11402,11 @@ class IWFMModel(IWFMMiscellaneous):
             ctypes.byref(tolerance), ctypes.byref(status)
         )
 
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
+
     def delete_inquiry_data_file(self):
         """
         deletes the binary file, IW_ModelData_ForInquiry.bin,
@@ -10877,6 +11439,11 @@ class IWFMModel(IWFMMiscellaneous):
             ctypes.byref(status),
         )
 
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
+
     def simulate_for_one_timestep(self):
         """
         simulates a single timestep of the model application
@@ -10896,6 +11463,11 @@ class IWFMModel(IWFMMiscellaneous):
         status = ctypes.c_int(0)
 
         self.dll.IW_Model_SimulateForOneTimeStep(ctypes.byref(status))
+
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
 
     def simulate_for_an_interval(self, time_interval):
         """
@@ -10946,6 +11518,11 @@ class IWFMModel(IWFMMiscellaneous):
             ctypes.byref(len_time_interval), time_interval, ctypes.byref(status)
         )
 
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
+
     def simulate_all(self):
         """
         performs all of the computations for the entire simulation
@@ -10968,6 +11545,11 @@ class IWFMModel(IWFMMiscellaneous):
 
         self.dll.IW_Model_SimulateAll(ctypes.byref(status))
 
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
+
     def advance_time(self):
         """
         advances the simulation time step by one simulation time step
@@ -10988,6 +11570,11 @@ class IWFMModel(IWFMMiscellaneous):
         status = ctypes.c_int(0)
 
         self.dll.IW_Model_AdvanceTime(ctypes.byref(status))
+
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
 
     def read_timeseries_data(self):
         """
@@ -11014,6 +11601,11 @@ class IWFMModel(IWFMMiscellaneous):
         status = ctypes.c_int(0)
 
         self.dll.IW_Model_ReadTSData(ctypes.byref(status))
+
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
 
     def read_timeseries_data_overwrite(
         self,
@@ -11207,6 +11799,11 @@ class IWFMModel(IWFMMiscellaneous):
             ctypes.byref(status),
         )
 
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
+
     def print_results(self):
         """
         prints out all the simulation results at the end of a
@@ -11223,6 +11820,11 @@ class IWFMModel(IWFMMiscellaneous):
         status = ctypes.c_int(0)
 
         self.dll.IW_Model_PrintResults(ctypes.byref(status))
+
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
 
     def advance_state(self):
         """
@@ -11241,6 +11843,11 @@ class IWFMModel(IWFMMiscellaneous):
         status = ctypes.c_int(0)
 
         self.dll.IW_Model_AdvanceState(ctypes.byref(status))
+
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
 
     def is_stream_upstream_node(self, stream_node_1, stream_node_2):
         """
@@ -11285,6 +11892,11 @@ class IWFMModel(IWFMMiscellaneous):
             ctypes.byref(status),
         )
 
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
+
         if is_upstream.value == 1:
             return True
         else:
@@ -11315,6 +11927,11 @@ class IWFMModel(IWFMMiscellaneous):
         self.dll.IW_Model_IsEndOfSimulation(
             ctypes.byref(is_end_of_simulation), ctypes.byref(status)
         )
+
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
 
         if is_end_of_simulation.value == 1:
             return True
@@ -11348,9 +11965,13 @@ class IWFMModel(IWFMMiscellaneous):
 
         # get the IWFM API version
         api_version = self.get_version()
-        iwfm_core_version = api_version["IWFM Core"]
+        iwfm_core_version = (
+            api_version["IWFM Core"]
+            if "IWFM Core" in api_version.keys()
+            else api_version["IWFM"]
+        )
         major_version, revision_number, build_number = [
-            int(v) for v in iwfm_core_version.split(".")
+            v for v in iwfm_core_version.split(".")
         ]
 
         # initialize output variables
@@ -11359,7 +11980,7 @@ class IWFMModel(IWFMMiscellaneous):
         # set instance variable status to 0
         status = ctypes.c_int(0)
 
-        if major_version > 2015:
+        if int(major_version) > 2015:
             model_index = ctypes.c_int(model_index)
 
             self.dll.IW_Model_IsModelInstantiated(
@@ -11372,6 +11993,11 @@ class IWFMModel(IWFMMiscellaneous):
             self.dll.IW_Model_IsModelInstantiated(
                 ctypes.byref(is_instantiated), ctypes.byref(status)
             )
+
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
 
         if is_instantiated.value == 1:
             return True
@@ -11436,6 +12062,11 @@ class IWFMModel(IWFMMiscellaneous):
             ctypes.byref(status),
         )
 
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
+
     def restore_pumping_to_read_values(self):
         """
         restores the pumping rates to the values read from the
@@ -11469,6 +12100,11 @@ class IWFMModel(IWFMMiscellaneous):
         status = ctypes.c_int(0)
 
         self.dll.IW_Model_RestorePumpingToReadValues(ctypes.byref(status))
+
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
 
     def fe_interpolate(self, x, y):
         """
@@ -11785,11 +12421,13 @@ class IWFMModel(IWFMMiscellaneous):
         element_segments["orig_start_node"] = element_segments["start_node"]
         element_segments["orig_end_node"] = element_segments["end_node"]
 
-        # order start_nodes and end_nodes low to high
-        condition = element_segments["start_node"] > element_segments["end_node"]
-        element_segments.loc[condition, ["start_node", "end_node"]] = (
-            element_segments.loc[condition, ["end_node", "start_node"]].values
-        )
+        # store start_node and end_node series
+        start = element_segments["start_node"]
+        end = element_segments["end_node"]
+
+        # swap start and end nodes so low index is in start and higher is in end
+        element_segments["start_node"] = np.where(start <= end, start, end)
+        element_segments["end_node"] = np.where(start <= end, end, start)
 
         if not subregions:
             # count segments interior segments should have count of 2 while edge segments have count of 1
@@ -11804,13 +12442,9 @@ class IWFMModel(IWFMMiscellaneous):
 
             if remove_duplicates:
                 # organize nodes in single column and remove duplicates
-                boundary_nodes = (
-                    boundary_nodes.stack()
-                    .reset_index()
-                    .drop(["level_0", "level_1"], axis=1)
-                )
-                boundary_nodes.rename(columns={0: "NodeID"}, inplace=True)
-                boundary_nodes.drop_duplicates("NodeID", inplace=True)
+                boundary_nodes = pd.melt(boundary_nodes, value_name="NodeID")[
+                    ["NodeID"]
+                ].drop_duplicates()
 
                 return boundary_nodes
 
