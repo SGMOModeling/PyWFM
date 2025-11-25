@@ -193,7 +193,12 @@ class IWFMModel(IWFMMiscellaneous):
                 ctypes.byref(status),
             )
 
-            return model_id.value, status.value
+            # check for errors in the IWFM API call
+            if status.value != 0:
+                error_message = self.get_last_message()
+                raise IWFMError(error_message)
+
+            return model_id.value
 
         else:
             self.dll.IW_Model_New(
@@ -206,7 +211,10 @@ class IWFMModel(IWFMMiscellaneous):
                 ctypes.byref(status),
             )
 
-            return status.value
+            # check for errors in the IWFM API call
+            if status.value != 0:
+                error_message = self.get_last_message()
+                raise IWFMError(error_message)
 
     def kill(self):
         """
