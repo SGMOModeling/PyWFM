@@ -146,9 +146,13 @@ class IWFMModel(IWFMMiscellaneous):
 
         # get the IWFM API version
         api_version = self.get_version()
-        iwfm_core_version = api_version["IWFM Core"]
+        iwfm_core_version = (
+            api_version["IWFM Core"]
+            if "IWFM Core" in api_version.keys()
+            else api_version["IWFM"]
+        )
         major_version, revision_number, build_number = [
-            int(v) for v in iwfm_core_version.split(".")
+            v for v in iwfm_core_version.split(".")
         ]
 
         # convert preprocessor file name to ctypes
@@ -174,7 +178,7 @@ class IWFMModel(IWFMMiscellaneous):
         # set instance variable status to 0
         status = ctypes.c_int(0)
 
-        if major_version > 2015:
+        if int(major_version) > 2015:
             # initialize model_id to 0
             model_id = ctypes.c_int(0)
 
