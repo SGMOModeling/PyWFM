@@ -203,6 +203,7 @@
       ~IWFMModel.get_version
       ~IWFMModel.get_well_coordinates
       ~IWFMModel.get_well_ids
+      ~IWFMModel.get_well_perfs
       ~IWFMModel.get_well_pumping_purpose
       ~IWFMModel.get_zbudget_type_ids
       ~IWFMModel.get_zone_ag_pumping_average_depth_to_water
