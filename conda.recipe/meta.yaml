@@ -1,5 +1,5 @@
 {% set version_match = load_file_regex(
-  load_file="../../src/pywfm/__init__.py",
+  load_file="../src/pywfm/__init__.py",
   from_recipe_dir=True, 
   regex_pattern='__version__ = "(.+)"') %}
 {% set version = version_match[1] %}
@@ -7,15 +7,16 @@
 
 package:
   name: iwfm-pywfm
-  version: {{ version }}.1273
+  version: {{ version }}
 
 source:
   git_url: https://github.com/SGMOModeling/PyWFM.git
   git_tag: master
 
 build:
-  skip: true [not win]
+  skip: true # [not win]
   number: {{ build_number }}
+  string: iwfm{{ iwfm_api_version|replace(".", "_") }}_{{ build_number }}
   script: {{ PYTHON }} -m pip install --no-deps --ignore-installed .
 
 requirements:
@@ -24,13 +25,13 @@ requirements:
     - pip
   
   run:
-    - python
+    - python >=3.8
     - pandas
     - numpy
     - matplotlib
-    - click
+    - Click
     - requests
-    - cadwr-sgmo::iwfmdll==2015.0.1273 # [win]
+    - cadwr-sgmo::iwfmdll=={{ iwfm_api_version }} # [win]
 
 test:
   imports:
