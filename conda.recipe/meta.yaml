@@ -14,10 +14,13 @@ source:
   git_tag: master
 
 build:
+  noarch: python
   skip: true # [not win]
   number: {{ build_number }}
   string: iwfm{{ iwfm_api_version|replace(".", "_") }}_{{ build_number }}
   script: {{ PYTHON }} -m pip install --no-deps --ignore-installed .
+  entry_points:
+    - pywfm=pywfm.cli:cli
 
 requirements:
   host:
@@ -25,7 +28,7 @@ requirements:
     - pip
   
   run:
-    - python >=3.8
+    - python
     - pandas
     - numpy
     - matplotlib
