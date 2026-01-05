@@ -17,10 +17,10 @@ Installation using Anaconda
 
    .. code:: bash
       
-      conda create -n <env_name> python
+      conda create -n <env_name>
    
    .. note::
-      pywfm has been tested using python 3.7.9, 3.7.11, 3.10.2
+      pywfm has been tested using python 3.7.9, 3.7.11, 3.10.2, 3.11.7, 3.12.2, 3.13.11
 
 3. Activate the conda environment you created
 =============================================
@@ -34,15 +34,30 @@ Installation using Anaconda
 
    .. code:: bash
       
-      conda install -c cadwr-sgmo pywfm
+      conda install iwfm-pywfm
 
    .. note::
-      This will install the latest version of the iwfm dll (IWFM 2015.1.1443)
+      This will install the latest version of the iwfm dll (IWFM 2025.0.1747)
       
    If you want to install pywfm with version 2015.0.1273 of the dll, use:
 
    .. code:: bash
       
-      conda install -c cadwr-sgmo pywfm=0.2.3.1273
+      conda install iwfm-pywfm iwfmdll=2015.0.1273
+
+   Currently, the following versions of the IWFM DLL are available via conda:
+   +----------------------+------------------+
+   | IWFM DLL Version     | pywfm Version    |
+   +----------------------+------------------+
+   | 2015.0.1273         | 0.2.6         |
+   +----------------------+------------------+
+   | 2015.0.1403         | 0.2.6         |
+   +----------------------+------------------+
+   | 2015.1.1443         | 0.2.6         |
+   +----------------------+------------------+
+   | 2024.2.1594         | 0.2.6         |
+   +----------------------+------------------+
+   | 2025.0.1747         | 0.2.6         |
+   +----------------------+------------------+
    
    

@@ -366,12 +366,12 @@ document.write(`
 <section id="open-anaconda-prompt-and-create-a-new-virtual-environment">
 <h2>2. Open anaconda prompt and create a new virtual environment<a class="headerlink" href="#open-anaconda-prompt-and-create-a-new-virtual-environment" title="Link to this heading">#</a></h2>
 <blockquote>
-<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>&lt;env_name&gt;<span class="w"> </span>python
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>&lt;env_name&gt;
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>pywfm has been tested using python 3.7.9, 3.7.11, 3.10.2</p>
+<p>pywfm has been tested using python 3.7.9, 3.7.11, 3.10.2, 3.11.7, 3.12.2, 3.13.11</p>
 </div>
 </div></blockquote>
 </section>
@@ -386,17 +386,31 @@ document.write(`
 <section id="install-pywfm">
 <h2>4. Install pywfm<a class="headerlink" href="#install-pywfm" title="Link to this heading">#</a></h2>
 <blockquote>
-<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>install<span class="w"> </span>-c<span class="w"> </span>cadwr-sgmo<span class="w"> </span>pywfm
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>install<span class="w"> </span>iwfm-pywfm
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>This will install the latest version of the iwfm dll (IWFM 2015.1.1443)</p>
+<p>This will install the latest version of the iwfm dll (IWFM 2025.0.1747)</p>
 </div>
 <p>If you want to install pywfm with version 2015.0.1273 of the dll, use:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>install<span class="w"> </span>-c<span class="w"> </span>cadwr-sgmo<span class="w"> </span><span class="nv">pywfm</span><span class="o">=</span><span class="m">0</span>.2.3.1273
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>install<span class="w"> </span>iwfm-pywfm<span class="w"> </span><span class="nv">iwfmdll</span><span class="o">=</span><span class="m">2015</span>.0.1273
 </pre></div>
 </div>
+<p>Currently, the following versions of the IWFM DLL are available via conda:
++———————-+——————+
+| IWFM DLL Version     | pywfm Version    |
++———————-+——————+
+| 2015.0.1273         | 0.2.6         |
++———————-+——————+
+| 2015.0.1403         | 0.2.6         |
++———————-+——————+
+| 2015.1.1443         | 0.2.6         |
++———————-+——————+
+| 2024.2.1594         | 0.2.6         |
++———————-+——————+
+| 2025.0.1747         | 0.2.6         |
++———————-+——————+</p>
 </div></blockquote>
 </section>
 </section>

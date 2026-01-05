@@ -13,16 +13,23 @@ pywfm is a python package that exposes the functionality of the IWFM API
    In these cases, users should be able to rerun the model with the same version of IWFM as the IWFM API included with pywfm.
    If you do not plan to rerun the model, install the version of pywfm with the same IWFM API, if available.
 
-.. versionadded:: 0.2.2
-   pywfm now includes an indicator for the version of the IWFM API in the version
-   
-   +----------------------+------------------+
-   | pywfm |release|.1273 | IWFM 2015.0.1273 |
-   +----------------------+------------------+
-   | pywfm |release|.1403 | IWFM 2015.0.1403 |
-   +----------------------+------------------+
-   | pywfm |release|.1443 | IWFM 2015.1.1443 |
-   +----------------------+------------------+
+.. versionadded:: 0.2.6
+   pywfm now includes the capability to instantiate multiple models simultaneously and toggle between them. This was added in version 2024.0.1594 of the IWFM API.
+
+.. deprecated:: 0.2.6
+   pywfm no longer includes an indicator for the version of the IWFM API in the pywfm version.
+
+   .. versionadded:: 0.2.2
+      pywfm now includes an indicator for the version of the IWFM API in the version
+      
+      Prior versions of pywfm still use this approach as shown below.
+      +----------------------+------------------+
+      | pywfm 0.2.5.1273 | IWFM 2015.0.1273 |
+      +----------------------+------------------+
+      | pywfm 0.2.5.1403 | IWFM 2015.0.1403 |
+      +----------------------+------------------+
+      | pywfm 0.2.4.1443 | IWFM 2015.1.1443 |
+      +----------------------+------------------+
 
 
 --------
