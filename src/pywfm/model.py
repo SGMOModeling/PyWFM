@@ -111,7 +111,10 @@ class IWFMModel(IWFMMiscellaneous):
         self.set_log_file(log_file)
 
         if instantiate:
-            self.new()
+            # Track 7: capture the slot ID returned by IW_Model_New so every
+            # method can pass it explicitly. This makes multiple IWFMModel
+            # instances independent of each other.
+            self.model_id = ctypes.c_int(self.new())
 
     def __enter__(self):
         return self
@@ -233,73 +236,7 @@ class IWFMModel(IWFMMiscellaneous):
         # set status to 0
         status = ctypes.c_int(0)
 
-        self.dll.IW_Model_Kill(ctypes.byref(status))
-
-        # check for errors in the IWFM API call
-        if status.value != 0:
-            error_message = self.get_last_message()
-            raise IWFMError(error_message)
-
-    def get_current_model_id(self):
-        """
-        Return the ID for the current active model
-
-        Returns
-        -------
-        int
-            ID for the current active model
-        """
-        # check to see if IWFM procedure is available in user version of IWFM DLL
-        if not hasattr(self.dll, "IW_Model_GetCurrentModelID"):
-            raise AttributeError(
-                'IWFM API does not have "{}" procedure. '
-                "Check for an updated version".format("IW_Model_GetCurrentModelID")
-            )
-        # initialize model ID
-        model_id = ctypes.c_int(0)
-
-        # set status to 0
-        status = ctypes.c_int(0)
-
-        self.dll.IW_Model_GetCurrentModelID(
-            ctypes.byref(model_id), ctypes.byref(status)
-        )
-
-        # check for errors in the IWFM API call
-        if status.value != 0:
-            error_message = self.get_last_message()
-            raise IWFMError(error_message)
-
-        return model_id.value
-
-    def switch_active_model(self, model_id):
-        """
-        Switch between active models
-
-        Parameters
-        ----------
-        model_id : int
-            ID of model to change to active
-
-        Returns
-        -------
-        None
-            switches active model
-        """
-        # check to see if IWFM procedure is available in user version of IWFM DLL
-        if not hasattr(self.dll, "IW_Model_Switch"):
-            raise AttributeError(
-                'IWFM API does not have "{}" procedure. '
-                "Check for an updated version".format("IW_Model_Switch")
-            )
-
-        # convert model_id to ctypes
-        model_id = ctypes.c_int(model_id)
-
-        # set status to 0
-        status = ctypes.c_int(0)
-
-        self.dll.IW_Model_Switch(ctypes.byref(model_id), ctypes.byref(status))
+        self.dll.IW_Model_Kill(ctypes.byref(self.model_id), ctypes.byref(status))
 
         # check for errors in the IWFM API call
         if status.value != 0:
@@ -372,7 +309,10 @@ class IWFMModel(IWFMMiscellaneous):
         status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetCurrentDateAndTime(
-            ctypes.byref(length_date_string), current_date_string, ctypes.byref(status)
+            ctypes.byref(self.model_id),
+            ctypes.byref(length_date_string),
+            current_date_string,
+            ctypes.byref(status),
         )
 
         # check for errors in the IWFM API call
@@ -425,7 +365,9 @@ class IWFMModel(IWFMMiscellaneous):
         n_time_steps = ctypes.c_int(0)
 
         self.dll.IW_Model_GetNTimeSteps(
-            ctypes.byref(n_time_steps), ctypes.byref(status)
+            ctypes.byref(self.model_id),
+            ctypes.byref(n_time_steps),
+            ctypes.byref(status),
         )
 
         # check for errors in the IWFM API call
@@ -498,6 +440,7 @@ class IWFMModel(IWFMMiscellaneous):
         delimiter_position_array = (ctypes.c_int * n_data.value)()
 
         self.dll.IW_Model_GetTimeSpecs(
+            ctypes.byref(self.model_id),
             raw_dates_string,
             ctypes.byref(length_dates),
             simulation_time_step,
@@ -572,6 +515,7 @@ class IWFMModel(IWFMMiscellaneous):
         delimiter_position_array = (ctypes.c_int * max_num_time_intervals.value)()
 
         self.dll.IW_Model_GetOutputIntervals(
+            ctypes.byref(self.model_id),
             output_intervals,
             ctypes.byref(length_output_intervals),
             delimiter_position_array,
@@ -633,7 +577,9 @@ class IWFMModel(IWFMMiscellaneous):
         # initialize n_nodes variable
         n_nodes = ctypes.c_int(0)
 
-        self.dll.IW_Model_GetNNodes(ctypes.byref(n_nodes), ctypes.byref(status))
+        self.dll.IW_Model_GetNNodes(
+            ctypes.byref(self.model_id), ctypes.byref(n_nodes), ctypes.byref(status)
+        )
 
         # check for errors in the IWFM API call
         if status.value != 0:
@@ -693,7 +639,11 @@ class IWFMModel(IWFMMiscellaneous):
         y_coordinates = (ctypes.c_double * num_nodes.value)()
 
         self.dll.IW_Model_GetNodeXY(
-            ctypes.byref(num_nodes), x_coordinates, y_coordinates, ctypes.byref(status)
+            ctypes.byref(self.model_id),
+            ctypes.byref(num_nodes),
+            x_coordinates,
+            y_coordinates,
+            ctypes.byref(status),
         )
 
         # check for errors in the IWFM API call
@@ -746,7 +696,10 @@ class IWFMModel(IWFMMiscellaneous):
         node_ids = (ctypes.c_int * num_nodes.value)()
 
         self.dll.IW_Model_GetNodeIDs(
-            ctypes.byref(num_nodes), node_ids, ctypes.byref(status)
+            ctypes.byref(self.model_id),
+            ctypes.byref(num_nodes),
+            node_ids,
+            ctypes.byref(status),
         )
 
         # check for errors in the IWFM API call
@@ -801,7 +754,9 @@ class IWFMModel(IWFMMiscellaneous):
         # initialize n_nodes variable
         n_elements = ctypes.c_int(0)
 
-        self.dll.IW_Model_GetNElements(ctypes.byref(n_elements), ctypes.byref(status))
+        self.dll.IW_Model_GetNElements(
+            ctypes.byref(self.model_id), ctypes.byref(n_elements), ctypes.byref(status)
+        )
 
         # check for errors in the IWFM API call
         if status.value != 0:
@@ -856,7 +811,10 @@ class IWFMModel(IWFMMiscellaneous):
         element_ids = (ctypes.c_int * num_elements.value)()
 
         self.dll.IW_Model_GetElementIDs(
-            ctypes.byref(num_elements), element_ids, ctypes.byref(status)
+            ctypes.byref(self.model_id),
+            ctypes.byref(num_elements),
+            element_ids,
+            ctypes.byref(status),
         )
 
         # check for errors in the IWFM API call
@@ -935,6 +893,7 @@ class IWFMModel(IWFMMiscellaneous):
         nodes_in_element = (ctypes.c_int * max_nodes_per_element.value)()
 
         self.dll.IW_Model_GetElementConfigData(
+            ctypes.byref(self.model_id),
             ctypes.byref(element_index),
             ctypes.byref(max_nodes_per_element),
             nodes_in_element,
@@ -1011,7 +970,10 @@ class IWFMModel(IWFMMiscellaneous):
         element_areas = (ctypes.c_double * n_elements.value)()
 
         self.dll.IW_Model_GetElementAreas(
-            ctypes.byref(n_elements), element_areas, ctypes.byref(status)
+            ctypes.byref(self.model_id),
+            ctypes.byref(n_elements),
+            element_areas,
+            ctypes.byref(status),
         )
 
         # check for errors in the IWFM API call
@@ -1062,7 +1024,9 @@ class IWFMModel(IWFMMiscellaneous):
         n_subregions = ctypes.c_int(0)
 
         self.dll.IW_Model_GetNSubregions(
-            ctypes.byref(n_subregions), ctypes.byref(status)
+            ctypes.byref(self.model_id),
+            ctypes.byref(n_subregions),
+            ctypes.byref(status),
         )
 
         # check for errors in the IWFM API call
@@ -1124,7 +1088,10 @@ class IWFMModel(IWFMMiscellaneous):
         subregion_ids = (ctypes.c_int * n_subregions.value)()
 
         self.dll.IW_Model_GetSubregionIDs(
-            ctypes.byref(n_subregions), subregion_ids, ctypes.byref(status)
+            ctypes.byref(self.model_id),
+            ctypes.byref(n_subregions),
+            subregion_ids,
+            ctypes.byref(status),
         )
 
         # check for errors in the IWFM API call
@@ -1203,6 +1170,7 @@ class IWFMModel(IWFMMiscellaneous):
         subregion_name = ctypes.create_string_buffer(length_name.value)
 
         self.dll.IW_Model_GetSubregionName(
+            ctypes.byref(self.model_id),
             ctypes.byref(subregion_index),
             ctypes.byref(length_name),
             subregion_name,
@@ -1282,7 +1250,10 @@ class IWFMModel(IWFMMiscellaneous):
         element_subregions = (ctypes.c_int * n_elements.value)()
 
         self.dll.IW_Model_GetElemSubregions(
-            ctypes.byref(n_elements), element_subregions, ctypes.byref(status)
+            ctypes.byref(self.model_id),
+            ctypes.byref(n_elements),
+            element_subregions,
+            ctypes.byref(status),
         )
 
         # check for errors in the IWFM API call
@@ -1340,7 +1311,9 @@ class IWFMModel(IWFMMiscellaneous):
         n_stream_nodes = ctypes.c_int(0)
 
         self.dll.IW_Model_GetNStrmNodes(
-            ctypes.byref(n_stream_nodes), ctypes.byref(status)
+            ctypes.byref(self.model_id),
+            ctypes.byref(n_stream_nodes),
+            ctypes.byref(status),
         )
 
         # check for errors in the IWFM API call
@@ -1401,7 +1374,10 @@ class IWFMModel(IWFMMiscellaneous):
         stream_node_ids = (ctypes.c_int * n_stream_nodes.value)()
 
         self.dll.IW_Model_GetStrmNodeIDs(
-            ctypes.byref(n_stream_nodes), stream_node_ids, ctypes.byref(status)
+            ctypes.byref(self.model_id),
+            ctypes.byref(n_stream_nodes),
+            stream_node_ids,
+            ctypes.byref(status),
         )
 
         # check for errors in the IWFM API call
@@ -1482,6 +1458,7 @@ class IWFMModel(IWFMMiscellaneous):
         n_upstream_stream_nodes = ctypes.c_int(0)
 
         self.dll.IW_Model_GetStrmNUpstrmNodes(
+            ctypes.byref(self.model_id),
             ctypes.byref(stream_node_index),
             ctypes.byref(n_upstream_stream_nodes),
             ctypes.byref(status),
@@ -1577,6 +1554,7 @@ class IWFMModel(IWFMMiscellaneous):
         upstream_nodes = (ctypes.c_int * n_upstream_stream_nodes.value)()
 
         self.dll.IW_Model_GetStrmUpstrmNodes(
+            ctypes.byref(self.model_id),
             ctypes.byref(stream_node_index),
             ctypes.byref(n_upstream_stream_nodes),
             upstream_nodes,
@@ -1638,7 +1616,10 @@ class IWFMModel(IWFMMiscellaneous):
         stream_bottom_elevations = (ctypes.c_double * n_stream_nodes.value)()
 
         self.dll.IW_Model_GetStrmBottomElevs(
-            ctypes.byref(n_stream_nodes), stream_bottom_elevations, ctypes.byref(status)
+            ctypes.byref(self.model_id),
+            ctypes.byref(n_stream_nodes),
+            stream_bottom_elevations,
+            ctypes.byref(status),
         )
 
         # check for errors in the IWFM API call
@@ -1713,6 +1694,7 @@ class IWFMModel(IWFMMiscellaneous):
         n_rating_table_points = ctypes.c_int(0)
 
         self.dll.IW_Model_GetNStrmRatingTablePoints(
+            ctypes.byref(self.model_id),
             ctypes.byref(stream_node_index),
             ctypes.byref(n_rating_table_points),
             ctypes.byref(status),
@@ -1794,6 +1776,7 @@ class IWFMModel(IWFMMiscellaneous):
         flow = (ctypes.c_double * n_rating_table_points.value)()
 
         self.dll.IW_Model_GetStrmRatingTable(
+            ctypes.byref(self.model_id),
             ctypes.byref(stream_node_index),
             ctypes.byref(n_rating_table_points),
             stage,
@@ -1847,7 +1830,9 @@ class IWFMModel(IWFMMiscellaneous):
         n_stream_inflows = ctypes.c_int(0)
 
         self.dll.IW_Model_GetStrmNInflows(
-            ctypes.byref(n_stream_inflows), ctypes.byref(status)
+            ctypes.byref(self.model_id),
+            ctypes.byref(n_stream_inflows),
+            ctypes.byref(status),
         )
 
         # check for errors in the IWFM API call
@@ -1899,7 +1884,10 @@ class IWFMModel(IWFMMiscellaneous):
         stream_inflow_nodes = (ctypes.c_int * n_stream_inflows.value)()
 
         self.dll.IW_Model_GetStrmInflowNodes(
-            ctypes.byref(n_stream_inflows), stream_inflow_nodes, ctypes.byref(status)
+            ctypes.byref(self.model_id),
+            ctypes.byref(n_stream_inflows),
+            stream_inflow_nodes,
+            ctypes.byref(status),
         )
 
         # check for errors in the IWFM API call
@@ -1955,7 +1943,10 @@ class IWFMModel(IWFMMiscellaneous):
         stream_inflow_ids = (ctypes.c_int * n_stream_inflows.value)()
 
         self.dll.IW_Model_GetStrmInflowIDs(
-            ctypes.byref(n_stream_inflows), stream_inflow_ids, ctypes.byref(status)
+            ctypes.byref(self.model_id),
+            ctypes.byref(n_stream_inflows),
+            stream_inflow_ids,
+            ctypes.byref(status),
         )
 
         # check for errors in the IWFM API call
@@ -2104,6 +2095,7 @@ class IWFMModel(IWFMMiscellaneous):
         inflows = (ctypes.c_double * n_stream_inflow_locations.value)()
 
         self.dll.IW_Model_GetStrmInflows_AtSomeInflows(
+            ctypes.byref(self.model_id),
             ctypes.byref(n_stream_inflow_locations),
             stream_inflow_indices,
             ctypes.byref(inflow_conversion_factor),
@@ -2218,6 +2210,7 @@ class IWFMModel(IWFMMiscellaneous):
         status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetStrmFlow(
+            ctypes.byref(self.model_id),
             ctypes.byref(stream_node_index),
             ctypes.byref(flow_conversion_factor),
             ctypes.byref(stream_flow),
@@ -2330,6 +2323,7 @@ class IWFMModel(IWFMMiscellaneous):
         status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetStrmFlows(
+            ctypes.byref(self.model_id),
             ctypes.byref(n_stream_nodes),
             ctypes.byref(flow_conversion_factor),
             stream_flows,
@@ -2442,6 +2436,7 @@ class IWFMModel(IWFMMiscellaneous):
         status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetStrmStages(
+            ctypes.byref(self.model_id),
             ctypes.byref(n_stream_nodes),
             ctypes.byref(stage_conversion_factor),
             stream_stages,
@@ -2511,6 +2506,7 @@ class IWFMModel(IWFMMiscellaneous):
         status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetStrmTributaryInflows(
+            ctypes.byref(self.model_id),
             ctypes.byref(n_stream_nodes),
             ctypes.byref(inflow_conversion_factor),
             small_watershed_inflows,
@@ -2578,6 +2574,7 @@ class IWFMModel(IWFMMiscellaneous):
         status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetStrmRainfallRunoff(
+            ctypes.byref(self.model_id),
             ctypes.byref(n_stream_nodes),
             ctypes.byref(runoff_conversion_factor),
             rainfall_runoff_inflows,
@@ -2646,6 +2643,7 @@ class IWFMModel(IWFMMiscellaneous):
         status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetStrmReturnFlows(
+            ctypes.byref(self.model_id),
             ctypes.byref(n_stream_nodes),
             ctypes.byref(return_flow_conversion_factor),
             return_flows,
@@ -2711,6 +2709,7 @@ class IWFMModel(IWFMMiscellaneous):
         status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetStrmPondDrains(
+            ctypes.byref(self.model_id),
             ctypes.byref(n_stream_nodes),
             ctypes.byref(pond_drain_conversion_factor),
             pond_drain_flows,
@@ -2778,6 +2777,7 @@ class IWFMModel(IWFMMiscellaneous):
         status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetStrmTileDrains(
+            ctypes.byref(self.model_id),
             ctypes.byref(n_stream_nodes),
             ctypes.byref(tile_drain_conversion_factor),
             tile_drain_flows,
@@ -2850,6 +2850,7 @@ class IWFMModel(IWFMMiscellaneous):
         status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetStrmRiparianETs(
+            ctypes.byref(self.model_id),
             ctypes.byref(n_stream_nodes),
             ctypes.byref(evapotranspiration_conversion_factor),
             riparian_evapotranspiration,
@@ -2919,6 +2920,7 @@ class IWFMModel(IWFMMiscellaneous):
         status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetStrmGainFromGW(
+            ctypes.byref(self.model_id),
             ctypes.byref(n_stream_nodes),
             ctypes.byref(stream_gain_conversion_factor),
             gain_from_groundwater,
@@ -2987,6 +2989,7 @@ class IWFMModel(IWFMMiscellaneous):
         status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetStrmGainFromLakes(
+            ctypes.byref(self.model_id),
             ctypes.byref(n_stream_nodes),
             ctypes.byref(lake_inflow_conversion_factor),
             gain_from_lakes,
@@ -3057,6 +3060,7 @@ class IWFMModel(IWFMMiscellaneous):
         status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetStrmGainFromLakes(
+            ctypes.byref(self.model_id),
             ctypes.byref(n_stream_nodes),
             ctypes.byref(bypass_inflow_conversion_factor),
             net_bypass_inflow,
@@ -3169,6 +3173,7 @@ class IWFMModel(IWFMMiscellaneous):
         actual_diversion_amounts = (ctypes.c_double * n_diversions.value)()
 
         self.dll.IW_Model_GetStrmActualDiversions_AtSomeDiversions(
+            ctypes.byref(self.model_id),
             ctypes.byref(n_diversions),
             diversion_indices,
             ctypes.byref(diversion_conversion_factor),
@@ -3267,6 +3272,7 @@ class IWFMModel(IWFMMiscellaneous):
         diversion_stream_nodes = (ctypes.c_int * n_diversions.value)()
 
         self.dll.IW_Model_GetStrmDiversionsExportNodes(
+            ctypes.byref(self.model_id),
             ctypes.byref(n_diversions),
             diversion_list,
             diversion_stream_nodes,
@@ -3350,6 +3356,7 @@ class IWFMModel(IWFMMiscellaneous):
         status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetStrmDiversionNElems(
+            ctypes.byref(self.model_id),
             ctypes.byref(diversion_index),
             ctypes.byref(n_elements),
             ctypes.byref(status),
@@ -3424,6 +3431,7 @@ class IWFMModel(IWFMMiscellaneous):
         status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetStrmDiversionElems(
+            ctypes.byref(self.model_id),
             ctypes.byref(diversion_index),
             ctypes.byref(n_delivery_elements),
             element_indices,
@@ -3489,6 +3497,7 @@ class IWFMModel(IWFMMiscellaneous):
         n_stream_reaches = ctypes.c_int(0)
 
         self.dll.IW_Model_GetNReaches(
+            ctypes.byref(self.model_id),
             ctypes.byref(n_stream_reaches), ctypes.byref(status)
         )
 
@@ -3550,6 +3559,7 @@ class IWFMModel(IWFMMiscellaneous):
         stream_reach_ids = (ctypes.c_int * n_stream_reaches.value)()
 
         self.dll.IW_Model_GetReachIDs(
+            ctypes.byref(self.model_id),
             ctypes.byref(n_stream_reaches), stream_reach_ids, ctypes.byref(status)
         )
 
@@ -3630,6 +3640,7 @@ class IWFMModel(IWFMMiscellaneous):
         status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetReachNNodes(
+            ctypes.byref(self.model_id),
             ctypes.byref(reach_index),
             ctypes.byref(n_nodes_in_reach),
             ctypes.byref(status),
@@ -3722,6 +3733,7 @@ class IWFMModel(IWFMMiscellaneous):
         status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetReachGWNodes(
+            ctypes.byref(self.model_id),
             ctypes.byref(reach_index),
             ctypes.byref(n_nodes_in_reach),
             reach_groundwater_nodes,
@@ -3813,6 +3825,7 @@ class IWFMModel(IWFMMiscellaneous):
         status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetReachStrmNodes(
+            ctypes.byref(self.model_id),
             ctypes.byref(reach_index),
             ctypes.byref(n_nodes_in_reach),
             reach_stream_nodes,
@@ -3927,6 +3940,7 @@ class IWFMModel(IWFMMiscellaneous):
         status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetReaches_ForStrmNodes(
+            ctypes.byref(self.model_id),
             ctypes.byref(n_stream_nodes),
             stream_node_indices,
             stream_reaches,
@@ -3996,6 +4010,7 @@ class IWFMModel(IWFMMiscellaneous):
         status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetReachUpstrmNodes(
+            ctypes.byref(self.model_id),
             ctypes.byref(n_reaches), upstream_stream_nodes, ctypes.byref(status)
         )
 
@@ -4097,6 +4112,7 @@ class IWFMModel(IWFMMiscellaneous):
         status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetReachNUpstrmReaches(
+            ctypes.byref(self.model_id),
             ctypes.byref(reach_index),
             ctypes.byref(n_upstream_reaches),
             ctypes.byref(status),
@@ -4198,6 +4214,7 @@ class IWFMModel(IWFMMiscellaneous):
         status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetReachUpstrmReaches(
+            ctypes.byref(self.model_id),
             ctypes.byref(reach_index),
             ctypes.byref(n_upstream_reaches),
             upstream_reaches,
@@ -4267,6 +4284,7 @@ class IWFMModel(IWFMMiscellaneous):
         status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetReachDownstrmNodes(
+            ctypes.byref(self.model_id),
             ctypes.byref(n_reaches), downstream_stream_nodes, ctypes.byref(status)
         )
 
@@ -4340,6 +4358,7 @@ class IWFMModel(IWFMMiscellaneous):
         status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetReachOutflowDest(
+            ctypes.byref(self.model_id),
             ctypes.byref(n_reaches), reach_outflow_destinations, ctypes.byref(status)
         )
 
@@ -4409,6 +4428,7 @@ class IWFMModel(IWFMMiscellaneous):
         status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetReachOutflowDestTypes(
+            ctypes.byref(self.model_id),
             ctypes.byref(n_reaches),
             reach_outflow_destination_types,
             ctypes.byref(status),
@@ -4460,6 +4480,7 @@ class IWFMModel(IWFMMiscellaneous):
         n_diversions = ctypes.c_int(0)
 
         self.dll.IW_Model_GetNDiversions(
+            ctypes.byref(self.model_id),
             ctypes.byref(n_diversions), ctypes.byref(status)
         )
 
@@ -4512,6 +4533,7 @@ class IWFMModel(IWFMMiscellaneous):
         diversion_ids = (ctypes.c_int * n_diversions.value)()
 
         self.dll.IW_Model_GetDiversionIDs(
+            ctypes.byref(self.model_id),
             ctypes.byref(n_diversions), diversion_ids, ctypes.byref(status)
         )
 
@@ -4564,7 +4586,11 @@ class IWFMModel(IWFMMiscellaneous):
         # initialize n_stream_reaches variable
         n_bypasses = ctypes.c_int(0)
 
-        self.dll.IW_Model_GetNBypasses(ctypes.byref(n_bypasses), ctypes.byref(status))
+        self.dll.IW_Model_GetNBypasses(
+            ctypes.byref(self.model_id),
+            ctypes.byref(n_bypasses),
+            ctypes.byref(status),
+        )
 
         # check for errors in the IWFM API call
         if status.value != 0:
@@ -4619,6 +4645,7 @@ class IWFMModel(IWFMMiscellaneous):
         bypass_ids = (ctypes.c_int * n_bypasses.value)()
 
         self.dll.IW_Model_GetBypassIDs(
+            ctypes.byref(self.model_id),
             ctypes.byref(n_bypasses), bypass_ids, ctypes.byref(status)
         )
 
@@ -4699,6 +4726,7 @@ class IWFMModel(IWFMMiscellaneous):
         status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetBypassExportNodes(
+            ctypes.byref(self.model_id),
             ctypes.byref(n_bypasses),
             bypass_indices,
             stream_node_indices,
@@ -4798,6 +4826,7 @@ class IWFMModel(IWFMMiscellaneous):
         status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetBypassExportDestinationData(
+            ctypes.byref(self.model_id),
             ctypes.byref(n_bypasses),
             bypass_indices,
             export_stream_node_indices,
@@ -4886,6 +4915,7 @@ class IWFMModel(IWFMMiscellaneous):
         status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetBypassOutflows(
+            ctypes.byref(self.model_id),
             ctypes.byref(n_bypasses),
             ctypes.byref(bypass_conversion_factor),
             bypass_outflows,
@@ -4958,6 +4988,7 @@ class IWFMModel(IWFMMiscellaneous):
         status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetBypassRecoverableLossFactor(
+            ctypes.byref(self.model_id),
             ctypes.byref(bypass_index),
             ctypes.byref(recoverable_loss_factor),
             ctypes.byref(status),
@@ -5029,6 +5060,7 @@ class IWFMModel(IWFMMiscellaneous):
         status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetBypassNonRecoverableLossFactor(
+            ctypes.byref(self.model_id),
             ctypes.byref(bypass_index),
             ctypes.byref(nonrecoverable_loss_factor),
             ctypes.byref(status),
@@ -5080,7 +5112,11 @@ class IWFMModel(IWFMMiscellaneous):
         # set instance variable status to 0
         status = ctypes.c_int(0)
 
-        self.dll.IW_Model_GetNLakes(ctypes.byref(n_lakes), ctypes.byref(status))
+        self.dll.IW_Model_GetNLakes(
+            ctypes.byref(self.model_id),
+            ctypes.byref(n_lakes),
+            ctypes.byref(status),
+        )
 
         # check for errors in the IWFM API call
         if status.value != 0:
@@ -5136,6 +5172,7 @@ class IWFMModel(IWFMMiscellaneous):
         status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetLakeIDs(
+            ctypes.byref(self.model_id),
             ctypes.byref(n_lakes), lake_ids, ctypes.byref(status)
         )
 
@@ -5219,6 +5256,7 @@ class IWFMModel(IWFMMiscellaneous):
         status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetNElementsInLake(
+            ctypes.byref(self.model_id),
             ctypes.byref(lake_index),
             ctypes.byref(n_elements_in_lake),
             ctypes.byref(status),
@@ -5305,6 +5343,7 @@ class IWFMModel(IWFMMiscellaneous):
         status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetElementsInLake(
+            ctypes.byref(self.model_id),
             ctypes.byref(lake_index),
             ctypes.byref(n_elements_in_lake),
             elements_in_lake,
@@ -5362,6 +5401,7 @@ class IWFMModel(IWFMMiscellaneous):
         status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetNTileDrainNodes(
+            ctypes.byref(self.model_id),
             ctypes.byref(n_tile_drains), ctypes.byref(status)
         )
 
@@ -5419,6 +5459,7 @@ class IWFMModel(IWFMMiscellaneous):
         status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetTileDrainIDs(
+            ctypes.byref(self.model_id),
             ctypes.byref(n_tile_drains), tile_drain_ids, ctypes.byref(status)
         )
 
@@ -5476,6 +5517,7 @@ class IWFMModel(IWFMMiscellaneous):
         status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetTileDrainNodes(
+            ctypes.byref(self.model_id),
             ctypes.byref(n_tile_drains), tile_drain_nodes, ctypes.byref(status)
         )
 
@@ -5531,7 +5573,11 @@ class IWFMModel(IWFMMiscellaneous):
         # set instance variable status to 0
         status = ctypes.c_int(0)
 
-        self.dll.IW_Model_GetNLayers(ctypes.byref(n_layers), ctypes.byref(status))
+        self.dll.IW_Model_GetNLayers(
+            ctypes.byref(self.model_id),
+            ctypes.byref(n_layers),
+            ctypes.byref(status),
+        )
 
         # check for errors in the IWFM API call
         if status.value != 0:
@@ -5624,7 +5670,12 @@ class IWFMModel(IWFMMiscellaneous):
         # set instance variable status to 0
         status = ctypes.c_int(0)
 
-        self.dll.IW_Model_GetGSElev(ctypes.byref(n_nodes), gselev, ctypes.byref(status))
+        self.dll.IW_Model_GetGSElev(
+            ctypes.byref(self.model_id),
+            ctypes.byref(n_nodes),
+            gselev,
+            ctypes.byref(status),
+        )
 
         # check for errors in the IWFM API call
         if status.value != 0:
@@ -5765,6 +5816,7 @@ class IWFMModel(IWFMMiscellaneous):
         status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetAquiferTopElev(
+            ctypes.byref(self.model_id),
             ctypes.byref(n_nodes),
             ctypes.byref(n_layers),
             aquifer_top_elevations,
@@ -5928,6 +5980,7 @@ class IWFMModel(IWFMMiscellaneous):
         status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetAquiferBottomElev(
+            ctypes.byref(self.model_id),
             ctypes.byref(n_nodes),
             ctypes.byref(n_layers),
             aquifer_bottom_elevations,
@@ -6056,6 +6109,7 @@ class IWFMModel(IWFMMiscellaneous):
         status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetStratigraphy_AtXYCoordinate(
+            ctypes.byref(self.model_id),
             ctypes.byref(n_layers),
             ctypes.byref(x),
             ctypes.byref(y),
@@ -6201,6 +6255,7 @@ class IWFMModel(IWFMMiscellaneous):
         status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetAquiferHorizontalK(
+            ctypes.byref(self.model_id),
             ctypes.byref(n_nodes),
             ctypes.byref(n_layers),
             aquifer_horizontal_k,
@@ -6319,6 +6374,7 @@ class IWFMModel(IWFMMiscellaneous):
         status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetAquiferVerticalK(
+            ctypes.byref(self.model_id),
             ctypes.byref(n_nodes),
             ctypes.byref(n_layers),
             aquifer_vertical_k,
@@ -6449,6 +6505,7 @@ class IWFMModel(IWFMMiscellaneous):
         status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetAquitardVerticalK(
+            ctypes.byref(self.model_id),
             ctypes.byref(n_nodes),
             ctypes.byref(n_layers),
             aquitard_vertical_k,
@@ -6593,6 +6650,7 @@ class IWFMModel(IWFMMiscellaneous):
         status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetAquiferSy(
+            ctypes.byref(self.model_id),
             ctypes.byref(n_nodes),
             ctypes.byref(n_layers),
             aquifer_specific_yield,
@@ -6783,6 +6841,7 @@ class IWFMModel(IWFMMiscellaneous):
         status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetAquiferSs(
+            ctypes.byref(self.model_id),
             ctypes.byref(n_nodes),
             ctypes.byref(n_layers),
             aquifer_specific_storage,
@@ -6854,6 +6913,7 @@ class IWFMModel(IWFMMiscellaneous):
         status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetAquiferParameters(
+            ctypes.byref(self.model_id),
             ctypes.byref(n_nodes),
             ctypes.byref(n_layers),
             aquifer_horizontal_k,
@@ -6911,7 +6971,11 @@ class IWFMModel(IWFMMiscellaneous):
         # set instance variable status to 0
         status = ctypes.c_int(0)
 
-        self.dll.IW_Model_GetNAgCrops(ctypes.byref(n_ag_crops), ctypes.byref(status))
+        self.dll.IW_Model_GetNAgCrops(
+            ctypes.byref(self.model_id),
+            ctypes.byref(n_ag_crops),
+            ctypes.byref(status),
+        )
 
         # check for errors in the IWFM API call
         if status.value != 0:
@@ -6966,7 +7030,11 @@ class IWFMModel(IWFMMiscellaneous):
         # set instance variable status to 0
         status = ctypes.c_int(0)
 
-        self.dll.IW_Model_GetNWells(ctypes.byref(n_wells), ctypes.byref(status))
+        self.dll.IW_Model_GetNWells(
+            ctypes.byref(self.model_id),
+            ctypes.byref(n_wells),
+            ctypes.byref(status),
+        )
 
         # check for errors in the IWFM API call
         if status.value != 0:
@@ -7023,7 +7091,10 @@ class IWFMModel(IWFMMiscellaneous):
         well_ids = (ctypes.c_int * n_wells.value)()
 
         self.dll.IW_Model_GetWellIDs(
-            ctypes.byref(n_wells), well_ids, ctypes.byref(status)
+            ctypes.byref(self.model_id),
+            ctypes.byref(n_wells),
+            well_ids,
+            ctypes.byref(status),
         )
 
         # check for errors in the IWFM API call
@@ -7087,10 +7158,12 @@ class IWFMModel(IWFMMiscellaneous):
 
         if n == "IW_Model_GetWellCoordinates":
             self.dll.IW_Model_GetWellCoordinates(
+                ctypes.byref(self.model_id),
                 ctypes.byref(n_wells), x, y, ctypes.byref(status)
             )
         else:
             self.dll.IW_Model_GetWellXY(
+                ctypes.byref(self.model_id),
                 ctypes.byref(n_wells), x, y, ctypes.byref(status)
             )
 
@@ -7146,6 +7219,7 @@ class IWFMModel(IWFMMiscellaneous):
         bottoms = (ctypes.c_double * n_wells.value)()
 
         self.dll.IW_Model_GetWellPerfTopBottom(
+            ctypes.byref(self.model_id),
             ctypes.byref(n_wells), tops, bottoms, ctypes.byref(status)
         )
 
@@ -7201,6 +7275,7 @@ class IWFMModel(IWFMMiscellaneous):
         status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetNElemPumps(
+            ctypes.byref(self.model_id),
             ctypes.byref(n_elem_pumps), ctypes.byref(status)
         )
 
@@ -7257,7 +7332,10 @@ class IWFMModel(IWFMMiscellaneous):
         element_pump_ids = (ctypes.c_int * n_element_pumps.value)()
 
         self.dll.IW_Model_GetWellIDs(
-            ctypes.byref(n_element_pumps), element_pump_ids, ctypes.byref(status)
+            ctypes.byref(self.model_id),
+            ctypes.byref(n_element_pumps),
+            element_pump_ids,
+            ctypes.byref(status),
         )
 
         # check for errors in the IWFM API call
@@ -7326,6 +7404,7 @@ class IWFMModel(IWFMMiscellaneous):
         status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetSupplyPurpose(
+            ctypes.byref(self.model_id),
             ctypes.byref(supply_type_id),
             ctypes.byref(n_supply_indices),
             supply_indices,
@@ -7753,6 +7832,7 @@ class IWFMModel(IWFMMiscellaneous):
         status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetSupplyRequirement_Ag(
+            ctypes.byref(self.model_id),
             ctypes.byref(location_type_id),
             ctypes.byref(n_locations),
             locations_list,
@@ -7961,6 +8041,7 @@ class IWFMModel(IWFMMiscellaneous):
         status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetSupplyRequirement_Urb(
+            ctypes.byref(self.model_id),
             ctypes.byref(location_type_id),
             ctypes.byref(n_locations),
             locations_list,
@@ -8171,6 +8252,7 @@ class IWFMModel(IWFMMiscellaneous):
         status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetSupplyShortAtOrigin_Ag(
+            ctypes.byref(self.model_id),
             ctypes.byref(supply_type_id),
             ctypes.byref(n_locations),
             supply_location_list,
@@ -8460,6 +8542,7 @@ class IWFMModel(IWFMMiscellaneous):
         status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetSupplyShortAtOrigin_Urb(
+            ctypes.byref(self.model_id),
             ctypes.byref(supply_type_id),
             ctypes.byref(n_locations),
             supply_location_list,
@@ -8773,6 +8856,7 @@ class IWFMModel(IWFMMiscellaneous):
         status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetNames(
+            ctypes.byref(self.model_id),
             ctypes.byref(location_type_id),
             ctypes.byref(num_names),
             delimiter_position_array,
@@ -9067,6 +9151,7 @@ class IWFMModel(IWFMMiscellaneous):
         status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetNHydrographTypes(
+            ctypes.byref(self.model_id),
             ctypes.byref(n_hydrograph_types), ctypes.byref(status)
         )
 
@@ -9149,6 +9234,7 @@ class IWFMModel(IWFMMiscellaneous):
         status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetHydrographTypeList(
+            ctypes.byref(self.model_id),
             ctypes.byref(n_hydrograph_types),
             delimiter_position_array,
             ctypes.byref(length_hydrograph_type_list),
@@ -9208,6 +9294,7 @@ class IWFMModel(IWFMMiscellaneous):
         location_type_id = ctypes.c_int(location_type_id)
 
         self.dll.IW_Model_GetNHydrographs(
+            ctypes.byref(self.model_id),
             ctypes.byref(location_type_id),
             ctypes.byref(n_hydrographs),
             ctypes.byref(status),
@@ -9449,6 +9536,7 @@ class IWFMModel(IWFMMiscellaneous):
             hydrograph_ids = (ctypes.c_int * num_hydrographs.value)()
 
             self.dll.IW_Model_GetHydrographIDs(
+                ctypes.byref(self.model_id),
                 ctypes.byref(location_type_id),
                 ctypes.byref(num_hydrographs),
                 hydrograph_ids,
@@ -9699,6 +9787,7 @@ class IWFMModel(IWFMMiscellaneous):
             y = (ctypes.c_double * num_hydrographs.value)()
 
             self.dll.IW_Model_GetHydrographCoordinates(
+                ctypes.byref(self.model_id),
                 ctypes.byref(location_type_id),
                 ctypes.byref(num_hydrographs),
                 x,
@@ -10093,6 +10182,7 @@ class IWFMModel(IWFMMiscellaneous):
         status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetHydrograph(
+            ctypes.byref(self.model_id),
             ctypes.byref(hydrograph_type),
             ctypes.byref(hydrograph_index),
             ctypes.byref(layer_number),
@@ -10694,6 +10784,7 @@ class IWFMModel(IWFMMiscellaneous):
 
         # call DLL procedure
         self.dll.IW_Model_GetGWHeads_ForALayer(
+            ctypes.byref(self.model_id),
             ctypes.byref(layer_number),
             begin_date,
             end_date,
@@ -10819,6 +10910,7 @@ class IWFMModel(IWFMMiscellaneous):
         status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetGWHeads_All(
+            ctypes.byref(self.model_id),
             ctypes.byref(n_nodes),
             ctypes.byref(n_layers),
             ctypes.byref(previous),
@@ -10927,6 +11019,7 @@ class IWFMModel(IWFMMiscellaneous):
         status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetSubsidence_All(
+            ctypes.byref(self.model_id),
             ctypes.byref(n_nodes),
             ctypes.byref(n_layers),
             ctypes.byref(subsidence_conversion_factor),
@@ -11024,6 +11117,7 @@ class IWFMModel(IWFMMiscellaneous):
         status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetSubregionAgPumpingAverageDepthToGW(
+            ctypes.byref(self.model_id),
             ctypes.byref(n_subregions),
             average_depth_to_groundwater,
             ctypes.byref(status),
@@ -11151,6 +11245,7 @@ class IWFMModel(IWFMMiscellaneous):
         status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetZoneAgPumpingAverageDepthToGW(
+            ctypes.byref(self.model_id),
             ctypes.byref(len_elements_list),
             elements_list,
             zones_list,
@@ -11204,6 +11299,7 @@ class IWFMModel(IWFMMiscellaneous):
         status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetNLocations(
+            ctypes.byref(self.model_id),
             ctypes.byref(location_type_id),
             ctypes.byref(n_locations),
             ctypes.byref(status),
@@ -11280,6 +11376,7 @@ class IWFMModel(IWFMMiscellaneous):
         status = ctypes.c_int(0)
 
         self.dll.IW_Model_GetLocationIDs(
+            ctypes.byref(self.model_id),
             ctypes.byref(location_type_id),
             ctypes.byref(n_locations),
             location_ids,
@@ -11350,6 +11447,7 @@ class IWFMModel(IWFMMiscellaneous):
         status = ctypes.c_int(0)
 
         self.dll.IW_Model_SetPreProcessorPath(
+            ctypes.byref(self.model_id),
             ctypes.byref(len_pp_path), preprocessor_path, ctypes.byref(status)
         )
 
@@ -11390,6 +11488,7 @@ class IWFMModel(IWFMMiscellaneous):
         status = ctypes.c_int(0)
 
         self.dll.IW_Model_SetSimulationPath(
+            ctypes.byref(self.model_id),
             ctypes.byref(len_sim_path), simulation_path, ctypes.byref(status)
         )
 
@@ -11424,6 +11523,7 @@ class IWFMModel(IWFMMiscellaneous):
         status = ctypes.c_int(0)
 
         self.dll.IW_Model_SetSupplyAdjustmentMaxIters(
+            ctypes.byref(self.model_id),
             ctypes.byref(max_iterations), ctypes.byref(status)
         )
 
@@ -11471,6 +11571,7 @@ class IWFMModel(IWFMMiscellaneous):
         status = ctypes.c_int(0)
 
         self.dll.IW_Model_SetSupplyAdjustmentTolerance(
+            ctypes.byref(self.model_id),
             ctypes.byref(tolerance), ctypes.byref(status)
         )
 
@@ -11534,7 +11635,9 @@ class IWFMModel(IWFMMiscellaneous):
         # set instance variable status to 0
         status = ctypes.c_int(0)
 
-        self.dll.IW_Model_SimulateForOneTimeStep(ctypes.byref(status))
+        self.dll.IW_Model_SimulateForOneTimeStep(
+            ctypes.byref(self.model_id), ctypes.byref(status)
+        )
 
         # check for errors in the IWFM API call
         if status.value != 0:
@@ -11587,6 +11690,7 @@ class IWFMModel(IWFMMiscellaneous):
         status = ctypes.c_int(0)
 
         self.dll.IW_Model_SimulateForAnInterval(
+            ctypes.byref(self.model_id),
             ctypes.byref(len_time_interval), time_interval, ctypes.byref(status)
         )
 
@@ -11615,7 +11719,9 @@ class IWFMModel(IWFMMiscellaneous):
         # set instance variable status to 0
         status = ctypes.c_int(0)
 
-        self.dll.IW_Model_SimulateAll(ctypes.byref(status))
+        self.dll.IW_Model_SimulateAll(
+            ctypes.byref(self.model_id), ctypes.byref(status)
+        )
 
         # check for errors in the IWFM API call
         if status.value != 0:
@@ -11641,7 +11747,9 @@ class IWFMModel(IWFMMiscellaneous):
         # set instance variable status to 0
         status = ctypes.c_int(0)
 
-        self.dll.IW_Model_AdvanceTime(ctypes.byref(status))
+        self.dll.IW_Model_AdvanceTime(
+            ctypes.byref(self.model_id), ctypes.byref(status)
+        )
 
         # check for errors in the IWFM API call
         if status.value != 0:
@@ -11672,7 +11780,9 @@ class IWFMModel(IWFMMiscellaneous):
         # set instance variable status to 0
         status = ctypes.c_int(0)
 
-        self.dll.IW_Model_ReadTSData(ctypes.byref(status))
+        self.dll.IW_Model_ReadTSData(
+            ctypes.byref(self.model_id), ctypes.byref(status)
+        )
 
         # check for errors in the IWFM API call
         if status.value != 0:
@@ -11859,6 +11969,7 @@ class IWFMModel(IWFMMiscellaneous):
         status = ctypes.c_int(0)
 
         self.dll.IW_Model_ReadTSData_Overwrite(
+            ctypes.byref(self.model_id),
             ctypes.byref(n_landuses),
             ctypes.byref(n_subregions),
             land_use_array,
@@ -11891,7 +12002,9 @@ class IWFMModel(IWFMMiscellaneous):
         # set instance variable status to 0
         status = ctypes.c_int(0)
 
-        self.dll.IW_Model_PrintResults(ctypes.byref(status))
+        self.dll.IW_Model_PrintResults(
+            ctypes.byref(self.model_id), ctypes.byref(status)
+        )
 
         # check for errors in the IWFM API call
         if status.value != 0:
@@ -11914,7 +12027,9 @@ class IWFMModel(IWFMMiscellaneous):
         # set instance variable status to 0
         status = ctypes.c_int(0)
 
-        self.dll.IW_Model_AdvanceState(ctypes.byref(status))
+        self.dll.IW_Model_AdvanceState(
+            ctypes.byref(self.model_id), ctypes.byref(status)
+        )
 
         # check for errors in the IWFM API call
         if status.value != 0:
@@ -11958,6 +12073,7 @@ class IWFMModel(IWFMMiscellaneous):
         status = ctypes.c_int(0)
 
         self.dll.IW_Model_IsStrmUpstreamNode(
+            ctypes.byref(self.model_id),
             ctypes.byref(stream_node_1),
             ctypes.byref(stream_node_2),
             ctypes.byref(is_upstream),
@@ -11997,6 +12113,7 @@ class IWFMModel(IWFMMiscellaneous):
         status = ctypes.c_int(0)
 
         self.dll.IW_Model_IsEndOfSimulation(
+            ctypes.byref(self.model_id),
             ctypes.byref(is_end_of_simulation), ctypes.byref(status)
         )
 
@@ -12129,6 +12246,7 @@ class IWFMModel(IWFMMiscellaneous):
         status = ctypes.c_int(0)
 
         self.dll.IW_Model_TurnSupplyAdjustOnOff(
+            ctypes.byref(self.model_id),
             ctypes.byref(diversion_adjustment_flag),
             ctypes.byref(pumping_adjustment_flag),
             ctypes.byref(status),
@@ -12171,7 +12289,9 @@ class IWFMModel(IWFMMiscellaneous):
         # set instance variable status to 0
         status = ctypes.c_int(0)
 
-        self.dll.IW_Model_RestorePumpingToReadValues(ctypes.byref(status))
+        self.dll.IW_Model_RestorePumpingToReadValues(
+            ctypes.byref(self.model_id), ctypes.byref(status)
+        )
 
         # check for errors in the IWFM API call
         if status.value != 0:
@@ -12235,6 +12355,7 @@ class IWFMModel(IWFMMiscellaneous):
         coeff = (ctypes.c_double * 4)()
 
         self.dll.IW_Model_FEInterpolate(
+            ctypes.byref(self.model_id),
             ctypes.byref(x),
             ctypes.byref(y),
             ctypes.byref(element_idx),
