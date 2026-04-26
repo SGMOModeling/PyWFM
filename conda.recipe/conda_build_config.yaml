@@ -1,8 +1,7 @@
 python:
   - 3.8
-iwfm_api_version:
-  - 2015.0.1273
-  - 2015.0.1403
-  - 2015.1.1443
-  - 2024.2.1594
-  - 2025.0.1747
+# 0.3.x requires the handle-based IWFM kernel (commit 393e02e+).
+# No DLL in the cadwr-sgmo channel currently ships with that kernel.
+# When upstream publishes a build (e.g. labelled 2025.1.xxxx), add the
+# version here and update the iwfmdll constraint in meta.yaml.
+iwfm_api_version: []

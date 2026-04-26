@@ -147,17 +147,6 @@ class IWFMModel(IWFMMiscellaneous):
                 )
             )
 
-        # get the IWFM API version
-        api_version = self.get_version()
-        iwfm_core_version = (
-            api_version["IWFM Core"]
-            if "IWFM Core" in api_version.keys()
-            else api_version["IWFM"]
-        )
-        major_version, revision_number, build_number = [
-            v for v in iwfm_core_version.split(".")
-        ]
-
         # convert preprocessor file name to ctypes
         preprocessor_file_name = ctypes.create_string_buffer(
             self.preprocessor_file_name.encode("utf-8")
@@ -178,46 +167,29 @@ class IWFMModel(IWFMMiscellaneous):
         # convert is_for_inquiry to ctypes
         is_for_inquiry = ctypes.c_int(self.is_for_inquiry)
 
+        # initialize model_id to 0
+        model_id = ctypes.c_int(0)
+
         # set instance variable status to 0
         status = ctypes.c_int(0)
 
-        if int(major_version) > 2015:
-            # initialize model_id to 0
-            model_id = ctypes.c_int(0)
+        self.dll.IW_Model_New(
+            ctypes.byref(length_preprocessor_file_name),
+            preprocessor_file_name,
+            ctypes.byref(length_simulation_file_name),
+            simulation_file_name,
+            ctypes.byref(has_routed_streams),
+            ctypes.byref(is_for_inquiry),
+            ctypes.byref(model_id),
+            ctypes.byref(status),
+        )
 
-            self.dll.IW_Model_New(
-                ctypes.byref(length_preprocessor_file_name),
-                preprocessor_file_name,
-                ctypes.byref(length_simulation_file_name),
-                simulation_file_name,
-                ctypes.byref(has_routed_streams),
-                ctypes.byref(is_for_inquiry),
-                ctypes.byref(model_id),
-                ctypes.byref(status),
-            )
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
 
-            # check for errors in the IWFM API call
-            if status.value != 0:
-                error_message = self.get_last_message()
-                raise IWFMError(error_message)
-
-            return model_id.value
-
-        else:
-            self.dll.IW_Model_New(
-                ctypes.byref(length_preprocessor_file_name),
-                preprocessor_file_name,
-                ctypes.byref(length_simulation_file_name),
-                simulation_file_name,
-                ctypes.byref(has_routed_streams),
-                ctypes.byref(is_for_inquiry),
-                ctypes.byref(status),
-            )
-
-            # check for errors in the IWFM API call
-            if status.value != 0:
-                error_message = self.get_last_message()
-                raise IWFMError(error_message)
+        return model_id.value
 
     def kill(self):
         """

@@ -34,6 +34,9 @@ requirements:
     - matplotlib
     - Click
     - requests
+    # TODO (0.3.0 release): pin to the iwfmdll build cut from kernel commit
+    # 393e02e+ once it ships in the cadwr-sgmo channel. Until then this
+    # recipe builds no variants (conda_build_config.yaml has an empty matrix).
     - cadwr-sgmo::iwfmdll=={{ iwfm_api_version }} # [win]
 
 test:
