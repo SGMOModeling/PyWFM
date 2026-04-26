@@ -4,6 +4,10 @@ python library to expose the functionality of the IWFM DLL
 
 Full documentation of PyWFM is available [here](https://sgmomodeling.github.io/PyWFM/html/index.html)
 
+## Compatibility
+
+This is the **0.2.x maintenance line**. It supports stock IWFM DLLs from the cadwr-sgmo conda channel: 2015.0.1273, 2015.0.1403, 2015.1.1443, 2024.2.1594, and 2025.0.1747. For the handle-based multi-instance API (kernel commit 393e02e+), use `iwfm-pywfm>=0.3`.
+
 To use the pywfm module, users need to download this repository
 
 **Note** Users must also download the IWFM DLL.
