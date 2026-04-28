@@ -1,0 +1,47 @@
+#4.0
+C *** DO NOT DELETE ABOVE LINE ***
+C
+C*******************************************************************************
+C
+C                  INTEGRATED WATER FLOW MODEL (IWFM)
+C
+C*******************************************************************************
+C
+C                        PUMPING MAIN DATA FILE
+C                           Pumping Component
+C                          *** Version 4.0 ***
+C
+C
+C             Project:  IWFM Version 2015 Release
+C                       California Department of Water Resources
+C                       November, 2022
+C             Filename: Pump_MAIN.dat
+C
+C*******************************************************************************
+C                             File Description:
+C
+C   This data file contains the file names and other relevant data that are 
+C   used for the simulation of pumping.
+C
+C*******************************************************************************
+C
+C  WELLFL     ; Well pumping specifications data file (max. 1000 characters)
+C                  * Leave blank if no wells are simulated
+C  ELEMPUMPFL ; Element pumping specifications data file (max. 1000 characters)
+C                  * Leave blank if element pumping is not simulated
+C  PUMPFL     ; Time series pumping data file (max. 1000 characters)
+C                  * Leave blank if pumping rates are not read from a file (for
+C                     instance, in a situation where pumping rates are computed 
+C                     by an external program)
+C  PUMPOUTFL  ; Output file for agricultural and urban element and well pumping
+C                  that lists pumping used by the model; this file can only be 
+C                  a text file (max. 1000 characters)
+C                  * Leave blank if this output is not desired
+C
+C-------------------------------------------------------------------------------
+C     VALUE                         DESCRIPTION
+C-------------------------------------------------------------------------------
+                                    / WELLFL
+    GW\ElemPump.dat                 / ELEMPUMPFL
+    GW\TSPumping.dat                / PUMPFL
+    ..\Results\ElemWellPumping.out  / PUMPOUTFL

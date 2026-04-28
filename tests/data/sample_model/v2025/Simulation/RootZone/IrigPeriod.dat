@@ -1,0 +1,86 @@
+C*******************************************************************************
+C
+C                  INTEGRATED WATER FLOW MODEL (IWFM)
+C
+C*******************************************************************************
+C
+C                   IRRIGATION PERIOD DATA FILE
+C                       Root Zone Component
+C                       *** Version 4.12 ***
+C
+C
+C             Project:  IWFM Public Release
+C                       California Department of Water Resources
+C                       September, 2025
+C             Filename: IrigPeriod.dat
+C
+C*******************************************************************************
+C                           File Description
+C
+C   This data file contains a set of irrigation period indicators (1 for irrigation
+C   season and 0 for non-irrigation season).  These values are correlated to
+C   individual ponded and non-ponded crops through the Ponded Crops Main File and 
+C   the Non-Ponded Crops Main File.
+C
+C*******************************************************************************
+C               Irrigation Period Data Specifications
+C
+C   NCOLIP  ; Number of irrigation period data columns
+C   NSPIP   ; Number of time steps to update the irrigation period data
+C              * Enter any number if time-tracking option is on
+C   NFQIP   ; Repetition frequency of the irrigation period data 
+C              * Enter 0 if full time series data is supplied
+C              * Enter any number if time-tracking option is on
+C   DSSFL   ; The name of the DSS file for data input 
+C              * Leave blank if DSS file is not used for data input
+C
+C-------------------------------------------------------------------------------
+C         VALUE                                      DESCRIPTION
+C-------------------------------------------------------------------------------
+          4                                          / NCOLIP
+          1                                          / NSPIP 
+          0                                          / NFQIP
+                                                     / DSSFL
+C----------------------------------------------------------------------------------------------
+C                         Irrigation Period Indicators 
+C                            (READ FROM THIS FILE)
+C
+C   List the irrigation period data below, if it will not be read from
+C   a DSS file (i.e. DSSFL is left blank above).
+C
+C   TIME ;  Time
+C   IP   ;  Irrigation period indicator; 
+C             0 = non-irrigation period (i.e. agricultural water demand will not be computed)
+C             1 = irrigation period (i.e. agricultural water demand will be computed)
+C
+C----------------------------------------------------------------------------------------------
+C  TIME              IP[1]  IP[2]  IP[3] ... IP[NCOLIP] 
+C----------------------------------------------------------------------------------------------
+C                     TO     AL    RICE_NDC    NO_IRIG
+  10/31/4000_24:00    0      1       0           0
+  11/30/4000_24:00    0      0       0           0
+  12/31/4000_24:00    0      0       0           0
+  01/31/4000_24:00    0      0       0           0
+  02/29/4000_24:00    0      0       0           0
+  03/31/4000_24:00    0      1       0           0
+  04/30/4000_24:00    1      1       0           0
+  05/31/4000_24:00    1      1       1           0
+  06/30/4000_24:00    1      1       1           0
+  07/31/4000_24:00    1      1       1           0
+  08/31/4000_24:00    1      1       0           0
+  09/30/4000_24:00    1      1       0           0
+C-------------------------------------------------------------------------------
+C                       Pathnames for Irrigation Period Data
+C                             (READ FROM DSS FILE)
+C
+C   List the pathnames for irrigation period indicators below, if it 
+C   will be read from a DSS file (i.e. DSSFL is specified above).
+C
+C   REC  ;  Time series record number
+C   PATH ;  Pathname for the time series record 
+C
+C----------------------------------------------------------------------------------------------------------- 
+C   REC     PATH
+C-----------------------------------------------------------------------------------------------------------
+*
+*

@@ -1,0 +1,105 @@
+C*******************************************************************************
+C
+C                  INTEGRATED WATER FLOW MODEL (IWFM)
+C
+C*******************************************************************************
+C
+C                  ELEMENT PUMPING SPECIFICATION FILE
+C                          Pumping Component
+C                         *** Version 4.0 ***
+C
+C
+C             Project:  IWFM Version 2015 Release
+C                       California Department of Water Resources
+C                       November, 2022
+C             Filename: ElemPump.dat
+C
+C*******************************************************************************
+C                          File Description
+C
+C   This data file contains the specification data for element pumping.
+C
+C*******************************************************************************
+C
+C   NSINK ;  Number of elements used for element pumping
+C
+C-------------------------------------------------------------------------------
+C   VALUE                       DESCRIPTION
+C-------------------------------------------------------------------------------
+     5                          / NSINK
+C-------------------------------------------------------------------------------
+C*******************************************************************************
+C              List of elements for pumping and their corresponding parameters
+C
+C   ID       ; Element identification number corresponding to the pumping
+C   ICOLSK   ; Element pumping - this number corresponds to the appropriate data 
+C               column in the Time Series Pumping File
+C               * Enter 0 if pumping will not be read from the Time Series
+C                  Pumping File (for instance, in a situation where pumping is 
+C                  calculated by an external program)
+C   FRACSK    ; Relative proportion of the pumping in column ICOLSK to be applied
+C               to element ID
+C   IOPTSK   ; Option for distribution of pumping at the delivery destination
+C               0 = to distribute the pumping according to the given relative
+C                     fraction, FRACSK
+C               1 = to distribute the pumping in proportion to FRACSK
+C                     times the total area of the destination for pumping
+C               2 = to distribute the pumping in proportion to FRACSK
+C                     times the developed area (ag. and urban) at the destination 
+C                     for pumping
+C               3 = to distribute the pumping in proportion to FRACSK
+C                     times the ag. area at the destination for pumping
+C               4 = to distribute the pumping in proportion to FRACSK
+C                     times the urban area at the destination for pumping
+C   FRACSKL  ; The distribution factor of pumping for each aquifer layer; i.e. for
+C               layers 1 to NL 
+C   TYPDSTSK ; Destination where the pumping is delivered to 
+C              -1 = pumping is used in the same element that pumping occurs
+C               0 = Pumping goes outside the model domain
+C               2 = Pumping goes to element DSTSK (see below)
+C               4 = Pumping goes to subregion DSTSK (see below)
+C               6 = Pumping goes to a group of elements with ID DSTDL 
+C                     (element groups are listed after this section)
+C   DSTSK    ; Destination number for element pumping delivery
+C               * Enter any number if TYPDSTSK is set to -1 or 0
+C   ICFIRIGSK; Fraction of the pumping that is used for irrigation purposes -
+C               this number corresponds to the appropriate data column in the 
+C               Irrigation Fractions Data File
+C               * Enter 0 if pumping is delivered outside the model domain
+C   ICADJSK  ; Supply adjustment specification - this number corresponds to 
+C               the data column in the Supply Adjustment Specifications 
+C               Data File 
+C               * Enter 0 if element pumping will not be adjusted
+C   ICSKMAX  ; Maximum pumping amount - this number corresponds to the 
+C               appropriate data column in the Time Series Pumping File 
+C               * Enter 0 if a maximum pumping amount does not apply
+C   FSKMAX   ; Fraction of data value specified in column ICSKMAX to be used as
+C               maximum pumping amount
+C             
+C---------------------------------------------------------------------------------------------------------------------
+C ID  ICOLSK   FRACSK   IOPTSK   FRACSKL(1)   FRACSKL(2)   TYPDSTSK   DSTSK   ICFIRIGSK   ICADJSK  ICSKMAX  FSKMAX
+C---------------------------------------------------------------------------------------------------------------------
+  73    1       1.0       0         1.0          1.0          4         1        2          1         0       1.0
+  193   1       1.0       0         1.0          1.0          4         1        2          1         0       1.0
+  333   1       1.0       0         1.0          1.0          4         2        1          2         0       1.0
+  134   2       1.0       0         1.0          1.0          0         0        0          3         0       1.0
+  274   2       1.0       0         1.0          1.0          0         0        0          3         0       1.0
+C--------------------------------------------------------------------------------------------------
+C
+C                Element Groups for Element Pumping Deliveries
+C
+C   List the elements in each group where selected element pumping above is delivered to. 
+C
+C   NGRP  ; Number of element groups 
+C            * Enter 0 if there are no element groups where well pumping is delivered
+C   ID    ; Element group ID 
+C   NELEM ; Number of elements in element group ID
+C   IELEM ; Element numbers that are in group ID
+C
+C-------------------------------------------------------------------------------
+     0                 / NGRP
+C-------------------------------------------------------------------------------
+C    ID         NELEM      IELEM
+C-------------------------------------------------------------------------------
+*
+*

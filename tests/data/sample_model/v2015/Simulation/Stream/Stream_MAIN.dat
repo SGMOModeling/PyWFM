@@ -1,0 +1,231 @@
+#4.0
+C *** DO NOT DELETE ABOVE LINE ***
+C
+C*******************************************************************************
+C
+C                  INTEGRATED WATER FLOW MODEL (IWFM)
+C
+C*******************************************************************************
+C
+C                      STREAM PARAMETERS DATA FILE
+C                           Stream Component
+C                          *** Version 4.0 ***
+C
+C
+C             Project:  IWFM Version 2015 Release
+C                       California Department of Water Resources
+C                       November, 2022
+C             Filename: Stream_MAIN.dat
+C
+C*******************************************************************************
+C                              File Description
+C
+C    This file contains parameters and data file names for the simulation 
+C    of stream flows.
+C
+C*******************************************************************************
+C                        Input and Output Data File Names
+C
+C  INFLOWFL    ; Stream inflow data file (max. 1000 characters)
+C                 * Leave blank if no stream inflow data exists
+C  DIVSPECFL   ; Diversion specifications data file (max. 1000 characters)
+C                 * Leave blank if diversions are not simulated
+C  BYPSPECFL   ; Bypass specifications data file (max. 1000 characters)
+C                 * Leave blank if bypasses are not simulated
+C  DIVFL       ; Diversion data file (max. 1000 characters)
+C                 * Leave blank if diversions are not simulated
+C  STRMRCHBUDFL; HDF5 output file for stream flow budget at each 
+C                 stream reach (max. 1000 characters) 
+C                 * Leave blank if this output is not required
+C  DIVDTLBUDFL ; HDF5 output file for diversion details (max. 1000 characters)
+C                 * Leave blank if this output is not required
+C------------------------------------------------------------------------------
+C   VALUE                         DESCRIPTION
+C------------------------------------------------------------------------------
+    Stream\StreamInflow.dat       / INFLOWFL                       
+    Stream\DiverSpecs.dat         / DIVSPECFL 
+    Stream\BypassSpecs.dat        / BYPSPECFL
+    Stream\Diversions.dat         / DIVFL                        
+    ..\Results\StrmBud.hdf        / STRMRCHBUDFL            
+    ..\Results\DiverDetail.hdf    / DIVDTLBUDFL             
+C*******************************************************************************
+C                       Stream Flow Hydrograph Output Data
+C
+C  NOUTR      ; Total number of hydrographs to be printed
+C                (NOUTR = 0 if no stream hydrograph data is to be printed)
+C  IHSQR      ; Switch for the output of stream surface elevations or stream flows; 
+C                IHSQR = 0 if output of stream flows is desired,
+C                IHSQR = 1 if output of stream stage is desired
+C                IHSQR = 2 if output of both stream stage and flows are desired
+C  FACTVROU   ; Factor to convert simulation unit of stream flows into 
+C                intented output unit 
+C  UNITVROU   ; Output unit of stream flow (max. 10 characters long)
+C  FACTLTOU   ; Factor to convert simulation unit of stream surface 
+C                elevations into intented output unit 
+C  UNITLTOU   ; Output unit of stream surface elevation (max. 10 characters long)
+C  STHYDOUTFL ; File name for stream hydrograph output (max. 1000 characters) 
+C                 * Leave blank if this output is not required
+C
+C------------------------------------------------------------------------------
+C   VALUE                         DESCRIPTION
+C------------------------------------------------------------------------------
+    23                            / NOUTR
+    0                             / IHSQR
+    0.000022957                   / FACTVROU     (cu.ft./day -> ac.ft./day)
+    ac.ft./day                    / UNITVROU
+    1.0                           / FACTLTOU
+    ft                            / UNITLTOU
+    ..\Results\StrmHyd.out        / STHYDOUTFL
+C-------------------------------------------------------------------------------
+C
+C   The following lists the stream node number for hydrograph to be printed
+C   (skip if no hydrographs are to be printed, ie. NOUTR = 0)
+C
+C   IOUTR;   Stream node number for printing hydrograph output
+C   NAME ;   Name of hydrograph location (max. 30 characters)
+C
+C-------------------------------------------------------------------------------
+C    IOUTR       NAME
+C-------------------------------------------------------------------------------
+       1         StrmHyd_1
+       2         StrmHyd_2 
+       3         StrmHyd_3 
+       4         StrmHyd_4 
+       5         StrmHyd_5 
+       6         StrmHyd_6 
+       7         StrmHyd_7 
+       8         StrmHyd_8 
+       9         StrmHyd_9 
+       10        StrmHyd_10
+       11        StrmHyd_11
+       12        StrmHyd_12
+       13        StrmHyd_13
+       14        StrmHyd_14
+       15        StrmHyd_15
+       16        StrmHyd_16
+       17        StrmHyd_17
+       18        StrmHyd_18
+       19        StrmHyd_19
+       20        StrmHyd_20
+       21        StrmHyd_21
+       22        StrmHyd_22
+       23        StrmHyd_23
+C*******************************************************************************
+C                       Stream Flow Budget at Selected Nodes
+C
+C  NBUDR      ; Total number of stream nodes for which budget output is desired
+C                (NBUDR = 0 if no stream node budget is required)
+C  STNDBUDFL  ; HDF5 output file for stream node budget (max. 1000 characters)
+C                 * Leave blank if this output is not required
+C
+C------------------------------------------------------------------------------
+C   VALUE                         DESCRIPTION
+C------------------------------------------------------------------------------
+     3                            / NBUDR
+     ..\Results\StrmNodeBud.hdf   / STNDBUDFL
+C-------------------------------------------------------------------------------
+C
+C   The following lists the stream nodes for budget output
+C   (skip if no budget output is required, ie. NBUDR = 0)
+C
+C   IBUDR;   Stream node for budget output
+C-------------------------------------------------------------------------------
+C    IBUDR
+C-------------------------------------------------------------------------------
+       1
+       8
+       19
+C*******************************************************************************
+C                       Stream Bed Parameters
+C
+C     The following lists the parameters to model stream flows and stream-aquifer
+C     interaction.
+C
+C   FACTK ;   Conversion factor for stream bed conductivity
+C              It is used to convert only the spatial component of the unit; 
+C              DO NOT include the conversion factor for time component of the unit.
+C              * e.g. Unit of conductivity listed in this file = IN/DAY
+C                     Consistent unit used in simulation       = FT/MONTH 
+C                     Enter FACTK (IN/MONTH -> FT/MONTH)       = 8.33333E-02 
+C                      (conversion of DAY -> MONTH is performed automatically) 
+C   TUNITSK;  Time unit of conductivity.  This should be one of the units 
+C              recognized by HEC-DSS that are listed in the Main Control File.  
+C   FACTL ;   Conversion factor for stream bed thickness and wetted perimeter
+C   IR    ;   Stream node number
+C   CSTRM ;   Hydraulic conductivity of stream bed; [L/T]
+C   DSTRM ;   Thickness of stream bed; [L]
+C   WETPR ;   Wetted perimeter; [L]
+C
+C------------------------------------------------------------------------------
+C   VALUE                 DESCRIPTION
+C------------------------------------------------------------------------------
+    1.0                   / FACTK
+    1day                  / TUNITSK
+    1.0                   / FACTL
+C------------------------------------------------------------------------------
+C    IR       CSTRM       DSTRM      WETPR       
+C------------------------------------------------------------------------------
+     1         10.0        1.0       150.0
+     2         10.0        1.0       150.0
+     3         10.0        1.0       150.0
+     4         10.0        1.0       150.0
+     5         10.0        1.0       150.0
+     6         10.0        1.0       150.0
+     7         10.0        1.0       150.0
+     8         10.0        1.0       150.0
+     9         10.0        1.0       150.0
+     10        10.0        1.0       150.0
+     11        10.0        1.0       150.0
+     12        10.0        1.0       150.0
+     13        10.0        1.0       150.0
+     14        10.0        1.0       150.0
+     15        10.0        1.0       150.0
+     16        10.0        1.0       150.0
+     17        10.0        1.0       150.0
+     18        10.0        1.0       150.0
+     19        10.0        1.0       150.0
+     20        10.0        1.0       150.0
+     21        10.0        1.0       150.0
+     22        10.0        1.0       150.0
+     23        10.0        1.0       150.0
+C*******************************************************************************
+C                Hydraulic Disconnection for Stream-Aquifer Interaction
+C
+C  INTRCTYPE   ; Assumption for hydraulic disconnection of stream and aquifer
+C                 1 = Stream and aquifer disconnects when groundwater head falls 
+C                      below the top of stream bed (i.e. stream bottom)
+C                 2 = Stream and aquifer disconnects when groundwater head falls 
+C                      below bottom of stream bed
+C
+C------------------------------------------------------------------------------
+C   VALUE                         DESCRIPTION
+C------------------------------------------------------------------------------
+     1                            / INTRCTYPE                       
+C*******************************************************************************
+C                            Stream Evaporation
+C
+C     The following data is used to simulate stream evaporation. If stream evaporation
+C     will not be simulated, leave this section blank.
+C
+C   STARFL ;  Filename for stream surface area timeseries input data (max. 1000 characters)
+C              * Leave blank if stream surface area will be computed using wetted 
+C                perimeter and stream length
+C   IR     ;  Stream node number
+C   ICETST ;  Stream evaporation - this number corresponds to the appropriate data 
+C              column in the ET data file listed in the Main Control Data file.
+C              * Enter 0 if stream evaporation will not be simulated
+C   ICARST ;  Stream surface area - this number corresponds to the appropriate data
+C              column in the Stream Surface Area input file, STARFL
+C              * Enter 0 if stream surface area will be calculated as wetted 
+C                perimeter (WETPR) times the length of the stream length associated 
+C                with the stream node
+C
+C------------------------------------------------------------------------------
+C   VALUE                         DESCRIPTION
+C------------------------------------------------------------------------------
+                                  / STARFL
+C------------------------------------------------------------------------------
+C    IR    ICETST    ICARST            
+C------------------------------------------------------------------------------
+
+

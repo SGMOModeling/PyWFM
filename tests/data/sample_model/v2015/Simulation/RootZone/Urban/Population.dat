@@ -1,0 +1,70 @@
+C*******************************************************************************
+C
+C                  INTEGRATED WATER FLOW MODEL (IWFM)
+C
+C*******************************************************************************
+C       
+C                     POPULATION DATA FILE      
+C                      Root Zone Component
+C                      *** Version 4.12 ***
+C
+C
+C             Project:  IWFM Version 2015 Release
+C                       California Department of Water Resources
+C                       November, 2022
+C             Filename: Population.dat
+C
+C*******************************************************************************
+C                              File Description
+C
+C   This data file contains a set of population data on a time-series basis
+C    
+C*******************************************************************************
+C                      Population Data Specifications
+C
+C   NCOLPOP;  Number of population data columns
+C   NSPPOP ;  Number of time steps to update the population data
+C              * Enter any number if time-tracking option is on
+C   NFQPOP ;  Repetition frequency of the population data 
+C              * Enter 0 if full time series data is supplied
+C              * Enter any number if time-tracking option is on
+C   DSSFL  ;  The name of the DSS file for data input (maximum 50 characters); 
+C              * Leave blank if DSS file is not used for data input
+C
+C-------------------------------------------------------------------------------
+C         VALUE                                      DESCRIPTION
+C-------------------------------------------------------------------------------
+          1                                          / NCOLPOP
+          1                                          / NSPPOP
+          0                                          / NFQPOP
+                                                     / DSSFL
+C-------------------------------------------------------------------------------
+C                           Population Data
+C                         (READ FROM THIS FILE)
+C
+C   List the population data below, if it will not be read from a
+C   DSS file (i.e. DSSFL is left blank above).
+C
+C   ITPOP;   Time                                                                                                                                                       
+C   POPUL;   Population; [People]                                                                                                                                                                       
+C                                                                                                                                                                       
+C-------------------------------------------------------------------------------
+C ITPOP              POPUL(1)  POPUL(2)  POPUL(3) ...                                                                                                                                                                   
+C-------------------------------------------------------------------------------
+  09/30/2500_24:00   1000
+*
+C-------------------------------------------------------------------------------
+C                       Pathnames for Population Data
+C                           (READ FROM DSS FILE)
+C
+C   List the pathnames for the population data below, if it will be read 
+C   from a DSS file (i.e. DSSFL is specified above).
+C
+C   I    ;  Pathname number
+C   PATH ;  Pathname for the time series record 
+C
+C----------------------------------------------------------------------------------------------------------- 
+C   I       PATH
+C-----------------------------------------------------------------------------------------------------------
+*
+*

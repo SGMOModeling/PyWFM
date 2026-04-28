@@ -1,0 +1,179 @@
+#4.0
+C***  DO NOT DELETE ABOVE LINE ***
+C
+C*******************************************************************************
+C
+C                  INTEGRATED WATER FLOW MODEL (IWFM)
+C
+C*******************************************************************************
+C
+C                    SMALL WATERSHED PARAMETERS DATA FILE
+C                          Small Watershed Component
+C                             *** Version 4.0 ***
+C
+C
+C             Project:  IWFM Version 2015 Release
+C                       California Department of Water Resources
+C                       November, 2022
+C             Filename: SWShed.dat
+C
+C*******************************************************************************
+C                          File Description
+C
+C   This data file contains the parameters and data file names for the simulation
+C   of small watersheds that are adjacent to a model boundary.
+C
+C*******************************************************************************
+C                          Small Watersheds Data File Names
+C
+C   SWBUDFL ;  HDF5 output file for small watershed budget data (max. 1000 characters)
+C                * Leave blank if this output is not required
+C   FNSWFL  ;  Output file for end-of-simulation root zone moisture and groundwater 
+C               storage for small watersheds  (max. 1000 characters)
+C                * Leave blank if this output is not required
+C
+C----------------------------------------------------------------------------------------
+C         VALUE                                      DESCRIPTION
+C----------------------------------------------------------------------------------------
+     ..\Results\SWShed.hdf                           / SWBUDFL
+     ..\Results\FinalSWShed.out                      / FNSWFL
+C*******************************************************************************
+C                    Small Watershed Parameters
+C
+C   NSW     ;  Number of small watersheds
+C   FACTA   ;  Conversion factor for small watershed drainage area
+C   FACTQ   ;  Conversion factor for maximum recharge rate
+C               It is used to convert only the spatial component of the unit; 
+C               DO NOT include the conversion factor for time component of the unit.
+C               * e.g. Unit of max. recharge rate listed in this file   = AC-FT/MONTH
+C                      Consistent unit used in simulation               = CU.FT/DAY 
+C                      Enter FACT (AC-FT/MONTH -> CU.FT/MONTH)          = 43560.0 
+C                       (conversion of MONTH -> DAY is performed automatically) 
+C   TUNITQ  ;  Time unit of max. recharge rate.  This should be one of the units 
+C               recognized by HEC-DSS that are listed in the Main Control File.  
+C   ID      ;  Small watershed identification number
+C   AREAS   ;  Drainage area of the small watershed; [L^2]
+C   IWBTS   ;  Stream node that receives the surface runoff from the small watershed
+C   NWB     ;  Number of groundwater nodes that receive the base flow and the
+C               percolation of surface flow from the small watershed
+C   IWB     ;  Groundwater node number small watershed baseflow is routed through
+C   QMAXWB  ;  Maximum recharge rate for each node; [L^3/T]
+C              (Enter the negative of layer number to specify which groundwater node(s) 
+C               at which layer receive baseflow from the small watersheds; e.g. -1 means 
+C               layer 1, -2 means layer 2, etc)
+C
+C-------------------------------------------------------------------------------
+C         VALUE                                      DESCRIPTION
+C-------------------------------------------------------------------------------
+           3                                         / NSW
+           1000000.0                                 / FACTA
+           1000.0                                    / FACTQ
+           1day                                      / TUNITQ
+C-------------------------------------------------------------------------------
+C   ID     AREAS     IWBTS     NWB      IWB      QMAXWB
+C-------------------------------------------------------------------------------
+    1       6.0        1        2       432        -1
+                                        433        -1
+    2       6.0        3        3       436        -1
+                                        414      10.0
+                                        392       5.0
+    3       6.0       21        2        15        -1
+                                         35       2.0
+C*******************************************************************************
+C                    Small Watershed Root Zone Parameters
+C
+C   TOLER   ;  Convergence criteria for iterative soil moisture routing as a
+C               fraction of total porosity; [L/L] 
+C   ITERMAX ;  Maximum number of iterations for the soil moisture routing
+C   FACTL   ;  Conversion factor for small watershed root zone depth
+C   FACTCN  ;  Conversion factor to convert inches to the simulation unit of length
+C   FACTK   ;  Conversion factor for small watershed root zone hydraulic conductivity
+C              It is used to convert only the spatial component of the unit; 
+C              DO NOT include the conversion factor for time component of the unit.
+C              * e.g. Unit of hydraulic conductivity listed in this file = IN/DAY
+C                     Consistent unit used in simulation                 = FT/MONTH 
+C                     Enter FACT (IN/MONTH -> FT/MONTH)                  = 8.33333E-02 
+C                      (conversion of DAY -> MONTH is performed automatically) 
+C   TUNITK  ;  Time unit of small watershed root zone hydraulic conductivity.  This  
+C               should be one of the units recognized by HEC-DSS that are listed in 
+C               the Main Control File.  
+C   ID      ;  Small watershed identification number
+C   IRNS    ;  Rainfall station number associated with the small watershed - this number
+C               corresponds to the appropriate data column in the Precipitation Data File
+C   FRNS    ;  Factor to convert rainfall at the precipitation data column to
+C               rainfall at watershed ID
+C   ICETS   ;  Evapotranspiration rate for the small watershed - this number corresponds 
+C               to the appropriate data column in the ET Data File
+C   WPS     ;  Wilting point; [L/L]
+C   FLDCAS  ;  Field capacity; [L/L]
+C   TPOROS  ;  Total porosity; [L/L]
+C   LAMBDAS ;  Pore size distribution index; [dimensionless]
+C   CROOT   ;  Root zone depth in the small watershed; [L]
+C   SOILKS  ;  Hydraulic conductivity of the root zone; [L/T]
+C   RHCS    ;  Method to represent hydraulic conductivity vs. moisture content curve
+C               1 = Campbell's equation
+C               2 = van Genucten-Mualem equation
+C   CN      ;  Curve number for small watershed area (Reference: USDA, 1985)
+C
+C-------------------------------------------------------------------------------
+C         VALUE                                      DESCRIPTION
+C-------------------------------------------------------------------------------
+           0.001                                     / TOLER
+           150                                       / ITERMAX
+           1.0                                       / FACTL
+           0.0833333                                 / FACTCN     (in -> ft)
+           1.0                                       / FACTK
+           1day                                      / TUNITK
+C------------------------------------------------------------------------------------------------
+C   ID     IRNS   FRNS   ICETS   WPS   FLDCAS   TPOROS    LAMBDAS   CROOT    SOILKS   RHCS    CN
+C------------------------------------------------------------------------------------------------
+    1       2      1.0     6     0.10   0.13     0.20      0.18      3.0       5.0      2     80    
+    2       2      1.0     6     0.02   0.08     0.10      0.18      8.0       5.0      2     75
+    3       2      1.0     6     0.05   0.11     0.22      0.21      5.0       8.0      2     71
+C*******************************************************************************
+C                    Small Watershed Aquifer Parameters
+C
+C   FACTGW  ;  Conversion factor for threshold and maximum groundwater depths
+C   FACTT   ;  Conversion factor for recession coefficients
+C   TUNITT  ;  Time unit of recession coefficients.  This should be one of the units 
+C               recognized by HEC-DSS that are listed in the Main Control File.  
+C   ID      ;  Small watershed identification number
+C   GWSOS   ;  Threshold value of groundwater depth above which groundwater
+C               storage of small watershed contributes to surface runoff; [L]
+C   GWSOX   ;  Maximum groundwater storage depth; [L] 
+C   SWKS    ;  Recession coefficient for surface outflow; [1/T]
+C   GWKS    ;  Recession coefficient for base flow; [1/T]
+C
+C-------------------------------------------------------------------------------
+C         VALUE                                      DESCRIPTION
+C-------------------------------------------------------------------------------
+          1.0                                        / FACTGW
+          1.0                                        / FACTT
+          1day                                       / TUNITT
+C-------------------------------------------------------------------------------
+C   ID     GWSOS    GWSOX    SWKS     GWKS
+C-------------------------------------------------------------------------------
+    1      10.0      20.0    0.4      0.002
+    2       7.0      15.0    0.3      0.003
+    3      12.0      21.0    0.4      0.001
+C*******************************************************************************
+C               Initial Root Zone Moisture and Groundwater Storage
+C
+C   FACT  ;  Conversion factor for initial groundwater storage
+C   ISW   ;  Small watershed ID number
+C   SOILS ;  Initial soil moisture content for each watershed; [L/L]
+C   GWSTS ;  Initial groundwater storage for each watershed; [L] 
+C
+C------------------------------------------------------------------------------- 
+C   VALUE                       DESCRIPTION 
+C------------------------------------------------------------------------------- 
+    1.0                         / FACT
+C------------------------------------------------------------------------------- 
+C    ISW    SOILS    GWSTS
+C------------------------------------------------------------------------------- 
+      1      0.13     7.0
+      2      0.08     7.0
+      3      0.11     7.0
+      
+
+

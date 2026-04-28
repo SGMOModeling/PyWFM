@@ -1,0 +1,100 @@
+C*******************************************************************************
+C
+C                  INTEGRATED WATER FLOW MODEL (IWFM)
+C
+C*******************************************************************************
+C
+C                 STREAM BYPASS SPECIFICATION DATA FILE
+C                           Stream Component
+C                          *** Version 4.0 ***
+C
+C
+C             Project:  IWFM Version 2015 Release
+C                       California Department of Water Resources
+C                       November, 2022
+C             Filename: BypassSpecs.dat
+C
+C*******************************************************************************
+C                          File Description
+C
+C  This data file contains the specification data for stream bypasses.
+C
+C*******************************************************************************
+C
+C                 Bypass Configuration Specifications
+C
+C   NBYPS   ; Number of bypasses
+C   FACTX   ; Conversion factor for DIVX
+C              It is used to convert only the spatial component of the unit; 
+C              DO NOT include the conversion factor for time component of the unit.
+C              * e.g. Unit of stream flow listed in this file   = AC-FT/MONTH
+C                     Consistent unit used in simulation        = CU.FT/DAY 
+C                     Enter FACTX (AC-FT/MONTH -> CU.FT/MONTH)  = 43560.0 
+C                      (conversion of MONTH -> DAY is performed automatically) 
+C   TUNITX  ; Time unit of stream flow.  This should be one of the units 
+C              recognized by HEC-DSS that are listed in the Main Control File.  
+C   FACTY   ; Conversion factor for DIVY
+C              It is used to convert only the spatial component of the unit; 
+C              DO NOT include the conversion factor for time component of the unit.
+C              * e.g. Unit of spills listed in this file        = AC-FT/MONTH
+C                     Consistent unit used in simulation        = CU.FT/DAY 
+C                     Enter FACTY (AC-FT/MONTH -> CU.FT/MONTH)  = 43560.0 
+C                      (conversion of MONTH -> DAY is performed automatically) 
+C   TUNITY  ; Time unit of spills into the bypasses.  This should be one of the  
+C              units recognized by HEC-DSS that are listed in the Main Control File.  
+C   ID      ; Bypass identification number
+C   IA      ; Stream node number where spills into bypass canal occur
+C   TYPEDEST; Destination type for the bypass
+C               0 = bypass goes to outside the model boundary
+C               1 = bypass goes to a downstream node
+C               3 = bypass goes to a lake
+C   DEST    ; Destination for the bypass
+C               * Note: Enter any number if TYPEDEST is set to 0
+C   IDIVC   ; If positive, IDIVC is the column number in the Diversion Data File for spills into bypass
+C             If negative, IDIVC is the number of points in the bypass rating table
+C               * Note: A rating table cannot be specified if the bypass originates outside the model area
+C   DIVRL   ; Fraction of the bypass flows assigned as recoverable loss
+C   DIVNL   ; Fraction of the bypass flows assigned as non-recoverable loss
+C   DIVX    ; Stream flow available at stream node IA; [L^3/T]
+C               * Note: Enter only if IDIVC is less than zero
+C   DIVY    ; Spills into bypass canal corresponding to DIVX; [L^3/T]
+C               * Note: Enter only if IDIVC is less than zero
+C   NAME    ; Name of the bypass (maximum 20 characters)
+C
+C-------------------------------------------------------------------------------
+C   VALUE                       DESCRIPTION
+C-------------------------------------------------------------------------------
+     2                          / NBYPS
+     43560.0                    / FACTX      (ac.ft. -> cu.ft.)
+     1DAY                       / TUNITX
+     43560.0                    / FACTY      (ac.ft. -> cu.ft.)
+     1DAY                       / TUNITY
+C----------------------------------------------------------------------------------
+C  ID   IA   TYPEDEST  DEST   IDIVC   DIVRL  DIVNL    NAME
+C                                     DIVX   DIVY 
+C----------------------------------------------------------------------------------
+   1    13      0        0     6      0.0     0.0     Bypass1    
+   2    17      1       22    -4      0.0     0.1     Bypass2
+                                      0.0     0.0         
+                                      1.0     0.5
+                                     18.0     9.0
+                                   8000.0  4000.0
+C----------------------------------------------------------------------------------
+C
+C               Seepage locations for bypass canals
+C
+C      The following information specifies the recharge zone for each bypass.
+C      (Skip if no bypass is being modeled, i.e. NBYPS = 0)
+C
+C   ID    ;  Recharge zone identification number
+C             (* Note: Recharge zone ID's should match bypass ID numbers)
+C   NERELS;  Total number of elements through which recharge occurs
+C   IERELS;  Element ID number through which recharge occurs
+C   FERELS;  Relative proportion of the recoverable loss to be applied to
+C             element IERELS as recharge.
+C
+C-------------------------------------------------------------------------------
+C    ID         NERELS      IERELS     FERELS
+C-------------------------------------------------------------------------------
+   1              0             0         0
+   2              0             0         0
