@@ -7659,7 +7659,7 @@ class IWFMModel(IWFMMiscellaneous):
 
         >>> model.kill()
         >>> model.close_log_file()"""
-        supply_type_id = self.get_supply_type_id_well()
+        supply_type_id = self.get_supply_type_id_elempump()
 
         # get all element pump IDs
         element_pump_ids = self.get_element_pump_ids()
