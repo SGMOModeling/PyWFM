@@ -173,8 +173,18 @@ def sample_gw_budget(sample_dir, _ensure_results):
 
 @pytest.fixture(scope="session")
 def sample_gw_zbudget(sample_dir, _ensure_results):
-    """IWFMZBudget against SampleModel/Results/GW_ZBud.hdf."""
+    """IWFMZBudget against SampleModel/Results/GW_ZBud.hdf with zones loaded.
+
+    Most ZBudget queries are zone-keyed (``get_n_zones``, ``get_zone_list``,
+    ``get_values_for_a_zone``), so the fixture eagerly loads the vendored
+    zone definition file (``ZBudget/ZoneDef_SRs.dat``) via
+    ``generate_zone_list_from_file``. Tests that don't need zones still
+    work — having zones loaded is harmless to them.
+    """
     z = pywfm.IWFMZBudget(str(sample_dir / "Results" / "GW_ZBud.hdf"))
+    zone_def = sample_dir / "ZBudget" / "ZoneDef_SRs.dat"
+    if zone_def.exists():
+        z.generate_zone_list_from_file(str(zone_def))
     yield z
     z.close_zbudget_file()
 

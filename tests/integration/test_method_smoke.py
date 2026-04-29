@@ -669,12 +669,14 @@ DEFERRED: dict[str, list[str]] = {
         "get_zone_ag_pumping_average_depth_to_water", # (elements_list, zones_list)
     ],
 
-    # Method definitions that look broken at the source level — calling
-    # them as bound instance methods raises TypeError because ``self``
-    # is missing from the signature. Tracked here so the coverage gate
-    # surfaces the fact rather than silently letting them slip past.
-    "broken": [
-        "order_boundary_nodes",  # missing 'self' in def — model.py:13144
+    # Methods with known runtime bugs that prevent testing them as-is.
+    # Tracked here so the coverage gate keeps them visible.
+    "bug": [
+        # model.py:13223,13233 use DataFrame.append() which was removed
+        # in pandas 2.0 (April 2023). Method raises AttributeError on
+        # any modern pandas. Fix: replace with pd.concat([df, row],
+        # ignore_index=True). Static method is otherwise correct.
+        "order_boundary_nodes",
     ],
 
     # Visualization — needs matplotlib backend handling, separate concern.
