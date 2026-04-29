@@ -669,13 +669,11 @@ DEFERRED: dict[str, list[str]] = {
         "get_zone_ag_pumping_average_depth_to_water", # (elements_list, zones_list)
     ],
 
-    # Methods with known runtime bugs that prevent testing them as-is.
-    # Tracked here so the coverage gate keeps them visible.
-    "bug": [
-        # model.py:13223,13233 use DataFrame.append() which was removed
-        # in pandas 2.0 (April 2023). Method raises AttributeError on
-        # any modern pandas. Fix: replace with pd.concat([df, row],
-        # ignore_index=True). Static method is otherwise correct.
+    # @staticmethod utilities that take a constructed DataFrame rather
+    # than a real model state — not parametrizable from a model fixture.
+    # Each gets a dedicated test with synthetic input in a follow-up
+    # commit.
+    "static_utility": [
         "order_boundary_nodes",
     ],
 
