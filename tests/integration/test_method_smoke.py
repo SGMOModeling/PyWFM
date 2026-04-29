@@ -39,17 +39,33 @@ class MethodSpec:
     (the call to ``isinstance`` accepts either form). Use a tuple to
     accept e.g. both Python ``int`` and ``np.integer`` for scalar returns.
 
+    ``args`` is either a literal tuple or a callable ``model -> tuple``
+    so a method that takes a real ID can lazily resolve it from the
+    model fixture (e.g. ``args=lambda m: (m.get_subregion_ids()[0],)``).
+
     ``shape_check`` receives ``(result, model)`` and returns ``True`` if
     the shape is consistent. Use ``None`` to skip.
     """
 
     name: str
-    args: tuple = ()
+    args: tuple | Callable[..., tuple] = ()
     kwargs: dict = field(default_factory=dict)
     expected_type: Any = (int, np.integer)
     shape_check: Callable[..., bool] | None = None
     skip_if_no_switch: bool = False
+    precondition: Callable[..., str | None] | None = None
     notes: str = ""
+
+    def resolve_args(self, model) -> tuple:
+        return self.args(model) if callable(self.args) else self.args
+
+
+# Precondition helpers — return a skip reason string, or None if OK
+def _need_count(getter: str) -> Callable:
+    """Skip if model.<getter>() returns 0."""
+    def check(model):
+        return None if getattr(model, getter)() > 0 else f"model has no {getter[6:]}"
+    return check
 
 
 # ---------------------------------------------------------------------------
@@ -208,6 +224,393 @@ INQUIRY_SPECS: list[MethodSpec] = [
     MethodSpec("get_n_small_watersheds"),
     MethodSpec("get_n_ag_crops"),
 
+    # --- Aquifer parameters (no args; values per node × per layer) -------
+    MethodSpec("get_aquifer_bottom_elevation", expected_type=np.ndarray),
+    MethodSpec("get_aquifer_top_elevation", expected_type=np.ndarray),
+    MethodSpec("get_aquifer_horizontal_k", expected_type=np.ndarray),
+    MethodSpec("get_aquifer_vertical_k", expected_type=np.ndarray),
+    MethodSpec("get_aquifer_specific_storage", expected_type=np.ndarray),
+    MethodSpec("get_aquifer_specific_yield", expected_type=np.ndarray),
+    MethodSpec("get_aquifer_transmissivity", expected_type=np.ndarray),
+    MethodSpec("get_aquitard_vertical_k", expected_type=np.ndarray),
+    MethodSpec("get_aquifer_parameters", expected_type=tuple),
+    MethodSpec(
+        "get_ground_surface_elevation",
+        expected_type=np.ndarray,
+        shape_check=_ndarray_of_len("get_n_nodes"),
+    ),
+
+    # --- Element / node detail (no args) ----------------------------------
+    MethodSpec("get_element_info", expected_type=(np.ndarray, tuple, pd.DataFrame)),
+    MethodSpec("get_element_spatial_info", expected_type=(np.ndarray, tuple, pd.DataFrame)),
+    MethodSpec(
+        "get_element_pump_ids",
+        expected_type=np.ndarray,
+        shape_check=_ndarray_of_len("get_n_element_pumps"),
+        precondition=_need_count("get_n_element_pumps"),
+    ),
+    MethodSpec("get_node_info", expected_type=(np.ndarray, tuple, pd.DataFrame)),
+    MethodSpec("get_model_stratigraphy", expected_type=(np.ndarray, tuple, pd.DataFrame)),
+
+    # --- Stream topology / flows (no args) -------------------------------
+    MethodSpec(
+        "get_stream_bottom_elevations",
+        expected_type=np.ndarray,
+        shape_check=_ndarray_of_len("get_n_stream_nodes"),
+    ),
+    MethodSpec(
+        "get_stream_inflow_ids",
+        expected_type=np.ndarray,
+        shape_check=_ndarray_of_len("get_n_stream_inflows"),
+    ),
+    MethodSpec(
+        "get_stream_inflow_nodes",
+        expected_type=np.ndarray,
+        shape_check=_ndarray_of_len("get_n_stream_inflows"),
+    ),
+    MethodSpec("get_stream_network", expected_type=(np.ndarray, tuple, pd.DataFrame)),
+    MethodSpec(
+        "get_downstream_node_in_stream_reaches",
+        expected_type=np.ndarray,
+        shape_check=_ndarray_of_len("get_n_stream_reaches"),
+        precondition=_need_count("get_n_stream_reaches"),
+    ),
+    MethodSpec(
+        "get_upstream_nodes_in_stream_reaches",
+        expected_type=np.ndarray,
+        shape_check=_ndarray_of_len("get_n_stream_reaches"),
+        precondition=_need_count("get_n_stream_reaches"),
+    ),
+    MethodSpec(
+        "get_reach_outflow_destination",
+        expected_type=np.ndarray,
+        shape_check=_ndarray_of_len("get_n_stream_reaches"),
+        precondition=_need_count("get_n_stream_reaches"),
+    ),
+    MethodSpec(
+        "get_reach_outflow_destination_types",
+        expected_type=np.ndarray,
+        shape_check=_ndarray_of_len("get_n_stream_reaches"),
+        precondition=_need_count("get_n_stream_reaches"),
+    ),
+
+    # --- Hydrograph: groundwater / subsidence / stream / tile drain ------
+    MethodSpec(
+        "get_groundwater_hydrograph_ids",
+        expected_type=np.ndarray,
+        shape_check=_ndarray_of_len("get_n_groundwater_hydrographs"),
+        precondition=_need_count("get_n_groundwater_hydrographs"),
+    ),
+    MethodSpec(
+        "get_groundwater_hydrograph_names",
+        expected_type=list,
+        shape_check=lambda r, m: len(r) == m.get_n_groundwater_hydrographs(),
+        precondition=_need_count("get_n_groundwater_hydrographs"),
+    ),
+    MethodSpec(
+        "get_groundwater_hydrograph_coordinates",
+        expected_type=tuple,
+        shape_check=_two_ndarrays_of_len("get_n_groundwater_hydrographs"),
+        precondition=_need_count("get_n_groundwater_hydrographs"),
+    ),
+    MethodSpec(
+        "get_groundwater_hydrograph_info",
+        expected_type=(np.ndarray, tuple, pd.DataFrame),
+        precondition=_need_count("get_n_groundwater_hydrographs"),
+    ),
+    MethodSpec(
+        "get_subsidence_hydrograph_ids",
+        expected_type=np.ndarray,
+        shape_check=_ndarray_of_len("get_n_subsidence_hydrographs"),
+        precondition=_need_count("get_n_subsidence_hydrographs"),
+    ),
+    MethodSpec(
+        "get_subsidence_hydrograph_names",
+        expected_type=list,
+        shape_check=lambda r, m: len(r) == m.get_n_subsidence_hydrographs(),
+        precondition=_need_count("get_n_subsidence_hydrographs"),
+    ),
+    MethodSpec(
+        "get_subsidence_hydrograph_coordinates",
+        expected_type=tuple,
+        shape_check=_two_ndarrays_of_len("get_n_subsidence_hydrographs"),
+        precondition=_need_count("get_n_subsidence_hydrographs"),
+    ),
+    MethodSpec(
+        "get_stream_hydrograph_ids",
+        expected_type=np.ndarray,
+        shape_check=_ndarray_of_len("get_n_stream_hydrographs"),
+        precondition=_need_count("get_n_stream_hydrographs"),
+    ),
+    MethodSpec(
+        "get_stream_hydrograph_names",
+        expected_type=list,
+        shape_check=lambda r, m: len(r) == m.get_n_stream_hydrographs(),
+        precondition=_need_count("get_n_stream_hydrographs"),
+    ),
+    MethodSpec(
+        "get_stream_hydrograph_coordinates",
+        expected_type=tuple,
+        shape_check=_two_ndarrays_of_len("get_n_stream_hydrographs"),
+        precondition=_need_count("get_n_stream_hydrographs"),
+    ),
+    MethodSpec(
+        "get_tile_drain_hydrograph_ids",
+        expected_type=np.ndarray,
+        shape_check=_ndarray_of_len("get_n_tile_drain_hydrographs"),
+        precondition=_need_count("get_n_tile_drain_hydrographs"),
+    ),
+    MethodSpec(
+        "get_tile_drain_hydrograph_coordinates",
+        expected_type=tuple,
+        shape_check=_two_ndarrays_of_len("get_n_tile_drain_hydrographs"),
+        precondition=_need_count("get_n_tile_drain_hydrographs"),
+    ),
+
+    # --- Wells / tile drains / small watersheds (no args) ---------------
+    MethodSpec(
+        "get_well_ids",
+        expected_type=np.ndarray,
+        shape_check=_ndarray_of_len("get_n_wells"),
+        precondition=_need_count("get_n_wells"),
+    ),
+    MethodSpec(
+        "get_well_coordinates",
+        expected_type=tuple,
+        shape_check=_two_ndarrays_of_len("get_n_wells"),
+        precondition=_need_count("get_n_wells"),
+    ),
+    MethodSpec(
+        "get_well_perfs",
+        expected_type=(np.ndarray, tuple, pd.DataFrame),
+        precondition=_need_count("get_n_wells"),
+    ),
+    MethodSpec(
+        "get_tile_drain_ids",
+        expected_type=np.ndarray,
+        shape_check=_ndarray_of_len("get_n_tile_drains"),
+        precondition=_need_count("get_n_tile_drains"),
+    ),
+    MethodSpec(
+        "get_tile_drain_nodes",
+        expected_type=np.ndarray,
+        shape_check=_ndarray_of_len("get_n_tile_drains"),
+        precondition=_need_count("get_n_tile_drains"),
+    ),
+    MethodSpec(
+        "get_small_watershed_ids",
+        expected_type=np.ndarray,
+        shape_check=_ndarray_of_len("get_n_small_watersheds"),
+        precondition=_need_count("get_n_small_watersheds"),
+    ),
+    MethodSpec(
+        "get_subregion_ag_pumping_average_depth_to_water",
+        expected_type=np.ndarray,
+        shape_check=_ndarray_of_len("get_n_subregions"),
+    ),
+
+    # --- All-defaultable args (use defaults: most accept "all" sentinel) -
+    MethodSpec("get_diversion_purpose", expected_type=np.ndarray,
+               precondition=_need_count("get_n_diversions")),
+    MethodSpec("get_element_pump_purpose", expected_type=np.ndarray,
+               precondition=_need_count("get_n_element_pumps")),
+    MethodSpec("get_well_pumping_purpose", expected_type=np.ndarray,
+               precondition=_need_count("get_n_wells")),
+    MethodSpec("get_ag_diversion_supply_shortage_at_origin", expected_type=np.ndarray,
+               precondition=_need_count("get_n_diversions")),
+    MethodSpec("get_ag_elempump_supply_shortage_at_origin", expected_type=np.ndarray,
+               precondition=_need_count("get_n_element_pumps")),
+    MethodSpec("get_ag_well_supply_shortage_at_origin", expected_type=np.ndarray,
+               precondition=_need_count("get_n_wells")),
+    MethodSpec("get_urban_diversion_supply_shortage_at_origin", expected_type=np.ndarray,
+               precondition=_need_count("get_n_diversions")),
+    MethodSpec("get_urban_elempump_supply_shortage_at_origin", expected_type=np.ndarray,
+               precondition=_need_count("get_n_element_pumps")),
+    MethodSpec("get_urban_well_supply_shortage_at_origin", expected_type=np.ndarray,
+               precondition=_need_count("get_n_wells")),
+    MethodSpec("get_bypass_outflows", expected_type=np.ndarray,
+               precondition=_need_count("get_n_bypasses")),
+    MethodSpec("get_net_bypass_inflows", expected_type=np.ndarray,
+               precondition=_need_count("get_n_bypasses")),
+    MethodSpec("get_gwheads_all", expected_type=np.ndarray),
+    MethodSpec("get_subsidence_all", expected_type=np.ndarray),
+    MethodSpec("get_stream_diversion_locations", expected_type=np.ndarray,
+               precondition=_need_count("get_n_diversions")),
+    MethodSpec(
+        "get_stream_flows", expected_type=np.ndarray,
+        shape_check=_ndarray_of_len("get_n_stream_nodes"),
+    ),
+    MethodSpec(
+        "get_stream_gain_from_groundwater", expected_type=np.ndarray,
+        shape_check=_ndarray_of_len("get_n_stream_nodes"),
+    ),
+    MethodSpec(
+        "get_stream_gain_from_lakes", expected_type=np.ndarray,
+        shape_check=_ndarray_of_len("get_n_stream_nodes"),
+    ),
+    MethodSpec("get_stream_pond_drains", expected_type=np.ndarray),
+    MethodSpec("get_stream_rainfall_runoff", expected_type=np.ndarray),
+    MethodSpec("get_stream_return_flows", expected_type=np.ndarray),
+    MethodSpec("get_stream_riparian_evapotranspiration", expected_type=np.ndarray),
+    MethodSpec(
+        "get_stream_stages", expected_type=np.ndarray,
+        shape_check=_ndarray_of_len("get_n_stream_nodes"),
+    ),
+    MethodSpec("get_stream_tile_drain_flows", expected_type=np.ndarray),
+    MethodSpec("get_stream_tributary_inflows", expected_type=np.ndarray),
+    MethodSpec(
+        "get_stream_reaches_for_stream_nodes",
+        expected_type=np.ndarray,
+        shape_check=_ndarray_of_len("get_n_stream_nodes"),
+    ),
+
+    # --- Lazy-resolved args from real fixture IDs -----------------------
+    MethodSpec(
+        "get_subregion_name",
+        args=lambda m: (int(m.get_subregion_ids()[0]),),
+        expected_type=str,
+    ),
+    MethodSpec(
+        "get_element_config",
+        args=lambda m: (int(m.get_element_ids()[0]),),
+        expected_type=(np.ndarray, tuple, pd.DataFrame),
+    ),
+    MethodSpec(
+        "get_elements_in_lake",
+        args=lambda m: (int(m.get_lake_ids()[0]),),
+        expected_type=np.ndarray,
+        precondition=_need_count("get_n_lakes"),
+    ),
+    MethodSpec(
+        "get_n_elements_in_lake",
+        args=lambda m: (int(m.get_lake_ids()[0]),),
+        precondition=_need_count("get_n_lakes"),
+    ),
+    MethodSpec(
+        "get_n_nodes_in_stream_reach",
+        args=lambda m: (int(m.get_stream_reach_ids()[0]),),
+        precondition=_need_count("get_n_stream_reaches"),
+    ),
+    MethodSpec(
+        "get_n_reaches_upstream_of_reach",
+        args=lambda m: (int(m.get_stream_reach_ids()[0]),),
+        precondition=_need_count("get_n_stream_reaches"),
+    ),
+    MethodSpec(
+        "get_reaches_upstream_of_reach",
+        args=lambda m: (int(m.get_stream_reach_ids()[0]),),
+        expected_type=np.ndarray,
+        precondition=_need_count("get_n_stream_reaches"),
+    ),
+    MethodSpec(
+        "get_stream_reach_groundwater_nodes",
+        args=lambda m: (int(m.get_stream_reach_ids()[0]),),
+        expected_type=np.ndarray,
+        precondition=_need_count("get_n_stream_reaches"),
+    ),
+    MethodSpec(
+        "get_stream_reach_stream_nodes",
+        args=lambda m: (int(m.get_stream_reach_ids()[0]),),
+        expected_type=np.ndarray,
+        precondition=_need_count("get_n_stream_reaches"),
+    ),
+    MethodSpec(
+        "get_n_stream_nodes_upstream_of_stream_node",
+        args=lambda m: (int(m.get_stream_node_ids()[0]),),
+        precondition=_need_count("get_n_stream_nodes"),
+    ),
+    MethodSpec(
+        "get_stream_nodes_upstream_of_stream_node",
+        args=lambda m: (int(m.get_stream_node_ids()[0]),),
+        expected_type=np.ndarray,
+        precondition=_need_count("get_n_stream_nodes"),
+    ),
+    MethodSpec(
+        "get_n_rating_table_points",
+        args=lambda m: (int(m.get_stream_node_ids()[0]),),
+        precondition=_need_count("get_n_stream_nodes"),
+    ),
+    MethodSpec(
+        "get_stream_rating_table",
+        args=lambda m: (int(m.get_stream_node_ids()[0]),),
+        expected_type=tuple,
+        precondition=_need_count("get_n_stream_nodes"),
+    ),
+    MethodSpec(
+        "get_stream_flow_at_location",
+        args=lambda m: (int(m.get_stream_node_ids()[0]),),
+        expected_type=(int, float, np.integer, np.floating, np.ndarray),
+        precondition=_need_count("get_n_stream_nodes"),
+    ),
+    MethodSpec(
+        "get_bypass_nonrecoverable_loss_factor",
+        args=lambda m: (int(m.get_bypass_ids()[0]),),
+        expected_type=(int, float, np.integer, np.floating),
+        precondition=_need_count("get_n_bypasses"),
+    ),
+    MethodSpec(
+        "get_bypass_recoverable_loss_factor",
+        args=lambda m: (int(m.get_bypass_ids()[0]),),
+        expected_type=(int, float, np.integer, np.floating),
+        precondition=_need_count("get_n_bypasses"),
+    ),
+    MethodSpec(
+        "get_bypass_export_nodes",
+        args=lambda m: (m.get_bypass_ids().tolist(),),
+        expected_type=np.ndarray,
+        precondition=_need_count("get_n_bypasses"),
+    ),
+    MethodSpec(
+        "get_bypass_exports_destinations",
+        args=lambda m: (m.get_bypass_ids().tolist(),),
+        expected_type=(np.ndarray, tuple),
+        precondition=_need_count("get_n_bypasses"),
+    ),
+    MethodSpec(
+        "get_stream_diversion_elements",
+        args=lambda m: (int(m.get_diversion_ids()[0]),),
+        expected_type=np.ndarray,
+        precondition=_need_count("get_n_diversions"),
+    ),
+    MethodSpec(
+        "get_stream_diversion_n_elements",
+        args=lambda m: (int(m.get_diversion_ids()[0]),),
+        precondition=_need_count("get_n_diversions"),
+    ),
+    MethodSpec(
+        "get_groundwater_hydrograph",
+        args=lambda m: (int(m.get_groundwater_hydrograph_ids()[0]),),
+        expected_type=(np.ndarray, tuple, pd.DataFrame),
+        precondition=_need_count("get_n_groundwater_hydrographs"),
+    ),
+    MethodSpec(
+        "get_groundwater_hydrograph_at_node_and_layer",
+        args=lambda m: (int(m.get_node_ids()[0]), 1),
+        expected_type=(np.ndarray, tuple, pd.DataFrame),
+    ),
+    MethodSpec(
+        "get_subsidence_hydrograph",
+        args=lambda m: (int(m.get_subsidence_hydrograph_ids()[0]),),
+        expected_type=(np.ndarray, tuple, pd.DataFrame),
+        precondition=_need_count("get_n_subsidence_hydrographs"),
+    ),
+    MethodSpec(
+        "get_stream_hydrograph",
+        args=lambda m: (int(m.get_stream_hydrograph_ids()[0]),),
+        expected_type=(np.ndarray, tuple, pd.DataFrame),
+        precondition=_need_count("get_n_stream_hydrographs"),
+    ),
+    MethodSpec(
+        "get_depth_to_water",
+        args=(1,),
+        expected_type=(np.ndarray, tuple, pd.DataFrame),
+    ),
+    MethodSpec(
+        "get_gwheads_foralayer",
+        args=(1,),
+        expected_type=np.ndarray,
+    ),
+
     # --- Branch-specific (0.2.x stock 2024/2025 only) ---------------------
     MethodSpec(
         "get_current_model_id",
@@ -255,108 +658,23 @@ DEFERRED: dict[str, list[str]] = {
         "get_supply_requirement_urban_subregions",
     ],
 
-    # Methods that take a required scalar id/index — covered by dedicated
-    # tests once we know what IDs exist in the SampleModel fixture
-    # (test_introspection.py iterates IDs returned by get_X_ids).
-    "needs_args": [
-        "fe_interpolate",
-        "get_ag_diversion_supply_shortage_at_origin",
-        "get_ag_elempump_supply_shortage_at_origin",
-        "get_ag_well_supply_shortage_at_origin",
-        "get_aquifer_bottom_elevation",
-        "get_aquifer_horizontal_k",
-        "get_aquifer_parameters",
-        "get_aquifer_specific_storage",
-        "get_aquifer_specific_yield",
-        "get_aquifer_top_elevation",
-        "get_aquifer_transmissivity",
-        "get_aquifer_vertical_k",
-        "get_aquitard_vertical_k",
-        "get_bypass_export_nodes",
-        "get_bypass_exports_destinations",
-        "get_bypass_nonrecoverable_loss_factor",
-        "get_bypass_outflows",
-        "get_bypass_recoverable_loss_factor",
-        "get_depth_to_water",
-        "get_diversion_purpose",
-        "get_downstream_node_in_stream_reaches",
-        "get_element_config",
-        "get_element_info",
-        "get_element_pump_ids",
-        "get_element_pump_purpose",
-        "get_element_spatial_info",
-        "get_elements_in_lake",
-        "get_ground_surface_elevation",
-        "get_groundwater_hydrograph",
-        "get_groundwater_hydrograph_at_node_and_layer",
-        "get_groundwater_hydrograph_coordinates",
-        "get_groundwater_hydrograph_ids",
-        "get_groundwater_hydrograph_info",
-        "get_groundwater_hydrograph_names",
-        "get_gwheads_all",
-        "get_gwheads_foralayer",
-        "get_model_stratigraphy",
-        "get_n_elements_in_lake",
-        "get_n_nodes_in_stream_reach",
-        "get_n_rating_table_points",
-        "get_n_reaches_upstream_of_reach",
-        "get_n_stream_nodes_upstream_of_stream_node",
-        "get_net_bypass_inflows",
-        "get_node_info",
-        "get_reach_outflow_destination",
-        "get_reach_outflow_destination_types",
-        "get_reaches_upstream_of_reach",
-        "get_small_watershed_ids",
-        "get_stratigraphy_atXYcoordinate",
-        "get_stream_bottom_elevations",
-        "get_stream_diversion_elements",
-        "get_stream_diversion_locations",
-        "get_stream_diversion_n_elements",
-        "get_stream_flow_at_location",
-        "get_stream_flows",
-        "get_stream_gain_from_groundwater",
-        "get_stream_gain_from_lakes",
-        "get_stream_hydrograph",
-        "get_stream_hydrograph_coordinates",
-        "get_stream_hydrograph_ids",
-        "get_stream_hydrograph_names",
-        "get_stream_inflow_ids",
-        "get_stream_inflow_nodes",
-        "get_stream_network",
-        "get_stream_nodes_upstream_of_stream_node",
-        "get_stream_pond_drains",
-        "get_stream_rainfall_runoff",
-        "get_stream_rating_table",
-        "get_stream_reach_groundwater_nodes",
-        "get_stream_reach_stream_nodes",
-        "get_stream_reaches_for_stream_nodes",
-        "get_stream_return_flows",
-        "get_stream_riparian_evapotranspiration",
-        "get_stream_stages",
-        "get_stream_tile_drain_flows",
-        "get_stream_tributary_inflows",
-        "get_subregion_ag_pumping_average_depth_to_water",
-        "get_subregion_name",
-        "get_subsidence_all",
-        "get_subsidence_hydrograph",
-        "get_subsidence_hydrograph_coordinates",
-        "get_subsidence_hydrograph_ids",
-        "get_subsidence_hydrograph_names",
-        "get_tile_drain_hydrograph_coordinates",
-        "get_tile_drain_hydrograph_ids",
-        "get_tile_drain_ids",
-        "get_tile_drain_nodes",
-        "get_upstream_nodes_in_stream_reaches",
-        "get_urban_diversion_supply_shortage_at_origin",
-        "get_urban_elempump_supply_shortage_at_origin",
-        "get_urban_well_supply_shortage_at_origin",
-        "get_well_coordinates",
-        "get_well_ids",
-        "get_well_perfs",
-        "get_well_pumping_purpose",
-        "get_zone_ag_pumping_average_depth_to_water",
-        "is_stream_upstream_node",
-        "order_boundary_nodes",
+    # Methods needing inputs that don't fit a simple "first ID" shape:
+    # XY coordinates that must be inside the mesh, paired stream-node
+    # arguments, zone definitions, etc. Each gets a dedicated test that
+    # can construct or sample appropriate values.
+    "complex_args": [
+        "fe_interpolate",                             # (x, y) inside the mesh
+        "get_stratigraphy_atXYcoordinate",            # (x, y) inside the mesh
+        "is_stream_upstream_node",                    # two stream-node IDs
+        "get_zone_ag_pumping_average_depth_to_water", # (elements_list, zones_list)
+    ],
+
+    # Method definitions that look broken at the source level — calling
+    # them as bound instance methods raises TypeError because ``self``
+    # is missing from the signature. Tracked here so the coverage gate
+    # surfaces the fact rather than silently letting them slip past.
+    "broken": [
+        "order_boundary_nodes",  # missing 'self' in def — model.py:13144
     ],
 
     # Visualization — needs matplotlib backend handling, separate concern.
@@ -393,8 +711,14 @@ def test_method_returns_expected(spec, sample_inquiry, dll_has_switch):
     if spec.skip_if_no_switch and not dll_has_switch:
         pytest.skip(f"{spec.name} requires IW_Model_Switch")
 
+    if spec.precondition is not None:
+        reason = spec.precondition(sample_inquiry)
+        if reason:
+            pytest.skip(f"{spec.name}: {reason}")
+
     method = getattr(sample_inquiry, spec.name)
-    result = method(*spec.args, **spec.kwargs)
+    args = spec.resolve_args(sample_inquiry)
+    result = method(*args, **spec.kwargs)
 
     assert isinstance(result, spec.expected_type), (
         f"{spec.name}: expected {spec.expected_type}, got {type(result).__name__}"
