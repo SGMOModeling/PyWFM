@@ -7256,7 +7256,7 @@ class IWFMModel(IWFMMiscellaneous):
         # initialize output variables
         element_pump_ids = (ctypes.c_int * n_element_pumps.value)()
 
-        self.dll.IW_Model_GetWellIDs(
+        self.dll.IW_Model_GetElemPumpIDs(
             ctypes.byref(n_element_pumps), element_pump_ids, ctypes.byref(status)
         )
 
@@ -11237,7 +11237,7 @@ class IWFMModel(IWFMMiscellaneous):
         """
         location_type_id = self.get_location_type_id_smallwatershed()
 
-        return self._get_n_locations(ctypes.byref(location_type_id))
+        return self._get_n_locations(location_type_id)
 
     def _get_location_ids(self, location_type_id):
         """
