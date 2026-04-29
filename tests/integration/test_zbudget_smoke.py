@@ -86,9 +86,10 @@ ZBUDGET_SPECS: list[ZBudgetSpec] = [
     ),
 
     # --- Multi-zone interval query (defaults to 'all') ---
+    # Returns dict (zone_id -> DataFrame), not a single DataFrame.
     ZBudgetSpec(
         "get_values_for_some_zones_for_an_interval",
-        expected_type=pd.DataFrame,
+        expected_type=dict,
     ),
 ]
 

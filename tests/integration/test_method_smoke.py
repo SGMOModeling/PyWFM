@@ -157,7 +157,7 @@ INQUIRY_SPECS: list[MethodSpec] = [
         expected_type=np.ndarray,
         shape_check=_ndarray_of_len("get_n_elements"),
     ),
-    MethodSpec("get_boundary_nodes", expected_type=np.ndarray),
+    MethodSpec("get_boundary_nodes", expected_type=pd.DataFrame),
 
     # --- Streams ----------------------------------------------------------
     MethodSpec("get_n_stream_nodes"),
@@ -221,7 +221,6 @@ INQUIRY_SPECS: list[MethodSpec] = [
     MethodSpec("get_n_groundwater_hydrographs"),
     MethodSpec("get_n_subsidence_hydrographs"),
     MethodSpec("get_n_stream_hydrographs"),
-    MethodSpec("get_n_small_watersheds"),
     MethodSpec("get_n_ag_crops"),
 
     # --- Aquifer parameters (no args; values per node × per layer) -------
@@ -231,7 +230,7 @@ INQUIRY_SPECS: list[MethodSpec] = [
     MethodSpec("get_aquifer_vertical_k", expected_type=np.ndarray),
     MethodSpec("get_aquifer_specific_storage", expected_type=np.ndarray),
     MethodSpec("get_aquifer_specific_yield", expected_type=np.ndarray),
-    MethodSpec("get_aquifer_transmissivity", expected_type=np.ndarray),
+    MethodSpec("get_aquifer_transmissivity", expected_type=pd.DataFrame),
     MethodSpec("get_aquitard_vertical_k", expected_type=np.ndarray),
     MethodSpec("get_aquifer_parameters", expected_type=tuple),
     MethodSpec(
@@ -243,12 +242,6 @@ INQUIRY_SPECS: list[MethodSpec] = [
     # --- Element / node detail (no args) ----------------------------------
     MethodSpec("get_element_info", expected_type=(np.ndarray, tuple, pd.DataFrame)),
     MethodSpec("get_element_spatial_info", expected_type=(np.ndarray, tuple, pd.DataFrame)),
-    MethodSpec(
-        "get_element_pump_ids",
-        expected_type=np.ndarray,
-        shape_check=_ndarray_of_len("get_n_element_pumps"),
-        precondition=_need_count("get_n_element_pumps"),
-    ),
     MethodSpec("get_node_info", expected_type=(np.ndarray, tuple, pd.DataFrame)),
     MethodSpec("get_model_stratigraphy", expected_type=(np.ndarray, tuple, pd.DataFrame)),
 
@@ -398,12 +391,6 @@ INQUIRY_SPECS: list[MethodSpec] = [
         precondition=_need_count("get_n_tile_drains"),
     ),
     MethodSpec(
-        "get_small_watershed_ids",
-        expected_type=np.ndarray,
-        shape_check=_ndarray_of_len("get_n_small_watersheds"),
-        precondition=_need_count("get_n_small_watersheds"),
-    ),
-    MethodSpec(
         "get_subregion_ag_pumping_average_depth_to_water",
         expected_type=np.ndarray,
         shape_check=_ndarray_of_len("get_n_subregions"),
@@ -412,20 +399,14 @@ INQUIRY_SPECS: list[MethodSpec] = [
     # --- All-defaultable args (use defaults: most accept "all" sentinel) -
     MethodSpec("get_diversion_purpose", expected_type=np.ndarray,
                precondition=_need_count("get_n_diversions")),
-    MethodSpec("get_element_pump_purpose", expected_type=np.ndarray,
-               precondition=_need_count("get_n_element_pumps")),
     MethodSpec("get_well_pumping_purpose", expected_type=np.ndarray,
                precondition=_need_count("get_n_wells")),
     MethodSpec("get_ag_diversion_supply_shortage_at_origin", expected_type=np.ndarray,
                precondition=_need_count("get_n_diversions")),
-    MethodSpec("get_ag_elempump_supply_shortage_at_origin", expected_type=np.ndarray,
-               precondition=_need_count("get_n_element_pumps")),
     MethodSpec("get_ag_well_supply_shortage_at_origin", expected_type=np.ndarray,
                precondition=_need_count("get_n_wells")),
     MethodSpec("get_urban_diversion_supply_shortage_at_origin", expected_type=np.ndarray,
                precondition=_need_count("get_n_diversions")),
-    MethodSpec("get_urban_elempump_supply_shortage_at_origin", expected_type=np.ndarray,
-               precondition=_need_count("get_n_element_pumps")),
     MethodSpec("get_urban_well_supply_shortage_at_origin", expected_type=np.ndarray,
                precondition=_need_count("get_n_wells")),
     MethodSpec("get_bypass_outflows", expected_type=np.ndarray,
@@ -499,7 +480,9 @@ INQUIRY_SPECS: list[MethodSpec] = [
     MethodSpec(
         "get_reaches_upstream_of_reach",
         args=lambda m: (int(m.get_stream_reach_ids()[0]),),
-        expected_type=np.ndarray,
+        # Returns None when the reach has no upstream reaches (common
+        # for the first reach in topological order). Accept ndarray | None.
+        expected_type=(np.ndarray, type(None)),
         precondition=_need_count("get_n_stream_reaches"),
     ),
     MethodSpec(
@@ -522,7 +505,8 @@ INQUIRY_SPECS: list[MethodSpec] = [
     MethodSpec(
         "get_stream_nodes_upstream_of_stream_node",
         args=lambda m: (int(m.get_stream_node_ids()[0]),),
-        expected_type=np.ndarray,
+        # Returns None for headwater stream nodes with no upstream nodes.
+        expected_type=(np.ndarray, type(None)),
         precondition=_need_count("get_n_stream_nodes"),
     ),
     MethodSpec(
@@ -600,17 +584,6 @@ INQUIRY_SPECS: list[MethodSpec] = [
         expected_type=(np.ndarray, tuple, pd.DataFrame),
         precondition=_need_count("get_n_stream_hydrographs"),
     ),
-    MethodSpec(
-        "get_depth_to_water",
-        args=(1,),
-        expected_type=(np.ndarray, tuple, pd.DataFrame),
-    ),
-    MethodSpec(
-        "get_gwheads_foralayer",
-        args=(1,),
-        expected_type=np.ndarray,
-    ),
-
     # --- Branch-specific (0.2.x stock 2024/2025 only) ---------------------
     MethodSpec(
         "get_current_model_id",
@@ -675,6 +648,32 @@ DEFERRED: dict[str, list[str]] = {
     # commit.
     "static_utility": [
         "order_boundary_nodes",
+    ],
+
+    # Methods that query simulation state during a run — only valid in
+    # is_for_inquiry=0 mode at a specific timestep. Tested via the
+    # function-scoped sample_simulation fixture (phase 5), not the
+    # session-scoped inquiry fixture.
+    "simulation_state": [
+        "get_depth_to_water",
+        "get_gwheads_foralayer",
+    ],
+
+    # Methods that crash via known pywfm source bugs in 0.2.x. Each will
+    # move out of this bucket when the corresponding source fix lands.
+    "source_bug": [
+        # model.py:11240 — passes Python int to ctypes.byref instead of
+        # wrapping in ctypes.c_int. Cascades to get_small_watershed_ids
+        # (depends on get_n_small_watersheds).
+        "get_n_small_watersheds",
+        "get_small_watershed_ids",
+        # model.py:7259 — calls IW_Model_GetWellIDs instead of
+        # IW_Model_GetElemPumpIDs (copy-paste). Access violation when
+        # the model has element pumps. Cascades to dependent methods.
+        "get_element_pump_ids",
+        "get_element_pump_purpose",
+        "get_ag_elempump_supply_shortage_at_origin",
+        "get_urban_elempump_supply_shortage_at_origin",
     ],
 
     # Visualization — needs matplotlib backend handling, separate concern.

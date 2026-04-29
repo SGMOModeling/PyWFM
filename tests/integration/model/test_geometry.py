@@ -50,9 +50,17 @@ class TestLayerStructure:
 @pytest.mark.integration
 class TestBoundary:
     def test_boundary_nodes_subset_of_all_nodes(self, sample_inquiry):
-        """Every boundary node ID must be a known node ID."""
-        node_ids = set(sample_inquiry.get_node_ids().tolist())
+        """Every boundary node ID must be a known node ID.
+
+        get_boundary_nodes returns a DataFrame of boundary segments
+        (start_node, end_node, code). Flatten across both ID columns
+        and verify each is a known node.
+        """
+        node_ids = set(int(n) for n in sample_inquiry.get_node_ids())
         boundary = sample_inquiry.get_boundary_nodes()
-        # get_boundary_nodes returns ndarray; cast to set
-        unknown = set(np.asarray(boundary).tolist()) - node_ids
-        assert not unknown, f"Boundary references unknown node IDs: {unknown}"
+        # Drop the 'code' column (path-patch directive, not a node ID)
+        # if present, then flatten remaining columns.
+        id_cols = [c for c in boundary.columns if c.lower() != "code"]
+        flat = set(int(v) for v in boundary[id_cols].values.ravel())
+        unknown = flat - node_ids
+        assert not unknown, f"Boundary references unknown node IDs: {sorted(unknown)[:10]}"

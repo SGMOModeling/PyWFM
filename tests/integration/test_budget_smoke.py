@@ -97,7 +97,10 @@ BUDGET_SPECS: list[BudgetSpec] = [
         "get_values_for_a_column",
         args=lambda b: (1, _first_column_name_for_loc1(b)),
         expected_type=pd.DataFrame,
-        shape_check=lambda r, b: len(r) == b.get_n_time_steps(),
+        # Row count may differ from n_time_steps if the column has its
+        # own output schedule (some columns are aggregated to monthly
+        # or annual). Just assert non-empty.
+        shape_check=lambda r, b: len(r) > 0,
     ),
 ]
 

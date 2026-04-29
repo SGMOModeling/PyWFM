@@ -41,9 +41,11 @@ class TestTimeSpec:
         parsed = [parse(d) for d in dates]
         assert all(a < b for a, b in zip(parsed, parsed[1:])), "dates not strictly increasing"
 
-    def test_current_date_is_in_time_specs(self, sample_inquiry):
-        """At session start, current date should equal the first time-spec entry."""
+    def test_current_date_returns_iwfm_format(self, sample_inquiry):
+        """get_current_date_and_time returns the BDT — the simulation
+        start (one interval BEFORE the first time-spec entry, which is
+        end-of-first-step). The date itself just needs to parse as an
+        IWFM-format string.
+        """
         current = sample_inquiry.get_current_date_and_time()
-        dates, _ = sample_inquiry.get_time_specs()
-        # is_for_inquiry=1 model — current date is start of simulation
-        assert current in dates, f"{current!r} not in time spec dates list"
+        assert _IWFM_DATE_RE.match(current), f"current date {current!r} not in IWFM format"
