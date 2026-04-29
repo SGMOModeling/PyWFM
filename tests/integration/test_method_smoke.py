@@ -221,6 +221,7 @@ INQUIRY_SPECS: list[MethodSpec] = [
     MethodSpec("get_n_groundwater_hydrographs"),
     MethodSpec("get_n_subsidence_hydrographs"),
     MethodSpec("get_n_stream_hydrographs"),
+    MethodSpec("get_n_small_watersheds"),
     MethodSpec("get_n_ag_crops"),
 
     # --- Aquifer parameters (no args; values per node × per layer) -------
@@ -242,6 +243,12 @@ INQUIRY_SPECS: list[MethodSpec] = [
     # --- Element / node detail (no args) ----------------------------------
     MethodSpec("get_element_info", expected_type=(np.ndarray, tuple, pd.DataFrame)),
     MethodSpec("get_element_spatial_info", expected_type=(np.ndarray, tuple, pd.DataFrame)),
+    MethodSpec(
+        "get_element_pump_ids",
+        expected_type=np.ndarray,
+        shape_check=_ndarray_of_len("get_n_element_pumps"),
+        precondition=_need_count("get_n_element_pumps"),
+    ),
     MethodSpec("get_node_info", expected_type=(np.ndarray, tuple, pd.DataFrame)),
     MethodSpec("get_model_stratigraphy", expected_type=(np.ndarray, tuple, pd.DataFrame)),
 
@@ -391,6 +398,12 @@ INQUIRY_SPECS: list[MethodSpec] = [
         precondition=_need_count("get_n_tile_drains"),
     ),
     MethodSpec(
+        "get_small_watershed_ids",
+        expected_type=np.ndarray,
+        shape_check=_ndarray_of_len("get_n_small_watersheds"),
+        precondition=_need_count("get_n_small_watersheds"),
+    ),
+    MethodSpec(
         "get_subregion_ag_pumping_average_depth_to_water",
         expected_type=np.ndarray,
         shape_check=_ndarray_of_len("get_n_subregions"),
@@ -399,14 +412,20 @@ INQUIRY_SPECS: list[MethodSpec] = [
     # --- All-defaultable args (use defaults: most accept "all" sentinel) -
     MethodSpec("get_diversion_purpose", expected_type=np.ndarray,
                precondition=_need_count("get_n_diversions")),
+    MethodSpec("get_element_pump_purpose", expected_type=np.ndarray,
+               precondition=_need_count("get_n_element_pumps")),
     MethodSpec("get_well_pumping_purpose", expected_type=np.ndarray,
                precondition=_need_count("get_n_wells")),
     MethodSpec("get_ag_diversion_supply_shortage_at_origin", expected_type=np.ndarray,
                precondition=_need_count("get_n_diversions")),
+    MethodSpec("get_ag_elempump_supply_shortage_at_origin", expected_type=np.ndarray,
+               precondition=_need_count("get_n_element_pumps")),
     MethodSpec("get_ag_well_supply_shortage_at_origin", expected_type=np.ndarray,
                precondition=_need_count("get_n_wells")),
     MethodSpec("get_urban_diversion_supply_shortage_at_origin", expected_type=np.ndarray,
                precondition=_need_count("get_n_diversions")),
+    MethodSpec("get_urban_elempump_supply_shortage_at_origin", expected_type=np.ndarray,
+               precondition=_need_count("get_n_element_pumps")),
     MethodSpec("get_urban_well_supply_shortage_at_origin", expected_type=np.ndarray,
                precondition=_need_count("get_n_wells")),
     MethodSpec("get_bypass_outflows", expected_type=np.ndarray,
@@ -657,23 +676,6 @@ DEFERRED: dict[str, list[str]] = {
     "simulation_state": [
         "get_depth_to_water",
         "get_gwheads_foralayer",
-    ],
-
-    # Methods that crash via known pywfm source bugs in 0.2.x. Each will
-    # move out of this bucket when the corresponding source fix lands.
-    "source_bug": [
-        # model.py:11240 — passes Python int to ctypes.byref instead of
-        # wrapping in ctypes.c_int. Cascades to get_small_watershed_ids
-        # (depends on get_n_small_watersheds).
-        "get_n_small_watersheds",
-        "get_small_watershed_ids",
-        # model.py:7259 — calls IW_Model_GetWellIDs instead of
-        # IW_Model_GetElemPumpIDs (copy-paste). Access violation when
-        # the model has element pumps. Cascades to dependent methods.
-        "get_element_pump_ids",
-        "get_element_pump_purpose",
-        "get_ag_elempump_supply_shortage_at_origin",
-        "get_urban_elempump_supply_shortage_at_origin",
     ],
 
     # Visualization — needs matplotlib backend handling, separate concern.
