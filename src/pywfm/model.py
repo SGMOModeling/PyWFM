@@ -13220,23 +13220,19 @@ class IWFMModel(IWFMMiscellaneous):
                 current_end_node = next_segment[0][-1]
 
                 if current_end_node == first_start_node:
-                    out_df = out_df.append(
-                        pd.DataFrame(
-                            data=np.append(next_segment, 79).reshape(1, 3),
-                            columns=[start_node_column, end_node_column, "code"],
-                        ),
-                        ignore_index=True,
+                    new_row = pd.DataFrame(
+                        data=np.append(next_segment, 79).reshape(1, 3),
+                        columns=[start_node_column, end_node_column, "code"],
                     )
+                    out_df = pd.concat([out_df, new_row], ignore_index=True)
                     df_list.append(out_df)
 
                 else:
-                    out_df = out_df.append(
-                        pd.DataFrame(
-                            data=np.append(next_segment, 2).reshape(1, 3),
-                            columns=[start_node_column, end_node_column, "code"],
-                        ),
-                        ignore_index=True,
+                    new_row = pd.DataFrame(
+                        data=np.append(next_segment, 2).reshape(1, 3),
+                        columns=[start_node_column, end_node_column, "code"],
                     )
+                    out_df = pd.concat([out_df, new_row], ignore_index=True)
 
                 previous_end_node = current_end_node
 
