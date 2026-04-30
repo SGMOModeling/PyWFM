@@ -1,0 +1,941 @@
+#4.0
+C***  DO NOT DELETE ABOVE LINE ***
+C
+C*******************************************************************************
+C
+C                  INTEGRATED WATER FLOW MODEL (IWFM)
+C
+C*******************************************************************************
+C
+C                  GROUNDWATER COMPONENT MAIN DATA FILE
+C                        Groundwater Component
+C                         *** Version 4.0 ***
+C
+C
+C             Project:  IWFM Public Release
+C                       California Department of Water Resources
+C                       September, 2025
+C             Filename: GW_MAIN.dat
+C
+C*******************************************************************************
+C                          File Description
+C
+C   This data file contains the parameters and data file names for the simulation
+C   of groundwater and related flow processes.
+C
+C*******************************************************************************
+C                   Input and Output Data File Names
+C
+C   BCFL      ;  Boundary conditions data file (max. 1000 characters)
+C                 * Leave blank if no boundary conditions (other than zero flow b.c.)
+C                   are specified
+C   TDFL      ;  Tile drains/subsurface irrigation data file (max. 1000 characters)
+C                 * Leave blank if tile drains/subsurface irrigation are not simulated
+C   PUMPFL    ;  Pumping/recharge data file (max. 1000 characters)
+C                 * Leave blank if pumping/recharge is not simulated
+C   SUBSFL    ;  Subsidence parameter file (max. 1000 characters)
+C                 * Leave blank if subsidence is not simulated
+C   OVRWRTFL  ;  Aquifer parameter overwrite file (max. 1000 characters)
+C                 * Leave blank if aquifer parameters will not be overwritten
+C   FACTLTOU  ;  Factor to convert simulation unit of groundwater heads and the coordinates 
+C                 of cell centroids for velocity print-out into intented output unit 
+C   UNITLTOU  ;  Output unit of groundwater heads and the coordinates of cell 
+C                 centroids (max. 10 characters)
+C   FACTVLOU  ;  Factor to convert simulation unit of groundwater flows into 
+C                 intented output unit 
+C   UNITVLOU  ;  Output unit of groundwater flow (max. 10 characters)
+C   FACTVROU  ;  Factor to convert simulation unit of groundwater flow velocities (with 
+C                 dimensions L/T) at cell centroids into intended output unit
+C   UNITVROU  ;  Output unit of groundwater flow velocities at cell centroids (max. 10 characters)
+C   VELOUTFL  ;  Output file for groundwater velocities at cell centroids (max. 1000 characters)
+C                 * Leave blank if this output is not required
+C   VFLOWOUTFL;  Output file for vertical flow (max. 1000 characters)
+C                 * Leave blank if this output is not required
+C   GWALLOUTFL;  Output file for groundwater head at every node (max. 1000 characters)
+C                 * Leave blank if this output is not required
+C   HTPOUTFL  ;  TecPlot output file for groundwater heads (max. 1000 characters)
+C                 * Leave blank if this output is not required
+C   VTPOUTFL  ;  TecPlot output file for groundwater velocities (max. 1000 characters)
+C                 * Leave blank if this output is not required
+C   GWBUDFL   ;  HDF5 output file for groundwater budget at each subregion (max. 1000 characters)
+C                 * Leave blank if this output is not required
+C   ZBUDFL    ;  HDF5 output file for zone budget post-processor (max. 1000 characters)
+C                 * Leave blank if this output is not required
+C   FNGWFL    ;  Output file for end-of-simulation groundwater heads (max. 1000 characters)
+C                 * Leave blank if this output is not required
+C   IHTPFLAG  ;  Flag for TecPlot output for groundwater heads
+C                 * 1: Print gw heads
+C                 * 2: Print depth-to-groundwater
+C
+C----------------------------------------------------------------------------------------
+C         VALUE                                      DESCRIPTION
+C----------------------------------------------------------------------------------------
+          GW\BC_MAIN.dat                             / BCFL  
+          GW\TileDrain.dat                           / TDFL
+          GW\Pump_MAIN.dat                           / PUMPFL
+          GW\Subsidence.dat                          / SUBSFL
+                                                     / OVRWRTFL
+          1.0                                        / FACTLTOU      (ft. -> ft.)
+          ft.                                        / UNITLTOU
+          2.29568e-5                                 / FACTVLOU      (cu.ft. -> ac.ft.)
+          ac.ft.                                     / UNITVLOU
+          1.0                                        / FACTVROU
+          fpd                                        / UNITVROU
+          ..\Results\GWVelocities.out                / VELOUTFL
+          ..\Results\VerticalFlow.out                / VFLOWOUTFL
+          ..\Results\GWHeadAll.out                   / GWALLOUTFL
+          ..\Results\TecPlotGW.out                   / HTPOUTFL
+                                                     / VTPOUTFL
+          ..\Results\GW.hdf                          / GWBUDFL
+          ..\Results\GW_ZBud.hdf                     / ZBUDFL
+          ..\Results\\FinalGWHeads.out               / FNGWFL
+          1                                          / IHTPFLAG
+C*******************************************************************************
+C                             Debugging
+C
+C   KDEB       ;   Enter 1 - print aquifer parameter data
+C                  Enter 0 - DO NOT print aquifer parameter data
+C
+C-------------------------------------------------------------------------------
+C   VALUE                       DESCRIPTION
+C-------------------------------------------------------------------------------
+    1                           / KDEB
+C*******************************************************************************
+C                       Groundwater Hydrograph Output Data
+C
+C   The following lists the node and layer numbers for which groundwater
+C   hydrograph will be printed
+C
+C   NOUTH      ; Total number of hydrographs to be printed 
+C                 (NOUTH = 0 if no hydrograph is to be printed)
+C   FACTXY     ; Conversion factor for nodal coordinates of the hydrograph location 
+C                 if given in x-y coordinates
+C   GWHYDOUTFL ; File name for groundwater hydrograph output (max. 1000 characters) 
+C                 * Leave blank if this output is not required
+C
+C-------------------------------------------------------------------------------
+C   VALUE                       DESCRIPTION
+C-------------------------------------------------------------------------------
+    42                          / NOUTH
+    3.2808                      / FACTXY         (m -> ft)
+    ..\Results\GWHyd.out        / GWHYDOUTFL
+C-------------------------------------------------------------------------------
+C
+C   The following lists the hydrograph location type (x-y coordinates or node number), 
+C   layer number, and x-y coordinates or groundwater node number for each groundwater 
+C   hydrograph to be printed (skip if no hydrographs are to be printed, i.e. NOUTH = 0)
+C
+C   ID    ;  Hydrograph ID number
+C   HYDTYP;  Hydrograph location type
+C              0 = hydrograph location is given as x-y coordinates
+C              1 =    "          "      "   "    " groundwater node number
+C   IOUTHL;  Layer number
+C              * Enter 0 to print average head for all layers
+C   X     ;  The x-coordinate of the hydrograph location; [L]
+C              * Leave blank if HYDTYP = 1
+C   Y     ;  The y-coordinate of the hydrograph location; [L]
+C              * Leave blank if HYDTYP = 1
+C   IOUTH ;  Groundwater node number
+C              * Leave blank if HYDTYP = 0
+C   NAME  ;  Name of the hydrograph print location such as the well name (max. 30 characters)
+C   
+C-------------------------------------------------------------------------------
+C   ID    HYDTYP    IOUTHL         X           Y        IOUTH      NAME    
+C-------------------------------------------------------------------------------
+     1      0         1        574000.0     4440000.0              GWHyd1
+     2      1         1                                  412       GWHyd2
+     3      1         1                                  391       GWHyd3
+     4      1         1                                  370       GWHyd4
+     5      1         1                                  349       GWHyd5
+     6      1         1                                  328       GWHyd6
+     7      1         1                                  307       GWHyd7
+     8      1         1                                  286       GWHyd8
+     9      1         1                                  265       GWHyd9
+    10      1         1                                  244      GWHyd10
+    11      1         1                                  223      GWHyd11
+    12      1         1                                  202      GWHyd12
+    13      1         1                                  181      GWHyd13
+    14      1         1                                  160      GWHyd14
+    15      1         1                                  139      GWHyd15
+    16      1         1                                  118      GWHyd16
+    17      0         1         574000.0    4408000.0             GWHyd17
+    18      0         1         574000.0    4406000.0             GWHyd18
+    19      1         1                                  55       GWHyd19
+    20      1         1                                  34       GWHyd20
+    21      1         1                                  13       GWHyd21
+    22      1         2                                  433      GWHyd22
+    23      1         2                                  412      GWHyd23
+    24      1         2                                  391      GWHyd24
+    25      1         2                                  370      GWHyd25
+    26      1         2                                  349      GWHyd26
+    27      1         2                                  328      GWHyd27
+    28      1         2                                  307      GWHyd28
+    29      1         2                                  286      GWHyd29
+    30      1         2                                  265      GWHyd30
+    31      1         2                                  244      GWHyd31
+    32      1         2                                  223      GWHyd32
+    33      1         2                                  202      GWHyd33
+    34      1         2                                  181      GWHyd34
+    35      1         2                                  160      GWHyd35
+    36      1         2                                  139      GWHyd36
+    37      1         2                                  118      GWHyd37
+    38      1         2                                  97       GWHyd38
+    39      1         2                                  76       GWHyd39
+    40      1         2                                  55       GWHyd40
+    41      1         2                                  34       GWHyd41
+    42      1         2                                  13       GWHyd42
+C*******************************************************************************
+C                         Element Face Flow Output Data
+C
+C   The following lists the element faces for which the groundwater flow output 
+C   is desired.
+C
+C-------------------------------------------------------------------------------
+C
+C   NOUTF      ; Number of element faces for flow output
+C                 (NOUTF = 0 if no hydrograph is to be printed)
+C   FCHYDOUTFL ; File name for element face flow output (max. 1000 characters) 
+C                 * Leave blank if this output is not required
+C
+C-------------------------------------------------------------------------------
+C   VALUE                       DESCRIPTION
+C-------------------------------------------------------------------------------
+    3                           / NOUTF
+    ..\Results\FaceFlow.out     / FCHYDOUTFL
+C-------------------------------------------------------------------------------
+C
+C   The following lists the layer number and groundwater node numbers that 
+C   defines the element face for each face flow hydrograph to be printed (skip 
+C   if no element face flow hydrograph is to be printed, ie. NOUTF = 0)
+C
+C   ID     ; Hydrograph ID number
+C   IOUTFL ; Layer number
+C   IOUTFA ; The first groundwater node number that defines the element face
+C   IOUTFB ; The second groundwater node number that defines the element face
+C   NAME   ; Name for the hydrograph (max. 30 characters)
+C
+C-------------------------------------------------------------------------------
+C   ID    IOUTFL     IOUTFA     IOUTFB    NAME
+C-------------------------------------------------------------------------------
+    1       1          89         90      FaceFlow1
+    2       1          91         90      FaceFlow2
+    3       2          91         90      FaceFlow3
+C*******************************************************************************
+C                           Aquifer Parameters
+C
+C-------------------------------------------------------------------------------
+C   Option 1 - Set aquifer parameters by use of a parametric grid(NGROUP > 0)
+C   Option 2 - Set aquifer parameters at every groundwater node  (NGROUP = 0)
+C
+C   NGROUP;  Number of parametric grid groups
+C
+C-------------------------------------------------------------------------------
+C       VALUE                   DESCRIPTION
+C-------------------------------------------------------------------------------
+         1                      / NGROUP
+C-------------------------------------------------------------------------------
+C   OPTIONS 1 & 2 : The following lists the factors to convert the aquifer
+C   parameters and grid coordinates to the appropriate units 
+C
+C   FX     ;  Conversion factor for parametric grid coordinates
+C   FKH    ;  Conversion factor for horizontal hydraulic conductivity 
+C              It is used to convert only the spatial component of the unit; 
+C              DO NOT include the conversion factor for time component of the unit.
+C              * e.g. Unit of hydraulic conductivity listed in this file = IN/DAY
+C                     Consistent unit used in simulation                 = FT/MONTH 
+C                     Enter FKH (IN/MONTH -> FT/MONTH)                   = 8.33333E-02 
+C                      (conversion of DAY -> MONTH is performed automatically) 
+C   FS     ;  Conversion factor for specific storage coefficient 
+C   FN     ;  Weighting factor for specific yield value
+C   FV     ;  Conversion factor for aquitard vertical hydraulic conductivity
+C              It is used to convert only the spatial component of the unit; 
+C              DO NOT include the conversion factor for time component of the unit.
+C              * e.g. Unit of hydraulic conductivity listed in this file = IN/DAY
+C                     Consistent unit used in simulation                 = FT/MONTH 
+C                     Enter FV (IN/MONTH -> FT/MONTH)                    = 8.33333E-02 
+C                      (conversion of DAY -> MONTH is performed automatically) 
+C   FL     ;  Conversion factor for aquifer vertical hydraulic conductivity 
+C              It is used to convert only the spatial component of the unit; 
+C              DO NOT include the conversion factor for time component of the unit.
+C              * e.g. Unit of hydraulic conductivity listed in this file = IN/DAY
+C                     Consistent unit used in simulation                 = FT/MONTH 
+C                     Enter FL (IN/MONTH -> FT/MONTH)                    = 8.33333E-02 
+C                      (conversion of DAY -> MONTH is performed automatically) 
+C   TUNITKH;  Time unit of horizontal hydraulic conductivity.  This should be one of the units 
+C              recognized by HEC-DSS that are listed in the Main Control File.  
+C   TUNITV ;  Time unit of aquitard vertical conductivity.  This should be one of the units 
+C              recognized by HEC-DSS that are listed in the Main Control File.  
+C   TUNITL ;  Time unit of aquifer vertical conductivity.  This should be one of the units 
+C              recognized by HEC-DSS that are listed in the Main Control File.  
+C
+C-------------------------------------------------------------------------------
+C  FX       FKH         FS          FN         FV        FL       
+C-------------------------------------------------------------------------------
+  3.2808    1.0         1E-6       1.0         1.0       1.0     
+C-------------------------------------------------------------------------------
+C   VALUE              DESCRIPTION
+C-------------------------------------------------------------------------------
+    1day               / TUNITKH
+    1day               / TUNITV
+    1day               / TUNITL
+C*******************************************************************************
+C                  OPTION 1 
+C*******************************************************************************
+C-------------------------------------------------------------------------------
+C   *** GROUP 1 ***
+C-------------------------------------------------------------------------------
+C   Enter node numbers from FE grid for the 1st parametric group
+C     (e.g. 1-100,101,301-359,567)
+C     * Enter 0 if no nodes will be affected with this parametric grid
+C-------------------------------------------------------------------------------
+   1-441
+C-------------------------------------------------------------------------------
+C
+C   NDP;     Number of nodes in the 1st parametric grid
+C   NEP;     Number of elements in the 1st parametric grid
+C
+C-------------------------------------------------------------------------------
+C   VALUE                       DESCRIPTION
+C-------------------------------------------------------------------------------
+     1                          / NDP
+     0                          / NEP
+C-------------------------------------------------------------------------------
+C
+C   The following is a list of the parametric elements and
+C   corresponding parametric nodes for the 1st parametric group
+C   (to be used only when NEP > 0)
+C
+C   IE  ;    Parametric element number
+C   NODE;    Corresponding parametric node
+C
+C-------------------------------------------------------------------------------
+C             Node 1    Node 2    Node 3     Node 4
+C    IE        NODE      NODE      NODE       NODE
+C-------------------------------------------------------------------------------
+*
+C-------------------------------------------------------------------------------
+C
+C   List the paramatric nodes, nodal coordinates and aquifer
+C   parameters for each layer of the 1st parametric group
+C   (enter -1.0 not to overwrite the previously set values)
+C
+C   ID   ;   Parametric node number
+C   PX,PY;   Parametric node coordinates; [L]
+C   PKH  ;   Hydraulic conductivity; [L/T]
+C   PS   ;   Specific storage; [1/L]
+C   PN   ;   Specific yield; [L/L]
+C   PV   ;   Aquitard vertical hydraulic conductivity; [L/T]
+C   PL   ;   Aquifer vertical hydraulic conductivity; [L/T]
+C
+C-------------------------------------------------------------------------------------
+C            NODAL   COORDINATES                                                 
+C            OF PARAMETRIC  GRID        Hydr.   Spec.    Spec.   Aquitard    Aquifer
+C                                       cond.   Stor.    Yld.     Vert. K    Vert. K
+C  ID         PX             PY          PKH     PS       PN        PV          PL  
+C-------------------------------------------------------------------------------------
+    1      -15000.0       -15000.0      50.00    1.0     0.25      0.20        1.0       
+                                        50.00    1.0     0.25      0.20        1.0       
+C-------------------------------------------------------------------------------------
+C    *** GROUP 2 ***
+C-------------------------------------------------------------------------------
+C   Enter node numbers from the FE grid for the 2nd parametric group
+C     (e.g. 1-100,101,301-359,567)
+C     * Enter 0 if no nodes will be affected with this parametric grid
+C-------------------------------------------------------------------------------
+*
+C-------------------------------------------------------------------------------
+C
+C   NDP;     Number of nodes in the 2nd parametric grid
+C   NEP;     Number of elements in the 2nd parametric grid
+C
+C-------------------------------------------------------------------------------
+C   VALUE                        DESCRIPTION
+C-------------------------------------------------------------------------------
+*                                 / NDP
+*                                 / NEP
+C-------------------------------------------------------------------------------
+C
+C   The following is a list of the parametric elements and
+C   corresponding parametric nodes for the 2nd parametric group
+C   (to be used only when NEP > 0)
+C
+C   IE  ;    Parametric element number
+C   NODE;    Corresponding parametric node
+C
+C-------------------------------------------------------------------------------
+C   Element   Node 1    Node 2    Node 3     Node 4
+C    IE        NODE      NODE      NODE       NODE
+C-------------------------------------------------------------------------------
+*
+C-------------------------------------------------------------------------------
+C
+C   List the paramatric nodes, nodal coordinates and aquifer
+C   parameters for each layer of the 2nd parametric group
+C   (enter -1.0 not to overwrite the previously set values)
+C
+C   ID   ;   Parametric node number
+C   PX,PY;   Parametric node coordinates; [L]
+C   PKH  ;   Hydraulic conductivity; [L/T]
+C   PS   ;   Specific storage; [1/L]
+C   PN   ;   Specific yield; [L/L]
+C   PV   ;   Aquitard vertical hydraulic conductivity; [L/T]
+C   PL   ;   Aquifer vertical hydraulic conductivity; [L/T]
+C
+C-------------------------------------------------------------------------------------
+C            NODAL   COORDINATES                                                 
+C            OF PARAMETRIC  GRID        Hydr.   Spec.    Spec.   Aquitard    Aquifer
+C                                       cond.   Stor.    Yld.     Vert. K    Vert. K
+C  ID         PX             PY          PKH     PS       PN        PV          PL  
+C-------------------------------------------------------------------------------------
+*
+C-------------------------------------------------------------------------------------
+C*******************************************************************************
+C                  OPTION 2
+C*******************************************************************************
+C
+C    List the groundwater nodes, and aquifer parameters for
+C    each layer (skip if option 1 is used)
+C
+C   ID   ;   Groundwater node number
+C   PKH  ;   Hydraulic conductivity; [L/T]
+C   PS   ;   Specific storage; [1/L]
+C   PN   ;   Specific yield; [L/L]
+C   PV   ;   Aquitard vertical hydraulic conductivity; [L/T]
+C   PL   ;   Aquifer vertical hydraulic conductivity; [L/T]
+C
+C-------------------------------------------------------------------------------
+C                           Layer  1              
+C                           Layer  2
+C                              .
+C                              .
+C                           Layer  NL
+C
+C         Hydr.   Spec.    Spec.   Aquitard    Aquifer 
+C         cond.   Stor.    Yld.     Vert. K    Vert. K 
+C  ID      PKH     PS       PN        PV          PL   
+C-------------------------------------------------------------------------------
+*
+C-------------------------------------------------------------------------------
+C*******************************************************************************
+C                     Anomaly in Hydraulic Conductivity
+C
+C   List the groundwater elements and corresponding hydraulic conductivities
+C   that will overwrite the above aquifer data
+C
+C   NEBK;   Number of elements where hydraulic conductivity values will be overwritten 
+C            (NEBK = 0 if there are no anomalies) 
+C   FACT;   Conversion factor for the anomaly hydraulic conductivity
+C            It is used to convert only the spatial component of the unit; 
+C            DO NOT include the conversion factor for time component of the unit.
+C            * e.g. Unit of anomaly hydraulic conductivity listed in this file = IN/DAY
+C                   Consistent unit used in simulation                         = FT/MONTH 
+C                   Enter FACT (IN/MONTH -> FT/MONTH)                          = 8.33333E-02 
+C                    (conversion of DAY -> MONTH is performed automatically) 
+C   TUNITH; Time unit of anomaly hydraulic conductivity.  This should be one of the units 
+C             recognized by HEC-DSS that are listed in the Main Control File.
+C
+C-------------------------------------------------------------------------------
+C   VALUE                       DESCRIPTION
+C-------------------------------------------------------------------------------
+     0                          / NEBK
+     1.0                        / FACT
+     1day                       / TUNITH
+C-------------------------------------------------------------------------------
+C
+C   The following lists the element numbers and the hydraulic conductivity anomalies
+C   at these elements (skip if there are no anomalies, i.e. NEBK = 0)
+C
+C   IC  ;    Sequential counter for number of overwrite options
+C   IEBK;    Element number corresponding to counter IC
+C   BK  ;    Hydraulic conductivity at the specified node; [L/T]
+C
+C-------------------------------------------------------------------------------
+C                       LAYER 1    LAYER 2    LAYER 3
+C     IC      IEBK        BK         BK        BK
+C-------------------------------------------------------------------------------
+*
+*
+C******************************************************************************* 
+C                  Simulation of Groundwater Return Flow
+C
+C   The following lists parameters to simulate groundwater return flows (portion  
+C   of the groundwater head at the top aquifer layer that turns into surface runoff 
+C   in case it rises above ground surface elevation) and to route them to other  
+C   hydrologic flow features (streams, lakes, or outside the model domain).
+C
+C   IFLAGRF; Flag to turn on or off the simulation of groundwater return flows
+C               0 = DO NOT simulate groundwater return flows
+C               1 = Simulate groundwater return flows
+C   ID     ; Node ID number
+C   TYPDEST; Destination type for the groundwater return flow from node ID
+C               0 = Groundwater return flow goes outside of model area
+C               1 =     "          "    "  to a stream node
+C               3 =     "          "    "   " a lake
+C   DEST   ; Destination for the groundwater return flow from node ID
+C               * Note: Enter any number if TYPDEST is set to 0 
+C
+C-------------------------------------------------------------------------------
+C   VALUE                       DESCRIPTION
+C-------------------------------------------------------------------------------
+    0                           / IFLAGRF
+C-------------------------------------------------------------------------------
+C   *Note: List parameters below only if IFLAGRF = 1 above
+C   ID    TYPDEST    DEST
+C-------------------------------------------------------------------------------
+*
+*
+C******************************************************************************* 
+C                      Initial Groundwater Head Values 
+C 
+C   FACTHP;  Conversion factor for initial heads 
+C   ID    ;  Groundwater node number
+C   HP    ;  Initial head at corresponding groundwater node; [L] 
+C
+C-------------------------------------------------------------------------------
+C   VALUE                       DESCRIPTION
+C-------------------------------------------------------------------------------
+    1.0                         / FACTHP
+C-------------------------------------------------------------------------------
+C   ID     HP[1]    HP[2]  ...  HP[NLayers]
+C-------------------------------------------------------------------------------
+     1     280.0    290.0
+     2     280.0    290.0
+     3     280.0    290.0
+     4     280.0    290.0
+     5     280.0    290.0                                     
+     6     280.0    290.0
+     7     280.0    290.0
+     8     280.0    290.0
+     9     280.0    290.0
+    10     280.0    290.0
+    11     280.0    290.0
+    12     280.0    290.0
+    13     280.0    290.0
+    14     280.0    290.0
+    15     280.0    290.0
+    16     280.0    290.0
+    17     280.0    290.0
+    18     280.0    290.0
+    19     280.0    290.0
+    20     280.0    290.0
+    21     280.0    290.0
+    22     280.0    290.0
+    23     280.0    290.0
+    24     280.0    290.0
+    25     280.0    290.0
+    26     280.0    290.0
+    27     280.0    290.0
+    28     280.0    290.0
+    29     280.0    290.0
+    30     280.0    290.0
+    31     280.0    290.0
+    32     280.0    290.0
+    33     280.0    290.0
+    34     280.0    290.0
+    35     280.0    290.0
+    36     280.0    290.0
+    37     280.0    290.0
+    38     280.0    290.0
+    39     280.0    290.0
+    40     280.0    290.0
+    41     280.0    290.0
+    42     280.0    290.0
+    43     280.0    290.0
+    44     280.0    290.0
+    45     280.0    290.0
+    46     280.0    290.0
+    47     280.0    290.0
+    48     280.0    290.0
+    49     280.0    290.0
+    50     280.0    290.0
+    51     280.0    290.0
+    52     280.0    290.0
+    53     280.0    290.0
+    54     280.0    290.0
+    55     280.0    290.0
+    56     280.0    290.0
+    57     280.0    290.0
+    58     280.0    290.0
+    59     280.0    290.0
+    60     280.0    290.0
+    61     280.0    290.0
+    62     280.0    290.0
+    63     280.0    290.0
+    64     280.0    290.0
+    65     280.0    290.0
+    66     280.0    290.0
+    67     280.0    290.0
+    68     280.0    290.0
+    69     280.0    290.0
+    70     280.0    290.0
+    71     280.0    290.0
+    72     280.0    290.0
+    73     280.0    290.0
+    74     280.0    290.0
+    75     280.0    290.0
+    76     280.0    290.0
+    77     280.0    290.0
+    78     280.0    290.0
+    79     280.0    290.0
+    80     280.0    290.0
+    81     280.0    290.0
+    82     280.0    290.0
+    83     280.0    290.0
+    84     280.0    290.0
+    85     280.0    290.0
+    86     280.0    290.0
+    87     280.0    290.0
+    88     280.0    290.0
+    89     280.0    290.0
+    90     280.0    290.0
+    91     280.0    290.0
+    92     280.0    290.0
+    93     280.0    290.0
+    94     280.0    290.0
+    95     280.0    290.0
+    96     280.0    290.0
+    97     280.0    290.0
+    98     280.0    290.0
+    99     280.0    290.0
+   100     280.0    290.0
+   101     280.0    290.0
+   102     280.0    290.0
+   103     280.0    290.0
+   104     280.0    290.0
+   105     280.0    290.0
+   106     280.0    290.0
+   107     280.0    290.0
+   108     280.0    290.0
+   109     280.0    290.0
+   110     280.0    290.0
+   111     280.0    290.0
+   112     280.0    290.0
+   113     280.0    290.0
+   114     280.0    290.0
+   115     280.0    290.0
+   116     280.0    290.0
+   117     280.0    290.0
+   118     280.0    290.0
+   119     280.0    290.0
+   120     280.0    290.0
+   121     280.0    290.0
+   122     280.0    290.0
+   123     280.0    290.0
+   124     280.0    290.0
+   125     280.0    290.0
+   126     280.0    290.0
+   127     280.0    290.0
+   128     280.0    290.0
+   129     280.0    290.0
+   130     280.0    290.0
+   131     280.0    290.0
+   132     280.0    290.0
+   133     280.0    290.0
+   134     280.0    290.0
+   135     280.0    290.0
+   136     280.0    290.0
+   137     280.0    290.0
+   138     280.0    290.0
+   139     280.0    290.0
+   140     280.0    290.0
+   141     280.0    290.0
+   142     280.0    290.0
+   143     280.0    290.0
+   144     280.0    290.0
+   145     280.0    290.0
+   146     280.0    290.0
+   147     280.0    290.0
+   148     280.0    290.0
+   149     280.0    290.0
+   150     280.0    290.0
+   151     280.0    290.0
+   152     280.0    290.0
+   153     280.0    290.0
+   154     280.0    290.0
+   155     280.0    290.0
+   156     280.0    290.0
+   157     280.0    290.0
+   158     280.0    290.0
+   159     280.0    290.0
+   160     280.0    290.0
+   161     280.0    290.0
+   162     280.0    290.0
+   163     280.0    290.0
+   164     280.0    290.0
+   165     280.0    290.0
+   166     280.0    290.0
+   167     280.0    290.0
+   168     280.0    290.0
+   169     280.0    290.0
+   170     280.0    290.0
+   171     280.0    290.0
+   172     280.0    290.0
+   173     280.0    290.0
+   174     280.0    290.0
+   175     280.0    290.0
+   176     280.0    290.0
+   177     280.0    290.0
+   178     280.0    290.0
+   179     280.0    290.0
+   180     280.0    290.0
+   181     280.0    290.0
+   182     280.0    290.0
+   183     280.0    290.0
+   184     280.0    290.0
+   185     280.0    290.0
+   186     280.0    290.0
+   187     280.0    290.0
+   188     280.0    290.0
+   189     280.0    290.0
+   190     280.0    290.0
+   191     280.0    290.0
+   192     280.0    290.0
+   193     280.0    290.0
+   194     280.0    290.0
+   195     280.0    290.0
+   196     280.0    290.0
+   197     280.0    290.0
+   198     280.0    290.0
+   199     280.0    290.0
+   200     280.0    290.0
+   201     280.0    290.0
+   202     280.0    290.0
+   203     280.0    290.0
+   204     280.0    290.0
+   205     280.0    290.0
+   206     280.0    290.0
+   207     280.0    290.0
+   208     280.0    290.0
+   209     280.0    290.0
+   210     280.0    290.0
+   211     280.0    290.0
+   212     280.0    290.0
+   213     280.0    290.0
+   214     280.0    290.0
+   215     280.0    290.0
+   216     280.0    290.0
+   217     280.0    290.0
+   218     280.0    290.0
+   219     280.0    290.0
+   220     280.0    290.0
+   221     280.0    290.0
+   222     280.0    290.0
+   223     280.0    290.0
+   224     280.0    290.0
+   225     280.0    290.0
+   226     280.0    290.0
+   227     280.0    290.0
+   228     280.0    290.0
+   229     280.0    290.0
+   230     280.0    290.0
+   231     280.0    290.0
+   232     280.0    290.0
+   233     280.0    290.0
+   234     280.0    290.0
+   235     280.0    290.0
+   236     280.0    290.0
+   237     280.0    290.0
+   238     280.0    290.0
+   239     280.0    290.0
+   240     280.0    290.0
+   241     280.0    290.0
+   242     280.0    290.0
+   243     280.0    290.0
+   244     280.0    290.0
+   245     280.0    290.0
+   246     280.0    290.0
+   247     280.0    290.0
+   248     280.0    290.0
+   249     280.0    290.0
+   250     280.0    290.0
+   251     280.0    290.0
+   252     280.0    290.0
+   253     280.0    290.0
+   254     280.0    290.0
+   255     280.0    290.0
+   256     280.0    290.0
+   257     280.0    290.0
+   258     280.0    290.0
+   259     280.0    290.0
+   260     280.0    290.0
+   261     280.0    290.0
+   262     280.0    290.0
+   263     280.0    290.0
+   264     280.0    290.0
+   265     280.0    290.0
+   266     280.0    290.0
+   267     280.0    290.0
+   268     280.0    290.0
+   269     280.0    290.0
+   270     280.0    290.0
+   271     280.0    290.0
+   272     280.0    290.0
+   273     280.0    290.0
+   274     280.0    290.0
+   275     280.0    290.0
+   276     280.0    290.0
+   277     280.0    290.0
+   278     280.0    290.0
+   279     280.0    290.0
+   280     280.0    290.0
+   281     280.0    290.0
+   282     280.0    290.0
+   283     280.0    290.0
+   284     280.0    290.0
+   285     280.0    290.0
+   286     280.0    290.0
+   287     280.0    290.0
+   288     280.0    290.0
+   289     280.0    290.0
+   290     280.0    290.0
+   291     280.0    290.0
+   292     280.0    290.0
+   293     280.0    290.0
+   294     280.0    290.0
+   295     280.0    290.0
+   296     280.0    290.0
+   297     280.0    290.0
+   298     280.0    290.0
+   299     280.0    290.0
+   300     280.0    290.0
+   301     280.0    290.0
+   302     280.0    290.0
+   303     280.0    290.0
+   304     280.0    290.0
+   305     280.0    290.0
+   306     280.0    290.0
+   307     280.0    290.0
+   308     280.0    290.0
+   309     280.0    290.0
+   310     280.0    290.0
+   311     280.0    290.0
+   312     280.0    290.0
+   313     280.0    290.0
+   314     280.0    290.0
+   315     280.0    290.0
+   316     280.0    290.0
+   317     280.0    290.0
+   318     280.0    290.0
+   319     280.0    290.0
+   320     280.0    290.0
+   321     280.0    290.0
+   322     280.0    290.0
+   323     280.0    290.0
+   324     280.0    290.0
+   325     280.0    290.0
+   326     280.0    290.0
+   327     280.0    290.0
+   328     280.0    290.0
+   329     280.0    290.0
+   330     280.0    290.0
+   331     280.0    290.0
+   332     280.0    290.0
+   333     280.0    290.0
+   334     280.0    290.0
+   335     280.0    290.0
+   336     280.0    290.0
+   337     280.0    290.0
+   338     280.0    290.0
+   339     280.0    290.0
+   340     280.0    290.0
+   341     280.0    290.0
+   342     280.0    290.0
+   343     280.0    290.0
+   344     280.0    290.0
+   345     280.0    290.0
+   346     280.0    290.0
+   347     280.0    290.0
+   348     280.0    290.0
+   349     280.0    290.0
+   350     280.0    290.0
+   351     280.0    290.0
+   352     280.0    290.0
+   353     280.0    290.0
+   354     280.0    290.0
+   355     280.0    290.0
+   356     280.0    290.0
+   357     280.0    290.0
+   358     280.0    290.0
+   359     280.0    290.0
+   360     280.0    290.0
+   361     280.0    290.0
+   362     280.0    290.0
+   363     280.0    290.0
+   364     280.0    290.0
+   365     280.0    290.0
+   366     280.0    290.0
+   367     280.0    290.0
+   368     280.0    290.0
+   369     280.0    290.0
+   370     280.0    290.0
+   371     280.0    290.0
+   372     280.0    290.0
+   373     280.0    290.0
+   374     280.0    290.0
+   375     280.0    290.0
+   376     280.0    290.0
+   377     280.0    290.0
+   378     280.0    290.0
+   379     280.0    290.0
+   380     280.0    290.0
+   381     280.0    290.0
+   382     280.0    290.0
+   383     280.0    290.0
+   384     280.0    290.0
+   385     280.0    290.0
+   386     280.0    290.0
+   387     280.0    290.0
+   388     280.0    290.0
+   389     280.0    290.0
+   390     280.0    290.0
+   391     280.0    290.0
+   392     280.0    290.0
+   393     280.0    290.0
+   394     280.0    290.0
+   395     280.0    290.0
+   396     280.0    290.0
+   397     280.0    290.0
+   398     280.0    290.0
+   399     280.0    290.0
+   400     280.0    290.0
+   401     280.0    290.0
+   402     280.0    290.0
+   403     280.0    290.0
+   404     280.0    290.0
+   405     280.0    290.0
+   406     280.0    290.0
+   407     280.0    290.0
+   408     280.0    290.0
+   409     280.0    290.0
+   410     280.0    290.0
+   411     280.0    290.0
+   412     280.0    290.0
+   413     280.0    290.0
+   414     280.0    290.0
+   415     280.0    290.0
+   416     280.0    290.0
+   417     280.0    290.0
+   418     280.0    290.0
+   419     280.0    290.0
+   420     280.0    290.0
+   421     280.0    290.0
+   422     280.0    290.0
+   423     280.0    290.0
+   424     280.0    290.0
+   425     280.0    290.0
+   426     280.0    290.0
+   427     280.0    290.0
+   428     280.0    290.0
+   429     280.0    290.0
+   430     280.0    290.0
+   431     280.0    290.0
+   432     280.0    290.0
+   433     280.0    290.0
+   434     280.0    290.0
+   435     280.0    290.0
+   436     280.0    290.0
+   437     280.0    290.0
+   438     280.0    290.0
+   439     280.0    290.0
+   440     280.0    290.0
+   441     280.0    290.0

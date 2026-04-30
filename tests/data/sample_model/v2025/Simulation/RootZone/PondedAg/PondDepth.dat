@@ -1,0 +1,85 @@
+C*******************************************************************************
+C
+C                  INTEGRATED WATER FLOW MODEL (IWFM)
+C
+C*******************************************************************************
+C
+C                 RICE/REFUGE POND DEPTH DATA FILE
+C                       Root Zone Component
+C                       *** Version 4.12 ***
+C
+C
+C             Project:  IWFM Public Release
+C                       California Department of Water Resources
+C                       September, 2025
+C             Filename: PondDepth.dat
+C
+C*******************************************************************************
+C                           File Description
+C
+C   This data file contains a set of ponding depths for rice fields and refuges.
+C   These values are correlated to individual grid elements through the Rice/Refuge 
+C   Data File.
+C
+C*******************************************************************************
+C                 Rice/Refuge Pond Depth Data Specifications
+C
+C   NCOLPND  ; Number of pond depth data columns
+C   FACTPND  ; Conversion factor for pond depths 
+C   NSPPND   ; Number of time steps to update the pond depths
+C               * Enter any number if time-tracking option is on
+C   NFQPND   ; Repetition frequency of the pond depth data 
+C               * Enter 0 if full time series data is supplied
+C               * Enter any number if time-tracking option is on
+C   DSSFL    ; The name of the DSS file for data input 
+C               * Leave blank if DSS file is not used for data input
+C
+C-------------------------------------------------------------------------------
+C         VALUE                                      DESCRIPTION
+C-------------------------------------------------------------------------------
+          5                                          / NCOLPND
+          0.083333                                   / FACTPND (in -> ft)
+          1                                          / NSPPND 
+          0                                          / NFQPND
+                                                     / DSSFL
+C----------------------------------------------------------------------------------------------
+C                         Rice/Refuge Pond Depth Data 
+C                            (READ FROM THIS FILE)
+C
+C   List the rice/refuge pond depths below, if it will not be read from
+C   a DSS file (i.e. DSSFL is left blank above).
+C
+C   TIME ;  Time
+C   PND  ;  Pond depths; [L]
+C
+C----------------------------------------------------------------------------------------------
+C  TIME                PND[1]    PND[2]    PND[3] ... PND[NCOLPND]  
+C----------------------------------------------------------------------------------------------
+C                      FloodedDecomp_RI   NonFloodedDecomp_RI   NoDecomp_RI   Seasonal_RF    Permament_RF
+   10/31/4000_24:00         0.0                0.0                  0.0           0.0            0.0
+   11/30/4000_24:00         0.0                0.0                  0.0           0.0            0.0
+   12/31/4000_24:00         0.0                0.0                  0.0           0.0            0.0
+   01/31/4000_24:00         0.0                0.0                  0.0           0.0            0.0
+   02/29/4000_24:00         0.0                0.0                  0.0           0.0            0.0
+   03/31/4000_24:00         0.0                0.0                  0.0           0.0            0.0
+   04/30/4000_24:00         0.0                0.0                  0.0           0.0            0.0
+   05/31/4000_24:00         0.0                0.0                  3.0           0.0            0.0
+   06/30/4000_24:00         0.0                0.0                  5.0           0.0            0.0
+   07/31/4000_24:00         0.0                0.0                  8.0           0.0            0.0
+   08/31/4000_24:00         0.0                0.0                  0.0           0.0            0.0
+   09/30/4000_24:00         0.0                0.0                  0.0           0.0            0.0
+C-------------------------------------------------------------------------------
+C                           Pathnames for Pond Depths
+C                             (READ FROM DSS FILE)
+C
+C   List the pathnames for pond depths below, if it will be 
+C   read from a DSS file (i.e. DSSFL is specified above).
+C
+C   REC  ;  Time series record number
+C   PATH ;  Pathname for the time series record 
+C
+C----------------------------------------------------------------------------------------------------------- 
+C   REC     PATH
+C-----------------------------------------------------------------------------------------------------------
+*
+*

@@ -1,0 +1,71 @@
+C*******************************************************************************
+C
+C                  INTEGRATED WATER FLOW MODEL (IWFM)
+C
+C*******************************************************************************
+C
+C                 RETURN FLOW FRACTIONS DATA FILE
+C                       Root Zone Component
+C                       *** Version 4.12 ***
+C
+C
+C             Project:  IWFM Public Release
+C                       California Department of Water Resources
+C                       September, 2025
+C             Filename: ReturnFlowFrac.dat
+C
+C*******************************************************************************
+C                           File Description
+C
+C   This data file contains a set of return flows given as fractions of irrigation
+C   water.  
+C
+C*******************************************************************************
+C               Return Flow Fractions Data Specifications
+C
+C   NCOLRT ; Number of return flow fractions data columns
+C   NSPRT  ; Number of time steps to update the return flow fractions
+C             * Enter any number if time-tracking option is on
+C   NFQRT  ; Repetition frequency of the return flow fractions data 
+C             * Enter 0 if full time series data is supplied
+C             * Enter any number if time-tracking option is on
+C   DSSFL  ; The name of the DSS file for data input 
+C             * Leave blank if DSS file is not used for data input
+C
+C-------------------------------------------------------------------------------
+C         VALUE                                      DESCRIPTION
+C-------------------------------------------------------------------------------
+          2                                          / NCOLRT
+          1                                          / NSPRT  
+          0                                          / NFQRT
+                                                     / DSSFL
+C----------------------------------------------------------------------------------------------
+C                            Return Flow Fractions 
+C                            (READ FROM THIS FILE)
+C
+C   List the return flow fractions data below, if it will not be read from
+C   a DSS file (i.e. DSSFL is left blank above).
+C
+C   TIME ;  Time
+C   RTRNF;  Return flows as a fraction of applied water; [dimensionless]
+C
+C----------------------------------------------------------------------------------------------
+C  TIME                 RTRNF[1]  RTRNF[2]  RTRNF[3] ... RTRNF[NCOLRT] 
+C----------------------------------------------------------------------------------------------
+C                       AgReturn   UrbReturn
+   09/30/2500_24:00     0.10       0.15
+C-------------------------------------------------------------------------------
+C                   Pathnames for Return Flow Fractions Data
+C                             (READ FROM DSS FILE)
+C
+C   List the pathnames for return flow fractions data below, if it 
+C   will be read from a DSS file (i.e. DSSFL is specified above).
+C
+C   REC  ;  Time series record number
+C   PATH ;  Pathname for the time series record 
+C
+C----------------------------------------------------------------------------------------------------------- 
+C   REC     PATH
+C-----------------------------------------------------------------------------------------------------------
+*
+*

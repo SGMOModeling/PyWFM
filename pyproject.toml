@@ -23,6 +23,12 @@ dependencies = [
     "requests",
 ]
 
+[project.optional-dependencies]
+test = [
+    "pytest>=7",
+    "pytest-xdist",
+]
+
 [project.urls]
 Documentation = "https://sgmomodeling.github.io/PyWFM"
 Repository = "https://github.com/SGMOModeling/PyWFM"
@@ -36,6 +42,17 @@ version = {attr = "pywfm.__version__"}
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "--strict-markers -ra"
+markers = [
+    "unit: tests that don't need a DLL or model fixture",
+    "integration: requires the SampleModel and a loaded DLL",
+    "regression: pinned golden values (subset of integration)",
+    "simulation: runs an IWFM simulation; slower than inquiry-only tests",
+    "slow: requires C2VSimCG; skipped by default unless --runslow is passed",
+]
 
 [project.scripts]
 pywfm = "pywfm.cli:cli"

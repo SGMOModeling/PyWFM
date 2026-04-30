@@ -1,0 +1,160 @@
+#4.0
+C *** DO NOT DELETE ABOVE LINE ***
+C
+C*******************************************************************************
+C
+C                  INTEGRATED WATER FLOW MODEL (IWFM)
+C
+C*******************************************************************************
+C
+C              TILE DRAIN AND SUB_IRRIGATION PARAMETER DATA FILE
+C                         Tile Drain Component
+C                         *** Version 4.0 ***
+C
+C
+C             Project:  IWFM Public Release
+C                       California Department of Water Resources
+C                       September, 2025
+C             Filename: TileDrain.dat
+C
+C*******************************************************************************
+C                          File Description:
+C
+C   This data file contains tile drain and subsurface irrigation parameter values.
+C
+C*******************************************************************************
+C                  Tile Drain Data Specifications
+C
+C   NTD    ; Number of groundwater nodes with tile drains
+C   FACTH  ; Conversion factor for tile drain elevations
+C   FACTCDC; Conversion factor for tile drain conductances
+C            It is used to convert only the spatial component of the unit; 
+C             DO NOT include the conversion factor for time component of the unit.
+C             * e.g. Unit of conductance listed in this file = AC/MONTH
+C                    Consistent unit used in simulation      = SQ.FT/DAY 
+C                    Enter FACTQ (AC/MONTH -> SQ.FT/MONTH)   = 43560.0 
+C                     (conversion of MONTH -> DAY is performed automatically) 
+C   TUNITDR; Time unit of conductance.  This should be one of the units 
+C            recognized by HEC-DSS that are listed in the Main Control File.  
+C-------------------------------------------------------------------------------
+C       VALUE                   DESCRIPTION
+C-------------------------------------------------------------------------------
+        21                      / NTD
+        1.0                     / FACTH
+        1.0                     / FACTCDC       
+        1day                    / TUNITDR
+C-------------------------------------------------------------------------------
+C                     Tile Drain Parameters
+C
+C   The following lists the groundwater node number, elevation and conductance 
+C   for each tile drain. The destination type and destination ID that the tile  
+C   drain flows into is also listed.
+C
+C   IDDR   ; Tile drain ID
+C   NODEDR ; Groundwater node number corresponding to the tile drain
+C   ELEVDR ; Elevation of the drain; [L]
+C   CDCDR  ; Hydraulic conductance of the interface between the aquifer and 
+C             the drain; [L^2/T]
+C   TYPDST ; Destination type for drain flow
+C              0 = Drain flow goes outside the model domain
+C              1 = Drain flow goes to stream node DST (see below)
+C   DST   ;  Destination number for drain flow
+C              * Note: Enter any number if TYPDST is 0
+C
+C-------------------------------------------------------------------------------
+C   IDDR  NODEDR    ELEVDR     CDCDR    TYPDST    DST
+C-------------------------------------------------------------------------------
+     1      6        280.0     20000.0     1       20        
+     2      27       280.0     20000.0     1       20        
+     3      48       280.0     20000.0     1       20        
+     4      69       280.0     20000.0     1       20        
+     5      90       280.0     20000.0     1       20        
+     6      111      280.0     20000.0     1       20        
+     7      132      280.0     20000.0     1       20        
+     8      153      280.0     20000.0     1       20        
+     9      174      280.0     20000.0     1       20        
+    10      195      280.0     20000.0     1       20        
+    11      216      280.0     20000.0     1       20        
+    12      237      280.0     20000.0     1       20        
+    13      258      280.0     20000.0     1       20        
+    14      279      280.0     20000.0     1       20        
+    15      300      280.0     20000.0     1       20        
+    16      321      280.0     20000.0     1       20        
+    17      342      280.0     20000.0     1       20        
+    18      363      280.0     20000.0     1       20        
+    19      384      280.0     20000.0     1       20        
+    20      405      280.0     20000.0     1       20        
+    21      426      280.0     20000.0     1       20        
+C*******************************************************************************
+C                  Subsurface Irrigation Data Specifications
+C
+C   NSI      ;  Number of groundwater nodes with subsurface irrigation
+C   FACTHSI  ;  Conversion factor for subsurface irrigation elevations
+C   FACTCDCSI;  Conversion factor for subsurface irrigation conductances
+C               It is used to convert only the spatial component of the unit; 
+C               DO NOT include the conversion factor for time component of the unit.
+C               * e.g. Unit of conductance listed in this file = AC/MONTH
+C                      Consistent unit used in simulation      = SQ.FT/DAY 
+C                      Enter FACTQ (AC/MONTH -> SQ.FT/MONTH)   = 43560.0 
+C                       (conversion of MONTH -> DAY is performed automatically) 
+C   TUNITSI  ; Time unit of conductance.  This should be one of the units 
+C               recognized by HEC-DSS that are listed in the Main Control File.  
+C
+C-------------------------------------------------------------------------------
+C       VALUE                   DESCRIPTION
+C-------------------------------------------------------------------------------
+         0                       / NSI
+         1.0                     / FACTHSI
+         1.0                     / FACTCDCSI
+         1day                    / TUNITSI
+C-------------------------------------------------------------------------------
+C                     Subsurface Irrigation Parameters
+C
+C   The following lists the groundwater node number, elevation and conductance 
+C   for each subsurface irrigation. 
+C
+C   IDSI   ; Subsurface irrigation ID
+C   NODESI ; Groundwater node number corresponding to the subsurface irrigation
+C   ELEVSI ; Elevation of the subsurface irrigation; [L]
+C   CDCSI  ; Hydraulic conductance of the interface between the aquifer and 
+C             subsurface irrigation; [L^2/T]
+C
+C-------------------------------------------------------------------------------
+C   IDSI  NODESI    ELEVSI    CDCSI         
+C-------------------------------------------------------------------------------
+*
+*
+C*******************************************************************************
+C                      Hydrograph Print Control
+C
+C   The following lists the tile drain and subsurface irrigation IDs for which 
+C   a hydrograph printing is needed, as well as output control options.
+C
+C   NOUTTD  ;  Number of hydrographs to be printed
+C   FACTVLOU;  Factor to convert simulation unit of tile drain/subsurface irrigation
+C                flows into intented output unit 
+C   UNITVLOU;  Output unit of flows (max. 10 characters long)
+C   TDOUTFL ;  Filename for tile drain/subsurface irrigation hydrograph output
+C                (max. 1000 characters)
+C   ID      ;  Tile drain or subsurface irrigation ID for hydrograph printing
+C   IDTYP   ;  Type of hydrograph
+C                1 = Tile drain hydrograph
+C                2 = Subsurface irrigation hydrograph
+C   NAME    ;  Name of the hydrograph (max. 30 characters)
+C
+C-------------------------------------------------------------------------------
+C       VALUE                               DESCRIPTION
+C-------------------------------------------------------------------------------
+         6                                  / NOUTTD
+         2.295684e-5                        / FACTVLOU     (cu.ft. -> ac.ft.)
+         ac.ft.                             / UNITVLOU
+         ..\Results\TileDrainFlows.out      / TDOUTFL
+C-------------------------------------------------------------------------------
+C  ID    IDTYP   NAME    
+C-------------------------------------------------------------------------------
+    1     1      TDHyd_1
+    4     1      TDHyd_4
+    7     1      TDHyd_7
+   10     1      TDHyd_10
+   13     1      TDHyd_13
+   16     1      TDHyd_16

@@ -1,0 +1,91 @@
+C*******************************************************************************
+C
+C                  INTEGRATED WATER FLOW MODEL (IWFM)
+C
+C*******************************************************************************
+C
+C                  STREAM INFLOW DATA FILE
+C                     Stream Component
+C                    *** Version 4.0 ***
+C
+C
+C             Project:  IWFM Public Release
+C                       California Department of Water Resources
+C                       September, 2025
+C             Filename: StreamInflow.dat
+C
+C*******************************************************************************
+C                           File Description
+C
+C   This data file contains the inflows to the stream nodes that are modeled.
+C
+C*******************************************************************************
+C                       Stream Inflow Data Specifications
+C
+C   NCOLSTRM; Total number of stream inflows (or pathnames if DSS files are used)
+C   FACTSTRM; Conversion factor for stream inflow 
+C              It is used to convert only the spatial component of the unit; 
+C              DO NOT include the conversion factor for time component of the unit.
+C              * e.g. Unit of flow listed in this file           = AC-FT/MONTH
+C                     Consistent unit used in simulation         = CU.FT/DAY 
+C                     Enter FACTSTRM (AC-FT/MONTH -> CU.FT/MONTH)= 43560.0 
+C                      (conversion of MONTH -> DAY is performed automatically) 
+C   NSPSTRM ; Number of time steps to update the stream inflows
+C              * Enter any number if time-tracking option is on
+C   NFQSTRM ; Repetition frequency of the stream inflow data 
+C              * Enter 0 if full time series data is supplied
+C              * Enter any number if time-tracking option is on
+C   DSSFL   ; The name of the DSS file for data input (maximum 50 characters); 
+C              * Leave blank if DSS file is not used for data input
+C
+C-------------------------------------------------------------------------------
+C    VALUE                      DESCRIPTION
+C-------------------------------------------------------------------------------
+     1                          / NCOLSTRM
+     86400.0                    / FACTSTRM      (cfs -> cu.ft./day)
+     1                          / NSPSTRM
+     1                          / NFQSTRM
+                                / DSSFL
+C-------------------------------------------------------------------------------
+C                      Stream Inflow Location Information
+C
+C   List the inflow identification numbers and stream nodes where the inflow occurs.
+C
+C   ID  ;    Inflow identification number 
+C   IRST;    Stream node where inflow occurs
+C            * Enter 0 if the inflow listed in the corresponding column 
+C              will not be used
+C              
+C-------------------------------------------------------------------------------
+C   ID    IRST                        
+C-------------------------------------------------------------------------------
+     1      1
+C-------------------------------------------------------------------------------
+C                          Stream Inflow Data 
+C                         (READ FROM THIS FILE)
+C
+C   List the stream inflow data below, if it will not be read from a DSS
+C   file (i.e. DSSFL is left blank above).
+C
+C   ITST ;   Time
+C   ASTRM;   Stream inflow at the stream node specified above; [L^3/T] 
+C               
+C-------------------------------------------------------------------------------
+C   ITST             ASTRM(1)  ASTRM(2)  ASTRM(3) ...                
+C-------------------------------------------------------------------------------
+  09/30/2100_24:00    1000.0
+C-------------------------------------------------------------------------------
+C                    Pathnames for Stream Inflow Data
+C                         (READ FROM DSS FILE)
+C
+C   List the pathnames for the stream inflow data below, if it will be read 
+C   from a DSS file (i.e. DSSFL is specified above).
+C
+C   REC  ;  Time series record number
+C   PATH ;  Pathname for the time series record 
+C
+C----------------------------------------------------------------------------------------------------------- 
+C   REC       PATH
+C-----------------------------------------------------------------------------------------------------------
+*
+*
