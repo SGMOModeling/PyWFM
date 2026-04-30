@@ -33,6 +33,11 @@ def pytest_addoption(parser):
         "--runslow", action="store_true",
         help="run slow tests (e.g. C2VSimCG)",
     )
+    parser.addoption(
+        "--update-baselines", action="store_true",
+        help="capture regression values into the baseline JSON instead of "
+             "comparing — used to refresh tests/regression/data/*.json",
+    )
 
 
 def pytest_collection_modifyitems(config, items):
