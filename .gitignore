@@ -16,4 +16,5 @@ build/
 tests/data/sample_model/*/Results/
 tests/data/sample_model/*/Simulation/*.bin
 tests/data/sample_model/*/Simulation/*.log
-tests/data/sample_model/*/Simulation/PreprocessorMessages.out
+tests/data/sample_model/*/Simulation/*.out
+tests/data/sample_model/*/Simulation/fort.*

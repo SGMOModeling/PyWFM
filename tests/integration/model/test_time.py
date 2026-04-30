@@ -49,3 +49,18 @@ class TestTimeSpec:
         """
         current = sample_inquiry.get_current_date_and_time()
         assert _IWFM_DATE_RE.match(current), f"current date {current!r} not in IWFM format"
+
+    def test_simulation_interval_in_output_intervals(self, sample_inquiry):
+        """The simulation timestep must be one of the supported output intervals.
+
+        get_output_interval returns the list of intervals at which time-
+        series data can be retrieved (e.g. 1DAY, 1WEEK, 1MON, 1YEAR). The
+        simulation runs at the smallest of these — the time_specs
+        interval — so it must be present in the list.
+        """
+        _, sim_interval = sample_inquiry.get_time_specs()
+        output_intervals = sample_inquiry.get_output_interval()
+        assert sim_interval in output_intervals, (
+            f"simulation interval {sim_interval!r} not in supported output "
+            f"intervals {output_intervals!r}"
+        )
