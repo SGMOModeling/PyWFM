@@ -11578,7 +11578,7 @@ class IWFMModel(IWFMMiscellaneous):
             )
 
         # convert time_interval to ctypes
-        time_interval = ctypes.create_string_buffer(time_interval.encoding("utf-8"))
+        time_interval = ctypes.create_string_buffer(time_interval.encode("utf-8"))
 
         # get length of time interval
         len_time_interval = ctypes.c_int(ctypes.sizeof(time_interval))
