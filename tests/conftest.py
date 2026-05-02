@@ -239,6 +239,12 @@ def c2vsimcg_path():
     Set PYWFM_C2VSIMCG to override the default OneDrive path. Tests using
     this fixture should also be marked @pytest.mark.slow so they're
     skipped unless --runslow is passed.
+
+    Also skips if Results/ is missing or empty — C2VSimCG inquiry-mode
+    instantiation reads .hdf and .out files from Results/, which only
+    exist after a prior sim run. Users must run simulate_all once
+    locally before these tests will pass; the suite doesn't run
+    simulate_all itself because C2VSimCG simulations take hours.
     """
     env = os.environ.get(
         "PYWFM_C2VSIMCG",
@@ -247,14 +253,39 @@ def c2vsimcg_path():
     p = Path(env)
     if not (p / "Preprocessor").exists():
         pytest.skip(f"C2VSimCG not found at {p}; set PYWFM_C2VSIMCG")
+    results = p / "Results"
+    if not results.exists() or not any(results.glob("*.hdf")):
+        pytest.skip(
+            f"C2VSimCG Results/ at {results} is empty or missing — "
+            "run simulate_all locally first to populate it."
+        )
     return p
+
+
+def _find_main_in(directory, hints):
+    """Locate a model component's main entry .in file.
+
+    SampleModel uses ``*MAIN*.IN``; C2VSimCG/FG use names like
+    ``C2VSimCG.in`` or ``C2VSimCG_Preprocessor.in``. Try the SampleModel
+    convention first, then fall back to substring hints in *.in.
+    """
+    for pattern in ("*MAIN*.IN", "*MAIN*.in"):
+        for p in directory.glob(pattern):
+            return p
+    candidates = [
+        p for p in directory.glob("*.in")
+        if any(h.lower() in p.name.lower() for h in hints)
+    ]
+    if candidates:
+        return candidates[0]
+    raise FileNotFoundError(f"no main .in file found in {directory}")
 
 
 @pytest.fixture(scope="session")
 def c2vsimcg_inquiry(c2vsimcg_path):
     """Long-lived read-only IWFMModel against C2VSimCG."""
-    pp = next(c2vsimcg_path.glob("Preprocessor/*MAIN*.IN"))
-    sim = next(c2vsimcg_path.glob("Simulation/*MAIN*.IN"))
+    pp = _find_main_in(c2vsimcg_path / "Preprocessor", ["preproc"])
+    sim = _find_main_in(c2vsimcg_path / "Simulation", ["c2vsimcg", "sim"])
     cwd = os.getcwd()
     os.chdir(c2vsimcg_path / "Simulation")
     try:
