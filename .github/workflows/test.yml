@@ -1,0 +1,75 @@
+name: tests
+
+on:
+  push:
+    branches: [master, "0.2.x", "0.3.x"]
+    paths-ignore:
+      - "**/*.md"
+      - "docs/**"
+      - "LICENSE"
+  pull_request:
+    paths-ignore:
+      - "**/*.md"
+      - "docs/**"
+      - "LICENSE"
+
+jobs:
+  test:
+    name: ${{ matrix.iwfm_api_version }} / py${{ matrix.python-version }}
+    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        iwfm_api_version:
+          - 2015.0.1273
+          - 2015.0.1403
+          - 2015.1.1443
+          - 2024.2.1594
+          - 2025.0.1747
+        python-version: ["3.8"]
+
+    defaults:
+      run:
+        shell: bash -el {0}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: conda-incubator/setup-miniconda@v3
+        with:
+          python-version: ${{ matrix.python-version }}
+          channels: cadwr-sgmo,conda-forge
+          channel-priority: strict
+          auto-activate-base: false
+          activate-environment: pywfm-test
+
+      - name: Install IWFM DLL
+        run: conda install -y iwfmdll==${{ matrix.iwfm_api_version }}
+
+      - name: Install pywfm + test deps
+        run: pip install -e ".[test]"
+
+      # Cache the simulated Results/ across runs. simulate_all runs once per
+      # session via the _ensure_results fixture; cached output keeps wall time
+      # down on subsequent runs as long as inputs and DLL version match.
+      - name: Cache SampleModel Results
+        uses: actions/cache@v4
+        with:
+          path: |
+            tests/data/sample_model/v2015/Results
+            tests/data/sample_model/v2025/Results
+          key: results-${{ matrix.iwfm_api_version }}-${{ hashFiles('tests/data/sample_model/v2015/Preprocessor/**', 'tests/data/sample_model/v2015/Simulation/**', 'tests/data/sample_model/v2025/Preprocessor/**', 'tests/data/sample_model/v2025/Simulation/**') }}
+
+      # Default suite: unit + integration + regression. Skips slow (C2VSimCG,
+      # not vendored on CI) and simulation (kernel-state collisions with
+      # inquiry-mode tests force a separate invocation — see below).
+      - name: Run default suite
+        run: pytest tests/ -ra
+
+      # Simulation-mode tests run in a dedicated process. The IWFM kernel's
+      # simulation bookkeeping is a process-wide singleton that doesn't fully
+      # reset on kill(), so a second IWFMModel(is_for_inquiry=0) in the same
+      # process crashes the Fortran runtime. Splitting the invocation also
+      # ensures inquiry-mode tests above ran against an untouched fixture.
+      - name: Run simulation-mode tests
+        run: pytest --runsim tests/integration/model/test_simulation.py -ra
