@@ -47,7 +47,13 @@ jobs:
         run: conda install -y iwfmdll==${{ matrix.iwfm_api_version }}
 
       - name: Install pywfm + test deps
-        run: pip install -e ".[test]"
+        # Non-editable install: pywfm/__init__.py resolves the IWFM DLL
+        # via a relative path from its own location (../../../../Library/bin),
+        # which lands in <env>/Library/bin only when the package is in
+        # site-packages. An editable install leaves __init__.py under the
+        # source tree where that relative path resolves outside the env
+        # and the DLL lookup fails.
+        run: pip install ".[test]"
 
       # Cache the simulated Results/ across runs. simulate_all runs once per
       # session via the _ensure_results fixture; cached output keeps wall time
