@@ -87,6 +87,43 @@ def dll_has_switch():
     return hasattr(pywfm.IWFM_API, "IW_Model_Switch")
 
 
+def requires_api(*procedures):
+    """Skip the test if the loaded DLL doesn't export every named procedure.
+
+    The IWFM Fortran procedure surface evolves between minor releases and
+    branches don't track each other strictly — e.g. ``IW_Model_GetElementAreas``
+    is present in 2025.0.1747 and 2015.1.1273 but missing from 2024.2.1594
+    and 2015.0.1403, even though those builds straddle the others
+    chronologically. Tests that call a method whose underlying procedure
+    isn't exported get an ``AttributeError`` from the pywfm wrapper, which
+    pytest reports as a failure rather than a skip.
+
+    Apply this as a decorator on a test (or class) that depends on one or
+    more specific procedures, or pass it via ``pytest.param(..., marks=...)``
+    inside a ``parametrize`` to skip a single parametrization::
+
+        @requires_api("IW_Model_GetElementAreas")
+        class TestElementAreas: ...
+
+        @pytest.mark.parametrize("name", [
+            "get_node_ids",
+            pytest.param("get_element_areas",
+                         marks=requires_api("IW_Model_GetElementAreas")),
+        ])
+        def test_array_getter_repeats(...): ...
+
+    For parametrize lists driven by a spec dataclass (see
+    ``test_method_smoke.py``'s ``MethodSpec`` and
+    ``test_sample_model_baseline.py``'s ``RegressionSpec``), declare the
+    needed procedures on the spec and check them inside the test instead.
+    """
+    missing = [p for p in procedures if not hasattr(pywfm.IWFM_API, p)]
+    return pytest.mark.skipif(
+        bool(missing),
+        reason=f"loaded DLL doesn't export {missing}",
+    )
+
+
 @pytest.fixture(scope="session")
 def dll_version():
     """Returns the loaded DLL's IWFM core version string (e.g. '2025.0.1747')."""

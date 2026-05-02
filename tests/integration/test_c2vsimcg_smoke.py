@@ -20,6 +20,8 @@ import numpy as np
 import pandas as pd
 import pytest
 
+from tests.conftest import requires_api
+
 
 @pytest.mark.integration
 @pytest.mark.slow
@@ -72,6 +74,7 @@ class TestC2VSimCGArrays:
         assert len(x) == n and len(y) == n
         assert np.all(np.isfinite(x)) and np.all(np.isfinite(y))
 
+    @requires_api("IW_Model_GetElementAreas")
     def test_element_areas_positive(self, c2vsimcg_inquiry):
         areas = c2vsimcg_inquiry.get_element_areas()
         assert (areas > 0).all(), (

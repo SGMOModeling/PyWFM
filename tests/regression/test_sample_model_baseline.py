@@ -28,6 +28,8 @@ from typing import Any, Callable
 import numpy as np
 import pytest
 
+import pywfm
+
 BASELINE_DIR = Path(__file__).parent / "data"
 
 
@@ -48,6 +50,7 @@ class RegressionSpec:
     name: str
     extract: Callable[[Any], Any]
     tolerance: float = 0.0
+    requires_procedure: tuple = ()
 
 
 # Helper: convert ndarray scalar to Python scalar for JSON serialization
@@ -101,7 +104,8 @@ SAMPLE_SPECS: list[RegressionSpec] = [
 
     # --- Geometry sums (derived; should be exact within rounding) ---
     RegressionSpec("total_element_area",        lambda m: float(m.get_element_areas().sum()),
-                                                tolerance=1e-6),
+                                                tolerance=1e-6,
+                                                requires_procedure=("IW_Model_GetElementAreas",)),
 ]
 
 
@@ -159,6 +163,13 @@ def _baseline_state(dll_version, request):
 @pytest.mark.parametrize("spec", SAMPLE_SPECS, ids=lambda s: s.name)
 def test_value_matches_baseline(spec, sample_inquiry, _baseline_state):
     """For each RegressionSpec: extract value and compare to baseline."""
+    missing = [
+        p for p in spec.requires_procedure
+        if not hasattr(pywfm.IWFM_API, p)
+    ]
+    if missing:
+        pytest.skip(f"{spec.name}: DLL doesn't export {missing}")
+
     value = _to_py(spec.extract(sample_inquiry))
 
     if _baseline_state["update"]:

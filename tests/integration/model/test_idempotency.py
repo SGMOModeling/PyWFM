@@ -13,6 +13,8 @@ behave consistently across repeated invocations.
 import numpy as np
 import pytest
 
+from tests.conftest import requires_api
+
 
 @pytest.mark.integration
 class TestScalarIdempotency:
@@ -42,7 +44,10 @@ class TestArrayIdempotency:
         "get_node_ids",
         "get_element_ids",
         "get_subregion_ids",
-        "get_element_areas",
+        pytest.param(
+            "get_element_areas",
+            marks=requires_api("IW_Model_GetElementAreas"),
+        ),
     ])
     def test_array_getter_repeats(self, sample_inquiry, name):
         getter = getattr(sample_inquiry, name)

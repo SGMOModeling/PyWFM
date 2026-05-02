@@ -25,6 +25,8 @@ from typing import Any, Callable
 import numpy as np
 import pytest
 
+import pywfm
+
 BASELINE_DIR = Path(__file__).parent / "data"
 
 
@@ -37,6 +39,7 @@ class C2VRegressionSpec:
     name: str
     extract: Callable[[Any], Any]
     tolerance: float = 0.0
+    requires_procedure: tuple = ()
 
 
 def _to_py(v):
@@ -67,7 +70,8 @@ C2VSIM_SPECS: list[C2VRegressionSpec] = [
     C2VRegressionSpec("first_node_y",   lambda m: float(m.get_node_coordinates()[1][0]),
                                         tolerance=1e-6),
     C2VRegressionSpec("total_element_area", lambda m: float(m.get_element_areas().sum()),
-                                        tolerance=1.0),
+                                        tolerance=1.0,
+                                        requires_procedure=("IW_Model_GetElementAreas",)),
 ]
 
 
@@ -109,6 +113,13 @@ def _c2vsim_baseline_state(dll_version, request):
 @pytest.mark.parametrize("spec", C2VSIM_SPECS, ids=lambda s: s.name)
 def test_c2vsim_value_matches_baseline(spec, c2vsimcg_inquiry, _c2vsim_baseline_state):
     """For each C2VRegressionSpec: extract value and compare to baseline."""
+    missing = [
+        p for p in spec.requires_procedure
+        if not hasattr(pywfm.IWFM_API, p)
+    ]
+    if missing:
+        pytest.skip(f"{spec.name}: DLL doesn't export {missing}")
+
     value = _to_py(spec.extract(c2vsimcg_inquiry))
 
     if _c2vsim_baseline_state["update"]:

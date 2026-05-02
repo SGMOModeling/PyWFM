@@ -53,6 +53,7 @@ class MethodSpec:
     expected_type: Any = (int, np.integer)
     shape_check: Callable[..., bool] | None = None
     skip_if_no_switch: bool = False
+    requires_procedure: tuple[str, ...] = ()
     precondition: Callable[..., str | None] | None = None
     notes: str = ""
 
@@ -141,6 +142,7 @@ INQUIRY_SPECS: list[MethodSpec] = [
         "get_element_areas",
         expected_type=np.ndarray,
         shape_check=_ndarray_of_len("get_n_elements"),
+        requires_procedure=("IW_Model_GetElementAreas",),
     ),
     MethodSpec(
         "get_subregion_ids",
@@ -715,6 +717,13 @@ def test_method_returns_expected(spec, sample_inquiry, dll_has_switch):
     """For each MethodSpec: invoke the method and assert return type/shape."""
     if spec.skip_if_no_switch and not dll_has_switch:
         pytest.skip(f"{spec.name} requires IW_Model_Switch")
+
+    missing = [
+        p for p in spec.requires_procedure
+        if not hasattr(pywfm.IWFM_API, p)
+    ]
+    if missing:
+        pytest.skip(f"{spec.name}: DLL doesn't export {missing}")
 
     if spec.precondition is not None:
         reason = spec.precondition(sample_inquiry)

@@ -9,6 +9,8 @@ that should hold for any valid model.
 import numpy as np
 import pytest
 
+from tests.conftest import requires_api
+
 
 @pytest.mark.integration
 class TestNodeCoordinates:
@@ -26,6 +28,7 @@ class TestNodeCoordinates:
 
 
 @pytest.mark.integration
+@requires_api("IW_Model_GetElementAreas")
 class TestElementAreas:
     def test_positive_areas(self, sample_inquiry):
         """Every element area is strictly positive (no degenerate elements)."""
