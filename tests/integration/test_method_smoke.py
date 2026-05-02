@@ -52,6 +52,7 @@ class MethodSpec:
     kwargs: dict = field(default_factory=dict)
     expected_type: Any = (int, np.integer)
     shape_check: Callable[..., bool] | None = None
+    requires_procedure: tuple[str, ...] = ()
     precondition: Callable[..., str | None] | None = None
     notes: str = ""
 
@@ -140,6 +141,7 @@ INQUIRY_SPECS: list[MethodSpec] = [
         "get_element_areas",
         expected_type=np.ndarray,
         shape_check=_ndarray_of_len("get_n_elements"),
+        requires_procedure=("IW_Model_GetElementAreas",),
     ),
     MethodSpec(
         "get_subregion_ids",
@@ -701,6 +703,13 @@ DEFERRED: dict[str, list[str]] = {
 @pytest.mark.parametrize("spec", INQUIRY_SPECS, ids=lambda s: s.name)
 def test_method_returns_expected(spec, sample_inquiry):
     """For each MethodSpec: invoke the method and assert return type/shape."""
+    missing = [
+        p for p in spec.requires_procedure
+        if not hasattr(pywfm.IWFM_API, p)
+    ]
+    if missing:
+        pytest.skip(f"{spec.name}: DLL doesn't export {missing}")
+
     if spec.precondition is not None:
         reason = spec.precondition(sample_inquiry)
         if reason:

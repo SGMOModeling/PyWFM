@@ -9,6 +9,8 @@ ID array for the wrong domain, or an off-by-one in count reporting.
 import numpy as np
 import pytest
 
+from conftest import requires_api
+
 
 @pytest.mark.integration
 class TestNodeIntrospection:
@@ -31,6 +33,7 @@ class TestElementIntrospection:
         n = sample_inquiry.get_n_elements()
         assert len(sample_inquiry.get_element_ids()) == n
 
+    @requires_api("IW_Model_GetElementAreas")
     def test_element_areas_count_matches_n_elements(self, sample_inquiry):
         n = sample_inquiry.get_n_elements()
         assert len(sample_inquiry.get_element_areas()) == n

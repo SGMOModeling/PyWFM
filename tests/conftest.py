@@ -86,6 +86,35 @@ def dll_version():
     return v.get("IWFM Core") or v["IWFM"]
 
 
+def requires_api(*procedures):
+    """Skip the test if the loaded DLL doesn't export every named procedure.
+
+    The IWFM Fortran procedure surface evolves between minor releases and
+    branches don't track each other strictly. Tests that call a method
+    whose underlying procedure isn't exported get an ``AttributeError``
+    from the pywfm wrapper, which pytest reports as a failure rather than
+    a skip — this helper turns those into clean skips.
+
+    Apply as a decorator on a test or class, or pass via
+    ``pytest.param(..., marks=...)`` inside a ``parametrize`` to skip a
+    single parametrization. For spec-dataclass-driven parametrize blocks
+    (test_method_smoke.py's ``MethodSpec``, the regression baselines'
+    ``RegressionSpec`` / ``C2VRegressionSpec``), declare the needed
+    procedures on the spec and check them inside the test instead.
+
+    On 0.3.x this is most useful for tests that exercise procedures added
+    between the 393e02e+ kernel rewrite and whatever DLL build the user
+    has installed — once upstream ships a stable build, the surface is
+    fixed and skips become rare, but until then this keeps the suite
+    useful against in-flight kernel snapshots.
+    """
+    missing = [p for p in procedures if not hasattr(pywfm.IWFM_API, p)]
+    return pytest.mark.skipif(
+        bool(missing),
+        reason=f"loaded DLL doesn't export {missing}",
+    )
+
+
 @pytest.fixture(scope="session")
 def sample_dir():
     """The vendored 2025-vintage SampleModel.

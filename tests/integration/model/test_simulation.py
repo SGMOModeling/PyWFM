@@ -116,7 +116,20 @@ class TestSimulateForAnInterval:
     by a coarser interval (e.g. weekly when the simulation is daily)."""
 
     def test_simulate_for_an_interval_weekly(self, sample_simulation):
-        """Simulate for 1WEEK on a 1DAY-step model — should advance ~7 days."""
+        """Simulate for 1WEEK on a 1DAY-step model — should advance ~7 days.
+
+        Advances one timestep first so ``get_current_date_and_time()`` is
+        guaranteed populated. Some IWFM kernel builds (notably 2015.0.1403
+        on 0.2.x) return an empty string from this getter when called
+        pre-simulation; later builds return BDT. Calling
+        simulate_for_one_timestep first keeps the test portable across
+        DLL builds while still exercising the same interval-advance
+        behavior.
+        """
+        sample_simulation.read_timeseries_data()
+        sample_simulation.simulate_for_one_timestep()
+        sample_simulation.advance_state()
+        sample_simulation.advance_time()
         sample_simulation.read_timeseries_data()
         before = _parse_iwfm_date(sample_simulation.get_current_date_and_time())
         sample_simulation.simulate_for_an_interval("1WEEK")
