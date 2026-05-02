@@ -669,11 +669,15 @@ DEFERRED: dict[str, list[str]] = {
         "order_boundary_nodes",
     ],
 
-    # Methods that query simulation state during a run — only valid in
-    # is_for_inquiry=0 mode at a specific timestep. Tested via the
-    # function-scoped sample_simulation fixture (phase 5), not the
-    # session-scoped inquiry fixture.
-    "simulation_state": [
+    # The IWFM kernel raises "Model data can be queried only if the model
+    # is instantiated for inquiry!" against these methods even on
+    # is_for_inquiry=1 models, while sibling getters (get_gwheads_all,
+    # get_subsidence_all) work fine in the same fixture. The error message
+    # is self-contradictory — likely a kernel-side state-check bug
+    # specific to the IW_Model_GetGWHeads_ForALayer / GetDepthToWater
+    # procedures. Filed as a downstream issue; tests skip until the kernel
+    # is fixed or pywfm grows a workaround.
+    "kernel_limitation": [
         "get_depth_to_water",
         "get_gwheads_foralayer",
     ],
