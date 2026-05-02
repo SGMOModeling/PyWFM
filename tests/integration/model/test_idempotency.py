@@ -13,7 +13,7 @@ behave consistently across repeated invocations.
 import numpy as np
 import pytest
 
-from tests.conftest import requires_api
+from conftest import requires_api
 
 
 @pytest.mark.integration

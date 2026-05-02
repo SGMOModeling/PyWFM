@@ -9,7 +9,7 @@ ID array for the wrong domain, or an off-by-one in count reporting.
 import numpy as np
 import pytest
 
-from tests.conftest import requires_api
+from conftest import requires_api
 
 
 @pytest.mark.integration

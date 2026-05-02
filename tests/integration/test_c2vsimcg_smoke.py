@@ -20,7 +20,7 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from tests.conftest import requires_api
+from conftest import requires_api
 
 
 @pytest.mark.integration
