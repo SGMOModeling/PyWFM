@@ -1,0 +1,72 @@
+C*******************************************************************************
+C
+C                  INTEGRATED WATER FLOW MODEL (IWFM)
+C
+C*******************************************************************************
+C
+C                    RE-USE FRACTIONS DATA FILE
+C                       Root Zone Component
+C                       *** Version 4.12 ***
+C
+C
+C             Project:  IWFM Version 2015 Release
+C                       California Department of Water Resources
+C                       July, 2022
+C             Filename: ReuseFrac.dat
+C
+C*******************************************************************************
+C                           File Description
+C
+C   This data file contains a set of re-use data given as fractions of irrigation
+C   water.  These values are correlated to individual crops through the Root Zone 
+C   Parameter file.
+C
+C*******************************************************************************
+C               Re-Use Fractions Data Specifications
+C
+C   NCOLRUF ; Number of re-use fractions data columns
+C   NSPRUF  ; Number of time steps to update the re-use fractions
+C              * Enter any number if time-tracking option is on
+C   NFQRUF  ; Repetition frequency of the re-use fractions data 
+C              * Enter 0 if full time series data is supplied
+C              * Enter any number if time-tracking option is on
+C   DSSFL   ; The name of the DSS file for data input 
+C              * Leave blank if DSS file is not used for data input
+C
+C-------------------------------------------------------------------------------
+C         VALUE                                      DESCRIPTION
+C-------------------------------------------------------------------------------
+          2                                          / NCOLRUF
+          1                                          / NSPRUF  
+          0                                          / NFQRUF
+                                                     / DSSFL
+C----------------------------------------------------------------------------------------------
+C                              Re-Use Fractions 
+C                            (READ FROM THIS FILE)
+C
+C   List the re-use fractions data below, if it will not be read from
+C   a DSS file (i.e. DSSFL is left blank above).
+C
+C   TIME ;  Time
+C   RUF  ;  Re-use as a fraction of applied water; [dimensionless]
+C
+C----------------------------------------------------------------------------------------------
+C  TIME                 RUF[1]  RUF[2]  RUF[3] ... RUF[NCOLRUF] 
+C----------------------------------------------------------------------------------------------
+C                       AgReuse    UrbReuse
+   09/30/2500_24:00     0.06       0.0
+C-------------------------------------------------------------------------------
+C                       Pathnames for Re-Use Fractions Data
+C                             (READ FROM DSS FILE)
+C
+C   List the pathnames for re-use fractions data below, if it 
+C   will be read from a DSS file (i.e. DSSFL is specified above).
+C
+C   REC  ;  Time series record number
+C   PATH ;  Pathname for the time series record 
+C
+C----------------------------------------------------------------------------------------------------------- 
+C   REC     PATH
+C-----------------------------------------------------------------------------------------------------------
+*
+*

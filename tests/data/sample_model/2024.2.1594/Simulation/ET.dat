@@ -1,0 +1,87 @@
+C*******************************************************************************
+C
+C                  INTEGRATED WATER FLOW MODEL (IWFM)
+C
+C*******************************************************************************
+C
+C                       EVAPOTRANSPIRATION DATA FILE
+C               Precipitation and Evapotranspiration Component
+C                           *** Version 4.0 ***
+C
+C
+C             Project:  IWFM Public Release
+C                       California Department of Water Resources
+C                       October, 2024
+C             Filename: ET.dat
+C
+C*******************************************************************************
+C                         File Description:
+C
+C   This data file contains sets of evapotranspiration values that are used in
+C   root zone, lake and small watershed components of Simulation.
+C
+C*******************************************************************************
+C                     Evapotranspiration Data Specifications
+C
+C   NCOLET;  Number of ET columns (or pathnames if DSS files are used)
+C   FACTET:  Conversion factor for evapotranspiration rate  
+C             It is used to convert only the spatial component of the unit; 
+C             DO NOT include the conversion factor for time component of the unit.
+C             * e.g. Unit of ET rate listed in this file       = INCHES/MONTH
+C                    Consistent unit used in simulation        = FEET/DAY 
+C                    Enter FACTET (INCHES/MONTH -> FEET/MONTH) = 8.33333E-02 
+C                     (conversion of MONTH -> DAY is performed automatically) 
+C   NSPET ;  Number of time steps to update the ET data
+C             * Enter any number if time-tracking option is on
+C   NFQET ;  Repetition frequency of the ET data 
+C             * Enter 0 if full time series data is supplied
+C             * Enter any number if time-tracking option is on
+C   DSSFL ;  The name of the DSS file for data input (maximum 50 characters); 
+C             * Leave blank if DSS file is not used for data input
+C
+C-------------------------------------------------------------------------------
+C         VALUE                                      DESCRIPTION
+C-------------------------------------------------------------------------------
+          7                                          / NCOLET
+          0.083333                                   / FACTET  (in/month -> ft/month)     
+          1                                          / NSPET
+          0                                          / NFQET  
+                                                     / DSSFL
+C-------------------------------------------------------------------------------
+C                             Evapotranspiration Data 
+C                              (READ FROM THIS FILE)
+C
+C   ITEV ;   Time
+C   AEVAP;   Evapotranspiration rate; [L/T]
+C              
+C-------------------------------------------------------------------------------
+C ITEV  AEVAP[1]  AEVAP[2]  AEVAP[3] ...  AEVAP[NCOLET]
+C-------------------------------------------------------------------------------
+C                    Tomatoes  Alfalfa     Rice    Urban    Native   SmallWatershed      Lake
+  10/31/4000_24:00     3.4       3.5       2.2      3.4       3.4        3.4             3.7
+  11/30/4000_24:00     1.6       1.6       1.6      1.6       1.6        1.6             1.8
+  12/31/4000_24:00     1.0       1.0       1.0      0.5       1.0        1.2             1.2
+  01/31/4000_24:00     1.0       1.0       1.0      0.5       1.0        1.1             1.1
+  02/29/4000_24:00     1.8       1.8       1.8      1.8       1.8        1.8             1.8
+  03/31/4000_24:00     3.0       3.0       3.0      3.0       3.0        2.8             2.8
+  04/30/4000_24:00     4.5       4.1       8.0      4.5       4.5        3.9             3.9
+  05/31/4000_24:00     5.9       5.4       9.1      5.9       5.9        5.1             5.1
+  06/30/4000_24:00     7.3       6.8      10.4      7.3       7.3        7.2             7.2
+  07/31/4000_24:00     7.9       7.7       9.7      7.9       7.9        7.5             7.5
+  08/31/4000_24:00     6.6       6.8       7.0      6.6       6.6        6.4             6.4
+  09/30/4000_24:00     5.2       5.4       1.9      5.2       5.2        4.8             4.8
+C-------------------------------------------------------------------------------
+C                       Pathnames for Evapotranspiration Data 
+C                              (READ FROM DSS FILE)
+C
+C   List the pathnames for evapotranspiration  data below, if it will 
+C   be read from a DSS file (i.e. DSSFL is specified above).
+C
+C   REC  ;  Time series record number
+C   PATH ;  Pathname for the time series record 
+C
+C----------------------------------------------------------------------------------------------------------- 
+C   REC       PATH
+C-----------------------------------------------------------------------------------------------------------
+*
+*

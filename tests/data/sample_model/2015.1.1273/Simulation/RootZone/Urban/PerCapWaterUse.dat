@@ -1,0 +1,89 @@
+C*******************************************************************************
+C
+C                  INTEGRATED WATER FLOW MODEL (IWFM)
+C
+C*******************************************************************************
+C       
+C                  PER CAPITA WATER USE DATA FILE       
+C                       Root Zone Component
+C                       *** Version 4.01 ***
+C
+C
+C             Project:  IWFM Version 2015 Release
+C                       California Department of Water Resources
+C                       September, 2021
+C             Filename: PerCapWaterUse.dat
+C
+C*******************************************************************************
+C                              File Description
+C
+C   This data file contains a set of per capita water use data on a time-series 
+C   basis.  Water use includes both indoors (M&I) and outdoors water.
+C    
+C*******************************************************************************
+C                      Per Capita Water Use Data Specifications
+C
+C   NCOLWU ;  Number of water use data columns
+C   FACTWU ;  Conversion factor for the water use data 
+C               It is used to convert only the spatial component of the unit; 
+C               DO NOT include the conversion factor for time component of the unit.
+C               * e.g. Unit of flow listed in this file           = AC-FT/MONTH
+C                      Consistent unit used in simulation         = CU.FT/DAY 
+C                      Enter FACTDAGF (AC-FT/MONTH -> CU.FT/MONTH)= 43560.0 
+C                     (conversion of MONTH -> DAY is performed automatically) 
+C   NSPWU  ;  Number of time steps to update the water use data
+C              * Enter any number if time-tracking option is on
+C   NFQWU  ;  Repetition frequency of the water use data 
+C              * Enter 0 if full time series data is supplied
+C              * Enter any number if time-tracking option is on
+C   DSSFL  ;  The name of the DSS file for data input (maximum 50 characters); 
+C              * Leave blank if DSS file is not used for data input
+C
+C-------------------------------------------------------------------------------
+C         VALUE                                      DESCRIPTION
+C-------------------------------------------------------------------------------
+          1                                          / NCOLWU
+          43560000.0                                 / FACTWU    (taf/person -> cu.ft./person)
+          1                                          / NSPWU
+          0                                          / NFQWU
+                                                     / DSSFL
+C-------------------------------------------------------------------------------
+C                       Per Capita Water Use Data
+C                         (READ FROM THIS FILE)
+C
+C   List the per capita water use data below, if it will not be read from a
+C   DSS file (i.e. DSSFL is left blank above).
+C
+C   ITWU;   Time                                                                                                                                                        
+C   WU  ;   Per capita water use; [L^3/T/PERSON]                                                                                                                                                                        
+C                                                                                                                                                                       
+C-------------------------------------------------------------------------------
+C ITWU              WU(1)    WU(2)  WU(3) ...                                                                                                                                                                   
+C-------------------------------------------------------------------------------
+  01/31/4000_24:00  0.0003
+  02/29/4000_24:00  0.0003
+  03/31/4000_24:00  0.0003
+  04/30/4000_24:00  0.0003
+  05/31/4000_24:00  0.0003
+  06/30/4000_24:00  0.0003
+  07/31/4000_24:00  0.0004
+  08/31/4000_24:00  0.0004
+  09/30/4000_24:00  0.0004
+  10/31/4000_24:00  0.0004
+  11/30/4000_24:00  0.0004
+  12/31/4000_24:00  0.0004
+C-------------------------------------------------------------------------------
+C                   Pathnames for Per Capita Water Use Data
+C                           (READ FROM DSS FILE)
+C
+C   List the pathnames for the per capita water use data below, if it will be read 
+C   from a DSS file (i.e. DSSFL is specified above).
+C
+C   REC  ;  Time series record number
+C   PATH ;  Pathname for the time series record 
+C
+C----------------------------------------------------------------------------------------------------------- 
+C   REC       PATH
+C-----------------------------------------------------------------------------------------------------------
+*
+*

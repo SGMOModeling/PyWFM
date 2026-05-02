@@ -1,0 +1,78 @@
+C*******************************************************************************
+C
+C                  INTEGRATED WATER FLOW MODEL (IWFM)
+C
+C*******************************************************************************
+C
+C                            MAIN INPUT FILE
+C                        for IWFM Pre-Processing
+C                             
+C
+C             Project:  IWFM Public Release
+C                       California Department of Water Resources
+C                       October, 2024
+C             Filename: PreProcessor_MAIN.IN
+C
+C*****************************************************************************
+C                     Titles Printed in the Output
+C
+C   *A Maximum of 3 title lines can be printed. 
+C   *Do not use '*' , 'c' or 'C' in the first column.
+C
+C                          **********************
+                                  IWFM
+                              Public Release
+                                   DWR
+C                          **********************
+C*****************************************************************************
+C                            File Description
+C
+C  *Listed below are all input and output file names used when running the
+C   pre-processor for IWFM simulation.  
+C
+C  *Each file name has a maximum length of 500 characters
+C
+C  *If a file does not exist for a project, leave the filename blank 
+C   For example, if lakes are not modeled in the project, the file name and
+C   description columns for lake configuration file will appear as:
+C
+C   FILE NAME                                      DESCRIPTION
+C                                                  / 6: LAKE DATA FILE
+C-----------------------------------------------------------------------------
+C   FILE NAME                                      DESCRIPTION
+C-----------------------------------------------------------------------------
+    ..\Simulation\PreProcessor.bin                 / 1: BINARY OUTPUT FOR SIMULATION (OUTPUT, REQUIRED)
+    Element.dat                                    / 2: ELEMENT CONFIGURATION FILE (INPUT, REQUIRED)
+    NodeXY.dat                                     / 3: NODE X-Y COORDINATE FILE (INPUT, REQUIRED))
+    Strata.dat                                     / 4: STRATIGRAPHIC DATA FILE (INPUT, REQUIRED))
+    Stream.dat                                     / 5: STREAM GEOMETRIC DATA FILE (INPUT, OPTIONAL)
+    Lake.dat                                       / 6: LAKE DATA FILE (INPUT, OPTIONAL)
+C******************************************************************************
+C                    Pre-Processor Output Specifications
+C
+C    KOUT; Enter 1 - Print geometric and stratigraphic information
+C          Enter 0 - Otherwise
+C
+C    KDEB; Enter 2 - Print messages on the screen during program execution
+C          Enter 1 - Print non-zero Finite Element Stiffness Matrix Components
+C          Enter 0 - Otherwise
+C-----------------------------------------------------------------------------
+C  VALUE                        DESCRIPTION
+C-----------------------------------------------------------------------------
+     1                          /KOUT
+     2                          /KDEB
+C*****************************************************************************
+C                  Unit Specifications of Pre-Processor Output
+C
+C    FACTLTOU; Factor to convert simulation unit of length to specified output unit of length
+C    UNITLTOU; The output unit of length (maximum of 10 characters)
+C    FACTAROU; Factor to convert simulation unit of area to specified output unit of area
+C    UNITAROU; The output unit of area (maximum of 10 characters)
+C
+C-----------------------------------------------------------------------------
+C   VALUE                       DESCRIPTION
+C-----------------------------------------------------------------------------
+    1.0                         /FACTLTOU    (ft -> ft)
+    FEET                        /UNITLTOU
+    0.000022957                 /FACTAROU    (sq.ft -> ac.)
+    ACRES                       /UNITAROU

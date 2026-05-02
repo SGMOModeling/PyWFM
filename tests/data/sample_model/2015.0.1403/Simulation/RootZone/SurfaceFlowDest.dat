@@ -1,0 +1,68 @@
+C*******************************************************************************
+C
+C                  INTEGRATED WATER FLOW MODEL (IWFM)
+C
+C*******************************************************************************
+C       
+C                  URBAN SURFACE FLOW DESTINATION DATA FILE
+C                            Root Zone Component
+C                           *** Version 4.12 ***
+C
+C
+C             Project:  IWFM Version 2015 Release
+C                       California Department of Water Resources
+C                       July, 2022
+C             Filename: SurfaceFlowDest.dat 
+C
+C*******************************************************************************
+C                              File Description
+C
+C   This data file contains a set of data pairs to represent the destinations 
+C   for surface flows (return flow, rainfall runoff and pond drainage from 
+C   ponded crops). 
+C   
+C*******************************************************************************
+C                       Surface Flow Destinations
+C   
+C
+C   NDSTN  ; Number of destination data columns
+C   NSPDSTN; Number of time steps to update the flow destination data 
+C             * Enter any number if time-tracking option is on
+C   NFQDSTN; Repetition frequency of the flow destination data 
+C             * Enter 0 if full time series data is supplied
+C             * Enter any number if time-tracking option is on
+C
+C------------------------------------------------------------------------------
+C         VALUE                                      DESCRIPTION
+C------------------------------------------------------------------------------
+          2                                          / NDSTN
+          1                                          / NSPDSTN
+          0                                          / NFQDSTN
+C------------------------------------------------------------------------------
+C                      Surface Flow Destination Data
+C                         (READ FROM THIS FILE)
+C
+C   List NDSTN pairs of integer numbers to describe surface flow 
+C   destinations in the form of (T,D), where T represents the destination  
+C   type and D represents the destination ID number. 
+C
+C   ITDSTN;  Time
+C   DSTN  ;  Destination data in (T,D) format
+C             * For T, enter:
+C                0 = Surface flow goes outside of model area
+C                1 =   "       "    "  to a stream node
+C                3 =   "       "    "   " a lake
+C                5 =   "       "    "   " groundwater at an element
+C             * For D:
+C                If T = 0, enter any number
+C                If T = 1, enter destination stream node ID
+C                If T = 3, enter destination lake ID
+C                If T = 5, enter -1 if surface flow will contribute 
+C                          to groundwater at the same element; otherwise 
+C                          enter the destination element ID
+C
+C------------------------------------------------------------------------------
+C   ITDSTN           DSTN[1]  DSTN[2]  DSTN[3] ...  DSTN[NDSTN]
+C------------------------------------------------------------------------------
+   12/31/2500_24:00  (1,18)  (1,6)
+

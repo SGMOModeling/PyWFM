@@ -1,0 +1,98 @@
+#4.0
+C***  DO NOT DELETE ABOVE LINE ***
+C
+C*******************************************************************************
+C
+C                  INTEGRATED WATER FLOW MODEL (IWFM)
+C
+C*******************************************************************************
+C
+C                       LAKE PARAMETERS DATA FILE
+C                           Lake Component
+C                         *** Version 4.0 ***
+C
+C
+C             Project:  IWFM Public Release
+C                       California Department of Water Resources
+C                       October, 2024
+C             Filename: Lake_MAIN.dat
+C
+C*******************************************************************************
+C                          File Description
+C
+C   This data file contains the parameters and data file names for the simulation
+C   of lakes.
+C
+C*******************************************************************************
+C                          Lake Data File Names
+C
+C   MXLKELVFL;  File name that lists the maximum lake elevations (max. 1000 characters)
+C   LKBUDFL  ;  HDF5 output file for lake budget (max. 1000 characters)
+C                * Leave blank if this output is not required
+C   FNLKELVFL;  Output file for end-of-simulation lake elevations (max. 1000 characters)
+C                 * Leave blank if this output is not required
+C
+C----------------------------------------------------------------------------------------
+C         VALUE                                      DESCRIPTION
+C----------------------------------------------------------------------------------------
+          Lake\MaxLakeElev.dat                       / MXLKELVFL 
+          ..\Results\LakeBud.hdf                     / LKBUDFL
+          ..\Results\FinalLakeElev.out               / FNLKELVFL
+C*******************************************************************************
+C                           Lake Parameters
+C
+C     The parameters required to model lakes are listed below.
+C
+C   FACTK  ;   Conversion factor for lake bed hydraulic conductivity
+C              It is used to convert only the spatial component of the unit; 
+C              DO NOT include the conversion factor for time component of the unit.
+C              * e.g. Unit of hydraulic conductivity listed in this file = IN/DAY
+C                     Consistent unit used in simulation                 = FT/MONTH 
+C                     Enter FACT (IN/MONTH -> FT/MONTH)                  = 8.33333E-02 
+C                      (conversion of DAY -> MONTH is performed automatically) 
+C   TUNITK ;   Time unit of hydraulic conductivity.  This should be one of the units 
+C              recognized by HEC-DSS that are listed in the Main Control File.  
+C   FACTL  ;   Conversion factor for thickness of lake bed   
+C   IL     ;   Lake number
+C   CLAKE  ;   Hydraulic conductivity of the lake bed; [L/T]
+C   DLAKE  ;   Thickness of the lake bed; [L]
+C   ICHLMAX;   Column number in MXLKELVFL file that gives maximum lake elevation
+C   ICETLK ;   Evapotranspiration - this number corresponds to the appropriate data 
+C               column in the ET data file listed in the Main Control Data file.
+C   ICPCPLK;   Precipitation - this number corresponds to the appropriate data column
+C               in the Precipitation data file listed in the Main Control Data file.
+C   NAMELK ;   Name of the lake (max. 1000 characters)
+C
+C-------------------------------------------------------------------------------
+C   VALUE                 DESCRIPTION
+C-------------------------------------------------------------------------------
+    1.0                   / FACTK  
+    1day                  / TUNITK
+    1.0                   / FACTL
+C-------------------------------------------------------------------------------
+C   IL       CLAKE      DLAKE      ICHLMAX    ICETLK   ICPCPLK   NAMELK
+C-------------------------------------------------------------------------------
+    1         2.0      1.0          1          7        2       Lake1
+C*******************************************************************************
+C                           Initial Lake Elevations
+C
+C     Initial lake surface elevations are listed below.
+C
+C   FACT  ;  Conversion factor for initial lake elevations 
+C   ILAKE ;  Lake ID number
+C   HLAKE ;  Initial lake elevations; [L] 
+C
+C------------------------------------------------------------------------------- 
+C   VALUE                       DESCRIPTION 
+C------------------------------------------------------------------------------- 
+     1.0                        / FACT
+C------------------------------------------------------------------------------- 
+C    ILAKE     HLAKE 
+C------------------------------------------------------------------------------- 
+       1       280.0
+
+
+
+
+
+

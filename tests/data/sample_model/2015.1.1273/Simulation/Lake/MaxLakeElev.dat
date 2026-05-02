@@ -1,0 +1,74 @@
+C*******************************************************************************
+C
+C                  INTEGRATED WATER FLOW MODEL (IWFM)
+C
+C*******************************************************************************
+C
+C                  MAXIMUM LAKE ELEVATION DATA FILE
+C                          Lake Component
+C                        *** Version 4.0 ***
+C
+C
+C             Project:  IWFM Version 2015 Release
+C                       California Department of Water Resources
+C                       September, 2021
+C             Filename: MaxLakeElev.dat 
+C
+C*******************************************************************************
+C                           File Description
+C
+C   This data file contains the time series data for the maximum lake elevations 
+C   at the modeled lakes.
+C
+C*******************************************************************************
+C                       Maximum Lake Elevation Data Specifications
+C
+C   NCOLHLMX; Total number of time series data columns (or pathanmes if DSS files 
+C              are used)for maximum lake elevations
+C   FACTHLMX; Conversion factor for maximum lake elevations 
+C   NSPHLMX ; Number of time steps to update the maximum lake elevations
+C              * Enter any number if time-tracking option is on
+C   NFQHLMX ; Repetition frequency of the maximum lake elevation data 
+C              * Enter 0 if full time series data is supplied
+C              * Enter any number if time-tracking option is on
+C   DSSFL  ;  The name of the DSS file for data input (maximum 50 characters); 
+C              * Leave blank if DSS file is not used for data input
+C
+C-------------------------------------------------------------------------------
+C     VALUE                     DESCRIPTION
+C-------------------------------------------------------------------------------
+      1                         / NCOLHLMX
+      1.0                       / FACTHLMX      
+      1                         / NSPHLMX
+      1                         / NFQHLMX
+                                / DSSFL
+C-------------------------------------------------------------------------------
+C                       Maximum Lake Elevations Data
+C                          (READ FROM THIS FILE)
+C
+C   List the maximum lake elevations data below, if it will not be read from
+C   a DSS file (i.e. DSSFL is left blank above).
+C
+C   ITHLMX ;   Time
+C   HLMAX  ;   Maximum lake elevation; [L] 
+C
+C-------------------------------------------------------------------------------
+C   ITHLMX          HLMAX(1)  HLMAX(2)  HLMAX(3) ...                
+C-------------------------------------------------------------------------------
+09/30/2100_24:00    285.0
+*
+C-------------------------------------------------------------------------------
+C                      Pathnames for Maximum Lake Elevations Data
+C                               (READ FROM DSS FILE)
+C
+C   List the pathnames for maximum lake elevations data below, if it will be read
+C   from a DSS file (i.e. DSSFL is specified above).
+C
+C   REC  ;  Time series record number
+C   PATH ;  Pathname for the time series record 
+C
+C----------------------------------------------------------------------------------------------------------- 
+C   REC       PATH
+C-----------------------------------------------------------------------------------------------------------
+*
+*

@@ -1,0 +1,94 @@
+C*******************************************************************************
+C
+C                  INTEGRATED WATER FLOW MODEL (IWFM)
+C
+C*******************************************************************************
+C
+C                   TIME SERIES BOUNDARY CONDITION DATA
+C                        Groundwater Component
+C                         *** Version 4.0 ***
+C
+C
+C             Project:  IWFM Public Release
+C                       California Department of Water Resources
+C                       October, 2024
+C             Filename: BoundTSD.dat
+C
+C*******************************************************************************
+C                          File Description
+C
+C   This data file contains the time series data for the specified flow, specified  
+C   head, general head and/or constrained general head boundary conditions. The file  
+C   provides time series data for the groundwater nodes specified in Boundary Conditions  
+C   Data File.
+C
+C*******************************************************************************
+C                    Time Series Boundary Condition Specifications
+C
+C   The following lists the time series values for the groundwater nodes 
+C   specified in Boundary Conditions Data File. 
+C
+C   NBTSD  ; Number of columns (or pathnames if DSS files are used) 
+C   FACTHTS; Conversion factor for head values 
+C   FACTQTS; Conversion factor for flow values 
+C             It is used to convert only the spatial component of the unit; 
+C             DO NOT include the conversion factor for time component of the unit.
+C             * e.g. Unit of flow listed in this file          = AC-FT/MONTH
+C                    Consistent unit used in simulation        = CU.FT/DAY 
+C                    Enter FACTQTS (AC-FT/MONTH -> CU.FT/MONTH)= 43560.0 
+C                     (conversion of MONTH -> DAY is performed automatically) 
+C   NSPHTS;  Number of time steps to update the time series boundary condition data
+C             * Enter any number if time-tracking option is on
+C   NFQHTS;  Repetition frequency of the time series boundary condition data 
+C             * Enter 0 if full time series data is supplied
+C             * Enter any number if time-tracking option is on
+C   DSSFL ;  The name of the DSS file for data input (maximum 50 characters); 
+C             * Leave blank if DSS file is not used for data input
+C
+C-------------------------------------------------------------------------------
+C    VALUE                      DESCRIPTION
+C-------------------------------------------------------------------------------
+      1                         / NBTSD   
+      1.0                       / FACTHTS
+      1.0                       / FACTQTS
+      1                         / NSPHTS  
+      0                         / NFQHTS  
+                                / DSSFL
+C-------------------------------------------------------------------------------
+C                    Time Series Boundary Condition Data
+C                         (READ FROM THIS FILE)
+C
+C   List the time series boundary condition data below, if it will not be read 
+C   from a DSS file (i.e. DSSFL is left blank above).
+C
+C   ITHTS;  Time
+C   HQTS ;  Time series boundary values; [L] or [L^3/T] 
+C
+C----------------------------------------------------------------------------------------------------------- 
+C   ITHTS              HQTS(1)  HQTS(2)  HQTS(3) ...
+C-----------------------------------------------------------------------------------------------------------
+    09/30/1991_24:00   310.0
+    09/30/1992_24:00   310.0
+    09/30/1993_24:00   310.0
+    09/30/1994_24:00   310.0
+    09/30/1995_24:00   310.0
+    09/30/1996_24:00   350.0
+    09/30/1997_24:00   350.0
+    09/30/1998_24:00   350.0
+    09/30/1999_24:00   350.0
+    09/30/2000_24:00   350.0
+C-------------------------------------------------------------------------------
+C                    Pathnames for Time Series Boundary Condition Data
+C                                (READ FROM DSS FILE)
+C
+C   List the pathnames for the time series boundary condition data below, if it will be read 
+C   from a DSS file (i.e. DSSFL is specified above).
+C
+C   REC  ;  Time series record number
+C   PATH ;  Pathname for the time series record 
+C
+C----------------------------------------------------------------------------------------------------------- 
+C   REC       PATH
+C-----------------------------------------------------------------------------------------------------------
+*
+*

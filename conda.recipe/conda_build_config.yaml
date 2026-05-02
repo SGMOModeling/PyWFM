@@ -1,5 +1,18 @@
 python:
   - 3.8
+# These are cadwr-sgmo conda channel labels — they are NOT identical to the
+# upstream CNRA labels for some 2015-series builds. The build numbers (the
+# last component) match across both, but major.minor labels diverge:
+#   conda 2015.0.1273  ↔  CNRA iwfm-2015.1.1273  (build 1273)
+#   conda 2015.0.1403  ↔  CNRA iwfm-2015.0.1403  (build 1403)  [matches]
+#   conda 2015.1.1443  ↔  CNRA iwfm-2015.3.1443  (build 1443)
+#   conda 2024.2.1594  ↔  CNRA iwfm-2024.2.1594  (build 1594)  [matches]
+#   conda 2025.0.1747  ↔  CNRA iwfm-2025.0.1747  (build 1747)  [matches]
+# The DLL itself self-reports the CNRA label via IW_GetVersion, so the test
+# suite vendors per-build SampleModels under tests/data/sample_model/ keyed
+# by the CNRA label, not the conda label. Don't rename the labels here —
+# they're what cadwr-sgmo publishes and what `conda install iwfmdll==<V>`
+# resolves against. Renaming would break existing users.
 iwfm_api_version:
   - 2015.0.1273
   - 2015.0.1403

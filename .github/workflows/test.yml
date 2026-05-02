@@ -20,6 +20,19 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        # cadwr-sgmo conda labels — these are NOT identical to upstream
+        # CNRA labels for some 2015-series builds. Build numbers (the last
+        # component) are stable across both, but major.minor labels diverge:
+        #   conda 2015.0.1273  ↔  CNRA iwfm-2015.1.1273.zip  (build 1273)
+        #   conda 2015.0.1403  ↔  CNRA iwfm-2015.0.1403.zip  (build 1403)
+        #   conda 2015.1.1443  ↔  CNRA iwfm-2015.3.1443.zip  (build 1443)
+        #   conda 2024.2.1594  ↔  CNRA iwfm-2024.2.1594.zip  (build 1594)
+        #   conda 2025.0.1747  ↔  CNRA iwfm-2025.0.1747.zip  (build 1747)
+        # The DLL itself self-reports the CNRA label via IW_GetVersion, so
+        # the sample_dir fixture in tests/conftest.py picks the SampleModel
+        # by CNRA label (= directory name), not the conda label installed
+        # below. Don't try to "normalize" the matrix labels — these are what
+        # cadwr-sgmo publishes and conda install needs.
         iwfm_api_version:
           - 2015.0.1273
           - 2015.0.1403
@@ -57,14 +70,19 @@ jobs:
 
       # Cache the simulated Results/ across runs. simulate_all runs once per
       # session via the _ensure_results fixture; cached output keeps wall time
-      # down on subsequent runs as long as inputs and DLL version match.
+      # down on subsequent runs as long as inputs and DLL version match. The
+      # cache restores all five SampleModel Results dirs but only the one
+      # matching the loaded DLL version actually gets populated per run.
       - name: Cache SampleModel Results
         uses: actions/cache@v4
         with:
           path: |
-            tests/data/sample_model/v2015/Results
-            tests/data/sample_model/v2025/Results
-          key: results-${{ matrix.iwfm_api_version }}-${{ hashFiles('tests/data/sample_model/v2015/Preprocessor/**', 'tests/data/sample_model/v2015/Simulation/**', 'tests/data/sample_model/v2025/Preprocessor/**', 'tests/data/sample_model/v2025/Simulation/**') }}
+            tests/data/sample_model/2015.1.1273/Results
+            tests/data/sample_model/2015.0.1403/Results
+            tests/data/sample_model/2015.3.1443/Results
+            tests/data/sample_model/2024.2.1594/Results
+            tests/data/sample_model/2025.0.1747/Results
+          key: results-${{ matrix.iwfm_api_version }}-${{ hashFiles('tests/data/sample_model/*/Preprocessor/**', 'tests/data/sample_model/*/Simulation/**') }}
 
       # Default suite: unit + integration + regression. Skips slow (C2VSimCG,
       # not vendored on CI) and simulation (kernel-state collisions with

@@ -1,0 +1,269 @@
+#4.0
+C***  DO NOT DELETE ABOVE LINE ***
+C
+C*******************************************************************************
+C
+C                  INTEGRATED WATER FLOW MODEL (IWFM)
+C
+C*******************************************************************************
+C
+C                    SUBSIDENCE COMPONENT MAIN DATA FILE
+C                          Subsidence Component
+C                           *** Version 4.0 ***
+C
+C
+C             Project:  IWFM Version 2015 Release
+C                       California Department of Water Resources
+C                       July, 2022
+C             Filename: Subsidence.dat
+C
+C*******************************************************************************
+C                          File Description
+C
+C   This data file contains the parameters and data file names for the simulation
+C   of aquifer subsidence.
+C
+C*******************************************************************************
+C                   Input and Output Data File Names
+C
+C   INISUBFL  ;  Initial conditions input file for interbed thickness and pre-compaction 
+C                 head (max. 1000 characters)
+C                 * Leave blank if these parameters are defined below
+C                 * If the file is specified, the initial conditions will over-write
+C                    interbed thickness and pre-compaction head defined below
+C   TPSOUTFL  ;  TecPlot output file for subsidence (max. 1000 characters)
+C                 * Leave blank if this output is not required
+C   FNSUBFL   ;  Output file for end-of-simulation interbed thicknesses and pre-compaction 
+C                 heads (max. 1000 characters)
+C                 * Leave blank if this output is not required
+C   FACTLTOU  ;  Factor to convert simulation unit of subsidence into intented output unit 
+C   UNITLTOU  ;  Output unit of subsidence (max. 10 characters)
+C
+C----------------------------------------------------------------------------------------
+C   VALUE                                      DESCRIPTION
+C----------------------------------------------------------------------------------------
+                                               / INISUBFL
+                                               / TPSOUTFL
+    ..\Results\FinalSubsidence.out             / FNSUBFL
+    1.0                                        / FACTLTOU     (ft -> ft)
+    ft.                                        / UNITLTOU
+C*******************************************************************************
+C                          Subsidence Output Data
+C
+C   The following lists the node and layer numbers for which subsidence data
+C   will be printed
+C
+C   NOUTS      ; Total number of subsidence data to be printed 
+C                 (NOUTS = 0 if no subsidence data is to be printed)
+C   FACTXY     ; Conversion factor for nodal coordinates of the subsidence data 
+C                 location if given in x-y coordinates
+C   SUBHYDOUTFL; File name for subsidence data output (max. 1000 characters) 
+C                 * Leave blank if this output is not required
+C
+C-------------------------------------------------------------------------------
+C   VALUE                       DESCRIPTION
+C-------------------------------------------------------------------------------
+    5                           / NOUTS
+    3.2808                      / FACTXY         (m -> ft)
+    ..\Results\Subsidence.out   / SUBHYDOUTFL
+C-------------------------------------------------------------------------------
+C
+C   The following lists the subsidence data location type (x-y coordinates or node number), 
+C   layer number, and x-y coordinates or groundwater node number for each subsidence 
+C   data to be printed (skip if no subsidence data are to be printed, i.e. NOUTS = 0)
+C
+C   ID    ;  Subsidence data output ID number 
+C   SUBTYP;  Subsidence data location type
+C              0 = subsidence data location is given as x-y coordinates
+C              1 =    "         "      "     "   "    " groundwater node number
+C   IOUTSL;  Layer number
+C              * Enter 0 to print total subsidence for all layers
+C   X     ;  The x-coordinate of the subsidence data location; [L]
+C              * Leave blank if SUBTYP = 1
+C   Y     ;  The y-coordinate of the subsidence data location; [L]
+C              * Leave blank if SUBTYP = 1
+C   IOUTS ;  Groundwater node number for subsidence data output
+C              * Leave blank if SUBTYP = 0
+C   NAME  ;  Name of the subsidence data print location (max. 30 characters)
+C   
+C-------------------------------------------------------------------------------
+C   ID    SUBTYP    IOUTSL         X           Y        IOUTS    NAME    
+C-------------------------------------------------------------------------------
+    1       1         0                                  168     SubsHyd1
+    2       1         0                                  169     SubsHyd2
+    3       0         0         552000.0    4416000.0            SubsHyd3
+    4       1         0                                  171     SubsHyd4
+    5       1         0                                  178     SubsHyd5
+C*******************************************************************************
+C                           SUBSIDENCE PARAMETERS
+C
+C-------------------------------------------------------------------------------
+C   Option 1 - Set subsidence parameters by use of a parametric grid(NGROUP > 0)
+C   Option 2 - Set subsidence parameters at every groundwater node  (NGROUP = 0)
+C
+C   NGROUP;  Number of parametric grid groups
+C
+C-------------------------------------------------------------------------------
+C       VALUE                   DESCRIPTION
+C-------------------------------------------------------------------------------
+         1                      / NGROUP
+C-------------------------------------------------------------------------------
+C   OPTIONS 1 & 2 : The following lists the factors to convert the subsidence
+C   parameters and grid coordinates to the appropriate units 
+C
+C   FX     ;  Conversion factor for parametric grid coordinates
+C   FSCE   ;  Conversion factor for elastic storage coefficient
+C   FSCI   ;  Conversion factor for inelastic storage coefficient 
+C   FDC    ;  Conversion factor for interbed thickness
+C   FDCMIN ;  Conversion factor for minimum interbed thickness
+C   FHC    ;  Conversion factor for pre-compaction hydraulic head
+C
+C-------------------------------------------------------------------------------
+C  FX       FSCE      FSCI    FDC     FDCMIN    FHC    
+C-------------------------------------------------------------------------------
+   3.2808   1E-6      1E-5    1.0      1.0      1.0
+C*******************************************************************************
+C                  OPTION 1  
+C*******************************************************************************
+C-------------------------------------------------------------------------------
+C   *** GROUP 1 ***
+C-------------------------------------------------------------------------------
+C   Enter node numbers from FE grid for the 1st parametric group
+C     (e.g. 1-100,101,301-359,567)
+C     * Enter 0 if no nodes will be affected with this parametric grid
+C-------------------------------------------------------------------------------
+   1-441
+C-------------------------------------------------------------------------------
+C
+C   NDP;     Number of nodes in the 1st parametric grid
+C   NEP;     Number of elements in the 1st parametric grid
+C
+C-------------------------------------------------------------------------------
+C   VALUE                       DESCRIPTION
+C-------------------------------------------------------------------------------
+     1                           / NDP
+     0                           / NEP
+C-------------------------------------------------------------------------------
+C
+C   The following is a list of the parametric elements and
+C   corresponding parametric nodes for the 1st parametric group
+C   (to be used only when NEP > 0)
+C
+C   IE  ;    Parametric element number
+C   NODE;    Corresponding parametric node
+C
+C-------------------------------------------------------------------------------
+C             Node 1    Node 2    Node 3     Node 4
+C    IE        NODE      NODE      NODE       NODE
+C-------------------------------------------------------------------------------
+*
+C-------------------------------------------------------------------------------
+C
+C   List the paramatric nodes, nodal coordinates and subsidence
+C   parameters for each layer of the 1st parametric group
+C   (enter -1.0 not to overwrite the previously set values)
+C
+C   ID   ;   Parametric node number
+C   PX,PY;   Parametric node coordinates; [L]
+C   SCE  ;   Elastic storage coefficient; [1/L]
+C   SCI  ;   Inelastic storage coefficient; [1/L]
+C   DC   ;   Interbed thickness;[L] 
+C   DCMIN;   Minimum interbed thickness; [L]
+C   HC   ;   Pre-compaction hydraulic head (use 99999. to use initial heads); [L]
+C            *Note* The above land subsidence parameters are only for interbed layers (i.e. clay layers)
+C
+C-----------------------------------------------------------------------------------------------------------------------------------------------
+C            NODAL   COORDINATES                               
+C            OF PARAMETRIC  GRID         Elastic   Inelastic   Interbed   Min. Intrbd   Precompc
+C                                       Stg. Coef. Stg. Coef.  Thickness   Thickness    Hyd. Head
+C  ID         PX             PY            SCE        SCI         DC        DCMIN          HC
+C-----------------------------------------------------------------------------------------------------------------------------------------------
+    1      -15000.0       -15000.0         5.0        5.0        10.0        2.0         99999.0
+                                           5.0        5.0        10.0        2.0         99999.0
+C-------------------------------------------------------------------------------------
+C    *** GROUP 2 ***
+C-------------------------------------------------------------------------------
+C   Enter node numbers from the FE grid for the 2nd parametric group
+C     (e.g. 1-100,101,301-359,567)
+C     * Enter 0 if no nodes will be affected with this parametric grid
+C-------------------------------------------------------------------------------
+*
+C-------------------------------------------------------------------------------
+C
+C   NDP;     Number of nodes in the 2nd parametric grid
+C   NEP;     Number of elements in the 2nd parametric grid
+C
+C-------------------------------------------------------------------------------
+C   VALUE                        DESCRIPTION
+C-------------------------------------------------------------------------------
+*                                 / NDP
+*                                 / NEP
+C-------------------------------------------------------------------------------
+C
+C   The following is a list of the parametric elements and
+C   corresponding parametric nodes for the 2nd parametric group
+C   (to be used only when NEP > 0)
+C
+C   IE  ;    Parametric element number
+C   NODE;    Corresponding parametric node
+C
+C-------------------------------------------------------------------------------
+C   Element   Node 1    Node 2    Node 3     Node 4
+C    IE        NODE      NODE      NODE       NODE
+C-------------------------------------------------------------------------------
+*
+C-------------------------------------------------------------------------------
+C
+C   List the paramatric nodes, nodal coordinates and subsidence
+C   parameters for each layer of the 1st parametric group
+C   (enter -1.0 not to overwrite the previously set values)
+C
+C   ID   ;   Parametric node number
+C   PX,PY;   Parametric node coordinates; [L]
+C   SCE  ;   Elastic storage coefficient; [1/L]
+C   SCI  ;   Inelastic storage coefficient; [1/L]
+C   DC   ;   Interbed thickness;[L] 
+C   DCMIN;   Minimum interbed thickness; [L]
+C   HC   ;   Pre-compaction hydraulic head (use 99999. to use initial heads); [L]
+C            *Note* The above land subsidence parameters are only for interbed layers (i.e. clay layers)
+C
+C-------------------------------------------------------------------------------------------------
+C            NODAL   COORDINATES                               
+C            OF PARAMETRIC  GRID         Elastic   Inelastic   Interbed   Min. Intrbd   Precompc
+C                                       Stg. Coef. Stg. Coef.  Thickness   Thickness    Hyd. Head
+C  ID         PX             PY            SCE        SCI         DC        DCMIN          HC
+C-------------------------------------------------------------------------------------------------
+*
+C-------------------------------------------------------------------------------
+C*******************************************************************************
+C                  OPTION 2 
+C*******************************************************************************
+C
+C    List the groundwater nodes, and subsidence parameters for
+C    each layer (skip if option 1 is used)
+C
+C   ID   ;   Groundwater node number
+C   SCE  ;   Elastic storage coefficient; [1/L]
+C   SCI  ;   Inelastic storage coefficient; [1/L]
+C   DC   ;   Interbed thickness; [L] 
+C   DCMIN;   Minimum interbed thickness; [L]
+C   HC   ;   Pre-compaction hydraulic head (use 99999. to use initial heads); [L]
+C            *Note* The above land subsidence parameters are only for interbed layers (i.e. clay layers)
+C
+C-------------------------------------------------------------------------------
+C                           Layer  1              
+C                           Layer  2
+C                              .
+C                              .
+C                                                                              
+C          Elastic   Inelastic   Interbed   Min. Intrbd   Precompc
+C         Stg. Coef. Stg. Coef.  Thickness   Thickness    Hyd. Head
+C  ID        SCE        SCI         DC        DCMIN          HC
+C-------------------------------------------------------------------------------
+*
+*
+
+
+
+
+                                                     

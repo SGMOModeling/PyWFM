@@ -1,0 +1,96 @@
+C*******************************************************************************
+C
+C                  INTEGRATED WATER FLOW MODEL (IWFM)
+C
+C*******************************************************************************
+C 
+C                  SURFACE WATER DIVERSION DATA FILE
+C                           Stream Component
+C                          *** Version 4.0 ***
+C
+C
+C             Project:  IWFM Version 2015 Release
+C                       California Department of Water Resources
+C                       September, 2021
+C             Filename: Diversions.dat
+C
+C*******************************************************************************
+C                             File Description
+C
+C   This data file contains the surface water diversion and bypass data 
+C   for the stream nodes that have been specified in the surface water
+C   diversion specification data file. Maximum diversion rates to be used 
+C   in supply adjutment computations are also listed in this file.
+C
+C*******************************************************************************
+C                    Surface Water Diversion Data Specifications
+C
+C   The following lists the time-series surface water diversions for
+C   each of the stream nodes where surface diversions have been specified.
+C
+C   NCOLDV;  Number of surface water diversions (or pathnames if DSS files are used)
+C   FACTDV;  Conversion factor for surface water diversions 
+C             It is used to convert only the spatial component of the unit; 
+C             DO NOT include the conversion factor for time component of the unit.
+C             * e.g. Unit of diversion listed in this file    = AC-FT/MONTH
+C                    Consistent unit used in simulation       = CU.FT/DAY 
+C                    Enter FACTDV (AC-FT/MONTH -> CU.FT/MONTH)= 43560.0
+C                     (conversion of MONTH -> DAY is performed automatically) 
+C   NSPDV ;  Number of time steps to update the surface water diversion data
+C             * Enter any number if time-tracking option is on
+C   NFQDV ;  Repetition frequency of the surface water diversion data 
+C             * Enter 0 if full time series data is supplied
+C             * Enter any number if time-tracking option is on
+C   DSSFL ;  The name of the DSS file for data input (maximum 50 characters); 
+C             * Leave blank if DSS file is not used for data input
+C
+C-------------------------------------------------------------------------------
+C    VALUE                      DESCRIPTION
+C-------------------------------------------------------------------------------
+     6                          / NCOLDV   
+     43560000.0                 / FACTDV     (taf -> cu.ft.) 
+     1                          / NSPDV
+     0                          / NFQDV
+                                / DSSFL
+C*******************************************************************************
+C                      Surface Water Diversion Data
+C                         (READ FROM THIS FILE)
+C
+C   List the diversion data below, if it will not be read from a DSS file (i.e. 
+C   DSSFL is left blank above).
+C
+C   ITDV ;  Time
+C   ADIVS;  Diversion rate and maximum diversion rates (if any) corresponding to 
+C            the stream node specified in diversion specification file; [L^3/T]
+C
+C-------------------------------------------------------------------------------
+C   ITDV   ADIVS(1)  ADIVS(2)  ADIVS(3) ...                     
+C-------------------------------------------------------------------------------
+C                     Div1      Div2       Div3    Div4    Div5    Bypass1
+01/31/4000_24:00      3.0       3.0        3.0     3.0     3.0     6.0
+02/29/4000_24:00      3.0       3.0        3.0     3.0     3.0     6.0
+03/31/4000_24:00      3.0       3.0        3.0     3.0     3.0     6.0
+04/30/4000_24:00      3.0       3.0        3.0     3.0     3.0     6.0
+05/31/4000_24:00      3.0       3.0        3.0     3.0     3.0     6.0
+06/30/4000_24:00      3.0       3.0        3.0     3.0     3.0     6.0
+07/31/4000_24:00      3.0       3.0        3.0     3.0     3.0     6.0
+08/31/4000_24:00      3.0       3.0        3.0     3.0     3.0     6.0
+09/30/4000_24:00      3.0       3.0        3.0     3.0     3.0     6.0
+10/31/4000_24:00      3.0       3.0        3.0     3.0     3.0     6.0
+11/30/4000_24:00      3.0       3.0        3.0     3.0     3.0     6.0
+12/31/4000_24:00      3.0       3.0        3.0     3.0     3.0     6.0
+C-------------------------------------------------------------------------------
+C                Pathnames for Surface Water Diversion Data
+C                         (READ FROM DSS FILE)
+C
+C   List the pathnames for diversion data below, if it will be read from a DSS file  
+C   (i.e. DSSFL is specified above).
+C
+C   REC  ;   Time series record number
+C   PATH ;   Pathname for the time series record
+C
+C-------------------------------------------------------------------------------
+C   REC       PATH            
+C-------------------------------------------------------------------------------
+*
+*

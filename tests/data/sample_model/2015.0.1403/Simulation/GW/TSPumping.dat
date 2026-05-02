@@ -1,0 +1,92 @@
+C*******************************************************************************
+C
+C                  INTEGRATED WATER FLOW MODEL (IWFM)
+C
+C*******************************************************************************
+C
+C                       PUMPING DATA FILE
+C                       Pumping Component
+C                      *** Version 4.0 ***
+C
+C
+C             Project:  IWFM Version 2015 Release
+C                       California Department of Water Resources
+C                       July, 2022
+C             Filename: TSPumping.dat
+C
+C*******************************************************************************
+C                            File Description:
+C
+C   This data file contains the time series pumping/recharge data. 
+C
+C*******************************************************************************
+C                         Pumping Data Specifications
+C
+C   NCOLPUMP; Number of pumping sets (or pathnames if DSS files are used) 
+C   FACTPUMP; Conversion factor for pumping data 
+C              It is used to convert only the spatial component of the unit; 
+C              DO NOT include the conversion factor for time component of the unit.
+C              * e.g. Unit of pumping listed in this file        = AC-FT/MONTH
+C                     Consistent unit used in simulation         = CU.FT/DAY 
+C                     Enter FACTPUMP (AC-FT/MONTH -> CU.FT/MONTH)= 43560.0 
+C                      (conversion of MONTH -> DAY is performed automatically) 
+C   NSPPUMP ; Number of time steps to update pumping data
+C              * Enter any number if time-tracking option is on
+C   NFQPUMP ; Repetition frequency of the pumping data 
+C              * Enter 0 if full time series data is supplied
+C              * Enter any number if time-tracking option is on
+C   DSSFL   ; The name of the DSS file for data input (maximum 50 characters); 
+C              * Leave blank if DSS file is not used for data input
+C
+C-------------------------------------------------------------------------------
+C         VALUE                                      DESCRIPTION
+C-------------------------------------------------------------------------------
+           2                                         / NCOLPUMP
+           43560000.0                                / FACTPUMP    (taf -> cu.ft.)
+           1                                         / NSPPUMP
+           0                                         / NFQPUMP
+                                                     / DSSFL
+C-------------------------------------------------------------------------------
+C                             Pumping Data
+C                         (READ FROM THIS FILE)
+C
+C   List the pumping data below if it will not be read from a DSS file (i.e. 
+C   DSSFL is left blank above).
+C
+C   For pumping enter negative values, for recharge enter positive values.
+C
+C   ITPU ;   Time
+C   APUMP;   Pumping rate; [L^3/T]
+C             * Negative values: Pumping
+C             * Positive values: Recharge
+C
+C-------------------------------------------------------------------------------
+C ITPU                APUMP(1)  APUMP(2)  APUMP(3) ...             
+C-------------------------------------------------------------------------------
+01/31/4000_24:00      -3.50      0.00
+02/29/4000_24:00      -3.50      0.00
+03/31/4000_24:00      -3.50      0.00
+04/30/4000_24:00       0.00      6.00
+05/31/4000_24:00       0.00      6.00
+06/30/4000_24:00       0.00      6.00
+07/31/4000_24:00       0.00      6.00
+08/31/4000_24:00       0.00      6.00
+09/30/4000_24:00       0.00      6.00    
+10/31/4000_24:00      -3.50      0.00
+11/30/4000_24:00      -3.50      0.00
+12/31/4000_24:00      -3.50      0.00
+C-------------------------------------------------------------------------------
+C                       Pathnames for Pumping Data
+C                         (READ FROM DSS FILE)
+C
+C   List the pathnames for pumping data below if it will be read from a DSS file  
+C   (i.e. DSSFL is specified above).
+C
+C   REC  ;   Time series record number
+C   PATH ;   Pathname for the time series record
+C
+C-------------------------------------------------------------------------------
+C   REC       PATH            
+C-------------------------------------------------------------------------------
+*
+*

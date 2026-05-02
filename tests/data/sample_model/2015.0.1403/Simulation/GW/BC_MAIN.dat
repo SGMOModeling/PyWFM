@@ -1,0 +1,81 @@
+C*******************************************************************************
+C
+C                  INTEGRATED WATER FLOW MODEL (IWFM)
+C
+C*******************************************************************************
+C
+C                  BOUNDARY CONDITIONS DATA FILE
+C                      Groundwater Component
+C                       *** Version 4.0 ***
+C
+C
+C             Project:  IWFM Version 2015 Release
+C                       California Department of Water Resources
+C                       July, 2022
+C             Filename: Bound.dat
+C
+C*******************************************************************************
+C                          File Description:
+C
+C   This data file contains the name of the data files that includes information 
+C   about four boundary conditions that can be simulated: specified flow, specified 
+C   head, general head and constrained general head boundary conditions. If any of 
+C   these boundary conditions are specified as time series data, the name of the 
+C   time series boundary conditions data file is also listed in this file.
+C
+C*******************************************************************************
+C
+C   SPFLOWFL ;  Specified flow boundary conditions data file (max. 1000 characters)
+C                * Leave blank if this boundary condition is not simulated
+C   SPHEADFL ;  Specified head boundary conditions data file (max. 1000 characters)
+C                * Leave blank if this boundary condition is not simulated
+C   GHBCFL   ;  General head boundary conditions data file (max. 1000 characters)
+C                * Leave blank if this boundary condition is not simulated
+C   CONGHBCFL;  Constrained general head boundary conditions data file (max. 1000 characters)
+C                * Leave blank if this boundary condition is not simulated
+C   TSBCFL   ;  Time series boundary conditions data file (max. 1000 characters)
+C                * Leave blank if no time series boundary conditions are specified
+C
+C-------------------------------------------------------------------------------
+C     VALUE                       DESCRIPTION
+C-------------------------------------------------------------------------------
+                                  / SPFLOWFL
+      GW\SpecHeadBC.dat           / SPHEADFL
+                                  / GHBCFL
+                                  / CONGHBCFL
+      GW\BoundTSD.dat             / TSBCFL 
+C*******************************************************************************
+C                         Boundary Node Flow Output Data
+C
+C   The following lists the boundary nodes and layers for which flow values
+C   will be printed
+C
+C   NOUTB     ; Number of boundary nodes for hydrograph printing 
+C                 * NOUTB = 0 if no hydrograph is to be printed
+C   BHYDOUTFL ; File name for boundary node flow output (max. 1000 characters) 
+C                 * Leave blank if this output is not required
+C-------------------------------------------------------------------------------
+C   VALUE                       DESCRIPTION
+C-------------------------------------------------------------------------------
+    6                           / NOUTB
+    ..\Results\BoundaryFlow.out / BHYDOUTFL
+C-------------------------------------------------------------------------------
+C
+C   The following lists the layer number and groundwater node number for each 
+C   boundary node flow hydrograph to be printed (skip if no flow hydrograph is
+C   to be printed, ie. NOUTB = 0)
+C
+C   ID     ; Hydrograph ID number 
+C   IOUTBL ; Layer number
+C   IOUTB  ; Groundwater boundary node number for flow hydrograph output
+C   NAME   ; Name for the hydrograph (max. 30 characters)
+C
+C-------------------------------------------------------------------------------
+C   ID     IOUTBL      IOUTB      NAME
+C-------------------------------------------------------------------------------
+     1      1             1       BCFlow1
+     2      1            22       BCFlow2
+     3      1            85       BCFlow3
+     4      1           148       BCFlow4
+     5      1           211       BCFlow5
+     6      1           274       BCFlow6

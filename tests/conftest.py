@@ -3,11 +3,14 @@
 The fixtures here are the foundation for every integration and regression
 test. Key design points:
 
-- ``sample_dir`` picks v2015/ or v2025/ at session start based on the
-  loaded DLL's IWFM major version. Both SampleModels are vendored under
-  ``tests/data/sample_model/`` because the file format genuinely differs
-  between 2015 and 2024+ (e.g. Element.dat region naming, Simulation_MAIN.IN
-  unit-12 file slot and STOPCVL parameter).
+- ``sample_dir`` picks the SampleModel matching the loaded DLL's full
+  CNRA version at session start. We vendor one SampleModel per supported
+  build under ``tests/data/sample_model/<cnra_version>/`` because the input
+  format evolves between minor releases (2025.0.1747 added a unit-12 file
+  slot and the STOPCVL parameter that 2024.2.1594 rejects; the 2015 series
+  evolved similarly between 2015.0.1403 and 2015.3.1443). Sharing one
+  SampleModel across DLL versions does not work — each release ships its
+  own SampleModel tailored to that kernel.
 - ``_ensure_results`` runs the simulation once per session if the Results/
   directory is empty, since IWFMBudget/IWFMZBudget tests need .hdf outputs
   that aren't vendored.
@@ -94,15 +97,28 @@ def dll_version():
 
 @pytest.fixture(scope="session")
 def sample_dir(dll_version):
-    """Resolves to v2015/ or v2025/ based on the loaded DLL major version.
+    """Resolves to the SampleModel that ships with the loaded DLL.
 
-    2024.x and 2025.x DLLs use v2025 (post-2015 input format).
-    2015.x DLLs use v2015.
+    The IWFM input format evolves between minor releases (e.g. 2025.0.1747
+    added a unit-12 file slot and the STOPCVL parameter that 2024.2.1594
+    rejects), so each DLL gets the SampleModel that was published alongside
+    it. We vendor one directory per CNRA build, named by the full upstream
+    version string. ``dll_version`` is the version the loaded DLL self-
+    reports — that's the CNRA label, not the conda label (see the comment
+    on iwfm_api_version in .github/workflows/test.yml for the
+    cadwr-sgmo↔CNRA mismatch).
     """
-    major = int(dll_version.split(".")[0])
-    chosen = SAMPLE_DIR / ("v2025" if major >= 2024 else "v2015")
+    # The DLL self-reports a version with an optional ``-<commit_hash>``
+    # suffix (e.g. ``2025.0.1747-054223d4``). CNRA artifacts and our
+    # vendored directories use only the short form.
+    short = dll_version.split("-")[0]
+    chosen = SAMPLE_DIR / short
     if not (chosen / "Preprocessor" / "PreProcessor_MAIN.IN").exists():
-        pytest.skip(f"SampleModel not vendored at {chosen}")
+        pytest.skip(
+            f"SampleModel not vendored at {chosen}. Loaded DLL reports "
+            f"version {dll_version!r}; vendor source inputs from the "
+            f"matching iwfm-{short}.zip on CNRA into that directory."
+        )
     return chosen
 
 

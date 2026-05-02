@@ -1,0 +1,553 @@
+#4.12
+C***  DO NOT DELETE ABOVE LINE ***
+C
+C*******************************************************************************
+C
+C                  INTEGRATED WATER FLOW MODEL (IWFM)
+C
+C*******************************************************************************
+C
+C                    ROOT ZONE PARAMETERS DATA FILE
+C                         Root Zone Component
+C                         *** Version 4.12 ***
+C
+C
+C             Project:  IWFM Public Release
+C                       California Department of Water Resources
+C                       October, 2024
+C             Filename: RootZone_MAIN.dat
+C
+C*******************************************************************************
+C                          File Description
+C
+C   This data file contains the parameters and data file names for the simulation
+C   of root zone processes.
+C
+C*******************************************************************************
+C                Root Zone Simulation Scheme Control and File Names
+C
+C   RZCONV   ;  Convergence criteria for iterative soil moisture accounting as a
+C                fraction of total porosity; [L/L] 
+C   RZITERMX ;  Maximum number of iterations for iterative soil moisture accounting
+C   FACTCN   ;  Conversion factor to convert inches to the simulation unit of length
+C   GWUPTK   ;  Flag to turn on or off the root water uptake from groundwater
+C                0 = DO NOT allow root water uptake from groundwater
+C                1 = Allow root water uptake from groundwater
+C   AGNPFL   ;  Non-ponded agricultural crop data file (max. 1000 characters)
+C                * Leave blank if non-ponded crops are not simulated
+C   PFL      ;  Rice/refuge data file (max. 1000 characters)
+C                * Leave blank if rice and/or refuge lands are not simulated
+C   URBFL    ;  Urban lands data file (max. 1000 characters)
+C                * Leave blank if urban lands are not simulated
+C   NVRVFL   ;  Native/riparian vegetation lands data file (max. 1000 characters)
+C                * Leave blank if native and/or riparion veg. lands are not simulated
+C   RFFL     ;  File that lists the return flow fractions (max. 1000 characters)
+C                * Leave blank if only native/riparian vegetation lands are simulated
+C   RUFL     ;  File that lists the irrigation water re-use factors (max. 1000 characters)
+C                * Leave blank if only native/riparian vegetation lands are simulated
+C   IPFL     ;  File that lists the irrigation periods for each ponded and 
+C                non-ponded crop (max. 1000 characters)
+C                * Leave blank if both ponded and non-ponded crops are not simulated
+C   MSRCFL   ;  File that lists generic source of moisture rates other than precipitation 
+C                and irrigation (max. 1000 characters)
+C                * Leave blank if there are no generic sources of moisture simulated
+C   AGWDFL   ;  File that lists agricultural water supply requirement (max. 1000 characters)
+C                * Leave blank if agricultural water supply requirement will be computed 
+C                  dynamically
+C   LWUBUDFL ;  HDF5 output file for land and water use budget at each 
+C                  subregion (max. 1000 characters)
+C                * Leave blank if this output is not required
+C   RZBUDFL  ;  HDF5 output file for root zone moisture budget at each
+C                  subregion (max. 1000 characters)
+C                * Leave blank if this output is not required
+C   ZLWUBUDFL;  HDF5 output file for land and water use zone budget 
+C                  post-processor (max. 1000 characters)
+C                 * Leave blank if this output is not required
+C   ZRZBUDFL ;  HDF5 output file for root zone zone budget 
+C                  post-processor (max. 1000 characters)
+C                 * Leave blank if this output is not required
+C
+C----------------------------------------------------------------------------------------
+C         VALUE                                      DESCRIPTION
+C----------------------------------------------------------------------------------------
+          0.001                                      / RZCONV  
+          150                                        / RZITERMX
+          0.0833333                                  / FACTCN  (in -> ft)
+          0                                          / GWUPTK
+          RootZone\NonPondedAg\NonPondedAg_MAIN.dat  / AGNPFL
+          RootZone\PondedAg\PondedAg_MAIN.dat        / PFL
+          RootZone\Urban\Urban_MAIN.dat              / URBFL
+          RootZone\NativeVeg\NativeVeg_MAIN.dat      / NVRVFL
+          RootZone\ReturnFlowFrac.dat                / RFFL
+          RootZone\ReuseFrac.dat                     / RUFL
+          RootZone\IrigPeriod.dat                    / IPFL
+                                                     / MSRCFL
+                                                     / AGWDFL
+          ..\Results\LWU.hdf                         / LWUBUDFL
+          ..\Results\RootZone.hdf                    / RZBUDFL
+          ..\Results\LWU_ZBud.hdf                    / ZLWUBUDFL
+          ..\Results\RootZone_ZBud.hdf               / ZRZBUDFL
+C*******************************************************************************
+C             Parameters for Soil, Precipitation and Runoff Destination 
+C
+C   Enter conversion factors.
+C
+C   FACTK     ;  Conversion factor for root zone hydraulic conductivity
+C                 It is used to convert only the spatial component of the unit; 
+C                 DO NOT include the conversion factor for time component of the unit.
+C                 * e.g. Unit of hydraulic conductivity listed in this file = IN/DAY
+C                        Consistent unit used in simulation                 = FT/MONTH 
+C                        Enter FACT (IN/MONTH -> FT/MONTH)                  = 8.33333E-02 
+C                        (conversion of DAY -> MONTH is performed automatically) 
+C   FACTCPRISE;  Conversion factor for capillary rise 
+C   TUNITK    ;  Time unit of root zone hydraulic conductivity.  This should be one of the 
+C                 units recognized by HEC-DSS that are listed in the Main Control File. 
+C   DESTFL    ;  Surface flow destination timeseries input file (max. 1000 characters)
+C
+C----------------------------------------------------------------------------------------
+C         VALUE                                      DESCRIPTION
+C----------------------------------------------------------------------------------------
+          0.03281                                    / FACTK   (cm -> ft)
+          1.0                                        / FACTPRISE
+          1hour                                      / TUNITK
+          RootZone\SurfaceFlowDest.dat               / DESTFL
+C----------------------------------------------------------------------------------------
+C
+C   Enter soil parameters, precipitation and surface flow destination data below for each 
+C   grid element.
+C
+C   IE         ; Element ID
+C   WP         ; Wilting point; [L/L]
+C   FC         ; Field capacity; [L/L]
+C   TN         ; Total porosity; [L/L]
+C   LAMBDA     ; Pore size distribution index; [dimensionless]
+C   K          ; Saturated hydraulic conductivity; [L/T]
+C   KPonded    ; Saturated hydraulic conductivity to be used for ponded crops in the element; [L/T]
+C                  * Note: Enter -1.0 if KPonded is the same as K
+C   RHC        ; Method to represent hydraulic conductivity vs. moisture content curve
+C                  1 = Campbell's equation
+C                  2 = van Genuchten-Mualem equation
+C   CPRISE     ; Capillary rise; [L]
+C   IRNE       ; Precipitation data column in the Precipitation file that applies to element IE  
+C   FRNE       ; Factor to convert rainfall at the precipitation data column to
+C                  rainfall at element IE
+C   IMSRC      ; Generic source of moisture data column in the Generic Moisture Source file (MSRCFL
+C                  file listed above) that applies to element IE
+C                  * Note: Enter any number if MSRCFL above is left blank
+C   ICDSTAG    ; Destination for the agricultural surface flow (return flow, rainfall 
+C                  runoff and pond drainage from ponded crops) generated at element IE - this number 
+C                  corresponds to the appropriate 
+C                  data column in the Surface Flow Destination file (DESTFL)
+C   ICDSTURBIN ; Destination for the urban indoors return flow generated at element IE - this 
+C                  number corresponds to the appropriate data column in the Surface Flow 
+C                  Destination file (DESTFL)
+C   ICDSTURBOUT; Destination for the urban outdoors surface flow (return flow and rainfall 
+C                  runoff) generated at element IE - this number corresponds to the appropriate 
+C                  data column in the Surface Flow Destination file (DESTFL)
+C   ICDSTNVRV  ; Destination for the surface flow (return flow and rainfall runoff) from 
+C                  native and riparian vegetation lands at element IE - this number corresponds 
+C                  to the appropriate data column in the Surface Flow Destination file (DESTFL)
+C
+C----------------------------------------------------------------------------------------------------------------------------------------------
+C  IE      WP      FC      TN      LAMBDA     K   KPonded   RHC  CPRISE  IRNE  FRNE  IMSRC  ICDSTAG  ICDSTURBIN  ICDSTURBOUT  ICDSTNVRV
+C----------------------------------------------------------------------------------------------------------------------------------------------
+   1       0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     1    1.0     0       1        1           1            1
+   2       0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     1    1.0     0       1        1           1            1
+   3       0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     1    1.0     0       1        1           1            1
+   4       0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     1    1.0     0       1        1           1            1
+   5       0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     1    1.0     0       1        1           1            1
+   6       0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     1    1.0     0       1        1           1            1
+   7       0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     1    1.0     0       1        1           1            1
+   8       0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     1    1.0     0       1        1           1            1
+   9       0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     1    1.0     0       1        1           1            1
+   10      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     1    1.0     0       1        1           1            1
+   11      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   12      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   13      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   14      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   15      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   16      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   17      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   18      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   19      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   20      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   21      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   22      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   23      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   24      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   25      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   26      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   27      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   28      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   29      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   30      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   31      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   32      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   33      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   34      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   35      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   36      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   37      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   38      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   39      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   40      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   41      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   42      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   43      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   44      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   45      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   46      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   47      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   48      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   49      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   50      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   51      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   52      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   53      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   54      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   55      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   56      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   57      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   58      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   59      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   60      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   61      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   62      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   63      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   64      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   65      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   66      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   67      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   68      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   69      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   70      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   71      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   72      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   73      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   74      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   75      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   76      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   77      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   78      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   79      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   80      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   81      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   82      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   83      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   84      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   85      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   86      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   87      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   88      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   89      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   90      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   91      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   92      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   93      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   94      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   95      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   96      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   97      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   98      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   99      0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   100     0.0     0.20    0.45     0.62      2.60  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   101     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   102     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   103     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   104     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   105     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   106     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   107     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   108     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   109     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   110     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   111     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   112     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   113     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   114     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   115     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   116     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   117     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   118     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   119     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   120     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   121     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   122     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   123     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   124     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   125     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   126     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   127     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   128     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   129     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   130     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   131     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   132     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   133     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   134     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   135     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   136     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   137     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   138     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   139     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   140     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   141     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   142     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   143     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   144     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   145     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   146     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   147     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   148     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   149     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   150     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   151     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   152     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   153     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   154     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   155     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   156     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   157     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   158     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   159     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   160     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   161     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   162     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   163     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   164     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   165     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   166     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   167     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   168     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   169     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   170     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   171     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   172     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   173     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   174     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   175     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   176     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   177     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   178     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   179     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   180     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   181     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   182     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   183     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   184     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   185     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   186     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   187     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   188     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   189     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   190     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   191     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   192     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   193     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   194     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   195     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   196     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   197     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   198     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   199     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   200     0.0     0.33    0.50     0.36      0.68  -1.0    2     0.0     2    1.0     0       1        1           1            1
+   201     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   202     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   203     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   204     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   205     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   206     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   207     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   208     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   209     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   210     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   211     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   212     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   213     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   214     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   215     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   216     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   217     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   218     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   219     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   220     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   221     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   222     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   223     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   224     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   225     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   226     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   227     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   228     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   229     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   230     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   231     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   232     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   233     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   234     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   235     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   236     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   237     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   238     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   239     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   240     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   241     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   242     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   243     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   244     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   245     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   246     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   247     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   248     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   249     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   250     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   251     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   252     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   253     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   254     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   255     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   256     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   257     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   258     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   259     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   260     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   261     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   262     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   263     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   264     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   265     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   266     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   267     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   268     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   269     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   270     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   271     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   272     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   273     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   274     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   275     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   276     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   277     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   278     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   279     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   280     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   281     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   282     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   283     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   284     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   285     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   286     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   287     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   288     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   289     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   290     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   291     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   292     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   293     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   294     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   295     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   296     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   297     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   298     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   299     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   300     0.0     0.40    0.48     0.29      0.01  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   301     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   302     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   303     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   304     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   305     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   306     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   307     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   308     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   309     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   310     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   311     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   312     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   313     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   314     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   315     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   316     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   317     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   318     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   319     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   320     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   321     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   322     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   323     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   324     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   325     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   326     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   327     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   328     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   329     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   330     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   331     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   332     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   333     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   334     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   335     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   336     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   337     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   338     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   339     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   340     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   341     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   342     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   343     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   344     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   345     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   346     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   347     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   348     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   349     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   350     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   351     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   352     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   353     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   354     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   355     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   356     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   357     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   358     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   359     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   360     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   361     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   362     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   363     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   364     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   365     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   366     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   367     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   368     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   369     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   370     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   371     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   372     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   373     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   374     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   375     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   376     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   377     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   378     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   379     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   380     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   381     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   382     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   383     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   384     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   385     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   386     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   387     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   388     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   389     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   390     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   391     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   392     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   393     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   394     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   395     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   396     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   397     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   398     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   399     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2
+   400     0.0     0.37    0.47     0.32      0.15  -1.0    2     0.0     2    1.0     0       2        2           2            2

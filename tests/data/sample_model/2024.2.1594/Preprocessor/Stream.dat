@@ -1,0 +1,294 @@
+#4.0
+C *** DO NOT DELETE ABOVE LINE ***
+C
+C*******************************************************************************
+C
+C                  INTEGRATED WATER FLOW MODEL (IWFM)
+C
+C*******************************************************************************
+C
+C                       STREAM SPECIFICATION FILE
+C                           Stream Component
+C                          *** Version 4.0 ***
+C
+C
+C             Project:  IWFM Public Release
+C                       California Department of Water Resources
+C                       October, 2024
+C             Filename: Stream.dat
+C
+C*******************************************************************************
+C                             File Description
+C
+C   *All stream/river nodes modeled in IWFM are specified with respect to their 
+C    corresponding groundwater nodes
+C
+C   *A flow versus depth rating table is specified for each stream node
+C
+C*******************************************************************************
+C                     Stream Reach Specifications
+C
+C   NRH;   Number of stream reaches modeled
+C   NRTB;  Number of data points in stream rating tables
+C
+C-------------------------------------------------------------------------------
+C   VALUE                       DESCRIPTION
+C-------------------------------------------------------------------------------
+     3                          / NRH
+     5                          / NRTB
+C-------------------------------------------------------------------------------
+C*******************************************************************************
+C                      Description of Stream Reaches
+C
+C   The following lists the stream nodes and corresponding groundwater
+C   nodes for each stream reach modeled in IWFM.
+C
+C   ID  ;  Reach number
+C   NRD ;  Number of stream nodes in reach
+C   IDWN;  Stream node into which the reach flows into
+C              0: If stream flow leaves the modeled area
+C           -nlk: If stream flows into lake number nlk
+C   NAME;  Name of the reach (maximum 20 characters)
+C
+C   In addition, for each stream node within the reach the corresponding
+C   groundwater node is listed.
+C
+C   IRV;   Stream node
+C   IGW;   Corresponding groundwater node
+C
+C-------------------------------------------------------------------------------
+C     REACH  1  
+C   Reach  Number of   Outflow   Reach                                
+C            Nodes      Node      Name                                 
+C   ID        NRD       IDWN      NAME                                 
+C-------------------------------------------------------------------------------
+     1        10       -1       Reach1
+C-------------------------------------------------------------------------------
+C   Stream    Groundwater   
+C   node        node        
+C   IRV         IGW         
+C-------------------------------------------------------------------------------
+     1          433      
+     2          412      
+     3          391      
+     4          370      
+     5          349      
+     6          328      
+     7          307      
+     8          286      
+     9          265      
+    10          264 
+C-------------------------------------------------------------------------------
+C     REACH 2  
+C   Reach  Number of   Outflow   Reach                                
+C            Nodes      Node      Name                                 
+C   ID        NRD       IDWN      NAME                                 
+C-------------------------------------------------------------------------------
+     2         6        17       Reach2
+C-------------------------------------------------------------------------------
+C   Stream    Groundwater   
+C   node        node        
+C   IRV         IGW         
+C-------------------------------------------------------------------------------
+    11          222     
+    12          223     
+    13          202     
+    14          181     
+    15          160     
+    16          139     
+C-------------------------------------------------------------------------------
+C     REACH  3 
+C   Reach  Number of   Outflow   Reach                                
+C            Nodes      Node      Name                                 
+C   ID        NRD       IDWN      NAME                                 
+C-------------------------------------------------------------------------------
+     3         7        0        Reach3
+C-------------------------------------------------------------------------------
+C   Stream    Groundwater   
+C   node        node        
+C   IRV         IGW         
+C-------------------------------------------------------------------------------
+    17          139      
+    18          118 
+    19          97       
+    20          76            
+    21          55            
+    22          34       
+    23          13       
+C*******************************************************************************
+C                             Stream rating tables
+C
+C   FACTLT; Conversion factor for stream bottom elevation and stream depth
+C   FACTQ;  Conversion factor for rating table flow rates 
+C             It is used to convert only the spatial component of the unit; 
+C             DO NOT include the conversion factor for time component of the unit.
+C             * e.g. Unit of flow rate listed in this file      = AC.FT./MONTH
+C                    Consistent unit used in simulation         = CU.FT/DAY 
+C                    Enter FACTQ (AC.FT./MONTH -> CU.FT./MONTH) = 43560.0 
+C                     (conversion of MONTH -> DAY is performed automatically) 
+C   TUNIT;  Time unit of flow rate.  This should be one of the units 
+C             recognized by HEC-DSS that are listed in the Simulation Main 
+C             Control File.  
+C
+C-------------------------------------------------------------------------------
+C   VALUE                       DESCRIPTION
+C-------------------------------------------------------------------------------
+      1.0                       / FACTLT
+     60.0                       / FACTQ   (cfs -> cu.ft./min)   
+     1min                       / TUNIT
+C-------------------------------------------------------------------------------
+C   The following lists a stream rating table for each of the stream nodes
+C   *Note* In order to define a specified stream depth, enter all HRTB values
+C             as equal to the specified depth value
+C
+C   ID;    Stream node number
+C   BOTR;  Stream bottom elevation relative to a common datum [L]
+C   HRTB;  Stream depth [L]
+C   QRTB;  Flow rate at stream depth HRTB [L^3/T]
+C
+C-------------------------------------------------------------
+C   Stream    Bottom   Stream      Flow
+C   node     elevation  depth      rate
+C   ID         BOTR     HRTB       QRTB
+C-------------------------------------------------------------
+     1         300.0     0.0       0.00
+                         2.0       734.94
+                         5.0       3299.29
+                         15.0      19033.60
+                         25.0      41568.45
+     2         298.0     0.0       0.00
+                         2.0       734.94
+                         5.0       3299.29
+                         15.0      19033.60
+                         25.0      41568.45
+     3         296.0     0.0       0.00
+                         2.0       734.94
+                         5.0       3299.29
+                         15.0      19033.60
+                         25.0      41568.45
+     4         294.0     0.0       0.00
+                         2.0       734.94
+                         5.0       3299.29
+                         15.0      19033.60
+                         25.0      41568.45
+     5         292.0     0.0       0.00
+                         2.0       734.94
+                         5.0       3299.29
+                         15.0      19033.60
+                         25.0      41568.45
+     6         290.0     0.0       0.00
+                         2.0       734.94
+                         5.0       3299.29
+                         15.0      19033.60
+                         25.0      41568.45
+     7         288.0     0.0       0.00
+                         2.0       734.94
+                         5.0       3299.29
+                         15.0      19033.60
+                         25.0      41568.45
+     8         286.0     0.0       0.00
+                         2.0       734.94
+                         5.0       3299.29
+                         15.0      19033.60
+                         25.0      41568.45
+     9         284.0     0.0       0.00
+                         2.0       734.94
+                         5.0       3299.29
+                         15.0      19033.60
+                         25.0      41568.45
+    10         282.0     0.0       0.00
+                         2.0       734.94
+                         5.0       3299.29
+                         15.0      19033.60
+                         25.0      41568.45
+    11         282.0     0.0       0.00
+                         2.0       734.94
+                         5.0       3299.29
+                         15.0      19033.60
+                         25.0      41568.45
+    12         280.0     0.0       0.00
+                         2.0       734.94
+                         5.0       3299.29
+                         15.0      19033.60
+                         25.0      41568.45
+    13         278.0     0.0       0.00
+                         2.0       734.94
+                         5.0       3299.29
+                         15.0      19033.60
+                         25.0      41568.45
+    14         276.0     0.0       0.00
+                         2.0       734.94
+                         5.0       3299.29
+                         15.0      19033.60
+                         25.0      41568.45
+    15         274.0     0.0       0.00
+                         2.0       734.94
+                         5.0       3299.29
+                         15.0      19033.60
+                         25.0      41568.45
+    16         272.0     0.0       0.00
+                         2.0       734.94
+                         5.0       3299.29
+                         15.0      19033.60
+                         25.0      41568.45
+    17         272.0     0.0       0.00
+                         2.0       734.94
+                         5.0       3299.29
+                         15.0      19033.60
+                         25.0      41568.45
+    18         270.0     0.0       0.00
+                         2.0       734.94
+                         5.0       3299.29
+                         15.0      19033.60
+                         25.0      41568.45
+    19         268.0     0.0       0.00
+                         2.0       734.94
+                         5.0       3299.29
+                         15.0      19033.60
+                         25.0      41568.45
+    20         266.0     0.0       0.00
+                         2.0       734.94
+                         5.0       3299.29
+                         15.0      19033.60
+                         25.0      41568.45
+    21         264.0     0.0       0.00
+                         2.0       734.94
+                         5.0       3299.29
+                         15.0      19033.60
+                         25.0      41568.45
+    22         262.0     0.0       0.00
+                         2.0       734.94
+                         5.0       3299.29
+                         15.0      19033.60
+                         25.0      41568.45
+    23         260.0     0.0       0.00
+                         2.0       734.94
+                         5.0       3299.29
+                         15.0      19033.60
+                         25.0      41568.45
+C*******************************************************************************
+C           Stream Nodes with Partial Stream-Aquifer Interaction
+C
+C   The following lists stream nodes and the fraction of stream-aquifer interaction   
+C   that will be applied to the corresponding groundwater nodes. IWFM sets these   
+C   fractions to 1.0 by default. For stream nodes at the boundary of a model, the   
+C   user can specify a fraction of the stream-aquifer interaction that will affect   
+C   the corresponding groundwater nodes. 100% of the simulated stream-aquifer 
+C   interaction is applied to stream flow at these stream nodes. 
+C
+C   NSTRPINT; Number of stream nodes where a fraction of stream-aquifer interaction 
+C             will be applied to the corresponding groundwater nodes
+C                *Enter 0 if there are no stream nodes with fractions less than 1.0
+C   IDSTR;    Stream node number 
+C   FPINT;    Fraction of stream-aquifer interaction at stream node IDSTR that will be 
+C             applied to its corresponding gw node (must be between 0 and 1)  
+C
+C-------------------------------------------------------------------------------
+C   VALUE                DESCRIPTION
+C-------------------------------------------------------------------------------
+    0                     / NSTRPINT
+C-------------------------------------------------------------------------------
+C      IDSTR           FPINT
+C-------------------------------------------------------------------------------
+*
+*

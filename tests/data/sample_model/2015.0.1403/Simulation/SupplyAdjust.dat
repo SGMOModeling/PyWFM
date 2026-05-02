@@ -1,0 +1,85 @@
+C*******************************************************************************
+C
+C                  INTEGRATED WATER FLOW MODEL (IWFM)
+C                         *** Version 2015 ***
+C
+C*******************************************************************************
+C
+C                     SUPPLY ADJUSTMENT SPECIFICATIONS
+C                           for IWFM Simulation
+C
+C
+C             Project:  IWFM Version 2015 Release
+C                       California Department of Water Resources
+C                       July, 2022
+C             Filename: SupplyAdjust.dat
+C
+C*******************************************************************************
+C                          File Description
+C
+C   This data file contains the time series specifications for the adjustment of 
+C   surface water diversions and groundwater pumping. The data contains information  
+C   to specify if a diversion or pumping should be adjusted to meet agricultural  
+C   demand, urban demand or both. This file is required when KOPTDV is set to a  
+C   value other than 00 in the Main Control Input file.
+C
+C*******************************************************************************
+C                    Supply Adjustment Specifications
+C
+C   The following lists the time-series specifications for supply adjustment options
+C   for surface water diversions and groundwater pumping.
+C
+C   NCOLADJ;  Number of columns (or pathnames if DSS files are used) in the supply 
+C              adjustment specifications data file
+C   NSPADJ ;  Number of time steps to update the supply adjustment specifications data
+C              * Enter any number if time-tracking option is on
+C   NFQADJ ;  Repetition frequency of the supply adjustment specifications data
+C              * Enter 0 if full time series data is supplied
+C              * Enter any number if time-tracking option is on
+C   DSSFL  ;  The name of the DSS file for data input (maximum 50 characters); 
+C              * Leave blank if DSS file is not used for data input
+C
+C-------------------------------------------------------------------------------
+C         VALUE                                      DESCRIPTION
+C-------------------------------------------------------------------------------
+          4                                          / NCOLADJ
+          1                                          / NSPADJ
+          0                                          / NFQADJ
+                                                     / DSSFL
+C*******************************************************************************
+C                    Supply Adjustment Specifications Data
+C                         (READ FROM THIS FILE)
+C
+C   List the time series supply adjustment specifications data below, if it will 
+C   not be read from a DSS file (i.e. DSSFL is left blank above).
+C
+C   ITADJ;  Time
+C   KADJ;   Supply adjustment option. Enter two digits as follows:
+C           1st digit(from left):
+C                  0 = NO adjustment of supply to meet agricultural water demand
+C                  1 = YES, adjust supply to meet agricultural water demand
+C           2nd digit(from left):
+C                  0 = NO adjustment of supply to meet urban water demand
+C                  1 = YES, adjust supply to meet urban water demand
+C
+C-------------------------------------------------------------------------------
+C       ITADJ            KADJ
+C-------------------------------------------------------------------------------     
+C                     AgAdjust  UrbAdjust   NoAdjust    AgUrbAdjust
+  09/30/2500_24:00    10         01           00            11
+*
+C-------------------------------------------------------------------------------
+C                    Pathnames for Supply Adjustment Specifications Data
+C                                (READ FROM DSS FILE)
+C
+C   List the pathnames for supply adjustment specifications data below, if it will 
+C   be read from a DSS file (i.e. DSSFL is specified above).
+C
+C   REC  ;  Time series record number
+C   PATH ;  Pathname for the time series record 
+C
+C----------------------------------------------------------------------------------------------------------- 
+C   REC       PATH
+C-----------------------------------------------------------------------------------------------------------
+*
+*

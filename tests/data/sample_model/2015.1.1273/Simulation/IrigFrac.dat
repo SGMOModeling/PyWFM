@@ -1,0 +1,73 @@
+C*******************************************************************************
+C
+C                  INTEGRATED WATER FLOW MODEL (IWFM)
+C                         *** Version 2015 ***
+C
+C*******************************************************************************
+C
+C       IRRIGATION FRACTIONS FOR PUMPING AND SURFACE WATER DIVERSIONS 
+C                        for IWFM Simulation
+C
+C
+C             Project:  IWFM Version 2015 Release
+C                       California Department of Water Resources
+C                       September, 2021
+C             Filename: IrigFrac.dat
+C
+C*******************************************************************************
+C                          File Description
+C
+C   This data file contains the time series data for the fraction of pumping 
+C   and surface water diversions to be used for agricultural purposes.  
+C
+C*******************************************************************************
+C                        Irrigation Fractions Data Specifications
+C
+C   NCOLIRF;  Number of columns (or pathnames if DSS files are used) in the 
+C              irrigation fractions data file  
+C   NSPIRF ;  Number of time steps to update the irrigation fractions
+C              * Enter any number if time-tracking option is on
+C   NFQIRF ;  Repetition frequency of the irrigation fractions data 
+C              * Enter 0 if full time series data is supplied
+C              * Enter any number if time-tracking option is on
+C   DSSFL  ;  The name of the DSS file for data input (maximum 50 characters); 
+C              * Leave blank if DSS file is not used for data input
+C
+C------------------------------------------------------------------------------
+C         VALUE                                      DESCRIPTION
+C------------------------------------------------------------------------------
+          2                                          / NCOLIRF
+          1                                          / NSPIRF
+          0                                          / NFQIRF
+                                                     / DSSFL
+C-------------------------------------------------------------------------------
+C                        Irrigation Fractions Data
+C                          (READ FROM THIS FILE)
+C
+C   List the irrigation fractions data below, if it will not be read from
+C   a DSS file (i.e. DSSFL is left blank above).
+C
+C   ITIRF;  Time
+C   FIRIG;  Irrigation fraction
+C
+C----------------------------------------------------------------------------------------------------------- 
+C   ITIRF    FIRIG(1)  FIRIG(2)  FIRIG(3) ...
+C-----------------------------------------------------------------------------------------------------------
+C                    UrbIrrig    AgIrrig
+  09/30/2500_24:00   0.0         1.0
+*
+C-------------------------------------------------------------------------------
+C                       Pathnames for Irrigation Fractions Data
+C                               (READ FROM DSS FILE)
+C
+C   List the pathnames for irrigation fractions data below, if it will be read
+C   from a DSS file (i.e. DSSFL is specified above).
+C
+C   REC  ;  Time series record number
+C   PATH ;  Pathname for the time series record 
+C
+C----------------------------------------------------------------------------------------------------------- 
+C   REC       PATH
+C-----------------------------------------------------------------------------------------------------------
+*
+*

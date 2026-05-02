@@ -1,0 +1,62 @@
+#4.0
+C *** DO NOT DELETE ABOVE LINE ***
+C
+C*******************************************************************************
+C
+C                  INTEGRATED WATER FLOW MODEL (IWFM)
+C
+C*******************************************************************************
+C                                                                                                                                                           
+C                   LAKE CONFIGURATION DATA FILE                                                                                                            
+C                         Lake Component
+C                       *** Version 4.0 ***
+C
+C
+C             Project:  IWFM Version 2015 Release
+C                       California Department of Water Resources
+C                       September, 2021
+C             Filename: Lake.dat
+C
+C*******************************************************************************
+C
+C                             File Description:
+C
+C   This data file contains the number of lakes being modeled, 
+C   destination for lake outflow and the finite elements included in each lake.
+C   
+C*******************************************************************************
+C                  Lake Configuration Data
+C
+C   NLAKE  ; Number of lakes that are being modeled
+C
+C-------------------------------------------------------------------------------
+C   VALUE                       DESCRIPTION
+C-------------------------------------------------------------------------------
+     1                          / NLAKE
+C-------------------------------------------------------------------------------
+C
+C   The following lists the area and elevation for the NLAKE number of lakes
+C
+C   ID    ;  Lake ID number
+C   TYPDST;  Destination type for lake outflow
+C              0 = Lake outflow goes outside the model domain
+C              1 = Lake outflow goes to stream node DST (see below)
+C              3 = Lake outflow goes to downstream lake DST (see below)
+C   DST   ;  Destination number for lake outflow
+C              * Note: Enter any number if TYPDST is 0
+C   NELAKE;  Number of lake elements where lake lies
+C   IELAKE;  List of elements in which the lake is located
+C
+C----------------------------------------------------------------------
+C     ID    TYPDST      DST       NELAKE        IELAKE     
+C----------------------------------------------------------------------
+      1       1         11         10            169
+                                                 170
+                                                 171
+                                                 188
+                                                 189
+                                                 190
+                                                 207
+                                                 208
+                                                 209
+                                                 210

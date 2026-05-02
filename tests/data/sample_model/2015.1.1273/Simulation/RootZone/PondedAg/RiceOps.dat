@@ -1,0 +1,92 @@
+C*******************************************************************************
+C
+C                  INTEGRATED WATER FLOW MODEL (IWFM)
+C
+C*******************************************************************************
+C
+C              RICE/REFUGE OPERATION FLOW RATE DATA FILE
+C                         Root Zone Component
+C                         *** Version 4.01 ***
+C
+C
+C             Project:  IWFM Version 2015 Release
+C                       California Department of Water Resources
+C                       September, 2021
+C             Filename: RiceOps.dat
+C
+C*******************************************************************************
+C                           File Description
+C
+C   This data file contains a set of flow rates (in units of L/T) to be used for 
+C   simulating the rice and refuge return flows, re-use and water application rates 
+C   for non-flooded rice decomposition. These values are correlated to individual 
+C   grid elements through the Rice/Refuge Data File.
+C
+C*******************************************************************************
+C               Rice/Refuge Operation Flow Rate Data Specifications
+C
+C   NCOLFLW  ; Number of data columns
+C   FACTFLW  ; Conversion factor for operation flow rates 
+C               It is used to convert only the spatial component of the unit; 
+C               DO NOT include the conversion factor for time component of the unit.
+C               * e.g. Unit of depth listed in this file        = INCHES/MONTH
+C                      Consistent unit used in simulation       = FT/DAY 
+C                      Enter FACTOPS (INCHES/MONTH -> FT/MONTH) = 8.333333E-02 
+C                       (conversion of MONTH -> DAY is performed automatically) 
+C   NSPFLW   ; Number of time steps to update the operation flow rates
+C               * Enter any number if time-tracking option is on
+C   NFQFLW   ; Repetition frequency of the operation flow rate data 
+C               * Enter 0 if full time series data is supplied
+C               * Enter any number if time-tracking option is on
+C   DSSFL    ; The name of the DSS file for data input 
+C               * Leave blank if DSS file is not used for data input
+C
+C-------------------------------------------------------------------------------
+C         VALUE                                      DESCRIPTION
+C-------------------------------------------------------------------------------
+          2                                          / NCOLFLW
+          0.08333                                    / FACTFLW  (in -> ft)
+          1                                          / NSPFLW 
+          0                                          / NFQFLW
+                                                     / DSSFL
+C----------------------------------------------------------------------------------------------
+C                      Rice/Refuge Operation Flow Rate Data 
+C                            (READ FROM THIS FILE)
+C
+C   List the rice/refuge operation flow rates below, if it will not be read from
+C   a DSS file (i.e. DSSFL is left blank above).
+C
+C   TIME ;  Time
+C   FLW  ;  Operation flow rates; [L/T]
+C
+C----------------------------------------------------------------------------------------------
+C  TIME    FLW[1]    FLW[2]    FLW[3] ... FLW[NCOLFLW]  
+C----------------------------------------------------------------------------------------------
+C                          Other   NoDecomp_Return   
+   10/31/4000_24:00         0.0               0.0    
+   11/30/4000_24:00         0.0               0.0    
+   12/31/4000_24:00         0.0               0.0    
+   01/31/4000_24:00         0.0               0.0    
+   02/29/4000_24:00         0.0               0.0    
+   03/31/4000_24:00         0.0               0.0    
+   04/30/4000_24:00         0.0               0.0    
+   05/31/4000_24:00         0.0               2.0    
+   06/30/4000_24:00         0.0               2.0    
+   07/31/4000_24:00         0.0               2.0    
+   08/31/4000_24:00         0.0               0.0    
+   09/30/4000_24:00         0.0               0.0    
+C-------------------------------------------------------------------------------
+C                         Pathnames for Operation Flow Rates
+C                             (READ FROM DSS FILE)
+C
+C   List the pathnames for operation flow rates below, if it will be 
+C   read from a DSS file (i.e. DSSFL is specified above).
+C
+C   REC  ;  Time series record number
+C   PATH ;  Pathname for the time series record 
+C
+C----------------------------------------------------------------------------------------------------------- 
+C   REC     PATH
+C-----------------------------------------------------------------------------------------------------------
+*
+*

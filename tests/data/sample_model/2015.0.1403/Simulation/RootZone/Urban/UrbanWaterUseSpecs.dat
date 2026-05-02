@@ -1,0 +1,72 @@
+C*******************************************************************************
+C
+C                  INTEGRATED WATER FLOW MODEL (IWFM)
+C
+C*******************************************************************************
+C       
+C                  URBAN WATER USAGE SPECIFICATION DATA FILE
+C                            Root Zone Component
+C                            *** Version 4.12 ***
+C
+C
+C             Project:  IWFM Version 2015 Release
+C                       California Department of Water Resources
+C                       July, 2022
+C             Filename: UrbanWaterUseSpecs.dat
+C
+C*******************************************************************************
+C                              File Description
+C
+C   This data file contains a set of urban water usage specification data as the
+C   fraction of total urban water that is usd indoors. These values are correlated  
+C   to individual crops through the Root Zone Parameter file. 
+C   
+C*******************************************************************************
+C                            Urban Water Use Data Specifications
+C
+C   NURBSP   ;   Number of urban water use specifications data columns
+C   NSPURBSP ;   Number of time steps to update the urban water use specification data 
+C                 * Enter any number if time-tracking option is on
+C   NFQURBSP ;   Repitition frequency of the urban water use sepcification data 
+C                 * Enter 0 if full time series data is supplied
+C                 * Enter any number if time-tracking option is on
+C   DSSFL    ;   The name of the DSS file for data input (maximum 50 characters); 
+C                 * Leave blank if DSS file is not used for data input
+C
+C------------------------------------------------------------------------------
+C         VALUE                                      DESCRIPTION
+C------------------------------------------------------------------------------
+          1                                          / NURBSP
+          0                                          / NSPURBSP
+          0                                          / NFQURBSP
+          TSDATA_IN.DSS                              / DSSFL
+C-------------------------------------------------------------------------------------------------
+C                            Urban Water Use Data
+C                            (READ FROM THIS FILE)
+C
+C   List the urban water use data below, if it will not be read from
+C   a DSS file (i.e. DSSFL is left blank above).
+C
+C   ITUSP ;  Time
+C   URINDR;  Fraction of total urban water that is used indoors
+C
+C-------------------------------------------------------------------------------------------------
+C   ITUSP   URINDR[1]  URINDR[2]  URINDR[3] ...  
+C-------------------------------------------------------------------------------------------------
+*
+*
+C-------------------------------------------------------------------------------
+C                       Pathnames for Urban Water Use Data
+C                             (READ FROM DSS FILE)
+C
+C   List the pathnames for urban water use data below, if it will be read
+C   from a DSS file (i.e. DSSFL is specified above).
+C
+C   REC  ;  Time series record number
+C   PATH ;  Pathname for the time series record 
+C
+C----------------------------------------------------------------------------------------------------------- 
+C   REC       PATH
+C-----------------------------------------------------------------------------------------------------------
+    1        /SAMPLE_PROBLEM/URB_SPEC/FRACTION//1YEAR/URBAN_SPEC/
+

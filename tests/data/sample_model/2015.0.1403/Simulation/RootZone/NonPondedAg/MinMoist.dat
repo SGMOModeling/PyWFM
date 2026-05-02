@@ -1,0 +1,74 @@
+C*******************************************************************************
+C
+C                  INTEGRATED WATER FLOW MODEL (IWFM)
+C
+C*******************************************************************************
+C
+C                  MINIMUM SOIL MOISTURE DATA FILE
+C                       Root Zone Component
+C                       *** Version 4.12 ***
+C
+C
+C             Project:  IWFM Version 2015 Release
+C                       California Department of Water Resources
+C                       July, 2022
+C             Filename: MinMoist.dat
+C
+C*******************************************************************************
+C                           File Description
+C
+C   This data file contains a set of minimum soil moistures as a fraction of  
+C   field capacity that are used as trigger for irrigation events. The minimum 
+C   soil moisture value for a particular crop corresponds to the moisture content 
+C   at the Management Allowable Depletion (MAD) for that crop.  These values are 
+C   correlated to individual crops through the Non-Ponded Crop Data File.
+C
+C*******************************************************************************
+C               Minimum Soil Moisture Data Specifications
+C
+C   NCOLSM ; Number of minimum soil moisture data columns
+C   NSPSM  ; Number of time steps to update the minimum soil moisture data
+C             * Enter any number if time-tracking option is on
+C   NFQSM  ; Repetition frequency of the minimum soil moisture data 
+C             * Enter 0 if full time series data is supplied
+C             * Enter any number if time-tracking option is on
+C   DSSFL  ; The name of the DSS file for data input 
+C             * Leave blank if DSS file is not used for data input
+C
+C-------------------------------------------------------------------------------
+C         VALUE                                      DESCRIPTION
+C-------------------------------------------------------------------------------
+          2                                          / NCOLSM
+          1                                          / NSPSM  
+          0                                          / NFQSM
+                                                     / DSSFL
+C----------------------------------------------------------------------------------------------
+C                         Minimum Soil Moisture Data 
+C                            (READ FROM THIS FILE)
+C
+C   List the minimum soil moisture data below, if it will not be read from
+C   a DSS file (i.e. DSSFL is left blank above).
+C
+C   TIME ;  Time
+C   SMMIN;  Minimum soil moisture as a fraction of field capacity; [L/L]
+C
+C----------------------------------------------------------------------------------------------
+C  TIME            SMMIN[1]  SMMIN[2]  SMMIN[3] ... SMMIN[NCOLSM] 
+C----------------------------------------------------------------------------------------------
+C                     TO     AL
+  09/30/2500_24:00    0.6    0.45       
+C-------------------------------------------------------------------------------
+C                     Pathnames for Minimum Soil Moisture Data
+C                             (READ FROM DSS FILE)
+C
+C   List the pathnames for minimum soil moisture data below, if it 
+C   will be read from a DSS file (i.e. DSSFL is specified above).
+C
+C   REC  ;  Time series record number
+C   PATH ;  Pathname for the time series record 
+C
+C----------------------------------------------------------------------------------------------------------- 
+C   REC     PATH
+C-----------------------------------------------------------------------------------------------------------
+*
+*
