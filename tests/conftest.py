@@ -34,6 +34,13 @@ def pytest_addoption(parser):
         help="run slow tests (e.g. C2VSimCG)",
     )
     parser.addoption(
+        "--runsim", action="store_true",
+        help="run simulation-mode tests — they can't coexist with inquiry-"
+             "mode tests in the same pytest session (kernel singleton state), "
+             "so they're skipped by default. Use a dedicated pytest invocation: "
+             "`pytest --runsim tests/integration/model/test_simulation.py`",
+    )
+    parser.addoption(
         "--update-baselines", action="store_true",
         help="capture regression values into the baseline JSON instead of "
              "comparing — used to refresh tests/regression/data/*.json",
@@ -41,12 +48,16 @@ def pytest_addoption(parser):
 
 
 def pytest_collection_modifyitems(config, items):
-    if config.getoption("--runslow"):
-        return
-    skip = pytest.mark.skip(reason="needs --runslow")
-    for item in items:
-        if "slow" in item.keywords:
-            item.add_marker(skip)
+    if not config.getoption("--runslow"):
+        skip = pytest.mark.skip(reason="needs --runslow")
+        for item in items:
+            if "slow" in item.keywords:
+                item.add_marker(skip)
+    if not config.getoption("--runsim"):
+        skip = pytest.mark.skip(reason="needs --runsim")
+        for item in items:
+            if "simulation" in item.keywords:
+                item.add_marker(skip)
 
 
 class _SilentLog(pywfm.IWFMModel):
@@ -134,17 +145,44 @@ def sample_inquiry(sample_dir, sample_pp_sim, _ensure_results):
         os.chdir(cwd)
 
 
-@pytest.fixture
-def sample_simulation(sample_dir, sample_pp_sim, _ensure_results):
-    """Function-scoped fresh IWFMModel for tests that mutate state.
+@pytest.fixture(scope="session")
+def sample_simulation(sample_dir, tmp_path_factory):
+    """Session-scoped sim-mode IWFMModel — shared across all sim tests.
 
-    Uses _SilentLog so DefaultLogger isn't tripped after sample_inquiry
-    has already configured logging. Passes delete_inquiry_data_file=False
-    for the same kernel-state-bookkeeping reason.
+    Function-scoped sim fixtures don't work on the IWFM kernel: after
+    the first IWFMModel(is_for_inquiry=0).kill(), a second instantiation
+    in the same process crashes the Fortran runtime (CLOSE error on a
+    leaked unit). The kernel's simulation-mode bookkeeping is a process
+    singleton that doesn't fully reset on kill. So phase 5 tests share
+    one model and run sequentially against it; tests that mutate state
+    (advance_state, simulate_*) accumulate effects on the shared model.
+
+    Isolated to a tmp_path so simulation output doesn't truncate the
+    vendored Results/ that inquiry-mode tests read.
+
+    Copies the vendored Preprocessor + Simulation inputs to tmp_path so
+    the simulation writes its Results there. This keeps the vendored
+    Results/ (populated by _ensure_results for inquiry-mode tests)
+    safe from truncation — IWFMModel(is_for_inquiry=0) opens Results in
+    write mode on instantiation, so a sim test running against the
+    vendored location would corrupt subsequent inquiry-mode tests.
+
+    Uses _SilentLog so the DefaultLogger singleton isn't tripped after
+    sample_inquiry has configured logging, and delete_inquiry_data_file
+    =False for the same kernel-state-bookkeeping reason.
     """
-    pp, sim = sample_pp_sim
+    import shutil
+
+    sim_dir = tmp_path_factory.mktemp("sim")
+    for sub in ("Preprocessor", "Simulation"):
+        shutil.copytree(sample_dir / sub, sim_dir / sub)
+    # Kernel needs Results/ to exist on instantiation (writes output files
+    # into it during simulate_*; wants to truncate-or-create them up front).
+    (sim_dir / "Results").mkdir(exist_ok=True)
+    pp = sim_dir / "Preprocessor" / "PreProcessor_MAIN.IN"
+    sim = sim_dir / "Simulation" / "Simulation_MAIN.IN"
     cwd = os.getcwd()
-    os.chdir(sample_dir / "Simulation")
+    os.chdir(sim_dir / "Simulation")
     try:
         m = _SilentLog(
             str(pp), str(sim),
