@@ -46,15 +46,24 @@ jobs:
         shell: bash -el {0}
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
-      - uses: conda-incubator/setup-miniconda@v3
+      - uses: conda-incubator/setup-miniconda@v4
         with:
           python-version: ${{ matrix.python-version }}
           channels: cadwr-sgmo,conda-forge
           channel-priority: strict
-          auto-activate-base: false
+          # auto-activate-base was deprecated in setup-miniconda v3.3 and
+          # removed in v4 — the replacement is auto-activate. We're
+          # activating a named env (pywfm-test) below, so base activation
+          # is irrelevant; setting false is just defensive.
+          auto-activate: false
           activate-environment: pywfm-test
+          # Suppress the implicit-defaults-channel warning. We resolve
+          # iwfmdll from cadwr-sgmo and everything else from conda-forge;
+          # the defaults channel is neither needed nor licensed for free
+          # commercial use under the current Anaconda terms.
+          conda-remove-defaults: "true"
 
       - name: Install IWFM DLL
         run: conda install -y iwfmdll==${{ matrix.iwfm_api_version }}
@@ -74,7 +83,7 @@ jobs:
       # cache restores all five SampleModel Results dirs but only the one
       # matching the loaded DLL version actually gets populated per run.
       - name: Cache SampleModel Results
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: |
             tests/data/sample_model/2015.1.1273/Results
