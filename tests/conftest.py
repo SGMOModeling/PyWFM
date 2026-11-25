@@ -74,7 +74,21 @@ class _SilentLog(pywfm.IWFMModel):
 
 
 @pytest.fixture(scope="session")
-def dll_version():
+def iwfm_library():
+    """The loaded IWFM library; skips the test when none is installed.
+
+    Unit tests run in CI without an IWFM library (tests/unit on Linux, where
+    no stock library exists); the tests that need one skip there and run in
+    the jobs that install a library.
+    """
+    try:
+        return pywfm.get_dll()
+    except FileNotFoundError as e:
+        pytest.skip(f"no IWFM library installed: {str(e).splitlines()[0]}")
+
+
+@pytest.fixture(scope="session")
+def dll_version(iwfm_library):
     """Returns the loaded DLL's IWFM core version string."""
     misc = IWFMMiscellaneous()
     v = misc.get_version()

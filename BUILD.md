@@ -1,99 +1,88 @@
-# Building and Uploading PyWFM
+# Building pywfm packages
 
-This guide provides a description of how to build PyWFM and upload the built package to Conda for public distribution
+pywfm 1.0 ships three ways:
 
-## Building a Conda Package
+| Package | What it contains | Where the IWFM library comes from |
+|---|---|---|
+| PyPI wheel, `py3-none-win_amd64` / `manylinux` | pywfm plus the IWFM library in `pywfm/_lib` | bundled; the Intel runtimes it needs come from Intel's PyPI packages |
+| PyPI source distribution / pure wheel | pywfm only | `PYWFM_DLL`, `pywfm.load_dll()`, or `pywfm setup-pywfm` |
+| conda-forge `iwfm-pywfm` (noarch) | pywfm only | the conda-forge `libiwfm` package, a dependency |
 
-1. Set-up an account on anaconda.org
-2. Download and install anaconda or miniconda distribution
-3. Open Anaconda Prompt and create a conda environment
+## The IWFM library for a wheel
 
-   ```
-   conda create -n <env-name>
-   ```
+A wheel bundles the IWFM C library built from the handle-based fork with the
+**shared** Intel runtimes, and depends on Intel's PyPI packages of the same
+compiler version instead of bundling the runtimes. Requirements for the
+library:
 
-   For example if you want the environment to be called build_pkg
+- **Compiler.** Build it with the ifx version the fork's release was verified
+  with: 2026.1.1 for 2026.0.1848. Other versions don't reproduce the official
+  results bit for bit.
+- **Runtime libraries.** It may link only libraries that are on PyPI:
+  - `libifcoremd`, from `intel-fortran-rt`;
+  - `libmmd`, from `intel-cmplr-lib-rt`;
+  - `libiomp5md`, from `intel-openmp`;
+  - the system C runtime.
+- **heclib and HDF5.** Link them statically, which is the fork's default.
+- **OpenMP.** The conda-forge ifx links LLVM's `libomp.dll`, which isn't on
+  PyPI, and its `libiomp5md.lib` is an alias for that DLL. Link against the
+  real `libiomp5md.lib` from the `intel-openmp` PyPI wheel instead. Unpack
+  `intel_openmp-<version>-…-win_amd64.whl` and put its `Library\lib` first on
+  `LIB`.
 
-   > **Example**
-   >
-   > ```
-   > conda create -n build_pkg
-   > ```
+Windows, from the fork's source tree, with ifx 2026.1.1 set up and the
+`intel-openmp` import library first on `LIB`:
 
-   > **Note:**
-   >
-   > if you have an environment created to build conda packages, you can view existing environments by:
-   >
-   > ```
-   > conda info --envs
-   > ```
-   >
-   > or
-   >
-   > ```
-   > conda env list
-   > ```
+```bat
+cmake -S . -B build-wheel -G Ninja -DCMAKE_BUILD_TYPE=Release ^
+      -DCMAKE_Fortran_COMPILER=ifx -DIWFM_MONOLITHIC_BUILD=ON -DIWFM_SHARED_RUNTIME=ON ^
+      -DIWFM_BUILD_SIMULATION=OFF -DIWFM_BUILD_PREPROCESSOR=OFF -DIWFM_BUILD_BUDGET=OFF ^
+      -DIWFM_BUILD_ZBUDGET=OFF -DIWFM_BUILD_TESTS=OFF -DIWFM_BUILD_DLL=ON
+cmake --build build-wheel --target IWFM_C_DLL
+```
 
-4. Activate the new or existing conda environment
+The library is written to the fork's `Bin\IWFM_C_x64.dll`, overwriting
+whatever is there. Check its imports with
+`dumpbin /dependents Bin\IWFM_C_x64.dll`. Expect only `libiomp5md.dll`,
+`libifcoremd.dll`, `libmmd.dll`, `KERNEL32.dll`, `VCRUNTIME140.dll` and
+`api-ms-win-crt-*`.
 
-   ```
-   conda activate <env-name>
-   ```
+## Building a wheel
 
-5. Install [conda-build](https://docs.conda.io/projects/conda-build/en/stable/) and [anaconda-client](https://docs.anaconda.com/free/anacondaorg/user-guide/getting-started-with-anaconda-client/)
+```bash
+pip install build
+python scripts/stage_library.py path/to/IWFM_C_x64.dll path/to/IWFM/LICENSE --runtime-version 2026.1.1
+python -m build --wheel
+python scripts/stage_library.py --clean      # back to a pure checkout
+```
 
-   ```
-   conda install anaconda-client conda-build
-   ```
+`stage_library.py` copies three files into `src/pywfm/_lib`:
+- the library;
+- IWFM's license, as `LICENSE-IWFM`;
+- `runtime-requirements.txt`, listing `intel-fortran-rt`, `intel-cmplr-lib-rt`
+  and `intel-openmp`, each pinned to `--runtime-version`.
 
-6. Log-in to your anaconda account from anaconda prompt
+`setup.py` then tags the wheel for the platform (`py3-none-<platform>`) and
+adds those requirements. Without a staged library, `python -m build` produces
+the pure `py3-none-any` wheel and the sdist.
 
-   ```
-   anaconda login
-   ```
+Before uploading, test the wheel in a clean environment with no `PYWFM_DLL`.
+pywfm must report the bundled library, and the suite must pass. The
+regression tests compare simulated values exactly with the release's
+baseline.
 
-7. To create a conda package, you need to develop a conda recipe. For PyWFM, conda recipes can be found in the conda.recipe directory
+```bash
+python -m venv /tmp/wheeltest && /tmp/wheeltest/Scripts/python -m pip install dist/*.whl pytest
+/tmp/wheeltest/Scripts/pywfm get-api-version          # Library: …/site-packages/pywfm/_lib/…
+/tmp/wheeltest/Scripts/python -m pytest tests/unit tests/integration tests/regression
+/tmp/wheeltest/Scripts/python -m pytest --runsim tests/integration/model/test_simulation.py
+```
 
-   For more information about conda recipes, see the link to the docs:
-   https://docs.conda.io/projects/conda-build/en/stable/concepts/recipe.html
+Upload with `twine upload dist/*`.
 
-   At a minimum, you will need a meta.yaml. For more complex builds, you may also need a build.bat and build.sh to support windows and linux/mac builds, respectively.
+## conda-forge
 
-   > **Note**
-   >
-   > At this time, pywfm only supports Windows due to the binary dependency with the Windows IWFM DLL. Initial stages of development for a Linux version of the IWFM API are being explored.
-
-8. Build the conda package
-
-   Navigate to the conda recipe (meta.yaml)
-
-   ```
-   conda build --no-anaconda-upload .
-   ```
-
-9. Upload the built package to anaconda.org for distribution.
-
-   > **Note**
-   >
-   > if you want to upload the conda package to a specific channel, you may need to add the channel via conda config
-   >
-   > ```
-   > conda config --env --add channels ORGANIZATION
-   > ```
-   >
-   > You also need to provide the full path to the <package-name>.tar.bz2 file created by conda build.
-   > Upon completion of the build process, the path will be provided to you.
-
-   ```
-   anaconda upload --user ORGANIZATION package.tar.bz2
-   ```
-
-   > **Example**
-   >
-   > ```
-   > conda config --env --add channels cadwr-sgmo
-   > ```
-   >
-   > ```
-   > anaconda upload --user cadwr-sgmo C:\Users\hatch\.conda\envs\build_pkg\conda-bld\noarch\pywfm-0.2.5-pyh7b7c402_0.tar.bz2
-   > ```
+pywfm on conda-forge is a pure `noarch: python` package (`recipe/`) that
+depends on `libiwfm`. The `libiwfm` and `heclib` recipes live in the fork,
+under `packaging/conda-forge/`. Both go to conda-forge through
+`staged-recipes`, then are maintained in their feedstocks.

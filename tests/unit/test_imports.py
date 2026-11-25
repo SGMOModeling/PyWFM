@@ -20,7 +20,7 @@ def test_pywfm_imports():
 
 
 @pytest.mark.unit
-def test_dll_loaded():
+def test_dll_loaded(iwfm_library):
     """The library loads and its path is reported."""
     assert pywfm.get_dll() is not None
     assert pywfm.IWFM_API is pywfm.get_dll()
@@ -48,7 +48,7 @@ def test_dll_reports_iwfm_version(dll_version):
 
 
 @pytest.mark.unit
-def test_abi_matches_exports():
+def test_abi_matches_exports(iwfm_library):
     """abi() agrees with the structural marker: stock DLLs export IW_Model_Switch."""
     dll = pywfm.get_dll()
     expected = "switch" if hasattr(dll, "IW_Model_Switch") else "handle"
@@ -56,15 +56,26 @@ def test_abi_matches_exports():
 
 
 @pytest.mark.unit
-def test_load_dll_same_path_is_idempotent():
+def test_load_dll_same_path_is_idempotent(iwfm_library):
     """Re-loading the already-loaded library returns the same handle."""
     assert pywfm.load_dll(pywfm.dll_path()) is pywfm.get_dll()
 
 
 @pytest.mark.unit
-def test_load_dll_other_path_refused(tmp_path):
+def test_load_dll_other_path_refused(iwfm_library, tmp_path):
     """A process can only use one IWFM library."""
     other = tmp_path / "other.dll"
     other.write_bytes(b"")
     with pytest.raises(pywfm.IWFMError):
         pywfm.load_dll(other)
+
+
+@pytest.mark.unit
+def test_missing_library_error_lists_search_locations():
+    """Without a library, the error names every place pywfm looked."""
+    try:
+        pywfm.get_dll()
+    except FileNotFoundError as e:
+        assert "PYWFM_DLL" in str(e)
+    else:
+        pytest.skip("an IWFM library is installed")
