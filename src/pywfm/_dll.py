@@ -128,14 +128,65 @@ def load_dll(path=None):
             target = find_library().resolve()
         elif not target.is_file():
             raise FileNotFoundError(f"IWFM library not found: {target}")
-        if platform.system() == "Windows":
-            # dependent runtime DLLs (OpenMP, Intel runtime) sit next to it
-            os.add_dll_directory(str(target.parent))
-        dll = ctypes.CDLL(str(target))
+        dll = _open(target)
         _abi = _classify(dll, target)
         _core_version = _version(dll)
         _dll, _path = dll, target
         return _dll
+
+
+def _runtime_dir():
+    """Where the environment's runtime libraries live.
+
+    conda (intel-fortran-rt, llvm-openmp) and Intel's PyPI packages
+    (intel-fortran-rt, intel-openmp) both install into this directory.
+    """
+    prefix = Path(sys.prefix)
+    return prefix / "Library" / "bin" if platform.system() == "Windows" else prefix / "lib"
+
+
+def _open(target):
+    """Load the library, finding the Intel Fortran and OpenMP runtimes it links.
+
+    The runtimes are separate packages, never copied next to the library, so
+    a library bundled in the wheel (pywfm/_lib) must find them in the
+    environment.
+    """
+    runtime_dir = _runtime_dir()
+    if platform.system() == "Windows":
+        dirs = [target.parent]
+        if runtime_dir.is_dir() and runtime_dir != target.parent:
+            dirs.append(runtime_dir)
+        for d in dirs:
+            os.add_dll_directory(str(d))
+        # libifcoremd.dll loads libmmd.dll in a way that ignores directories
+        # added with add_dll_directory (it is found only through PATH, which
+        # an activated conda environment sets but a pip install does not), so
+        # load it first by full path.
+        for d in dirs:
+            if (d / "libmmd.dll").is_file():
+                ctypes.CDLL(str(d / "libmmd.dll"))
+                break
+        return ctypes.CDLL(str(target))
+
+    # Linux: the dynamic loader ignores sys.prefix, so preload each runtime
+    # library it reports missing from <prefix>/lib (globally, so later loads
+    # resolve against it) and retry.
+    return _load_preloading(target, ctypes.DEFAULT_MODE, runtime_dir, set())
+
+
+def _load_preloading(path, mode, runtime_dir, attempted):
+    while True:
+        try:
+            return ctypes.CDLL(str(path), mode=mode)
+        except OSError as err:
+            m = re.match(r"(\S+?): cannot open shared object file", str(err))
+            name = m.group(1) if m else None
+            candidate = runtime_dir / name if name else None
+            if candidate is None or name in attempted or not candidate.is_file():
+                raise
+            attempted.add(name)
+            _load_preloading(candidate, ctypes.RTLD_GLOBAL, runtime_dir, attempted)
 
 
 def get_dll():
