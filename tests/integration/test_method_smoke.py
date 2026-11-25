@@ -623,8 +623,6 @@ DEFERRED: dict[str, list[str]] = {
         "read_timeseries_data",
         "read_timeseries_data_overwrite",
         "restore_pumping_to_read_values",
-        "set_preprocessor_path",
-        "set_simulation_path",
         "set_supply_adjustment_max_iterations",
         "set_supply_adjustment_tolerance",
         "simulate_all",

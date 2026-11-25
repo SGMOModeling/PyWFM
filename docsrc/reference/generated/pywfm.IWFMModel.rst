@@ -226,8 +226,6 @@
       ~IWFMModel.read_timeseries_data_overwrite
       ~IWFMModel.restore_pumping_to_read_values
       ~IWFMModel.set_log_file
-      ~IWFMModel.set_preprocessor_path
-      ~IWFMModel.set_simulation_path
       ~IWFMModel.set_supply_adjustment_max_iterations
       ~IWFMModel.set_supply_adjustment_tolerance
       ~IWFMModel.simulate_all

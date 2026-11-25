@@ -288,8 +288,6 @@ Model Simulation
    close_log_file
    get_last_message
    log_last_message
-   set_preprocessor_path
-   set_simulation_path
    turn_supply_adjustment_on_off
    set_supply_adjustment_max_iterations
    set_supply_adjustment_tolerance

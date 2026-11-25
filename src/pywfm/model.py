@@ -7133,16 +7133,10 @@ class IWFMModel(IWFMMiscellaneous):
         >>> model.kill()
         >>> model.close_log_file()
         """
-        # method has been renamed in newer versions of the IWFM API to IW_Model_GetWellCoordinates
-        procedure_names = ("IW_Model_GetWellCoordinates", "IW_Model_GetWellXY")
-
-        for n in procedure_names:
-            if hasattr(self.dll, n):
-                procedure_name = n
-                break
-        else:
+        # (2015-series DLLs called this IW_Model_GetWellXY; pywfm 1.0 does not support them)
+        if not hasattr(self.dll, "IW_Model_GetWellCoordinates"):
             raise AttributeError(
-                f'IWFM API does not have procedure "{procedure_names[0]}" or "{procedure_names[1]}". '
+                'IWFM API does not have "IW_Model_GetWellCoordinates" procedure. '
                 "Check for an updated version"
             )
 
@@ -7156,16 +7150,10 @@ class IWFMModel(IWFMMiscellaneous):
         x = (ctypes.c_double * n_wells.value)()
         y = (ctypes.c_double * n_wells.value)()
 
-        if n == "IW_Model_GetWellCoordinates":
-            self._call(
-                "IW_Model_GetWellCoordinates",
-                ctypes.byref(n_wells), x, y, ctypes.byref(status)
-            )
-        else:
-            self._call(
-                "IW_Model_GetWellXY",
-                ctypes.byref(n_wells), x, y, ctypes.byref(status)
-            )
+        self._call(
+            "IW_Model_GetWellCoordinates",
+            ctypes.byref(n_wells), x, y, ctypes.byref(status)
+        )
 
         # check for errors in the IWFM API call
         if status.value != 0:
@@ -11413,90 +11401,6 @@ class IWFMModel(IWFMMiscellaneous):
 
         return self._get_location_ids(location_type_id)
 
-    def set_preprocessor_path(self, preprocessor_path):
-        """
-        sets the path to the directory where the preprocessor main
-        input file is located
-
-        Parameters
-        ----------
-        preprocessor_path : str
-            file path to where preprocessor main input file is stored
-
-        Returns
-        -------
-        None
-            internally sets the path of the preprocessor main input file
-        """
-        # check to see if IWFM procedure is available in user version of IWFM DLL
-        if not hasattr(self.dll, "IW_Model_SetPreProcessorPath"):
-            raise AttributeError(
-                'IWFM API does not have "{}" procedure. '
-                "Check for an updated version".format("IW_Model_SetPreProcessorPath")
-            )
-
-        # get length of preprocessor_path string
-        len_pp_path = len(preprocessor_path)
-
-        # convert preprocessor path to ctypes character array
-        preprocessor_path = ctypes.create_string_buffer(
-            preprocessor_path.encode("utf-8")
-        )
-
-        # set instance variable status to 0
-        status = ctypes.c_int(0)
-
-        self._call(
-            "IW_Model_SetPreProcessorPath",
-            ctypes.byref(len_pp_path), preprocessor_path, ctypes.byref(status)
-        )
-
-        # check for errors in the IWFM API call
-        if status.value != 0:
-            error_message = self.get_last_message()
-            raise IWFMError(error_message)
-
-    def set_simulation_path(self, simulation_path):
-        """
-        sets the path to the directory where the simulation main
-        input file is located
-
-        Parameters
-        ----------
-        simulation_path : str
-            file path to where simulation main input file is stored
-
-        Returns
-        -------
-        None
-            internally sets the path of the simulation main input file
-        """
-        # check to see if IWFM procedure is available in user version of IWFM DLL
-        if not hasattr(self.dll, "IW_Model_SetSimulationPath"):
-            raise AttributeError(
-                'IWFM API does not have "{}" procedure. '
-                "Check for an updated version".format("IW_Model_SetSimulationPath")
-            )
-
-        # get length of preprocessor_path string
-        len_sim_path = len(simulation_path)
-
-        # convert preprocessor path to ctypes character array
-        simulation_path = ctypes.create_string_buffer(simulation_path.encode("utf-8"))
-
-        # set instance variable status to 0
-        status = ctypes.c_int(0)
-
-        self._call(
-            "IW_Model_SetSimulationPath",
-            ctypes.byref(len_sim_path), simulation_path, ctypes.byref(status)
-        )
-
-        # check for errors in the IWFM API call
-        if status.value != 0:
-            error_message = self.get_last_message()
-            raise IWFMError(error_message)
-
     def set_supply_adjustment_max_iterations(self, max_iterations):
         """
         sets the maximum number of iterations that will be used in
@@ -11791,38 +11695,43 @@ class IWFMModel(IWFMMiscellaneous):
 
     def read_timeseries_data_overwrite(
         self,
-        land_use_areas,
-        diversion_ids,
-        diversions,
-        stream_inflow_ids,
-        stream_inflows,
+        land_use_areas=None,
+        diversion_ids=None,
+        diversions=None,
+        stream_inflow_ids=None,
+        stream_inflows=None,
+        bypass_ids=None,
+        bypasses=None,
     ):
         """
-        reads time series data for the current simulation time step and allows overwriting certain time series data
+        reads time series data for the current simulation time step and
+        overwrites selected values with the ones provided
 
         Parameters
         ----------
-        land_use_areas : list or np.ndarray
-            subregional land use areas to be overwritten for the current
-            time step order is non-ponded first, then ponded, then urban,
-            then native, and riparian
+        land_use_areas : list, np.ndarray or None, default None
+            subregional land use areas for the current time step, shape
+            (n_subregions, n_land_uses) with land uses ordered non-ponded
+            crops, ponded crops, urban, native, riparian. None keeps the
+            areas read from the input files.
 
-        diversion_ids : list or np.ndarray
-            diversion identification numbers to be overwritten
+        diversion_ids : list, np.ndarray or None, default None
+            diversion identification numbers to overwrite
 
-        diversions : list or np.ndarray
-            diversion amounts to overwrite for each diversion
-            identification number provided. must be same length
-            as diversion_ids
+        diversions : list, np.ndarray or None, default None
+            diversion amounts, one per diversion_ids entry
 
-        stream_inflow_ids : list or np.ndarray
-            stream inflow indices where boundary inflows will be
-            overwritten
+        stream_inflow_ids : list, np.ndarray or None, default None
+            stream inflow identification numbers to overwrite
 
-        stream_inflows : list or np.ndarray
-            stream inflow amounts to be overwritten for each stream
-            flow index provided. Must be the same length as
-            stream_inflow_ids
+        stream_inflows : list, np.ndarray or None, default None
+            stream inflow amounts, one per stream_inflow_ids entry
+
+        bypass_ids : list, np.ndarray or None, default None
+            bypass identification numbers to overwrite
+
+        bypasses : list, np.ndarray or None, default None
+            bypass amounts, one per bypass_ids entry
 
         Returns
         -------
@@ -11831,7 +11740,9 @@ class IWFMModel(IWFMMiscellaneous):
         Note
         ----
         This method is intended to be used when is_for_inquiry=0 during
-        a model simulation
+        a model simulation. A group whose ids or values are None is not
+        overwritten. Identification numbers are translated to the
+        positions the IWFM API expects.
 
         See Also
         --------
@@ -11844,128 +11755,34 @@ class IWFMModel(IWFMMiscellaneous):
                 "Check for an updated version".format("IW_Model_ReadTSData_Overwrite")
             )
 
+        # land use areas: IWFM expects a (subregion, land use) array in
+        # Fortran (column-major) order; an empty array means no overwrite
         if land_use_areas is None:
             n_landuses = ctypes.c_int(0)
             n_subregions = ctypes.c_int(0)
+            land_use_array = (ctypes.c_double * 0)()
         else:
-            # get number of land uses
             n_landuses = ctypes.c_int(self.get_n_ag_crops() + 3)
-
-            # get number of subregions
             n_subregions = ctypes.c_int(self.get_n_subregions())
-
-            # check that land_use_areas is n_subregions by n_landuses
-            if isinstance(land_use_areas, list):
-                land_use_areas = np.array(land_use_areas)
-
-            if land_use_areas.shape != (n_subregions, n_landuses):
+            areas = np.asarray(land_use_areas, dtype=float)
+            if areas.shape != (n_subregions.value, n_landuses.value):
                 raise ValueError(
-                    "land_use areas must be provided for "
-                    "each land use and subregion in the model"
+                    "land_use_areas must have shape (n_subregions, n_land_uses) = "
+                    f"({n_subregions.value}, {n_landuses.value}), got {areas.shape}"
                 )
+            flat = areas.ravel(order="F")
+            land_use_array = (ctypes.c_double * flat.size)(*flat)
 
-        # convert land_use_areas to ctypes
-        land_use_array = ((ctypes.c_double * n_subregions.value) * n_landuses.value)()
-        for i, row in enumerate(land_use_areas):
-            land_use_array[i][:] = row
+        n_diversions, diversion_index, diversion_values = self._overwrite_group(
+            "diversion", diversion_ids, diversions, self.get_diversion_ids
+        )
+        n_stream_inflows, inflow_index, inflow_values = self._overwrite_group(
+            "stream inflow", stream_inflow_ids, stream_inflows, self.get_stream_inflow_ids
+        )
+        n_bypasses, bypass_index, bypass_values = self._overwrite_group(
+            "bypass", bypass_ids, bypasses, self.get_bypass_ids
+        )
 
-        # check that diversion_ids are valid
-        # if either diversion_ids or diversions are None treat both as None.
-        if diversion_ids is None or diversions is None:
-            n_diversions = ctypes.c_int(0)
-        else:
-            # check that diversion_ids are provided as correct data type
-            if not isinstance(diversion_ids, (np.ndarray, list)):
-                raise TypeError(
-                    "diversion_ids must be provided as a list or np.ndarray"
-                )
-
-            # check that diversions are provided as the correct data type
-            if not isinstance(diversions, (np.ndarray, list)):
-                raise TypeError("diversions must be provided as a list or np.ndarray")
-
-            # get diversion_ids specified in the model input files
-            model_diversion_ids = self.get_diversion_ids()
-
-            # if provided as a list, convert to a np.ndarray
-            if isinstance(diversion_ids, list):
-                diversion_ids = np.array(diversion_ids)
-
-            if isinstance(diversions, list):
-                diversions = np.array(diversions)
-
-            # check that all diversion_ids provided are valid model diversion ids
-            if not np.all(np.isin(diversion_ids, model_diversion_ids)):
-                raise ValueError(
-                    "diversion_ids contains diversion "
-                    "identification number not found in the model"
-                )
-
-            # check diversion and diversion_ids are the same length
-            if (diversion_ids.shape != diversions.shape) and (
-                len(diversion_ids.shape) == 1
-            ):
-                raise ValueError(
-                    "diversion_ids and diversions must be 1D arrays of the same length"
-                )
-
-            # get the number of diversions
-            n_diversions = ctypes.c_int(len(diversion_ids))
-
-        # convert diversion_ids and diversion to ctypes
-        diversion_ids = (ctypes.c_int * n_diversions.value)(*diversion_ids)
-        diversions = (ctypes.c_double * n_diversions.value)(*diversions)
-
-        # check that stream_inflow_ids are valid
-        # if either stream_inflow_ids or stream_inflows are None treat both as None.
-        if stream_inflow_ids is None or stream_inflows is None:
-            n_stream_inflows = ctypes.c_int(0)
-        else:
-            # check that stream_inflow_ids are provided as the correct data type
-            if not isinstance(stream_inflow_ids, (np.ndarray, list)):
-                raise TypeError(
-                    "stream_inflow_ids must be provided as a list or np.ndarray"
-                )
-
-            # check that stream_inflows are provided as the correct data type
-            if not isinstance(stream_inflows, (np.ndarray, list)):
-                raise TypeError(
-                    "stream_inflows must be provided as a list or np.ndarray"
-                )
-
-            model_stream_inflow_ids = self.get_stream_inflow_ids()
-
-            # if provided as a list, convert to a np.ndarray
-            if isinstance(stream_inflow_ids, list):
-                stream_inflow_ids = np.array(stream_inflow_ids)
-
-            if isinstance(stream_inflows, list):
-                stream_inflows = np.array(stream_inflows)
-
-            # check that all stream_inflow_ids provided are valid model stream inflow ids
-            if not np.all(np.isin(stream_inflow_ids, model_stream_inflow_ids)):
-                raise ValueError(
-                    "stream_inflow_ids contains stream inflow "
-                    "identification numbers not found in the model"
-                )
-
-            # check stream_inflows and stream_inflow_ids are the same length
-            if (stream_inflow_ids.shape != stream_inflows.shape) and (
-                len(stream_inflow_ids.shape) == 1
-            ):
-                raise ValueError(
-                    "stream_inflow_ids and stream_inflows "
-                    "must be 1D arrays of the same length"
-                )
-
-            # get the number of diversions
-            n_stream_inflows = ctypes.c_int(len(stream_inflow_ids))
-
-        # convert diversion_ids and diversion to ctypes
-        stream_inflow_ids = (ctypes.c_int * n_diversions.value)(*stream_inflow_ids)
-        stream_inflows = (ctypes.c_double * n_diversions.value)(*stream_inflows)
-
-        # set instance variable status to 0
         status = ctypes.c_int(0)
 
         self._call(
@@ -11974,11 +11791,14 @@ class IWFMModel(IWFMMiscellaneous):
             ctypes.byref(n_subregions),
             land_use_array,
             ctypes.byref(n_diversions),
-            diversion_ids,
-            diversions,
+            diversion_index,
+            diversion_values,
             ctypes.byref(n_stream_inflows),
-            stream_inflow_ids,
-            stream_inflows,
+            inflow_index,
+            inflow_values,
+            ctypes.byref(n_bypasses),
+            bypass_index,
+            bypass_values,
             ctypes.byref(status),
         )
 
@@ -11986,6 +11806,40 @@ class IWFMModel(IWFMMiscellaneous):
         if status.value != 0:
             error_message = self.get_last_message()
             raise IWFMError(error_message)
+
+    @staticmethod
+    def _overwrite_group(label, ids, values, get_model_ids):
+        """Validate one overwrite group and convert its IDs to 1-based positions.
+
+        Returns (count, positions, values) as ctypes objects; a group with
+        ids or values None is empty (not overwritten).
+        """
+        if ids is None or values is None:
+            return ctypes.c_int(0), (ctypes.c_int * 0)(), (ctypes.c_double * 0)()
+
+        ids = np.asarray(ids, dtype=int).ravel()
+        values = np.asarray(values, dtype=float).ravel()
+        if ids.shape != values.shape:
+            raise ValueError(
+                f"{label} ids and values must be 1D sequences of the same length"
+            )
+
+        model_ids = np.asarray(get_model_ids(), dtype=int)
+        missing = ids[~np.isin(ids, model_ids)]
+        if missing.size:
+            raise ValueError(
+                f"{label} identification numbers not found in the model: {missing.tolist()}"
+            )
+        # IWFM indexes the overwritten entries by position (1-based), not ID
+        position = {int(i): k + 1 for k, i in enumerate(model_ids)}
+        positions = [position[int(i)] for i in ids]
+
+        n = len(positions)
+        return (
+            ctypes.c_int(n),
+            (ctypes.c_int * n)(*positions),
+            (ctypes.c_double * n)(*values),
+        )
 
     def print_results(self):
         """
@@ -12152,36 +12006,19 @@ class IWFMModel(IWFMMiscellaneous):
                 "Check for an updated version".format("IW_Model_IsModelInstantiated")
             )
 
-        # get the IWFM API version
-        api_version = self.get_version()
-        iwfm_core_version = (
-            api_version["IWFM Core"]
-            if "IWFM Core" in api_version.keys()
-            else api_version["IWFM"]
-        )
-        major_version, revision_number, build_number = [
-            v for v in iwfm_core_version.split(".")
-        ]
-
         # initialize output variables
         is_instantiated = ctypes.c_int(0)
 
         # set instance variable status to 0
         status = ctypes.c_int(0)
 
-        if int(major_version) > 2015:
-            model_index = ctypes.c_int(model_index)
+        model_index = ctypes.c_int(model_index)
 
-            self.dll.IW_Model_IsModelInstantiated(
-                ctypes.byref(model_index),
-                ctypes.byref(is_instantiated),
-                ctypes.byref(status),
-            )
-
-        else:
-            self.dll.IW_Model_IsModelInstantiated(
-                ctypes.byref(is_instantiated), ctypes.byref(status)
-            )
+        self.dll.IW_Model_IsModelInstantiated(
+            ctypes.byref(model_index),
+            ctypes.byref(is_instantiated),
+            ctypes.byref(status),
+        )
 
         # check for errors in the IWFM API call
         if status.value != 0:

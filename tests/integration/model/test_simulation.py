@@ -137,3 +137,66 @@ class TestSimulateForAnInterval:
         sample_simulation.advance_time()
         after = _parse_iwfm_date(sample_simulation.get_current_date_and_time())
         assert after > before
+
+
+def _step_rest(model):
+    """Finish a time step whose time series data has already been read."""
+    model.simulate_for_one_timestep()
+    model.advance_state()
+    model.advance_time()
+
+
+@pytest.mark.integration
+@pytest.mark.simulation
+class TestReadTimeseriesDataOverwrite:
+    """read_timeseries_data_overwrite: IW_Model_ReadTSData_Overwrite takes
+    land-use areas plus diversion, stream inflow and bypass groups, each
+    indexed by position. Earlier versions passed 10 of its 13 arguments and
+    crashed on any group left as None."""
+
+    def test_no_overwrites(self, sample_simulation):
+        """All groups None behaves like read_timeseries_data."""
+        sample_simulation.read_timeseries_data_overwrite()
+        _step_rest(sample_simulation)
+
+    def test_stream_inflow_overwrite_is_applied(self, sample_simulation):
+        inflow_ids = sample_simulation.get_stream_inflow_ids()
+        target = int(inflow_ids[-1])
+        sample_simulation.read_timeseries_data_overwrite(
+            stream_inflow_ids=[target], stream_inflows=[12345.0]
+        )
+        got = sample_simulation.get_stream_inflows_at_some_locations([target])
+        assert got[0] == pytest.approx(12345.0)
+        _step_rest(sample_simulation)
+
+    def test_all_groups_together(self, sample_simulation):
+        """Every group passed at once (bypass group included) runs a step."""
+        div_ids = sample_simulation.get_diversion_ids()
+        inflow_ids = sample_simulation.get_stream_inflow_ids()
+        byp_ids = sample_simulation.get_bypass_ids()
+        sample_simulation.read_timeseries_data_overwrite(
+            diversion_ids=div_ids[:1], diversions=[0.0],
+            stream_inflow_ids=inflow_ids[:1], stream_inflows=[100.0],
+            bypass_ids=byp_ids[:1] if len(byp_ids) else None,
+            bypasses=[0.0] if len(byp_ids) else None,
+        )
+        _step_rest(sample_simulation)
+
+    def test_rejects_unknown_id(self, sample_simulation):
+        with pytest.raises(ValueError, match="not found in the model"):
+            sample_simulation.read_timeseries_data_overwrite(
+                diversion_ids=[987654], diversions=[1.0]
+            )
+
+    def test_rejects_mismatched_lengths(self, sample_simulation):
+        first = int(sample_simulation.get_stream_inflow_ids()[0])
+        with pytest.raises(ValueError, match="same length"):
+            sample_simulation.read_timeseries_data_overwrite(
+                stream_inflow_ids=[first, first], stream_inflows=[1.0]
+            )
+
+    def test_rejects_wrong_land_use_shape(self, sample_simulation):
+        with pytest.raises(ValueError, match="land_use_areas must have shape"):
+            sample_simulation.read_timeseries_data_overwrite(
+                land_use_areas=np.zeros((1, 1))
+            )
