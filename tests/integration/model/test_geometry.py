@@ -96,6 +96,16 @@ class TestBoundary:
         assert not unknown, f"Boundary references unknown node IDs: {sorted(unknown)[:10]}"
 
 
+@pytest.fixture(scope="module")
+def mesh(sample_inquiry):
+    """Node coordinates, node-ID -> index map, and element IDs."""
+    x, y = sample_inquiry.get_node_coordinates()
+    node_ids = sample_inquiry.get_node_ids()
+    element_ids = sample_inquiry.get_element_ids()
+    index = {nid: i for i, nid in enumerate(node_ids)}
+    return x, y, index, element_ids
+
+
 @pytest.mark.integration
 @requires_api("IW_Model_FEInterpolate")
 class TestFEInterpolate:
@@ -106,14 +116,6 @@ class TestFEInterpolate:
     unity, and they reproduce the point's own coordinates (IWFM's element
     shape functions are isoparametric).
     """
-
-    @pytest.fixture(scope="class")
-    def mesh(self, sample_inquiry):
-        x, y = sample_inquiry.get_node_coordinates()
-        node_ids = sample_inquiry.get_node_ids()
-        element_ids = sample_inquiry.get_element_ids()
-        index = {nid: i for i, nid in enumerate(node_ids)}
-        return x, y, index, element_ids
 
     def _centroid_cases(self, sample_inquiry, mesh, n=25):
         x, y, index, element_ids = mesh

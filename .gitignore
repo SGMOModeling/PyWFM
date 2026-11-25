@@ -22,3 +22,8 @@ tests/data/sample_model/*/Simulation/fort.*
 # instantiate without an existing preprocessor cache, and pywfm doesn't
 # invoke the standalone PreProcessor_x64.exe from Python. Re-include it.
 !tests/data/sample_model/*/Simulation/PreProcessor.bin
+
+# Per-DLL working copies of the vendored SampleModels (conftest._working_copy)
+tests/data/sample_model/.work/
+# IWFM library copied in by wheel builds (setup.py)
+src/pywfm/_lib/

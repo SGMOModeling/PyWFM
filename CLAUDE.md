@@ -4,58 +4,60 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this project is
 
-`pywfm` is a Python wrapper around the **IWFM (Integrated Water Flow Model) C API DLL** maintained by California DWR. It exposes the Fortran procedures via `ctypes` so users work with regular Python types (str, int, float, list, numpy arrays) instead of raw `ctypes` buffers. Distribution is Windows-only because the IWFM DLL is Windows-only (a Linux `.so` path exists in `__init__.py` but is exploratory).
+`pywfm` is a Python wrapper around the **IWFM (Integrated Water Flow Model) C API library** maintained by California DWR. It exposes the Fortran procedures via `ctypes` so users work with regular Python types (str, int, float, list, numpy arrays) instead of raw `ctypes` buffers. Windows (`IWFM_C_x64.dll`) and Linux (`libiwfm_c.so`) are supported.
 
-## Two release lines
+## Release lines
 
-The repo maintains two parallel branches because the IWFM kernel had a multi-instance API rewrite (commit 393e02e) that no shipped DLL ships with yet:
-
-- **`master` (this branch, 0.3.x)** — targets the handle-based kernel (393e02e+). Every `IW_Model_*` call takes `iModelID`. `IW_Model_Switch` is gone. Held at `0.3.0-rc1` (no conda upload) until upstream publishes a DLL with the new kernel.
-- **`0.2.x`** — maintenance line for stock IWFM DLLs currently in the cadwr-sgmo channel: 2015.0.1273, 2015.0.1403, 2015.1.1443, 2024.2.1594, 2025.0.1747. Bug fixes for those users land here. Uses `IW_Model_Switch` / `IW_Model_GetCurrentModelID` (the previous-generation multi-instance pattern) for 2024/2025; falls through `hasattr` guards on 2015.
-
-When working on a fix, decide which line it belongs to before opening a PR. Cross-port if it applies to both.
+- **`1.0-dev`** (this branch, becoming 1.0): one codebase for both IWFM C API generations (see "Two API generations" below), Python 3.10+.
+- **`0.3.x`**: handle-based kernel only. Superseded by 1.0.
+- **`0.2.x`**: stock DLLs including the 2015 series (1273, 1403, 1443). 1.0 drops the 2015 series; fixes for those users land on 0.2.x.
 
 ## Common commands
 
-Tests use pytest:
+```
+pytest tests/unit tests/integration                  # inquiry-mode suite
+pytest --runsim tests/integration/model/test_simulation.py      # sim-mode tests: own session
+pytest --runsim tests/integration/model/test_multi_instance.py  # multi-instance: own session
+PYWFM_DLL=C:\path	o\IWFM_C_x64.dll pytest ...    # test against a specific library
+```
+
+Run the suite once per library (stock 2025.0.1747, stock 2026.0.1848, the handle-based 2026.0.1848.rev build). `tests/conftest.py` picks the vendored SampleModel by the library's major version (`v2025` or `v2026`) and the DSS file by API generation (stock builds read only DSS-6, the handle-based builds only DSS-7), and builds a working copy under `tests/data/sample_model/.work/` (git-ignored; Results are cached there between sessions). `PYWFM_SAMPLE_DIR` overrides the SampleModel.
+
+CLI:
 
 ```
-pytest                              # run all tests
-pytest tests/test_multi_instance.py # run one file
-pytest tests/test_multi_instance.py::test_two_models_simultaneously
-```
-
-The multi-instance test is gated on a sample model existing on disk (default path `../../IWFM/iwfm-2025.0.1747/SampleModel`, override with `IWFM_SAMPLE_MODEL` env var). `test_model.py`, `test_budget.py`, and `test_zbudget.py` are unfinished stubs that import a non-existent `iwfmdll` package and will fail collection — leave them alone unless explicitly asked to fix them.
-
-CLI (installed by `pip install -e .`):
-
-```
-pywfm setup-pywfm --version 1747       # download IWFM API zip from CNRA, copy DLL into env's Library/bin
-pywfm setup-pywfm --path C:\path\to\IWFM_C_x64.dll  # use a local DLL instead
-pywfm get-api-version                  # print version of the loaded DLL
+pywfm setup-pywfm --version 1848       # download the stock IWFM API from CNRA into the env's library dir
+pywfm setup-pywfm --path C:\path	o\IWFM_C_x64.dll  # use a local library instead
+pywfm get-api-version                  # version, path, and API generation of the loaded library
 ```
 
 Build:
 
 ```
-pip install -e .                      # editable install
-conda build conda.recipe                # build noarch conda pkg, requires conda-build & anaconda-client
+pip install -e .                      # editable install (library from PYWFM_DLL or the environment)
+python -m build --wheel               # pure wheel, or a py3-none-<platform> wheel when src/pywfm/_lib holds the library (setup.py)
+rattler-build build -r recipe          # conda package (noarch; depends on libiwfm)
 ```
-
-The conda recipe builds one variant per IWFM API version listed in `conda.recipe/conda_build_config.yaml` and depends on `cadwr-sgmo::iwfmdll==<version>` to vendor the DLL. Targets Python 3.8 per the same config.
 
 ## Architecture
 
-### DLL loading happens at import time
+### Library loading (`_dll.py`)
 
-`src/pywfm/__init__.py` resolves `LIB` to `<python-env>/Library/bin/IWFM_C_x64.dll` (or `IWFM2015_C_x64.dll`) and calls `ctypes.CDLL(LIB)` into module-level `IWFM_API`. Importing `pywfm` therefore **fails immediately** if the DLL isn't installed — the CLI's `setup-pywfm` command exists to put it there. `IWFM_API` is the singleton handle every class uses via `self.dll`.
+The library is loaded on first use, not at import. Search order: `pywfm.load_dll(path)`, then the `PYWFM_DLL` environment variable, then the copy bundled in a platform wheel (`pywfm/_lib`), then the environment (`<prefix>/Library/bin` on Windows, `<prefix>/lib` on Linux, where the `libiwfm` conda package installs it). One library per process. `pywfm.IWFM_API` and `pywfm.LIB` still work (module `__getattr__`) but load the library when accessed.
 
-Right after the load, a structural guard checks `hasattr(IWFM_API, "IW_Model_Switch")`. That symbol exists on every pre-393e02e DLL and was removed by the kernel rewrite, so its presence is the unambiguous signal that the user has the wrong generation of DLL — the guard raises `IWFMError` with a "pin `iwfm-pywfm<0.3`" message. Don't replace this with a version-string parse; the structural check survives upstream version-label reuse.
+### Two API generations
+
+`_dll.abi()` classifies the loaded library structurally:
+
+- `"switch"`: stock DWR DLLs (2024.2.1594+). They export `IW_Model_Switch`; the DLL holds one active model.
+- `"handle"`: the handle-based kernel (commit 393e02e+, e.g. 2026.0.1848.rev). Every `IW_Model_*` procedure except `_dll.NO_MODEL_ID` takes the model ID as its first argument. Verified against the 2026.0.1848 sources: 165 procedures differ only by that leading argument.
+
+Model methods call `self._call("IW_Model_X", *args)` with the arguments **without** the model ID. `_call` prepends the ID on handle libraries; on switch libraries it calls `IW_Model_Switch` under `_dll.ACTIVE_MODEL_LOCK` first, so several `IWFMModel` objects work on both. Keep the procedure name as the literal first argument so the file stays searchable by Fortran procedure name. When a procedure's arguments changed between releases, branch on `_dll.core_version()` inside the method (see `fe_interpolate`: 2026.0.1848 added NVertex and iStat). 2015-series DLLs are rejected at load.
 
 ### Class hierarchy
 
 ```
-IWFMMiscellaneous (misc.py)         base — sets self.dll = IWFM_API, exposes IW_Get* helpers
+IWFMMiscellaneous (misc.py)         base — sets self.dll = get_dll(), exposes IW_Get* helpers
 ├── IWFMModel    (model.py, ~580k)  IW_Model_*  — the bulk of the API
 ├── IWFMBudget   (budget.py)        IW_Budget_* — budget HDF post-processing
 └── IWFMZBudget  (zbudget.py)       IW_ZBudget_* — zone-based budget
@@ -63,11 +65,9 @@ IWFMMiscellaneous (misc.py)         base — sets self.dll = IWFM_API, exposes I
 
 `IWFMMiscellaneous` is a base, not standalone — its docstring says "this class is not meant to be called directly," and `cli.py` instantiates it only to call `get_version()`. Most methods follow the same pattern: check `hasattr(self.dll, "IW_X")` (raises `AttributeError` if the loaded DLL is older), pack inputs into ctypes, call the Fortran proc, check `status.value`, raise `IWFMError` on non-zero, return Python types. **When adding methods, follow this pattern exactly** — don't shortcut the `hasattr` guard, since the same code runs against multiple DLL versions.
 
-### Handle-based model API (multi-instance)
+### Multi-instance limitations
 
-`IW_Model_New` returns a `model_id` (slot integer) and every subsequent `IW_Model_*` call takes it as the first argument. `IWFMModel.__init__` captures it as `self.model_id = ctypes.c_int(self.new())`, and every method passes `ctypes.byref(self.model_id)` so multiple `IWFMModel` instances coexist. There's no version branching in `new()` — the structural import-time guard in `__init__.py` already excluded any DLL that doesn't fit this shape.
-
-Two kernel-level limitations bite when using multiple instances simultaneously (documented in `tests/test_multi_instance.py`):
+Two kernel-level limitations bite when using multiple instances simultaneously (documented in `tests/integration/model/test_multi_instance.py`):
 
 1. `delete_inquiry_data_file` corrupts Fortran unit bookkeeping in current 393e02e+ builds — pass `delete_inquiry_data_file=False` on the 2nd+ instance.
 2. IWFM's `DefaultLogger` is a process-wide singleton — only one `set_log_file` call is allowed per process. Subclass `IWFMModel` and override `set_log_file` to a no-op for additional instances, or share the same `log_file`.
@@ -87,4 +87,4 @@ These are stateful in a different way: `IW_Budget_OpenFile` / `IW_ZBudget_OpenFi
 
 - Ctypes preparation is verbose-but-uniform: `ctypes.c_int(x)`, `ctypes.create_string_buffer(s.encode("utf-8"))`, `ctypes.sizeof(buf)` for the matching length arg, `ctypes.byref(...)` on every scalar passed to the DLL. Don't refactor toward "cleaner" wrappers — uniform repetition is what makes the file searchable for a given Fortran proc.
 - `model.py` is ~580k and ~13k lines; use `Grep` to find the method that wraps a given `IW_Model_*` proc rather than reading top-down.
-- Versioning: `__version__` lives in `src/pywfm/__init__.py` and is read by both `pyproject.toml` (`tool.setuptools.dynamic`) and `conda.recipe/meta.yaml` (regex). Bumping requires only that one line. Master is held at `0.3.0-rc1` until upstream ships the 393e02e+ DLL — see "When upstream ships" in `~/.claude/plans/does-this-repo-have-splendid-cookie.md` for the release checklist.
+- Versioning: `__version__` lives in `src/pywfm/__init__.py` (read by `pyproject.toml`); `recipe/recipe.yaml` repeats it in `context.version`.

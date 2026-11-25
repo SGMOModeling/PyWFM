@@ -2,7 +2,7 @@ import ctypes
 import datetime
 import numpy as np
 
-from pywfm import IWFM_API
+from pywfm._dll import get_dll
 
 
 class IWFMMiscellaneous:
@@ -22,7 +22,7 @@ class IWFMMiscellaneous:
     """
 
     def __init__(self):
-        self.dll = IWFM_API
+        self.dll = get_dll()
 
     def get_data_unit_type_id_length(self):
         if not hasattr(self.dll, "IW_GetDataUnitTypeID_Length"):

@@ -3,11 +3,12 @@
 The fixtures here are the foundation for every integration and regression
 test. Key design points:
 
-- ``sample_dir`` picks v2015/ or v2025/ at session start based on the
-  loaded DLL's IWFM major version. Both SampleModels are vendored under
-  ``tests/data/sample_model/`` because the file format genuinely differs
-  between 2015 and 2024+ (e.g. Element.dat region naming, Simulation_MAIN.IN
-  unit-12 file slot and STOPCVL parameter).
+- ``sample_dir`` picks v2025/ (2024/2025 DLLs) or v2026/ (2026.0.1848 and
+  later) at session start based on the loaded DLL's IWFM major version.
+  Each release's SampleModel is vendored under ``tests/data/sample_model/``
+  because newer kernels reject older SampleModel inputs.
+- The DLL under test is chosen with ``PYWFM_DLL`` (see pywfm._dll); run the
+  suite once per DLL to cover stock and handle-based builds.
 - ``_ensure_results`` runs the simulation once per session if the Results/
   directory is empty, since IWFMBudget/IWFMZBudget tests need .hdf outputs
   that aren't vendored.
@@ -74,13 +75,7 @@ class _SilentLog(pywfm.IWFMModel):
 
 @pytest.fixture(scope="session")
 def dll_version():
-    """Returns the loaded DLL's IWFM core version string.
-
-    On 0.3.x this requires the handle-based 393e02e+ kernel; the
-    structural import guard in src/pywfm/__init__.py refuses to load
-    against any DLL that still exports IW_Model_Switch, so by the time
-    a test runs we know we're on a compatible build.
-    """
+    """Returns the loaded DLL's IWFM core version string."""
     misc = IWFMMiscellaneous()
     v = misc.get_version()
     return v.get("IWFM Core") or v["IWFM"]
@@ -115,21 +110,71 @@ def requires_api(*procedures):
     )
 
 
+def _sample_variant():
+    """Vendored SampleModel matching the loaded DLL's IWFM release.
+
+    The 2026.0.1848 kernel rejects the 2025.0.1747 SampleModel's annual
+    Year-4000 time-series setup, and each release's SampleModel is the one
+    its DLL is tested against, so pick by the DLL's major version.
+    """
+    major = int(_core_version().split(".")[0])
+    return "v2026" if major >= 2026 else "v2025"
+
+
+def _core_version():
+    v = IWFMMiscellaneous().get_version()
+    return v.get("IWFM Core") or v["IWFM"]
+
+
+def _dss_format():
+    """HEC-DSS format the loaded DLL reads: 7 or 6.
+
+    The handle-based fork builds link HEC-DSS 7 and read only DSS-7 files;
+    the stock DWR DLLs read only DSS-6. Override with PYWFM_DSS=6|7.
+    """
+    if os.environ.get("PYWFM_DSS"):
+        return int(os.environ["PYWFM_DSS"])
+    return 7 if pywfm.abi() == "handle" else 6
+
+
+def _working_copy(variant, dss):
+    """Working copy of a vendored SampleModel with the matching DSS file.
+
+    Kept (git-ignored) under tests/data/sample_model/.work/ so the Results
+    simulated by _ensure_results are reused by later sessions with the same
+    DLL generation. Rebuilt when the vendored inputs are newer.
+    """
+    import shutil
+
+    src = SAMPLE_DIR / variant
+    work = SAMPLE_DIR / ".work" / f"{variant}-dss{dss}"
+    newest = max(p.stat().st_mtime for p in src.rglob("*") if p.is_file())
+    stamp = work / ".built"
+    if not stamp.exists() or stamp.stat().st_mtime < newest:
+        shutil.rmtree(work, ignore_errors=True)
+        shutil.copytree(src, work, ignore=shutil.ignore_patterns("Results"))
+        sim = work / "Simulation"
+        if dss == 6:
+            shutil.copy2(sim / "TSDATA_IN_dss6.DSS", sim / "TSDATA_IN.DSS")
+        stamp.touch()
+    return work
+
+
 @pytest.fixture(scope="session")
 def sample_dir():
-    """The vendored 2025-vintage SampleModel.
+    """SampleModel for the loaded DLL (see _sample_variant and _dss_format).
 
-    Unlike the 0.2.x suite, 0.3.x only ships one variant — the 2015
-    series doesn't have a handle-based kernel build, so a v2015 fixture
-    would never apply here.
-
-    Set PYWFM_SAMPLE_DIR to use another SampleModel instead (e.g. the
-    2026.0.1848 release's, whose TSDATA_IN.DSS is DSS-7: DLLs built on
-    the 1848 kernel cannot read the vendored model's older DSS file).
+    Set PYWFM_SAMPLE_DIR to use another SampleModel as-is instead.
     """
-    chosen = Path(os.environ.get("PYWFM_SAMPLE_DIR", SAMPLE_DIR / "v2025"))
+    if os.environ.get("PYWFM_SAMPLE_DIR"):
+        chosen = Path(os.environ["PYWFM_SAMPLE_DIR"])
+    else:
+        variant = _sample_variant()
+        if not (SAMPLE_DIR / variant / "Preprocessor" / "PreProcessor_MAIN.IN").exists():
+            pytest.skip(f"SampleModel not vendored at {SAMPLE_DIR / variant}")
+        chosen = _working_copy(variant, _dss_format())
     if not (chosen / "Preprocessor" / "PreProcessor_MAIN.IN").exists():
-        pytest.skip(f"SampleModel not vendored at {chosen}")
+        pytest.skip(f"SampleModel not found at {chosen}")
     return chosen
 
 

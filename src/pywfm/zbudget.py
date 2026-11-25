@@ -3,7 +3,6 @@ import ctypes
 import numpy as np
 import pandas as pd
 
-from pywfm import LIB
 
 from pywfm.misc import IWFMMiscellaneous
 

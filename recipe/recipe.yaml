@@ -1,0 +1,66 @@
+# conda-forge style (v1, rattler-build) recipe for pywfm.
+# pywfm is pure Python and loads the IWFM library at run time; the library
+# comes from the separate `libiwfm` package (built from source by its own
+# feedstock), so this package is noarch.
+schema_version: 1
+
+context:
+  name: iwfm-pywfm
+  version: "1.0.0.dev0"
+  python_min: "3.10"
+
+package:
+  name: ${{ name }}
+  version: ${{ version }}
+
+source:
+  # conda-forge builds from the PyPI sdist; replace the url/sha256 at release.
+  url: https://pypi.org/packages/source/i/iwfm-pywfm/iwfm_pywfm-${{ version }}.tar.gz
+  sha256: 0000000000000000000000000000000000000000000000000000000000000000
+
+build:
+  number: 0
+  noarch: python
+  script: ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  python:
+    entry_points:
+      - pywfm = pywfm.cli:cli
+
+requirements:
+  host:
+    - python ${{ python_min }}.*
+    - pip
+    - setuptools >=64
+  run:
+    - python >=${{ python_min }}
+    - numpy
+    - pandas
+    - matplotlib-base
+    - click
+    - requests
+    # the IWFM C API library (IWFM_C_x64.dll / libiwfm_c.so); found by
+    # pywfm in <prefix>/Library/bin (Windows) or <prefix>/lib (Linux)
+    - libiwfm >=2026.0.1848
+
+tests:
+  - python:
+      imports:
+        - pywfm
+      python_version: ${{ python_min }}.*
+  - script:
+      - pywfm get-api-version
+    requirements:
+      run:
+        - python ${{ python_min }}.*
+
+about:
+  homepage: https://github.com/SGMOModeling/PyWFM
+  repository: https://github.com/SGMOModeling/PyWFM
+  documentation: https://sgmomodeling.github.io/PyWFM
+  license: MIT
+  license_file: LICENSE
+  summary: Python interface to the Integrated Water Flow Model (IWFM) C API
+
+extra:
+  recipe-maintainers:
+    - hatch-tyler

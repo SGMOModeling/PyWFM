@@ -1,8 +1,11 @@
-"""Verifies the handle-based multi-instance API (kernel commit 393e02e+).
+"""Verifies that several ``IWFMModel`` objects coexist in one process.
 
-This is the feature 0.3.x was built for: multiple ``IWFMModel`` objects
-can coexist in a single Python process, each operating on its own
-``model_id`` slot independently. The single-instance smoke + invariant
+On the handle-based kernel (commit 393e02e+) each model has its own
+``model_id`` slot. On stock (switch) DLLs pywfm makes each model active
+before every call (``IWFMModel._call``), so queries on two models still
+return their own results; killing one model, however, breaks the others
+there (kernel-shared state), which ``test_kill_one_leaves_other_functional``
+records as an expected failure. The single-instance smoke + invariant
 suite already proves every ``IW_Model_*`` call passes the right
 ``model_id``; this file proves slots actually stay isolated.
 
@@ -99,6 +102,11 @@ class TestTwoInquiryInstances:
         slots. A pre-393e02e kernel had a single 'active model' pointer,
         so killing m1 also broke m2; the rewrite fixed that.
         """
+        if pywfm.abi() == "switch":
+            pytest.xfail(
+                "stock (switch) DLLs share kernel state between models: "
+                "killing one model leaves the others unusable"
+            )
         from tests.conftest import _SilentLog
 
         pp, sim = sample_pp_sim
