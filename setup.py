@@ -15,6 +15,7 @@ with.
 from pathlib import Path
 
 from setuptools import setup
+from setuptools.dist import Distribution
 
 try:
     from setuptools.command.bdist_wheel import bdist_wheel
@@ -49,12 +50,15 @@ def _runtime_requirements():
     return [ln.strip() for ln in lines if ln.strip() and not ln.startswith("#")]
 
 
-class PlatformWheel(bdist_wheel):
-    def finalize_options(self):
-        super().finalize_options()
-        if _has_bundled_library():
-            self.root_is_pure = False
+class LibraryDistribution(Distribution):
+    # A bundled library makes the distribution platform-specific: its files
+    # install to platlib and the wheel root is not purelib (auditwheel and
+    # installers require shared libraries outside purelib).
+    def has_ext_modules(self):
+        return _has_bundled_library()
 
+
+class PlatformWheel(bdist_wheel):
     def get_tag(self):
         python, abi, plat = super().get_tag()
         if _has_bundled_library():
@@ -64,5 +68,6 @@ class PlatformWheel(bdist_wheel):
 
 setup(
     install_requires=DEPENDENCIES + _runtime_requirements(),
+    distclass=LibraryDistribution,
     cmdclass={"bdist_wheel": PlatformWheel},
 )

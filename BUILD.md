@@ -47,6 +47,34 @@ whatever is there. Check its imports with
 `libifcoremd.dll`, `libmmd.dll`, `KERNEL32.dll`, `VCRUNTIME140.dll` and
 `api-ms-win-crt-*`.
 
+Linux: build in the `quay.io/pypa/manylinux_2_28_x86_64` image, so the
+library needs nothing newer than glibc 2.28. Use
+`scripts/build_manylinux_library.sh`. It installs ifx 2026.1.1 from
+conda-forge with micromamba, builds the C dependencies with the image's gcc,
+and links OpenMP against the real `libiomp5.so` from the `intel-openmp` PyPI
+wheel. conda-forge's `libiomp5.so` is a symlink to LLVM's `libomp.so`. Set up
+a work directory, then run the script:
+
+```bash
+mkdir -p WORK/src WORK/rt
+git -C path/to/fork archive HEAD | tar -x -C WORK/src
+pip download --no-deps --only-binary=:all: --platform manylinux_2_28_x86_64 -d WORK/rt \
+    intel-openmp==2026.1.1 intel-fortran-rt==2026.1.1 intel-cmplr-lib-rt==2026.1.1
+cp scripts/build_manylinux_library.sh WORK/
+docker run --rm -v "$PWD/WORK:/lw" quay.io/pypa/manylinux_2_28_x86_64 bash /lw/build_manylinux_library.sh
+```
+
+The script prints the library's `NEEDED` entries and highest glibc symbol
+version. Expect:
+- `libifcoremt.so.5`, `libifport.so.5`, `libimf.so`, `libsvml.so`,
+  `libintlc.so.5` and `libiomp5.so`, all from the PyPI runtime wheels;
+- glibc system libraries;
+- `GLIBC_2.28` or lower.
+
+A pip install has no RPATH to `<prefix>/lib`, where Intel's PyPI packages put
+their libraries. pywfm's loader therefore reads the library's ELF
+dependencies and preloads the Intel runtimes from there before loading it.
+
 ## Building a wheel
 
 ```bash
@@ -62,9 +90,22 @@ python scripts/stage_library.py --clean      # back to a pure checkout
 - `runtime-requirements.txt`, listing `intel-fortran-rt`, `intel-cmplr-lib-rt`
   and `intel-openmp`, each pinned to `--runtime-version`.
 
-`setup.py` then tags the wheel for the platform (`py3-none-<platform>`) and
-adds those requirements. Without a staged library, `python -m build` produces
-the pure `py3-none-any` wheel and the sdist.
+`setup.py` then marks the wheel as platform-specific, tags it
+`py3-none-<platform>`, and adds those requirements. Without a staged library,
+`python -m build` produces the pure `py3-none-any` wheel and the sdist.
+
+On Linux, build in the manylinux image and give the platform tag
+explicitly; setuptools would otherwise tag the wheel `linux_x86_64`, which
+PyPI rejects:
+
+```bash
+python -m build --wheel -C--build-option=--plat-name=manylinux_2_28_x86_64
+```
+
+`auditwheel show` confirms the glibc 2.28 limit. It still reports only
+`linux_x86_64`, because it expects the Intel libraries inside the wheel.
+They come from Intel's PyPI packages instead, by design, so don't run
+`auditwheel repair`: it would copy them into the wheel.
 
 Before uploading, test the wheel in a clean environment with no `PYWFM_DLL`.
 pywfm must report the bundled library, and the suite must pass. The

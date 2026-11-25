@@ -21,6 +21,7 @@ Two generations of the IWFM C API are supported (see ``abi()``):
   call and serializes calls, so several ``IWFMModel`` objects still work.
 """
 import ctypes
+import struct
 import os
 import platform
 import re
@@ -171,24 +172,98 @@ def _open(target):
                 break
         return ctypes.CDLL(str(target))
 
-    # Linux: the dynamic loader ignores sys.prefix, so preload each runtime
-    # library it reports missing from <prefix>/lib (globally, so later loads
-    # resolve against it) and retry.
-    return _load_preloading(target, ctypes.DEFAULT_MODE, runtime_dir, set())
+    # Linux: the dynamic loader ignores sys.prefix, and a pip install puts
+    # the Intel runtimes in <prefix>/lib with no RPATH pointing there. Preload
+    # the ones the library needs from there, dependencies first and globally,
+    # so that loading the library resolves against them.
+    if runtime_dir.is_dir():
+        _preload(_runtime_needed(target, runtime_dir, [], set()))
+    return ctypes.CDLL(str(target))
 
 
-def _load_preloading(path, mode, runtime_dir, attempted):
-    while True:
-        try:
-            return ctypes.CDLL(str(path), mode=mode)
-        except OSError as err:
-            m = re.match(r"(\S+?): cannot open shared object file", str(err))
-            name = m.group(1) if m else None
-            candidate = runtime_dir / name if name else None
-            if candidate is None or name in attempted or not candidate.is_file():
-                raise
-            attempted.add(name)
-            _load_preloading(candidate, ctypes.RTLD_GLOBAL, runtime_dir, attempted)
+def _runtime_needed(path, runtime_dir, found, seen):
+    """Libraries in runtime_dir that ``path`` needs, directly or indirectly,
+    each listed after its own dependencies."""
+    for name in _elf_needed(path):
+        candidate = runtime_dir / name
+        if name in seen or not candidate.is_file():
+            continue
+        seen.add(name)
+        _runtime_needed(candidate, runtime_dir, found, seen)
+        found.append(candidate)
+    return found
+
+
+def _preload(libraries):
+    """Load the libraries globally, retrying any that fail after the others.
+
+    Some Intel runtime libraries use symbols of another without listing it
+    as a dependency (libifport.so.5 needs for_abort from libifcoremt.so.5),
+    so dependency order alone can't order them, and ctypes binds symbols
+    at load time.
+    """
+    pending = list(libraries)
+    while pending:
+        failed, error = [], None
+        for lib in pending:
+            try:
+                ctypes.CDLL(str(lib), mode=ctypes.RTLD_GLOBAL)
+            except OSError as err:
+                failed.append(lib)
+                error = err
+        if len(failed) == len(pending):
+            raise error
+        pending = failed
+
+
+def _elf_needed(path):
+    """DT_NEEDED entries of a 64-bit little-endian ELF shared library.
+
+    Returns [] for anything else; the loader then reports what is missing.
+    """
+    try:
+        with open(path, "rb") as f:
+            data = f.read()
+    except OSError:
+        return []
+    if data[:4] != b"\x7fELF" or data[4] != 2 or data[5] != 1:
+        return []
+    phoff, = struct.unpack_from("<Q", data, 0x20)
+    phentsize, phnum = struct.unpack_from("<HH", data, 0x36)
+    loads, dynamic = [], None
+    for i in range(phnum):
+        p_type, _, p_offset, p_vaddr, _, p_filesz = struct.unpack_from(
+            "<IIQQQQ", data, phoff + i * phentsize)
+        if p_type == 1:                       # PT_LOAD
+            loads.append((p_vaddr, p_offset, p_filesz))
+        elif p_type == 2:                     # PT_DYNAMIC
+            dynamic = (p_offset, p_filesz)
+    if dynamic is None:
+        return []
+
+    def file_offset(vaddr):
+        for v, o, n in loads:
+            if v <= vaddr < v + n:
+                return o + vaddr - v
+        return None
+
+    needed, strtab = [], None
+    off, size = dynamic
+    for k in range(0, size, 16):
+        tag, val = struct.unpack_from("<qQ", data, off + k)
+        if tag == 0:                          # DT_NULL
+            break
+        if tag == 1:                          # DT_NEEDED
+            needed.append(val)
+        elif tag == 5:                        # DT_STRTAB
+            strtab = file_offset(val)
+    if strtab is None:
+        return []
+    names = []
+    for n in needed:
+        start = strtab + n
+        names.append(data[start:data.index(b"\0", start)].decode())
+    return names
 
 
 def get_dll():
