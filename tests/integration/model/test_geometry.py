@@ -94,3 +94,60 @@ class TestBoundary:
         flat = set(int(v) for v in boundary[id_cols].values.ravel())
         unknown = flat - node_ids
         assert not unknown, f"Boundary references unknown node IDs: {sorted(unknown)[:10]}"
+
+
+@pytest.mark.integration
+@requires_api("IW_Model_FEInterpolate")
+class TestFEInterpolate:
+    """fe_interpolate locates a point's element and its vertex weights.
+
+    Checks at the centroid of a spread of elements: the returned element
+    and vertices match get_element_config, the weights form a partition of
+    unity, and they reproduce the point's own coordinates (IWFM's element
+    shape functions are isoparametric).
+    """
+
+    @pytest.fixture(scope="class")
+    def mesh(self, sample_inquiry):
+        x, y = sample_inquiry.get_node_coordinates()
+        node_ids = sample_inquiry.get_node_ids()
+        element_ids = sample_inquiry.get_element_ids()
+        index = {nid: i for i, nid in enumerate(node_ids)}
+        return x, y, index, element_ids
+
+    def _centroid_cases(self, sample_inquiry, mesh, n=25):
+        x, y, index, element_ids = mesh
+        for elem in element_ids[:: max(1, len(element_ids) // n)]:
+            vertices = [v for v in sample_inquiry.get_element_config(elem) if v != 0]
+            ix = [index[v] for v in vertices]
+            yield elem, vertices, x[ix].mean(), y[ix].mean(), x[ix], y[ix]
+
+    def test_centroid_lies_in_its_element(self, sample_inquiry, mesh):
+        for elem, vertices, cx, cy, _, _ in self._centroid_cases(sample_inquiry, mesh):
+            e, nodes, coeff = sample_inquiry.fe_interpolate(cx, cy)
+            assert e == elem
+            assert sorted(nodes) == sorted(vertices)
+            assert len(coeff) == len(vertices)
+
+    def test_weights_are_partition_of_unity(self, sample_inquiry, mesh):
+        for _, _, cx, cy, _, _ in self._centroid_cases(sample_inquiry, mesh):
+            _, _, coeff = sample_inquiry.fe_interpolate(cx, cy)
+            assert np.all(coeff >= -1e-12) and np.all(coeff <= 1 + 1e-12)
+            assert abs(coeff.sum() - 1.0) < 1e-9
+
+    def test_weights_reproduce_coordinates(self, sample_inquiry, mesh):
+        x, y, index, _ = mesh
+        for _, _, cx, cy, _, _ in self._centroid_cases(sample_inquiry, mesh):
+            _, nodes, coeff = sample_inquiry.fe_interpolate(cx, cy)
+            ix = [index[v] for v in nodes]
+            scale = max(abs(cx), abs(cy), 1.0)
+            assert abs(np.dot(coeff, x[ix]) - cx) / scale < 1e-9
+            assert abs(np.dot(coeff, y[ix]) - cy) / scale < 1e-9
+
+    def test_point_outside_grid(self, sample_inquiry, mesh):
+        x, y, _, _ = mesh
+        e, nodes, coeff = sample_inquiry.fe_interpolate(
+            x.max() + 10 * (x.max() - x.min()), y.max() + 10 * (y.max() - y.min())
+        )
+        assert e == 0
+        assert nodes.size == 0 and coeff.size == 0

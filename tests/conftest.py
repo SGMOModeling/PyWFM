@@ -122,8 +122,12 @@ def sample_dir():
     Unlike the 0.2.x suite, 0.3.x only ships one variant — the 2015
     series doesn't have a handle-based kernel build, so a v2015 fixture
     would never apply here.
+
+    Set PYWFM_SAMPLE_DIR to use another SampleModel instead (e.g. the
+    2026.0.1848 release's, whose TSDATA_IN.DSS is DSS-7: DLLs built on
+    the 1848 kernel cannot read the vendored model's older DSS file).
     """
-    chosen = SAMPLE_DIR / "v2025"
+    chosen = Path(os.environ.get("PYWFM_SAMPLE_DIR", SAMPLE_DIR / "v2025"))
     if not (chosen / "Preprocessor" / "PreProcessor_MAIN.IN").exists():
         pytest.skip(f"SampleModel not vendored at {chosen}")
     return chosen

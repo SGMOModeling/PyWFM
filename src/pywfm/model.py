@@ -12289,6 +12289,11 @@ class IWFMModel(IWFMMiscellaneous):
             node_ids of nodes corresponding to element vertices
             interpolation coefficients for each node
 
+            The node and coefficient arrays have one entry per element
+            vertex (3 for triangular elements, 4 for quadrilaterals). If
+            the point is not inside any element, element_id is 0 and both
+            arrays are empty.
+
         Note
         ----
         x and y coordinates need to be in model units which may be different from the units of the coordinates
@@ -12323,17 +12328,32 @@ class IWFMModel(IWFMMiscellaneous):
 
         # initialize output variables
         element_idx = ctypes.c_int(0)
+        n_vertex = ctypes.c_int(0)
         nodes_idx = (ctypes.c_int * 4)()
         coeff = (ctypes.c_double * 4)()
+
+        # set instance variable status to 0
+        status = ctypes.c_int(0)
 
         self.dll.IW_Model_FEInterpolate(
             ctypes.byref(self.model_id),
             ctypes.byref(x),
             ctypes.byref(y),
             ctypes.byref(element_idx),
+            ctypes.byref(n_vertex),
             nodes_idx,
             coeff,
+            ctypes.byref(status),
         )
+
+        # check for errors in the IWFM API call
+        if status.value != 0:
+            error_message = self.get_last_message()
+            raise IWFMError(error_message)
+
+        # point is not inside any element
+        if element_idx.value == 0:
+            return 0, np.array([], dtype=int), np.array([], dtype=float)
 
         # get element ids
         element_ids = self.get_element_ids()
@@ -12344,10 +12364,10 @@ class IWFMModel(IWFMMiscellaneous):
         # get node IDs
         node_ids = self.get_node_ids()
 
-        # convert node index to node ID
-        nodes = node_ids[np.array(nodes_idx) - 1]
+        # convert node index to node ID (only the element's vertices are filled)
+        nodes = node_ids[np.array(nodes_idx[: n_vertex.value]) - 1]
 
-        return element, nodes, np.array(coeff)
+        return element, nodes, np.array(coeff[: n_vertex.value])
 
     ### methods that wrap two or more DLL calls
     def get_groundwater_hydrograph_info(self):
