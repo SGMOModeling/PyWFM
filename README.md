@@ -1,87 +1,122 @@
-# PyWFM
----
-python library to expose the functionality of the IWFM DLL
+# pywfm
 
-Full documentation of PyWFM is available [here](https://sgmomodeling.github.io/PyWFM/html/index.html)
+Python interface to the [Integrated Water Flow Model (IWFM)](https://data.cnra.ca.gov/dataset/iwfm-integrated-water-flow-model)
+C API. Run IWFM simulations from Python, query a completed model's inputs
+and results, and process budgets and zone budgets, all as NumPy arrays and
+pandas DataFrames.
 
-## Compatibility
+Full documentation: <https://sgmomodeling.github.io/PyWFM/html/index.html>
 
-This is the **0.3.x line**, which targets the handle-based IWFM kernel (commit 393e02e+) — every `IW_Model_*` export takes `iModelID` as its first argument and multiple `IWFMModel` instances can coexist in one process. No stock IWFM DLL in the cadwr-sgmo conda channel ships with that kernel yet.
+> **pywfm 1.0** works with both generations of the IWFM library: the stock
+> DWR releases (2024.2.1594 and later) and the handle-based
+> [2026.0.1848 fork](https://github.com/hatch-tyler/integrated-water-flow-model).
+> Coming from 0.2.x or 0.3.x? See [MIGRATING.md](MIGRATING.md).
 
-For 2015-series DLLs (1273, 1403, 1443) and stock 2024/2025 DLLs (1594, 1747), use `iwfm-pywfm<0.3` (the [`0.2.x` maintenance branch](https://github.com/SGMOModeling/PyWFM/tree/0.2.x)).
+## Installation
 
-To use the pywfm module, users need to download this repository
+pywfm needs Python 3.10 or later and the IWFM shared library
+(`IWFM_C_x64.dll` on Windows, `libiwfm_c.so` on Linux).
 
-**Note** Users must also download the IWFM DLL.
+**conda** (recommended). The library comes as a separate package,
+`libiwfm`, which pywfm depends on:
 
-The IWFM DLL can be downloaded from the [CNRA Open Data Platform](https://data.cnra.ca.gov/dataset/iwfm-integrated-water-flow-model)
-
-## Overview
----
-The pywfm library includes 3 main classes (IWFMModel, IWFMBudget, and IWFMZBudget). Each of these inherits from the IWFMMiscellaneous base class. Many of the methods in the IWFMMiscellaneous base class cannot be used on their own because the IWFMMiscellaneous class was designed without direct access to the IWFM DLL. Users can access all of this functionality from within the IWFMModel, IWFMBudget, and IWFMZBudget classes.
-
-## Design
----
-The pywfm library wraps each of the IWFM DLL functions so that the user does not have to deal with the IWFM DLL syntax directly. Instead, users familiar with python can work with standard python objects such as strings, ints, floats, lists, and numpy arrays.
-
-Many parts of the IWFM DLL procedures are handled internally allowing the user to provide only a few pieces of required information to obtain results.
-
-### IWFMModel
-the IWFMModel class can be run in two modes.
-1. is_for_inquiry=0, which allows running model simulations from python and interacting with the model simulations at runtime
-2. is_for_inquiry=1, which allows obtaining data from a model that has already been completed
-
-### IWFMBudget
-the IWFMBudget class performs budget processing from the HDF output files
-
-### IWFMZBudget
-the IWFMZBudget class performs ZBudgets based on user provided zone definitions and the HDF output files
-
-## IWFMModel methods
-To obtain data from an already completed model, use the following code:
-
-```python
-# import libraries
-from pywfm import IWFMModel
-
-# set paths to files needed to create model object
-preprocessor_in_file = 'SampleModel/Preprocessor/PreProcessor_MAIN.IN'
-simulation_in_file = 'SampleModel/Simulation/Simulation_MAIN.IN'
-
-# create instance of the IWFMModel class
-m = IWFMModel(preprocessor_in_file, simulation_in_file)
-```
-To see all methods available within the IWFMModel class, type the following:
-```python
-from pywfm import IWFMModel
-
-help(IWFMModel)
+```bash
+conda install -c conda-forge iwfm-pywfm
 ```
 
-## IWFMBudget methods
-To use IWFMBudget, use the following code:
+**pip**. The Windows and Linux wheels bundle the IWFM library and install
+the Intel Fortran and OpenMP runtimes it needs (`intel-fortran-rt`,
+`intel-openmp`) from PyPI:
 
-```python
-# import libraries
-from pywfm import IWFMBudget
-
-# set paths to files needed to create budget object
-gw_budget_file = 'SampleModel/Results/GW.hdf'
-
-# create instance of the IWFMBudget class
-gw_budget = IWFMBudget(gw_budget_file)
+```bash
+pip install iwfm-pywfm
 ```
 
-## IWFMZBudget methods
-To use IWFMZBudget, use the following code:
+**Another IWFM library.** To use a specific build, such as a stock DWR
+DLL from the CNRA Open Data Platform or your own, point pywfm at it before
+creating a model:
+
+```bash
+export PYWFM_DLL=/path/to/libiwfm_c.so   # the file, or a folder containing it
+pywfm setup-pywfm --version 1848          # or download a stock DLL into the environment
+```
 
 ```python
-# import libraries
-from pywfm import IWFMZBudget
-
-# set paths to files needed to create zbudget object
-gw_budget_file = 'SampleModel/Results/GW_ZBud.hdf'
-
-# create instance of the IWFMZBudget class
-z = IWFMZBudget(zbudget_file)
+import pywfm
+pywfm.load_dll(r"C:\path\to\IWFM_C_x64.dll")
 ```
+
+pywfm looks for the library on first use, in this order:
+1. `pywfm.load_dll(path)`;
+2. the `PYWFM_DLL` environment variable;
+3. the library bundled in the wheel;
+4. the active environment (`Library\bin` on Windows, `lib` on Linux).
+
+To see which library it picked up:
+
+```bash
+pywfm get-api-version
+```
+
+## Usage
+
+```python
+from pywfm import IWFMModel, IWFMBudget, IWFMZBudget
+
+pp_file = "Preprocessor/PreProcessor_MAIN.IN"
+sim_file = "Simulation/Simulation_MAIN.IN"
+
+# Inquiry mode: read a model that has already been simulated
+with IWFMModel(pp_file, sim_file, is_for_inquiry=1) as model:
+    heads = model.get_gwheads_all()
+
+# Budgets and zone budgets from the HDF5 output files
+gw = IWFMBudget("Results/GW.hdf")
+zb = IWFMZBudget("Results/GW_ZBud.hdf")
+```
+
+Simulation mode (`is_for_inquiry=0`) steps a model from Python. At each
+time step you can read the time series data as is, or overwrite selected
+values:
+
+```python
+with IWFMModel(pp_file, sim_file, is_for_inquiry=0) as model:
+    while not model.is_end_of_simulation():
+        model.advance_time()
+        model.read_timeseries_data_overwrite(diversion_ids=[3], diversions=[0.0])
+        model.simulate_for_one_timestep()
+        model.print_results()
+        model.advance_state()
+```
+
+`help(IWFMModel)` lists every method.
+
+## Which IWFM library?
+
+| | Stock DWR library (2024.2.1594+) | Handle-based fork (2026.0.1848.rev) |
+|---|---|---|
+| API generation (`pywfm.abi()`) | `"switch"` | `"handle"` |
+| Several `IWFMModel` objects at once | yes: pywfm selects the active model before each call and serializes calls | yes, fully independent |
+| Killing one model while others are open | breaks the others (a kernel limitation) | safe |
+| DSS input files | DSS-6 | DSS-7 |
+| Results compared with the official release | official | byte-identical when built with ifx 2026.1.1, except where two upstream subsidence v5.0 bugs are fixed |
+
+pywfm 1.0 does not support the 2015-series libraries (2015.0.1273,
+2015.0.1403, 2015.1.1443); use `iwfm-pywfm<0.3` for those.
+
+## Development
+
+```bash
+pip install -e ".[test]"
+PYWFM_DLL=/path/to/library pytest tests/unit tests/integration
+pytest --runsim tests/integration/model/test_simulation.py   # simulation mode
+```
+
+The test suite chooses the vendored sample model and DSS file to match the
+loaded library; see `tests/conftest.py`.
+
+## License
+
+pywfm is MIT-licensed. The IWFM library is GPL-2.0-or-later and is
+distributed separately: as the conda `libiwfm` package, or bundled
+unmodified in the wheels together with its license.
