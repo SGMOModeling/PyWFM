@@ -57,6 +57,8 @@ _dll = None
 _path = None
 _abi = None
 _core_version = None
+# Log file opened through IW_SetLogFile. The library keeps one per process.
+log_file = None
 
 
 def _candidates():

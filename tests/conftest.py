@@ -196,9 +196,22 @@ def _ensure_results(sample_dir, sample_pp_sim):
     """
     pp, sim = sample_pp_sim
     results_dir = sample_dir / "Results"
-    if (results_dir / "GW.hdf").exists():
+    # Results are reused only if the loaded library produced them: the
+    # regression tests compare simulated values, so Results from another
+    # build of the same release would hide a difference in this one.
+    lib = Path(pywfm.dll_path())
+    st = lib.stat()
+    produced_by = f"{lib.resolve()}|{st.st_size}|{st.st_mtime_ns}"
+    stamp = results_dir / ".pywfm_library"
+    if (results_dir / "GW.hdf").exists() and stamp.exists() \
+            and stamp.read_text(encoding="utf-8") == produced_by:
         return
-    results_dir.mkdir(exist_ok=True)
+    # Start from an empty Results/: the inquiry model converts the text
+    # hydrographs to GWHyd.hdf etc. on first use and keeps existing ones, so
+    # files left from another library would survive a new simulation.
+    import shutil
+    shutil.rmtree(results_dir, ignore_errors=True)
+    results_dir.mkdir()
     cwd = os.getcwd()
     os.chdir(sample_dir / "Simulation")
     try:
@@ -207,6 +220,7 @@ def _ensure_results(sample_dir, sample_pp_sim):
         m.kill()
     finally:
         os.chdir(cwd)
+    stamp.write_text(produced_by, encoding="utf-8")
 
 
 @pytest.fixture(scope="session")

@@ -1,0 +1,57 @@
+name: tests
+
+on:
+  push:
+    branches: [master, 1.0-dev]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  unit:
+    # No IWFM library needed: imports, CLI and argument validation.
+    name: unit (${{ matrix.os }}, py${{ matrix.python }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python: ["3.10", "3.11", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - run: pip install -e ".[test]"
+      - run: pytest tests/unit
+
+  stock:
+    # The stock DWR libraries are Windows-only and self-contained (static
+    # Intel runtime); setup-pywfm downloads them from the CNRA Open Data
+    # Platform into the environment, where pywfm finds them.
+    name: stock ${{ matrix.iwfm }} (windows, py${{ matrix.python }})
+    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        iwfm: [1747, 1848]
+        python: ["3.10", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - run: pip install -e ".[test]"
+      - name: Install the IWFM ${{ matrix.iwfm }} library
+        run: |
+          pywfm setup-pywfm --version ${{ matrix.iwfm }}
+          pywfm get-api-version
+      - name: Unit, integration and regression tests
+        run: pytest tests/unit tests/integration tests/regression
+      # Simulation-mode tests can't share a process with inquiry-mode tests
+      # (kernel singleton state), so they run in their own pytest session.
+      - name: Simulation tests
+        run: pytest --runsim tests/integration/model/test_simulation.py

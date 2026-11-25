@@ -1,8 +1,12 @@
 import ctypes
+import os
 import datetime
+import warnings
 import numpy as np
 
+from pywfm import _dll
 from pywfm._dll import get_dll
+from pywfm.exceptions import IWFMError
 
 
 class IWFMMiscellaneous:
@@ -24,6 +28,12 @@ class IWFMMiscellaneous:
     def __init__(self):
         self.dll = get_dll()
 
+    def _raise_on_error(self, status):
+        """Raise IWFMError with the library's message if an IWFM API call
+        returned a nonzero status."""
+        if status.value != 0:
+            raise IWFMError(self.get_last_message())
+
     def get_data_unit_type_id_length(self):
         if not hasattr(self.dll, "IW_GetDataUnitTypeID_Length"):
             raise AttributeError(
@@ -38,6 +48,7 @@ class IWFMMiscellaneous:
         self.dll.IW_GetDataUnitTypeID_Length(
             ctypes.byref(length_unit_id), ctypes.byref(status)
         )
+        self._raise_on_error(status)
 
         return length_unit_id.value
 
@@ -55,6 +66,7 @@ class IWFMMiscellaneous:
         self.dll.IW_GetDataUnitTypeID_Area(
             ctypes.byref(area_unit_id), ctypes.byref(status)
         )
+        self._raise_on_error(status)
 
         return area_unit_id.value
 
@@ -72,6 +84,7 @@ class IWFMMiscellaneous:
         self.dll.IW_GetDataUnitTypeID_Volume(
             ctypes.byref(volume_unit_id), ctypes.byref(status)
         )
+        self._raise_on_error(status)
 
         return volume_unit_id.value
 
@@ -94,6 +107,7 @@ class IWFMMiscellaneous:
             ctypes.byref(volume_unit_id),
             ctypes.byref(status),
         )
+        self._raise_on_error(status)
 
         return dict(
             length=length_unit_id.value,
@@ -115,6 +129,7 @@ class IWFMMiscellaneous:
         self.dll.IW_GetLandUseTypeID_GenAg(
             ctypes.byref(gen_ag_landuse_id), ctypes.byref(status)
         )
+        self._raise_on_error(status)
 
         return gen_ag_landuse_id.value
 
@@ -132,6 +147,7 @@ class IWFMMiscellaneous:
         self.dll.IW_GetLandUseTypeID_Urban(
             ctypes.byref(urban_landuse_id), ctypes.byref(status)
         )
+        self._raise_on_error(status)
 
         return urban_landuse_id.value
 
@@ -149,6 +165,7 @@ class IWFMMiscellaneous:
         self.dll.IW_GetLandUseTypeID_NonPondedAg(
             ctypes.byref(nonponded_ag_landuse_id), ctypes.byref(status)
         )
+        self._raise_on_error(status)
 
         return nonponded_ag_landuse_id.value
 
@@ -166,6 +183,7 @@ class IWFMMiscellaneous:
         self.dll.IW_GetLandUseTypeID_Rice(
             ctypes.byref(rice_landuse_id), ctypes.byref(status)
         )
+        self._raise_on_error(status)
 
         return rice_landuse_id.value
 
@@ -183,6 +201,7 @@ class IWFMMiscellaneous:
         self.dll.IW_GetLandUseTypeID_Refuge(
             ctypes.byref(refuge_landuse_id), ctypes.byref(status)
         )
+        self._raise_on_error(status)
 
         return refuge_landuse_id.value
 
@@ -200,6 +219,7 @@ class IWFMMiscellaneous:
         self.dll.IW_GetLandUseTypeID_UrbIndoors(
             ctypes.byref(urban_indoor_landuse_id), ctypes.byref(status)
         )
+        self._raise_on_error(status)
 
         return urban_indoor_landuse_id.value
 
@@ -217,6 +237,7 @@ class IWFMMiscellaneous:
         self.dll.IW_GetLandUseTypeID_UrbOutdoors(
             ctypes.byref(urban_outdoor_landuse_id), ctypes.byref(status)
         )
+        self._raise_on_error(status)
 
         return urban_outdoor_landuse_id.value
 
@@ -234,6 +255,7 @@ class IWFMMiscellaneous:
         self.dll.IW_GetLandUseTypeID_NVRV(
             ctypes.byref(nvrv_landuse_id), ctypes.byref(status)
         )
+        self._raise_on_error(status)
 
         return nvrv_landuse_id.value
 
@@ -262,6 +284,7 @@ class IWFMMiscellaneous:
             ctypes.byref(nvrv_landuse_id),
             ctypes.byref(status),
         )
+        self._raise_on_error(status)
 
         return dict(
             general_ag=gen_ag_landuse_id.value,
@@ -301,6 +324,7 @@ class IWFMMiscellaneous:
             ctypes.byref(nvrv_landuse_id),
             ctypes.byref(status),
         )
+        self._raise_on_error(status)
 
         return dict(
             general_ag=gen_ag_landuse_id.value,
@@ -327,6 +351,7 @@ class IWFMMiscellaneous:
         self.dll.IW_GetLocationTypeID_Node(
             ctypes.byref(location_type_id_node), ctypes.byref(status)
         )
+        self._raise_on_error(status)
 
         return location_type_id_node.value
 
@@ -344,6 +369,7 @@ class IWFMMiscellaneous:
         self.dll.IW_GetLocationTypeID_Element(
             ctypes.byref(location_type_id_element), ctypes.byref(status)
         )
+        self._raise_on_error(status)
 
         return location_type_id_element.value
 
@@ -361,6 +387,7 @@ class IWFMMiscellaneous:
         self.dll.IW_GetLocationTypeID_Subregion(
             ctypes.byref(location_type_id_subregion), ctypes.byref(status)
         )
+        self._raise_on_error(status)
 
         return location_type_id_subregion.value
 
@@ -378,6 +405,7 @@ class IWFMMiscellaneous:
         self.dll.IW_GetLocationTypeID_Zone(
             ctypes.byref(location_type_id_zone), ctypes.byref(status)
         )
+        self._raise_on_error(status)
 
         return location_type_id_zone.value
 
@@ -395,6 +423,7 @@ class IWFMMiscellaneous:
         self.dll.IW_GetLocationTypeID_StrmNode(
             ctypes.byref(location_type_id_streamnode), ctypes.byref(status)
         )
+        self._raise_on_error(status)
 
         return location_type_id_streamnode.value
 
@@ -412,6 +441,7 @@ class IWFMMiscellaneous:
         self.dll.IW_GetLocationTypeID_StrmReach(
             ctypes.byref(location_type_id_streamreach), ctypes.byref(status)
         )
+        self._raise_on_error(status)
 
         return location_type_id_streamreach.value
 
@@ -429,6 +459,7 @@ class IWFMMiscellaneous:
         self.dll.IW_GetLocationTypeID_Lake(
             ctypes.byref(location_type_id_lake), ctypes.byref(status)
         )
+        self._raise_on_error(status)
 
         return location_type_id_lake.value
 
@@ -448,6 +479,7 @@ class IWFMMiscellaneous:
         self.dll.IW_GetLocationTypeID_SmallWatershed(
             ctypes.byref(location_type_id_smallwatershed), ctypes.byref(status)
         )
+        self._raise_on_error(status)
 
         return location_type_id_smallwatershed.value
 
@@ -465,6 +497,7 @@ class IWFMMiscellaneous:
         self.dll.IW_GetLocationTypeID_GWHeadObs(
             ctypes.byref(location_type_id_gwheadobs), ctypes.byref(status)
         )
+        self._raise_on_error(status)
 
         return location_type_id_gwheadobs.value
 
@@ -482,6 +515,7 @@ class IWFMMiscellaneous:
         self.dll.IW_GetLocationTypeID_StrmHydObs(
             ctypes.byref(location_type_id_streamhydobs), ctypes.byref(status)
         )
+        self._raise_on_error(status)
 
         return location_type_id_streamhydobs.value
 
@@ -501,6 +535,7 @@ class IWFMMiscellaneous:
         self.dll.IW_GetLocationTypeID_SubsidenceObs(
             ctypes.byref(location_type_id_subsidenceobs), ctypes.byref(status)
         )
+        self._raise_on_error(status)
 
         return location_type_id_subsidenceobs.value
 
@@ -520,6 +555,7 @@ class IWFMMiscellaneous:
         self.dll.IW_GetLocationTypeID_TileDrainObs(
             ctypes.byref(location_type_id_tile_drain), ctypes.byref(status)
         )
+        self._raise_on_error(status)
 
         return location_type_id_tile_drain.value
 
@@ -539,6 +575,7 @@ class IWFMMiscellaneous:
         self.dll.IW_GetLocationTypeID_StrmNodeBud(
             ctypes.byref(location_type_id_streamnodebud), ctypes.byref(status)
         )
+        self._raise_on_error(status)
 
         return location_type_id_streamnodebud.value
 
@@ -556,6 +593,7 @@ class IWFMMiscellaneous:
         self.dll.IW_GetLocationTypeID_Diversion(
             ctypes.byref(location_type_id_diversion), ctypes.byref(status)
         )
+        self._raise_on_error(status)
 
         return location_type_id_diversion.value
 
@@ -573,6 +611,7 @@ class IWFMMiscellaneous:
         self.dll.IW_GetLocationTypeID_Bypass(
             ctypes.byref(location_type_id_bypass), ctypes.byref(status)
         )
+        self._raise_on_error(status)
 
         return location_type_id_bypass.value
 
@@ -615,6 +654,7 @@ class IWFMMiscellaneous:
             ctypes.byref(location_type_id_streamnodebud),
             ctypes.byref(status),
         )
+        self._raise_on_error(status)
 
         return dict(
             nodes=location_type_id_nodes.value,
@@ -675,6 +715,7 @@ class IWFMMiscellaneous:
             ctypes.byref(location_type_id_bypass),
             ctypes.byref(status),
         )
+        self._raise_on_error(status)
 
         return dict(
             nodes=location_type_id_nodes.value,
@@ -708,6 +749,7 @@ class IWFMMiscellaneous:
         self.dll.IW_GetFlowDestTypeID_Outside(
             ctypes.byref(flow_destination_type_id), ctypes.byref(status)
         )
+        self._raise_on_error(status)
 
         return flow_destination_type_id.value
 
@@ -725,6 +767,7 @@ class IWFMMiscellaneous:
         self.dll.IW_GetFlowDestTypeID_Element(
             ctypes.byref(flow_destination_type_id), ctypes.byref(status)
         )
+        self._raise_on_error(status)
 
         return flow_destination_type_id.value
 
@@ -742,6 +785,7 @@ class IWFMMiscellaneous:
         self.dll.IW_GetFlowDestTypeID_ElementSet(
             ctypes.byref(flow_destination_type_id), ctypes.byref(status)
         )
+        self._raise_on_error(status)
 
         return flow_destination_type_id.value
 
@@ -759,6 +803,7 @@ class IWFMMiscellaneous:
         self.dll.IW_GetFlowDestTypeID_GWElement(
             ctypes.byref(flow_destination_type_id), ctypes.byref(status)
         )
+        self._raise_on_error(status)
 
         return flow_destination_type_id.value
 
@@ -776,6 +821,7 @@ class IWFMMiscellaneous:
         self.dll.IW_GetFlowDestTypeID_StrmNode(
             ctypes.byref(flow_destination_type_id), ctypes.byref(status)
         )
+        self._raise_on_error(status)
 
         return flow_destination_type_id.value
 
@@ -793,6 +839,7 @@ class IWFMMiscellaneous:
         self.dll.IW_GetFlowDestTypeID_Lake(
             ctypes.byref(flow_destination_type_id), ctypes.byref(status)
         )
+        self._raise_on_error(status)
 
         return flow_destination_type_id.value
 
@@ -810,6 +857,7 @@ class IWFMMiscellaneous:
         self.dll.IW_GetFlowDestTypeID_Subregion(
             ctypes.byref(flow_destination_type_id), ctypes.byref(status)
         )
+        self._raise_on_error(status)
 
         return flow_destination_type_id.value
 
@@ -840,6 +888,7 @@ class IWFMMiscellaneous:
             ctypes.byref(flow_destination_type_id_subregion),
             ctypes.byref(status),
         )
+        self._raise_on_error(status)
 
         return dict(
             outside=flow_destination_type_id_outside.value,
@@ -865,6 +914,7 @@ class IWFMMiscellaneous:
         self.dll.IW_GetSupplyTypeID_Diversion(
             ctypes.byref(supply_type_id), ctypes.byref(status)
         )
+        self._raise_on_error(status)
 
         return supply_type_id.value
 
@@ -882,6 +932,7 @@ class IWFMMiscellaneous:
         self.dll.IW_GetSupplyTypeID_Well(
             ctypes.byref(supply_type_id), ctypes.byref(status)
         )
+        self._raise_on_error(status)
 
         return supply_type_id.value
 
@@ -899,6 +950,7 @@ class IWFMMiscellaneous:
         self.dll.IW_GetSupplyTypeID_ElemPump(
             ctypes.byref(supply_type_id), ctypes.byref(status)
         )
+        self._raise_on_error(status)
 
         return supply_type_id.value
 
@@ -916,6 +968,7 @@ class IWFMMiscellaneous:
         self.dll.IW_GetZoneExtentID_Horizontal(
             ctypes.byref(zone_extent_id), ctypes.byref(status)
         )
+        self._raise_on_error(status)
 
         return zone_extent_id.value
 
@@ -933,6 +986,7 @@ class IWFMMiscellaneous:
         self.dll.IW_GetZoneExtentID_Vertical(
             ctypes.byref(zone_extent_id), ctypes.byref(status)
         )
+        self._raise_on_error(status)
 
         return zone_extent_id.value
 
@@ -953,6 +1007,7 @@ class IWFMMiscellaneous:
             ctypes.byref(zone_extent_id_vertical),
             ctypes.byref(status),
         )
+        self._raise_on_error(status)
 
         return dict(
             horizontal=zone_extent_id_horizontal.value,
@@ -998,6 +1053,7 @@ class IWFMMiscellaneous:
             ctypes.byref(budget_type_id_lake),
             ctypes.byref(status),
         )
+        self._raise_on_error(status)
 
         return dict(
             gw=budget_type_id_gw.value,
@@ -1036,6 +1092,7 @@ class IWFMMiscellaneous:
             ctypes.byref(zbudget_type_id_unsatzone),
             ctypes.byref(status),
         )
+        self._raise_on_error(status)
 
         return dict(
             gw=zbudget_type_id_gw.value,
@@ -1065,6 +1122,7 @@ class IWFMMiscellaneous:
         self.dll.IW_GetVersion(
             ctypes.byref(version_length), iwfm_version, ctypes.byref(status)
         )
+        self._raise_on_error(status)
 
         iwfm_version_string = iwfm_version.value.decode("utf-8")
 
@@ -1177,6 +1235,7 @@ class IWFMMiscellaneous:
             ctypes.byref(n_intervals),
             ctypes.byref(status),
         )
+        self._raise_on_error(status)
 
         if includes_end_date:
             return n_intervals.value + 1
@@ -1280,6 +1339,7 @@ class IWFMMiscellaneous:
             ctypes.byref(n_intervals),
             ctypes.byref(status),
         )
+        self._raise_on_error(status)
 
         return date_string.value.decode("utf-8")
 
@@ -1360,6 +1420,7 @@ class IWFMMiscellaneous:
             ctypes.byref(compare_result),
             ctypes.byref(status),
         )
+        self._raise_on_error(status)
 
         if compare_result.value == -1:
             is_greater = False
@@ -1388,6 +1449,19 @@ class IWFMMiscellaneous:
                 "Check for an updated version".format("IW_SetLogFile")
             )
 
+        # The library keeps one log file per process and refuses a second
+        # one, so models created after the first share the open log file.
+        if _dll.log_file is not None:
+            if file_name != _dll.log_file:
+                warnings.warn(
+                    f"IWFM log file {_dll.log_file!r} is already open in this "
+                    f"process; {file_name!r} is not opened. Call "
+                    "close_log_file() first to switch log files.",
+                    stacklevel=2,
+                )
+            return
+        requested = file_name
+
         # convert file_name to ctypes character array
         file_name = ctypes.create_string_buffer(file_name.encode("utf-8"))
 
@@ -1400,6 +1474,8 @@ class IWFMMiscellaneous:
         self.dll.IW_SetLogFile(
             ctypes.byref(len_file_name), file_name, ctypes.byref(status)
         )
+        self._raise_on_error(status)
+        _dll.log_file = requested
 
     def close_log_file(self):
         # check to see if IWFM procedure is available in user version of IWFM DLL
@@ -1413,6 +1489,8 @@ class IWFMMiscellaneous:
         status = ctypes.c_int(0)
 
         self.dll.IW_CloseLogFile(ctypes.byref(status))
+        self._raise_on_error(status)
+        _dll.log_file = None
 
     def get_last_message(self):
         """the error message in case a procedure call from IWFM API
@@ -1461,6 +1539,7 @@ class IWFMMiscellaneous:
         status = ctypes.c_int(0)
 
         self.dll.IW_LogLastMessage(ctypes.byref(status))
+        self._raise_on_error(status)
 
     def _is_time_interval_greater_or_equal(
         self, time_interval, simulation_time_interval

@@ -37,6 +37,25 @@ argument group was left out. In 1.0:
 - IDs are translated to the positions IWFM uses, so the call also works for
   models whose diversion, inflow or bypass IDs don't run 1…N.
 
+**Budget, zone budget and utility errors raise `IWFMError`.** Earlier
+versions ignored the error status of every `IWFMBudget`, `IWFMZBudget` and
+utility call, so a failed call returned meaningless values. A failed
+budget read also closed the budget file without saying so. These calls now
+raise `IWFMError` with the library's message, as `IWFMModel` always has.
+`IWFMBudget.get_values_for_a_column` no longer accepts `"Time"` as a
+column name.
+
+**One log file per process.** The IWFM library keeps a single log file per
+process. The first model opens it; later models share it instead of
+failing. Asking for a different log file while one is open gives a warning;
+call `close_log_file()` first to switch.
+
+**Stale inquiry data with older stock libraries.** Stock libraries before
+2026.0.1848 didn't delete `IW_ModelData_ForInquiry.bin` when asked to before
+a model was opened. Reopening a model could then build only part of it, and
+the missing parts returned wrong values without an error (for example, no
+stream inflows). pywfm now deletes the file itself.
+
 **Removed: `set_preprocessor_path` and `set_simulation_path`.** They wrapped
 library procedures that no IWFM release has ever exported, so they always
 raised `AttributeError`. Pass full paths to `IWFMModel` instead.

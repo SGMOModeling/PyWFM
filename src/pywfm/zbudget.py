@@ -54,6 +54,7 @@ class IWFMZBudget(IWFMMiscellaneous):
         self.dll.IW_ZBudget_OpenFile(
             zbudget_file, ctypes.byref(length_file_name), ctypes.byref(status)
         )
+        self._raise_on_error(status)
 
     def __enter__(self):
         return self
@@ -76,6 +77,7 @@ class IWFMZBudget(IWFMMiscellaneous):
         status = ctypes.c_int(0)
 
         self.dll.IW_ZBudget_CloseFile(ctypes.byref(status))
+        self._raise_on_error(status)
 
     def generate_zone_list_from_file(self, zone_definition_file):
         """
@@ -119,6 +121,7 @@ class IWFMZBudget(IWFMMiscellaneous):
         self.dll.IW_ZBudget_GenerateZoneList_FromFile(
             zone_file, ctypes.byref(length_file_name), ctypes.byref(status)
         )
+        self._raise_on_error(status)
 
     def _generate_zone_list(self, zone_extent_id, elements, layers, zones, zone_names):
         """
@@ -242,6 +245,7 @@ class IWFMZBudget(IWFMMiscellaneous):
             delimiter_position_array,
             ctypes.byref(status),
         )
+        self._raise_on_error(status)
 
     def get_n_zones(self):
         """
@@ -283,6 +287,7 @@ class IWFMZBudget(IWFMMiscellaneous):
         status = ctypes.c_int(0)
 
         self.dll.IW_ZBudget_GetNZones(ctypes.byref(n_zones), ctypes.byref(status))
+        self._raise_on_error(status)
 
         return n_zones.value
 
@@ -332,6 +337,7 @@ class IWFMZBudget(IWFMMiscellaneous):
         self.dll.IW_ZBudget_GetZoneList(
             ctypes.byref(n_zones), zone_list, ctypes.byref(status)
         )
+        self._raise_on_error(status)
 
         return np.array(zone_list)
 
@@ -376,6 +382,7 @@ class IWFMZBudget(IWFMMiscellaneous):
         self.dll.IW_ZBudget_GetNTimeSteps(
             ctypes.byref(n_time_steps), ctypes.byref(status)
         )
+        self._raise_on_error(status)
 
         return n_time_steps.value
 
@@ -448,6 +455,7 @@ class IWFMZBudget(IWFMMiscellaneous):
             delimiter_position_array,
             ctypes.byref(status),
         )
+        self._raise_on_error(status)
 
         dates_list = self._string_to_list_by_array(
             raw_dates_string, delimiter_position_array, n_time_steps
@@ -523,6 +531,7 @@ class IWFMZBudget(IWFMMiscellaneous):
             delimiter_position_array,
             ctypes.byref(status),
         )
+        self._raise_on_error(status)
 
         return self._string_to_list_by_array(
             raw_column_header_string, delimiter_position_array, n_columns
@@ -724,6 +733,7 @@ class IWFMZBudget(IWFMMiscellaneous):
             diversified_columns_list,
             ctypes.byref(status),
         )
+        self._raise_on_error(status)
 
         column_headers = self._string_to_list_by_array(
             raw_column_header_string, delimiter_position_array, n_columns
@@ -786,6 +796,7 @@ class IWFMZBudget(IWFMMiscellaneous):
             delimiter_location_array,
             ctypes.byref(status),
         )
+        self._raise_on_error(status)
 
         return self._string_to_list_by_array(
             raw_zone_names, delimiter_location_array, n_zones
@@ -831,6 +842,7 @@ class IWFMZBudget(IWFMMiscellaneous):
         self.dll.IW_ZBudget_GetNTitleLines(
             ctypes.byref(n_title_lines), ctypes.byref(status)
         )
+        self._raise_on_error(status)
 
         return n_title_lines.value
 
@@ -945,6 +957,7 @@ class IWFMZBudget(IWFMMiscellaneous):
             delimiter_position_array,
             ctypes.byref(status),
         )
+        self._raise_on_error(status)
 
         return self._string_to_list_by_array(
             raw_title_string, delimiter_position_array, n_title_lines
@@ -1259,6 +1272,7 @@ class IWFMZBudget(IWFMMiscellaneous):
             zbudget_values,
             ctypes.byref(status),
         )
+        self._raise_on_error(status)
 
         values = np.array(zbudget_values)
 
@@ -1538,6 +1552,7 @@ class IWFMZBudget(IWFMMiscellaneous):
             ctypes.byref(n_times_out),
             ctypes.byref(status),
         )
+        self._raise_on_error(status)
 
         values = np.array(zbudget_values)
 

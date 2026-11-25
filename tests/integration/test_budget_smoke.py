@@ -116,7 +116,8 @@ def _first_column_name_for_loc1(b):
             # Skip the time/date column (typically at index 0 or 1) and take a real column name
             return first[1] if len(first) > 1 else first[0]
         return first
-    return headers[0] if hasattr(headers, "__getitem__") else headers
+    # headers[0] is the "Time" column, not a data column
+    return headers[1]
 
 
 DEFERRED: dict[str, list[str]] = {

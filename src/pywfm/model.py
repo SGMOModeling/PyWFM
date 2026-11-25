@@ -11521,6 +11521,18 @@ class IWFMModel(IWFMMiscellaneous):
             error_message = self.get_last_message()
             raise IWFMError(error_message)
 
+        # Stock libraries before 2026.0.1848 skip the deletion when no model
+        # is open yet, which is when IWFMModel calls this. A stale file then
+        # gives a partially instantiated model that silently returns wrong
+        # values (e.g. no stream inflows), so remove it here as well. The
+        # library keeps it next to the simulation main file.
+        inquiry_file = os.path.join(
+            os.path.dirname(os.path.abspath(self.simulation_file_name)),
+            "IW_ModelData_ForInquiry.bin",
+        )
+        if os.path.exists(inquiry_file):
+            os.remove(inquiry_file)
+
     def simulate_for_one_timestep(self):
         """
         simulates a single timestep of the model application

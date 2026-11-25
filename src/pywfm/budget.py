@@ -52,6 +52,7 @@ class IWFMBudget(IWFMMiscellaneous):
         self.dll.IW_Budget_OpenFile(
             budget_file, ctypes.byref(length_file_name), ctypes.byref(status)
         )
+        self._raise_on_error(status)
 
     def __enter__(self):
         return self
@@ -74,6 +75,7 @@ class IWFMBudget(IWFMMiscellaneous):
         status = ctypes.c_int(0)
 
         self.dll.IW_Budget_CloseFile(ctypes.byref(status))
+        self._raise_on_error(status)
 
     def get_n_locations(self):
         """
@@ -116,6 +118,7 @@ class IWFMBudget(IWFMMiscellaneous):
         self.dll.IW_Budget_GetNLocations(
             ctypes.byref(n_locations), ctypes.byref(status)
         )
+        self._raise_on_error(status)
 
         return n_locations.value
 
@@ -164,6 +167,7 @@ class IWFMBudget(IWFMMiscellaneous):
             delimiter_position_array,
             ctypes.byref(status),
         )
+        self._raise_on_error(status)
 
         return self._string_to_list_by_array(
             raw_names_string, delimiter_position_array, n_locations
@@ -201,6 +205,7 @@ class IWFMBudget(IWFMMiscellaneous):
         self.dll.IW_Budget_GetNTimeSteps(
             ctypes.byref(n_time_steps), ctypes.byref(status)
         )
+        self._raise_on_error(status)
 
         return n_time_steps.value
 
@@ -269,6 +274,7 @@ class IWFMBudget(IWFMMiscellaneous):
             delimiter_position_array,
             ctypes.byref(status),
         )
+        self._raise_on_error(status)
 
         dates_list = self._string_to_list_by_array(
             raw_dates_string, delimiter_position_array, n_time_steps
@@ -312,6 +318,7 @@ class IWFMBudget(IWFMMiscellaneous):
         self.dll.IW_Budget_GetNTitleLines(
             ctypes.byref(n_title_lines), ctypes.byref(status)
         )
+        self._raise_on_error(status)
 
         return n_title_lines.value
 
@@ -348,6 +355,7 @@ class IWFMBudget(IWFMMiscellaneous):
         self.dll.IW_Budget_GetTitleLength(
             ctypes.byref(title_length), ctypes.byref(status)
         )
+        self._raise_on_error(status)
 
         return title_length.value
 
@@ -485,6 +493,7 @@ class IWFMBudget(IWFMMiscellaneous):
             delimiter_position_array,
             ctypes.byref(status),
         )
+        self._raise_on_error(status)
 
         return self._string_to_list_by_array(
             raw_title_string, delimiter_position_array, n_title_lines
@@ -545,6 +554,7 @@ class IWFMBudget(IWFMMiscellaneous):
         self.dll.IW_Budget_GetNColumns(
             ctypes.byref(location_id), ctypes.byref(n_columns), ctypes.byref(status)
         )
+        self._raise_on_error(status)
 
         return n_columns.value
 
@@ -654,6 +664,7 @@ class IWFMBudget(IWFMMiscellaneous):
             delimiter_position_array,
             ctypes.byref(status),
         )
+        self._raise_on_error(status)
 
         return self._string_to_list_by_array(
             raw_column_headers, delimiter_position_array, n_columns
@@ -892,6 +903,7 @@ class IWFMBudget(IWFMMiscellaneous):
             ctypes.byref(n_output_intervals),
             ctypes.byref(status),
         )
+        self._raise_on_error(status)
 
         budget = pd.DataFrame(data=np.array(budget_values), columns=["Time"] + columns)
         budget["Time"] = budget["Time"].astype("timedelta64[D]") + np.array(
@@ -1014,10 +1026,11 @@ class IWFMBudget(IWFMMiscellaneous):
         )
 
         # check that column name provided exists. if so, get column index.
-        if column_name not in column_headers:
+        # column_headers[0] is "Time"; data columns are numbered from 1
+        if column_name not in column_headers[1:]:
             raise ValueError(
                 "column_name provided must be one of the "
-                "following:\n {}".format(", ".join(column_headers))
+                "following:\n {}".format(", ".join(column_headers[1:]))
             )
 
         column_id = ctypes.c_int(column_headers.index(column_name))
@@ -1109,6 +1122,7 @@ class IWFMBudget(IWFMMiscellaneous):
             values,
             ctypes.byref(status),
         )
+        self._raise_on_error(status)
 
         dates = np.array("1899-12-30", dtype="datetime64") + np.array(
             dates, dtype="timedelta64"

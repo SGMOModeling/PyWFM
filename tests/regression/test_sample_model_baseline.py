@@ -1,9 +1,15 @@
 """Regression baseline for the SampleModel.
 
-Pins ~20 critical numerical values to a golden JSON file keyed by the
-loaded DLL version. The test compares the live model's values against
-the baseline; mismatches fail with a diff and a hint about how to
-regenerate the file.
+Pins model inputs (counts, IDs, coordinates, stratigraphy) and simulated
+results (hydrograph values, groundwater budget and zone budget totals) to a
+golden JSON file keyed by the loaded DLL version. The test compares the
+live model's values against the baseline; mismatches fail with a diff and
+a hint about how to regenerate the file.
+
+Simulated values are compared exactly. Every library of a release (stock
+DWR builds and the fork) must reproduce the release's results bit for bit,
+and the session re-simulates the SampleModel whenever the loaded library
+isn't the one that produced Results/ (see conftest._ensure_results).
 
 To regenerate the baseline (e.g. after a deliberate change to inputs
 or after vendoring a new DLL build), run::
@@ -23,6 +29,7 @@ from __future__ import annotations
 import json
 from dataclasses import dataclass
 from pathlib import Path
+from types import SimpleNamespace
 from typing import Any, Callable
 
 import numpy as np
@@ -51,6 +58,7 @@ class RegressionSpec:
     extract: Callable[[Any], Any]
     tolerance: float = 0.0
     requires_procedure: tuple = ()
+    requires_results: tuple = ()   # Results/ files the extract reads
 
 
 # Helper: convert ndarray scalar to Python scalar for JSON serialization
@@ -109,6 +117,62 @@ SAMPLE_SPECS: list[RegressionSpec] = [
 ]
 
 
+# Simulated results. Each extract gets a namespace with ``model`` (inquiry
+# IWFMModel), ``gw`` (IWFMBudget on GW.hdf) and ``zb`` (IWFMZBudget on
+# GW_ZBud.hdf with the subregion zones). The values come from the HDF5
+# output of the session's SampleModel run, at full double precision, and
+# are compared exactly: every supported library of a release must reproduce
+# that release's results bit for bit (the fork's stock-vs-fork byte
+# identity is the point of these specs).
+
+
+def _hydrograph_finals(get_ids, get_hydrograph):
+    return [float(get_hydrograph(int(i))[1][-1]) for i in get_ids()]
+
+
+def _budget_totals(budget):
+    """Column sums over the whole run, one row per budget location."""
+    rows = []
+    for loc in range(1, budget.get_n_locations() + 1):
+        df = budget.get_values(loc)
+        rows.append(df.drop(columns="Time").sum().to_numpy(dtype=float).tolist())
+    return rows
+
+
+def _zbudget_zone_totals(zb):
+    rows = []
+    for zone in zb.get_zone_list():
+        df = zb.get_values_for_a_zone(int(zone))
+        rows.append(df.drop(columns="Time").sum().to_numpy(dtype=float).tolist())
+    return rows
+
+
+SIMULATED_SPECS: list[RegressionSpec] = [
+    RegressionSpec("sim_gw_hydrograph_finals",
+                   lambda c: _hydrograph_finals(c.model.get_groundwater_hydrograph_ids,
+                                                c.model.get_groundwater_hydrograph),
+                   requires_results=("GWHyd.hdf",)),
+    RegressionSpec("sim_gw_hydrograph_1_sum",
+                   lambda c: float(c.model.get_groundwater_hydrograph(
+                       int(c.model.get_groundwater_hydrograph_ids()[0]))[1].sum()),
+                   requires_results=("GWHyd.hdf",)),
+    RegressionSpec("sim_stream_hydrograph_finals",
+                   lambda c: _hydrograph_finals(c.model.get_stream_hydrograph_ids,
+                                                c.model.get_stream_hydrograph),
+                   requires_results=("StrmHyd.hdf",)),
+    RegressionSpec("sim_stream_hydrograph_1_sum",
+                   lambda c: float(c.model.get_stream_hydrograph(
+                       int(c.model.get_stream_hydrograph_ids()[0]))[1].sum()),
+                   requires_results=("StrmHyd.hdf",)),
+    RegressionSpec("sim_subsidence_hydrograph_finals",
+                   lambda c: _hydrograph_finals(c.model.get_subsidence_hydrograph_ids,
+                                                c.model.get_subsidence_hydrograph),
+                   requires_results=("Subsidence.hdf",)),
+    RegressionSpec("sim_gw_budget_totals", lambda c: _budget_totals(c.gw)),
+    RegressionSpec("sim_gw_zbudget_zone_totals", lambda c: _zbudget_zone_totals(c.zb)),
+]
+
+
 # ---------------------------------------------------------------------------
 # Baseline file resolution
 # ---------------------------------------------------------------------------
@@ -159,6 +223,54 @@ def _baseline_state(dll_version, request):
         _save_baseline(path, captured)
 
 
+@pytest.fixture(scope="session")
+def _sim_results(sample_dir, sample_inquiry, sample_gw_budget, sample_gw_zbudget):
+    return SimpleNamespace(results=sample_dir / "Results", model=sample_inquiry,
+                           gw=sample_gw_budget, zb=sample_gw_zbudget)
+
+
+def _check(spec, value, state):
+    """Compare one extracted value with the baseline (or capture it)."""
+    if state["update"]:
+        # Capture mode — record value, don't compare
+        state["captured"][spec.name] = value
+        return
+
+    if not state["data"]:
+        pytest.skip(
+            f"no baseline at {state['path']}. "
+            "Run `pytest tests/regression --update-baselines` to create one."
+        )
+
+    if spec.name not in state["data"]:
+        pytest.skip(
+            f"baseline at {state['path']} has no entry for {spec.name!r}. "
+            "Run `pytest tests/regression --update-baselines` to refresh."
+        )
+
+    expected = state["data"][spec.name]
+
+    if isinstance(value, list):
+        live, base = np.asarray(value, dtype=float), np.asarray(expected, dtype=float)
+        assert live.shape == base.shape, (
+            f"{spec.name}: shape {live.shape} != baseline {base.shape}"
+        )
+        diff = np.abs(live - base)
+        worst = np.unravel_index(int(diff.argmax()), diff.shape) if diff.size else ()
+        assert diff.size == 0 or diff.max() <= spec.tolerance, (
+            f"{spec.name}: {int((diff > spec.tolerance).sum())} of {diff.size} values "
+            f"differ; worst at {worst}: live={live[worst]!r} baseline={base[worst]!r}"
+        )
+    elif isinstance(value, float) or isinstance(expected, float):
+        diff = abs(value - expected)
+        assert diff <= spec.tolerance, (
+            f"{spec.name}: live={value} baseline={expected} diff={diff} "
+            f"tolerance={spec.tolerance}"
+        )
+    else:
+        assert value == expected, f"{spec.name}: live={value!r} baseline={expected!r}"
+
+
 @pytest.mark.regression
 @pytest.mark.parametrize("spec", SAMPLE_SPECS, ids=lambda s: s.name)
 def test_value_matches_baseline(spec, sample_inquiry, _baseline_state):
@@ -170,32 +282,17 @@ def test_value_matches_baseline(spec, sample_inquiry, _baseline_state):
     if missing:
         pytest.skip(f"{spec.name}: DLL doesn't export {missing}")
 
-    value = _to_py(spec.extract(sample_inquiry))
+    _check(spec, _to_py(spec.extract(sample_inquiry)), _baseline_state)
 
-    if _baseline_state["update"]:
-        # Capture mode — record value, don't compare
-        _baseline_state["captured"][spec.name] = value
-        return
 
-    if not _baseline_state["data"]:
-        pytest.skip(
-            f"no baseline at {_baseline_state['path']}. "
-            "Run `pytest tests/regression --update-baselines` to create one."
-        )
-
-    if spec.name not in _baseline_state["data"]:
-        pytest.skip(
-            f"baseline at {_baseline_state['path']} has no entry for {spec.name!r}. "
-            "Run `pytest tests/regression --update-baselines` to refresh."
-        )
-
-    expected = _baseline_state["data"][spec.name]
-
-    if isinstance(value, float) or isinstance(expected, float):
-        diff = abs(value - expected)
-        assert diff <= spec.tolerance, (
-            f"{spec.name}: live={value} baseline={expected} diff={diff} "
-            f"tolerance={spec.tolerance}"
-        )
-    else:
-        assert value == expected, f"{spec.name}: live={value!r} baseline={expected!r}"
+@pytest.mark.regression
+@pytest.mark.parametrize("spec", SIMULATED_SPECS, ids=lambda s: s.name)
+def test_simulated_value_matches_baseline(spec, _sim_results, _baseline_state):
+    """Simulated heads, stream flows, subsidence and budgets from the
+    session's SampleModel run match the release's baseline exactly."""
+    # The hydrograph API reads the HDF5 hydrograph output, which older
+    # releases' SampleModels don't write
+    missing = [f for f in spec.requires_results if not (_sim_results.results / f).exists()]
+    if missing:
+        pytest.skip(f"{spec.name}: the SampleModel run writes no {missing}")
+    _check(spec, _to_py(spec.extract(_sim_results)), _baseline_state)
