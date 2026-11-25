@@ -18,7 +18,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 pytest tests/unit tests/integration                  # inquiry-mode suite
 pytest --runsim tests/integration/model/test_simulation.py      # sim-mode tests: own session
 pytest --runsim tests/integration/model/test_multi_instance.py  # multi-instance: own session
-PYWFM_DLL=C:\path	o\IWFM_C_x64.dll pytest ...    # test against a specific library
+PYWFM_DLL=C:\path\to\IWFM_C_x64.dll pytest ...    # test against a specific library
 ```
 
 Run the suite once per library (stock 2025.0.1747, stock 2026.0.1848, the handle-based 2026.0.1848.rev build). `tests/conftest.py` picks the vendored SampleModel by the library's major version (`v2025` or `v2026`) and the DSS file by API generation (stock builds read only DSS-6, the handle-based builds only DSS-7), and builds a working copy under `tests/data/sample_model/.work/` (git-ignored; Results are cached there between sessions). `PYWFM_SAMPLE_DIR` overrides the SampleModel.
@@ -27,7 +27,7 @@ CLI:
 
 ```
 pywfm setup-pywfm --version 1848       # download the stock IWFM API from CNRA into the env's library dir
-pywfm setup-pywfm --path C:\path	o\IWFM_C_x64.dll  # use a local library instead
+pywfm setup-pywfm --path C:\path\to\IWFM_C_x64.dll  # use a local library instead
 pywfm get-api-version                  # version, path, and API generation of the loaded library
 ```
 
