@@ -97,6 +97,13 @@ exception: stack overflow`). Run that work with
 `pywfm.run_with_large_stack(function)`, which calls `function` on a thread
 with a 255 MB stack (the largest Windows allows a Python thread).
 
+The library runs parts of a simulation on up to 16 OpenMP threads. That
+helps large models but slows small ones: the 2026.0.1848 sample model
+simulates in 64 s on one thread and 149 s on sixteen. With the fork library
+(2026.0.1848.rev, fork commit a36acdf or later), set `OMP_NUM_THREADS=1` (or
+another count) in the environment before pywfm loads the library; stock
+libraries always choose their own count.
+
 ### Freezing supply adjustment
 
 Supply adjustment (`KOPTDV`) re-solves every time step until pumping and
