@@ -6,10 +6,13 @@ golden JSON file keyed by the loaded DLL version. The test compares the
 live model's values against the baseline; mismatches fail with a diff and
 a hint about how to regenerate the file.
 
-Simulated values are compared exactly. Every library of a release (stock
-DWR builds and the fork) must reproduce the release's results bit for bit,
-and the session re-simulates the SampleModel whenever the loaded library
-isn't the one that produced Results/ (see conftest._ensure_results).
+Simulated values are compared exactly. Every stock DWR library of a
+release must reproduce the release's results bit for bit, and so must
+every build of the handle-based fork, against the fork's own baseline (its
+solver differs from the stock one within the solver tolerance; see
+_baseline_path). The session re-simulates the SampleModel whenever the
+loaded library isn't the one that produced Results/ (see
+conftest._ensure_results).
 
 To regenerate the baseline (e.g. after a deliberate change to inputs
 or after vendoring a new DLL build), run::
@@ -21,8 +24,9 @@ see PASSED for every spec and the file is rewritten in place. Review
 the resulting diff before committing.
 
 Baseline files are stored as ``tests/regression/data/sample_model_<dll_version>.json``
-so each DLL variant in the conda matrix has its own pinned set; tests
-gracefully skip when no matching baseline exists.
+(``sample_model_<dll_version>-fork.json`` for the fork) so each library
+variant has its own pinned set; tests gracefully skip when no matching
+baseline exists.
 """
 from __future__ import annotations
 
@@ -181,8 +185,14 @@ SIMULATED_SPECS: list[RegressionSpec] = [
 def _baseline_path(dll_version: str) -> Path:
     """Strip a build-hash suffix (e.g. '2025.0.1747-054223d4' → '2025.0.1747')
     so the same baseline applies to all builds of the same numbered version.
+
+    The handle-based fork has its own baseline ('…-fork'): its matrix solver
+    keeps the ILUT preconditioner across Newton iterations, so its simulated
+    values differ from the stock DWR library's within the solver tolerance.
     """
     short = dll_version.split("-")[0]
+    if pywfm.abi() == "handle":
+        short += "-fork"
     return BASELINE_DIR / f"sample_model_{short}.json"
 
 
