@@ -91,6 +91,39 @@ with IWFMModel(pp_file, sim_file, is_for_inquiry=0) as model:
 
 `help(IWFMModel)` lists every method.
 
+Large models such as C2VSimFG overflow the 1 MB stack of a Python thread
+when they are instantiated or simulated through the library (`OSError:
+exception: stack overflow`). Run that work with
+`pywfm.run_with_large_stack(function)`, which calls `function` on a thread
+with a 255 MB stack (the largest Windows allows a Python thread).
+
+### Freezing supply adjustment
+
+Supply adjustment (`KOPTDV`) re-solves every time step until pumping and
+diversions meet demand. When repeated runs don't change the demands, for
+example while calibrating aquifer parameters, `pywfm.supply` records the
+adjusted supplies once and writes input files that specify them as fixed
+data, with supply adjustment off. This needs the handle-based fork library.
+
+```python
+from pywfm import IWFMModel, run_with_large_stack
+from pywfm.supply import freeze_supply_adjustment, record_adjusted_supplies
+
+def record():
+    with IWFMModel(pp_file, sim_file, is_for_inquiry=0) as model:
+        return record_adjusted_supplies(model)
+
+supplies = run_with_large_stack(record)
+frozen_main = freeze_supply_adjustment(sim_file, supplies)   # Simulation_MAIN_frozen.IN
+```
+
+The frozen files are written next to the originals with a `_frozen`
+suffix; the originals are not changed. The frozen run reproduces the
+adjusted one within the solver tolerance: on the 2026.0.1848 sample model,
+heads within 0.14 ft over 10 years and budgets within a relative 1e-4, in
+half the time. Re-record when the demands or the stream flow available for
+diversion change.
+
 ## Which IWFM library?
 
 | | Stock DWR library (2024.2.1594+) | Handle-based fork (2026.0.1848.rev) |
@@ -99,7 +132,9 @@ with IWFMModel(pp_file, sim_file, is_for_inquiry=0) as model:
 | Several `IWFMModel` objects at once | yes: pywfm selects the active model before each call and serializes calls | yes, fully independent |
 | Killing one model while others are open | breaks the others (a kernel limitation) | safe |
 | DSS input files | DSS-6 | DSS-7 |
-| Results compared with the official release | official | byte-identical when built with ifx 2026.1.1, except where two upstream subsidence v5.0 bugs are fixed |
+| Results compared with the official release | official | within the solver tolerance (its matrix solver keeps the ILUT preconditioner across iterations), and different where upstream bugs are fixed (subsidence v5.0) |
+| Required pumping, diversion data values (`pywfm.supply`) | no | yes |
+| `get_budget_annual_cumulative_gw_storage_change` | invalid values (raises) | yes |
 
 pywfm 1.0 does not support the 2015-series libraries (2015.0.1273,
 2015.0.1403, 2015.1.1443); use `iwfm-pywfm<0.3` for those.

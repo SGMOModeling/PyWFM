@@ -8,6 +8,7 @@ from pywfm.budget import IWFMBudget
 from pywfm.zbudget import IWFMZBudget
 from pywfm.decorators import program_timer
 from pywfm.cli import cli
+from pywfm.utilities import run_with_large_stack
 
 
 def __getattr__(name):
