@@ -6,6 +6,10 @@ import pandas as pd
 
 from pywfm.misc import IWFMMiscellaneous
 
+# Progress callback of IW_ZBudget_GetValues_WithCallback: (length, text),
+# both passed by reference, text not null-terminated
+_PROGRESS_CALLBACK = ctypes.CFUNCTYPE(None, ctypes.POINTER(ctypes.c_int), ctypes.POINTER(ctypes.c_char))
+
 
 class IWFMZBudget(IWFMMiscellaneous):
     """
@@ -1314,6 +1318,7 @@ class IWFMZBudget(IWFMMiscellaneous):
         area_units="SQ FT",
         volume_conversion_factor=1.0,
         volume_units="CU FT",
+        progress=None,
     ):
         """
         Return specified Z-Budget data columns for a specified zone for
@@ -1351,6 +1356,10 @@ class IWFMZBudget(IWFMMiscellaneous):
 
         volume_units : str, default 'CU FT'
             output units of volume
+
+        progress : callable, optional
+            called with each time stamp (str) as it is read, to report
+            progress on large files (uses IW_ZBudget_GetValues_WithCallback)
 
         Returns
         -------
@@ -1536,7 +1545,23 @@ class IWFMZBudget(IWFMMiscellaneous):
         n_times_out = ctypes.c_int(0)
         status = ctypes.c_int(0)
 
-        self.dll.IW_ZBudget_GetValues_ForAZone(
+        if progress is None:
+            procedure, head = self.dll.IW_ZBudget_GetValues_ForAZone, []
+        else:
+            if not hasattr(self.dll, "IW_ZBudget_GetValues_WithCallback"):
+                raise AttributeError(
+                    'IWFM API does not have "IW_ZBudget_GetValues_WithCallback" '
+                    "procedure. Check for an updated version"
+                )
+
+            @_PROGRESS_CALLBACK
+            def report(length, text):
+                progress(ctypes.string_at(text, length.contents.value).decode("utf-8", "replace").strip())
+
+            procedure, head = self.dll.IW_ZBudget_GetValues_WithCallback, [report]
+
+        procedure(
+            *head,
             ctypes.byref(zone_id),
             ctypes.byref(n_column_ids),
             column_ids,
@@ -1554,7 +1579,7 @@ class IWFMZBudget(IWFMMiscellaneous):
         )
         self._raise_on_error(status)
 
-        values = np.array(zbudget_values)
+        values = np.array(zbudget_values)[: n_times_out.value]
 
         zbudget = pd.DataFrame(data=values, columns=columns)
         zbudget["Time"] = zbudget["Time"].astype("timedelta64[D]") + np.array(

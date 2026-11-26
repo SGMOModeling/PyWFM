@@ -259,6 +259,39 @@ class IWFMMiscellaneous:
 
         return nvrv_landuse_id.value
 
+    def _get_id(self, procedure):
+        """Value of a procedure that returns one integer ID and a status."""
+        if not hasattr(self.dll, procedure):
+            raise AttributeError(
+                'IWFM API does not have "{}" procedure. '
+                "Check for an updated version".format(procedure)
+            )
+        value = ctypes.c_int(0)
+        status = ctypes.c_int(0)
+        getattr(self.dll, procedure)(ctypes.byref(value), ctypes.byref(status))
+        self._raise_on_error(status)
+        return value.value
+
+    def get_land_use_type_id_ponded_ag(self):
+        """Return the land use type ID of ponded agricultural crops (rice and refuges)."""
+        return self._get_id("IW_GetLandUseTypeID_PondedAg")
+
+    def get_land_use_type_ids_2(self):
+        """Return every land use type ID, including ponded agriculture and the
+        urban indoor and outdoor classes."""
+        if not hasattr(self.dll, "IW_GetLandUseTypeIDs_2"):
+            raise AttributeError(
+                'IWFM API does not have "{}" procedure. '
+                "Check for an updated version".format("IW_GetLandUseTypeIDs_2")
+            )
+        names = ["general_ag", "urban", "nonponded_ag", "ponded_ag", "rice", "refuge",
+                 "urban_indoor", "urban_outdoor", "native_riparian"]
+        values = [ctypes.c_int(0) for _ in names]
+        status = ctypes.c_int(0)
+        self.dll.IW_GetLandUseTypeIDs_2(*[ctypes.byref(v) for v in values], ctypes.byref(status))
+        self._raise_on_error(status)
+        return {n: v.value for n, v in zip(names, values)}
+
     def get_land_use_type_ids(self):
         if not hasattr(self.dll, "IW_GetLandUseTypeIDs"):
             raise AttributeError(
@@ -558,6 +591,10 @@ class IWFMMiscellaneous:
         self._raise_on_error(status)
 
         return location_type_id_tile_drain.value
+
+    def get_location_type_id_tiledrain(self):
+        """Return the location type ID of tile drains."""
+        return self._get_id("IW_GetLocationTypeID_TileDrain")
 
     def get_location_type_id_streamnodebud(self):
         if not hasattr(self.dll, "IW_GetLocationTypeID_StrmNodeBud"):
@@ -1132,6 +1169,20 @@ class IWFMMiscellaneous:
         }
 
         return iwfm_version_info
+
+    def get_kernel_version(self):
+        """Return the version of the IWFM kernel the library is built from."""
+        if not hasattr(self.dll, "IW_IWFMKernel_GetVersion"):
+            raise AttributeError(
+                'IWFM API does not have "{}" procedure. '
+                "Check for an updated version".format("IW_IWFMKernel_GetVersion")
+            )
+        length = ctypes.c_int(500)
+        version = ctypes.create_string_buffer(length.value)
+        status = ctypes.c_int(0)
+        self.dll.IW_IWFMKernel_GetVersion(ctypes.byref(length), version, ctypes.byref(status))
+        self._raise_on_error(status)
+        return version.value.decode("utf-8", "replace").strip()
 
     def get_n_intervals(
         self, begin_date, end_date, time_interval, includes_end_date=True

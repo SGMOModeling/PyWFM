@@ -558,6 +558,19 @@ class IWFMBudget(IWFMMiscellaneous):
 
         return n_columns.value
 
+    def are_n_columns_same(self):
+        """Return True if every location of the budget has the same number of columns."""
+        if not hasattr(self.dll, "IW_Budget_AreNColumnsSame"):
+            raise AttributeError(
+                'IWFM API does not have "{}" procedure. '
+                "Check for an updated version".format("IW_Budget_AreNColumnsSame")
+            )
+        is_same = ctypes.c_int(0)
+        status = ctypes.c_int(0)
+        self.dll.IW_Budget_AreNColumnsSame(ctypes.byref(is_same), ctypes.byref(status))
+        self._raise_on_error(status)
+        return is_same.value == 1
+
     def get_column_headers(
         self, location_id, length_unit="FT", area_unit="SQ FT", volume_unit="CU FT"
     ):
@@ -905,7 +918,9 @@ class IWFMBudget(IWFMMiscellaneous):
         )
         self._raise_on_error(status)
 
-        budget = pd.DataFrame(data=np.array(budget_values), columns=["Time"] + columns)
+        budget = pd.DataFrame(
+            data=np.array(budget_values)[: n_output_intervals.value], columns=["Time"] + columns
+        )
         budget["Time"] = budget["Time"].astype("timedelta64[D]") + np.array(
             "1899-12-30", dtype="datetime64"
         )
@@ -1124,9 +1139,10 @@ class IWFMBudget(IWFMMiscellaneous):
         )
         self._raise_on_error(status)
 
+        n = n_output_intervals.value
         dates = np.array("1899-12-30", dtype="datetime64") + np.array(
             dates, dtype="timedelta64"
-        )
-        values = np.array(values)
+        )[:n]
+        values = np.array(values)[:n]
 
         return pd.DataFrame({"Time": dates, column_name: values})

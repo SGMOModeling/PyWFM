@@ -689,6 +689,66 @@ DEFERRED: dict[str, list[str]] = {
         "is_model_instantiated",
     ],
 
+    # Budget, zone budget, parametric grid, stream, well and land use
+    # wrappers (pywfm 1.0): budget-type/location/zone arguments or
+    # cross-checks between them, tested in
+    # tests/integration/model/test_model_api.py.
+    "model_api": [
+        "get_n_budgets",
+        "get_budget_list",
+        "get_budget_n_columns",
+        "get_budget_column_titles",
+        "get_budget_time_series",
+        "get_budget_annual_flows",
+        "get_budget_monthly_average_flows",
+        "get_budget_cumulative_gw_storage_change",
+        "get_budget_annual_cumulative_gw_storage_change",
+        "get_n_zbudgets",
+        "get_zbudget_list",
+        "get_zbudget_n_columns",
+        "get_zbudget_column_titles",
+        "get_zbudget_time_series",
+        "get_zbudget_annual_flows",
+        "get_zbudget_monthly_average_flows",
+        "get_zbudget_cumulative_gw_storage_change",
+        "get_zbudget_annual_cumulative_gw_storage_change",
+        "get_n_parametric_grids",
+        "get_n_parametric_nodes",
+        "get_n_parametric_elements",
+        "get_parametric_node_coordinates",
+        "get_parametric_element_vertices",
+        "get_parametric_aquifer_parameters",
+        "get_n_well_elements",
+        "get_well_elements",
+        "get_diversion_recharge_zone",
+        "get_land_use_areas_for_time_period",
+    ],
+
+    # Per-time-step values of a model instantiated for simulation, tested in
+    # tests/integration/model/test_simulation.py (TestSimulationState).
+    "simulation_state": [
+        "get_pumping_required",
+        "get_pumping_actual",
+        "get_stream_bypass_inflows",
+        "get_stream_net_bypass_inflows",
+        "get_stream_evaporation",
+        "get_stream_water_supply_available",
+        "get_stream_net_inflows_excluding_diversions",
+        "get_stream_net_inflows_excluding_diversions_and_groundwater",
+        "get_stream_required_diversions",
+        "get_stream_diversion_data_values",
+        "compute_future_water_demands",
+        "get_future_water_demand_for_diversion",
+        "simulate_transport_for_one_time_step",
+    ],
+
+    # IW_Model_GetGWHeadsIC re-parses the groundwater main file and
+    # misreads the 2026.0.1848 sample's file ("Node ID 1 is listed more than
+    # once for initial groundwater heads").
+    "kernel_limitation_heads_ic": [
+        "get_gw_heads_initial_conditions",
+    ],
+
 }
 
 

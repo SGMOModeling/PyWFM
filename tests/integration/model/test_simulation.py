@@ -24,6 +24,8 @@ import numpy as np
 import pandas as pd
 import pytest
 
+import pywfm
+
 
 _IWFM_DATE_RE = re.compile(r"^\d{2}/\d{2}/\d{4}_\d{2}:\d{2}$")
 
@@ -200,3 +202,35 @@ class TestReadTimeseriesDataOverwrite:
             sample_simulation.read_timeseries_data_overwrite(
                 land_use_areas=np.zeros((1, 1))
             )
+
+
+# ---------------------------------------------------------------------------
+# Per-time-step values of a simulation model
+# ---------------------------------------------------------------------------
+@pytest.mark.integration
+@pytest.mark.simulation
+class TestSimulationState:
+    def test_one_time_step(self, sample_simulation):
+        m = sample_simulation
+        m.advance_time()
+        m.read_timeseries_data()
+        m.simulate_for_one_timestep()
+        n_nodes, n_divs = m.get_n_stream_nodes(), m.get_n_diversions()
+        for name in ["get_stream_bypass_inflows", "get_stream_net_bypass_inflows",
+                     "get_stream_evaporation", "get_stream_water_supply_available",
+                     "get_stream_net_inflows_excluding_diversions",
+                     "get_stream_net_inflows_excluding_diversions_and_groundwater"]:
+            assert getattr(m, name)().shape == (n_nodes,), name
+        required = m.get_stream_required_diversions()
+        assert required.shape == (n_divs,)
+        first = int(m.get_diversion_ids()[0])
+        assert m.get_stream_required_diversions([first])[0] == required[0]
+        if pywfm.abi() == "handle":
+            for pump_type, n in [("element_pumps", m.get_n_element_pumps()), ("wells", m.get_n_wells())]:
+                req, act = m.get_pumping_required(pump_type), m.get_pumping_actual(pump_type)
+                assert req.shape == act.shape == (n,)
+                # actual pumping never exceeds the requirement
+                assert (np.abs(act) <= np.abs(req) * (1 + 1e-12) + 1e-9).all()
+            assert len(m.get_stream_diversion_data_values()) >= n_divs
+        m.print_results()
+        m.advance_state()

@@ -74,6 +74,8 @@ BUDGET_SPECS: list[BudgetSpec] = [
         shape_check=lambda r, b: len(r) == 2 and isinstance(r[0], list) and isinstance(r[1], str),
     ),
 
+    BudgetSpec("are_n_columns_same", expected_type=bool),
+
     # --- Location-keyed (use location 1) ---
     BudgetSpec("get_n_columns", args=_first_location),
     BudgetSpec(

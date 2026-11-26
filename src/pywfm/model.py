@@ -12,11 +12,13 @@ from matplotlib.collections import PolyCollection
 import matplotlib.colors as colors
 
 from pywfm.misc import IWFMMiscellaneous
+from pywfm._model_budgets import ModelBudgetMixin
+from pywfm._model_extras import ModelExtrasMixin
 from pywfm.exceptions import IWFMError
 from pywfm._dll import abi, core_version, ACTIVE_MODEL_LOCK, NO_MODEL_ID
 
 
-class IWFMModel(IWFMMiscellaneous):
+class IWFMModel(ModelBudgetMixin, ModelExtrasMixin, IWFMMiscellaneous):
     """
     IWFM Model Class for interacting with the IWFM API.
 
