@@ -3486,7 +3486,7 @@ class IWFMModel(IWFMMiscellaneous):
         if not hasattr(self.dll, "IW_Model_GetNReaches"):
             raise AttributeError(
                 'IWFM API does not have "{}" procedure. Check for an updated version'.format(
-                    "IW_ModelGetNReaches"
+                    "IW_Model_GetNReaches"
                 )
             )
 
