@@ -140,6 +140,45 @@ class TestZoneBudgets:
         with pytest.raises(ValueError):
             sample_inquiry.get_zbudget_n_columns(gw_zbudget_type, 1, "diagonal", [1], [1], [1])
 
+    def test_land_use_zbudget_flows_need_a_land_use_type(self, sample_inquiry):
+        """Annual land and water use zone flows for a land use type the budget
+        doesn't report are an error, not a process abort."""
+        if pywfm.abi() == "switch":
+            pytest.skip("stock DWR libraries abort the process here")
+        lwu = sample_inquiry.get_zbudget_type_ids()["lwu"]
+        if lwu not in set(sample_inquiry.get_zbudget_list().zbudget_type_id):
+            pytest.skip("model writes no land and water use zone budget")
+        zones = _zones_from_subregions(sample_inquiry)
+        with pytest.raises(IWFMError):
+            sample_inquiry.get_zbudget_annual_flows(lwu, 1, **zones, land_use_type_id=0)
+        ag = sample_inquiry.get_land_use_type_ids_2()["nonponded_ag"]
+        flows = sample_inquiry.get_zbudget_annual_flows(lwu, 1, **zones, land_use_type_id=ag)
+        assert len(flows) > 0
+
+        # Annual means annual: the supply requirement is the water-year total of
+        # the zone budget's own column (DWR's library returned monthly values).
+        yearly = sample_inquiry.get_zbudget_time_series(lwu, 1, **zones, interval="1YEAR")
+        column = next(c for c in yearly.columns
+                      if "non-ponded" in c.lower() and "supply requirement" in c.lower())
+        n = min(len(flows), len(yearly))
+        np.testing.assert_allclose(-flows["Supply Requirement"].to_numpy()[:n],
+                                   yearly[column].to_numpy()[:n], rtol=1e-9)
+
+    def test_land_use_budget_flows_need_a_land_use_type(self, sample_inquiry):
+        """The same for the land and water use budget, annual and monthly."""
+        if pywfm.abi() == "switch":
+            pytest.skip("stock DWR libraries crash here")
+        lwu = sample_inquiry.get_budget_type_ids()["lwu"]
+        if lwu not in set(sample_inquiry.get_budget_list().budget_type_id):
+            pytest.skip("model writes no land and water use budget")
+        ids = sample_inquiry.get_land_use_type_ids_2()
+        for unreported in (0, ids["rice"]):
+            with pytest.raises(IWFMError):
+                sample_inquiry.get_budget_annual_flows(lwu, 1, land_use_type_id=unreported)
+            with pytest.raises(IWFMError):
+                sample_inquiry.get_budget_monthly_average_flows(lwu, 1, land_use_type_id=unreported)
+        assert len(sample_inquiry.get_budget_annual_flows(lwu, 1, land_use_type_id=ids["general_ag"])) > 0
+
 
 def test_zbudget_progress_callback(sample_gw_zbudget):
     """get_values_for_a_zone(progress=...) reports each time stamp and returns
