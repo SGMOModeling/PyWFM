@@ -169,6 +169,27 @@ class TestModelData:
                 vertices = sample_inquiry.get_parametric_element_vertices(grid, element)
                 assert len(vertices) == 4 and vertices[:3].min() >= 1
 
+    def test_initial_heads(self, sample_inquiry, sample_dir):
+        """The heads equal the FACTHP block of the groundwater main file."""
+        try:
+            heads = sample_inquiry.get_gw_heads_initial_conditions()
+        except IWFMError:
+            if pywfm.abi() == "switch":
+                # stock libraries misread files with a groundwater return flow
+                # block (IFLAGRF) before the initial heads (fixed in the fork)
+                pytest.skip("stock library misreads this groundwater main file")
+            raise
+        n_layers, n_nodes = sample_inquiry.get_n_layers(), sample_inquiry.get_n_nodes()
+        assert heads.shape == (n_layers, n_nodes)
+        lines = [ln for ln in (sample_dir / "Simulation" / "GW" / "GW_MAIN.dat")
+                 .read_text(encoding="latin-1").splitlines() if ln[:1] not in ("C", "c", "*")]
+        start = next(i for i, ln in enumerate(lines) if "/ FACTHP" in ln)
+        factor = float(lines[start].split()[0])
+        rows = [ln.split() for ln in lines[start + 1:start + 1 + n_nodes]]
+        expected = {int(r[0]): [float(v) * factor for v in r[1:1 + n_layers]] for r in rows}
+        ids = list(sample_inquiry.get_node_ids())
+        np.testing.assert_allclose(heads.T, [expected[i] for i in ids])
+
     def test_well_elements(self, sample_inquiry):
         if sample_inquiry.get_n_wells() == 0:
             pytest.skip("model has no wells")

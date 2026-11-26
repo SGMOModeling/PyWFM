@@ -722,6 +722,7 @@ DEFERRED: dict[str, list[str]] = {
         "get_well_elements",
         "get_diversion_recharge_zone",
         "get_land_use_areas_for_time_period",
+        "get_gw_heads_initial_conditions",
     ],
 
     # Per-time-step values of a model instantiated for simulation, tested in
@@ -740,13 +741,6 @@ DEFERRED: dict[str, list[str]] = {
         "compute_future_water_demands",
         "get_future_water_demand_for_diversion",
         "simulate_transport_for_one_time_step",
-    ],
-
-    # IW_Model_GetGWHeadsIC re-parses the groundwater main file and
-    # misreads the 2026.0.1848 sample's file ("Node ID 1 is listed more than
-    # once for initial groundwater heads").
-    "kernel_limitation_heads_ic": [
-        "get_gw_heads_initial_conditions",
     ],
 
 }
