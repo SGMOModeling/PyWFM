@@ -121,21 +121,12 @@ def run_with_large_stack(function, *args, stack_size_mb=255, **kwargs):
     """Call ``function(*args, **kwargs)`` on a thread with a large stack and
     return its result (or raise its exception).
 
-    The IWFM library uses the calling thread's stack. The simulation
-    executables reserve 256 MB, but a Python thread has about 1 MB on
-    Windows (8 MB on Linux), which large models overflow when instantiated
-    or simulated through the library ("OSError: exception: stack overflow"
-    with C2VSimFG). Run everything that creates or simulates such a model
-    inside ``function``.
-
-    Example
-    -------
-    >>> def record():
-    ...     with IWFMModel(pp_file, sim_file, is_for_inquiry=0) as model:
-    ...         return record_adjusted_supplies(model)
-    >>> record = run_with_large_stack(record)
+    pywfm already runs every library procedure on a large-stack thread, so
+    this is no longer needed. Library calls made inside ``function`` run on
+    its thread directly, which saves handing each call to another thread.
+    ``stack_size_mb`` is ignored; the stack is ``pywfm._dll.STACK_SIZE_MB``.
     """
-    import threading
+    from pywfm._dll import start_large_stack_thread
 
     result, error = [], []
 
@@ -145,12 +136,7 @@ def run_with_large_stack(function, *args, stack_size_mb=255, **kwargs):
         except BaseException as exc:  # re-raised in the calling thread
             error.append(exc)
 
-    previous = threading.stack_size(stack_size_mb * 1024 * 1024)
-    try:
-        thread = threading.Thread(target=target, name="pywfm-large-stack")
-        thread.start()
-    finally:
-        threading.stack_size(previous)
+    thread = start_large_stack_thread(target, "pywfm-large-stack")
     thread.join()
     if error:
         raise error[0]

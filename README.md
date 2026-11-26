@@ -91,11 +91,12 @@ with IWFMModel(pp_file, sim_file, is_for_inquiry=0) as model:
 
 `help(IWFMModel)` lists every method.
 
-Large models such as C2VSimFG overflow the 1 MB stack of a Python thread
-when they are instantiated or simulated through the library (`OSError:
-exception: stack overflow`). Run that work with
-`pywfm.run_with_large_stack(function)`, which calls `function` on a thread
-with a 255 MB stack (the largest Windows allows a Python thread).
+The IWFM library uses the calling thread's stack, and models need far more
+than a Python thread has (the IWFM executables reserve 256 MB). pywfm
+therefore runs every library call on a worker thread with a 255 MB stack,
+the largest Windows allows a Python thread, one worker per calling thread.
+This lets the library be compiled without heap-arrays, which makes it
+several times faster (about 7x on C2VSimFG with the fork library).
 
 The library runs parts of a simulation on up to 16 OpenMP threads. That
 helps large models but slows small ones: the 2026.0.1848 sample model
@@ -113,14 +114,11 @@ adjusted supplies once and writes input files that specify them as fixed
 data, with supply adjustment off. This needs the handle-based fork library.
 
 ```python
-from pywfm import IWFMModel, run_with_large_stack
+from pywfm import IWFMModel
 from pywfm.supply import freeze_supply_adjustment, record_adjusted_supplies
 
-def record():
-    with IWFMModel(pp_file, sim_file, is_for_inquiry=0) as model:
-        return record_adjusted_supplies(model)
-
-supplies = run_with_large_stack(record)
+with IWFMModel(pp_file, sim_file, is_for_inquiry=0) as model:
+    supplies = record_adjusted_supplies(model)
 frozen_main = freeze_supply_adjustment(sim_file, supplies)   # Simulation_MAIN_frozen.IN
 ```
 

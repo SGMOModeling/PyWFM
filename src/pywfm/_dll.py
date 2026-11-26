@@ -24,6 +24,7 @@ import ctypes
 import struct
 import os
 import platform
+import queue
 import re
 import sys
 import threading
@@ -134,7 +135,7 @@ def load_dll(path=None):
         dll = _open(target)
         _abi = _classify(dll, target)
         _core_version = _version(dll)
-        _dll, _path = dll, target
+        _dll, _path = LargeStackLibrary(dll), target
         return _dll
 
 
@@ -267,8 +268,129 @@ def _elf_needed(path):
 
 
 def get_dll():
-    """Return the loaded IWFM library, loading it on first use."""
+    """Return the loaded IWFM library, loading it on first use.
+
+    Procedures of the returned object run on a large-stack thread (see
+    ``LargeStackLibrary``).
+    """
     return _dll if _dll is not None else load_dll()
+
+
+# The library uses the calling thread's stack. The IWFM executables reserve
+# 256,000,000 bytes; Python's main thread has 1-2 MB on Windows (8 MB on
+# Linux), which even the sample model overflows ("OSError: exception: stack
+# overflow") unless the library was compiled with heap-arrays, which makes it
+# several times slower. 255 MB is the largest stack CPython allows a thread on
+# Windows.
+STACK_SIZE_MB = 255
+
+_thread_state = threading.local()
+
+
+def on_large_stack():
+    """True on a thread pywfm created with a large stack."""
+    return getattr(_thread_state, "large_stack", False)
+
+
+def start_large_stack_thread(target, name):
+    """Start a daemon thread running ``target`` with a STACK_SIZE_MB stack."""
+    def run():
+        _thread_state.large_stack = True
+        target()
+    with _lock:
+        previous = threading.stack_size(STACK_SIZE_MB * 1024 * 1024)
+        try:
+            thread = threading.Thread(target=run, name=name, daemon=True)
+            thread.start()
+        finally:
+            threading.stack_size(previous)
+    return thread
+
+
+class _Worker:
+    """A large-stack thread that runs library calls for one calling thread."""
+
+    def __init__(self):
+        requests = self.requests = queue.SimpleQueue()
+        # The thread holds only the queue, so this object is freed (and the
+        # thread told to stop) when the calling thread ends.
+        start_large_stack_thread(lambda: _Worker._serve(requests),
+                                 f"pywfm-library-{threading.get_ident()}")
+
+    @staticmethod
+    def _serve(requests):
+        while True:
+            request = requests.get()
+            if request is None:
+                return
+            fn, args, done, outcome = request
+            try:
+                outcome.append((True, fn(*args)))
+            except BaseException as exc:
+                outcome.append((False, exc))
+            del request, fn, args
+            done.set()
+
+    def call(self, fn, args):
+        done, outcome = threading.Event(), []
+        self.requests.put((fn, args, done, outcome))
+        while not done.wait(0.5):   # a timeout keeps Ctrl-C responsive
+            pass
+        ok, value = outcome[0]
+        if ok:
+            return value
+        raise value
+
+    def __del__(self):
+        # The calling thread has ended (its thread-local storage was freed).
+        self.requests.put(None)
+
+
+def _worker():
+    worker = getattr(_thread_state, "worker", None)
+    if worker is None:
+        worker = _thread_state.worker = _Worker()
+    return worker
+
+
+class _Procedure:
+    __slots__ = ("fn", "__name__")
+
+    def __init__(self, fn, name):
+        self.fn = fn
+        self.__name__ = name
+
+    def __call__(self, *args):
+        if on_large_stack():
+            return self.fn(*args)
+        return _worker().call(self.fn, args)
+
+
+class LargeStackLibrary:
+    """The loaded library, with every procedure run on a large stack.
+
+    Calls from a thread that pywfm started with a large stack run directly.
+    Calls from any other thread run on a large-stack worker thread dedicated
+    to that thread, so the calls of one thread keep their order and threads
+    using different models still run at the same time. If Ctrl-C interrupts
+    a call, the library call itself still runs to its end.
+    """
+
+    def __init__(self, cdll):
+        self._cdll = cdll
+        self._procedures = {}
+
+    def __getattr__(self, name):
+        if name.startswith("_"):
+            raise AttributeError(name)
+        try:
+            return self._procedures[name]
+        except KeyError:
+            proc = self._procedures[name] = _Procedure(getattr(self._cdll, name), name)
+            return proc
+
+    def __repr__(self):
+        return f"<LargeStackLibrary {self._cdll!r}>"
 
 
 def dll_path():
